@@ -417,9 +417,9 @@ the defining equation \refeq{1dLattStat} for `temporal Bernoulli' retains
 its form under conjugation by any $\Cn{\infty}$  translation
 \refeq{C_infty},
 \beq
-\shift_i(\ssp_{\zeit} - {s}\ssp_{\zeit-1})\shift_i^{-1}
-= (\ssp_{\zeit+i} - {s}\ssp_{\zeit+i-1})\shift_i^{-1}
-= \ssp_{\zeit} - {s}\ssp_{\zeit-1}
+\shift_i({s}\ssp_{\zeit} - \ssp_{\zeit+1})\shift_i^{-1}
+= ({s}\ssp_{\zeit+i} - \ssp_{\zeit+i+1})\shift_i^{-1}
+= {s}\ssp_{\zeit} - \ssp_{\zeit+1}
 \,,
 \ee{invBern}
 while the Euler–Lagrange second-order difference equations
@@ -435,9 +435,9 @@ under any  $\Dn{\infty}$ reflection,
     }
 \beq
 \Refl_i(
-  \ssp_{\zeit+1} - \,{g}\,S'(\ssp_{\zeit})+\ssp_{\zeit-1}
+  -\ssp_{\zeit+1} + \,{g}\,S'(\ssp_{\zeit})-\ssp_{\zeit-1}
          )\Refl_i^{-1}
-= \ssp_{-\zeit+1} - \,{g}\,S'(\ssp_{-\zeit}) +\ssp_{-\zeit-1}
+= -\ssp_{-\zeit+1} + \,{g}\,S'(\ssp_{-\zeit}) -\ssp_{-\zeit-1}
 \,.
 \ee{invPhi4}
 
@@ -1067,36 +1067,36 @@ $\sitebox{\ssp_0}$:
 A {\lattstate} satisfies
 the defining equation \refeq{LC21:1dTempFT} %{catMapNewt}
 \beq
-\ssp_{\zeit-1}  -  S'(\ssp_{\zeit}) + \ssp_{\zeit+1}
+- \ssp_{\zeit-1}  +  S'(\ssp_{\zeit}) - \ssp_{\zeit+1}
     =
--\Ssym{\zeit}
+\Ssym{\zeit}
 \,,
 \ee{LC21:1dTempFTa} %{catMapHL}
 on the period-5 Bravais cell,
 \bea
-    -S'(\ssp_{0}) + 2 \ssp_1 &=& -m_0 \continue
-\ssp_0 -S'(\ssp_{1}) +\ssp_2 &=& -m_1 \continue
-\ssp_1 -S'(\ssp_{2}) +\ssp_2 &=& -m_2 \continue
-\ssp_1 -S'(\ssp_{2}) +\ssp_2 &=& -m_2 \continue
-\ssp_0 -S'(\ssp_{1}) +\ssp_2 &=& -m_1
+    S'(\ssp_{0}) - 2 \ssp_1 &=& m_0 \continue
+-\ssp_0 +S'(\ssp_{1}) -\ssp_2 &=& m_1 \continue
+-\ssp_1 +S'(\ssp_{2}) -\ssp_2 &=& m_2 \continue
+-\ssp_1 +S'(\ssp_{2}) -\ssp_2 &=& m_2 \continue
+-\ssp_0 +S'(\ssp_{1}) -\ssp_2 &=& m_1
 \label{symmCycD5eqs5} % from {HLsymmCycD5eqs}
 \eea
 where we have used \refeq{symmCycD5bcs}.
 The result is a length-3 \brick\ {\lattstate} condition for
 $\sitebox{\ssp_0}$, followed by the 2-{\brick} $(\ssp_1,\ssp_2)$,
 \bea
-    -S'(\ssp_{0}) + 2 \ssp_1 &=& -m_0 \continue
-\ssp_0 -S'(\ssp_{1}) +\ssp_2 &=& -m_1 \continue
-\ssp_1 -S'(\ssp_{2}) +\ssp_2 &=& -m_2
+    S'(\ssp_{0}) - 2 \ssp_1 &=& m_0 \continue
+-\ssp_0 +S'(\ssp_{1}) -\ssp_2 &=& m_1 \continue
+-\ssp_1 +S'(\ssp_{2}) -\ssp_2 &=& m_2
 \label{symmCycD5eqs} % from {HLsymmCycD5eqs}
 \eea
 with a 3\dmn\ {\jacobianOrb} \refeq{jMorb1dFT}
 \bea
 \jMorb_+ &=&
 \left(\begin{array}{ccc}
--{s}_0 & 2 & 0 \\
- 1 &-{s}_1 & 1 \\
- 0 & 1 &-{s}_2+1
+{s}_0 & -2 & 0 \\
+ -1 & {s}_1 & -1 \\
+ 0 & -1 & {s}_2-1
 \end{array}\right)
 \,,
 \label{OrbJacobianD5} % from {HLOrbJacobianD5}
@@ -1126,12 +1126,12 @@ The top, time-direction symmetry breaking b.c. I do not recognize.
 \jMorb[\Xx] =
 \left(\begin{array}{cccccccc}
 %\begin{pmatrix}
--{s}_{0} & {\color{red}2} & 0 & 0 & \cdots & 0 & 0 & {\color{red}0} \\
-1 & -{s}_{1} & 1 & 0 & \cdots & 0 & 0 & 0 \\
-0 & 1 & -{s}_{2} & 1 & \cdots & 0 & 0 & 0 \\
+{s}_{0} & {\color{red}-2} & 0 & 0 & \cdots & 0 & 0 & {\color{red}0} \\
+-1 & {s}_{1} & -1 & 0 & \cdots & 0 & 0 & 0 \\
+0 & -1 & {s}_{2} & -1 & \cdots & 0 & 0 & 0 \\
 \vdots & \vdots & \vdots & \vdots & \ddots & \vdots & \vdots & \vdots \\
-0 & 0 & 0 & 0 & \cdots & 1 & -{s}_{m-1} & 1 \\
-{\color{red}0} & 0 & 0 & 0 & \cdots & 0 & 1 & -{s}_{m} {\color{red}+1}
+0 & 0 & 0 & 0 & \cdots & -1 & {s}_{m-1} & -1 \\
+{\color{red}0} & 0 & 0 & 0 & \cdots & 0 & -1 & {s}_{m} {\color{red}-1}
 %\end{pmatrix}
           \end{array} \right)
 \,.
@@ -1143,12 +1143,12 @@ The top, time-direction symmetry breaking b.c. I do not recognize.
 \jMorb[\Xx] =
 \left(\begin{array}{cccccccc}
 %\begin{pmatrix}
--{s}_{0} & {\color{red}2} & 0 & 0 & \cdots & 0 & 0 & {\color{red}0} \\
-1 & -{s}_{1} & 1 & 0 & \cdots & 0 & 0 & 0 \\
-0 & 1 & -{s}_{2} & 1 & \cdots & 0 & 0 & 0 \\
+{s}_{0} & {\color{red}-2} & 0 & 0 & \cdots & 0 & 0 & {\color{red}0} \\
+-1 & {s}_{1} & -1 & 0 & \cdots & 0 & 0 & 0 \\
+0 & -1 & {s}_{2} & -1 & \cdots & 0 & 0 & 0 \\
 \vdots & \vdots & \vdots & \vdots & \ddots & \vdots & \vdots & \vdots \\
-0 & 0 & 0 & 0 & \cdots & 1 & -{s}_{m} & 1 \\
-{\color{red}0} & 0 & 0 & 0 & \cdots & 0 &  {\color{red}2} & -{s}_{m+1}
+0 & 0 & 0 & 0 & \cdots & -1 & {s}_{m} & -1 \\
+{\color{red}0} & 0 & 0 & 0 & \cdots & 0 &  {\color{red}-2} & {s}_{m+1}
 %\end{pmatrix}
           \end{array} \right)
 \,.
@@ -1160,11 +1160,11 @@ The top, time-direction symmetry breaking b.c. I do not recognize.
 \jMorb[\Xx] =
 \left(\begin{array}{ccccccc}
 %\begin{pmatrix}
- -{s}_{1} {\color{red}+1}& 1 & 0 & \cdots & 0 & 0 & {\color{red}0} \\
- 1 & -{s}_{2} & 1 & \cdots & 0 & 0 & 0 \\
+ {s}_{1} {\color{red}-1}& -1 & 0 & \cdots & 0 & 0 & {\color{red}0} \\
+ -1 & {s}_{2} & -1 & \cdots & 0 & 0 & 0 \\
  \vdots & \vdots & \vdots & \ddots & \vdots & \vdots & \vdots \\
- 0 & 0 & 0 & \cdots & 1 & -{s}_{m-1} & 1 \\
-{\color{red}0} & 0 & 0 & \cdots & 0 & 1 & -{s}_{m} {\color{red}+1}
+ 0 & 0 & 0 & \cdots & -1 & {s}_{m-1} & -1 \\
+{\color{red}0} & 0 & 0 & \cdots & 0 & -1 & {s}_{m} {\color{red}-1}
 %\end{pmatrix}
           \end{array} \right)
 \,.
@@ -1179,11 +1179,11 @@ The top, time-direction symmetry breaking b.c. I do not recognize.
 \jMorb\Refl%  = \shift - s\id + \shift^{-1}
   =
 \left(\begin{array}{ccccc}
- -{s}_0& 1 & 0 & 0 & 1 \\
- 1 &  -{s}_1& 1 & 0 &0\\
- 0 & 1 &  -{s}_2& 1 &0 \\
- 0 & 0 & 1 & -{s}_2& 1 \\
- 1 & 0 & 0 & 1 &  -{s}_1
+ {s}_0& -1 & 0 & 0 & -1 \\
+ -1 &  {s}_1& -1 & 0 &0\\
+ 0 & -1 &  {s}_2& -1 &0 \\
+ 0 & 0 & -1 & {s}_2& -1 \\
+ -1 & 0 & 0 & -1 &  {s}_1
 \end{array} \right)
 \left(
 \begin{array}{ccccc}
@@ -1296,16 +1296,16 @@ Combination $\shift+\shift^{-1}$
 commutes with $\Refl_k$,
 and $\Refl_k$ conjugacy reverses ${\mathbb{S}}$
 \bea
-\Refl_k\jMorb\Refl_k &=&\shift-\Refl_k{\mathbb{S}}\,\Refl_k+\shift^{-1}
+\Refl_k\jMorb\Refl_k &=&-\shift+\Refl_k{\mathbb{S}}\,\Refl_k-\shift^{-1}
     \continue
             &=&
 \left(\begin{array}{ccccccc} %\begin{bmatrix}
--{s}_{n-1} & 1 & 0 & 0 & \dots & 0 & 1\\
-1 & -{s}_{n-2} & 1 & 0 & \dots & 0 & 0\\
-0 & 1 & -{s}_2 & 1 & \dots & 0 & 0\\
+{s}_{n-1} & -1 & 0 & 0 & \dots & 0 & -1\\
+-1 & {s}_{n-2} & -1 & 0 & \dots & 0 & 0\\
+0 & -1 & {s}_2 & -1 & \dots & 0 & 0\\
 \vdots & \vdots & \vdots & \vdots & \ddots & \vdots & \vdots\\
-0 & 0 & \dots & \dots & \dots & -{s}_{2} & 1\\
-1 & 0 & \dots & \dots & \dots & 1 & -{s}_{1}
+0 & 0 & \dots & \dots & \dots & {s}_{2} & -1\\
+-1 & 0 & \dots & \dots & \dots & -1 & {s}_{1}
 \end{array}\right) %\end{bmatrix}
 %\label{LC21:reverOrbitJac}
 \eea
