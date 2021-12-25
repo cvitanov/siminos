@@ -1,0 +1,224 @@
+(* Content-type: application/vnd.wolfram.mathematica *)
+
+(*** Wolfram Notebook File ***)
+(* http://www.wolfram.com/nb *)
+
+(* CreatedBy='Mathematica 11.0' *)
+
+(*CacheID: 234*)
+(* Internal cache information:
+NotebookFileLineBreakTest
+NotebookFileLineBreakTest
+NotebookDataPosition[       158,          7]
+NotebookDataLength[      8295,        216]
+NotebookOptionsPosition[      7855,        198]
+NotebookOutlinePosition[      8274,        214]
+CellTagsIndexPosition[      8231,        211]
+WindowFrame->Normal*)
+
+(* Beginning of Notebook Content *)
+Notebook[{
+
+Cell[CellGroupData[{
+Cell[TextData[{
+ "Discrete Fourier 1D computations\n",
+ StyleBox["Cat map\n", "Chapter"],
+ StyleBox["Predrag Cvitanovic\t\t\t\t\t", "Author"],
+ StyleBox["2018-04-22", "Date"],
+ StyleBox["\n", "Chapter"],
+ StyleBox["Adler-Weiss partition of the Percival-Vivaldi cat map\n", 
+  "Section"],
+ StyleBox["siminos/spatiotemp/chapter/blogHL.tex\[LineSeparator]Computing the \
+Fourier transforms of periodic points, \\refeq{FourierPointsCorner}", "Text"]
+}], "Title",
+ CellChangeTimes->{{3.7334108079475884`*^9, 3.7334108320729685`*^9}, {
+   3.733410912549571*^9, 3.7334109207790422`*^9}, 3.7334109810534897`*^9, 
+   3.7334110531188054`*^9, {3.733411137625103*^9, 3.733411237334135*^9}, {
+   3.7334112727271786`*^9, 3.733411347326536*^9}, {3.7334117857339334`*^9, 
+   3.733411851884949*^9}}],
+
+Cell[BoxData[
+ RowBox[{"\t\t\t\t\t\t", 
+  RowBox[{"(*", " ", 
+   RowBox[{
+    RowBox[{
+     RowBox[{"the", " ", "10", " ", "4"}], "-", 
+     RowBox[{"cycles", " ", "symbol", " ", "blocks", " ", "for", " ", "s"}]}],
+     "=", 
+    RowBox[{"3", " ", "cat", " ", "map"}]}], " ", "*)"}], 
+  "\[IndentingNewLine]", GridBox[{
+    {
+     RowBox[{
+      RowBox[{
+       RowBox[{"Mma", "=", 
+        RowBox[{"{", 
+         RowBox[{"0", ",", "0", ",", "0", ",", "1"}], "}"}]}], ";"}], "\n", 
+      RowBox[{
+       RowBox[{"Mmb", "=", 
+        RowBox[{"{", 
+         RowBox[{"1", ",", "1", ",", "1", ",", "0"}], "}"}]}], ";"}], "\n", 
+      RowBox[{
+       RowBox[{"Mmc", "=", 
+        RowBox[{"{", 
+         RowBox[{"0", ",", "0", ",", "1", ",", 
+          RowBox[{"-", "1"}]}], "}"}]}], ";"}], "\n", 
+      RowBox[{
+       RowBox[{"Mmd", "=", 
+        RowBox[{"{", 
+         RowBox[{"0", ",", "0", ",", 
+          RowBox[{"-", "1"}], ",", "1"}], "}"}]}], ";"}], "\n", 
+      RowBox[{
+       RowBox[{"Mme", "=", 
+        RowBox[{"{", 
+         RowBox[{"0", ",", "1", ",", "1", ",", 
+          RowBox[{"-", "1"}]}], "}"}]}], ";"}], "\n", 
+      RowBox[{
+       RowBox[{"Mmf", "=", 
+        RowBox[{"{", 
+         RowBox[{"1", ",", "1", ",", "0", ",", 
+          RowBox[{"-", "1"}]}], "}"}]}], ";"}], "\n", 
+      RowBox[{
+       RowBox[{"Mmg", "=", 
+        RowBox[{"{", 
+         RowBox[{"1", ",", "1", ",", "1", ",", 
+          RowBox[{"-", "1"}]}], "}"}]}], ";"}], "\n", 
+      RowBox[{
+       RowBox[{"Mmh", "=", 
+        RowBox[{"{", 
+         RowBox[{"0", ",", "0", ",", "1", ",", 
+          RowBox[{"-", "1"}]}], "}"}]}], ";"}], "\n", 
+      RowBox[{
+       RowBox[{"Mmi", "=", 
+        RowBox[{"{", 
+         RowBox[{"0", ",", "0", ",", "1", ",", "1"}], "}"}]}], ";"}], "\n", 
+      RowBox[{
+       RowBox[{"Mmj", "=", 
+        RowBox[{"{", 
+         RowBox[{"0", ",", "1", ",", 
+          RowBox[{"-", "1"}], ",", "1"}], "}"}]}], ";"}], 
+      "\[IndentingNewLine]", "\t\t\t\t\t\t", 
+      RowBox[{"(*", " ", 
+       RowBox[{
+       "test", " ", "of", " ", "the", " ", "first", " ", "Fourier", " ", 
+        "transform"}], " ", "*)"}], "\n", 
+      RowBox[{"Fourier", "[", "Mma", "]"}], " ", "\[IndentingNewLine]", 
+      "\t\t\t\t\t\t", 
+      RowBox[{"(*", " ", 
+       RowBox[{
+       "are", " ", "phases", " ", "rational", " ", "multiples", " ", "of", 
+        " ", 
+        RowBox[{"PI", "?"}]}], " ", "*)"}], "\[IndentingNewLine]", 
+      RowBox[{"Rationalize", "[", 
+       RowBox[{
+        RowBox[{"Abs", "[", 
+         RowBox[{"Fourier", "[", "Mma", "]"}], "]"}], "+", 
+        RowBox[{"I", " ", 
+         RowBox[{
+          RowBox[{"Arg", "[", 
+           RowBox[{"Fourier", "[", "Mma", "]"}], "]"}], "/", "Pi"}]}]}], 
+       "]"}], " "}]},
+    {"\[Placeholder]"}
+   }]}]], "Input",
+ CellChangeTimes->{{3.7333988911859956`*^9, 3.7333989286928215`*^9}, {
+   3.73339929383093*^9, 3.7333992986135035`*^9}, {3.7333993999025593`*^9, 
+   3.7333994129277596`*^9}, {3.7333999887403536`*^9, 
+   3.7333999897891197`*^9}, {3.7334001106009755`*^9, 
+   3.7334001120897484`*^9}, {3.7334002398879614`*^9, 3.7334002517481437`*^9}, 
+   3.733400384258929*^9, {3.733400421824506*^9, 3.733400424882053*^9}, {
+   3.7334004885605307`*^9, 3.7334005509027386`*^9}, {3.7334006099261456`*^9, 
+   3.733400648382986*^9}, {3.7334007047751017`*^9, 3.733400710166435*^9}, {
+   3.733400741170661*^9, 3.733400772548643*^9}, {3.733400852623623*^9, 
+   3.73340091558084*^9}, {3.73340096568536*^9, 3.7334009666528745`*^9}, 
+   3.7334113759231715`*^9, {3.733411459321942*^9, 3.7334116153025656`*^9}}],
+
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{"Mm", "=", 
+   RowBox[{"{", 
+    RowBox[{
+    "Mma", ",", "Mmb", ",", "Mmc", ",", "Mmd", ",", "Mme", ",", "Mmf", ",", 
+     "Mmg", ",", "Mmh", ",", "Mmi", ",", "Mmj"}], "}"}]}], 
+  "\[IndentingNewLine]", "\t\t\t\t\t\t", 
+  RowBox[{"(*", " ", 
+   RowBox[{
+   "Fourier", " ", "transform", " ", "of", " ", "all", " ", "10", " ", 
+    "cycle", " ", "points"}], "*)"}]}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"Do", "[", 
+   RowBox[{
+    RowBox[{"Print", "[", 
+     RowBox[{"Apply", "[", 
+      RowBox[{"Fourier", ",", 
+       RowBox[{"{", 
+        RowBox[{"Mm", "[", 
+         RowBox[{"[", "j", "]"}], "]"}], "}"}]}], "]"}], "]"}], ",", 
+    RowBox[{"{", 
+     RowBox[{"j", ",", "10"}], "}"}]}], "]"}], "\[IndentingNewLine]", 
+  "\t\t\t\t\t\t", 
+  RowBox[{"(*", " ", 
+   RowBox[{
+   "a", " ", "hack", " ", "to", " ", "get", " ", "a", " ", "printout", " ", 
+    "for", " ", "blog", " ", "past"}], "*)"}]}], "\[IndentingNewLine]", 
+ RowBox[{"Do", "[", 
+  RowBox[{
+   RowBox[{"Print", "[", 
+    RowBox[{"NumberForm", "[", 
+     RowBox[{
+      RowBox[{"2", " ", 
+       RowBox[{"Apply", "[", 
+        RowBox[{"Fourier", ",", 
+         RowBox[{"{", 
+          RowBox[{"Mm", "[", 
+           RowBox[{"[", "j", "]"}], "]"}], "}"}]}], "]"}]}], ",", 
+      RowBox[{"{", 
+       RowBox[{"2", ",", "0"}], "}"}], ",", 
+      RowBox[{"NumberPoint", "\[Rule]", "\"\<\>\""}]}], "]"}], "]"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"j", ",", "10"}], "}"}]}], "]"}], "\[IndentingNewLine]"}], "Input",
+ CellChangeTimes->{{3.73340103928399*^9, 3.733401091717295*^9}, {
+   3.7334011686534767`*^9, 3.7334011739160576`*^9}, {3.733401386243069*^9, 
+   3.733401394849451*^9}, {3.7334014772657175`*^9, 3.7334014791607466`*^9}, 
+   3.733401513716277*^9, {3.733401641441989*^9, 3.733401684891406*^9}, {
+   3.7334017388247347`*^9, 3.7334017408085155`*^9}, 3.7334017875129824`*^9, 
+   3.733401819434723*^9, {3.7334019300751724`*^9, 3.7334020704548283`*^9}, {
+   3.7334022372476187`*^9, 3.7334023000535836`*^9}, {3.7334023913999867`*^9, 
+   3.7334024206066856`*^9}, {3.7334024584235163`*^9, 3.733402461069807*^9}, {
+   3.7334025309733806`*^9, 3.7334025640813894`*^9}, 3.7334026043807583`*^9, {
+   3.73340266634046*^9, 3.733402671828044*^9}, {3.7334028136702228`*^9, 
+   3.7334030222184258`*^9}, {3.7334031000171213`*^9, 3.733403115177354*^9}, {
+   3.733403185822189*^9, 3.733403188034723*^9}, {3.7334048022151175`*^9, 
+   3.733404803188882*^9}, {3.733405021413484*^9, 3.733405033833675*^9}, {
+   3.733405067502942*^9, 3.7334050730842776`*^9}, {3.7334052789886904`*^9, 
+   3.733405315359249*^9}, {3.733406658752383*^9, 3.7334066976979814`*^9}, {
+   3.733406727897195*^9, 3.733406731683503*^9}, 3.7334067794017363`*^9, {
+   3.7334068907796974`*^9, 3.733406902474877*^9}, 3.7334069553531885`*^9, {
+   3.7334070464745884`*^9, 3.7334070734337525`*^9}, {3.733411648291822*^9, 
+   3.733411743607036*^9}}]
+}, Open  ]]
+},
+WindowSize->{759, 835},
+WindowMargins->{{Automatic, 317}, {36, Automatic}},
+FrontEndVersion->"11.0 for Microsoft Windows (64-bit) (September 21, 2016)",
+StyleDefinitions->FrontEnd`FileName[{"Report"}, "StandardReport.nb", 
+  CharacterEncoding -> "UTF-8"]
+]
+(* End of Notebook Content *)
+
+(* Internal cache information *)
+(*CellTagsOutline
+CellTagsIndex->{}
+*)
+(*CellTagsIndex
+CellTagsIndex->{}
+*)
+(*NotebookFileOutline
+Notebook[{
+Cell[CellGroupData[{
+Cell[580, 22, 782, 15, 249, "Title"],
+Cell[1365, 39, 3571, 92, 336, "Input"],
+Cell[4939, 133, 2900, 62, 135, InheritFromParent]
+}, Open  ]]
+}
+]
+*)
+

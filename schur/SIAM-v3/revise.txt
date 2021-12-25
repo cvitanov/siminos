@@ -1,0 +1,153 @@
+siminos/schur/SIAM-v2/revise.txt
+$Author: xiong $
+$Date: 2016-03-27 14:08:31 -0400 (Sun, 27 Mar 2016) $
+===========================================================
+
+all citations and Sec# refer to DingCvit14-v2.pdf
+
+
+------------------------------------------------------------
+Reply to referee #1
+
+1. Initially, we thought that materials on the study of effective dimension of inertial manifold can effectively express our desire to compute Floquet vectors, but the feedback indicates that it is too much. So we get rid of the sentence about the inertial manifold research in the abstract, and also
+rewrite Sec2, P2 to emphasize our motivation of studying Floquet vectors of periodic orbits without too much exposition to the research on effective dimension of inertial manifold. 
+
+Other places that are modified accordingly: 
+1) paragraph 1 on page 16 : avoid mentioning "inertial manifold".
+2) paragraph 1 in page 18 : remove "physical modes".
+3) Caption of Figure 3 : replace "entangled modes" with "exponents"
+4) Caption of Table 1: remove the sentence talking about "entangled modes"
+   and "isolated modes"
+
+Places that we think it is better to keep:
+1) paragraph 2 in page 16: We mention the experiments conducted on covariant Lyapunov vectors and expect Floquet vectors may serve the same purpose and propose our future work.
+2) In the conclusion part for future work : we mention our goal to determine the physical dimension of a turbulent Navier-Stokes flow.
+
+2. We replace Fig.2 with a new one which illustrates the 2 stages of periodic Schur decomposition of three [6x6] matrices. Compared with the vague old one, this new figure is more straightforward and labels 2 stages explicitly. Also, the 2nd paragraph of section 2.4 is rewritten to avoid some technical details and the convergence properties. Readers can obtain all details from the references cited in this paragraph.
+
+3. $R_m$ being quasi-upper triangular is an assumption without lose of generality. One may think that simultaneous iteration for $J^{(k)}$ will make $R_k$ quasi-upper triangular. Such a concern is sensible because in equation (4.2) we absorb matrix $D$ into $R^{(0)}$. However, this is only performed for $R^{(0)}$ not for other $R^{(k)}$. So after one iteration, $Q_0$ rotates to $Q'_0$ and is rotated back to $Q_0$ intentionally, and all other $Q_i$ do not change. This point is critical because equation (3.3) should be uniform for all $J^{(k)}$. 
+
+We changed the sentences under equation (4.1) and (4.2) to explain our choice of $R_m$. If you think we are wrong, we can discuss again.
+
+4. This is our severe mistake.  We made the following changes:
+   1) Add a few sentences at the end of the 1st paragraph of section 5.1 to indicate how power iteration generates eigenvectors of all $R^{(k)}$ simultaneously.
+   2) Remove the first paragraph of section 5.2 which talks about the drawbacks of iteration method.
+   3) Remove the sentences talking about the drawbacks of iteration method in the 3rd paragraph in section 6.
+   4) Delete the statement under formula (3.5) about the ieration method.
+
+5. Substantial changes have been made to section 6. We refer to equations or figures to each complexity expression. Only high-lever processes are discussed and a lot details, like Householder transformation and Givens rotation, are hidden. The details are covered in any numerical linear algebra book, and the reader can get them from the references provided in that section. Also, we correct the complexity of GEPP from $O(mn^2)$ in general to $O(mi^2)$ for the i-th eigenvalue. 
+
+
+6. 1) We think "real part" is correct. When written in exponential form,  Floquet multipliers are $\Lambda_j = \exp(T \mu_j + i\theta)$, so $\mu$ is the real part in the exponent and it determines the magnitude of $\Lambda_j$. Maybe our phrasing is misleading, so the 3 lines above equation (2.2) are slightly changed. We can discuss it if you have different opinion.
+
+   2) Yes, we made a mistake about the indices of forward/back invariant subspaces of Oseledets matrices. We correct them following the style in Ref.[30]. Also, we change the '+' symbol to '\oplus' to emphasize that it is direct sum of subspaces.
+
+   3) Yes, we made a mistake about the symbol reserved for eigenvectors. $v_i^{(k)}$ are eigenvectors of $R^{(k)}$, while $e_i^{(k)}$ are eigenvectors of $J^{(k)}$. So, $v_i$ are all replaced by $e_i$ in section 4.  
+   
+   4) Typos such as "figure figure 1" are corrected.
+
+7. 1) We add Ref[14] at page 1, 4 and 5; all the places where mention Gineelli et al.'s work.
+   
+   2) When we say "these two methods are equivalent", we are not referring to simultaneous iteration and covariant Lyapunov vector algorithm. Actually, we try to say "simultaneous iteration is equivalent to periodic Schur decomposition algorithm". We changed the phrasing here to make it clearer. 
+
+   The new version is 
+   "Actually, for a single matrix, simultaneous iteration is equivalent to $QR$ iteration. When it comes to matrix product, simultaneous iteration and periodic Schur decomposition both achieve the PRSF, but their computational complexities differ."
+
+
+------------------------------------------------------------
+Other changes:
+
+1. Change "covariant vectors" to "covariant Lyapunov vectors" in the abstract and main text to make the term consistent with literature.
+
+2. Change xx.etc to xxx.et al. when citing one paper which has a few authors.
+
+3. Add a footnote for ceiling function in page 17. 
+
+4. remove the sentence about our future publication in the section 8.
+   "as well as in the forthcoming publication". 
+
+5. References 
+
+   2) Add Ref.[36] and use it in Sec1, p1 "periodic Schur decomposition(PSD)[3, 36]". 
+   The reason is that Chapter 8 of this book discusses various aspect of product eigenvalue problem, which is useful for readers interested in PSD.
+   
+   3) Add Ref.[28] and use it section 2 paragraph 2 : "physical dimension
+    of the inertial manifold[28, 29]".
+   The reason that this reference is far easier to follow than the more mathematical book Ref[34].
+
+
+6 Typo corrections
+   1) Abstract : strongly strongly suggests => strongly suggest
+   2) Sec1, P1 : PSD are only => PSD is only
+   3) Sec7, P2 : periodic QR algorithm algorithm => periodic QR algorithm
+   4) Acknowledgements : introducting => introducing
+   
+7. change of phrases
+   1) Sec1, P1 : For equilibrium points
+              => For equilibrium states
+   2) Sec1, P1 : expanding/contracting rates 
+              => expansion/contraction rates
+   3) Sec1, P1 : span a large order of magnitude 
+              => span a large range of orders of magnitude
+   4) Sec1, P1 : The second candidate is called periodic Schur decomposition 
+              => The second candidate is periodic Schur decomposition.
+   5) Sec1, P3 : an example which illustrates method's effectiveness 
+              => an example which illustrates the effectiveness of periodic eigendecomposition 
+   6) Sec2, P1 : The study of dynamical systems 
+              => The study of a dynamical system
+   7) Sec2, P1 : after a transient period 
+              => after a transient period of evolution
+   8) Sec2, P1 : and continues in this way forever
+              => and repeats this process forever.
+   9) Sec2, P1 : a chaotic attractor
+              => the strange attractor
+   10) Sec2, P1 : a sum over periodic orbits weighted by products of their unstable Floquet multipliers 
+               => a summation taken over periodic orbits weighted by their stabilities 
+   11) Sec2.1, P1 : A Floquet multiplier 
+                 => The $j_{th}$ Floquet multiplier
+
+   12) Sec2.4, P1 : 
+   The implicit QR algorithm is the standard way of solving eigen problem of a single matrix
+   =>
+   The double-implicit-shift QR algorithm is the standard way of solving eigen problem of a single matrix
+
+   13) Sec2.4, P1 :
+   Bojanczyk et al. [3] extends this idea to compute eigenvalues of the product of a sequence of matrices.	
+   =>
+   Bojanczyk et al. [3] extends this idea to obtain periodic Schur decomposition of the product of a sequence of matrices.	
+   
+   14) Sec2.4, P2 : 
+   Householder reflections =>
+   Householder transformations
+   
+   15) a lot of locations :
+   in this stage => at this stage
+   
+   16) Sec3, P1 : over 100's orders of magnitude 
+               => over hundreds orders of magnitude 
+  
+   17) Set4, P1 : More specific => More specifically
+
+   18) Set4, P1 : Another alternative is the first two stages of covariant Lyapunov vectors =>
+    An alternative is the first two stages of covariant Lyapunov vector algorithm 
+
+   19) Sec4, P2 :  for $s=1,2,\cdots,n$ =>  for $s=1,2,\cdots,m$,
+
+   20) Sec5.2, last paragraph of real eigenvector case :
+    wasting time in calculating the remaining transient uniformly vanishing modes =>
+    wasting time in calculating the remaining unimportant subset.
+
+   21) Sec7, P2 : has coefficient $q_{N/2} + q_{-N/2} = 0$ =>
+   has coefficient $-i(q_{N/2} + q_{-N/2})/2 = 0$
+
+   22) Sec7, Page15: has a shift along the x direction as time goes on =>
+    has a fixed shift along the $x$ direction after each period.    
+
+   23) Caption of Figure 5 : 
+   with the $i$th one localized at index $i$. Power is defined to be the modular square of Fourier coefficients =>
+   with the $i_{th}$ one localized at index $\lceil \frac{i}{2} \rceil$. Power is defined to be the square of the $k_{th}$ Fourier coefficient's magnitude
+   
+   
+8. Other minor changes like 'the', 'a', comma, plurality and so on are not mentioned here.
+
+9. Backward dynamics in the covariant Laypunov vector algorithm is slightly modified to take into account the normalization detail.

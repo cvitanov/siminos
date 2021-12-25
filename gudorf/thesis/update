@@ -1,0 +1,20 @@
+# ./update 
+# $Author: predrag $ $Date: 2018-03-27 14:32:42 -0400 (Tue, 27 Mar 2018) $
+#					Predrag Mar 20 2006
+
+# 		make sure that you are in ../gibson/blog/[subDir]/
+# ./update 	to process the ../gibson/lbub.tex
+
+latex thesis 
+bibtex thesis 
+makeindex -s inputs/gatech-thesis-index.ist thesis.idx        
+latex thesis 
+bibtex thesis
+latex --src-specials thesis
+dvips thesis -o thesis.ps 
+# PDF options embedd all fonts.
+ps2pdf -dCompatibilityLevel=1.4 -dPDFSETTINGS=/prepress thesis.ps 
+
+echo ' '
+echo '       thesis.ps, thesis.pdf updated'
+echo ' '

@@ -1,0 +1,121 @@
+\newif\ifbackground % whether use background image 
+\backgroundfalse 
+\newif\iflogo % whether use logo
+\logofalse
+\newif\ifnotes % whether show notes.
+\notestrue
+\newif\ifhandout % handout mode
+\handoutfalse
+
+\ifhandout
+\documentclass[mathserif, handout]{beamer}
+\else
+\documentclass[mathserif]{beamer}
+\fi
+
+\usepackage{graphicx}
+\usepackage{algpseudocode}
+\usepackage{algorithm}
+\usepackage{listings}
+\usepackage{tikz}
+\usetikzlibrary{calc}
+\usepackage{tipa}
+\usepackage{movie15}
+
+
+% ------                       setup of beamer               ----------------
+\usetheme{Madrid}
+
+\ifnotes
+\setbeameroption{show notes}
+\else
+\setbeameroption{hide notes}
+\fi
+
+\setbeamertemplate{bibliography item}[text]
+%  add background image
+\ifbackground
+\usebackgroundtemplate
+{
+  \includegraphics[width=\paperwidth,height=\paperheight]{./figs/background.jpg}%
+}
+\fi
+
+% -------------------      title page       --------------------------    
+\title[Notes about HPC] % (optional, only for long titles)
+{Notes about high performance computing skills}
+\subtitle{from the view of a physics student}
+\logo{
+  \iflogo
+  \includegraphics[width=2cm,height=1cm,keepaspectratio]{./figs/gtlogo}
+  \includegraphics[width=1cm,height=0.8cm,keepaspectratio]{./figs/cnslogo}
+  \fi
+}
+\author[Xiong, Predrag] % (optional, for multiple authors)
+{Xiong Ding\inst{1}}
+\institute[Gatech] % (optional)
+{
+  \inst{1}%
+  School of Physics\\
+  Georgia Institute of Technology
+}
+
+\date[Wet\&wild 2014] % (optional)
+{Wet\&wild discussion group, 2014}
+
+
+\subject{Computer Science}
+
+%  ----------------    setup of outline    -------------------------
+\iffalse
+\AtBeginSection[]
+{
+  \begin{frame}
+    \frametitle{Table of Contents}
+    \tableofcontents[currentsection]
+  \end{frame}
+}
+\fi
+
+\AtBeginSubsection[]
+{
+  \begin{frame}
+    \frametitle{Table of Contents}
+    \tableofcontents[currentsection,currentsubsection]
+  \end{frame}
+}
+
+%  ---------------   main content of slides  -----------------------
+\begin{document}
+\frame{\titlepage} % add title page.
+
+%  ----------------  section: definition of problem --------------
+\section{Eigen}
+
+\begin{frame}
+  \frametitle{examples}
+\begin{table}[h]
+  \centering
+  \begin{tabular}{c c c c c}
+    Broadcasting & Loop & optimized diagonal & repmat & repmat++\\
+    1.23 & 1.21 & 1.25 & 8.48  & 2.17 \\
+  \end{tabular}
+  \caption{Performance of different methods implementing column wise
+    multiplication. $M_2 = M.*v$ for 200 by 200 matrix and vector. 
+    Elapsed time accounts for 10000 runs.}
+\end{table}
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{Unsolved}
+  
+  Cannot map the existing matrix to output matrix in MEX:
+\begin{verbatim}
+    plhs[0] = mxCreateDoubleMatrix(N-2, nstp/np + 1, mxREAL);
+    Map<ArrayXXd> aa(mxGetPr(plhs[0]), N-2, nstp/np + 1);
+    aa = ksf(a0, d, h, nstp, np);
+\end{verbatim}
+ 
+\end{frame}
+
+\end{document}

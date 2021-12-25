@@ -1,0 +1,90 @@
+% create the angle used to reduce SO2 symmetry of two states which
+% are related by reflection
+% use package tikz
+% By Xiong
+% 
+% use the following command to generate the pdf
+% pdflatex --jobname=D3orbits-f1 D3orbits.tex
+
+\documentclass{article}
+\usepackage{graphicx}
+\usepackage{tikz}
+\usetikzlibrary{calc}
+\usetikzlibrary{decorations.markings}
+\usetikzlibrary{decorations.pathreplacing}
+
+\tikzset{
+  big arrow/.style={
+    decoration={markings,mark=at position 0.5 with {\arrow[scale=1.5,blue]{#1}}},
+    postaction={decorate},
+    shorten >=0.4pt},
+  big arrow/.default=>
+}
+
+
+\pgfrealjobname{D3orbits}
+
+\begin{document}
+
+\beginpgfgraphicnamed{D3orbits-f1}
+\begin{tikzpicture}
+
+  % coordinates for the rectangle
+  \coordinate (O1) at (0, 0);
+  \coordinate (O2) at ($(O1) + (5, 0)$);
+  \coordinate (O3) at ($(O2) + (5, 0)$);
+  \coordinate (O4) at ($(O3) + (5, 0)$);
+  
+  % draw the 1st configuration
+  \draw[color=black, thick] (O1) -- ($(O1) + (0, 2)$) node[above=0.2]{3};
+  \draw[color=black, thick] (O1) -- ($(O1) + (1.732, -1)$) node[right=0.2]{2};
+  \draw[color=black, thick] (O1) -- ($(O1) + (-1.732, -1)$) node[left=0.2]{1};
+  \draw[dashed, color=black, thick] (O1) -- ($(O1) + (1.732, 1)$);
+  \fill[fill=green!20] (O1) -- ($(O1) + (0, 2)$) -- ($(O1) + (1.732, 1)$);
+  \draw[color=red, very thick] ($(O1) + (0.6, 1)$) circle (0.35);
+
+  \node at ($(O1) + (0, -1.2)$) {$(a)$} ;
+
+  % draw the 2nd configuration
+  \draw[color=black, thick] (O2) -- ($(O2) + (0, 2)$) node[above=0.2]{3};
+  \draw[color=black, thick] (O2) -- ($(O2) + (1.732, -1)$) node[right=0.2]{2};
+  \draw[color=black, thick] (O2) -- ($(O2) + (-1.732, -1)$) node[left=0.2]{1};
+  \draw[dashed, color=black, thick] (O2) -- ($(O2) + (1.732, 1)$);
+  \fill[fill=green!20] (O2) -- ($(O2) + (0, 2)$) -- ($(O2) + (1.732, 1)$);
+  \draw[color=red, very thick] ($(O2) + (0, 0.4)$) arc (-90:90:0.6);
+  \draw[dashed, color=red, very thick] ($(O2) + (0, 1.6)$) arc (90:270:0.6);
+
+  \node at ($(O2) + (0, -1.2)$) {$(b)$} ;
+
+  % draw the 3rd configuration
+  \draw[color=black, thick] (O3) -- ($(O3) + (0, 2)$) node[above=0.2]{3};
+  \draw[color=black, thick] (O3) -- ($(O3) + (1.732, -1)$) node[right=0.2]{2};
+  \draw[color=black, thick] (O3) -- ($(O3) + (-1.732, -1)$) node[left=0.2]{1};
+  \draw[dashed, color=black, thick] (O3) -- ($(O3) + (1.732, 1)$);
+  \fill[fill=green!20] (O3) -- ($(O3) + (0, 2)$) -- ($(O3) + (1.732, 1)$);
+  \coordinate (A1) at ($(O3) + (0.5, 0.866)$) ;
+  \coordinate (B1) at ($(O3) + (0, 0.57735)$) ;
+  \coordinate (A2) at ($(O3) + (-1, 0)$) ;
+  \coordinate (A3) at ($(O3) + (0.5, -0.866)$) ;
+  \coordinate (B2) at ($(O3) + (0.5, 0.433)$) ;
+  \draw[color=red, very thick] (A1) -- (B1);
+  \draw[dashed, color=red, very thick] (B1) -- (A2) -- (A3) -- (B2);
+  \draw[color=red, very thick] (B2) -- (A1);
+
+  \node at ($(O3) + (0, -1.2)$) {$(c)$} ;
+
+  % draw the 4th configuration
+  \draw[color=black, thick] (O4) -- ($(O4) + (0, 2)$) node[above=0.2]{3};
+  \draw[color=black, thick] (O4) -- ($(O4) + (1.732, -1)$) node[right=0.2]{2};
+  \draw[color=black, thick] (O4) -- ($(O4) + (-1.732, -1)$) node[left=0.2]{1};
+  \draw[dashed, color=black, thick] (O4) -- ($(O4) + (1.732, 1)$);
+  \fill[fill=green!20] (O4) -- ($(O4) + (0, 2)$) -- ($(O4) + (1.732, 1)$);
+  \draw[color=red, very thick] ($(O4) + (0.6*0.866, 0.3)$) arc (30:90:0.6);
+  \draw[dashed, color=red, very thick] ($(O4) + (0, 0.6)$) arc (90:390:0.6);
+
+  \node at ($(O4) + (0, -1.2)$) {$(d)$} ;
+
+\end{tikzpicture}
+\endpgfgraphicnamed
+
+\end{document}

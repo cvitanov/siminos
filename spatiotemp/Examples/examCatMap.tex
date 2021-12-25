@@ -1,0 +1,484 @@
+% siminos/spatiotemp/chapter/examCatMap.tex called by catMap.tex
+% $Author: predrag $ $Date: 2021-12-24 01:25:20 -0500 (Fri, 24 Dec 2021) $
+
+% Predrag                                               23jan2018
+
+\section{Examples}
+\label{exam:catMap}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\example{Projection operator decomposition of the cat map:}{
+            \label{exam:ProjOpCatMap}
+\index{projection operator}
+Let's illustrate how the decomposition works for the \PV\rf{PerViv}
+``two-configuration representation'' of the Arnol'd cat map by the
+$[2\!\times\!2]$ matrix
+\beq
+{\bf A}
+=\MatrixII{0}{1}
+          {-1}{s}
+\,.
+\ee{examPVmap}
+To interpret $\Ssym{n}$'s, consider the action of
+the  % Newtonian cat
+this map \refeq{OneCat} on a 2\dmn\ \statesp\ point
+$(\ssp_{n-1},\ssp_{n})$,
+\beq
+ \left(\begin{array}{c}
+ \ssp_{n}  \\
+ \ssp_{n+1}
+ \end{array} \right )=
+ {\bf A} \left(\begin{array}{c}
+ \ssp_{n-1}  \\
+ \ssp_{n}
+ \end{array} \right ) %\mbox{ mod } 1
+ - \left(\begin{array}{c}
+ 0  \\
+ \Ssym{n}
+ \end{array} \right )
+ \,.
+\ee{eq:StateSpCatMap}
+%Every point $(\ssp_{0},\ssp_{1})$  in the 2\dmn\ \statesp\ $\pS$ (drawn
+%here as a unit square) defines a unique orbit.
+In Percival and Vivaldi\rf{PerViv} this representation of cat map is
+referred to as ``the two-configuration representation''.
+As illustrated in
+\reffig{fig:CatMapStatesp}, in one time step the area preserving
+map $A'$ stretches the unit square into a parallelogram, and a
+point $(\ssp_{0},\ssp_{1})$ within the initial unit square
+in general lands outside it, in another unit square $\Ssym{n}$
+steps away. As they shepherd such stray points back into the unit
+torus, the integers $\Ssym{n}$ can be interpreted as ``winding
+numbers''\rf{Keating91}, or ``stabilising impulses''\rf{PerViv}.
+The $\Ssym{n}$ translations reshuffle the \statesp, thus partitioning it into
+$|\A|$ regions $\pS_\Ssym{}$, $\Ssym{}\in\A$.
+
+Associated with each root $\ExpaEig^{i}$
+in \refeq{exam:catEigs} is the {\em projection operator}
+%\refeq{2dEigVec}
+% ${\PP}_i$,
+\( %beq
+{\PP}^{i} = \prod ({\bf A}-\ExpaEig^{j} \matId)
+                 /(\ExpaEig^{i} -\ExpaEig^{j})
+\, ,
+\) %ee{ProjOp2d:3.42}
+$j\not= i$,
+\index{orthogonality relation}
+\index{completeness relation}
+\bea
+\PP^{+} &=& \frac{1}{\surd{D}} ({\bf A} - \ExpaEig^{-1}\matId)
+\,=\,\frac{1}{\surd{D}}\MatrixII{-\ExpaEig^{-1}}{1}
+                         {-1}{\ExpaEig}
+\label{ProjOp2d:8.2} \\
+\PP^{-} &=& - \frac{1}{\surd{D}}({\bf A} -\ExpaEig\,\matId)
+\,=\, \frac{1}{\surd{D}}\MatrixII{\ExpaEig}{-1}
+                           {1}{-\ExpaEig^{-1}}
+\,.
+\label{ProjOp2d:8.3}
+\eea
+Matrices ${\PP}^{\pm}$ are orthonormal
+%\( %beq
+%{\PP}_i {\PP}_j = \delta_{ij} {\PP}_j \ , % \quad (\hbox{no sum on} \ j) \, ,
+%\) %ee{ProjOp2d:3.44}
+and complete.
+%\( %beq
+%\sum %_{i=1}^{r}
+%     {\PP}_i = \matId \, .
+%\) %ProjOp2d:3.45}
+The dimension of the $i$th subspace is given by
+\( %beq
+d_i = \tr {\PP}_i \,;
+\) %ee{ProjOp2d:3.46}
+in case at hand both subspaces are 1-dimensional.
+%
+From the characteristic equation %\refeq{ProjOp2d:3.41}
+% and the form of the projection operator \refeq{ProjOp2d:3.42}
+it follows that ${\PP}^{\pm}$ satisfy the eigenvalue equation
+\( %beq
+{\bf A} \, {\PP}^{\pm} = \ExpaEig^{\pm} {\PP}^{\pm}
+\,, %\qquad (\hbox{no sum on} \ i) \, .
+\) %ee{ProjOp2d:3.47}
+with every column a right
+eigen\-vector, and every row a left eigen\-vector. Picking --for example-- the
+first row/column we get the right and the left eigen\-vectors:
+\bea
+\{ \jEigvec[+],\jEigvec[-] \} &=& \left\{
+    \frac{1}{\surd{D}}\VectorII{-\ExpaEig^{-1}}{-1}
+    \,,
+     \frac{1}{\surd{D}}\VectorII{\ExpaEig}{1} \right\}
+    \continue
+\{ \jEigvecT[+],\jEigvecT[-] \} &=& \left\{
+   \frac{1}{\surd{D}}[-\ExpaEig^{-1},1]
+    \,,
+    \frac{1}{\surd{D}}[\ExpaEig,-1] \right\}
+\,,
+\label{PerViv:eigVecs}
+\eea                                                    \toCB
+with overall scale arbitrary.
+    \PC{2017-10-02}{
+    compare with \refeq{Adler98:leftEigVecs}
+    }
+The matrix is not symmetric, so
+$\{\jEigvec[j]\}$ do not form an orthogonal basis. The left-right
+eigen\-vector dot products $\jEigvecT[j]\,\cdot\,\jEigvec[k]$, however,
+are orthogonal,
+\[
+  \jEigvecT[i] \cdot \jEigvec[j] = c_j\,\delta_{ij}
+\,.
+\]
+What does this do to the partition \reffig{fig:CatMapStatesp}?
+The origin is still the fixed point. A \statesp\ point in the new, dynamically
+intrinsic right eigenvector \AW\rf{AdWei70} coordinate basis is
+\[
+\left(\begin{array}{c}
+ \ssp_{n-1}  \\
+ \ssp_{n}
+ \end{array} \right )
+ = (\PP^{+}+\PP^{-})
+\left(\begin{array}{c}
+ \ssp_{n-1}  \\
+ \ssp_{n}
+ \end{array} \right )
+\]
+\[
+=
+\frac{1}{\surd{D}}\MatrixII{-\ExpaEig^{-1}}{1}
+                         {-1}{\ExpaEig}
+\left(\begin{array}{c}
+ \ssp_{n-1}  \\
+ \ssp_{n}
+ \end{array} \right )
++
+\frac{1}{\surd{D}}\MatrixII{\ExpaEig}{-1}
+                           {1}{-\ExpaEig^{-1}}
+\left(\begin{array}{c}
+ \ssp_{n-1}  \\
+ \ssp_{n}
+ \end{array} \right )
+\]
+\[
+= \frac{1}{\surd{D}}
+\left(\begin{array}{c}
+ \ssp_{n}-\ExpaEig^{-1}\ssp_{n-1}  \\
+ \ExpaEig\ssp_{n}-\ssp_{n-1}
+ \end{array} \right )
++
+\frac{1}{\surd{D}}
+\left(\begin{array}{c}
+ -\ssp_{n}+\ExpaEig\ssp_{n-1}  \\
+ -\ExpaEig^{-1}\ssp_{n}+\ssp_{n-1}
+ \end{array} \right )
+\]
+\[
+  =
+-(\ExpaEig\ssp_{n}-\ssp_{n-1})\frac{1}{\surd{D}}\VectorII{-\ExpaEig^{-1}}{-1}
++
+(-\ExpaEig^{-1}\ssp_{n}+\ssp_{n-1})\frac{1}{\surd{D}}\VectorII{\ExpaEig}{1}
+\]
+\[
+=(-\ExpaEig\ssp_{n}+\ssp_{n-1})\,\PP^{+}
++ (-\ExpaEig^{-1}\ssp_{n}+\ssp_{n-1})\,\PP^{-}
+\,.
+\]
+The abscissa ($\ssp_{n-1}$ direction) is not affected, but the ordinate
+($\ssp_{n}$ direction) is flipped and stretched/shrunk by factor $-\ExpaEig$,
+$-\ExpaEig^{-1}$ respectively, preserving the vertical strip nature of the
+partition \reffig{fig:CatMapStatesp}. In the \AW\ right eigenbasis,
+${\bf A}$ acts by stretching the $\jEigvec[+]$ direction by $\ExpaEig$, and
+shrinking the $\jEigvec[-]$ direction by  $\ExpaEig^{-1}$, without any rotation
+of either direction.
+
+%(Continued in \refexam{exmp:invman??}.)
+    } %end \example{Projection operator decomposition in 2\dmn\
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\example{A linear cat map code.}{\label{exam:catLinSymDyn}
+% from siminos/cats/catMap.tex called by GHJSC16
+Eqs.~(\ref{exmPerViv2.1b},\ref{exmPerViv2.1a}) are the discrete-time Hamilton's
+equations, which induce temporal evolution on the 2-torus
+$(\ssp_{n},p_{n})$ {\em phase space}. For the problem at hand, it pays to
+go from the Hamiltonian $(\ssp_{n},p_{n})$ phase space formulation to the
+Newtonian (or Lagrangian) $(\ssp_{n-1},\ssp_{n})$ {\em state space}
+formulation\rf{PerViv}, with $p_n$ replaced by
+\(
+p_n = (\ssp_{n} - \ssp_{n-1})/\Delta t \,.
+\)
+Eq.~(\ref{exmPerViv2.1a}) then takes the 3-term recurrence form (the discrete
+time Laplacian $\Box$ formula for the second order time derivative
+${d^2}/{dt^2}$, with the time step set to $\Delta t=1$),
+\beq
+\Box \, \ssp_n \equiv \ssp_{n+1} - 2\ssp_{n} + \ssp_{n-1} = P(\ssp_{n})  \qquad  \mod 1
+\,,
+\ee{PerViv2.2e}
+\ie, Newton's Second Law: ``acceleration equals force.''
+For a cat map, with force $P(x)$ linear in the displacement $x$, the
+Newton's equation of motion \refeq{PerViv2.2e} takes form
+\beq
+(\Box  +2 - s)\,\ssp_{n} =-\Ssym{n}
+%    \,,  \qquad
+% \Box\,\ssp_{n}:= \ssp_{n-1}-2\ssp_{n} +\ssp_{n+1}
+\,,
+\ee{OneCat}
+with $\mod 1$ enforced by $\Ssym{n}$'s, integers from  the alphabet
+\beq
+\A=\{\underline{1},0,\dots s\!-\!1\}
+\,,
+\ee{catAlphabet1}
+necessary  to keep $\ssp_{n}$ for all times $t$ within the unit interval
+$[0,1)$. The genesis of this alphabet is illustrated by
+\reffig{fig:CatMapStatesp}.
+We have introduced here the  symbol   $ \underline{|m_n|} $  to denote $m_n$
+with the negative sign, \ie, `$\underline{1}$' stands for symbol `$-1$'.
+
+%       \jumpBack{exam:catLinSymDyn}
+    } % end \example{Linear code.}{exam:catLinSymDyn}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%  PC {2018-02-11}
+\example{\FPoper\ for the Arnol'd cat map.}{\label{exam:FP_eigs_CatMap}
+For a piecewise linear maps acting on a finite generating partition
+the \FPoper\ takes the finite, transfer matrix form (see \refref{CBmeasure}).
+\beq
+{\bf L}_{ij}\,=\,\frac{|{\pS}_{i} \cap
+f^{-1}({\pS}_{j})|}{|{\pS}_{i}|} \,, \quad \msr' = \msr {\bf L}
+\ee{overl-int} % PC kept ChaosBook label here
+
+The two rectangles and five sub-rectangle areas $|\pS_{j}|$
+are given by inspection of \reffig{fig:PVAdlerWeissS}\,(a):
+    \PC{2018-02-16}{to Han: PLEASE RECHECK}
+\bea
+|\pS_{A}| &=&  % {(\ExpaEig-1)}/{D} =
+                 \ExpaEig/(\ExpaEig+1)              \,,\quad
+|\pS_{B}|  =   % {(\ExpaEig-2)}/{D}  =
+              1/(\ExpaEig+1)\,,\quad
+    \continue
+|\pS_{1}| &=&  {|\pS_{A}|}/{\ExpaEig}        \,,\qquad
+|\pS_{2}|  =   {(\ExpaEig-1)}{|\pS_{B}|}/{\ExpaEig}  \,,\quad
+|\pS_{3}|  =   {|\pS_{A}|}/{\ExpaEig}  \,,
+    \continue
+|\pS_{4}| &=&  {|\pS_{B}|}/{\ExpaEig}        \,,\qquad
+|\pS_{5}|  =   {(\ExpaEig-2)}{|\pS_{A}|}/{\ExpaEig}
+\,,
+\label{CatMapAreas}
+\eea
+where $\ExpaEig$ and $D$ are given in \refeq{exam:catEigs}, and we are
+considering the $s=3$ Arnol'd cat map case (the generalization to $s>3$.
+is immediate) The areas are symplectic invariants, and thus the same in
+any choice of cat-map coordinates.
+    % \(
+    % |\pS_{A}|+|\pS_{B}|=1  \,,\\
+    % |\pS_{A{}^0\!A}| = |\pS_{A{}^1\!A}|
+    %                  = |\pS_{A}|/\ExpaEig \,,\\
+    % |\pS_{B{}^0\!B}| = |\pS_{B}|/\ExpaEig \,,\\
+    % |\pS_{A{}^{\underline{1}}\!B}| =
+    % |\pS_{B{}^1\!A}| = |\pS_{B}|(1-1/\ExpaEig) \,,\\
+    % |\pS_{A{}^{\underline{1}}\!B}| = |\pS_{A}| - |\pS_{A{}^0\!A}| - |\pS_{A{}^1\!A}|
+    %                                =(1-2/\ExpaEig)|\pS_{A}| \,,\\
+    % |\pS_{A{}^{\underline{1}}\!B}| = |\pS_{B}| - |\pS_{B{}^0\!B}|
+    %                                =(1-1/\ExpaEig)|\pS_{B}| \,,\\
+    % \Rightarrow
+    % |\pS_{B}|=\frac{\ExpaEig-2}{\ExpaEig-1}|\pS_{A}|
+    %          % = (1- \frac{1}{\ExpaEig-1})|\pS_{A}|
+    % \Rightarrow
+    % (1+ \frac{\ExpaEig-2}{\ExpaEig-1})|\pS_{A}| = 1 \\
+    % \Rightarrow\quad \hskip 5ex |\pS_{A}| = \frac{\ExpaEig-1}{2\ExpaEig-3} \,,\;\;
+    % |\pS_{B}| = -\frac{\ExpaEig-2}{2\ExpaEig-3} \,.\\
+    % \)
+As in the Chaos\-Book example
+{\em exam:FP\_eigs\_Ulam} (currently 19.1),  %%% FIX!
+the \AW\ partitioned \PV\ cat map is an expanding
+piecewise-linear map, so we can construct the associated transfer matrix %\FPoper\
+explicitly,
+by weighing the links of {\markGraph} \reffig{fig:PVAdlerWeissS}\,(a) by the
+ratios of out-, in-\-rectangle areas $T_{kj}=
+|\pS_{\Ssym{k}}|/|\pS_{\Ssym{j}}|$:
+        \index{Perron-Frobenius!matrix}\index{Markov!matrix}
+        \index{probability!matrix}\index{stochastic!matrix}
+    \PC{2018-02-11}{the matrix is NOT CORRECT yet, FIX!}
+\beq
+\left[
+\begin{array}{c}
+ \phi_1' \\ \phi_2' \\ \phi_3' \\ \phi_4' \\ \phi_5' \\
+\end{array}
+\right]
+=
+{\bf T}\phi=
+\frac{1}{\ExpaEig}
+\left[
+\begin{array}{ccccc}
+ {1} & {\ExpaEig-2}{} & {1} & 0            &  0             \\
+ 0   & 0              & 0   & {\ExpaEig-1} &  1 \\
+ {1} & {\ExpaEig-2}{} & {1} & 0            &  0             \\
+ 0   & 0              & 0   & {1} & {\ExpaEig-1}{}  \\
+{1}  &{\ExpaEig-1}{} &\frac{\ExpaEig-2}{\ExpaEig-1} & {0} &  0 \\
+\end{array}
+\right]
+\left[\begin{array}{c}
+ \phi_1 \\ \phi_2 \\ \phi_3 \\ \phi_4 \\ \phi_5 \\
+\end{array}\right]
+\ee{catMapPFmat}
+The probability for starting in initial
+state $j$ is conserved,
+\(
+\sum_{{k}}L_{{k}{j}}=1
+\,,
+\)
+as it should be.
+Such non-negative matrix whose columns conserve
+probability  is called {\em Markov}, {\em
+probability} or {\em stochastic} matrix.
+Thanks to the same expansion everywhere, and a finite \markGraph, the
+Fredholm determinant is the characteristic polynomial of the transfer
+matrix (currently Chaos\-Book Eq.~(18.13)) defined by the \markGraph\ of
+\reffig{fig:Lect13p8}\,(c), expanded in non-intersecting loops
+\(
+t_A = T_{A{}^0\!A},
+t_A' = T_{A{}^1\!A},
+t_B = T_{B{}^0\!B},
+t_{AB} = T_{A{}^{\underline{1}}\!B} T_{B{}^{1}\!A}
+\,:
+\)
+\beq
+\det (1-z{\bf T})
+     =  1-z(t_A+t_A'+t_{B}) - z^2 t_{AB} + z^2 (t_A+t_A')t_{B}
+     =  1-3\frac{z}{\ExpaEig} - (\ExpaEig -3)\frac{z^2}{\ExpaEig}
+\,,
+\label{CattyZeta}
+\eeq
+\beq
+\det (1-z{\bf T})
+     =  1-3\frac{z}{\ExpaEig} - (\ExpaEig -3)\frac{z^2}{\ExpaEig}
+\,,
+\label{CattyZeta1}
+\eeq
+in agreement with \refeq{CatMapDetTransMat}.
+This counts the fixed point at the origin thrice (it lives
+in the invariant subspace spanned by stable and unstable manifolds, the
+border) so that has to be divided out.
+
+Due to probability (unit area) conservation, ${\bf T}$ has a unit eigenvalue
+$z=1=e^{\eigenvL_0}$,
+with constant density eigen\-vector $\msr_0 =\msr_1$.
+
+
+In the orbit-counting case one retrieves Isola's {$\zeta$}-function\rf{Isola90}
+\refeq{Isola90-13}.
+
+This simple explicit matrix representation of the  {\FPoper} is
+a consequence of the piecewise linearity of the time-forward map,
+and the restriction of the densities
+$\msr$ to the space of  piecewise constant functions.
+%~~(continued in \refexam{exam:Trans-matrices})
+%                                           \jumpBack{exam:FP_eigs_Ulam}
+} %end \example{Eigenvalues of the skew {\fullTent} \FPoper.}{
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\example{Counting \templatt\ {\lattstate}s.}{\label{exam:tempCatCount}
+% from \subsection{Counting \templatt\ {\lattstate}s (experimental)}
+%      \label{s:tempCatCountTEMP}
+% 2020-06-10 Predrag
+
+The \templatt\ equation \refeq{catMapNewt} is
+a linear {$2$nd-order inhomogeneous difference} equation
+($3$-term recurrence relation) with constant coefficients
+%\beq
+%\ssp_{\zeit+1}  -  s \, \ssp_{\zeit} + \ssp_{\zeit-1}
+%    =
+%-\Ssym{\zeit}
+%%\,.
+%\ee{eq:CatMapNewton2}
+that can be solved by standard methods\rf{Elaydi05} that
+parallel the theory of linear differential equations.
+    \PC{2020-06-10}{
+    Comparing with \refeq{genFuncts:CatRec-s} we see that we need to
+    solve a second-order inhomogeneous difference equation with a
+    constant forcing term $2\,(s-2)$.
+    }
+Inserting a solution of form $\ssp_{\zeit}=\ExpaEig^\zeit$ into the
+associated (\Ssym{\zeit}=0) homogenous {$2$nd-order difference equation}
+\beq
+\ssp_{\zeit+1} - {s}\,\ssp_{\zeit} + \ssp_{\zeit-1}= 0
+\ee{diffEqs:CatCharEq}
+yields the {characteristic equation}
+\beq
+\ExpaEig^{2} - {s}\ExpaEig + 1 = 0
+\,,
+\ee{diffEqs:StabMtlpr}
+which, for $|s|>2$, has two real roots
+% stability multipliers
+$\{\ExpaEig\,,\;\ExpaEig^{-1}\}$,
+\beq
+\ExpaEig
+=\frac{1}{2}(s+\sqrt{(s-2)(s+2)})
+\,,
+\ee{PCStabMtlpr}
+and the so-called \emph{complementary} solution of form
+\beq
+\ssp_{c,\zeit}  = a_1\ExpaEig^\zeit+a_{-1}\ExpaEig^{-\zeit}
+\,.
+\label{PC(2.3.4)}
+\eeq
+% where constants $a_i$ can be determined by specifying
+% $\{\ssp_{0},\ssp_{1}\}$.
+
+A difference of any pair of solutions to the \templatt\
+inhomogenous equation \refeq{catMapNewt}
+%\beq
+%\ssp_{\zeit+1} - {s}\,\ssp_{\zeit} + \ssp_{\zeit-1}= -\Ssym{\zeit}
+%%\,,
+%\ee{PC(2.4.4)}
+is a solution of the homogenous difference equation
+\refeq{diffEqs:CatCharEq}, so the general solution is a sum of the
+{complementary} solution \refeq{PC(2.3.4)} and a \emph{particular}
+solution $\ssp_{p}$,
+\beq
+\ssp_{\zeit} = \ssp_{c,\zeit} + \ssp_{p,\zeit}
+\,.
+\ee{PC(2.4.3)}
+Eq.~\refeq{diffEqs:CatCharEq} is time-reversal invariant,
+$\ssp_{\zeit} = \ssp_{-\zeit}$, so $a_1=a_{-1}=a$.
+To determine the particular solution, assume that both the source
+ $\Ssym{\zeit}=\Ssym{}$
+and $\ssp_{p,\zeit}=\ssp_{p}$
+ in \refeq{catMapNewt} are site-independent,
+\beq
+\ssp_{p}  -  s \,\ssp_{p} + \ssp_{p}
+    = -\Ssym{}
+\,,
+\ee{eq:CatMapNewton5}
+so
+\(
+%  2\,\ssp_{p}-s\,\ssp_{p}={M}
+%  \quad \to \quad
+  \ssp_{p} = \Ssym{}/(s-2)
+\,.
+\)
+Hence the solution is
+\beq
+\ssp_{\zeit} = \ssp_{c,\zeit} + \ssp_{p,\zeit}
+= a\left(\ExpaEig^{\zeit} + \ExpaEig^{-\zeit}\right) + {\Ssym{}}/(s-2)
+\,,
+\ee{Chen11:1stepDiffSolu}
+with $a_i$ determined by fields at two lattice sites,
+\[
+\ssp_{0}= 2a + {\Ssym{}}/(s-2)
+\,,\quad
+\ssp_{1}= a\left(\ExpaEig + \ExpaEig^{-1}\right) + {\Ssym{}}/(s-2)
+\,,\quad
+\,.
+\]
+\tempLatt\ starts with $N_{0}=0$, and according to \refeq{catFundPar1},
+$N_{1}=s-2$, so $a=1$, $\Ssym{}=-2(s-2)$, and the number
+of temporal {\lattstate}s of period $\cl{}$ is
+\beq
+N_{\cl{}} =
+    \ExpaEig^{\cl{}} + \ExpaEig^{-\cl{}} - 2
+\,.
+\ee{PC:1stepDiffSolu}
+%       \jumpBack{exam:XXX}
+    } % end \exampleXXX.}{exam:XXX}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%

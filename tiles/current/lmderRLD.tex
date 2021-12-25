@@ -1,0 +1,78 @@
+% lmderRLD.tex
+% $Author: predrag $ $Date: 2020-05-07 18:16:42 -0400 (Thu, 07 May 2020) $
+
+\section{Searches for \po s}
+\label{sec:lmderRLD}
+
+In order to find periodic orbits, a system of nonlinear
+algebraic equations needs to be solved.
+
+Our approach differs from those used previously in that we do
+not XXX.  Being an optimization solver,
+the algorithm has no problem with XXX. In what
+follows we give a detailed description of the algorithm and
+the search strategy which we have used to find a large number
+of \po s defined in \refeq{XXX}.
+
+When searching for \rpo s of truncated \KS\ equation
+\refeq{eq:KS}, we need to solve the system of $N-2$ equations
+\beq
+  {\bf g}(\shift)f^\period{}(a) - a = 0\,,
+\ee{eq:system}
+with $N$ unknowns $(a, \speriod{}, \period{}, \shift)$, where $f^t$
+is the flow map of the \KSe.
+
+We have tried two different implementations of XXX.
+The emphasis was on the simplicity of the implementations, so, even
+though both implementations worked equally well, each of them had
+its own minor drawbacks.
+
+In the first implementation, we XXX.
+
+Let $(\hat{a}, \hat{\speriod{}}, \hat{\period{}}, \hat{\shift})$ be the starting guess for a \rpo\
+obtained through XXX (see (XXX)).
+
+With the
+number of shooting stages equal to $m$, the system in
+\refeq{eq:system} is rewritten as follows
+\begin{eqnarray}\label{eq:MultShoot}
+ F^{(1)}&\!=\!& f^\tau(a^{(1)}) - a^{(2)} = 0\,,\nonumber\\
+ F^{(2)}&\!=\!& f^\tau(a^{(2)}) - a^{(3)} = 0\,,\nonumber\\
+ && \cdots \\
+ F^{(m-1)}&\!=\!& f^\tau(a^{(m-1)}) - a^{(m)} = 0\,,\nonumber\\
+ F^{(m)}&\!=\!& {\bf g}(\shift)f^{\tau'}(a^{(m)}) - a^{(1)} = 0\,,\nonumber
+\end{eqnarray}
+where $\tau = \lfloor n/m \rfloor h$ ($\lfloor x \rfloor$ is the nearest
+integer smaller than $x$),
+$\tau' = nh - (m-1)\tau$, and $a^{(j)} = f^{(j-1)\tau}(a)$,
+$j = 1, \ldots , m$.
+With the \jacobianM\ of \refeq{eq:MultShoot} written as
+\beq
+  J = \left(\begin{array}{cccc}\!\!
+   \displaystyle \frac{\partial F^{(j)}}{\partial a^{(k)}} &
+   \displaystyle \frac{\partial F^{(j)}}{\partial \speriod{}} &
+   \displaystyle \frac{\partial F^{(j)}}{\partial \period{}} &
+   \displaystyle \frac{\partial F^{(j)}}{\partial \shift}\!\!
+  \end{array}\right),\quad j,k = 1,\ldots,m\,,
+\eeq
+the partial derivatives with respect to $a^{(k)}$ can be calculated
+using the solution of \refeq{eq:KStan}.  The partial derivatives
+with respect to $T$ are given by
+\beq
+  \frac{\partial F^{(j)}}{\partial \period{}} =
+  \left\{\begin{array}{ll}
+    \frac{\partial f^\tau(a^{(j)})}{\partial \tau}
+    \frac{\partial \tau}{\partial T} = v(f^\tau(a^{(j)}))
+    \lfloor n/m \rfloor/n\,, & j = 1,\ldots, m-1\\[.5ex]
+    {\bf g}(\shift) v(f^{\tau'}(a^{(j)}))
+    (1 - \frac{m-1}{n} \lfloor n/m \rfloor ), & j = m\,.
+  \end{array}\right.
+\eeq
+Partial derivatives $\partial F^{(j)}/\partial \shift$
+are all equal to zero except for $j = m$, where it is given by
+\beq
+  \frac{\partial F^{(m)}}{\partial \shift} =
+  \frac{d{\bf g}}{d\shift}f^{\tau'}(a^{(m)}) =
+  \mbox{diag}(i q_k e^{i q_k\, \shift} )f^{\tau'}(a^{(m)})\,.
+\eeq
+The following search strategy was adopted: XXX

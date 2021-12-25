@@ -1,0 +1,883 @@
+% siminos/spatiotemp/chapter/Ising.tex
+% $Author: predrag $ $Date: 2021-12-08 00:39:15 -0500 (Wed, 08 Dec 2021) $
+
+\chapter{Ising model in 2D}
+\label{chap:Ising2D}
+
+\begin{bartlett}{
+\toChaosBook{Item.258}
+{\bf Exercise 17.1 Time reversibility.}
+%\tangent
+Hamiltonian flows are time reversible. Does that mean that
+their \markGraph s are symmetric in all node$~\to~$node links,
+their transition matrices are adjacency matrices, symmetric and
+diagonalizable, and that they have only real eigenvalues?
+%\label{e-TimRevrs}
+
+Solution 14.1, 2021-12-07 Read \refsect{s:latt1d} and on for a
+group-theoretic solution.
+                }\bauthor{
+An open exercise from ChaosBook.org
+                }
+\end{bartlett}
+
+\bigskip
+
+\begin{description}
+
+    \PCpost{2016-02-19}{                    \toCB
+A wild idea, to keep in mind, if we get to the point where QFT is within
+reach.
+`Fundamental domain' appears in an interesting stat mech context in Wipf
+\etal\rf{WKWTP06,WHKW07} {\em Generalized {Potts-models} and their
+relevance for gauge theories}. They study the 3-state Potts model, a
+natural extension of the Ising model with 3 vectors at each site, whose
+global symmetries are point group \Cn{3}, and the 1d lattice of discrete
+translations. The domain of the traced Polyakov loop variable (?) for
+\SUn{3} is a triangle, with a  \Cn{3} fundamental domain. Then they
+compute leading terms in the strong coupling limit using characters
+$\chi_{pq}$ for the \SUn{3} representation $(p,q)$. These characters
+transform under \Cn{3}, so they restrict calculations to the fundamental
+domain inside the above triangle. Or perhaps \Dn{3}, could not tell in my
+first, very superficial reading. These articles were immediately followed
+up by a bunch of other articles - there are too many quantum field
+theorists out there:)
+
+In other words, Potts model could provide a bridge from Boris' cat maps to
+QFT on lattices.
+
+There is also a continuation with $G_2$ Yang-Mills by the same authors,
+but that's for another, more ambitious time...
+   }
+
+    \PCpost{2016-10-03}{
+Not quick or easy to explain, but I have a hunch that the spatiotemporal
+zeta function should be something like the 2D Ising model zeta function
+described by Aizenman \HREF{160913IsingZeta.pdf} {(click here)}. It
+should assign a weight for every spatiotemporal domain, described by its
+2D symbolic dynamics.
+    }
+
+    \PCpost{2016-10-08}{
+qmath16 Aizenman talk notes (mostly gibberish - my fault):
+
+It is known (?) that QM is emergent from the \emph{classical} stat mech
+of Ising models. Key tools: Pfaffians. Random current representation of
+Ising.
+
+Groenevald-Boel-Kasteleyn'78: describe correlations in the planar Ising
+model, by boundary segments, ordered cyclically. Pfaffian refers to
+spin-spin correlations along the boundary. There is a parity sign that
+makes it a non-interacting fermion model.
+
+Aizenman et al. extend it to nonplanar modles, where planarity
+\emph{emerges} at the critical point. ADTW'16 proof utilizes the
+\emph{random current representation}. Starts with high temperature
+expansion. Partition function is a sum over loops. In a correlation,
+sources are connected pairwise by lines, ie, Gaussian limit. Above
+critical dimension - four - the theory is free (sum of products over
+pairs). In 2D, fermionic case, you get Pfaffian. Leads to the
+integrability of the model. (Read Chelkak-Cimasoni-Kassel '15.)
+
+``Almost planar"
+
+Order-disorder variables.
+
+Aizenman: Two implications of planarity
+
+1) For any planar graph, and a symmetric edge function
+\[
+{\cal F}(\{K_\theta\}) = \det(1-K{\cal W})
+\]
+is the \emph{square of a multilinear function} of the parameters
+\(
+\{K_\theta\}_{\theta \in \epsilon_0}
+\,.
+\)
+This is proven through a reduction to an antisymmetric matrix $A$, and
+(Kasteleyn matrix '63):
+\[
+\det (A) = \mbox{Pf}[A]^2.
+\]
+
+
+For planar models, done by Kac-Ward. Works for any planar graph
+(``amorphous graphs''), not only on a regular lattice.
+
+2) For any planar loop of oriented non-backtracking edges
+\(
+\{e_1, e_2, \cdots\}
+\)
+\[
+\prod_{j=1}^n {\cal W}_{e_{j+1},e_j} = (-1)^{w(\rho^*)}
+             = (-1)^{n(\rho^*)}
+             \,.
+\]
+with $w(\rho^*) =$ winding number, and $n(\rho^*) = \#$~of {self
+crossings } [Whitney's Thm].
+
+This is then combined with the \emph{Ihara relation}, for matrices indexed by
+oriented edges:
+\[
+\det(1- KW)_{\epsilon_0\times\epsilon_0}
+= \prod_{\ell}\left[
+            1+(-1)^{n(\ell)} \chi_{-K}(\ell)
+            \right]^2.
+\]
+the product being over unoriented loops on $\mathbb{G}$ (hence the power 2).
+    }
+
+\item[2020-09-30 Predrag].
+
+\videoLink{YouTube.com/%
+watch?v=A_Jhee-s8jk} {Michael Aizenman biographical sketch}
+
+Aizenman Rutgers talk (unrecorded) was a modal of clear exposition.
+It is an audience
+friendly explanation of the background to, and advance for $d=4$
+explained in Michael Aizenman and Hugo Duminil-Copin {\em Marginal
+triviality of the scaling limits of critical 4D Ising and $\phi_4^4$
+models}, \arXiv{1912.07973}. Duminil-Copin will give a tutorial on this
+work on October 9-10, 2020, in
+\HREF{http://sites.math.northwestern.edu/mwp/}
+{42nd Midwest Probability Colloquium}.
+
+I especially liked the `reminder' explaining how $\phi^4$ goes to Ising in
+particular limit.
+
+Related publications to check:
+
+Michael Aizenman and Simone Warzel {\em Kac-Ward formula and its
+extension to order-disorder correlators through a graph zeta function},
+\arXiv{1709.06052}
+% doi 10.1007/s10955-018-2184-9
+
+Is the \emph{loop-soup expansion} related to my random walk
+interpretation of the hypercubic {\jacobianOrb} traces and the
+determinant? References might be in Michael Aizenman, Hugo Duminil-Copin
+and Simone Warzel {\em Dimerization and N{\'e}el order in different
+quantum spin chains through a shared loop representation},
+\arXiv{2002.02543}.
+% doi 10.1007/s00023-020-00924-2
+
+    \PCpost{2016-10-05}{
+Aizenman, La{\'{\i}}nz Valc{\'a}zar and Warzel\rf{AiLVWa16}
+{\em Pfaffian correlation functions of planar dimer covers}
+does not seem to be what we need (no word `zeta' in this paper). They
+refer to 2016 preprint  of
+
+M. Aizenman H. Duminil-Copin, V. Tassion, S. Warzel,
+{\em Fermionic correlation functions and emergent planarity in 2D Ising models}.
+(that paper does not seem to be available anywhere, as yet)
+
+The structure of the solution of Kac and Ward has been explained  in
+unpublished lectures by Feynman (Aizenman referred to Feynman's stat mech
+book).
+
+Sherman\rf{Sherman60} {\em Combinatorial aspects of the {Ising} model for
+ferromagnetism. {I. A} conjecture of {Feynman} on paths and graphs}
+
+Hurst and Green\rf{HurGre60}
+{\em New solution of the {Ising} problem for a rectangular lattice}
+
+Burgoyne\rf{Burgoyne63}
+{\em Remarks on the combinatorial approach to the Ising problem}
+
+Vdovichenko\rf{Vdov65}
+{\em A calculation of the partition function for a plane dipole lattice}.
+The steps: a) the sum over polygons is reduced to a sum over closed
+loops without intersections; b) the sum over closed loops without
+intersections is transformed into a sum over all loops; c) the sum over
+all loops is reduced to a random-walk problem and is calculated easily.
+
+Cimasoni\rf{Cimasoni10}
+{\em A generalized  {Kac-Ward} formula}: ``
+As a consequence of our second proof, we also obtain the following fact:
+the Kac–Ward and the Fisher–Kasteleyn methods for solving the Ising model
+are one and the same.
+''
+
+Cimasoni\rf{Cimasoni12}
+{\em The critical {Ising} model via {Kac-Ward} matrices}:
+The Kac-Ward formula\rf{KacWar52} allows to compute the Ising partition
+function on any finite graph G from a determinant with quite remarkable
+properties. First of all, they satisfy some generalized Kramers-Wannier
+duality: there is an explicit equality relating the determinants
+associated to a graph and to its dual graph. Also, they are proportional
+to the determinants of the discrete critical Laplacians on the graph G.
+
+Fisher\rf{Fisher66}
+{\em On the dimer solution of planar Ising models}
+
+Kasteleyn\rf{Kasteleyn61}
+{\em The statistics of dimers on a lattice:
+    {I. The} number of dimer arrangements on a quadratic lattice}
+
+Kasteleyn\rf{Kasteleyn63}
+{\em Dimer statistics and phase transitions}
+
+H.  Au-Yang,  J.  H.  H.  Perk.  Ising  correlations  at  the  critical  temperature.
+Physics Letters A 104, 131–134 (1984).
+
+Kager, Lis and Meester\rf{KaLiMe13}
+{\em The  signed  loop  approach  to  the  Ising  model:
+Foundations and critical point}
+
+Lis\rf{Lis15}
+{\em A short proof of the {Kac-Ward} formula}:
+\beq
+\det(Id-\Lambda)=\integers^2
+\ee{Kac-Ward}
+The original proof of Kac and Ward\rf{KacWar52} famously contained an
+error. We refer the reader to \refref{KaLiMe13} for a longer discussion
+on the history of this theorem. The main improvement here, in comparison
+with \refref{KaLiMe13},  is that there is no need for expanding the
+generating functions into generating functions of collections of loops.
+The combinatorial mechanism of the Kac-Ward formula is here as
+transparent as the one of the loop-erased walks.
+
+Chertkov, Chernyak and Teodorescu\rf{ChChTe08}
+{\em Belief propagation and loop series on planar graphs},
+write: ``
+We discuss a generic model of Bayesian inference with binary variables
+defined on edges of a planar graph. The Loop Calculus approach of
+Chertkov and Chernyak\rf{CheChe06,CheChe06} is used to evaluate the
+resulting series expansion for the partition function. We show that, for
+planar graphs, truncating the series at single-connected loops reduces,
+via a map reminiscent of the Fisher transformation\rf{Fisher61}, to
+evaluating the partition function of the dimer-matching model on an
+auxiliary planar graph. Thus, the truncated series can be easily
+re-summed, using the Pfaffian formula of Kasteleyn\rf{Kasteleyn61}. This
+allows us to identify a big class of computationally tractable planar
+models reducible to a dimer model via the Belief Propagation (gauge)
+transformation. The Pfaffian representation can also be extended to the
+full Loop Series, in which case the expansion becomes a sum of Pfaffian
+contributions, each associated with dimer matchings on an extension to a
+subgraph of the original graph. Algorithmic consequences of the Pfaffian
+representation, as well as relations to quantum and non-planar models,
+are discussed.
+''
+
+``
+As the seminal work of Onsager\rf{Onsager44} on the two-dimensional Ising
+model and its combinatorial interpretation by Kac and Ward\rf{KacWar52}
+have shown, the planarity constraint dramatically simplifies statistical
+calculations.
+''
+
+Onsager\rf{Onsager44} computed the free energy, and Yang\rf{Yang52}
+obtained a formula for the magnetization.  In particular, this formula
+implies that the magnetization is zero at criticality. These results have
+been reproved in a number of papers since then. See Werner\rf{Werner09}
+for a recent proof.
+
+Onsager's computation of the free energy is based on the study of the
+eigenvalues of the so-called transfer matrices. The original strategy
+used by Onsager is based on the fact that the transfer matrix is the
+product of two matrices whose commutation relations generate a finite
+dimensional Lie algebra. Later on, Kaufman\rf{Kaufman49} gave a simpler
+solution using Clifford algebra and anti-commuting spinor (free-fermion)
+operators.
+
+The most famous expansions of the partition function are called the low
+and high temperature expansions. An expansion in terms of subgraphs of
+the original graph, called the random-cluster model, was found by Fortuin
+and Kasteleyn\rf{ForKas72}. The strength of all these expansions is that
+they work for all graphs. They do not lead to an explicit computation of
+the partition function or the free energy, but they provide new insight
+and often highlight specific properties of the model.
+    }
+
+\item[2019-11-04 Predrag]
+Ivashkevich, Izmailian and Hu\rf{IvIzHu02} {\em Kronecker's double series
+and exact asymptotic expansions for free models of statistical mechanics
+on torus}:
+
+Consider a
+planar square lattice of size $M\times N$ with periodic boundary
+conditions, i.e. torus. To each site $(m,n)$ of the torus a spin
+variable is ascribed, $s_{mn}$, with two possible values: $+1$
+or $-1$. Two nearest neighbor spins, say $s_{mn}$ and
+$s_{m,n+1}$ contribute a term $-J\,s_{mn}\,s_{m,n+1}$ to the
+Hamiltonian, where $J$ is some fixed energy. Therefore, the
+Ising model
+Hamiltonian is the sum of all such terms, one for each edge
+of the lattice
+\begin{equation}
+H(s)=-J\sum_{n=0}^{N-1}\sum_{m=0}^{M-1}
+\left(s_{mn}\,s_{m+1,n}+s_{mn}\,s_{m,n+1}\right)
+\label{IsingHamiltonian}
+\end{equation}
+(Predrag:) Note that this can be written in terms of a shift matrices
+$\sigma_j$ as
+\[
+H(s)= %s_{mn}\,s_{m+1\,n}+s_{mn}\,s_{m,n+1}
+      -J\,\transp{s}\cdot(\sigma_1+\sigma_2)\cdot{s}
+\,,
+\]
+which looks asymmetric - check whether this has a lattice
+Laplacian formulation?
+
+The partition function of the Ising model is given by the sum over
+all spin configurations on the lattice
+%\begin{equation}
+$$ Z_{\rm Ising}(J)=\sum_{\{s\} }e^{-H(s)} $$
+%\end{equation}
+It is convenient to set up another parameterizations of the
+interaction constant $J$ in terms of the mass variable
+$\mu=\ln\sqrt{{\rm sh}\,2J}$. Critical point corresponds to the
+massless case $\mu=0$.
+
+An explicit expression for the partition function of the Ising model on
+$M \times N$ torus, which was given originally by Kaufmann\rf{Kaufman49},
+can be written as
+%Onsager's explicit expression for the partition function of the
+%Ising model can be written as \cite{Onsager}
+\begin{equation}
+Z_{\rm Ising}(\mu)=\frac{1}{2}\left(\sqrt{2}e^{\mu}\right)^{MN}
+\left\{Z_{\frac{1}{2},\frac{1}{2}}(\mu)+
+Z_{0,\frac{1}{2}}(\mu)+Z_{\frac{1}{2},0}(\mu)+Z_{0,0}(\mu)\right\}
+\label{ZIsing}
+\end{equation}
+where we have introduced the partition function with twisted
+boundary conditions
+\begin{equation}
+Z^2_{\alpha,\beta}(\mu)=
+\prod_{n=0}^{N-1}\prod_{m=0}^{M-1}4\left[\textstyle{
+\;\sin^2\left(\frac{\pi (n+\alpha)}{N}\right)+
+\sin^2\left(\frac{\pi (m+\beta)}{M}\right)+2\,{\rm sh}^2\mu
+\;}\right]
+\label{Zab2}
+\end{equation}
+Here $\alpha=0$ corresponds to the periodic boundary conditions
+for the underlying free fermion in the $N$-direction while
+$\alpha=\frac{1}{2}$ stands for anti-periodic boundary conditions.
+Similarly $\beta$ controls boundary conditions in $M$-direction.
+With the help of the identity\rf{GraRyz}
+\beq
+ 4\left|{\rm sh}\left(M\omega+i\pi\beta\right)\right|^2
+=4\left[\,{\rm sh}^2 M\omega +
+\sin^2\pi\beta\,\right]=\prod_{m=0}^{M-1}4\textstyle{
+\left[{\rm sh}^2\omega + \sin^2\left(\frac{\pi(m+\beta)}{M}\right)
+\right]}
+\ee{IvIzHu02:GraRyz}
+partition function
+the partition function with twisted boundary conditions
+$Z_{\alpha,\beta}$ can be transformed into simpler form
+\begin{equation}
+Z_{\alpha,\beta}(\mu)=\prod_{n=0}^{N-1} 2\left| \textstyle{~\!{\rm
+sh}\left[M\omega_\mu\!\left(\frac{\pi(n+\alpha)}{N}\right)+i\pi\beta
+\right] }\right| \label{Zab}
+\end{equation}
+where lattice dispersion relation has appeared
+\begin{equation}
+\omega_\mu(k)={\rm arcsinh}\sqrt{\sin^2 k+2\,{\rm sh}^2\mu}
+\label{SpectralFunction}
+\end{equation}
+This is nothing but the functional relation between energy
+$\omega_\mu$ and momentum $k$ of a free quasi-particle on the
+planar square lattice.
+
+\item[2019-11-04 Predrag]
+Ivashkevich, Izmailian and Hu\rf{IvIzHu02}
+\noindent{\bf Elliptic Theta Functions.}
+%\label{ThetaFunctions} % Ivashkevich, Izmailian and Hu\rf{IvIzHu02}
+We adopt the following definition of the elliptic
+$\theta$-functions:
+\begin{eqnarray}
+\theta_{\alpha,\beta}(z,\tau)&=&\sum_{n\in Z} \exp\left\{ \pi
+i\tau \left(n+\textstyle{\frac{1}{2}}-\alpha\right)^2+2\pi i
+\left(n+\textstyle{\frac{1}{2}}-\alpha\right)\left(z+\textstyle{\frac{1}{2}}-\beta\right)
+\right\}~~~~\nonumber\\ &=&\eta(\tau)\,\exp\left\{\textstyle{\pi
+i\tau\big(\alpha^2-\alpha+\frac{1}{6}\big)+2\pi
+i\big(\frac{1}{2}-\alpha\big)\big(z+\frac{1}{2}-\beta\big)}\right\}\nonumber\\
+&\times&\prod_{n=0}^{\infty}\!\Big[\,1-e^{2\pi
+i\tau\left(n+\alpha\right)-2\pi i\left(z-\beta\right)}\,\Big]
+\Big[\,1-e^{2\pi i\tau\left(n+1-\alpha\right)+2\pi
+i\left(z-\beta\right)}\,\Big]\nonumber
+\end{eqnarray}
+These should be compared with the notations of Mumford. %\cite{Mumford}.
+
+The elliptic $\theta$-functions satisfies the heat equation
+\begin{equation}
+\frac{\partial}{\partial \tau}\theta_{\alpha,\beta}(z,\tau) =
+\frac{1}{4\pi i}\frac{\partial^2}{\partial z^2}\theta_{\alpha,\beta}(z,\tau)
+\label{heat}
+\end{equation}
+
+\item[2020-12-23 Predrag]
+Kaufman\rf{Kaufman49} {\em Crystal statistics. {II}. {Partition} function
+evaluated by spinor analysis} is an impressive paper, bug I hope we do
+not need it.
+
+\item[2020-06-16 Predrag]
+Machide\rf{Machide08} {\em An elliptic analogue of generalized
+{Dedekind-Rademacher} sums}: ``We mention a relation between the
+generating function of Kronecker's double series\rf{IvIzHu02} and that of
+the (Debye) elliptic polylogarithms studied by A. Levin.''
+
+Machide\rf{Machide08a}
+{\em Sums of products of {Kronecker}'s double series}
+
+\item[2020-06-16 Predrag]
+Shanker\rf{Shanker09}
+{\em Exact solution of {Ising} model in 2d shortcut network}
+
+Janke and Kenna\rf{JanKen02} {\em Finite-size scaling and corrections in
+the {Ising} model with {Brascamp-Kunz} boundary conditions}
+
+Izmailian, Oganesyan and Hu\rf{IzOgCh02} {\em Exact finite-size
+corrections for the square-lattice {Ising} model with {Brascamp-Kunz}
+boundary conditions}
+
+Wu and Hu\rf{WuHu02} {\em Exact partition functions of the {Ising} model
+on {M x N} planar lattices with periodic-aperiodic boundary conditions}
+
+Kastening\rf{Kastening02} {\em Simplified transfer matrix approach in the
+two-dimensional {Ising} model with various boundary conditions}
+
+Izmailian\rf{Izmailian12} {\em Finite-size effects for anisotropic {2D
+Ising} model with various boundary conditions},
+
+Lyberg\rf{Lyberg13} {\em Free energy of the anisotropic {Ising} lattice
+with {Brascamp-Kunz} boundary conditions}
+
+Poghosyan, Izmailian and Kenna\rf{PoIzKe17} {\em Exact solution of the
+critical {Ising} model with special toroidal boundary conditions}
+
+%\item[2020-06-16 Predrag] {\bf Tilted \bcs}
+%Literature uses\\
+%\emph{`helical'}\rf{LHCLL06} vs. \emph{`toroidal'}\rf{IzOgCh02}
+%\\
+%\emph{`twisted'}\rf{LHCLL06}
+%\\
+%\emph{`twisting factor'}\rf{LHCLL06}
+%\\
+%\emph{`tilted'}\rf{OKKH99}
+
+\item[2020-06-19 Predrag]
+Okabe, Kaneda, Kikuchi and Hu\rf{OKKH99} {\em Universal finite-size
+scaling functions for critical systems with tilted boundary conditions},
+deal with the two-dimensional Ising model on $\speriod{} \times
+\period{}$ square lattices with periodic boundary conditions in the
+horizontal $\speriod{}$ direction and tilted boundary conditions in the
+vertical $\period{}$ direction, such that the $i$-th site in the first
+row is connected with the mod$(i + c \speriod{},\speriod{})$-th site in
+the $\period{}$ row of the lattice, where $1 \le i \le \speriod{}$; see
+\reffig{OKTKH00fig1}. They find that the finite-size scaling functions
+are universal for fixed sets of aspect ratio $a=\speriod{}/\period{}$ and
+tilt parameter $c=\tilt{}/\speriod{}$.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% FIG. 1 from Okabe \etal\ arXiv:cond-mat/0005167
+\begin{figure}
+  \centering
+\includegraphics[width=0.55\textwidth]{OKTKH00fig1}
+\caption{\label{OKTKH00fig1} %{tilt}
+ $\speriod{} \times \period{}$ square lattice with tilt parameter $c$.
+ Here, $\speriod{}=8$, $\period{}=4$ and $c=1/4$, so
+ $\tilt{}=\speriod{}/4$. The $i$-th site of the first row is identical
+ with the mod$(i + c \speriod{},\speriod{})$-th site in the last row. The
+ left-most site and the right-most site on the same horizontal line are
+ identical.
+ }
+\end{figure}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+It is interesting to discuss this problem in terms of the
+modular (conformal) transformation.  According to Cardy\rf{Cardy86},
+the shape of the 2D lattice may be represented by the imaginary number
+\beq
+  z = 1/a + i \ c.
+\ee{Cardy86-1}
+Then, Cardy asserted that the partition function becomes invariant
+under the transformations
+\beq
+  z \rightarrow z + i
+\ee{Cardy86-2}
+and
+\beq
+  z \rightarrow 1/z,
+\ee{Cardy86-3}
+in the limit that the system size becomes infinite.
+The first translates, the 2nd inverts: these are easiest to understand in
+the complex upper half-plane, see \reffig{ConradSL2Z}.
+
+\item[2021-01-08 Predrag]
+Lecian\rf{Lecian13} discusses this group in detail in\\
+\arXiv{1303.6343}, see
+`big billiard', `small billiard',
+Sect.~III.A.  {\em The modular group},
+Maass wavefunctions.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{figure}
+  \centering
+  \includegraphics[width=0.74\textwidth]{ConradSL2Z}
+  \caption{\label{ConradSL2Z}
+Action of \SLn{2}{\integers} on the complex upper half-plane by linear
+fractional transformations $T$ and $S$.
+Taken from Keith Conrad.
+  }
+\end{figure}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+We have another invariant transformation
+\beq
+  z \rightarrow z^*,
+\ee{Cardy86-4}
+which corresponds to the fact that we can confine $c$ to the interval
+of $0 \le c \le 1/2$.
+Starting from the recurrence relation
+\beq
+  z_{n+1} = \frac{1}{z_n+i} + i,
+\ee{Cardy86-5}
+we can easily show that (recheck! $\period{}$, $\speriod{}$ rewrite wrong
+as it stands)
+\beq
+A=a/(c^2 a^2+1)
+ =\frac{\period{}}{\speriod{}}
+  \frac{1}{
+         \frac{\tilt{}^2}{\speriod{}^2}
+         \frac{\period{}^2}{\speriod{}^2}+1
+           }
+\ee{Cardy86-6}
+is an invariant, and can be regarded as the effective aspect ratio.
+
+\item[2020-10-16 Predrag]
+For me the problem is that
+I do not see any of the above formulas in Cardy\rf{Cardy86},
+except for \refeq{Cardy86-1} that might correspond to his
+figure of a parallelepiped.
+I understand nothing in the paper. He writes thoug
+something intriguing:
+``the symmetry of the parallelogram, which corresponds to the invariance
+of $Z(\delta)$ under the modular group, has recently been exploited to
+limit the possible gauge groups in heterotic string theories by
+D. Gross, J. Harvey, E. Martinec and R. Rohm, Phys. Rev. Lett. 54 (1985) 502%
+%[22]
+.'' I would stay far away from such references.
+
+
+\item[2020-06-19 Predrag]
+%\bibitem{zlk99}
+Ziff, Lorentz and Kleban\rf{ZiLoKl99}
+{\em Shape-dependent universality in percolation},
+\arXiv{cond-mat/9811122}.
+
+The torus with a twist has various topological symmetries
+that apply to any shape-dependent universal quantity $u(r,t)$.  We consider a rectangular boundary
+with base 1 and height $r$, with a horizontal twist $t$ in the
+periodic b.~c. \   (Note that having twists in two directions leads to a
+non-uniform system, so we don't consider it.) \   $u(r,t)$ satisfies the obvious symmetries
+of reflection
+\begin{equation}
+u(r,t) = u(r,-t)
+\label{eq:reflection}
+\end{equation}
+and  periodicity in the $t$ direction
+\begin{equation}
+u(r,t) = u(r,1+t)
+\label{eq:periodicity}
+\end{equation}
+Another symmetry follows from the
+observation that the same rhombus can be made into a rectangle
+in two different ways, leading to:
+\begin{equation}
+u(r,t) = u\left({r \over r^2 + t^2},{t \over r^2 + t^2}\right)
+\label{eq:inverse}
+\end{equation}
+Another construction
+shows that when  $t = 1/n$ where $n$ is an integer,
+\begin{equation}
+u\left(r,{1 \over n}\right) = u\left({1\over n^2 r},{1 \over n}\right)
+\label{eq:integer}
+\end{equation}
+which also follows from Eqs.\ (\ref{eq:reflection}-\ref{eq:inverse}). On
+the complex $\tau = t + ir$ plane, (\ref{eq:inverse}) corresponds to
+$\tau \to 1/\tau$ while (\ref{eq:periodicity}) corresponds to $\tau \to
+\tau + 1$.  These transformations generate the modular group, and
+functions invariant under them are called modular.  Thus, $b(r,t)$ must
+necessarily be a modular function.
+
+Besides the excess number, another universal
+ quantity on a torus is the cross-configuration probability
+$\pi_+(r,t)$, which can be expressed in a quite compact form.
+Things veer off to Dedekind eta function and such, and Predrag gives up.
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% (a), (b) FIG. 1 from Liaw \etal\ \arXiv{cond-mat/0512262}
+% (c)   is FIG. 2 from Liaw \etal\ \arXiv{cond-mat/0512262}
+\begin{figure}
+  \centering
+\includegraphics[width=0.55\textwidth]{LHCLL06fig1}
+~~~(c) \includegraphics[width=0.25\textwidth]{LHCLL06fig2}
+  \caption{\label{LHCLL06fig1}
+A helical tiling is formed by pairwise joining of the edges of the
+rectangle spanned by an orthogonal set of basis vectors in the
+$\integers^2$ lattice:
+(a)
+    the direction of the basis vectors coincides with the lattice
+    orientations for the conventional toroidal \bcs, and
+(b)
+    a helical torus.
+(c)
+    Equivalence between the \bcs\ in helical and twisted schemes
+    prescribed by $\{{\vec{a}}_{1},{\vec{a}}_{2}\}$ and
+    $\{{\vec{a}}_{1}^{\prime},{\vec{a}}_{2}^{\prime }\}$ respectively, on
+    a $[M\times N]$ square lattice. For the helical \bcs, the setting
+    $Q_{1}/P_{1}=Q_{2}/P_{2}$ ensures that the two primitive vectors are
+    orthogonal. On the other hand, twisting is generated by a $d$-unit
+    traverse shift.
+        }
+\end{figure}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\item[2020-06-19 Predrag]
+Liaw \etal\ {\em Exact treatment of Ising model on the helical tori},
+\arXiv{cond-mat/0512262}, published as
+%
+Liaw \etal\rf{LHCLL06} {\em Partition functions and finite-size scalings
+of {Ising} model on helical tori}:
+The exact closed forms of the partition functions of a two-dimensional
+Ising model on square lattices with twisted \bcs\ are given.
+
+A helical
+torus is related to the twisted boundary conditions tiling by an
+$\SLn{2}{\integers}$ transformation. In $d=2$, the equivalence
+transformations among the Bravais cell vector-pairs preserve
+the area and are thus $\SLn{2}{\integers}$. This is the prototype of the
+modular symmetry of the conformal field theory.%\cite{cardyz}.
+
+In \reffig{LHCLL06fig1} they make a distinction between
+the \emph{`helical'}, and the equivalent \emph{`twisted'} tiles.
+
+Helical tori are tiled by pairwise joining the edges of the
+rectangle spanned by any orthogonal set of vectors on the lattice plane.
+This leads to distinct orientations of the underlying lattice, labelled
+by the chirality~{[sahito]} as well as the chiral aspect ratio. The
+conventional periodic $BC$ is referred as the helical Bravais cell with trivial
+chirality, as depicted in \reffig{LHCLL06fig1}\,(a).
+
+The twisted $BC$  Bravais cell is a modification to the
+conventional Bravais cell by cutting the torus and then rejoining after twisting.
+Twisted tori are what we call Hermite normal form Bravais cells.
+There are two types of twisting: $Tw_{I}(M,N,d/M)$ Bravais cell specified by
+ $\{\overrightarrow{a}_{1}=M{\hat{x}}+d{\hat{y}},%
+\overrightarrow{a}_{2}=N{\hat{y}}\}$, and $Tw_{II}(M,N,d/N)$ Bravais cell
+specified by $\{\overrightarrow{a}_{1}=M{\hat{x}},\overrightarrow{a}_{2}=d{%
+\hat{x}}+N{\hat{y}}\}$ used in \refref{CL18}.
+
+In CL18\rf{CL18} notation:
+$Tw_{II}(\speriod{},\period{},\tilt{}/\period{})$ Bravais cell is
+specified by\\
+$\{\overrightarrow{a}_{1}=\speriod{}{\hat{x}},
+   \overrightarrow{a}_{2}=\tilt{}{\hat{x}}+\period{}{\hat{y}}\}$.
+
+It suffices to study the
+unique correspondence of a helical torus to the one of the above twistings,
+say $Tw_{I}$.
+
+The helical tori Bravais cell is given by the orthogonal basis vector pair,
+\begin{eqnarray}
+{\overrightarrow{a}}_{1}^{\prime } &=&{\hat{x}}\ P_{1}+{\hat{y}}\ Q_{1},
+\nonumber \\
+{\overrightarrow{a}}_{2}^{\prime } &=&-{\hat{x}}\ Q_{2}+{\hat{y}}\ P_{2},
+\label{eq17}
+\end{eqnarray}%
+where the two radii for the torus are given as
+$L_{i}=\sqrt{P_{i}^{2}+Q_{i}^{2}}$ for $i=1,2$. They denoted the helical
+system by $Hl(B,L_{1},\chi)$, where the chiral aspect ratio
+$B=L_{2}/L_{1}$ and the chirality $\chi =Q_{1}/P_{1}\equiv{Q}_{2}/P_{2}$.
+In order to furnish the equivalent structure
+$Hl(B,L_{1},\chi)\cong{Tw}_{I}(A,M,\alpha )$,
+$\mathcal{M}_{11}={P_{1}}/{M}$ and $\mathcal{M}_{21}=-{Q_{2}}/M$ implies
+that
+\begin{eqnarray}
+\mathcal{M}_{21} &=&-B\chi \mathcal{M}_{11}  \label{eq17_1} \\
+1 &=&\mathcal{M}_{11}\mathcal{M}_{22}\ -\ \mathcal{M}_{21}\mathcal{M}_{12}.
+\label{eq18} \\
+A &=&\frac{\left( \mathcal{M}_{21}\right) ^{2}}{B}+B\left( \mathcal{M}%
+_{11}\right) ^{2},  \label{eq19} \\
+\alpha &=&-\frac{\mathcal{M}_{21}\mathcal{M}_{22}}{B}-B\mathcal{M}_{11}%
+\mathcal{M}_{12}.  \label{eq20}
+\end{eqnarray}%
+
+The helical Bravais cell is a subclass of twisted one
+by an $\SLn{2}{\integers}$ equivalence relation, \reffig{LHCLL06fig1}\,(c)
+and \refeq{eq:inverse}.
+
+They refer to  $\alpha=d/M$  (our notation: $\alpha=\tilt{}/\period{}$)
+as a ``twisting factor".
+
+$Q_{M,N}^{\alpha}=Q_{M,N}^{-\alpha }$ as twisting either clockwise or
+counterclockwise is not distinguished by the energy. Note that reversing
+the sign of a twist factor $\alpha$ is not an $\SLn{2}{\integers}$ transformation.
+
+The $[M\times N]$ square lattice with the helicity factor
+$d=D/M$, the system has
+periodic boundary conditions in the N direction and
+helical (tilted) boundary conditions in the M direction such
+that the i-site in the first column is connected with the
+$\mod(i+D, M)$th site in the N column of the lattice.
+
+%\bibitem{sahito}
+R. Sahito, G. Dresselhaus and M. S. Dresselhaus, \emph{Physical
+properties of Carbon Nanotubes}, (Imperial College Press, London, 1998).
+
+%\bibitem{pl} Grassman integral, not relevant here
+%V. N. Plechko: Theor. Math. Phys. \textbf{64}, 748 (1985);
+%Physica, A \textbf{152}, 51 (1988); Phys. lett. A \textbf{157}, 335 (1991).
+
+
+Alexi Morin-Duchesne, Paul A. Pearce and Jorgen Rasmussen
+{\em Modular invariant partition function of critical dense polymers},
+\arXiv{1303.4895}:
+% 10.1016/j.nuclphysb.2013.05.016
+{[...]} The torus is formed by gluing the top and bottom of the cylinder.
+This gives rise to a variety of non-contractible loops winding around the
+torus. [...] a parameter v that keeps track of the winding of defects on
+the cylinder. [...] The modified trace is constructed as a linear
+functional on planar connectivity diagrams in terms of matrix traces
+$Tr_d$ (with a fixed number of defects d) and Chebyshev polynomials of
+the first kind.
+
+We assume helical boundary conditions in x-direction, i.e.,
+\(
+\field_{L_x+1,y}=\field_{1,y+1}
+\,,
+\)
+and periodic boundaries in y-direction.
+
+\item[2020-06-16 Predrag]
+Izmailian and Hu\rf{IzmHu07}
+{\em Finite-size effects for the {Ising} model on helical tori}:
+``
+We analyze the exact partition function of the Ising model on a square
+lattice under helical boundary conditions obtained by Liaw
+\etal\rf{LHCLL06}. We find that finite-size corrections for the free
+energy, the internal energy, and the specific heat of the model in a
+crucial way depend on the helicity factor of the lattice.
+''
+
+
+\item[2019-11-04 Predrag]
+\newcommand{\Pf}{\mbox{\rm Pf}\,}
+%    \DeclareMathOperator{\Tr}{tr}%
+Hobrecht and Hucht\rf{HobHuc18}\\
+{\em Anisotropic scaling of the two-dimensional {Ising} model {I:} the torus}:
+They compute the partition function and the free energy of the finite
+two-dimensional square lattice Ising model with periodic boundary
+conditions.
+
+The problem of finding the generating function of the closest-packed
+dimer configurations on an arbitrary planar graph was solved by Kasteleyn
+in terms of Pfaffians, as it gives the number of \textit{perfect
+matchings} of a given directed planar graph with an even number of sites.
+This is especially powerful because of the connection between the
+Pfaffian and the determinant, namely
+\begin{align}
+\label{eq:DetPfaffianRel}
+	\left(\Pf{\mathcal A}\right)^{2}=\det{\mathcal  A}.
+\end{align}
+[...]
+The nearest-neighbour structure in a row and a column are both
+represented by the $[n \times n]$ matrix
+%
+\begin{align}
+	\setlength{\arraycolsep}{8pt}
+	{\bf H}_{\mathsf{b},n} = \begin{pmatrix}
+		0		& 1	& 0	& \cdots	& 0		\\
+		0		& 0 	& 1	&		& 0		\\
+		\vdots	&	&	& \ddots	& \vdots	\\
+		0		& 0	& 0	&		& 1		\\
+		-\mathsf{b}		& 0	& 0	& \cdots	& 0	
+	\end{pmatrix},
+\end{align}
+%
+with $\mathsf{b}\in\{+1,0,-1\}$ accounting for
+$\mathsf{b}=0$ open, $\mathsf{b}=+1$  periodic, and
+$\mathsf{b}=-1$ for anti-periodic boundary conditions.
+%, concerning the necessity of transition cycles on the graph to be odd.
+$\mathsf{b}=-1$ accounts for periodic boundaries on the
+directed graph, i.\,e., in the dimer system, in the sense that all edges
+are likewise aligned, while it accounts for antiperiodic BCs in the Ising
+model.
+However, the topology of the underlying directed graph is not
+representative for the Ising model, which is emphasised by the fact that
+the Ising partition function is a combination of four Pfaffians.
+
+[...]
+the characteristic polynomials are
+%
+\beq
+	\mathcal{P}^{\pm}_{\mathsf{\beta}}(N;\varphi)
+    =\prod_{m=0}^{N-1}\left(e^{\pm\ii\varphi}
+                        - e^{\ii\varphi_{m}^{(\mathsf{\beta})}}\right)
+    = e^{\pm\ii N \varphi} + \mathsf{\beta}
+\ee{eq:CharacteristicPolynomialPM}
+%
+with
+%
+\begin{align}
+	\varphi^{(\mathsf{\beta})}_{m}=\begin{cases}
+   		2m\pi/N 		& \text{if } \mathsf{\beta} = -1 \\
+   		(2m+1)\pi/N	& \text{if } \mathsf{\beta} = +1
+  	\end{cases}
+\end{align}
+%
+for $m\in\{0,1,2,\dots,N{-}1\}$, and thus we will call
+$\mathsf{\beta}=-1$ \textit{even} and $\mathsf{\beta}=+1$ \textit{odd}.
+Note that the eigenvalues lie equidistantly on the unit circle and thus
+we have a free shifting parameter for the spectrum.
+We have chosen it in such a way, that the eigenvalue $\varphi_0^{(-)}=0$
+appears in the even spectrum; a shift by $-\pi$ on the other hand would
+have given rise to a dependency on whether $N$ is even or odd.
+
+Characteristic polynomials \refeq{eq:CharacteristicPolynomialPM} have a
+simple scaling form as one only have to replace $\varphi=\Phi/N$ to
+obtain
+%
+\begin{subequations}
+\label{eq:CharacteristicPolynomials}
+\begin{align}
+	\mathcal{P}^{\pm}_{e}(\Phi)=e^{\pm\ii\Phi}-1,\\
+	\mathcal{P}^{\pm}_{o}(\Phi)=e^{\pm\ii\Phi}+1
+\,.
+\end{align}
+\end{subequations}
+%
+%where the $\pm$ accounts for the two possible choices of the eigenvalue
+%$\ee^{\pm\ii\varphi^{(\cM)}_{m}}$ in \refeq{eq:HDiagonal}.
+
+They compute variety of determinants. Particularly suggestive is the
+product formula for translational invariance in both directions, their
+eq.~(2.32), that looks like Han's determinant. This was previously
+computed by McCoy \& Wu for the anisotropic torus\rf{McCWu73}.
+There is an interesting matrix for the torus, their eq.~(4.3).
+All in all, looks harder than what we need for the \catlatt.
+
+\item[2019-11-04 Predrag]
+
+Baxter\rf{Baxter16} {\em The bulk, surface and corner free energies of
+the square lattice {Ising} model}
+
+Hucht\rf{Hucht17} {\em The square lattice {Ising} model on the rectangle
+{I}: finite systems}
+
+Hobrecht and Hucht\rf{HobHuc20} {\em
+Anisotropic scaling of the two-dimensional {Ising} model {II}: surfaces
+and boundary fields}
+
+\end{description}
+
+    \newpage
+%\section{{Ihara} zeta functions}
+%\label{sect:Ihara}
+\input{chapter/Ihara}
+    \newpage
+\input{chapter/models}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\printbibliography[heading=subbibintoc,title={References}]

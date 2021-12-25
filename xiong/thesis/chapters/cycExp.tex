@@ -1,0 +1,498 @@
+\section{Dynamics averaged over \po s}
+\label{sect:cycExp}
+
+Statistical properties and the geometrical structure of the global attractor
+are among the major
+questions in the study of chaotic nonlinear dissipative systems.
+Generally,
+such a system will get trapped to the global attractor after a transient
+period, and we are only interested
+in the dynamics on the attractor. The intrinsic instability of
+orbits on the attractor make the longtime simulation unreliable, which is
+also time-consuming. Fortunately, ergodic theorem\rf{sinai76} indicates that
+longtime average converges to the same answer as a spatial average over the attractor,
+provided that a natural measure exists on the attractor.
+\begin{align}
+  \overline{\expct{a}}
+  & = \lim_{t\to \infty} {1\over |\pS|}
+  \intM{\ssp_0}
+  {1\over t} \int_0^t d\tau \,
+  a(\ssp(\tau)) \label{eq:spa_ave1}\\
+  & =  {1\over |\pS_{\msr}|}
+  \intM{\ssp} \msr(\ssp) \, a(\ssp) \,. \label{eq:spa_ave2}
+\end{align}
+Here, $a(\ssp(t))$ is an observation, namely, a temporal
+physical quantity such as average diffusion rate, energy dissipation rate,
+Lyapunov exponents and so on. $\overline{\expct{a}}$ refers to its \spt\ average
+on the attractor.
+$\ssp(t)$ defines a dynamical system described by \refeq{eq:flow}.
+$\pS$ is the \statesp\ of this system.
+$\msr(\ssp)$ is the natural measure. Normalization quantities are
+\begin{equation}
+  \label{eq:ave_norm}
+  |\pS| = \intM{\ssp} \,,\quad
+  |\pS_{\msr}| = \intM{\ssp\,\msr(\ssp)}
+\end{equation}
+We make a distinction between the notation for \spt\ average
+$\overline{\expct{a}}$ and that for spatial average
+\[
+  \expct{a} = {1\over |\pS|}  \intM{\ssp} \, a(\ssp)
+  \,.
+\]
+So if
+we define the integrated observable
+\begin{equation}
+  \label{eq:ave}
+  A^t(\ssp_0) =
+  \int_0^t d\tau \, a(\ssp(\tau))
+  \,,
+\end{equation}
+then
+\begin{equation}
+  \label{eq:ave2}
+  \overline{\expct{a}} = \lim_{t\to\infty} \frac{1}{t} \expct{A^t}
+  = \lim_{t\to\infty} \frac{1}{t} {1\over |\pS|}
+  \intM{\ssp_0} A^t(\ssp_0)
+  \,.
+\end{equation}
+Formula \refeq{eq:spa_ave2} provides a nice way to calculate \spt\
+average while avoiding longtime integration.
+However, as a strange attractor usually has a fractal structure
+and the natural measure $\msr(\ssp)$ could be arbitrarily complicated
+and non-smooth,
+computation by \refeq{eq:spa_ave2}
+is not numerically feasible. This is where the
+\emph{cycle averaging theory}\rf{DasBuch} enters.
+In this section, we illustrate the process of obtaining the \spt\
+average \refeq{eq:spa_ave1} by the weighted contributions from a set of \po s.
+
+%======================================================================
+\subsection{The evolution operator}
+\label{sec:eo}
+
+Towards the goal of calculating \spt\ averages, it does not suffice to
+follow a single orbit. Instead, we study a swarm of orbits and see how
+they evolve as a whole.
+Equation \refeq{eq:ave2} deploys this idea exactly. We take all
+points in the \statesp\ and evolve them for a certain time, after which
+we study their overall asymptotic behavior.
+By formula \refeq{eq:ave2}, the \spt\ average of observable
+$a(\ssp(t))$ is given by the asymptotic behavior of the corresponding
+integrated observable $A^t(\ssp)$.
+However, instead of calculating $\expct{A^t}$, we turn to
+\begin{equation}
+  \label{eq:ave3}
+    \expct{  e^{\beta A^t} } =
+        {1 \over {|\pS|}} \intM{\ssp_s}  e^{\beta A^t(\ssp_s)}
+    \,.
+\end{equation}
+Here we use $\ssp_s$ instead of
+$\ssp_0$ as in \refeq{eq:ave2} to denote the starting point of the
+trajectory. $\beta$ is an auxiliary variable. The motivation of studying
+$e^{\beta A^t}$ instead of $A^t$ will be manifest later. Actually, this
+form resembles the partition function in statistical mechanics where
+$\beta = -1/kT$. And we will find several analogous formulas in this
+section with those in the canonical ensemble.
+Equation \refeq{eq:ave3} can be transformed as follows.
+\begin{align}
+    \expct{  e^{\beta A^t} }
+  & = {1 \over {|\pS|}} \intM{\ssp_s} \left(
+    \intM{\ssp_e}
+    \prpgtr{\ssp_e - \flow{t}{\ssp_s}} \right)e^{\beta A^t(\ssp_s)} \label{eq:ave4} \\
+  & = {1 \over {|\pS|}} \intM{\ssp_e}
+    \intM{\ssp_s}
+    \prpgtr{\ssp_e - \flow{t}{\ssp_s}} e^{\beta A^t(\ssp_s)} \label{eq:ave5} \\
+  & = {1 \over {|\pS|}}
+    \sum_{\substack{\text{all trajectories} \\ \text{of length } t}} e^{\beta A^t(\ssp_s)}
+  \label{eq:ave6}
+  \,.
+\end{align}
+From \refeq{eq:ave3} to \refeq{eq:ave4}, we insert an identity in the integral,
+and from \refeq{eq:ave4} to \refeq{eq:ave5}, we change the integral order.
+Here, $\ssp_s$ and $\ssp_e$ denote respectively the starting state
+and end state of a trajectory. Basically, \refeq{eq:ave6} says
+that whenever there is a path from $\ssp_s$ to $\ssp_e$, we should count its
+contribution to the \spt\ average.
+This idea is inspired  by the path integral in quantum mechanics.
+Feynman interprets the \emph{propagator} (transition probability)
+$\braket{\psi(x',t')}{\psi(x, t)}$  as a summation over all
+possible paths connecting the starting and end states, where
+the classical path is picked out
+when $i/\hbar \to \infty$. Here, in \refeq{eq:ave5} we are on a better
+standing because the Dirac delta function picks out paths that obey the flow equation
+exactly.
+Actually, the transition from a procedural law \refeq{eq:spa_ave1} to a high-level
+principle \refeq{eq:ave6} is a tendency in physics, similar to the transition from
+Lagrangian mechanics to the principle of least action, or the transition from
+Schr\"odinger equation to the path integral.
+
+The kernel of the integral in \refeq{eq:ave5} is called the \emph{evolution operator}
+\begin{equation}
+    \Lop^t(\ssp_e, \ssp_s)\,=\,
+    \prpgtr{\ssp_e- \flow{t}{\ssp_s}}\, e^{\beta A^t(\ssp_s)}
+    \, .
+    \label{eq:evooper}
+\end{equation}
+The evolution operator shares a lot of similarities with the propagator
+in quantum mechanics. For example,
+the evolution operator also forms a semigroup:
+\begin{equation}
+  \label{eq:lsemi}
+  \Lop^{t_1+t_2}(\ssp_e, \ssp_s)\,=\,
+  \intM{\ssp'}  \Lop^{t_2}(\ssp_e, \ssp')  \Lop^{t_1}(\ssp', \ssp_s)
+\end{equation}
+We define the action of the evolution operator on a function as
+\begin{equation}
+  \label{eq:evoact}
+  \Lop^t \circ \phi \,=\,
+  \intM{\ssp_s} \Lop^t(\ssp_e, \ssp_s) \phi(\ssp_s)
+\end{equation}
+which is a function of the end state $\ssp_e$.
+A function $\phi(\ssp)$ is said to be the eigenfunction of $\Lop^t$ if
+$\Lop^t \circ \phi = \lambda(t)\, \phi$. Here $\lambda(t)$ is the eigenvalue.
+We make it explicit that it depends on time.
+Note, $\Lop^t$ acts on a function space, so in principle,
+$\Lop^t$ is an infinite\dmn\ operator.
+However, in some cases such as piece-wise maps, if the observable is defined
+uniformly in each piece of the domain, then $\Lop^t$ can effectively
+be expressed as a finite\dmn\ matrix.
+% Anyway, the dimensionality of $\Lop^t$ does not stop us from investigating its
+% eigenspectrum.
+Here we give two examples of the eigenfunctions of $\Lop^t$.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\exampl{The invariant measure of an equilibrium is an eigenfunction of $\Lop^t$}{
+  \label{exam:imeq}                                                 \toCB
+  The invariant measure of an equilibrium $\ssp_q$ is given by
+  \[
+    \phi(\ssp) = \delta(\ssp - \ssp_q)
+    \,.
+  \]
+  Then
+  \begin{align*}
+    \Lop^t \circ \phi
+    & = \intM{\ssp_s} \Lop^t(\ssp_e, \ssp_s) \delta(\ssp_s - \ssp_q) \\
+    & = \intM{\ssp_s} \prpgtr{\ssp_e- \flow{t}{\ssp_s}}\, e^{\beta A^t(\ssp_s)}
+      \delta(\ssp_s - \ssp_q) \\
+    & = \prpgtr{\ssp_e- \flow{t}{\ssp_q}}\, e^{\beta A^t(\ssp_q)} \\
+    & = \prpgtr{\ssp_e- \ssp_q}\, e^{t\beta a(\ssp_q)} \\
+    & = e^{t\beta a(\ssp_q)} \phi(\ssp_e)  \,.
+  \end{align*}
+  Therefore, the invariant measure of an equilibrium is an eigenfunction of
+  the evolution operator with eigenvalue  $e^{t\beta a(\ssp_q)}$.
+}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\exampl{The invariant measure of a \po\ is an eigenfunction
+  of $\Lop^{nT}$}{
+  \label{exam:impo}                                             \toCB
+  The invariant measure of a \po\ is given by
+  \begin{equation}
+    \label{eq:poinv}
+    \phi(\ssp) = \frac{1}{T} \int_{0}^T \delta(\ssp - \flow{t}{\ssp_0} dt
+    \,.
+  \end{equation}
+  Here, $T$ is the period of this orbit. $\ssp_0$ is an arbitrarily chosen
+  point on this orbit. Then
+  \begin{align*}
+    \Lop^{nT} \circ \phi
+    & = \frac{1}{T} \int_{0}^T
+      \intM{\ssp_s} \prpgtr{\ssp_e- \flow{nT}{\ssp_s}}\, e^{\beta A^{nT}(\ssp_s)}
+      \delta(\ssp_s - \flow{nT}{\ssp_0} dt \\
+    & = \frac{1}{T} \int_{0}^T
+      \intM{\ssp_s} \prpgtr{\ssp_e- \flow{nT+t}{\ssp_s}}\, e^{\beta A^{nT}(\flow{t}{\ssp_0}}
+      \delta(\ssp_s - \flow{t}{\ssp_0} dt  \\
+    & = \frac{1}{T} \int_{0}^T  \prpgtr{\ssp_e- \flow{t}{\ssp_0}}
+      e^{n\beta A^{T}(\ssp_0)} dt
+      \intM{\ssp_s}
+      \delta(\ssp_s - \flow{t}{\ssp_0}  \\
+    & = \frac{1}{T} \int_{0}^T  \prpgtr{\ssp_e- \flow{t}{\ssp_0}}\,
+      e^{n\beta A^T(\ssp_0)} dt \\
+    & = e^{n\beta A^T(\ssp_0)} \phi(\ssp_e) \,.
+  \end{align*}
+  In the above derivation, we have used the identity
+  $A^{nT}(\flow{t}{\ssp_0} = n A^{T}(\ssp_0)$ which is manifest
+  because $\ssp_0$ is a periodic point.
+  In general, \refeq{eq:poinv} is not an eigenfunction
+  of $\Lop^{t}$, but it is for $t=nT$. In the above formula, $A^T(\ssp_0)$
+  actually does not depend on the choice of the starting point $\ssp_0$
+  as long as it is one point on the \po.
+}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+Let us now turn to the original
+problem of how to calculate \refeq{eq:ave2} and why we choose the exponential
+form in \refeq{eq:ave3}. Combine \refeq{eq:ave2}, \refeq{eq:ave3} and
+\refeq{eq:ave5}, we have
+\begin{align}
+  \overline{\expct{a}}
+  & = \lim_{t\to\infty} \frac{1}{t}
+    \left. \frac{\partial}{\partial \beta} \expct{  e^{\beta A^t} } \right|_{\beta=0}
+  \label{eq:aveDif1}\\
+  & = \left. \frac{\partial}{\partial \beta}
+     \lim_{t\to\infty} \frac{1}{t} {1 \over {|\pS|}} \intM{\ssp_e}
+    \intM{\ssp_s} \Lop^t(\ssp_e, \ssp_s) \right|_{\beta=0} \,.
+    \label{eq:aveDif2}
+\end{align}
+Here, we have used a trick to obtain the spatial average by using an auxiliary variable
+$\beta$, which is similar to what we do in
+the canonical ensemble. $\overline{\expct{a}}$
+is given by the longtime average of the evolution operator.
+From example \ref{exam:imeq} and \ref{exam:impo},
+we see that the eigenvalues of $\Lop^t$ go to $\infty$ when
+$t\to\infty$. Therefore, asymptotically, the leading eigenvalue of
+$\Lop^t$ will dominate the \spt\ average in \refeq{eq:aveDif2}.
+By the semi-Lie group property \refeq{eq:lsemi}, we define
+$\Lop^t = e^{t\Aop}$ with $\Aop$ defined as the generator of the evolution operator.
+Then \refeq{eq:aveDif2} is simplified as follows,
+\begin{align}
+  \overline{\expct{a}}
+  & = \left. \lim_{t\to\infty}  {1 \over {|\pS|}} \intM{\ssp_e}
+    \intM{\ssp_s} \Lop^t(\ssp_e, \ssp_s) \frac{\partial}{\partial \beta}
+    \Aop\right|_{\beta=0}
+    \label{eq:aveDif3} \\
+  & = \left. \lim_{t\to\infty}  {1 \over {|\pS|}} \intM{\ssp_e}
+    \intM{\ssp_s} \prpgtr{\ssp_e- \flow{t}{\ssp_s}} \frac{\partial}{\partial \beta}
+    \Aop\right|_{\beta=0}
+    \label{eq:aveDif4} \\
+  & = \left. \lim_{t\to\infty}
+    \expct {\frac{\partial}{\partial \beta}
+    \Aop}\right|_{\beta=0} \,.
+\end{align}
+As we said, the time limit above will converge to the leading eigenvalue of $\Aop$.
+By letting
+\begin{equation}
+  \label{eq:s}
+  s_0(\beta) := \text{the largest eigenvalue of } \Aop \text{ when } t\to\infty \,,
+\end{equation}
+we ultimately reach  the formula for \spt\ averages,
+\begin{equation}
+  \label{eq:spav}
+  \overline{\expct{a}} =  \left. \frac{\partial s_0}{\partial \beta} \right|_{\beta=0}
+  \,.
+\end{equation}
+Equation \refeq{eq:spav} connects the \spt\ averages with the
+largest eigenvalue of the generator of the evolution operator. It is
+one of the most important formulas in the cycle averaging theory.
+We need to study $\Lop^t$ for $t\to \infty$ to obtain \refeq{eq:s}.
+To make calculations easier,
+we turn to the \emph{resolvent} of $\Lop^t$, i.e., the Laplace transform
+of $\Lop^t$.
+\begin{equation}
+  \label{eq:resolv}
+  \int_0^\infty dt \, e^{-st} \Lop^t
+        = {1 \over s - \Aop} \,,\quad\quad   \Re s > \eigenvL_0
+        \,.
+\end{equation}
+So, the leading eigenvalue of $\Aop$ is the pole of the resolvent of the evolution
+operator. In the next subsection, we will obtain the expression for the resolvent
+of $\Lop^t$ by a set of \po s.
+
+%======================================================================
+\subsection{\FD s}
+\label{sec:det}
+
+The discussion in \refsect{sec:eo} motivates us to calculate the leading
+eigenvalue of the generator $\Aop$. Put it in another way, we need to
+solve equation
+\begin{equation}
+  \label{eq:Adet}
+  \det(s - \Aop) = 0
+\end{equation}
+whose answer gives the full spectrum of $\Aop$.
+We claim that \spt\ average can be calculated by \po s in
+this system. Still, there isn't any hint
+how \refeq{eq:Adet} is related to \po s.
+On one hand, we see that \po s are related to the trace of the evolution operator
+by the definition \refeq{eq:evooper}.
+\begin{equation}
+  \label{eq:trL}
+  \tr\Lop^t \,=\,
+  \intM{\ssp}\Lop^t(\ssp, \ssp)\,=\,
+  \intM{\ssp} \prpgtr{\ssp- \flow{t}{\ssp}}\, e^{\beta A^t(\ssp)}
+  \,.
+\end{equation}
+On the other hand, matrix identity
+\begin{equation}
+  \label{eq:Miden}
+  \ln\det M = \tr \ln M
+\end{equation}
+relates the determinant of a matrix $M$ on the left-hand side
+in \refeq{eq:Miden} with its
+trace on the right-hand side. With these two pieces of information,
+we can express \refeq{eq:Adet} in terms of $\tr\Lop^t$.
+\begin{equation}
+  \label{eq:trace}
+  \ln \det (s  - \Aop)
+  = \tr \ln (s - \Aop) = \int_{} \tr  \frac{1}{s - \Aop}  \, ds
+  \,.
+\end{equation}
+Also by the definition of resolvent \refeq{eq:resolv}, we have
+\begin{equation}
+  \label{eq:Adet2}
+  \det (s - \Aop) = \exp
+  \left(\int ds \int_0^\infty dt \, e^{-st} \tr\Lop^t \right)
+  \,.
+\end{equation}
+The remaining part of this subsection is devoted to calculating
+$\int_0^\infty dt \, e^{-st} \tr\Lop^t$. For a given \po\ with period
+$T_p$, we decompose the trace \refeq{eq:trL} in two directions: one
+is parallel to the velocity field $\ssp_{\parallel}$ and the other in the
+transverse direction $\ssp_{\perp}$,
+\[
+  \int_0^\infty dt \, e^{-st} \tr\Lop^t =
+  \int_0^\infty dt \, e^{-st}
+  \intM{\ssp_{\perp}} d\ssp_{\parallel} \prpgtr{\ssp_{\perp}- f^t_{\perp}(\ssp)}
+  \prpgtr{\ssp_{\parallel}- f^t_{\parallel}(\ssp)}
+  \, e^{\beta A^t(\ssp)}
+  \,.
+\]
+
+We first calculate the integration in the parallel direction. This is a
+one\dmn\ spatial integration. Due to the periodicity
+$\ssp_{\parallel}= f^{rT}_{\parallel}(\ssp)$ for $r=1, 2,\cdots$, we
+split the integration
+in this parallel direction into infinitely many periods:
+\begin{align}
+ \int_{0}^\infty dt \, e^{-s t} \, & \oint_p d\ssp_{\parallel}
+  \prpgtr{\ssp_\parallel -  f^t_{\parallel}(\ssp)}
+  =  \int_{0}^\infty dt \, e^{-s t} \, \int_0^{T_p} d\tau \,||\vel(\tau)|| \,
+  \prpgtr{\ssp_\parallel(\tau) -  \ssp_{\parallel}(\tau + t)}
+    \label{eq:detpara1}   \\
+  & = \sum_{r=1}^{\infty}  e^{-\eigenvL \period{p}r} \,
+    \int_0^{T_p} d\tau \, ||\vel(\tau)||\,  \int_{-\epsilon}^{\epsilon} dt \, e^{-\eigenvL t} \,
+    \prpgtr{\ssp_\parallel(\tau) -   \ssp_{\parallel}(\tau + rT_p + t)}
+    \label{eq:detpara2}
+    \,.
+\end{align}
+The integrand in \refeq{eq:detpara2} is defined in a small time window
+$[-\epsilon, \epsilon]$. Within this window
+$\ssp_\parallel(\tau) -   \ssp_{\parallel}(\tau + rT + t) =
+\ssp_\parallel(\tau) -   \ssp_{\parallel}(\tau + t) \simeq -\vel(\tau)t$.
+So if we take $\epsilon \to 0$,
+\[
+  \int_{-\epsilon}^{\epsilon} dt \, e^{-\eigenvL t} \,
+  \prpgtr{\ssp_\parallel(\tau) -   \ssp_{\parallel}(\tau + rT_p + t)}
+  = \frac{1}{\norm{\vel(\tau)}}
+  \,.
+\]
+Therefore, we obtain the integration in the parallel direction,
+\begin{equation}
+  \label{eq:detpara3}
+  \int_{0}^\infty dt \, e^{-s t} \, \oint_p d\ssp_{\parallel}
+  \prpgtr{\ssp_\parallel -  f^t_{\parallel}(\ssp)}
+  =  T_p \sum_{r=1}^{\infty}  e^{-\eigenvL \period{p}r}
+  \,.
+\end{equation}
+
+Now we calculate the trace integration in the transverse direction.
+In this case,
+we are actually integrating on a Poincar\'e section transverse to this
+\po. So $f^t_\perp(\ssp)$ is the projected evolution function
+in this section, which has codimension one with the full \statesp.
+Therefore,
+\begin{equation}
+  \label{eq:dettrans}
+  \int_{\PoincS} d\ssp_{\perp} \prpgtr{\ssp_{\perp}- f^{rT_p}_{\perp}(\ssp)}
+  = {1 \over \oneMinJ{r} }
+  \,.
+\end{equation}
+Here $\monodromy_p$ is the Floquet matrix projected on the Poincar\'e section
+of this \po.
+
+Combine \refeq{eq:detpara3} and \refeq{eq:dettrans} and consider all \po s inside
+this system, we obtain the
+\emph{trace formula}
+\begin{equation}
+  \label{eq:tr}
+  \int_0^\infty dt \, e^{-st} \tr\Lop^t =
+  \sum_p \period{p} \sum_{r=1}^\infty
+  { e^{r (\beta A_p -\eigenvL\period{p})}
+    \over  \oneMinJ{r} }
+  \,.
+\end{equation}
+$A_p$ is the integrated observable along the orbit for one period.
+Note, summation $\sum_p$ counts all \po s inside this system.
+Substitute \refeq{eq:tr} into \refeq{eq:Adet2}, we obtain the
+\emph{\Fd}
+\begin{equation}
+  \det(s - \Aop)  \defeq \exp \left(
+    - {
+      \sum_{p} \sum_{r=1}^\infty \frac{1}{r}
+      \frac{   e^{r (\beta A_p -\eigenvL\period{p}) }}
+      {\oneMinJ{r}}
+    }\right)
+  \label{eq:sd}
+\end{equation}
+of the flow.
+
+%======================================================================
+\subsection{\Dzeta s}
+\label{sect:zeta}
+
+In the \Fd\ \refeq{eq:sd}, $\oneMinJ{r}$
+is approximately equal to the product of all the expanding eigenvalues
+of $\monodromy_p$. That is, $\oneMinJ{r} \simeq |\ExpaEig_p|^r$. Here,
+$ \ExpaEig_p\,=\,\prod_e \ExpaEig_{p,e}$ is
+the product of the expanding eigenvalues of the
+Floquet matrix $\monodromy_p$.
+The accuracy of this approximation improves as $r\to\infty$.
+Substitute it into the \Fd\ \refeq{eq:sd},
+we have
+\[
+  \exp \left(
+    -\sum_{p} \sum_{r=1}^\infty \frac{1}{r}
+    \frac{   e^{r (\beta A_p -\eigenvL\period{p}) }}
+    {|\ExpaEig_p|^r}
+  \right)
+  = \exp \left(
+    \sum_{p} \ln \left( 1 -
+      \frac{   e^{\beta A_p -\eigenvL\period{p} }}{|\ExpaEig_p|}
+    \right)
+  \right)
+  = \prod_{p} \left(
+    1 -
+    \frac{   e^{\beta A_p -\eigenvL\period{p} }}{|\ExpaEig_p|}
+  \right)
+  \,,
+\]
+where we have used the Taylor expansion
+$\ln(1 - x) = -\sum_{n=1}^\infty \frac{x^n}{n}$.
+Then we obtain the {\em \dzeta},
+\begin{equation}
+  1/\zeta
+  \,=\,\prod_{p}
+  \left( 1 - t_p \right)
+  \,,\qquad \text{with} \qquad
+  t_p = \frac{   e^{\beta A_p -\eigenvL\period{p} }}{|\ExpaEig_p|}
+  \,.
+  \label{eq:zeta}
+\end{equation}
+
+Formulas \refeq{eq:spav}, \refeq{eq:sd} and \refeq{eq:zeta}
+are the ultimate goal of the discussion
+in this section. They tell us that the \spt\ average is determined
+by the leading eigenvalue of the generator of the evolution operator $\Aop$, and
+the eigenspectrum of $\Aop$ can be obtained by the whole set of \po s inside
+this system. Formula \refeq{eq:sd} precisely describes our perspective on chaotic
+deterministic flows. The flow on the global attractor can be
+visualized as a walk chaperoned by a hierarchy of unstable invariant
+solutions (\eqva, \po s) embedded in the attractor. An
+ergodic trajectory shadows one such invariant solution for a while, is
+expelled along its unstable manifold, settles into the neighborhood of
+another invariant solution for a while, and repeats this process forever.
+Together, the infinite set of these unstable invariant solutions forms
+the skeleton of the strange attractor,
+and in fact, \spt\ averages can be
+accurately calculated as a summation taken over contributions from
+\po s weighted by their stabilities\rf{Christiansen97, DasBuch}.
+
+In practice, we truncate \refeq{eq:sd} or \refeq{eq:zeta}
+according to the topological length of \po s,
+which is primarily established by symbolic dynamics, or if not available, by
+the stability of \po s. This technique is called \emph{cycle expansion},
+whose effectiveness has been demonstrated in a
+few one\dmn\ maps\rf{AACI, AACII} and
+ergodic flows\rf{BuBoCvSi14, Christiansen97, lanCvit07}. See \rf{DasBuch}
+for more details.

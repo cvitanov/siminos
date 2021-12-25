@@ -1,0 +1,113 @@
+\ifsvnmulti
+ \svnkwsave{$RepoFile: lyapunov/transport.tex $}
+ \svnidlong {$HeadURL: svn://zero.physics.gatech.edu/siminos/lyapunov/transport.tex $}
+ {$LastChangedDate: 2016-03-06 15:29:29 -0500 (Sun, 06 Mar 2016) $}
+ {$LastChangedRevision: 4688 $} {$LastChangedBy: predrag $}
+ \svnid{$Id: transport.tex 4688 2016-03-06 20:29:29Z predrag $}
+\fi
+
+\section{Transport of vector fields}
+\label{sect:transport}
+%
+% An extract from  ChaosBook.org {appendApplic.tex}, Appendix
+% PC Lyapunov vectors setting up?      	20sep2009
+% \section{\EvOper\ for Lyapunov exponents}
+% \label{c-vatt-det}
+\renewcommand{\ssp}{x}
+
+\begin{description}
+
+\item[Predrag 2015-06-27]
+moved to  pipes/blog/transport.tex
+\end{description}
+
+
+\section{Snippets}
+
+    \PC{ this section will }
+Projection operators $\mathbf{P}_{\alpha}^2 = \mathbf{P}_{\alpha}$,
+$\mathbf{P}_{\shortparallel} \mathbf{P}_{\perp} = \mathbf{P}_{\perp}
+\mathbf{P}_{\shortparallel} =0 $, resolve the identity $\matId =
+\mathbf{P}_{\shortparallel} + \mathbf{P}_{\perp} $ into group tangent
+direction and the in-slice remainder at point $\sspRed$:
+    \PC{2014-03-21 will rescue explicit Jacobians that have vanished
+        in the latest edit}
+%\beq
+%\mathbf{P}_{\perp}(\sspRed)=
+%    \matId-\frac{\ket{\groupTan(\sspRed)}\bra{\sliceTan{}}}
+%    {\braket{\groupTan(\sspRed)}{\sliceTan{}}}
+%    \,,\qquad
+%\mathbf{P}_{\shortparallel}(\sspRed)=
+%    \frac{\ket{\groupTan(\sspRed)}\bra{\sliceTan{}}}
+%    {\braket{\groupTan(\sspRed)}{\section{slice}Tan{}}} \,. %%????
+%\ee{InOutSlice} This is a coordinate transformation centered on
+$\sspRed$. Sandwich the full \statesp\ {\JacobianM} between a pair of
+$\matId$'s:
+\[
+\left(\mathbf{P}_{\shortparallel}^T(\sspRed_2)
+      + \mathbf{P}_{\perp}^T(\sspRed_2) \right)
+\jMps^\zeit(\sspRed_1)
+\left(\mathbf{P}_{\shortparallel}(\sspRed_1)
+      + \mathbf{P}_{\perp}(\sspRed_1) \right)
+\]
+In general the off-diagonal terms do not vanish, so the final
+perturbation will depend on initial perturbations in and transverse to
+the slice. The reduction to $\hat{\jMps}_{p}$ is achieved only for \rpo
+s, where the initial and final projections are evaluated at the same
+point.
+    \PC{2014-03-21 show that}
+
+% copied from siminos/thesis/chapters/slice.tex
+% predrag  2009-10-09
+We decompose $\vel(x)$
+%in \refeq{eq:difeq}
+in a part $\vel_\shortparallel$ parallel to the group action and a part
+$\vel_\perp$ transverse to it, \beq
+	\vel(\ssp)=\vel_\shortparallel(\ssp)+\vel_\perp(\ssp)\,,
+\ee{flowSplit} using the projection operators that project a
+$d$-dimensional flow $v(\ssp)$ onto flow \beq
+	\dot{\ssp}_\perp = \vel_\perp(\ssp)
+\ee{transvFlowSlice} in a $(d\!-\!1)$-dimensional {slice} transverse to
+the direction fixed by the point $\ssp$.
+
+% Predrag edited 2009-08-18 thesis/chapters/lasersSym.tex
+One can always write $\vf_\shortparallel(x_o)=c\Lg \cdot x$ where $c$ a
+constant.
+    \PC{probably wrong}
+Then \beq
+	A_{ij}=\left.\frac{\partial\vf_i}{\partial x_j}\right|_{x_o}
+    =c\Lg+\left.\frac{(\partial\vf_\perp)_i}{\partial x_j}\right|_{x_o}\,.
+\eeq Since hyperbolicity of a \reqv\ is determined by the dynamics on the
+{\csection} (see \refref{Krupa90}) we identify \beq
+	\left.\frac{\partial\vf_{\perp,i}}{\partial x_j}\right|_{x_o}
+   =\left.\frac{\partial\vf_i}{\partial x_j}\right|_{x_o}-c\Lg
+\eeq as the fundamental matrix which we are able to compute without
+explicitly computing the dynamics on the {\csection}.
+
+        \PC{2014-03-23 rescuing this temporarily from Rev.~3380;
+        as I understand reduction to a  slice\ hyperplane as a linear coordinate
+        transformation, it might be very natural to write it all in
+        terms of Jacobians of coordinate transformations. If that is pretty, we'll
+        rethink the |poincare\ sections as well.}
+For a trajectory from $\ssp(\zeit_1)$ to $\ssp(\zeit_2)$ in the full
+{\statesp}, the corresponding transformed trajectory in the  slice\ is
+from $\sspRed(\zeit_1)$ to $\sspRed(\zeit_2)$. Jacobian matrix in the
+slice\ is
+\[\hat{\jMps}_{ij}=\frac{\partial \sspRed(\zeit_2)_{i}}{\partial \sspRed(\zeit_1)_{j}}
+=\frac{\partial \sspRed(\zeit_2)_{i}}{\partial \ssp(\zeit_2)_{k}}
+\,
+\frac{\partial \ssp(\zeit_2)_{k}}{\partial \ssp(\zeit_1)_{\ell}}
+\,
+\frac{\partial \ssp(\zeit_1)_{\ell}}{\partial \sspRed(\zeit_1)_{j}}
+=\frac{\partial \sspRed(\zeit_2)_{i}}{\partial \ssp(\zeit_2)_{k}}
+\jMps_{k\ell}
+\frac{\partial \ssp(\zeit_1)_{\ell}}{\partial \sspRed(\zeit_1)_{j}}
+\]
+Substituting \refeq{eq:variation_full_slice} into the above equation, we
+obtain
+\begin{equation}
+  \label{eq:relation_jacobian2}
+  \hat{\jMps}(\sspRed(\zeit_2),\sspRed(\zeit_1))h(\sspRed(\zeit_1))g(\theta_{1})=
+h(\sspRed(\zeit_2))g(\theta_{2})\jMps(\ssp(\zeit_2),\ssp(\zeit_1))
+\,.
+\end{equation}

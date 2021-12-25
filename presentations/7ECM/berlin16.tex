@@ -1,0 +1,810 @@
+% siminos/talks/DDaysE12/DDaysE12.tex      pdflatex DDaysE12
+% $Author: predrag $
+% $Date: 2012-08-08 16:16:55 +0200 (Wed, 08 Aug 2012) $
+
+
+
+% Evangelos Dynamics Days Europe 2012 talk  2012.09.06
+% used as template:
+% Predrag GT math colloquium                2012.03.26
+% derived from
+% talks/predrag/continuous/continuous.tex   2011.09.09
+% Predrag beamer format                     2011.06.17
+% Predrag                                   2011.04.12
+% derived from
+% siminos/talks/Dresden10/symmReduc.tex 	2010.06.29
+% Predrag Eckmann's haeberli slide style    2005.05.03
+%    ChaosBook/version 11 slides
+%	 from ChaosBook continuous.tex
+
+% might want to use text from
+%    predrag/lectures/Goth11/Cphg11abstr.txt
+%    predrag/lectures/maribor/11/abscvitancourse.tex
+
+\input layoutBeamerES
+\input def % no edits, always from dasbuch/book/inputs
+\input defsBeamer
+
+\renewcommand{\gSpace}{\ensuremath{\theta}} % For this talk
+\renewcommand{\zeit}{\tau}
+
+ \usepackage{grffile}
+
+                          \date{{\scriptsize
+7ECM Berlin\\
+ July 21 2016
+                          }}
+
+\title{Continuous symmetry reduction for transport-dominated flows
+     }
+\author{Evangelos Siminos\\
+    Chalmers University of Technology\vspace{60pt}\\
+    Joint work with\\ 
+    Nazmi Burak Budanur (IST)\\
+	Predrag~Cvitanovi\'c (Georgia Tech)\\
+	Ruslan Davidchuck (Leicester)
+}
+
+
+\begin{document}
+
+\section{Symmetries}
+
+\begin{frame}{}
+  \titlepage
+\end{frame}
+
+
+\begin{frame}[t]{Motivation}
+ \begin{itemize}
+  \item PDEs as dynamical systems
+  \item Ultimate goal: return maps
+  \item State-space?
+  \only<2->{
+  \item Meaningful notion of distance of two states?
+  \item Separate shape and ``transport''
+  }
+  \only<3->{
+  \item We need \emph{symmetry reduction} methods  
+  }
+  \end{itemize}
+  \only<1>{
+  \begin{center}
+    \includegraphics[width=0.7\textwidth,clip=true]{ks22e2manif.png}
+  \end{center}
+  }
+  \only<2>{
+    \includegraphics[width=0.7\textwidth,clip=true]{cartoon_shape_vs_transport}
+  }
+  
+\end{frame}
+
+
+% \begin{frame}{Motivation}
+%  \begin{center}
+%   \includegraphics[width=0.4\textwidth,clip=true] %,height=0.5\textheight
+%   {CLEchaotic}
+%   \hspace{0.2\textwidth}\includegraphics[width=0.3\textwidth,clip=true]
+%   {CLEinvXYZ}
+% \end{center}
+%  \begin{itemize}
+%   \item Continuous symmetry induces drifts
+%   \item Transform to equivalent attractor (no loss of information)
+%   \item ODEs (Complex Lorenz equations)
+%   \item PDEs (Kuramoto-Sivashinsky equation)
+%  \end{itemize}
+% 
+% \end{frame}
+
+% \begin{frame}{\KSe\ as a convenient extended system}
+%   \begin{columns}
+%   \column{0.5\textwidth}
+% 	\includegraphics[width=\textwidth]{christRM}\\
+% 	Christiansen et. al. (1996)
+%   \column{0.5\textwidth}
+% 	\includegraphics[width=\textwidth]{lanRM}\\
+% 	Y. Lan and Cvitanovi\'c (2004)
+%  \end{columns}
+% \end{frame}
+
+
+\begin{frame}{symmetry of a dynamical system}
+
+% \begin{block}{\statesp}
+% a manifold $\pS \in \reals^{d}$ :
+% $d$ numbers determine the state of the system
+% \end{block}
+
+% \bigskip
+
+% \begin{block}{representative point }
+% $\ssp(t) \in \pS$
+% \\
+% a state of physical system at instant in time
+% \end{block}
+
+
+% \begin{block}{deterministic dynamics}
+% map $\timeflow(\xInit)$ =
+% representative point time $t$ later
+% \end{block}
+
+\begin{block}{a system of ODEs}
+ \[
+  \dot{x}=v(x), \qquad x\in M
+ \]
+\end{block}
+
+\begin{block}{has symmetry group $G$ (is $G$-equivariant) when}
+ \[
+  v(g\,x)=g\,v(x)
+ \]
+ for every $g\in G$ and  $x\in M$.
+\end{block}
+
+
+\begin{block}{}
+%   \begin{itemize}
+%   \item the system of ODEs retains its form
+  Then if $x(\zeit)$ is a solution, $\LieEl\,x(\zeit)$ is also a solution for every $\LieEl \in \Group$
+%   \end{itemize}
+\end{block}
+
+\begin{block}{For PDEs}
+ \[
+  u_\zeit=F(u)
+ \]
+ we must have $F(\LieEl u) = \LieEl F(u)$ for every $g\in G$ and every $u$ in the domain of $F$.
+
+\end{block}
+
+
+\end{frame}
+
+\begin{frame}{Group orbits}
+  \begin{columns}
+  \column{0.5\textwidth}
+\begin{block}{}
+% 2011-08-23 Predrag: previously BeThTraj.pdf from
+% dasbuch/book/FigSrc/inkscape/BeThTraj.svg
+%  2011-09-09 Predrag: updated continuous.tex overheads
+%  \includegraphics[width=1.00\textwidth,clip=true]{BeThTraj}
+ \begin{center}
+  \setlength{\unitlength}{1.00\textwidth}
+  %% \unitlength = units used in the Picture Environment
+  \begin{picture}(1,1.07471658)%
+    \put(0,0){\includegraphics[width=\unitlength]{BeThTrajTeX}}%
+    \put(0.32,0.9){\color[rgb]{0,0,0}\rotatebox{-22.37140782}{\makebox(0,0)[lb]{\smash{$\pS_{\ssp(\tau)}$}}}}%
+    \put(0.6,0.4){\color[rgb]{0,0,0}\rotatebox{-16.6673442}{\makebox(0,0)[lb]{\smash{$\pS_{\ssp(0)}$}}}}%
+    \put(0.63028127,0.18433597){\color[rgb]{0,0,0}\rotatebox{0.03136739}{\makebox(0,0)[lb]{\smash{$\ssp(0)$}}}}%
+    \put(0.46253394,0.65){\color[rgb]{0,0,0}\rotatebox{0.03136739}{\makebox(0,0)[lb]{\smash{$\ssp(\tau)$}}}}%
+    \put(0.03852492,0.09250899){\color[rgb]{0,0,0}\rotatebox{0.11031334}{\makebox(0,0)[lb]{\smash{$\pS$}}}}%
+  \end{picture}%
+ \end{center}
+\end{block}
+  \column{0.5\textwidth}
+\noindent
+\emph{group orbit} $\pS_\ssp $ of $\ssp$ is the set of all points visited under the 
+action of the group on $\ssp$
+\[
+\pS_\ssp = \{\LieEl\,\ssp \mid \LieEl \in {\Group}\}
+\]
+\noindent
+any point on the manifold $\pS_{\ssp}$ is
+equivalent to any other
+
+\end{columns}
+\end{frame}
+
+\begin{frame}{symmetry reduction}
+  \begin{columns}
+  \column{0.5\textwidth}
+\begin{block}{full \statesp}
+ \begin{center}
+  \setlength{\unitlength}{1.00\textwidth}
+  %% \unitlength = units used in the Picture Environment
+  \begin{picture}(1,1.07471658)%
+    \put(0,0){\includegraphics[width=\unitlength]{BeThTrajTeX}}%
+    \put(0.32,0.9){\color[rgb]{0,0,0}\rotatebox{-22.37140782}{\makebox(0,0)[lb]{\smash{$\pS_{\ssp(\tau)}$}}}}%
+    \put(0.6,0.4){\color[rgb]{0,0,0}\rotatebox{-16.6673442}{\makebox(0,0)[lb]{\smash{$\pS_{\ssp(0)}$}}}}%
+    \put(0.63028127,0.18433597){\color[rgb]{0,0,0}\rotatebox{0.03136739}{\makebox(0,0)[lb]{\smash{$\ssp(0)$}}}}%
+    \put(0.46253394,0.65){\color[rgb]{0,0,0}\rotatebox{0.03136739}{\makebox(0,0)[lb]{\smash{$\ssp(\tau)$}}}}%
+    \put(0.03852492,0.09250899){\color[rgb]{0,0,0}\rotatebox{0.11031334}{\makebox(0,0)[lb]{\smash{$\pS$}}}}%
+  \end{picture}%
+ 
+%   \setlength{\unitlength}{1.00\textwidth}
+%   %% \unitlength = units used in the Picture Environment
+%   \begin{picture}(1,1.07315413)%
+%     \put(0,0){\includegraphics[width=\unitlength]{BeThTrajTeX}}%
+%     \put(0.30362031,0.99939308){\color[rgb]{0,0,0}\rotatebox{-31.32889204}{\makebox(0,0)[lb]{\smash{$\pS_{\ssp(\tau)}$}}}}%
+%     \put(0.5686188,0.45975596){\color[rgb]{0,0,0}\rotatebox{-40.8073288}{\makebox(0,0)[lb]{\smash{$\pS_{\ssp(0)}$}}}}%
+%     \put(0.63028127,0.18433598){\color[rgb]{0,0,0}\rotatebox{0.03136739}{\makebox(0,0)[lb]{\smash{$\ssp(0)$}}}}%
+%     \put(0.46253394,0.70182305){\color[rgb]{0,0,0}\rotatebox{0.03136739}{\makebox(0,0)[lb]{\smash{$\ssp(\tau)$}}}}%
+%   \end{picture}%
+ \end{center}
+\end{block}
+  \column{0.5\textwidth}
+\begin{block}{\reducedsp}
+ \begin{center}
+  \setlength{\unitlength}{1.00\textwidth}
+  %% \unitlength = units used in the Picture Environment
+  \begin{picture}(1,1.07315413)%
+    \put(0,0){\includegraphics[width=\unitlength]{BeThRedTeX}}%
+    \put(0.19912369,0.17144733){\color[rgb]{0,0,0}\rotatebox{0.11031334}{\makebox(0,0)[lb]{\smash{$\pSRed$}}}}%
+    \put(0.63028127,0.18433598){\color[rgb]{0,0,0}\rotatebox{0.03136739}{\makebox(0,0)[lb]{\smash{$\sspRed(0)$}}}}%
+    \put(0.46253394,0.70182305){\color[rgb]{0,0,0}\rotatebox{0.03136739}{\makebox(0,0)[lb]{\smash{$\sspRed(\tau)$}}}}%
+  \end{picture}%
+ \end{center}
+\end{block}
+\end{columns}
+\end{frame}
+
+
+\begin{frame}{Complex Lorenz equations (CLE)}
+  \begin{exampleblock}{}
+	\begin{align*}
+	  \dot{x} &= -\sigma x+ \sigma y \,,\continue
+	  \dot{y} &=\, (\rLor-z)x-a y\,, \continue
+	  \dot{z} &= (x y^*+x^*y)/2 -b z\,.
+	\end{align*}
+  \end{exampleblock}
+  \begin{block}{}
+     \begin{itemize}
+	  \item $x,y\in\Clx{}$, $z\in\Rls{}$
+	  \item $\sigma,\,b \in \Rls{}$, $\rLor=\RerCLor+i\ImrCLor$, $a=1-i e$
+	  \end{itemize}
+  \end{block}
+  \begin{block}{equivariant under}
+    \[
+      x\mapsto e^{i\theta}x\,, \qquad y\mapsto e^{i\theta}y
+    \]
+  \end{block}
+\end{frame}
+
+
+\begin{frame}{\SOn{2} equivariant}
+			\begin{exampleblock}{{\cLe}}
+\scriptsize		
+\[
+		\left[
+					\begin{array}{c}
+				\dot{x}_1 \\ \dot{x}_2 \\ \dot{y}_1 \\ \dot{y}_2 \\ \dot{z}
+				\end{array}
+		\right]
+=
+		\left[
+					\begin{array}{c}
+				 -\sigma x_1 + \sigma y_1 \\
+				-\sigma x_2 + \sigma y_2 \\
+                (\RerCLor-z) x_1 - \ImrCLor x_2 -y_1-e y_2 \\
+                \ImrCLor x_1 + (\RerCLor-z) x_2 + e y_1- y_2 \\
+				-b z + x_1 y_1 + x_2 y_2
+				\end{array}
+		\right]
+\]
+$x=x_1+i\,x_2$, $y=y_1+i\,y_2$.
+			\end{exampleblock}
+
+\begin{block}{}
+equivariant under a \SOn{2} rotation by angle
+\gSpace:
+\scriptsize		
+\[
+\LieEl(\gSpace) \,=\,  \left(\barr{ccccc}
+  \cos \gSpace  & \sin \gSpace  & 0 & 0 & 0 \\
+ -\sin \gSpace  & \cos \gSpace  & 0 & 0 & 0 \\
+ 0 & 0 &  \cos \gSpace & \sin \gSpace   & 0 \\
+ 0 & 0 & -\sin \gSpace & \cos \gSpace   & 0 \\
+ 0 & 0 & 0             & 0              & 1
+    \earr\right)
+\] %{CLfRots}
+\end{block}
+%\begin{block}{\statesp\ decomposition}
+%\begin{enumerate}
+%  \item $m=0$ \SOn{2}-invariant subspace: $z$-axis
+%  \item $m=1$ subspace with multiplicity 2
+%\end{enumerate}
+%\end{block}
+\end{frame}
+
+
+\begin{frame}{CLE phase space}
+%  \begin{block}{continuous symmetry induces drifts}
+%  \end{block}
+ \begin{center}
+  \includegraphics[width=0.33\textwidth,clip=true] %,height=0.5\textheight
+  {CLEchaotic}~
+  \includegraphics[width=0.33\textwidth,clip=true]
+  {CLEcompact}~
+%   \only<2>{\includegraphics[width=0.33\textwidth,clip=true]
+%   {CLEWurst01} }
+\end{center}
+\begin{itemize}
+  \item generic chaotic trajectory (blue)
+  \item $E_0$ \eqv  %\EQV{0}
+  \item $E_0$ unstable manifold (green, representative)
+  \item $Q_1$ \reqv\ (red)
+  \item $Q_1$ unstable manifold (brown, representative)
+  \item \rpo\ 01, $x(T_p)=\LieEl(\gSpace)x(0)$ (purple)
+\end{itemize}
+\end{frame}
+
+% \begin{frame}{trajectories, orbits}
+% %  \caption{\label{fig:A27wurst}
+% 	\begin{columns}[t]
+% 	\column{.32\textwidth}
+% \includegraphics[width=0.95\textwidth]{A27traj}
+% 
+% trajectory $\ssp(\zeit)$
+% 	\column{.32\textwidth}
+% \includegraphics[width=0.95\textwidth]{A27gOrbit}
+% 
+% group orbit $\LieEl\,\ssp(0)$
+% 	\column{.32\textwidth}
+% \includegraphics[width=0.95\textwidth]{A27wurst}
+% 
+% wurst $\LieEl\,\ssp(\zeit)$
+% 	\end{columns}
+% \end{frame}
+
+
+% \section{symmetry reduction}
+% 
+% \begin{frame}{}
+% \begin{block}{the goal}
+% replace each group orbit by a unique
+% point in a lower-dimensional
+% 
+% \bigskip
+% 
+% \hfill
+% \textcolor{red}{\Large symmetry \reducedsp\ $\pS/\Group$}
+% \end{block}
+% \end{frame}
+
+
+\begin{frame}[t]{How to identify equivalent points?}
+  Two main approaches:
+  \begin{itemize}
+   \item Invartiant polynomials (Hilbert basis)
+      \only<2->{
+	  \begin{itemize}
+	  \item Computing a basis impractical for high-dimensional state space
+	  \end{itemize}
+       }
+   \item Slicing/Freezing
+	\only<3->{
+	  \begin{itemize}
+	  \item Applicable in high-dimensions
+	  \item Local
+	  \item Rowley and Marsden, Physica D {\bf 142}, 1 (2000)\\
+		Beyn and Th\"ummler, SIADS {\bf 3}, 85 (2004)\\
+		Arnol'd, Ordinary Differential Equations (1992)
+	  \end{itemize}
+	}
+    \only<4->{
+    \item Link between the two methods: moving frames (Cartan)\\ 
+    \footnotesize{Fels and Olver, Acta Appl. Math {\bf 55} 127 (1999)}
+    }
+  \end{itemize}
+  \bigskip \bigskip 
+  \only<4->{
+    \begin{block}{}
+      \footnotesize{for a review see Siminos and Cvitanovi\'c, Physica D {\bf 240}, 187 (2011)} 
+    \end{block}
+  }
+\end{frame}
+
+% \begin{frame}[t]{The method of slices}
+%  \begin{block}{}
+%   \begin{columns}
+% 	\column{0.5\textwidth}
+% 	  \includegraphics[width=\textwidth]{ReducTrajES.pdf}
+% 	\column{0.5\textwidth}
+% 	\begin{itemize}
+% 	  \item Pick a 'template' $\overline{x}'$.
+% 	  \item Define a slice hyperplane $\overline{M}$ transverse to the group tangent $t'$ at $\overline{x}'$.
+% 	  \item Find point $\overline{\ssp}(\tau)$ in group orbit of $\ssp(\tau)$ which intersects $\overline{M}$.
+% 	  \item Slice condition: $<g(-\theta)\ssp(\tau)-\overline{x}'|t'>=0$
+% 	\end{itemize}
+%   \end{columns}
+%   \begin{itemize}
+%     \item Solve for $\theta$ ($\theta$ depends on $\tau$!)
+%     \item Point on the slice is $\overline x(\tau) = g(-\theta)\ssp(\tau)$
+%   \end{itemize}
+%  \end{block}
+%   \begin{block}{See}
+%    \begin{itemize}
+%     \item {\footnotesize Siminos \& Cvitanovi\'c, Physica D {\bf 240}, 187 (2011)}
+%     \item {\footnotesize Froehlich \& Cvitanovi\'c, Comm. Nonlinear Sci. \& Numer. Simul.  (2011)}
+%    \end{itemize}
+% 
+%   \end{block}
+% 
+% %   \only<2>{ 
+% %     \begin{block}{}
+% %       \begin{itemize}
+% % 	\item Local method.
+% % 	\item In general several slice hyperplanes $\overline{M}_i$ will be needed in order to cover the reduced space.\\
+% % 	      \flushright see http://cns.gatech.edu/{\raise.17ex\hbox{$\scriptstyle\sim$}}predrag/papers/atlas12.pdf
+% %       \end{itemize}
+% %     \end{block}
+% %   }
+% \end{frame}
+
+\begin{frame}[t]{The method of slices}
+ \begin{block}{}
+  \begin{columns}
+	\column{0.5\textwidth}
+% 	  \includegraphics[width=\textwidth]{fig1}
+ \setlength{\unitlength}{\textwidth}
+ %% \unitlength = units used in the Picture Environment
+ \begin{picture}(1,0.8361641)%
+   \put(0,0){\includegraphics[width=\unitlength]{ReducTraj5.pdf}}%
+   \put(0.03,0.38){\color[rgb]{0,0,0}\rotatebox{-30.34758661}{\makebox(0,0)[lb]{\smash{$\pSRed$}}}}%
+   \put(0.57768586,0.29773425){\color[rgb]{0,0,0}\rotatebox{0.0313674}{\makebox(0,0)[lb]{\smash{$\sspRed(0)$}}}}%
+   \put(0.55,0.69932675){\color[rgb]{0,0,0}\rotatebox{0.03136739}{\makebox(0,0)[lb]{\smash{$\ssp(\zeit)$}}}}%
+   \put(0.8268425,0.39772328){\color[rgb]{0,0,0}\rotatebox{0.03136739}{\makebox(0,0)[lb]{\smash{$\sspRed(\zeit)$}}}}%
+   \put(0.81220962,0.66529577){\color[rgb]{0,0,0}\rotatebox{0.03136739}{\makebox(0,0)[lb]{\smash{$g(\theta(\zeit))\ssp(\zeit)$}}}}%
+%   \put(0.19,0.63610779){\color[rgb]{0,0,0}\rotatebox{0.0313674}{\makebox(0,0)[lb]{\smash{$\matrixRep(\theta)\,\slicep$}}}}%
+   \put(0.37740434,0.49597258){\color[rgb]{0,0,0}\rotatebox{0.0313674}{\makebox(0,0)[lb]{\smash{$\slicep$}}}}%
+   \put(0.3627714,0.69665188){\color[rgb]{0,0,0}\rotatebox{0.0313674}{\makebox(0,0)[lb]{\smash{$\sliceTan{}$}}}}%
+ \end{picture}%
+	\column{0.5\textwidth}
+	\begin{itemize}
+	  \item Pick a 'template' $\hat{x}'$.
+	  \item Define a slice hyperplane $\hat{M}$ transverse to 
+	  the group tangent\\ $\groupTan'=\Lg x'$ at $\hat{x}'$, where $\Lg$ is the group generator.
+% 	  \item Find point $\overline{\ssp}(\tau)$ in group orbit of $\ssp(\tau)$ which intersects $\overline{M}$.
+% 	  \item Slice condition: $<g(-\theta)\ssp(\tau)-\overline{x}'|t'>=0$
+	  \item Define the reduced space by $<\hat{x}|t'>=0$	    
+	\end{itemize}
+  \end{columns}
+  \begin{itemize}
+    \item Dynamics can be decomposed as
+    \[
+      \dot{\sspRed} = \vel(\sspRed)
+	-\dot{\theta}(\sspRed) \, \groupTan(\sspRed)\qquad\textrm{(dynamics on the slice)}
+    \]
+    \[
+      \dot{\theta}(\sspRed) = {\braket{\vel(\sspRed)}{\sliceTan{}}}/
+		    {\braket{\groupTan(\sspRed ) }{\sliceTan{} } }\qquad\textrm{(reconstruction equation)}
+    \]
+    where $\groupTan(\sspRed)=\Lg\sspRed$
+%     \item Solve for $\theta$ ($\theta$ depends on $\tau$!)
+%     \item Point on the slice is $\overline x(\tau) = g(-\theta)\ssp(\tau)$
+  \end{itemize}
+ \end{block}
+\end{frame}
+
+\begin{frame}{Application to CLe}
+ \centering
+  \includegraphics[width=0.33\textwidth,clip=true]{CLEchaotic}~
+  \includegraphics[width=0.33\textwidth,clip=true]{CLEmfAdHoc245}~
+  \includegraphics[width=0.33\textwidth,clip=true]{CLEinvRM}
+  \begin{itemize}
+    \item Choose $Q_1$ as template
+    \item Integrate on the slice
+    \item Group orbits are mapped to unique representatives
+    \item Introduce Poincar\'e section
+    \item Define a coordinate $s_n$ as the length along 
+    the unstable manifold of $Q_1$ 
+    \item Reduce dynamics to a return map
+  \end{itemize}
+\end{frame}
+
+
+\begin{frame}[t]{The method of slices}
+%  \begin{block}{}
+    \setlength{\unitlength}{0.4\textwidth}
+    %% \unitlength = units used in the Picture Environment
+    \begin{picture}(1,0.8361641)%
+      \put(0,0){\includegraphics[width=\unitlength]{ReducTraj5.pdf}}%
+      \put(0.03,0.38){\color[rgb]{0,0,0}\rotatebox{-30.34758661}{\makebox(0,0)[lb]{\smash{$\pSRed$}}}}%
+      \put(0.57768586,0.29773425){\color[rgb]{0,0,0}\rotatebox{0.0313674}{\makebox(0,0)[lb]{\smash{$\sspRed(0)$}}}}%
+      \put(0.55,0.69932675){\color[rgb]{0,0,0}\rotatebox{0.03136739}{\makebox(0,0)[lb]{\smash{$\ssp(\zeit)$}}}}%
+      \put(0.8268425,0.39772328){\color[rgb]{0,0,0}\rotatebox{0.03136739}{\makebox(0,0)[lb]{\smash{$\sspRed(\zeit)$}}}}%
+      \put(0.81220962,0.66529577){\color[rgb]{0,0,0}\rotatebox{0.03136739}{\makebox(0,0)[lb]{\smash{$g(\theta(\zeit))\ssp(\zeit)$}}}}%
+    %   \put(0.19,0.63610779){\color[rgb]{0,0,0}\rotatebox{0.0313674}{\makebox(0,0)[lb]{\smash{$\matrixRep(\theta)\,\slicep$}}}}%
+      \put(0.37740434,0.49597258){\color[rgb]{0,0,0}\rotatebox{0.0313674}{\makebox(0,0)[lb]{\smash{$\slicep$}}}}%
+      \put(0.3627714,0.69665188){\color[rgb]{0,0,0}\rotatebox{0.0313674}{\makebox(0,0)[lb]{\smash{$\sliceTan{}$}}}}%
+    \end{picture}
+  \hspace{40pt}  
+  \setlength{\unitlength}{0.30\textwidth}
+  %% \unitlength = units used in the Picture Environment
+  \begin{picture}(1,0.89907101)%
+    \small
+    \put(0,0){\includegraphics[width=\unitlength]{A29-1ridge}}%
+    \put(0.00894598,0.81885604){\color[rgb]{0,0,0}\makebox(0,0)[lb]{\smash{$\sspRed(0)$}}}%
+    \put(0.88743345,0.05105926){\color[rgb]{0,0,0}\makebox(0,0)[lb]{\smash{$\sspRed(\zeit)$}}}%
+    \put(0.78614059,0.43443027){\color[rgb]{0,0,0}\rotatebox{-25.76142111}{\makebox(0,0)[lb]{\smash{$\pSRed{}^{(2)}$}}}}%
+    \put(0.37048948,0.79485578){\color[rgb]{0,0,0}\rotatebox{-61.41291822}{\makebox(0,0)[lb]{\smash{$\pSRed{}^{(1)}$}}}}%
+    \put(0.2429401,0.27697318){\color[rgb]{0,0,0}\makebox(0,0)[lb]{\smash{$\sspRed_2$}}}%
+    \put(0.47832196,0.33514069){\color[rgb]{0,0,0}\makebox(0,0)[lb]{\smash{$\sspRed_1$}}}%
+    \normalsize
+  \end{picture}%    
+%  \end{block}
+%     \begin{block}{}
+      \begin{itemize}
+	\item Recall the reconstruction equation
+	\[
+	  \dot{\theta}(\sspRed) = {\braket{\vel(\sspRed)}{\sliceTan{}}}/
+			{\braket{\groupTan(\sspRed ) }{\sliceTan{} } }
+	\]
+	\item Singularity at the \emph{chart border}:
+	      $\braket{\groupTan(\sspRed ) }{\sliceTan{} }=0$
+	\item Local method.
+	\item In general several slice hyperplanes $\hat{M}^{(i)}$ will be needed in order to cover the reduced space.\\
+	      {\footnotesize Cvitanovi\'c, Borrero-Echeverry, Carroll, Robbins, Siminos, Chaos \textbf{22}, 047506 (2012)}\\
+	      {\footnotesize Willis, Cvitanovi\'c, Avila, J. Fluid Mech. \textbf{721}, 514-540 (2013)}
+	\item Challenge: Cover with charts a space which is only implicitly defined
+% 	\item For dynamical systems: ensure relative periodic orbits become periodic
+      \end{itemize}
+%     \end{block}
+\end{frame}
+
+
+\section{PDEs}
+
+\begin{frame}{Kuramoto-Sivashinsky equation (KSe)}
+ \begin{block}{}
+  \[
+	u_t =  -{\textstyle\frac{1}{2}}(u^2)_x-u_{xx}-u_{xxxx}
+  \]
+  \begin{itemize}
+    \item $u(x,t)$ real
+	\item $x\in[-L/2,L/2]$
+	\item periodic boundary conditions in $x$
+  \end{itemize}
+ \end{block}
+  \begin{block}{Symmetries}
+% 	If $u(x,t)$ a solutions then
+    \begin{itemize}
+	  \item Translations: $u(x,t) \mapsto u(x+\ell,t)$
+	  \item Reflections: $u(x,t) \mapsto -u(-x,t)$
+    \end{itemize}
+% 	are equivalent solutions.
+
+  \end{block}
+\end{frame}
+
+\begin{frame}{Kuramoto-Sivashinsky equation (KSe)}
+  \begin{block}{From Rowley and Marsden (2000)}
+  \centering
+    \includegraphics[width=0.8\textwidth]{rowley}
+  \end{block}
+  \begin{itemize}
+   \item Dynamics near a relative equilibrium (traveling wave) is studied
+   \item Model reduction using proper orthogonal decomposition was found to be much more efficient
+   in the symmetry reduced system
+  \end{itemize}
+
+\end{frame}
+
+
+
+\begin{frame}{Typical solution for $L=22$}
+  \centering
+  \includegraphics[width=0.8\textwidth]{ks_L22_long_orbit}
+  \begin{block}{}
+    {\footnotesize Cvitanovi\'c, Davidchuck and Siminos, SIADS {\bf 9}, 1 (2010)}
+  \end{block}
+\end{frame}
+
+
+\begin{frame}{Symmetries of KSe in Fourier space}
+\[
+    u(x,t)=\sum_{k=-\infty}^{+\infty} a_k (t) e^{ i k x /\tildeL }
+\]
+\begin{itemize}
+  \item Truncate to finite order $d$ ($\simeq32$).
+  \item Translations: $a\mapsto g(\ell)a$
+    \[
+       g(\ell)= diag(e^{i\,k\,2\pi\,\ell/L})
+    \]  
+  \item With $a_k=b_k+i\,c_k$
+%   \item Translations
+  \[
+  \LieEl(\ell) \,=\,  diag\left(\barr{cc}
+   \cos (k\, 2\pi\ell/L)  & \sin (k\, 2\pi\ell/L)   \\
+   -\sin (k\, 2\pi\ell/L)  & \cos (k\, 2\pi\ell/L)  
+  %  0 & 0 &  \cos \gSpace & \sin \gSpace   & 0 \\
+  %  0 & 0 & -\sin \gSpace & \cos \gSpace   & 0 \\
+  %  0 & 0 & 0             & 0              & 1
+      \earr\right)
+  \] %{CLfRots}
+  \item Reflections: $b_k\mapsto -b_k$
+  \item Symmetry $\On{2}$
+  \item Here we concentrate to translations $\sim\SOn{2}$
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Irreducible subspace slice}
+  
+  \begin{itemize}
+   \item Choose as template a point in the $n$'th Fourier subspace, e.g.:
+    \[
+      \slicep = (...,1,0,0,0,...)
+      \,,\quad
+	\sliceTan{} = (...,0,1,0,0,...)
+    \]
+    \item The slice is
+    \bea
+      \hat{b}_n & \geq & 0 \,,\quad  \hat{c}_n \,=\, 0\,, \continue
+      \hat{b}_k, \hat{c}_k & \in & \reals\,,\quad \mbox{for all~~} k \neq n
+    \eea
+    \item The chart border is $b_n=c_n=0$.
+    \item Advantage: by judicious choice of $n$ the probability to visit the 
+    chart border becomes negligible.
+    \item For $n=1$ the 'first Fourier mode' slice works well for KSe\\
+    {\footnotesize Budanur, Cvitanovi\'c, Davidchack
+     and Siminos, Phys. Rev. Lett. \textbf{114}, 084102 (2015)}\\
+    and Navier-Stokes (turbulent pipe flow)\\
+    {\footnotesize Willis, Short and Cvitanovi\'c, Phys. Rev. E \textbf{93}, 022204 (2016)}
+  \end{itemize}  
+\end{frame}
+
+\begin{frame}{Irreducible subspace slice}
+   
+  \begin{itemize}
+    \item Advantage: connection to the method of moving frames\\
+    \footnotesize Fels and Olver Acta Appl. Math, {\bf 55}, 127 (1999) 
+    \normalsize
+    \item The slice condition 
+    \[
+     \hat{c}_n = -\sin (n\, \theta) b_n   + \cos (n\, \theta)c_n =0 
+    \]
+    can be solved for the group parameter $\theta\equiv 2\pi\ell/L$:
+	\[
+	  \theta=\arctan(c_n/b_n)/n 
+ 	\]
+	  \emph{Moving frame}: mapping from state-space to the group parameter.
+    \item Substituting $\theta$ back to $\hat{a}=g(\theta)a$ provides $d-1$ invariant variables
+    \bea
+     \hat{b}_k &=& \cos (k\, \theta) b_k + \sin (k\, \theta)c_k\nonumber\\
+     \hat{c}_k &=& -\sin (k\, \theta) b_k   + \cos (k\, \theta)c_k
+    \eea
+    \item This allows to map solutions to the slice in post-processing
+    \item For general slice conditions one can find $\theta$ numerically
+    \item Fourier modes are irreducible representations of $\SOn{2}$.\\ 
+    In principle \emph{irreducible subspace slices} could be constructed for other compact groups\\ \vspace{9pt} 
+    {\footnotesize Siminos and Cvitanovi\'c, Physica D {\bf 240}, 187 (2011)}\\
+    {\footnotesize Fedele et al, Journal Fluid Mech. (2015)}
+    
+  \end{itemize}  
+\end{frame}
+
+\begin{frame}{Application to Kuramoto-Sivashinsky equation}
+ \begin{center}
+  \includegraphics[width=0.4\textwidth]{ks22reducePhysicalSpace.png}
+ \end{center}
+  \begin{itemize}
+   \item Perturbation of traveling wave $TW_1$ 
+   \item First Fourier mode slice
+   \item To deal with close passages to the chart border time rescaling was introduced\vspace{9pt}\\
+   \footnotesize{Budanur, Cvitanovi\'c, Davidchack and Siminos, Phys. Rev. Lett. \textbf{114}, 084102 (2015)}
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{Application to Kuramoto-Sivashinsky equation}
+ \begin{center}
+  \includegraphics[width=0.6\textwidth]{ks22reducePhaseSpace.png}
+ \end{center}
+ \begin{itemize}
+    \item Projections onto coordinates constructed by projecting onto the most expanding eigenvectors of $TW_1$
+    \item Unstable manifold of $TW_1$
+    \item $TW_2$
+    \item Relative periodic orbit $u(x+d_p,T_p)=u(x,0)$\vspace{9pt}\\
+    \footnotesize{Budanur, Cvitanovi\'c, Davidchack and Siminos, Phys. Rev. Lett. \textbf{114}, 084102 (2015)}
+   \end{itemize}
+\end{frame}
+
+
+% \begin{frame}{30000 relative periodic orbits}
+%  \begin{center}
+% \begin{tabular}{ccccc} 
+% % (\textit{a}) & (\textit{c}) & (\textit{e}) &
+% %                         (\textit{g}) & (\textit{i}) & (\textit{k})\\
+% \includegraphics[width=0.15\textwidth, clip=true]{ks22rpo016.3-02.86.pdf} &
+% \includegraphics[width=0.15\textwidth, clip=true]{ks22rpo033.5-04.04.pdf} &
+% \includegraphics[width=0.15\textwidth, clip=true]{ks22rpo047.6-05.68.pdf} &
+% % \includegraphics[width=0.15\textwidth, clip=true]{ks22rpo071.7-05.50.pdf}\hspace{-3ex} &
+% % \includegraphics[width=0.15\textwidth, clip=true]{ks22rpo020.5-00.00.pdf}\hspace{-3ex} &
+% % \includegraphics[width=0.15\textwidth, clip=true]{ks22rpo066.8-00.00.pdf}\\
+% % (\textit{b}) & (\textit{d}) & (\textit{f}) &
+% % (\textit{h}) & (\textit{j}) & (\textit{l})\\
+%  \includegraphics[width=0.15\textwidth, clip=true]{ks22rpo032.8-10.96.pdf} &
+%  \includegraphics[width=0.15\textwidth, clip=true]{ks22rpo034.6-09.60.pdf} 
+% % \includegraphics[width=0.15\textwidth, clip=true]{figs/ks22rpo059.9-05.44.eps}\hspace{-3ex} &
+% % \includegraphics[width=0.15\textwidth, clip=true]{figs/ks22rpo084.4-05.51.eps}\hspace{-3ex} &
+% % \includegraphics[width=0.15\textwidth, clip=true]{figs/ks22rpo064.7-00.00.eps}\hspace{-3ex} &
+% % \includegraphics[width=0.15\textwidth, clip=true]{figs/ks22rpo070.3-00.00.eps}
+% \end{tabular}
+% \end{center}
+% \begin{block}{}
+%   \begin{itemize}
+%     \item $u(x+d_p,T_p)=u(x,0)$
+%     \item How are they organized?
+%   \end{itemize}
+% \end{block}
+
+% \begin{block}{}
+%  \footnotesize{Cvitanovi\'c, Davidchuck and Siminos, SIAM J. Appl. Dyn. Syst. {\bf 9}, 1-33 (2010)}
+% \end{block}
+% 
+% 
+% \end{frame}
+
+\begin{frame}[t]{How are relative periodic orbits related?}
+  \begin{center}
+  \begin{tabular}{ccc}
+	% ES produced with siminos/matlab/ruslan/ks22export.m
+	\includegraphics[width=0.24\textwidth, clip=true]{ks22rpoT16p31s2p9phys} &
+	\includegraphics[width=0.24\textwidth, clip=true]{ks22rpoT47p32s0p3phys} &
+	\includegraphics[width=0.24\textwidth, clip=true]{ks22rpoT64p51s2p5phys} 
+\only<2>{ \\
+	\includegraphics[width=0.3\textwidth, clip=true]{ks22torRPO1} &
+	\includegraphics[width=0.3\textwidth, clip=true]{ks22torRPO2} &
+	\includegraphics[width=0.3\textwidth, clip=true]{ks22torRPO3}
+}
+\only<3>{\\
+	\includegraphics[width=0.3\textwidth]{ks22rpoShadFM} & & 
+}
+% \only<4>{\\
+% 	\includegraphics[width=0.3\textwidth]{ks22rpoShadFM} &  
+% 	\includegraphics[width=0.3\textwidth]{ks22rpoT47p32s0p3templ} & 
+% }
+\only<4>{\\
+	\includegraphics[width=0.3\textwidth]{ks22rpoShadFM} &  
+% 	\includegraphics[width=0.3\textwidth]{ks22rpoT47p32s0p3templ} & 
+	\includegraphics[width=0.3\textwidth]{ks22rpoShadSingleChart} 
+}
+  \end{tabular}
+\end{center}
+\end{frame}
+
+
+% \begin{frame}{Relative periodic orbits on a slice}
+%   \includegraphics[width=0.4\textwidth]{ks22rpoShadFM}~~
+%   \includegraphics[width=0.4\textwidth]{ks22rpoShadSingleChart}
+% \end{frame}
+
+% \begin{frame}{Poincar\'e Section}
+%  
+% (No return map) Unstable manifold of shortest orbit organizes the longer orbits
+% 
+% \end{frame}
+
+\begin{frame}{Conclusions}
+
+\begin{block}{}
+ \begin{itemize}
+  \item Symmetry reduction allows elucidation of phase-space topology in flows with continuous symmetry.
+  \item The method of slices/freezing is applicable in high-dimensional systems
+  \item Post-processing variant based on the method of moving frames
+  \item Need for several ``charts''
+  \item For some problems a single irreducible subspace slice works 
+ \end{itemize}
+\end{block} 
+% \begin{block}{Ongoing work}
+%   \begin{itemize}
+%    \item Covering KS state space with multiple charts  
+%   \end{itemize}
+% \end{block}
+
+
+% \begin{block}{Acknowledgements}
+%  \begin{itemize}
+%   \item Burak Budanur (IST)
+%   \item Predrag~Cvitanovi\'c (Georgia Tech)
+%   \item Ruslan Davidchuck (Leicester)
+%  \end{itemize}
+% \end{block}
+
+\end{frame}
+
+
+
+
+
+\end{document}

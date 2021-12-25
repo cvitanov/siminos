@@ -1,0 +1,186 @@
+\section{Conclusions}
+The \reffig{fig:MNGrfig2} is a comparison between the spatial integration
+of \refeq{e-MNGre12} using the compilation method I employed in
+\texttt{timeperiodic.m} and the time integration of \refeq{e-MNGre3}
+using the ETDRK4 numerical scheme implementation of MATLAB file
+\texttt{ksint.m}. The behavior of these figures seem to exhibit similar
+patterns up to a what appears to be a reflection in the time direction,
+implying that there is some unaccounted symmetry. This can be seen by
+what I call the ``tails" of the pattern in the middle being pointed in
+opposite directions for time and space integration.
+
+The hope for my code is to be capable of spatial integration of infinite
+ extent. My results are disappointing to me to say the least, having been
+  thrown for loops by what should have been insignificant details, but
+  I hope to use what I've learned in terms of coding in the future.
+
+Some possible means of improving the equations is to look for better ways to
+ dealias the pseudo-spectral term or to use the same method but require it to be more rigorous (e.g. more zero-padding).
+
+Second would be to write an integration scheme that could produce more
+accurate results. My first thought is to apply the ETDRK4 schema to spatial
+ integration, however, I'm not sure if this would work with a system of
+ equations rather than a single PDE.
+
+We have detailed a {\spt} formulation of turbulence
+which treats all continuous dimensions with translational
+invariance equally and
+explains solutions as collections of {\fpo}s.
+
+The new techniques we developed allow us
+to extract small {\po}s from larger {\po}s (clipping) and build larger {\po}s
+by combining smaller {\po}s (gluing).
+\subsection{Numerical robustness}
+
+While we hope to eventually apply these ideas to equations with more continuous
+dimensions there are still many tough questions yet to be answered.
+\section{Future work}
+These methods provides a numerical foundation
+with which to investigate a 2{\dmn}{\spt} symbolic dynamics.
+Specifically, by gluing members of the three continuous families of {\fpo}s
+we can begin to probe the grammar of the proposed {\symbolic} by looking
+for admissible orbits.
+
+The most important question is how to incorporate
+continuous families into the proposed  2\dmn\ \spt\ {\symbolic}.
+The existence of continuous families makes the determination of the {\symbolic} grammar
+particularly difficult. One reason is because our method for
+determining the grammar is ultimately an empirical process.
+The admissibility of every {\po} is
+dependent upon the convergence of the optimization problem, which in turn may depend on
+which {\fpo} family members ares used in the construction of the initial guess.
+Therefore, we can be mislead by initial guesses which do not converge to the corresponding
+{\po} it shadows. In addition to being sensitive to initial guesses, the
+failure to converge can also be the fault of insufficient numerical methods.
+The most obvious course of action is to improve the
+optimization and gluing methods, with respect to their frequency of convergence.
+The former of these two improvements is fairly
+straightforward; find and implement better numerical methods. This seems
+to be the low hanging fruit as we have employed some of the simplest available
+algorithms. Improving the gluing method is less straightforward; but there are
+also many potential improvements.
+
+The first set of gluing improvements we discuss center around the reduction of
+the number of false negatives (not converging to a {\po}). We consider
+the inclusion of local Galilean velocity towards this end. Historically,
+when performing simulations on a single spatially periodic domain,
+Galilean invariance has been invoked to constrain the mean value of
+the velocity field to zero. This does not mean, however, that the \emph{local}
+Galilean velocity be zero. This detail could be included in each gluing such that the
+local Galilean velocity of each {\fpo} would be included as a free parameter. By
+doing so we can theoretically construct better guesses by increasing the
+agreement between {\fpo}s at their boundaries.
+
+The second gluing improvement we offer is the proper usage of the {\fpo} continuous families.
+In other words, instead of using three static representatives of the families
+we would reference the entire family during the gluing. This could be employed to
+minimize differences at the
+boundaries as well as in the periods.
+In a similar vein, we need to incorporate symmetries into the construction process.
+This extends the freedom of choice from picking a member of a family to
+picking a member of each families' group orbit. For instance, during the gluing
+process one is free to choose whether to use a {\fpo} or its reflection.
+In the process of probing the {\symbolic} grammar, numerical convergence is not
+the only factor which is required for success. The {\po} found via optimization
+must also correspond to the original {block} it was targeting. If this is not
+upheld, then the result is deemed a false positive; numerical but not symbolic
+convergence.
+
+
+Our only method of classifying false positives is visual inspection;
+obviously an inefficient method that needs to be improved.
+For example, assume that a {block}
+contains $N$ symbols representative of the {\defect} family. If the {\po}
+which the initial guess converges to does not include the signatures of $N$
+defects then we claim that it cannot be a manifestation of the original {block}.
+We have tried a number of methods which
+attempt to identify features of {\fpo}s via image detection
+or their topological signatures via persistent homology with
+no real success. A possible brute force method would be to attempt to clip
+and compare subdomains with {\fpo}s. The problem with this
+is the incredible number of subdomains which could be clipped; a crude
+approximation is on the order of $\mathcal{(NM)^2}$. Choose a corner
+of the subdomain ($N$ choices in time, $M$ in space) then identify the
+dimensions of the rectangular subdomain ($N-1$ choices in time, $M-1$ in space).
+Therefore this brute force method does not seem to be a realistic option.
+Each of these improvements introduces a layer of complexity which
+quickly compound with one another making gluing a very complex process.
+
+The guiding principle for all of these improvements
+is that they minimize the cost function residual \refeq{e-cost} by
+mitigating the error at the gluing boundaries and the error due to difference
+in periods. We point out that simply reducing the cost function with no consideration
+towards the method is not useful. For instance,
+setting $\utensor=\mathbf{0}$ reduces the residual to zero but it quite clearly not of any use.
+Better metrics to gauge the merit of these additional techniques would perhaps be
+the frequency of convergence to the correct {\po} symbolically (true positive rate).
+
+Another common occurrence is the stretching of solutions in time where large swathes shadow
+equilibria. The numerical description of this effect is that during the variational search
+the time dimension being stretched, as evidenced by the large difference in time
+period. This reduces the magnitude of the temporal tangents which
+brings it close to equilibria In other words, stretching of the
+variational ``rubber band'' kills any tangential variation. This process
+is evidenced by numerical continuation of various solutions. For instance,
+the merger tile has a maximum spatial domain size at which point the torus
+essentially contracts into a relative equilibrium. This process is (numerically) irreversible;
+reducing the domain size of the newly found relative equilibrium does not
+bring the original merger tile back.
+
+For our purposes a collection on the order of a thousand \twots\
+was collected but this was likely overkill; as seemingly indicated by the number
+of fundamental tiles.
+
+It is of course desirable to match tiles based on their boundaries as to reduce the severity of numerical
+discontinuities. A more subtle reason to access the entire family is to match the
+\spt\ domain size of the neighbors. Solving the optimization problem is equivalent
+to enforcing the tangent space to behave according to the governing equations.
+The magnitudes of the each tangent; \spt\ derivatives, are affected by the magnitude
+of the temporal and spatial domain sizes.
+
+%What is missing:
+This paper mainly sets the stage and shows the feasibility for a \spt\ theory. There
+is still much more work required to advance the theory.
+
+Not only do we lack the symbolic
+dynamics to describe infinite space-time, we also describe a smart system for enumerating all
+\twots.
+We currently lack a systematic approach for the enumeration of all
+
+Solving the linear system directly by computing the (pseudo) inverse
+of the matrix
+is only available for problems of dimension smaller than those that
+occur in Navier-Stokes
+computations. In fact, this method wouldn't be feasible in the larger
+case at all and
+would have to be replaced with an alternative; a common choice is to
+use iterative
+methods such as GMRES \rf{Saad1986}. Another aspect that has room for
+improvement is
+the choice of norm used in the cost function. There have been cases
+where the
+approximate \twot\ hardly changes (visually) even though the cost
+ function is
+decreasing from $10^{-4}$ to $10^{-14}$. The tolerance is strict
+because we want
+the best approximations possible; especially in regards to the
+fundamental tiles
+whose acquisition is detailed next.
+
+A common criticism and source of skepticism as to these methods
+is the requirement
+to maintain the entire \spt\ discretization in memory. While this
+ is proper cause for
+concern, comparisons with other studies shows a dramatic increase
+in performance.
+For example, in \rf{LCC06}, the tolerance was much less strict,
+ the discretization
+was larger, and the numerical methods required the inversion of
+large matrices.
+
+In our case, coarse \spt\ discretizations remain viable and
+because the convergence is
+occurring in spectral space it is not only easier to interpolate
+ points (via zero padding of
+the spectrum) but also produces more accurate results than with
+ finite differencing.

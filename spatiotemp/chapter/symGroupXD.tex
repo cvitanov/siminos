@@ -1,0 +1,287 @@
+% siminos/spatiotemp/chapter/symGroupXD.tex
+% $Author: predrag $ $Date: 2021-08-03 16:02:22 -0400 (Tue, 03 Aug 2021) $
+
+\section{Group theory and symmetries: a review}
+\label{sect:group}
+
+    \PC{2021-06-19}{
+    A copy of the 2017-03-09 section from Xiong Ding's thesis\\
+    siminos/xiong/thesis/chapters/symGroup.tex.
+    }
+    \PC{2021-06-19}{
+    Update/replace the ChaosBook version, as now
+    $\Zn{2}\to\Dn{1}, \Zn{3}\to\Cn{3}$.
+    }
+In quantum mechanics, whenever a system exhibits some symmetry, the
+corresponding symmetry group commutes with the Hamiltonian of this
+system, namely, $[U(\LieEl), H] = U(\LieEl)H - HU(\LieEl) = 0$. Here
+$U(\LieEl)$ denotes the operation corresponding to symmetry $g$ whose
+meaning will be explained soon. The set of eigenstates with degeneracy
+$\ell$, $\{\phi_1, \phi_2, \cdots, \phi_\ell\}$, corresponding to the same
+system energy $H\psi_i = E_n\psi_i$, is invariant under the symmetry
+since $U(\LieEl)\psi_i$ are also eigenvectors for the same energy.
+This information helps us understand the spectrum of a Hamiltonian and
+the quantum mechanical selection rules. We now apply the same idea to
+the classical {\evOper} $\Lop^t(\ssp_e, \ssp_s)$
+for a system $\flow{t}{\ssp}$ equivariant under a discrete symmetry group
+$\Group=\{e, \LieEl_2, \LieEl_3,\cdots, \LieEl_{|\Group|}\}$ of order
+$|\Group|$:
+\begin{equation}
+  \label{eq:equiva}
+  \flow{t}{{D}(\LieEl)}\ssp)={D}(\LieEl)\,\flow{t}{\ssp} \quad \text{for}
+  \quad \forall
+  \LieEl\in\Group
+  \,.
+\end{equation}
+We start with a review of some basic facts of
+the group representation theory. Some examples of good references
+on this topic are \refref{Hamermesh62, Tinkham}.
+
+Suppose group $\Group$ acts on a linear space $V$ and function
+$\rho(\ssp)$ is defined on this space $\ssp\in V$. Each element
+$\LieEl\in\Group$ will transform point $\ssp$ to ${D}(\LieEl)\ssp$. At
+the same time, $\rho(\ssp)$ is transformed to $\rho'(\ssp)$. The value
+$\rho(\ssp)$ is unchanged after state point $\ssp$ is transformed to
+${D}(\LieEl)\ssp$, so $\rho'({D}(\LieEl)\ssp) = \rho(\ssp)$. Denote
+$U(\LieEl)\rho(\ssp)=\rho'(\ssp)$, so we have
+\begin{equation}
+  \label{eq:ogfx}
+  U(\LieEl)\rho(\ssp) = \rho({D}(\LieEl)^{-1}\ssp)
+  \,.
+\end{equation}
+This is how functions are transformed by group operations. Note, $D(\LieEl)$
+is the representation of $G$ in the form of space transformation matrices.
+The
+operator $U(\LieEl)$, which acts on the function space, is not the same as
+group operation ${D}(\LieEl)$, so \refeq{eq:ogfx} does not mean that
+$\rho(\ssp)$ is invariant under $\Group$. \refExam{exam:C3matrRep} gives
+the space transformation matrices of $\Cn{3}$.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% \example{A matrix representation of cyclic group $\Cn{3}$.}
+\fastTrackExam{exam:C3matrRep}     % \toExam
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\subsection{Regular representation}
+An operator $U(\LieEl)$ which acts on an infinite\dmn\ function space
+is too abstract to analyze.
+We would like to represent it in a more familiar way.
+Suppose there is a function $\rho(\ssp)$ with symmetry $\Group$ defined in full
+\statesp\ $\pS$, then full \statesp\ can be decomposed as a union
+of $|\Group|$ tiles each of which is obtained by transforming the fundamental
+domain,
+\begin{equation}
+  \label{eq:domain}
+  \pS =  \bigcup_{g\in \Group}g\pSRed
+  \,,
+\end{equation}
+where $\pSRed$ is the chosen fundamental domain.
+So $\rho(\ssp)$ takes $|G|$ different forms by \refeq{eq:ogfx} in each sub-domain
+in \refeq{eq:domain}. Now, we obtained a natural choice of a set of bases in this
+function space called the \emph{regular basis},
+\beq
+\label{eq:RegBasis}
+\{ \rho_1^{reg}(\sspRed), \rho_2^{reg}(\sspRed), %\rho_3^{reg}(\sspRed),
+\cdots, \rho_{|\Group|}^{reg}(\sspRed)\}
+=
+\{
+\rho(\sspRed), \rho(\LieEl_2\sspRed), % \rho(\LieEl_3\sspRed),
+\cdots, \rho(\LieEl_{|\Group|}\sspRed) \}
+\,.
+\eeq
+Here, for notation simplicity we use
+$\rho(\LieEl_i\sspRed)$ to represent $\rho(D(\LieEl_i\sspRed))$ without
+ambiguity.
+These bases are
+constructed by applying $U(\LieEl^{-1})$ to $\rho(\sspRed)$ for each
+$\LieEl\in\Group$, with $\sspRed$ a point in the fundamental domain.
+The [$|G|\!\times\!|G|$] matrix representation of the
+action of $U(\LieEl)$ in basis \refeq{eq:RegBasis} is called the \emph{(left)
+regular representation} $D^{reg}(\LieEl)$. Relation \refeq{eq:ogfx} says that
+$D^{reg}(\LieEl)$ is a permutation matrix, so each row or column has only one nonzero
+element.
+
+We have a simple trick to obtain the regular representation quickly.
+Suppose the element at the $i$th row and
+the $j$th column of $D^{reg}(\LieEl)$
+is $1$. It means
+$\rho(\LieEl_i\sspRed) = U(\LieEl) \rho(\LieEl_j\sspRed)$, which
+is $g_i=\LieEl^{-1}g_j \implies g^{-1} = g_i g_j^{-1}$. Namely,
+\beq
+D^{reg}(\LieEl)_{ij} = \delta_{\LieEl^{-1},\, g_i g_j^{-1}}
+\,.
+\ee{eq:RegRep}
+So if we arrange the
+columns of the multiplication table by the inverse of the group elements,
+then setting positions with $\LieEl^{-1}$ to 1 defines the regular
+representation $D^{reg}(\LieEl)$. Note, the above relation can
+be further simplified to $g = g_jg_i^{-1}$, but it exchanges the rows and
+columns of the multiplication table, so $g = g_jg_i^{-1}$
+should not be used to get $D^{reg}(\LieEl)$.
+On the other hand, it is easy to see
+that the regular representation of group element $e$ is always the identity matrix.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% \example{The regular representation of cyclic group $\Cn{3}$.}
+\fastTrackExam{exam:C3regularRep}     % \toExam
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\subsection{Irreducible representations}
+
+$U(\LieEl)$ is a linear operator under the regular basis.
+Any linearly independent combination of the regular bases can be used as
+new basis, and then the representation of $U(\LieEl)$ changes respectively.
+So we ask a question: can we find a new set of bases
+\begin{equation}
+  \rho^{irr}_i=\sum_j S_{ij}\rho^{reg}_j
+  \label{eq:trans}
+\end{equation}
+such that the new representation $D^{irr}(\LieEl) = SD^{reg}(\LieEl)S^{-1}$ is block-diagonal
+for any $\LieEl\in\Group$ ?
+\begin{equation}
+  D^{irr}(\LieEl) =
+  \begin{bmatrix}
+    D^{(1)}(\LieEl) & & \\
+    & D^{(2)}(\LieEl) & \\
+    & & \ddots \\
+  \end{bmatrix}
+  = \bigoplus_{\mu=1}^\shift d_\mu D^{(\mu)}(\LieEl)
+  \,.
+  \label{eq:irre}
+\end{equation}
+In such a block-diagonal representation, the
+subspace corresponding to each diagonal block is invariant under $\Group$
+and the action of $U(\LieEl)$ can be analyzed subspace by subspace.
+It can be easily checked that for each $\mu$, $D^{(\mu)}(\LieEl)$ for all
+$\LieEl\in\Group$ form another representation (\emph{irreducible
+  representation}, or \emph{irrep}) of group $\Group$.
+Here, $r$ denotes the total number of
+irreps of $\Group$. The same irrep may show up more than once in the decomposition
+\refeq{eq:irre}, so the coefficient $d_{\mu}$ denotes the number of its
+copies.  Moreover, it is proved\rf{Hamermesh62} that $d_{\mu}$ is also equal to the dimension
+of $D^{(\mu)}(\LieEl)$ in \refeq{eq:irre}.
+Therefore, we have a relation
+\[
+  \sum_{\mu=1}^r d_\mu^2 = |G|
+  \,.
+\]
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% \example{Irreps of cyclic group $\Cn{3}$.}
+\fastTrackExam{exam:C3irReps}     % \toExam
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\paragraph{Character tables.}
+Finding a transformation $S$ which simultaneously block-diagonalizes the
+regular representation of each group element sounds difficult.
+However, suppose it can be achieved and we obtain a set of irreps $D^{(\mu)}(\LieEl)$,
+then according to Schur's lemmas\rf{Hamermesh62}, $D^{(\mu)}(\LieEl)$ must satisfy a set of
+orthogonality relations:
+\begin{equation}
+  \label{eq:ortho}
+  \frac{d_\mu}{|G|} \sum_g D_{il}^{(\mu)}(\LieEl) D_{mj}^{(\nu)}(g^{-1}) = \delta_{\mu \nu}
+  \delta_{ij} \delta_{lm}
+  \,.
+\end{equation}
+Denote the trace of irrep $D^{(\mu)}$ as $\chi^{(\mu)}$, which is referred to as
+the \emph{character} of $D^{(\mu)}$. Properties of irreps can be derived from
+\refeq{eq:ortho}, and we list them as follows:
+\begin{enumerate}
+\item The number of irreps is the same as the number of
+  classes.
+\item Dimensions of irreps satisfy
+  $\sum_{\mu=1}^\shift d^2_\mu = |G| $
+\item Orthonormal relation I :
+  $\sum_{i=1}^\shift |K_i| \chi_i^{(\mu)} \chi_i^{(\nu)*} = |G|\delta_{\mu \nu} $. \\
+  Here, the summation goes through all classes of this group, and $|K_i|$ is
+  the number of elements in class $i$. This weight comes from the fact that
+  elements in the same class have the same character. Symbol $*$ means
+  the complex conjugate.
+\item Orthonormal relation II :
+  $\sum_{\mu=1}^\shift \chi_i^{(\mu)} \chi_j^{(\mu)*} = \frac{|G|}{|K_i|}\delta_{ij} $. \\
+\end{enumerate}
+The characters for all classes and irreps of a finite group are
+conventionally arranged into a \emph{character table}, a square matrix
+whose rows represent different
+classes and columns represent different irreps.
+Rules 1 and 2 help determine the number of irreps and
+their dimensions. As the matrix representation of class $\{e\}$ is always the
+identity matrix, the first row is always the dimension of the
+corresponding representation. All entries of the first column are always 1,
+because the symmetric irrep is always one\dmn. To compute the
+remaining entries, we should use properties 3, 4 and the class multiplication
+tables.   Spectroscopists conventions use labels $A$ and $B$ for
+symmetric, respectively antisymmetric nondegenerate irreps, and
+$E$, $T$, $G$, $H$ for doubly, triply, quadruply, quintuply degenerate irreps.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% \example{Character table of $\Dn{3}$.}
+\fastTrackExam{exam:D3charTab}     % \toExam
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\subsection{Projection operator}
+We have listed the properties of irreps and the
+techniques of constructing a character table, but we still do not know how to
+construct the similarity transformation $S$ which takes a regular representation into a
+block-diagonal form. Think of it in another way,
+each irrep is associated with an invariant subspace, so by
+projecting an arbitrary function $\rho(\ssp)$ into its invariant subspaces, we
+find the transformation \refeq{eq:trans}.
+One of these invariant subspaces is $\sum_g \rho(g\sspRed)$, which is the basis of
+the one\dmn\ symmetric irrep $A$. For $\Cn{3}$, it is \refeq{eq:c3f1}.
+But how to get the others? We resort to the projection operator:
+\begin{equation}
+  \label{eq:projecIrre}
+  P^{(\mu)}_{i} = \frac{d_\mu}{|G|}\sum_g \left(D^{(\mu)}_{ii} (\LieEl)\right)^* U(g)
+  \,.
+\end{equation}
+It projects an arbitrary function into the $i$th basis of irrep
+$D^{(\mu)}$ provided the diagonal elements of this representation
+$D^{(\mu)}_{ii}$ are known. $ P^{(\mu)}_{i} \rho(\ssp) = \rho^{(\mu)}_i$.
+Here, symbol $*$ means the complex conjugate. For unitary groups
+$\left(D^{(\mu)}_{ii} (\LieEl)\right)^* = D^{(\mu)}_{ii} (\LieEl^{-1})$.
+Summing $i$ in \refeq{eq:projecIrre} gives
+\begin{equation}
+  \label{eq:projectSum}
+  P^{(\mu)} = \frac{d_\mu}{|G|}\sum_g \left(\chi^{(\mu)}(\LieEl)\right)^*U(g)
+  \,.
+\end{equation}
+This is also a projection operator which projects an arbitrary function onto
+the sum of the bases of irrep $D^{(\mu)}$.
+
+Note, for one\dmn\ representations, \refeq{eq:projectSum}
+is equivalent to \refeq{eq:projecIrre}. The projection operator is
+known after we obtain
+the character table, since the character of an one\dmn\ matrix is the matrix itself.
+However, for two\dmn\ or higher\dmn\ representations, we need to know the
+diagonal elements $D^{(\mu)}_{ii}$ in order to get the basis of invariant subspaces. That is to say,
+\refeq{eq:projecIrre} should be used instead of \refeq{eq:projectSum} in this case.
+\refExam{exam:D3irrepBases} illustrates this point. The two one\dmn\ irreps are obtained
+by \refeq{eq:projectSum}, but the other four two\dmn\ irreps are obtained by
+\refeq{eq:projecIrre}.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% \example{Bases for irreps of $\Dn{3}$.}{
+\fastTrackExam{exam:D3irrepBases}     % \toExam
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+The $\Cn{3}$ and $\Dn{3}$ examples used in this section can be
+generalized to any $\Cn{n}$ and $\Dn{n}$. For references,
+\refExam{exam:CnChars}, \refexam{exam:DnOddChars} and
+\refexam{exam:DnEvenChars} give the character tables of $\Cn{n}$ and
+$\Dn{n}$.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% \example{Character table of cyclic group \Cn{n}.}
+\fastTrackExam{exam:CnChars}     % \toExam
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% \example{Character table of dihedral group $\Dn{n}$, $n$ odd.}
+\fastTrackExam{exam:DnOddChars}     % \toExam
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% \example{Character table of dihedral group $\Dn{n}$, $n$ even.}
+\fastTrackExam{exam:DnEvenChars}     % \toExam
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%

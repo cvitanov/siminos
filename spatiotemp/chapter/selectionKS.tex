@@ -1,0 +1,155 @@
+% siminos/spatiotemp/chapter/selectionKS.tex
+% $Author: mgudorf3 $ $Date: 2020-10-22 10:19:52 -0400 (Thu, 22 Oct 2020) $
+
+%\subsection{Selection rules for \KS}
+
+\subsection{Selection rules for real-valued Fourier coefficients}
+%\label{sect:selectionKS}
+
+%Possible figures
+%Pictographic display of selection rules/constraints
+
+
+
+
+Although the \spt\ \KSe\ is easier to write in terms of a complex
+Fourier-Fourier basis, the symmetry invariant subspaces generated
+by symmetry constraints is easier to describe in terms of \rv\ \Fcs.
+The \rv\
+{\spt} Fourier expansion can be written
+
+This is the expansion for a general {\spt} solution. For each discrete
+symmetry of the \spt\ \KSe\ there is a unique set of constraints or
+``selection rules'' for the \spt\ \Fcs. These selection rules constitute
+\textit{symmetry invariant subspaces} of solutions of the \spt\ \KSe. In
+this section we commit to the description of the selection rules of the
+\Fcs. For more discussion on the symmetries themselves we refer the
+reader to \refsect{sect:KSsymm}.
+
+The two discrete symmetries we will describe are spatial reflection
+symmetry and \spt\ shift-reflection symmetry. The shift-reflection
+symmetry is a special case of the broader symmetry group $\Dn{n}\times
+\Cn{n}$ ($n=2$). Due to the uncommon appearance of solutions with $n>2$
+and the relatively easy generalization of the $n=2$ shift-reflection
+case, we shall only consider the $n=2$ symmetry group.
+
+The general procedure for producing these selection rules is not very
+complicated. Let $R$ represent an arbitrary symmetry operation. If a
+solution is invariant under $R$ then it satisfies the \textit{invariance
+condition} $Ru = u$ or equivalently $(R-1)u=0$. Substitution of the
+expansion \refeq{e-RealFourier} produces a set of constraints that can
+only be satisfied when a subset of \rv\ \Fcs\ are individually equal to
+zero. To begin we start with spatial reflection symmetry, as it is almost
+trivial. Solutions invariant under spatial reflection only admit
+spatially antisymmetric basis functions. Therefore, the selection rules
+for spatial reflection symmetry are
+\beq \label{e-ReflRules}
+\akj,\bkj = 0 \mbox{  for all  } k,j
+\,.
+\eeq
+\Spt\ shift-reflection is the composition of two symmetry operations:
+spatial reflection $\Refl_x$ and time translation by $\tau_{\period{}/2}$.
+The action of this symmetry is as follows $\Refl_x \tau_{\period{}/2} u(\conf, \zeit) = -u(-\conf, \zeit + \period{}/2)$.
+When directly applied to the \rv\ Fourier expansion \refeq{e-RealFourier}
+and by virtue of trigonometric identities and the parity of $\sin$ and $\cos$ we have
+\beq
+\begin{split}
+\Refl_x \tau_{\period{}/2}\,u(\xm, \tn) &= -\sum_{k,j}
+                                \cos(\wavek (-\xm)) (\akj\cos(\freqj (\tn + \period{}/2)) + \bkj \sin(\freqj (\tn + \period{}/2))) \continue
+                                &+ \sin(\wavek(-\xm)) (\ckj\cos(\freqj (\tn + \period{}/2)) + \dkj\sin(\freqj (\tn + \period{}/2))) \continue
+                            &= \sum_{k,j} -\cos(\wavek \xm) (\akj \cos(\freqj \tn)\cos(\pi j) + \bkj \sin(\freqj \tn)\cos(\pi j)))\continue
+                                &+ \sin(\wavek \xm) (\ckj\cos(\freqj \tn)\cos(\pi j) + \dkj \sin(\freqj \tn)\cos(\pi j)) \continue
+                            &= \sum_{k,j} (-1)^{j+1} \cos(\wavek \xm) (\akj\cos(\freqj \tn) + \bkj\sin(\freqj \tn))\continue
+                                &+ (-1)^{j} \sin(\wavek \xm) (\ckj \cos(\freqj \tn) + \dkj \sin(\freqj \tn)) \, ,
+\end{split}
+\ee{e-ShiftReflectBasis}
+By combining this with the invariance condition
+$(\Refl_x \tau_{\period{}/2} - 1)u = 0$,
+we find that the selection rules for \spt\ shift-reflection are as follows
+\bea \label{e-ShiftReflRules}
+\akj,\bkj &=& 0 \, \mbox{ for }\, j \, \mbox{ even } \continue
+\ckj,\dkj &=& 0 \, \mbox{ for }\, j \, \mbox{ odd }
+\,.
+\eea
+
+%%%%%%%%%%%%%%%%%%
+%There is an argument to be made to either
+%1. Discuss everything in in terms of real-valued Fourier coefficient (sFb.tex equations -> real-valued basis)
+%2. Discuss the selection rules in terms of the complex coefficients only.
+%Both of these options have their disadvantages:
+%(1) requires description of operators in terms of
+%in an \On{2} representation vs. U(1), I find introducing matrix operators in the spatiotemporal equations
+%to be less intuitive.
+%(2) The selection rules for complex-valued coefficients are not nearly as nice as {Subset of Fourier Coefficients = 0},
+%instead the constraints include conjugation and multiplication by powers of -1. This makes the description of the
+%Fourier transform operations to be much less intuitive.
+%%%%%%%%%%%%%%%%%%
+
+
+%\subsection{Selection rules for complex Fourier coefficients}
+%Firstly just as a matter of note,
+%for the complex-valued {\spt} Fourier transform, $m$ will be the spatial mode number
+%and $n$ will be the temporal mode number. The discrete Fourier transform is defined as follows,
+
+%\beq
+%u(\xm,\tn) = \frac{1}{\sqrt{KJ}}\sum_{k=-K/2}^{K/2-1}\sum_{j=-J/2,J/2-1} \utensor_{kj}e^{\ii(\wavek \xm + \freqj \tn)},
+%\eeq
+
+%which we then perform shift and reflect symmetry operation on,
+
+%\beq
+%\Refl_x \tau_{\period{}/2} u(\xm,\tn) = \frac{1}{\sqrt{KJ}}\sum_{k=-K/2}^{K/2-1}\sum_{j=-J/2,J/2-1} -\utensor_{kj}e^{\ii(\wavek (-\xm) + \freqj %(\tn+\period{}/2))},
+%\eeq
+%which after some simplification can be written
+%\beq
+%\Refl_x \tau_{\period{}/2} u(\xm,\tn) =\frac{1}{\sqrt{KJ}}\sum_{k=-K/2}^{K/2-1}\sum_{j=-J/2,J/2-1} (-1)^{j+1} \utensor_{kj}e^{\ii(\wavek (-\xm) + \freqj %\tn)}.
+%\eeq
+%Equating the expansion before and after the symmetry operations in addition to some identities
+%between the \Fcs\ yields the selection rules
+%\beq \label{e-ComplexShiftReflRules}
+%(-1)^{n+1} \utensor_{n,m} = \utensor_{n,-m} \,.
+%\eeq
+%These selection rules allow us to reduce the dimensionality of the system as some
+%of the \Fcs\ are redundant. The velocity field
+%of any solution with this symmetry can be reproduced with the non-redundant \Fcs.
+%Therefore we may implement a symmetry specific \xDft\ which eliminates the redundant
+%\Fcs\ for the purpose of computation and then reconstructs the spectrum upon
+%application of the inverse \xDft.
+%We believe that this reconstruction is best demonstrated in a pictographic fashion
+%as the {\spt} \Fcs\ can be easily represented with a matrix. The \Fcs\ are arranged
+%in the manner in which they would appear computationally after using SciPy's
+%implementation of the Fast Fourier Transform routine.
+%\begin{table}[h!]
+%\caption{Shift-reflect spectrum reconstruction.}
+%\centering
+%\begin{tabular}{|c|c|c|c|c|}
+%\hline
+%\quad                & $k = 0$  & $k = 1,\ldots,K/2-1$            & $k = -\frac{K}{2}$ & $k = -K/2+1,\ldots,-1$    \\
+%\hline
+%$j = 0,\ldots,J/2-1$ & $0$      & $\utensor_{kj}$                     & $0$                  & $(-1)^{n+1}\utensor_{kj}$   \\
+%\hline
+%$j=\frac{-J}{2}$     & $0$      & $0$                             & $0$                  & $0$                     \\
+%\hline
+%$j=-J/2+1,\ldots,-1$ & $0$      & $(-1)^{j+1}\utensor_{kj}^{\dagger}$ & $0$                  & $\utensor_{kj}^{\dagger}$   \\
+%\hline
+%\end{tabular}
+%\end{table}
+%Where $\utensor_{kj}$ represents the set of \Fcs\ with positive indices, $j>0$ and $k>0$. From \refeq{e-ComplexShiftReflRules}
+%we can reconstruct the original field $u(\xm,\tn)$ using only these modes.
+%The same type of table can be constructed for the antisymmetric subspace
+%$\bbU^+$, which follows the following rules,
+%\begin{table}[h!]
+%\caption{Antisymmetric spectrum reconstruction.}
+%\centering
+%\begin{tabular}{|c|c|c|c|c|}
+%\hline
+%\quad                & $k = 0$  & $ = 1,\ldots,K/2-1$            & $k = -\frac{K}{2}$ & $k = -K/2+1,\ldots,-1$    \\
+%\hline
+%$j = 0,\ldots,J/2-1$ & $0$      & $\utensor_{kj}$                     & $0$                  & $(-1)\utensor_{kj}$   \\
+%\hline
+%$j=\frac{-J}{2}$     & $0$      & $0$                             & $0$                  & $0$                     \\
+%\hline
+%$j=-J/2+1,\ldots,-1$ & $0$      & $(-1)\utensor_{kj}^{\dagger}$ & $0$                  & $\utensor_{kj}^{\dagger}$   \\
+%\hline
+%\end{tabular}
+%\end{table}

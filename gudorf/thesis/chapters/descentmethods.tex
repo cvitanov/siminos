@@ -1,0 +1,213 @@
+% siminos/gudorf/thesis/chapter/descentmethods.tex
+% $Author: predrag $ $Date: 2020-05-25 15:18:45 -0400 (Mon, 25 May 2020) $
+
+
+Began parsing through the literature on (variational) {\descent},
+specifically \refrefs{CvitLanCrete02,lanVar1} and for invariant tori
+\refref{LCC06}.
+
+
+\beq
+\frac{\partial \conf}{\partial \tau}(s + \omega, \tau) + \frac{\partial \conf}{\partial s}(s + \omega, \tau)\frac{\partial \omega}{\partial \tau}(\tau) - J(\conf(s,\tau))\frac{\partial \conf}{\partial \tau}(s,\tau) =
+f(\conf (s,\tau))-x(s+\omega,\tau),
+\ee{MNGNewtonDescent}
+
+
+Still trying to find a systematic way of producing initial conditions for
+the use of variational {\descent}. The main equation governing the
+fictitious time evolution is again \refeq{e-MNGVND} or the non-square
+matrix variant, \refeq{e-MNGVNDpseudo}. The only differing components
+from that of the R\"ossler system, or spatial \KS\ is the definition of
+the velocity field $v$ and therefore the definition of the stability
+matrices $A$.
+
+
+I've been thinking that if the variational {\descent} shakes the orbit until
+the method stalls why not hit it with a hammer? My idea is to first find the
+component of $\lambda v - \tilde{v}$ that is contributing the most to the cost
+functional and introduce some sort of perturbation that would increase the cost
+functional before (hopefully) being minimized again. I'd be curious to hear
+what others think about this as I haven't really done anything rigorously so it
+might be a fool's errand but I just dislike how in this method it seems like
+(at least from my interpretation of \refref{FoxCvi14}) that you need to be relatively
+close to any periodic orbit to get it to work correctly.
+
+
+There is a storm in the distance however, as this general procedure is ruined for the spatial problem. As we know from the chronotopic literature \refrefs{LePoTo96, LePoTo97, PoToLe98,GiLePo95}, that iteration in space typically does not converge to the same attractor as iteration in time, and generally corresponds to a strange repeller. Therefore I cannot hope to form an initial guess loop from using a Poincar\'e section in the spatial direction, as typically all of my Fourier coefficients go off to infinity before a recurrence is found.
+
+My idea to remedy this is to actually use \emph{time} integration to form a initial guess loop for applying {\descent} in \emph{space}. If I integrate a spatially periodic initial condition in time, by virtue of the spatial periodicity there is a close recurrence in the spatial direction (close and not exact only due to discretization I believe). If I've thought about this the right way. It's the smartest way I can think of to generate an initial condition for the spatial {\descent} \refeq{e-FksX} given that my spatial integration code is ill-behaved. If my \emph{spatial} code was working and there is no lapse in my rationale then it might actually have been a way to produce smooth initial guess loops for the \emph{time} direction {\descent} code.
+   \MNG{2016-11-18}{I kept thinking about the process of using time integration
+   to produce loops for spatial {\descent}. The newest thought concerns the
+   fact that time and spatial directions do not usually converge to the same
+   attractor. Maybe this implies that my idea of using \emph{time} integration
+   with spatially periodic boundary conditions to produce an initial guess loop
+   for \emph{spatial} {\descent} could be the \emph{worst} way of doing
+   so...still haven't thought it through enough.}
+
+
+This puts a wrench in my plans of writing Python code to develop a pro-
+cedural way to generate initial conditions for Newton descent using a
+Poincaré section and elbow grease; I will try to do this using MATLAB
+and ask around for solutions towards why I’m so bad at Python. I’m hon-
+estly at a loss for words.That being said there ain’t no rest for the wicked
+so I’ll try to implement this in MATLAB and see where it leads.
+
+Past two days have been spent making changes to {\descent} and testing
+those changes. For any changes that I make that translate generically to
+any system I try to test them with R\"ossler first before applying them
+to antisymmetric subspace $\bbU^+$ of \KS. The other changes that are
+unique to antisymmetric \KS\ must of course be tested in that realm. The
+changes are looking promising, as I can find longer periodic orbits in
+the R\"ossler system now, however the period seems to be slightly off
+(Integrating the solution after application of {\descent} yields a
+solution that is periodic but overlaps). This is my number one suspect
+for why the {\descent} code continues to stall at the moment; however,
+for the R\"ossler system although it is much slower for longer periodic
+orbits, it still converges very quickly once $F^2 < 1$.
+
+{\bf spatial {\descent}} stalls out around
+cost functional value $\mathcal{F}^2 \approx 10^{-8}$. Final configuration
+space velocity field is a highly oscillating very non-physical
+ type solution that looks like the result of aliasing; I believe I need
+to incorporate more Fourier modes as a first step to fix the
+ issue, or the number of discretization points, although doing so leads me
+to run out of memory
+
+\textbf{After talking to PC today he pointed out that
+this is likely due to forgetting to slice the orbit; Need to do this with {\fFslice}}.
+
+
+I realized that I should not have to worry about implementing a slicing condition
+in the spatial version of variational {\descent}; All that was required in the
+time case was to reduce the symmetry associated with the marginal direction parallel to
+velocity, i.e. a Poincar\'e section. I didn't worry about the spatial translational invariance
+and it was able to converge to a solution just fine in the time case.
+
+In this line of thought, because space and time have their roles
+reversed, I should only have to take into consideration the translational
+invariance in the spatial direction and not the \SOn{2} symmetry in the (now periodic)
+time direction.
+
+I also changed the definition of the stability matrix elements that arise due
+to the nonlinearity in hopes this will fix my problems; All in all, things are
+working \emph{much} better than they were even when compared to yesterday,
+although the convergence properties are still not where they need to be in
+order to say I "found" an new solution yet (For an initial condition whose
+initial cost functional value is $\mathcal{F}_0^2 \approx 5$ my code is able to
+reduce it to $\mathcal{F}_{\tau}^2 \approx 10^{-1}$). I'm currently testing my
+code with discretized versions of \PPO{10.2}, but I am going to try to see what
+happens to an more general initial condition next.
+
+There also might be a smarter way of choosing a constraint that enables better
+convergence, as opposed to the ``first coordinate" hyperplane (i.e. the first
+Fourier mode in most systems). I'm currently playing around with using a
+hyperplane condition on the ``more dynamical" variables \MNGedit{which is a
+hasty and crude name not to be taken seriously}. What I mean by this is that in
+\refeq{e-FksX} the spatial derivatives of the Fourier coefficients of
+$u^{(3)}$, which represents the third derivative, are much more complex than
+the other derivatives, so perhaps using a hyperplane condition on one of these
+coordinates would be better; this hasn't seemed to be the case yet.
+
+
+%\MNGpost{2017-03-06}{:
+{\bf Variational {\Descent} (General)}
+
+Realized I made a small mistake when thinking about using Fourier transforms along
+the parameterization direction in order to approximate the loop tangent space \refeq{e-FvndBAD}.
+
+I thought that I would have to somehow permute the elements \refeq{e-FvndBAD} of the "Loop Vector" (vector that
+encodes the parameterization of initial condition for periodic orbit search). The reasoning behind this
+was in order to use differentiate with respect to a parameterization variable $s$, I would need
+the elements to be in sequential order with respect in parameterization variable $s$, in order to
+multiply by vector $i \vec{m}$, where $m$ is the conjugate variable (in a Fourier transform sense)
+to $s$. This is \textbf{\emph{not}}
+the case, as I can merely exploit the Kronecker outer product to produce a diagonal matrix such that
+along the diagonal there are $M$ duplicates of each element of $\vec{m}$
+
+I should have realized this sooner
+but I'm still not convinced this will enable faster calculations.
+
+We are essentially diagonalizing a sparse matrix for $\mathcal{O}(M\,(n log(n)))$ flops
+from taking $M$ Fourier transforms of length $n =$~power~of~$2$.
+This is all well and good, but I think that there might be complications from the stability matrices;
+I need to go through the calculation, but the naive way to write the
+stability matrices in their new representation is:
+ $\tilde{\mathbf{A}} = \mathbf{F} \mathbf{A} \mathbf{F^{*}}$, where $F$
+is a unitary matrix representing the discrete Fourier transform.
+% These $F$ matrices %are practically
+%full matrices, meaning that we are essentially trading the diagonalization of a sparse matrix for
+%a new dense matrix.
+\MNG{}{Note that Kronecker product again makes matrices sparse, such that
+previously full DFT matrix is now sparse}
+
+When you include the amount of flops needed to produce the product of these matrices, I don't think
+the benefits outweigh the costs \emph{unless} a much smaller discretization can be used due to the
+convergence of Fourier coefficients (i.e. a truncation in the parameterization variable).
+
+Next is the representation of the fictitious time evolution as a system of linear equations, similar to
+\refeq{e-MNGVNDpseudo}, which is restated here for comparison to the new system of equations.
+
+The old linear system is given by,
+\beq
+\begin{bmatrix} M & -v \end{bmatrix}  \left[ \begin{array}{c} \delta \tilde{\conf} \\ \delta \lambda \end{array} \right] =
+    \delta \tau \left[ \begin{array}{c} \lambda v - \tilde{v} \end{array} \right],
+\eeq
+where $M = D - \lambda Diag(A_n)$ with $D$ being the finite difference matrix, and $A_n$ a block diagonal matrix containing stability matrices.
+
+Now, the equations the same form, with new variables described by over-bars
+\beq \label{e-MNGVNDpseudoFMAT}
+\begin{bmatrix} \bar{M} & -\bar{v} \end{bmatrix}  \left[ \begin{array}{c} \delta \tilde{\bar{\conf}} \\ \delta \bar{\lambda} \end{array} \right] =
+    \delta \tau \left[ \begin{array}{c} \lambda \hat{\bar{v}} - \tilde{\bar{v}} \end{array} \right],
+\eeq
+where $\bar{M} = \mathbf{F} Diag (i \vec{m}) \mathbf{F}^* \otimes \mathbf{I}_d - \lambda Diag(A_n)$
+%$\bar{M} = Diag (i \vec{m}) \otimes \mathbf{I}_d - \lambda \mathbf{F} Diag(A_n) \mathbf{F}^*$,
+and $\bar{v} = \mathcal{F}(v)$, $\tilde{\bar{v}} = (Diag(i \vec{m})* \tilde{\bar{\conf}}$.
+\MNG{}{I changed this such that the only difference
+between my current code and this formulation
+ is the calculation of approximate tangent space via Fourier methods.}
+
+{\bf Spatial {\Descent}}
+Rewrote the main body of the fictitious time evolution loop to hopefully deal
+with memory management a bit better, but still getting memory issues.
+Waiting on latest Arnoldi iteration to finish before using terminal to do calculations.
+
+Waffling between implementation of least squares solver for pseudoinverse variational
+{\descent}.
+
+GMRES seems to be locked by memory.
+Also tried to implement QR decomposition as in Trefethen\r{Trefethen97}
+but trying to stick to pseudoinverse and least squares solvers as they
+typically work better; also keeping track of large matrices is a downside.
+
+The best results, (i.e. better than square matrix problem, but still not
+good enough) was with SciPy's LSQR algorithm, which, in the paper that
+it is based on \refref{PaSaLSQR}, describes it as a ``conjugate-gradient-like" algorithm,
+with better stability. I haven't gotten into the nitty gritty as of yet.
+
+{\bf Variational multishooting}
+After talking to Ashley, who told me to start the multishooting
+effort with only a few number of points rather than the large
+discretization used as if it was a {\descent}, I looked back
+into the variational multishooting technique that he described back
+in Santa Barbara. I took four point on the original orbit, while
+my code is minimizing the cost functional \refeq{e-MultishootCost}
+I am yet again getting the ``equilibrium descent" for an antisymmetric initial
+condition $\in \bbU^+$ that converges with my variational {\descent} code.
+This resulting equilibrium "solution" is a typical result when
+something is ill-defined. I would speculate that the manner in which
+I am handling the adjoint equations is the culprit, as I tried to
+modify the ETDRK4 of \refref{ks05com} to be the numerical integration
+routine to integrate the equations.
+
+ixed memory issue by making it such that the
+"Newton descent matrix" i.e. the matrix in (3.3) is not evaluated
+before each least squares evaluation; rather, we keep this matrix
+constant as an approximation and then when the cost functional
+can no longer decrease, i.e. we have left the local neighborhood of
+the stability matrices that define the matrix, we redefine the matrix
+and then restart the search; this is similar to what is implemented
+in other variational Newton descent code; forgot this fact when I
+rewrote the spatial Newton descent code to use LSQR to solve the
+least squares problem as opposed to using matrix inversion.
+Application of the spatial Newton descent code to ergodic trajecto-
+ries that have been deformed to be periodic in time were resulting in

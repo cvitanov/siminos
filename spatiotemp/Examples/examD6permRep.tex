@@ -1,0 +1,169 @@
+% siminos/spatiotemp/Examples/examD6permRep.tex
+% $Author: predrag $ $Date: 2021-08-10 11:56:19 -0400 (Tue, 10 Aug 2021) $
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\example{\Dn{6} permutation rep.}{\label{exam:D6permRep}
+For period-6 {\lattstate}s, the
+class operators are the identity, and:
+\beq
+{\cal R}_{3}=
+\left[
+\begin{array}{cccccc}
+ 0 & 0 & 0 & 1 & 0 & 0 \\
+ 0 & 0 & 0 & 0 & 1 & 0 \\
+ 0 & 0 & 0 & 0 & 0 & 1 \\
+ 1 & 0 & 0 & 0 & 0 & 0 \\
+ 0 & 1 & 0 & 0 & 0 & 0 \\
+ 0 & 0 & 1 & 0 & 0 & 0 \\
+\end{array}
+\right] \,,\quad
+\ee{D6R3}
+
+\beq
+{\cal R}_{1}=
+\left[
+\begin{array}{ccc|ccc}
+ 0 & 1 & 0 & 0 & 0 & 1 \\
+ 1 & 0 & 1 & 0 & 0 & 0 \\
+ 0 & 1 & 0 & 1 & 0 & 0 \\\hline
+ 0 & 0 & 1 & 0 & 1 & 0 \\
+ 0 & 0 & 0 & 1 & 0 & 1 \\
+ 1 & 0 & 0 & 0 & 1 & 0 \\
+\end{array}
+\right] \,,\quad
+{\cal R}_{2}=
+\left[
+\begin{array}{ccc|ccc}
+ 0 & 0 & 1 & 0 & 1 & 0 \\
+ 0 & 0 & 0 & 1 & 0 & 1 \\
+ 1 & 0 & 0 & 0 & 1 & 0 \\\hline
+ 0 & 1 & 0 & 0 & 0 & 1 \\
+ 1 & 0 & 1 & 0 & 0 & 0 \\
+ 0 & 1 & 0 & 1 & 0 & 0
+\end{array}
+\right] \,.
+\ee{D6R1R2}
+
+\beq
+{\cal S}_{0}=
+\left[
+\begin{array}{ccc|ccc}
+ 0 & 1 & 0 & 1 & 0 & 1 \\
+ 1 & 0 & 1 & 0 & 1 & 0 \\
+ 0 & 1 & 0 & 1 & 0 & 1 \\\hline
+ 1 & 0 & 1 & 0 & 1 & 0 \\
+ 0 & 1 & 0 & 1 & 0 & 1 \\
+ 1 & 0 & 1 & 0 & 1 & 0 \\
+\end{array}
+\right]
+\,,\quad
+{\cal S}_{1}=
+\left[
+\begin{array}{ccc|ccc}
+ 1 & 0 & 1 & 0 & 1 & 0 \\
+ 0 & 1 & 0 & 1 & 0 & 1 \\
+ 1 & 0 & 1 & 0 & 1 & 0 \\\hline
+ 0 & 1 & 0 & 1 & 0 & 1 \\
+ 1 & 0 & 1 & 0 & 1 & 0 \\
+ 0 & 1 & 0 & 1 & 0 & 1
+\end{array}
+\right] \,.
+\ee{PCreflect6}
+The reflection operators eigenvalues are $+1$ and $-1$,
+corresponding to the reflection symmetric and antisymmetric subspaces.
+
+To compute the dimensions of irreps obtained from
+\refeq{Ham-CayD6}, we need the characters of the permutation representation
+class operators:
+\beq
+\tr{\id}=6\,,\;
+\tr{{\cal R}_{3}}=0\,,\;
+\tr{{\cal R}_{1}}=0\,,\;
+\tr{{\cal R}_{2}}=0\,,\;
+\tr{{\cal S}_{0}}=0\,,\;
+\tr{{\cal S}_{1}}=6
+\,.
+\ee{D6clasOpsTr}
+(Predrag: I do not see why ${\cal S}_{1}$ is special...)
+In particular, we have a vanishing dimension
+$\lambda=-3$ representation, so
+\bea
+{\cal S}_{1}, \lambda=-3 &\rightarrow& \qquad
+\PP_{1,-3}
+    = (\id+\ensuremath{{\cal R}_{2}} - {\cal S}_{1})/2
+    = 0
+\,,
+\label{Ham-CayD6zero}
+\eea
+Taking trace of \refeq{Ham-CayD6PPpm1} we find that also $\PP_{1}\PP_{0,-3}$
+is 0\dmn, so, 6\dmn\ permutation representation is not faithful, and the
+classes are not independent (you can check this by inspecting eqs.
+\refeq{PCreflect6} to \refeq{D6R1R2}):
+\bea
+{\cal S}_{0} &=& {\cal R}_{3} + {\cal R}_{1}
+    \continue
+{\cal S}_{1} &=& \id + {\cal R}_{2}
+\,,
+\label{D6PermClassOps}
+\eea
+so forget the last two equations in \refeq{Ham-CayD6} for the $\cl{}$\dmn\
+permutation representations of \Dn{\cl{}}. I think it is clear from
+\refeq{Ham-CayD6PPpm1} that this means no
+antisymmetric 1\dmn\ reps.
+
+Lecturing about the "projector analysis" of \Dn{3} I was such a fool - I
+forgot to follow \wwwgt{}, which explains very clearly that whenever there is
+a matrix equation =0, that means a relationship between matrices, they are
+not independent.
+
+Now one can eliminate ${\cal S}_{j}$ from projection operators \refeq{Ham-CayD6S0S1PP}:
+\bea
+{\cal S}_{0}:\; \lambda=3 &\rightarrow& \qquad
+\PP_{0,3}
+    %= {\cal S}_{0}({\cal S}_{0} + 3\id)/3\cdot6
+    = (\id+{\cal R}_{3}+{\cal R}_{1} + {\cal R}_{2})/6
+    \continue{\cal S}_{1}:\; \lambda=3 &\rightarrow& \qquad
+\PP_{1,3}
+%    = {\cal S}_{0}({\cal S}_{0} - 3\id)/3\cdot6
+    = (\id+{\cal R}_{2})/3
+\,,
+\label{am-CayD6S0S1PP1}
+\eea
+To summarize - this is rather inelegant, but the main result is that the flip
+classes ${\cal S}_{0},{\cal S}_{1},{\cal S}_{2},\cdots$ do not contribute to
+the reduction of the permutation representation; is can be done purely in
+terms of the rotation classes
+${\cal R}_{1},{\cal R}_{3},{\cal R}_{3},\cdots$. This strikes me as a big
+deal, as this is isomorphic - I believe - to the cyclic group \Cn{\cl{}/2}
+(for the even period $\cl{}$). I tentative submit \reftab{tab:D6multTabperm}
+being sufficient to construct all irreducible projection operators. Of
+course, \Cn{6} is the only normal subgroup of \Dn{6}, but we do not use that
+- we use only 4 classes rather than the 6 of \Cn{6}. Looks pretty illegal:)
+
+Can you check that you get 2 symmetric
+1\dmn\ irreps, and the two 1\dmn\ ones?
+        \jumpBack{exam:D6permRep}
+} % end \example{exam:D6permRep}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Predrag                                                   2021-06-14
+\begin{table}
+\caption[]{
+A tentative \Dn{6} class operator multiplication table restricted to the
+permutations matrix representation, with flip classes eliminated using
+\refeq{D6PermClassOps}.
+    }
+\begin{center}
+\begin{tabular}{c|c c c c|}
+\Dn{6}&\id&\ensuremath{{\cal R}_{3}}&\ensuremath{{\cal R}_{1}}&\ensuremath{{\cal R}_{2}}\\\hline
+\id   &\id      &\ensuremath{{\cal R}_{3}}  &\ensuremath{{\cal R}_{1}}&\ensuremath{{\cal R}_{2}}\\
+\ensuremath{{\cal R}_{3}}&.&\id&\ensuremath{{\cal R}_{2}}  &\ensuremath{{\cal R}_{1}}\\
+\ensuremath{{\cal R}_{1}}&.&.&2\id+\ensuremath{{\cal R}_{2}} &2\ensuremath{{\cal R}_{3}}+\ensuremath{{\cal R}_{1}}\\
+\ensuremath{{\cal R}_{2}}&.&.&.&2\id+\ensuremath{{\cal R}_{2}}\\\hline
+\end{tabular}
+\end{center}
+  \label{tab:D6multTabperm}
+\end{table}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%

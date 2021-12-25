@@ -1,0 +1,225 @@
+% siminos/gudorf/thesis/defsThesis.tex
+% $Author: predrag $ $Date: 2019-03-27 16:44:17 -0400 (Wed, 27 Mar 2019) $
+
+\ifboyscout %%%%%%%% DISPLAY COMMENTS IN THE TEXT %%%%%%%%%%%%%%%%%%%%
+            %%%%%%%% turn on labeling of equations on margins %%%%%%%%
+    % also search the text for lines starting with %%  to
+    % locate various internal comments, recent edits etc.
+    \typeout{============ COMMENTED =====}
+ \renewcommand{\PC}[2]{$\footnotemark\footnotetext{Predrag #1: #2}$} %date, comment
+ \newcommand{\AC}[2]{$\footnotemark\footnotetext{Andy #1: #2}$} %date, comment
+ \newcommand{\BG}[2]{$\footnotemark\footnotetext{Boris #1: #2}$} %date, comment
+ \renewcommand{\AKS}[2]{$\footnotemark\footnotetext{Adrien #1: #2}$} %date, comment
+ \renewcommand{\RJ}[2]{$\footnotemark\footnotetext{Rana #1: #2}$} %date, comment
+ \renewcommand{\HL}[2]{$\footnotemark\footnotetext{Han #1: #2}$} %date, comment
+ \newcommand{\MNG}[2]{$\footnotemark\footnotetext{Matt #1: #2}$} %date, comment
+\else % drop comments
+      % do not turn on labeling of equations on margins
+  \typeout{============ UNCOMMENTED =====}
+ \renewcommand{\PC}[2]{}
+ \newcommand{\AC}[2]{}
+ \newcommand{\BG}[2]{}
+ \renewcommand{\AKS}[2]{}
+ \renewcommand{\RJ}[2]{}
+ \renewcommand{\HL}[2]{}
+ \newcommand{\MNG}[2]{}
+\fi  %%%%%%%%%%%% END OF ON/OFF COMMENTS SWITCH %%%%%%%%%%%%%%%%%%%%
+
+%\newcommand{\YTlink}[1]{\marginpar{   %% links to YouTube videos
+%    \HREF{http://#1}{\includegraphics[width=16pt]{start-32}}}
+%                       }
+\newcommand{\YTlink}[1]{    %% in text, links to YouTube videos
+    \raisebox{-0.4ex}[0pt][0pt]{\!\!\!
+    \HREF{http://#1}{\includegraphics[height=1em]{start-32}}
+    \!\!\!            }  }
+% in-text pointer to a video   2014-01-18
+\newcommand{\videoLink}[1]{    %% in text, links to YouTube videos
+    \raisebox{-0.4ex}[0pt][0pt]{$\!\!\!$
+    \HREF{http://#1}{\includegraphics[height=1em]{YouTubeIcon}}
+                    % or maybe streamThisRed}}
+                    % do not have compact eps for {start-32}
+    $\!$             }}
+% in-text pointer to a video   2014-01-18
+\newcommand{\toVideo}[1]
+{\marginpar[\videoLink{#1}]{\videoLink{#1} \hfill}}
+
+% \renewcommand{\toChap}[1]{}
+\renewcommand{\cl}[1]{{\ensuremath{|#1|}}}  % the length of a periodic orbit, Ronnie
+%\newcommand{\XD}{Xiong Ding}
+
+\ifpaper % prepare for B&W paper printing:
+       \renewcommand{\arXiv}[1]{ {arXiv:#1}}
+\else % prepare hyperlinked pdf
+       \renewcommand{\arXiv}[1]{
+              {\href{http://arXiv.org/abs/#1}{arXiv:#1}}}
+\fi
+
+    \ifboyscout
+\newcommand{\toCB}{\marginpar{\footnotesize 2CB}}  % to compare with ChaosBook
+\newcommand{\inCB}{\marginpar{\footnotesize now in CB}} % entered in ChaosBook
+\newcommand{\CBlibrary}[1]
+{\href{http://ChaosBook.org/library/#1.pdf} { (click here)}}
+    \else
+\newcommand{\toCB}{}
+\newcommand{\inCB}{}
+\newcommand{\CBlibrary}[1]{}
+    \fi %end of internal draft switch
+
+\newcommand{\conf}{\ensuremath{x}}      % Configuration space coordinate
+\newcommand{\Fu}{\tilde{u}}
+\newcommand{\abs}[1]{\lvert#1\rvert}    % Absolute value
+\newcommand{\twot}{invariant 2-torus} % Predrag, to distinguish from a PO
+\newcommand{\twots}{invariant 2-tori}
+\newcommand{\twoT}{Invariant 2-torus}
+\newcommand{\twoTs}{Invariant 2-tori}
+\newcommand{\brick}{block}
+\newcommand{\Brick}{Block}
+\renewcommand{\action}{W}                 % PC 07jan2018
+% \newcommand{\action}{S}               % Boris
+%\newcommand{\genF}{F}                  % Li and Tomsovic generating function
+\newcommand{\genF}{L}                   % McKay generating function
+
+%%%%%% Boris definitions
+\newcommand{\Aa}{\ensuremath{\bar{\A}}}
+\newcommand{\A}{\ensuremath{\mathcal{A}}}       % alphabet
+\newcommand{\Ai}{\ensuremath{\mathcal{A}_0}}    % alphabet inner
+\newcommand{\Ae}{\ensuremath{\mathcal{A}_1}}    % alphabet outer
+\newcommand{\R}{\ensuremath{\mathcal{R}}}
+%\newcommand{\m}{\ensuremath{\mathsf{m}}}     % Boris
+\newcommand{\m}{\ensuremath{m}}     % Predrag experimental 2016-11-08
+\newcommand{\Mm}{\ensuremath{\mathsf{M}}}
+\newcommand{\Xx}{\ensuremath{\mathsf{X}}}
+\newcommand{\Zz}{\ensuremath{\mathbb{Z}^2}}
+\newcommand{\ZLT}{\mathbb{Z}^2_{\scriptscriptstyle\mathrm{LT}}}
+%\newcommand{\q}{\ensuremath{\mathsf{m}}}     % Boris
+\newcommand{\q}{\ensuremath{q}}     % Predrag experimental 2016-11-08
+\newcommand{\D}{\mathcal{D}}
+\newcommand{\gd}{\mathsf{g}}
+\newcommand{\gp}{\mathsf{g}^0}
+
+%%%%%%%%%%%% MACROS, Xiong Ding specific %%%%%%%%%%
+\DeclareMathOperator{\im}{Im}
+\DeclareMathOperator{\re}{Re}
+\DeclareMathOperator{\diag}{Diag}
+\DeclareMathOperator{\dist}{dist}
+\DeclareMathOperator{\const}{const}
+% ==============================
+\newcommand{\spt}{spatiotemporal}
+\newcommand{\Spt}{Spatiotemporal}
+\newcommand{\xDFt}{Discrete Fourier transform}
+\newcommand{\xdFt}{discrete Fourier transform}
+
+\newcommand{\cGL}{complex Ginzburg-Landau}
+\newcommand{\cGLe}{complex Ginzburg-Landau equation}
+
+
+%%%%%%%%%%%% MACROS, Siminos specific %%%%%%%%%%
+\newcommand{\edit}[1]{{\color{blue} #1}} % for referees
+%\newcommand{\edit}[1]{#1}               % for the journal
+\newcommand{\vf}{v}	%%% keep notation for vector field flexible.
+                    % For the time being follow Das Buch.
+\newcommand{\conj}[1]{\ensuremath{\bar{#1}}}
+\newcommand{\Manif}{\ensuremath{\mathcal{M}}}
+\newcommand{\Order}[1]{\mathrm{O}(#1)}
+\newcommand{\steady}{\textdollar~}
+
+%%%%%%%% Symmetries, Siminos specific %%%%%%%%%%
+%\renewcommand{\shift}{\ensuremath{\ell}}
+%\newcommand{\Shift}{\ensuremath{\tau}}
+\newcommand{\Idg}{\ensuremath{\mathbf{1}}}
+\newcommand{\En}[1]{\ensuremath{\mathrm{E}(#1)}}
+\newcommand{\Rotn}[1]{\ensuremath{R_{#1}}}
+\newcommand{\Drot}{\ensuremath{\zeta}}
+\newcommand{\globstab}[1]{\ensuremath{\Sigma_{#1}}} % Change to be the same as stab. Was \Sigma^\ast_{#1}
+\newcommand{\Str}[1]{\ensuremath{\mathcal{S}_{#1}}} % Stratum
+\newcommand{\Nlz}[1]{\ensuremath{N(#1)}}
+\newcommand{\doubleperiod}[1]{{\ensuremath{\mathcal{T}_{#1}}}}
+
+%%%%%%%%%%%% Theorems, Siminos specific %%%%%%%%%%
+%%%%%%%%%%%%%% Solution labels %%%%%%%%%%%%%%%%%%%%
+
+
+% Redefine using mathrm, it is a label not a math symbol
+\renewcommand{\EQV}[1]{\ensuremath{\mathrm{E}_{#1}}}
+% E_0: u = 0 - trivial equilibrium
+% E_1,E_2,E_3, for 1,2,3-wave equilibria
+\renewcommand{\REQV}[2]{\ensuremath{\mathrm{TW}_{#1#2}}} % #1 is + or -
+% TW_1^{+,-} for 1-wave traveling waves (positive and negative velocity).
+\renewcommand{\PO}[1]{\ensuremath{\mathrm{PO}_{#1}}}
+% PO_{period to 2-4 significant digits} - periodic orbits
+\renewcommand{\RPO}[1]{\ensuremath{\mathrm{RPO}_{#1}}}
+% RPO_{period to 2-4 significant digits} - relative PO.  We use ^{+,-}
+% to distinguish between members of a reflection-symmetric pair.
+% Gibson likes:
+\renewcommand{\tEQ}{\ensuremath{\mathrm{EQ}}}
+
+\newcommand{\tLB}{\ensuremath{{\text{EQ}_1}}}
+\newcommand{\tUB}{\ensuremath{{\text{EQ}_2}}}
+
+%%%%%%%%%%%%%% Operators %%%%%%%%%%%%%%%%%%%%%%%
+\newcommand{\PperpOp}{\mathbf{P}^{\perp}}
+%\newcommand{\Pperp}{P^{\perp}}
+%
+
+%%%%%%%%%%% Equations, Siminos specific %%%%%%%%%%
+\newcommand{\cont}{\,, \\ }
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% JFG favorite macros
+\newcommand{\bu}{\ensuremath{{\bf u}}}
+\newcommand{\bx}{{\bf x}}
+\newcommand{\trHalf}[1]{\tau_{#1}}    % 1/2 cell translation
+\newcommand{\GPCF}{\ensuremath{\Gamma}} % Hoyle notation, equivariant symmetry group
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% GUDORF specific macros.
+\newcommand{\F}{\ensuremath{\mathcal{F}}}
+\newcommand{\Fi}{\ensuremath{\mathcal{F}^{-1}}}
+\newcommand{\Dxx}{\ensuremath{\mathcal{D}_{\conf \conf}}}
+\newcommand{\Dfourx}{\ensuremath{\mathcal{D}_{\conf \conf \conf \conf}}}
+\newcommand{\Sop}{\ensuremath{\mathcal{S}}}
+\newcommand{\Dt}{\ensuremath{\mathcal{D}_{\zeit}}}
+\newcommand{\Dx}{\ensuremath{\mathcal{D}_{\conf}}}
+\newcommand{\ufield}{\ensuremath{u(\conf,\zeit)}}
+\newcommand{\dufield}{\ensuremath{u(\conf_{m},\zeit_{n})}}
+\newcommand{\sFb}{spatiotemporal Fourier basis}
+\newcommand{\rv}{real valued}
+\newcommand{\Fuvec}{\ensuremath{\mathbf{\tilde{u}}}}
+\newcommand{\umn}{\ensuremath{\tilde{u}_{\sss{m,n}}}}
+\newcommand{\nm}[1]{\tilde{{#1}}_{\sss{n,m}}}
+\newcommand{\qm}{\ensuremath{q_{\sss m}}}
+\newcommand{\wavevec}{\ensuremath{\frac{2\pi m}{L}}}
+\newcommand{\wn}{\ensuremath{\omega_{\sss n}}}
+\newcommand{\freqvec}{\ensuremath{\frac{2\pi n}{T}}}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Lopez favorite macros, REMOVE MOST EVENTUALLY
+\newcommand{\sss}{\scriptscriptstyle}	
+\newcommand{\e}{\mathrm{e}}
+\newcommand{\mmbf}[1]{\mbox{\boldmath ${#1}$}}
+\newcommand{\Arot}{\theta}
+\newcommand{\spacetrans}{\sigma}
+\newcommand{\timetrans}{\tau}
+\newcommand{\lsym}{l}
+\newcommand{\ce}{c_{\sss{1}}}
+\newcommand{\co}{c_{\sss{2}}}
+\newcommand{\Lx}{L_{\sss x}}
+\newcommand{\omegan}{\omega_{\sss n}}
+\newcommand{\km}{k_{\sss m}}
+\newcommand{\am}[1]{a_{\sss{{#1}}}}
+\newcommand{\amn}[2]{\hat{a}_{\sss{{#1},{#2}}}}
+\newcommand{\bmn}[2]{\hat{b}_{\sss{{#1},{#2}}}}
+\newcommand{\torus}{{\mathbb T}}
+\newcommand{\dd}{\mathrm{d}}
+\newcommand{\cglegroup}{G}
+\newcommand{\cgleisotropy}[1]{\cglegroup_{\!{\sss{{#1}}}}}
+\newcommand{\baseSpace}{\mathcal{B}}
+\newcommand{\moduliSpace}{\pS} %\EuFrak{M}}
+% \newcommand{\moduliSpaceC}{\mathcal{M}} % conflicts with \pS
+\newcommand{\moduliSpaceI}{\mathcal{I}}
+\newcommand{\solSpace}{\mathcal{S}}
+\newcommand{\fiberM}[2]{\mathcal{#1}_{\sss{#2}}}
+
+
+%%%%%%%%%%%% REMOVE THIS EVENTUALLY %%%%%%%%%%%
+%

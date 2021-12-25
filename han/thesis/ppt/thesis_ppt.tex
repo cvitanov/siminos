@@ -1,0 +1,214 @@
+% siminos/xiong/thesis/thesis_ppt.tex
+% $Author: predrag $ $Date: 2021-06-22 07:16:06 -0400 (Tue, 22 Jun 2021) $
+
+% this is master file: pdflatex thesis_ppt; biber thesis_ppt
+%% logical setup, no need to edit %%%%%%%%%%
+\newif\ifpaper \newif\ifPDF               %%
+\newif\ifboyscout                         %%
+\PDFtrue \paperfalse
+
+
+\newif\ifbackground % whether use background image
+\backgroundfalse
+\newif\iflogo % whether use logo
+\logotrue
+\newif\ifnotes % whether show notes.
+\notestrue  %\notesfalse
+\newif\ifhandout % handout mode
+\handoutfalse
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\ifhandout
+\documentclass[mathserif, handout]{beamer}
+\else
+\documentclass[mathserif]{beamer}
+\fi
+
+\usepackage[utf8]{inputenc}     % Predrag 2017-03-06
+\usepackage{graphicx}
+\usepackage{tikz}
+\usetikzlibrary{calc}
+\usetikzlibrary{decorations.pathreplacing}
+% \usepackage{amsthm}
+\usepackage{ifthen}
+\usepackage{bm}
+\usepackage{array}
+\usepackage[font=small, labelfont=bf]{caption}
+\usepackage{subcaption}
+\usepackage[backend=biber, citestyle=authoryear]{biblatex}
+\addbibresource{../../bibtex/siminos.bib}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% deal with the conflicts between def.tex and beamer
+\newcounter{chapter}
+%\let\block\undefined
+\let\Loop\undefined
+\let\definition\undefined
+\let\theorem\undefined
+\let\lemma\undefined
+\let\example\undefined
+
+\input ../../inputs/editsDasbuch
+\input ../../inputs/def            %% do not edit; update from
+\input ../thesis/defsThesis
+\input defsThesisPPT
+
+% Xiong's customization of citation
+% \renewcommand{\footnotesize}{\scriptsize}
+\renewcommand{\footnotesize}{\tiny}
+\renewcommand{\rf}[1]{~{\color{green}[\cite{#1}]}}
+
+\newcommand{\edit}[1]{{\color{blue} #1}}
+\newcommand{\nssp}{u}
+\newcommand{\sspRedM}{\sspRed^{(-)}}
+\renewcommand{\ssp}{u}
+\renewcommand{\zeit}{t}
+\renewcommand{\jEigvec}[1][]{\ensuremath{{\bf e}_{#1}}} % right jacobiam eigenvector
+\renewcommand{\jEigvecT}[1][]{\ensuremath{{\bf e}_{#1}^\top}} % left jacobiam
+\newcommand{\jEigvecRed}[1][]{\ensuremath{\hat{{\bf e}}_{#1}}}
+
+\renewcommand{\zeit}{t}
+\renewcommand{\RPO}[1]{\ensuremath{\overline{rpo}_{#1}}} % Xiang experimental
+\renewcommand{\trDiscr}[2]{C_{#1}^{#2}}
+\renewcommand{\Lg}{\ensuremath{\mathbf{T}}}
+
+\DeclareMathOperator{\im}{Im}
+\DeclareMathOperator{\re}{Re}
+\DeclareMathOperator{\diag}{Diag}
+\DeclareMathOperator{\dist}{dist}
+\DeclareMathOperator{\const}{const}
+
+\graphicspath{{../../figs/}{../figures/}{../../dimension/}{../../schur/figs/}}
+
+% ------                       setup of beamer               ----------------
+\usetheme{Madrid}
+
+\ifnotes
+\setbeameroption{show notes}
+\else
+\setbeameroption{hide notes}
+\fi
+
+\setbeamertemplate{bibliography item}[text]
+% add background image
+\ifbackground
+\usebackgroundtemplate
+{
+  \includegraphics[width=\paperwidth,height=\paperheight]{./figs/background.jpg}%
+}
+\fi
+
+% -------------------      title page       --------------------------
+\title[Inertial Manifolds] % (optional, only for long titles)
+{Geometry of inertial manifolds }
+\subtitle{in nonlinear dissipative dynamical systems}
+\logo{
+  \iflogo
+  \includegraphics[width=2cm,height=1cm,keepaspectratio]{gtlogo}
+  \includegraphics[width=1cm,height=0.8cm,keepaspectratio]{cnslogo}
+  \fi
+}
+\author[X. Ding] % (optional, for multiple authors)
+{Xiong Ding %\inst{1}
+}
+\institute[Gatech] % (optional)
+{
+  % \inst{1}%
+  Center for Nonlinear Science \\
+  School of Physics \\
+  Georgia Institute of Technology
+}
+
+\date[Dissertation defense] % (optional)
+{ % Adviser: Prof. Predrag Cvitanovi\'c \\ \vspace{1em}
+  Dissertation defense, March 8, 2017
+} %\\ Topics in Geometric and Nonlinear Dynamical Systems}
+
+%\subject{Computer Science}
+
+% ----------------    setup of outline    -------------------------
+\AtBeginSection[]
+{
+  \begin{frame}
+    \frametitle{Table of Contents}
+    \tableofcontents[currentsection]
+  \end{frame}
+}
+
+\AtBeginSubsection[]
+{
+  \begin{frame}
+    \frametitle{Table of Contents}
+    %\tableofcontents[currentsection]
+    \tableofcontents[currentsection, currentsubsection]
+  \end{frame}
+}
+
+% ---------------   main content of slides  -----------------------
+\begin{document}
+\frame{\titlepage} % add title page.
+
+%======================================================================
+\input result
+
+%======================================================================
+\section{\Spt\ Chaos}
+\input intro
+
+%======================================================================
+% \section{Symmetries in dynamical systems}
+
+%======================================================================
+\section{\KSe}
+\input ks
+\input sym
+\input ksred
+
+%======================================================================
+\section{The inertial manifold in \KSe}
+
+\input motivation
+\input ksfv
+%\input dissip
+\input ksim
+
+%======================================================================
+\section{Other systems?}
+\input cgl
+
+%======================================================================
+\section{Conclusion and future work}
+\input concl
+
+
+
+%======================================================================
+\usebackgroundtemplate
+{
+  \includegraphics[width=\paperwidth,height=\paperheight]{lastpage.jpg}%
+}
+\begin{frame}
+
+  \centering{ \huge Thanks for your time !}
+
+  \vspace{2em}
+
+  \centering{ \huge Any question ?}
+
+\end{frame}
+
+
+\usebackgroundtemplate
+{
+  \includegraphics[width=\paperwidth,height=\paperheight]{background.jpg}%
+}
+
+%======================================================================
+\begin{frame}[t, allowframebreaks]
+  \frametitle{References}
+  %\scriptsize{\bibliographystyle{apalike}}
+  %\bibliography{../../bibtex/siminos}
+  \printbibliography
+\end{frame}
+
+\end{document}

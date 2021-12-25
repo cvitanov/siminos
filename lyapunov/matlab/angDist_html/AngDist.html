@@ -1,0 +1,516 @@
+
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html><head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   <!--
+This HTML was auto-generated from MATLAB code.
+To make changes, update the MATLAB code and republish this document.
+      --><title>Partially resolve the blow-up problem at small distance</title><meta name="generator" content="MATLAB 8.4"><link rel="schema.DC" href="http://purl.org/dc/elements/1.1/"><meta name="DC.date" content="2015-05-04"><meta name="DC.source" content="AngDist.m"><style type="text/css">
+html,body,div,span,applet,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abbr,acronym,address,big,cite,code,del,dfn,em,font,img,ins,kbd,q,s,samp,small,strike,strong,sub,sup,tt,var,b,u,i,center,dl,dt,dd,ol,ul,li,fieldset,form,label,legend,table,caption,tbody,tfoot,thead,tr,th,td{margin:0;padding:0;border:0;outline:0;font-size:100%;vertical-align:baseline;background:transparent}body{line-height:1}ol,ul{list-style:none}blockquote,q{quotes:none}blockquote:before,blockquote:after,q:before,q:after{content:'';content:none}:focus{outine:0}ins{text-decoration:none}del{text-decoration:line-through}table{border-collapse:collapse;border-spacing:0}
+
+html { min-height:100%; margin-bottom:1px; }
+html body { height:100%; margin:0px; font-family:Arial, Helvetica, sans-serif; font-size:10px; color:#000; line-height:140%; background:#fff none; overflow-y:scroll; }
+html body td { vertical-align:top; text-align:left; }
+
+h1 { padding:0px; margin:0px 0px 25px; font-family:Arial, Helvetica, sans-serif; font-size:1.5em; color:#d55000; line-height:100%; font-weight:normal; }
+h2 { padding:0px; margin:0px 0px 8px; font-family:Arial, Helvetica, sans-serif; font-size:1.2em; color:#000; font-weight:bold; line-height:140%; border-bottom:1px solid #d6d4d4; display:block; }
+h3 { padding:0px; margin:0px 0px 5px; font-family:Arial, Helvetica, sans-serif; font-size:1.1em; color:#000; font-weight:bold; line-height:140%; }
+
+a { color:#005fce; text-decoration:none; }
+a:hover { color:#005fce; text-decoration:underline; }
+a:visited { color:#004aa0; text-decoration:none; }
+
+p { padding:0px; margin:0px 0px 20px; }
+img { padding:0px; margin:0px 0px 20px; border:none; }
+p img, pre img, tt img, li img, h1 img, h2 img { margin-bottom:0px; } 
+
+ul { padding:0px; margin:0px 0px 20px 23px; list-style:square; }
+ul li { padding:0px; margin:0px 0px 7px 0px; }
+ul li ul { padding:5px 0px 0px; margin:0px 0px 7px 23px; }
+ul li ol li { list-style:decimal; }
+ol { padding:0px; margin:0px 0px 20px 0px; list-style:decimal; }
+ol li { padding:0px; margin:0px 0px 7px 23px; list-style-type:decimal; }
+ol li ol { padding:5px 0px 0px; margin:0px 0px 7px 0px; }
+ol li ol li { list-style-type:lower-alpha; }
+ol li ul { padding-top:7px; }
+ol li ul li { list-style:square; }
+
+.content { font-size:1.2em; line-height:140%; padding: 20px; }
+
+pre, code { font-size:12px; }
+tt { font-size: 1.2em; }
+pre { margin:0px 0px 20px; }
+pre.codeinput { padding:10px; border:1px solid #d3d3d3; background:#f7f7f7; }
+pre.codeoutput { padding:10px 11px; margin:0px 0px 20px; color:#4c4c4c; }
+pre.error { color:red; }
+
+@media print { pre.codeinput, pre.codeoutput { word-wrap:break-word; width:100%; } }
+
+span.keyword { color:#0000FF }
+span.comment { color:#228B22 }
+span.string { color:#A020F0 }
+span.untermstring { color:#B20000 }
+span.syscmd { color:#B28C00 }
+
+.footer { width:auto; padding:10px 0px; margin:25px 0px 0px; border-top:1px dotted #878787; font-size:0.8em; line-height:140%; font-style:italic; color:#878787; text-align:left; float:none; }
+.footer p { margin:0px; }
+.footer a { color:#878787; }
+.footer a:hover { color:#878787; text-decoration:underline; }
+.footer a:visited { color:#878787; }
+
+table th { padding:7px 5px; text-align:left; vertical-align:middle; border: 1px solid #d6d4d4; font-weight:bold; }
+table td { padding:7px 5px; text-align:left; vertical-align:top; border:1px solid #d6d4d4; }
+
+
+
+
+
+  </style></head><body><div class="content"><h1>Partially resolve the blow-up problem at small distance</h1><!--introduction--><p>In out previous experiments, we use first N Flouqet vectors to span a subspace <img src="AngDist_eq08221768486683812885.png" alt="$$v_N = \langle e_1, e_2,\cdots, e_N \rangle $$">. when an ergodic trajectory approaches one selected po (ppo/rpo), the difference vector is recorded. The angle between the difference vector and the subspace <img src="AngDist_eq01248161567426353282.png" alt="$v_N$"> is investigated. However, at short distances (very close shadowing), angle just belows up occacially. Later on, we find that the problem lies in the spacing of orbits. If it is too large, then calculation of difference vector is unreliable. Here, we take smaller integration time step after we obtain the raw data as so to illiminate the blow-up problem. We use one point in one relative periodic orbit to illustrate the process. The last figure is the final result.</p><!--/introduction--><h2>Contents</h2><div><ul><li><a href="#1">Load the data</a></li><li><a href="#2">view distance-angle distribution</a></li><li><a href="#3">view indivisual incidence</a></li><li><a href="#4">one single problematic point</a></li><li><a href="#5">use smaller time step to integrate the ergodic trajectory</a></li><li><a href="#6">get the new difference vector</a></li><li><a href="#7">apply this method to all the shadowing points of the above shadowing instances</a></li><li><a href="#8">apply this method to all shadowing incidences</a></li></ul></div><h2>Load the data<a name="1"></a></h2><p>All data comes from C++ simulation since collecting close approaches is computationally heavy. The initial conditions and Flouqet vectors are stored in HDF5 format.</p><pre class="codeinput">ang = dlmread(<span class="string">'angle'</span>); ang = sin(acos(ang));
+dis = dlmread(<span class="string">'dis'</span>);
+difv=dlmread(<span class="string">'difv'</span>);
+No = dlmread(<span class="string">'No'</span>);
+index = dlmread(<span class="string">'indexPo'</span>); index = index + 1; <span class="comment">% original index</span>
+                                               <span class="comment">% starts from 0</span>
+
+h5file = <span class="string">'/usr/local/home/xiong/00git/c/data/ks22h001t120x64EV.h5'</span>;
+ppType = <span class="string">'rpo'</span>;
+ppId = 4;
+np = 5;
+gTpos = 4;
+a0 = h5read(h5file, [<span class="string">'/'</span> ppType <span class="string">'/'</span> num2str(ppId) <span class="string">'/a'</span>]);
+nstp = h5read(h5file, [<span class="string">'/'</span> ppType <span class="string">'/'</span> num2str(ppId) <span class="string">'/nstp'</span>]);
+T = h5read(h5file, [<span class="string">'/'</span> ppType <span class="string">'/'</span> num2str(ppId) <span class="string">'/T'</span>]);
+s = h5read(h5file, [<span class="string">'/'</span> ppType <span class="string">'/'</span> num2str(ppId) <span class="string">'/s'</span>]);
+h = T/nstp;
+aa = intg(a0, h, nstp, np); aa = aa(:,1:end-1);
+[aaHat, ~] = orbitToSlice(aa);
+h1 = figure();
+plot3(aaHat(1,:), aaHat(3,:), aaHat(4,:));
+title(<span class="string">'rpo4 projected to subspace $[a_1, a_2, b_2]$'</span>, <span class="string">'Interpreter'</span>,<span class="string">'latex'</span>)
+</pre><img vspace="5" hspace="5" src="AngDist_01.png" alt=""> <h2>view distance-angle distribution<a name="2"></a></h2><p>If we do nothing to the raw data, the distance-angle distribution looks like the following figure. Here, we consider the subspace consisting of the first 7 Flouqet vectors.</p><pre class="codeinput"><span class="comment">% view the total distribution</span>
+h2 = figure();
+loglog(dis, ang(:, 5), <span class="string">'.'</span>);
+xlabel(<span class="string">'$||\Delta x||_2$'</span>, <span class="string">'Interpreter'</span>,<span class="string">'latex'</span>);
+ylabel(<span class="string">'$\sin(\theta)$'</span>, <span class="string">'Interpreter'</span>,<span class="string">'latex'</span>);
+title(<span class="string">'distance-angle scattering plot'</span>, <span class="string">'Interpreter'</span>,<span class="string">'latex'</span>);
+</pre><img vspace="5" hspace="5" src="AngDist_02.png" alt=""> <h2>view indivisual incidence<a name="3"></a></h2><p>Let's focus on a problematic incidence.</p><pre class="codeinput"><span class="comment">% select those which has certain shadowing time.</span>
+threshT = 50/0.1;
+N = length(No);
+ixLargeT = [];
+<span class="keyword">for</span> i = 1:N,
+    <span class="keyword">if</span> No(i)&gt;threshT, ixLargeT = [ixLargeT, i]; <span class="keyword">end</span>
+<span class="keyword">end</span>
+<span class="comment">% get the start and end index of a problematic incidence</span>
+<span class="comment">% ix = ixLargeT(2);</span>
+ix = 9;
+x1=sum(No(1:ix))+1; x2=sum(No(1:ix+1));
+h3 = figure();
+loglog(dis(x1:x2), ang(x1:x2, 5), <span class="string">'.'</span>);
+
+<span class="comment">% plot the corresponding distance</span>
+h4 = figure();
+subplot(2,2,1);
+semilogy(dis(x1:x2)); <span class="comment">% plot the distance</span>
+grid <span class="string">on</span>;
+subplot(2,2,2);
+plot(index(x1:x2)); <span class="comment">% plot the corresponding index on po</span>
+subplot(2,2,3);
+plot3(aaHat(1, x1:x2), aaHat(3, x1:x2), aaHat(4, x1:x2));
+subplot(2,2,4);
+<span class="comment">% calculate spacing</span>
+spacing = zeros(x2-x1);
+<span class="keyword">for</span> i = 1:x2-x1,
+    spacing(i) = norm(aaHat(:,index(i-1+x1)) - aaHat(:, index(i+x1)) );
+<span class="keyword">end</span>
+plot(spacing);
+</pre><img vspace="5" hspace="5" src="AngDist_03.png" alt=""> <img vspace="5" hspace="5" src="AngDist_04.png" alt=""> <h2>one single problematic point<a name="4"></a></h2><p>The above figure shows that when distance goes below <img src="AngDist_eq04824699449894430030.png" alt="$10^{-2}$">, some scattering points blow up. Let's choose the leftmost point in the above figure <img src="AngDist_eq11229855504944255789.png" alt="$x\simeq 10^{-2.7}$"> for consideration. First check that it is realy the minial distance between this ergodic point and rpo4. As shown in the figure below, we indeed find the point on rpo4 which is closest to this ergodic point. Denote the point on rpo4 and the ergodic point as <img src="AngDist_eq14936447282637968307.png" alt="$P_{po}$"> and <img src="AngDist_eq14811713616328506192.png" alt="$P_{e}$"> respectively.</p><pre class="codeinput">[minDis, pid] = min(dis(x1:x2)); <span class="comment">% get the index of smallest distance</span>
+pid = pid - 1;
+disp([minDis, ang(x1+pid, 5), index(x1+pid)]);
+
+<span class="comment">% confirm the index is correct</span>
+pointPo = aaHat(:, index(x1+pid));
+a0Ergo = pointPo + difv(x1+pid, :)'; <span class="comment">% recover the ergodic point</span>
+dif = repmat(a0Ergo, 1, 21) - aaHat(:, index(x1+pid)-10 : <span class="keyword">...</span>
+                                        index(x1+pid)+10);
+nor = [];
+<span class="keyword">for</span> i = 1:21, nor = [nor, norm(dif(:,i))]; <span class="keyword">end</span>
+figure();
+plot(nor);
+</pre><pre class="codeoutput">       0.00313714122946728       0.00295408820870727                       111
+
+</pre><img vspace="5" hspace="5" src="AngDist_05.png" alt=""> <h2>use smaller time step to integrate the ergodic trajectory<a name="5"></a></h2><p>now, we decrease the integration time time to recalculate the ergodic trajectory, and try to find the new ergodic point <img src="AngDist_eq04307211880439485803.png" alt="$P'_e$"> which has shortest distance to <img src="AngDist_eq14936447282637968307.png" alt="$P_{po}$">. As can be inferred in the following figure, and the printout, point <img src="AngDist_eq04307211880439485803.png" alt="$P'_e$"> and <img src="AngDist_eq02834476719298661984.png" alt="$P_e$"> are very close to each other.</p><pre class="codeinput">pointPo = aaHat(:, index(x1+pid-1));
+a0Ergo = pointPo + difv(x1+pid-1, :)';
+[aaErgo, ~] = intg2M1(a0Ergo, 0.001, 0.2);
+[N, M] = size(aaErgo);
+difNorm = zeros(M, 1);
+newDifv = zeros(N, M);
+<span class="keyword">for</span> i = 1:M,
+    newDifv(:,i) = aaErgo(:,i) - aaHat(:, index(x1+pid)); <span class="comment">%pointPo;</span>
+    difNorm(i) = norm(newDifv(:,i));
+<span class="keyword">end</span>
+figure();
+plot(difNorm);
+
+[newMinDis, minIndex] = min(difNorm);
+disp(newMinDis);
+oldDifv = difv(x1+pid, :)';
+trueDifv = aaErgo(:, minIndex) - aaHat(:, index(x1+pid));
+
+<span class="comment">% print out the first 10 components of old and new difference vectors</span>
+disp([oldDifv(1:10), trueDifv(1:10)]);
+</pre><pre class="codeoutput">       0.00313213248812494
+
+      0.000515638949843522      0.000527189807004225
+      6.59194920871187e-17      3.81691293802778e-17
+     -0.000928029245557016     -0.000968185858569004
+        0.0010224716316698       0.00100447602666953
+      0.000666909358502686      0.000739837248392883
+      -0.00235680331401578       -0.0023407415946699
+      0.000165874533143984      0.000194415759555422
+     -0.000702573071553914     -0.000588421646555426
+     -0.000557301351640598     -0.000616199321807648
+      0.000808289812496144      0.000794292865595764
+
+</pre><img vspace="5" hspace="5" src="AngDist_06.png" alt=""> <h2>get the new difference vector<a name="6"></a></h2><p>Now, we try to calculate the angle for the new difference vector. What amazed me is that even thougth <img src="AngDist_eq04307211880439485803.png" alt="$P'_e$"> and <img src="AngDist_eq02834476719298661984.png" alt="$P_e$"> are very similar to each other, their angles formed with Flouqet subspace have difference as large as one order, as showned in the printout. The figure below shows that the new angle point (red dot) lies in the asymptotic direction. The black dot is the original data.</p><pre class="codeinput"><span class="comment">% load Flouqet vectors</span>
+ve = h5read(h5file, [<span class="string">'/'</span> ppType <span class="string">'/'</span> num2str(ppId) <span class="string">'/ve'</span>], [1, index(x1+pid)], <span class="keyword">...</span>
+            [30*62,1]);
+ve = reshape(ve, 62, 30);
+ve = veToSlice(ve, aa(:, index(x1+pid)) );  <span class="comment">% transform to slice</span>
+ve = [ve(:,1:gTpos-1), ve(:, gTpos+1:end)]; <span class="comment">% get rid of one</span>
+                                            <span class="comment">% tangent direction</span>
+oldAngle = sin( subspace( oldDifv, ve(:, 1:7)) );
+newAngle = sin( subspace( trueDifv, ve(:, 1:7)) );
+
+<span class="comment">% print out the original angle and new angle</span>
+disp([oldAngle, newAngle]);
+
+<span class="comment">% plot the old point and new point</span>
+figure();
+loglog(dis(x1:x2), ang(x1:x2, 5), <span class="string">'.'</span>); hold <span class="string">on</span>;
+scatter(dis(x1+pid), ang(x1+pid, 5), <span class="string">'k'</span>, <span class="string">'filled'</span>);
+scatter(newMinDis, newAngle, <span class="string">'r'</span>, <span class="string">'filled'</span>);
+</pre><pre class="codeoutput">       0.00295408820877851      0.000584089778567998
+
+</pre><img vspace="5" hspace="5" src="AngDist_07.png" alt=""> <h2>apply this method to all the shadowing points of the above shadowing instances<a name="7"></a></h2><p>The following figure shows the new distance-angle scattering plot compared to the above figure. The part with large difference vector does not change too much. Only the small-distance part changes within our expectation.</p><pre class="codeinput">subsp = 3:9; <span class="comment">% the number of Floquet vectors to span the subspace</span>
+Nsubsp = length(subsp);
+
+<span class="comment">%Ntotal = length(dis);</span>
+newAngle = zeros(x2-x1, Nsubsp);     <span class="comment">% new angle</span>
+newDis = zeros(x2-x1, 1);            <span class="comment">% new distance</span>
+<span class="keyword">for</span> i=x1+1:x2,
+    pointPo = aaHat(:, index(i-1));
+    a0Ergo = pointPo + difv(i-1,:)';
+    [aaErgo, tt] = intg2M1(a0Ergo, 0.001, 0.2);
+    [N, M] = size(aaErgo);
+    difNorm = zeros(M,1);
+    newDifv = zeros(N, M);
+    <span class="keyword">for</span> j = 1:M,
+        newDifv(:, j) = aaErgo(:, j) - aaHat(:, index(i));
+        difNorm(j) = norm(newDifv(:,j));
+    <span class="keyword">end</span>
+    [newMinDis, minIndex] = min(difNorm);
+    trueDifv = newDifv(:, minIndex);
+    ve = h5read(h5file, [<span class="string">'/'</span> ppType <span class="string">'/'</span> num2str(ppId) <span class="string">'/ve'</span>], [1, index(i)], <span class="keyword">...</span>
+            [30*62,1]);
+    ve = reshape(ve, 62, 30);
+    ve = veToSlice(ve, aa(:, index(i)) );  <span class="comment">% transform to slice</span>
+    ve = [ve(:,1:gTpos-1), ve(:, gTpos+1:end)]; <span class="comment">% get rid of one</span>
+                                                <span class="comment">% tangent direction</span>
+    newDis(i-1) = newMinDis;
+    <span class="keyword">for</span> j = 1:Nsubsp,
+        newAngle(i-1, j) = sin( subspace( trueDifv, ve(:, 1:subsp(j))) );
+    <span class="keyword">end</span>
+<span class="keyword">end</span>
+figure();
+loglog(newDis, newAngle(:, 5), <span class="string">'.'</span>);
+</pre><img vspace="5" hspace="5" src="AngDist_08.png" alt=""> <h2>apply this method to all shadowing incidences<a name="8"></a></h2><pre class="codeinput"><span class="comment">%{
+</span><span class="comment">subsp = 3:9; % the number of Floquet vectors to span the subspace
+</span><span class="comment">Nsubsp = length(subsp);
+</span><span class="comment">
+</span><span class="comment">%Ntotal = length(dis);
+</span><span class="comment">Ntotal = 2000;
+</span><span class="comment">newAngle = zeros(Ntotal-1, Nsubsp);     % new angle
+</span><span class="comment">newDis = zeros(Ntotal-1, 1);            % new distance
+</span><span class="comment">% start from the second point
+</span><span class="comment">for i = 2:Ntotal,
+</span><span class="comment">    if(mod(i, 100) == 0) fprintf('******* i = %d ******** \n', i); end
+</span><span class="comment">    pointPo = aaHat(:, index(i-1));
+</span><span class="comment">    a0Ergo = pointPo + difv(i-1,:)';
+</span><span class="comment">    [aaErgo, tt] = intg2M1(a0Ergo, 0.001, 0.2);
+</span><span class="comment">    [N, M] = size(aaErgo);
+</span><span class="comment">    difNorm = zeros(M,1);
+</span><span class="comment">    newDifv = zeros(N, M);
+</span><span class="comment">    for j = 1:M,
+</span><span class="comment">        newDifv(:, j) = aaErgo(:, j) - aaHat(:, index(i));
+</span><span class="comment">        difNorm(j) = norm(newDifv(:,j));
+</span><span class="comment">    end
+</span><span class="comment">    [newMinDis, minIndex] = min(difNorm);
+</span><span class="comment">    trueDifv = newDifv(:, minIndex);
+</span><span class="comment">    ve = h5read(h5file, ['/' ppType '/' num2str(ppId) '/ve'], [1, index(i)], ...
+</span><span class="comment">            [30*62,1]);
+</span><span class="comment">    ve = reshape(ve, 62, 30);
+</span><span class="comment">    ve = veToSlice(ve, aa(:, index(i)) );  % transform to slice
+</span><span class="comment">    ve = [ve(:,1:gTpos-1), ve(:, gTpos+1:end)]; % get rid of one
+</span><span class="comment">                                                % tangent direction
+</span><span class="comment">    newDis(i-1) = newMinDis;
+</span><span class="comment">    for j = 1:Nsubsp,
+</span><span class="comment">        newAngle(i-1, j) = sin( subspace( trueDifv, ve(:, 1:subsp(j))) );
+</span><span class="comment">    end
+</span><span class="comment">end
+</span><span class="comment">
+</span><span class="comment">figure();
+</span><span class="comment">loglog(newDis, newAngle(:, 5), '.');
+</span><span class="comment">%}</span>
+</pre><p class="footer"><br><a href="http://www.mathworks.com/products/matlab/">Published with MATLAB&reg; R2014b</a><br></p></div><!--
+##### SOURCE BEGIN #####
+%% Partially resolve the blow-up problem at small distance 
+% In out previous experiments, we use first N Flouqet vectors to span a subspace 
+% $$v_N = \langle e_1, e_2,\cdots, e_N \rangle $$. when an ergodic trajectory
+% approaches one selected po (ppo/rpo), the difference vector is
+% recorded. The angle between the difference vector and the subspace
+% $v_N$ is investigated. However, at short distances (very close
+% shadowing), angle just belows up occacially. Later on, we find
+% that the problem lies in the spacing of orbits. If it is too large,
+% then calculation of difference vector is unreliable. Here, we
+% take smaller integration time step after we obtain the raw data
+% as so to illiminate the blow-up problem. We use 
+% one point in one relative periodic orbit to illustrate the
+% process. The last figure is the final result.
+
+
+%% Load the data
+% All data comes from C++ simulation since collecting 
+% close approaches is computationally heavy.
+% The initial conditions and Flouqet vectors are stored in HDF5 format.
+ang = dlmread('angle'); ang = sin(acos(ang));
+dis = dlmread('dis');
+difv=dlmread('difv');
+No = dlmread('No');
+index = dlmread('indexPo'); index = index + 1; % original index
+                                               % starts from 0
+
+h5file = '/usr/local/home/xiong/00git/c/data/ks22h001t120x64EV.h5';
+ppType = 'rpo';
+ppId = 4;
+np = 5;
+gTpos = 4;
+a0 = h5read(h5file, ['/' ppType '/' num2str(ppId) '/a']);
+nstp = h5read(h5file, ['/' ppType '/' num2str(ppId) '/nstp']);
+T = h5read(h5file, ['/' ppType '/' num2str(ppId) '/T']);
+s = h5read(h5file, ['/' ppType '/' num2str(ppId) '/s']);
+h = T/nstp;
+aa = intg(a0, h, nstp, np); aa = aa(:,1:end-1);
+[aaHat, ~] = orbitToSlice(aa);
+h1 = figure();
+plot3(aaHat(1,:), aaHat(3,:), aaHat(4,:));
+title('rpo4 projected to subspace $[a_1, a_2, b_2]$', 'Interpreter','latex')
+
+%% view distance-angle distribution
+% If we do nothing to the raw data, the distance-angle distribution
+% looks like the following figure.
+% Here, we consider the subspace consisting of the first 7 
+% Flouqet vectors.
+
+% view the total distribution
+h2 = figure();
+loglog(dis, ang(:, 5), '.');
+xlabel('$||\Delta x||_2$', 'Interpreter','latex');
+ylabel('$\sin(\theta)$', 'Interpreter','latex');
+title('distance-angle scattering plot', 'Interpreter','latex');
+
+
+%% view indivisual incidence 
+% Let's focus on a problematic incidence.
+
+% select those which has certain shadowing time.
+threshT = 50/0.1;
+N = length(No); 
+ixLargeT = []; 
+for i = 1:N,
+    if No(i)>threshT, ixLargeT = [ixLargeT, i]; end
+end
+% get the start and end index of a problematic incidence
+% ix = ixLargeT(2);
+ix = 9;
+x1=sum(No(1:ix))+1; x2=sum(No(1:ix+1));
+h3 = figure();
+loglog(dis(x1:x2), ang(x1:x2, 5), '.');
+
+% plot the corresponding distance
+h4 = figure();
+subplot(2,2,1);
+semilogy(dis(x1:x2)); % plot the distance
+grid on;
+subplot(2,2,2);
+plot(index(x1:x2)); % plot the corresponding index on po
+subplot(2,2,3);
+plot3(aaHat(1, x1:x2), aaHat(3, x1:x2), aaHat(4, x1:x2));
+subplot(2,2,4);
+% calculate spacing 
+spacing = zeros(x2-x1);
+for i = 1:x2-x1,
+    spacing(i) = norm(aaHat(:,index(i-1+x1)) - aaHat(:, index(i+x1)) );
+end
+plot(spacing);
+
+%% one single problematic point
+% The above figure shows that when distance goes below $10^{-2}$,
+% some scattering points blow up. Let's choose the leftmost point in
+% the above figure $x\simeq 10^{-2.7}$ for consideration. First check that it is 
+% realy the minial distance between this ergodic point and rpo4. As
+% shown in the figure below, we indeed find the point on rpo4 which
+% is closest to this ergodic point. Denote the point on rpo4 and 
+% the ergodic point as $P_{po}$ and $P_{e}$ respectively.
+
+[minDis, pid] = min(dis(x1:x2)); % get the index of smallest distance
+pid = pid - 1;
+disp([minDis, ang(x1+pid, 5), index(x1+pid)]);
+
+% confirm the index is correct
+pointPo = aaHat(:, index(x1+pid));
+a0Ergo = pointPo + difv(x1+pid, :)'; % recover the ergodic point
+dif = repmat(a0Ergo, 1, 21) - aaHat(:, index(x1+pid)-10 : ...
+                                        index(x1+pid)+10);
+nor = [];
+for i = 1:21, nor = [nor, norm(dif(:,i))]; end
+figure();
+plot(nor);
+
+%% use smaller time step to integrate the ergodic trajectory
+% now, we decrease the integration time time to recalculate the ergodic
+% trajectory, and try to find the new ergodic point $P'_e$ which
+% has shortest distance to $P_{po}$. As can be inferred in the following figure,
+% and the printout, point $P'_e$ and $P_e$ are very close to each other.
+
+pointPo = aaHat(:, index(x1+pid-1));
+a0Ergo = pointPo + difv(x1+pid-1, :)';
+[aaErgo, ~] = intg2M1(a0Ergo, 0.001, 0.2);
+[N, M] = size(aaErgo);
+difNorm = zeros(M, 1);
+newDifv = zeros(N, M);
+for i = 1:M,
+    newDifv(:,i) = aaErgo(:,i) - aaHat(:, index(x1+pid)); %pointPo;
+    difNorm(i) = norm(newDifv(:,i));
+end
+figure();
+plot(difNorm); 
+
+[newMinDis, minIndex] = min(difNorm);
+disp(newMinDis);
+oldDifv = difv(x1+pid, :)';
+trueDifv = aaErgo(:, minIndex) - aaHat(:, index(x1+pid));
+
+% print out the first 10 components of old and new difference vectors
+disp([oldDifv(1:10), trueDifv(1:10)]);
+
+%% get the new difference vector
+% Now, we try to calculate the angle for the new difference vector.
+% What amazed me is that even thougth $P'_e$ and $P_e$ are very
+% similar to each other, their angles formed with Flouqet subspace
+% have difference as large as one order, as showned in the printout.
+% The figure below shows that the new angle point (red dot) lies in 
+% the asymptotic direction. The black dot is the original data.
+
+% load Flouqet vectors
+ve = h5read(h5file, ['/' ppType '/' num2str(ppId) '/ve'], [1, index(x1+pid)], ...
+            [30*62,1]);
+ve = reshape(ve, 62, 30);
+ve = veToSlice(ve, aa(:, index(x1+pid)) );  % transform to slice
+ve = [ve(:,1:gTpos-1), ve(:, gTpos+1:end)]; % get rid of one
+                                            % tangent direction
+oldAngle = sin( subspace( oldDifv, ve(:, 1:7)) );
+newAngle = sin( subspace( trueDifv, ve(:, 1:7)) );
+
+% print out the original angle and new angle
+disp([oldAngle, newAngle]);
+
+% plot the old point and new point
+figure();
+loglog(dis(x1:x2), ang(x1:x2, 5), '.'); hold on;
+scatter(dis(x1+pid), ang(x1+pid, 5), 'k', 'filled'); 
+scatter(newMinDis, newAngle, 'r', 'filled');
+
+
+
+%% apply this method to all the shadowing points of the above shadowing instances
+% The following figure shows the new distance-angle scattering plot
+% compared to the above figure. The part with large difference
+% vector does not change too much. Only the small-distance part
+% changes within our expectation.
+
+subsp = 3:9; % the number of Floquet vectors to span the subspace
+Nsubsp = length(subsp);
+
+%Ntotal = length(dis);
+newAngle = zeros(x2-x1, Nsubsp);     % new angle
+newDis = zeros(x2-x1, 1);            % new distance
+for i=x1+1:x2,
+    pointPo = aaHat(:, index(i-1));
+    a0Ergo = pointPo + difv(i-1,:)';
+    [aaErgo, tt] = intg2M1(a0Ergo, 0.001, 0.2);
+    [N, M] = size(aaErgo);
+    difNorm = zeros(M,1);
+    newDifv = zeros(N, M);
+    for j = 1:M,
+        newDifv(:, j) = aaErgo(:, j) - aaHat(:, index(i));
+        difNorm(j) = norm(newDifv(:,j));
+    end
+    [newMinDis, minIndex] = min(difNorm);
+    trueDifv = newDifv(:, minIndex);
+    ve = h5read(h5file, ['/' ppType '/' num2str(ppId) '/ve'], [1, index(i)], ...
+            [30*62,1]);
+    ve = reshape(ve, 62, 30);
+    ve = veToSlice(ve, aa(:, index(i)) );  % transform to slice
+    ve = [ve(:,1:gTpos-1), ve(:, gTpos+1:end)]; % get rid of one
+                                                % tangent direction
+    newDis(i-1) = newMinDis;
+    for j = 1:Nsubsp,
+        newAngle(i-1, j) = sin( subspace( trueDifv, ve(:, 1:subsp(j))) );
+    end
+end
+figure();
+loglog(newDis, newAngle(:, 5), '.'); 
+
+
+%% apply this method to all shadowing incidences
+%{
+subsp = 3:9; % the number of Floquet vectors to span the subspace
+Nsubsp = length(subsp);
+
+%Ntotal = length(dis);
+Ntotal = 2000;
+newAngle = zeros(Ntotal-1, Nsubsp);     % new angle
+newDis = zeros(Ntotal-1, 1);            % new distance
+% start from the second point
+for i = 2:Ntotal,
+    if(mod(i, 100) == 0) fprintf('******* i = %d ******** \n', i); end
+    pointPo = aaHat(:, index(i-1));
+    a0Ergo = pointPo + difv(i-1,:)';
+    [aaErgo, tt] = intg2M1(a0Ergo, 0.001, 0.2);
+    [N, M] = size(aaErgo);
+    difNorm = zeros(M,1);
+    newDifv = zeros(N, M);
+    for j = 1:M,
+        newDifv(:, j) = aaErgo(:, j) - aaHat(:, index(i));
+        difNorm(j) = norm(newDifv(:,j));
+    end
+    [newMinDis, minIndex] = min(difNorm);
+    trueDifv = newDifv(:, minIndex);
+    ve = h5read(h5file, ['/' ppType '/' num2str(ppId) '/ve'], [1, index(i)], ...
+            [30*62,1]);
+    ve = reshape(ve, 62, 30);
+    ve = veToSlice(ve, aa(:, index(i)) );  % transform to slice
+    ve = [ve(:,1:gTpos-1), ve(:, gTpos+1:end)]; % get rid of one
+                                                % tangent direction
+    newDis(i-1) = newMinDis;
+    for j = 1:Nsubsp,
+        newAngle(i-1, j) = sin( subspace( trueDifv, ve(:, 1:subsp(j))) );
+    end
+end
+
+figure();
+loglog(newDis, newAngle(:, 5), '.'); 
+%}
+##### SOURCE END #####
+--></body></html>

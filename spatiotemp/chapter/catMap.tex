@@ -1,0 +1,1747 @@
+% siminos/spatiotemp/chapter/catMap.tex
+% $Author: predrag $ $Date: 2021-12-08 16:28:14 -0500 (Wed, 08 Dec 2021) $
+
+\Chapter{catMap}{26jan2018}{Cat map}
+% \label{c-catMap}  % formatted for ChaosBook.org
+\renewcommand{\ssp}{x}
+\renewcommand{\Ssym}[1]{{\ensuremath{m_{#1}}}}    % Boris
+% \newcommand{\Ssym}[1]{{\ensuremath{s_{#1}}}}  % ChaosBook
+
+\begin{bartlett}{
+If space is infinite, we are in no particular point
+in space. If time is infinite, we are in no particular
+point in time.
+        }
+\bauthor{
+\HREF{https://www.newyorker.com/podcast/fiction/mohsin-hamid-reads-jorge-luis-borges}
+{The Book of Sand}, by
+Jorge Luis Borges
+    }
+\end{bartlett}
+
+\bigskip\noindent
+What is a natural way to cover the torus, in such a way that the dynamics and
+the partition borders are correctly aligned? You are allowed to coordinatize
+the unit torus by any set of coordinates that covers the torus by a unit area.
+The origin is fixed under the action of ${\bf A}$, and straight lines map into
+the straight lines, so Adler and Weiss did the natural thing, and used
+parallelograms (following  Bowen\rf{Bowen70} we shall refer to such
+parallelograms as `rectangles') with edges parallel to the two eigenvectors of
+${\bf A}$. Adler and Weiss observed that the torus in the new eigen-coordinates
+is covered by two rectangles, labelled $A$ and $B$ in \reffig{fig:Lect13p8}.
+    \PC{2018-02-09}{
+(1) motivate Manning multiples by doing the 1D circle map first.
+    Maybe Robinson\rf{Robinson12} does that. \\
+(2) motivate {\catlatt} by recent Gutkin \etal\ many-body paper
+    }
+
+\section{\AW\ partition of the Thom-Arnol'd cat map}
+\label{sect:AdWei67coord}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{figure}
+  \centering
+(a) \includegraphics[width=0.74\textwidth]{Lect13p8}
+\\
+(b) \includegraphics[width=0.74\textwidth]{Lect13p11}
+\\
+(c)  \includegraphics[width=0.5\textwidth]{Lect13p17}
+  \caption{\label{fig:Lect13p8}
+(a) Two-rectangles \AW\ generating partition for the canonical Arnol'd cat
+map \refeq{ArnoldCat}, with borders given by stable-unstable manifolds of the
+unfolded cat map lattice points near to the origin.
+(b) The first iterate of the partition.
+(c) The iterate pulled back into the generating partition,
+and the corresponding 5-letter {\markGraph}. In (b) and (c)
+I have not bothered to
+relabel Crutchfield partition labels with our
+shift code. This is a ``linear code,'' in the
+sense that for each square on can count how many side-lengths are needed
+to pull the overhanging part of $f(x)$ back into the two defining squares.
+(Figure by Crutchfield\rf{Crutchfield18})
+}
+\end{figure}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+\refFig{fig:Lect13p8} for the canonical
+Thom-Arnol'd cat map
+                            \toRem{rem:catMapAbout}
+\beq
+A =
+\MatrixII{2}{1}
+         {1}{1}
+\,.
+% \qquad\det A= 1 \,,
+\ee{ArnoldCat}
+
+String people, \arXiv{1608.07845}, find the identity
+\beq
+\MatrixII{2}{1}
+         {1}{1}
+=
+\MatrixII{1}{1}
+         {0}{1}
+\MatrixII{1}{0}
+         {1}{1}
+% = LR^{-1}
+= L\transp{L}
+%\,,
+% \qquad\det A= 1 \,,
+\ee{AxFlNi16(2.7)}
+significant: ``The map corresponds to successive kicks, forwards and
+backwards along the light cone [...]''
+
+% 2018-02-10}{
+As another example, with $s=4$,
+Manning\rf{Manning02} discusses a Markov partition for the cat map
+(also discussed by Anosov, Klimenko and Kolutsky\rf{AnKlKo08})
+\beq
+A =
+\MatrixII{3}{1}
+         {2}{1}
+\,.
+% \qquad\det A= 1 \,,
+\ee{ArnoldCat2}
+
+                                        \toCB
+In order to count all admissible walks, one associates with the \markGraph\
+such as the one in \reffig{fig:Lect13p8}\,(c) the {\em connectivity} matrix
+\beq
+C =
+\MatrixII{1}{1}
+         {1}{2}
+\,,
+\ee{connArnoldCat}
+where $C_{ij}$ is the number of ways (number of links) of getting to $i$ from
+$j$.
+
+
+
+\section{\AW\ partition of the \PV\ cat map}
+\label{sect:AdlWeiPV}
+
+%\item[2016-05-29 PC]
+%I have added this chapter with intention to include it as several examples
+%in ChaosBook.org.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+  \begin{figure}
+  \begin{center}  %%% 2016-12-25  see
+                  %%% siminos/figsSrc/inkscape/CatMapStatesp.svg
+  \setlength{\unitlength}{0.65\textwidth}
+ %% \unitlength = units used in the Picture Environment
+  \begin{picture}(1,0.81984366)%
+    \put(0,0){\includegraphics[width=\unitlength]{CatMapStatesp}}%
+    \put(-0.025,0.15){\color[rgb]{0,0,0}\makebox(0,0)[lb]{\smash{$(0,0)$}}}%
+    \put(0.26669086,0.17307744){\color[rgb]{0,0,0}\makebox(0,0)[lb]{\smash{B}}}%
+    \put(0.26669086,0.41839762){\color[rgb]{0,0,0}\makebox(0,0)[lb]{\smash{C}}}%
+    \put(0.02137069,0.41839762){\color[rgb]{0,0,0}\makebox(0,0)[lb]{\smash{D}}}%
+    \put(0.38935094,0.00135332){\color[rgb]{0,0,0}\makebox(0,0)[lb]{\smash{B}}}%
+    %\put(0.32,0.17){\color[rgb]{0,0,0}\makebox(0,0)[lb]{\smash{$(0,0)$}}}%
+    \put(0.64284833,0.60647641){\color[rgb]{0,0,0}\makebox(0,0)[lb]{\smash{C}}}%
+    \put(0.64284833,0.79455521){\color[rgb]{0,0,0}\makebox(0,0)[lb]{\smash{D}}}%
+    %\put(0.79004043,0.42657495){\color[rgb]{0,0,0}\makebox(0,0)[lb]{\smash{A}}}%
+    %\put(0.79004043,0.17307744){\color[rgb]{0,0,0}\makebox(0,0)[lb]{\smash{B}}}%
+    %\put(0.96994189,0.17307744){\color[rgb]{0,0,0}\makebox(0,0)[lb]{\smash{C}}}%
+    %\put(0.97811923,0.42657495){\color[rgb]{0,0,0}\makebox(0,0)[lb]{\smash{D}}}%
+    \put(0.02,0.27){\color[rgb]{0,0,0}\rotatebox{90.0}{\makebox(0,0)[lb]{\smash{$\ssp_{0}$}}}}%
+    \put(0.39,0.27){\color[rgb]{0,0,0}\rotatebox{90.0}{\makebox(0,0)[lb]{\smash{$\ssp_{1}$}}}}%
+    \put(0.76,0.27){\color[rgb]{0,0,0}\rotatebox{90.0}{\makebox(0,0)[lb]{\smash{$\ssp_{1}$}}}}%
+    \put(0.1469525,0.173){\color[rgb]{0,0,0}\makebox(0,0)[lb]{\smash{$\ssp_{-1}$}}}%
+    \put(0.51493279,0.174){\color[rgb]{0,0,0}\makebox(0,0)[lb]{\smash{$\ssp_{0}$}}}%
+    \put(0.86655824,0.175){\color[rgb]{0,0,0}\makebox(0,0)[lb]{\smash{$\ssp_{0}$}}}%
+    \put(0.21762677,0.55482852){\color[rgb]{0,0,0}\rotatebox{43.35476392}{\makebox(0,0)[lb]{\smash{stretch}}}}%
+    \put(0.74915379,0.61465381){\color[rgb]{0,0,0}\rotatebox{-46.94301089}{\makebox(0,0)[lb]{\smash{wrap}}}}%
+  \end{picture}%
+\end{center}
+   \caption{ \label{fig:CatMapStatesp}
+(Color online)
+The $s=3$  \PV\ cat map matrix \refeq{PerViv:2confRepMat}
+%\refeq{eq:StateSpCatMap} keeps the origin $(0,0)$ fixed, but otherwise
+stretches the unit square
+into a parallelogram. Translations by $\Ssym{0}$ from alphabet
+$\A=\{-1,0,1,2\}=$
+\{%
+{\color{red}red},
+{\color{green}green},
+{\color{blue}blue},
+{\color{yellow}yellow}%
+\}
+bring stray regions back onto the torus.
+   }
+ \end{figure}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%    \PCpost{2016-12-26}{
+As illustrated in \reffig{fig:CatMapStatesp}, the action of the
+cat map in the \PV\rf{PerViv}  ``two-configuration
+representation'' is given by the antisymmetric  area
+preserving $[2\!\times\!2]$ matrix
+\beq
+{\bf A}
+=\MatrixII{0}{1}
+          {-1}{s}
+\ee{PerViv:2confRepMat}
+For the Arnol'd value $s=3$,
+in one time step the map stretches the unit square into a parallelogram, and
+than wraps it around the torus 3 times, as in \reffig{fig:CatMapStatesp}.
+Visualise the phase space as a bagel, with $\ssp_0$ axis a circle on the
+outside of the bagel. This circle is divided into three color segments, which
+map onto each other as you got in the $\ssp_1$ axis direction.  Now apply the
+inverse map - you get 3 strips intersecting the the above strips, for 9
+rectangles in all: a full shift, \ie, a ternary Smale horseshoe. So on the
+torus there are only 3 strips - there is no distinction between the two outer
+letters $\Ae=\{-1,2\}=$
+\{%
+{\color{red}red},
+{\color{yellow}yellow}%
+\},
+it is the same third strip. The division into 2 triangles is an artifact
+of plotting the torus as a unit square. All
+complicated pruning of (the current draft of) Gutkin \etal\rf{GHJSC16}
+is a red herring, due to over-partitioning of the
+torus with a 4-letter alphabet.
+
+{\em This is stupid.}
+
+How do \AW\ coordinates work out for the Arnol'd cat map in the \PV\
+representation \refeq{PerViv:2confRepMat} used here?
+First one needs to construct the eigen-coordinates.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\hfill         \fastTrackExam{exam:ProjOpCatMap}
+
+For $s>2$ the stability multipliers
+\(
+(\ExpaEig^{+},\ExpaEig^{-})
+\,=\,(\ExpaEig\,,\; \ExpaEig^{-1})
+\)
+are real,
+\beq
+\ExpaEig^{\pm}=\frac{1}{2}(s\pm \surd{D})
+\,,\qquad
+\ExpaEig=e^{\Lyap}
+\,,
+\ee{catEigs}
+where
+\bea
+s&=&\ExpaEig+\ExpaEig^{-1}
+  =  2\cosh(\Lyap)
+    \,,\quad
+    \continue
+\surd{D}&=&\ExpaEig-\ExpaEig^{-1}
+  =  2\sinh(\Lyap)
+\label{catEigs1}
+\eea
+ discriminant $D=s^{2}-4$,
+with a positive Lyapunov exponent $\Lyap >0$,
+and the right, left eigen\-vectors:
+\bea
+\{ \jEigvec[+],\jEigvec[-] \} &=& \left\{
+    \VectorII{\ExpaEig^{-1}}{1}
+    \,,
+     \VectorII{\ExpaEig}{1} \right\}
+    \continue
+\{ \jEigvecT[+],\jEigvecT[-] \} &=& \left\{
+   [-\ExpaEig^{-1},1]
+    \,,
+    [\ExpaEig,-1] \right\}
+\,,
+\label{eigVecs}
+\eea
+(where the overall scale is arbitrary).
+As the matrix is not symmetric, the
+$\{\jEigvec[j]\}$ do not form an orthogonal basis.
+
+What does this do to the partition of \reffig{fig:CatMapStatesp}? The origin
+is still the fixed point. For a \statesp\ point in the new, dynamically
+intrinsic right eigenvector \AW\ %\rf{AdWei70}
+coordinate basis $x'$
+\[
+\left(\begin{array}{c}
+ \ssp_{t-1}'  \\
+ \ssp_{t}'
+ \end{array} \right )
+ =
+\left(\begin{array}{c}
+ -\ExpaEig\ssp_{t}+\ssp_{t-1}\\
+ -\ExpaEig^{-1}\ssp_{t}+\ssp_{t-1}
+ \end{array} \right )
+\,.
+\]
+the abscissa ($\ssp_{t-1}$ direction) is not affected, but the ordinate
+($\ssp_{t}$ direction) is flipped and stretched/shrunk by factor $-\ExpaEig$,
+$-\ExpaEig^{-1}$ respectively,
+\[
+\left(\begin{array}{c}
+ \ssp_{t}'  \\
+ \ssp_{t+1}'
+ \end{array} \right )
+ =
+ \MatrixII{\ExpaEig^{-1}}{0}
+          {0}            {\ExpaEig}
+\left(\begin{array}{c}
+ \ssp_{t-1}'  \\
+ \ssp_{t}'
+ \end{array} \right )
+ - \left(\begin{array}{c}
+ 0  \\
+ \Ssym{t}
+ \end{array} \right )
+\,,
+\]
+preserving the vertical strip nature of the
+partition of \reffig{fig:CatMapStatesp}. In the \AW\ right eigenbasis,
+${\bf A}$ acts by stretching the $\jEigvec[+]$ direction by $\ExpaEig$, and
+shrinking the $\jEigvec[-]$ direction by  $\ExpaEig^{-1}$, without any rotation
+of either direction.
+
+Thus the \AW\ coordinates preserve the convenient feature of the
+\PV\ cat map, \reffig{fig:CatMapStatesp}: the torus `rewrapping'
+translations remain all vertical, specified by a single integer.
+
+The angles of stable / unstable manifolds are irrational respective to the
+lattice, and they never hit another vertex (and so they do not close onto
+themselves under quotienting of translations).
+
+%%%%%%%%%%%%%%%%% by hand calculations :)
+%   \surd{D} = sqrt(5)         = 2.23606797749
+%   L1 = (3+sqrt(5))/2  = 2.61803398874
+%   L2 = (3-sqrt(5))/2  = 0.38196601125
+%   e11= (L2)/(\surd{D})       = 0.17082039325
+%   e12= (1)/(\surd{D})        = 0.44721359550
+%   e21= (L1)/(\surd{D})       = 1.17082039325
+%   e22= (1)/(\surd{D})        = 0.44721359550
+%
+%   y = e12/e11         = 2.61803398874 x slope expanding
+%   y = e21/e22         = 0.38196601125 x slope contracting
+%
+% contract: Plot[0.38196601125 x, {x, 0, 1}, {y, 0, 1}]
+% expand:   Plot[2.61803398874 x, {x, 0, 1}, {y, 0, 1}] width 10.509
+%
+% horizontally along x:
+%  (439.8005-343.6351)*0.381966+343.6351 = 380.367, got through x= 232.17
+%  (-143.732+195.435)*0.381966 = 36.734, got through x= 175.7
+% vertically along y:
+%  (496.6877-400.3766)*2.6180+400.3766   = 652.519, got through x= 195.0420
+%  (155.5237-103.7766)*2.6180+103.7766   = 239.25, got through x= 195.0420
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%  \begin{figure}
+%  \begin{center}  %%% 2016-12-25  see
+%[to be drawn]
+%\end{center}
+%   \caption{ \label{fig:CatMapEigVecs}
+%(Color online)
+%Going from the Newtonian $s=3$  Arnol'd cat map to the right eigenvector
+%\AW\ coordinate basis,
+%with the expanding (purple) and contracting (beige) eigendirections indicated.
+%Next: figure out the two rectangles which are the start of the \AW\
+%construction. Or three rectangles - would be nice to have a partition something
+%symmetric across the main diagonal, as the two eigendirections are symmetric
+%under time reversal.
+%   }
+% \end{figure}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{figure}
+  \centering
+(a)\includegraphics[width=0.40\textwidth]{PCLect13p8}
+(b)\includegraphics[width=0.50\textwidth]{PCLect13p14}
+  \caption{\label{fig:PCLect13p8}
+(a) An abandoned two-rectangle \AW\ generating
+partition for the \PV\ cat map \refeq{PerViv:2confRepMat}, with
+borders given by cat map stable-unstable manifolds.
+(b) An abandoned attempt to identify the finite partition,
+since superseded by the partition of \reffig{fig:PCLect13p16}\,(b)
+and \reffig{fig:PVAdlerWeissB}.
+}
+\end{figure}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{figure}
+  \centering
+(a)\includegraphics[width=0.45\textwidth]{PCLect13p12}
+(b)\includegraphics[width=0.45\textwidth]{PCLect13p13}
+  \caption{\label{fig:PCLect13p12}
+(a) [Abandoned] Tiling of the square lattice by the two-rectangle \AW\
+generating partition of \reffig{fig:PCLect13p8}\,(a) for the \PV\
+cat map \refeq{PerViv:2confRepMat}.
+(b) Tiling of the square lattice by the three-rectangle, time reversal
+symmetric generating partition. Note that we have used the continuous
+translation invariance to center the large tile $A$ within the
+unit square (continued in \reffig{fig:PCLect13p9}\,(a)).
+}
+\end{figure}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+Note that from \reffig{fig:PCLect13p12}\,(a) to
+\reffig{fig:PCLect13p12}\,(b) we have used the continuous translation
+invariance to center the large tile $A$ within the unit square. That
+makes the time reversal invariance more explicit.
+It might not be obvious that the two parallelograms of
+\reffig{fig:PCLect13p8}\,(a) tile the square lattice, but they do, as
+illustrated in \reffig{fig:PCLect13p12}\,(a).
+                                            \toRem{rem:PythagorTiling}
+Such tilings are known as `Pythagorean'.
+
+Given the stable/unstable eigenvectors, the
+natural eigen-coordinates are given. I had first constructed a
+2-rectangle generating partition for the \PV\rf{PerViv}
+two-configuration representation \refeq{PerViv:2confRepMat} - it is a squashed
+and rotated version of \reffig{fig:Lect13p8}\,(a)
+drawn in \reffig{fig:PCLect13p8}\,(a). The point is, after a
+linear change of coordinates one has finite grammar \AW\ symbolic
+dynamics, and the symbolic dynamics is a linear code in sense of Boris,
+but this time with all admissible sequences generated as walks on
+a \markGraph\ isomorphic to the one in \reffig{fig:Lect13p8}\,(c).
+
+I actually like better the three-rectangle, time reversal symmetric
+generating partition of \reffig{fig:PCLect13p9} and \reffig{fig:PCLect13p16}.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{figure}
+  \centering
+(a)~~\includegraphics[width=0.37\textwidth]{PCLect13p9}
+(b)\includegraphics[width=0.41\textwidth]{PCLect13p15}
+  \caption{\label{fig:PCLect13p9}
+(a) The three-rectangle, time reversal symmetric generating partition
+for the \PV\ cat map \refeq{PerViv:2confRepMat}, with borders given by cat
+map stable-unstable manifolds.
+(b) The three-rectangle mapped one step forward in time.
+}
+\end{figure}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{figure}
+  \centering
+(a)\includegraphics[width=0.30\textwidth]{PCLect13p15}
+(b)\includegraphics[width=0.30\textwidth]{PCLect13p16}
+  \caption{\label{fig:PCLect13p16}
+(a) The three-rectangle mapped one step forward in time.
+(b) The three-rectangle wrapped back onto the torus, along the unstable
+direction, yields 8-letter alphabet generating partition, with three-nodes
+\markGraph.
+One could have kept the two-rectangle \AW\ generating partition of
+\reffig{fig:PCLect13p8}\,(a), in which case the alphabet is the standard 5
+letters.
+}
+\end{figure}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{figure}
+  \centering
+(a)~~\includegraphics[width=0.37\textwidth]{PCLect13p9b}
+(b)~~\includegraphics[width=0.37\textwidth]{PCLect13p16a}
+  \caption{\label{fig:PPCLect13p16a}
+\refFig{fig:PCLect13p16} continued.
+(a) The three-rectangle, time reversal symmetric generating partition for
+the \PV\ cat map \refeq{PerViv:2confRepMat}, with borders given
+by cat map stable-unstable manifolds.
+(b) The three-rectangle subpartition, one step forward in time. $A$ into three
+strips, $B$ into three strips, $B'$ into two strips, for a total of 8
+forward links in the graph
+ \PCedit{continue with a sensible coloring of these regions)}.
+Label the graph links by
+translations that bring these pieces back into the unit square.
+Under time reversal, interchange $B$ and $B'$, get the same partition going
+backwards in time. Then make it Lagrangian, meaning the combined graph should
+have undirected links (?).
+}
+\end{figure}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{figure}
+  \centering
+(a)~~\includegraphics[width=0.37\textwidth]{PCLect13p9b}
+(b)~~\includegraphics[width=0.37\textwidth]{PCLect13p9c}
+  \caption{\label{fig:PCLect13p9b}
+(a) The three-rectangle, time reversal symmetric generating partition for
+the \PV\ cat map \refeq{PerViv:2confRepMat}, with borders given
+by cat map stable-unstable manifolds.
+(b) The three-rectangle partition of the unit square (torus laid out).
+In this partition $A$ already lies entirely within the unit square,
+while
+$B$ and
+$B'$ are wrapped around the torus, and only seem to consist of three pieces
+each,
+an artifact of the wrapping. The unit square borders have no physical meaning.
+}
+\end{figure}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+Thus we have constructed \PV\ cat map coordinate transformation
+from the square to the intrinsic \AW\ eigencoordinate basis. This is a
+LINEAR transformation. As this has been falling on deaf ears for last few years,
+let me say it again:
+
+\bigskip\bigskip
+
+This is a {\Huge LINEAR code},
+
+\bigskip\bigskip
+
+\noindent
+as is every code in
+Chaos\-Book, as illustrated by the examples of \refsect{exam:tentMapSymbDyn} that
+I worked out for feline pleasure some years back. Got that?
+
+As \AW\ partition is generating, there is noting for Dirichlet boundary
+conditions Green's functions to accomplish - all admissible symbol {\brick s} are
+known. The problem is now \emph{trivial}, in the Soviet sense (\ie, after a few years of
+work, I understand it).
+
+\bigskip
+
+What is wrong with the argument so far? I used Newtonian, evolution-in-time
+thinking to generate the $d=1$ partition. That will not work in higher
+dimensions, so the above argument has to be recast in the Lagrangian form.
+
+\bigskip
+
+%Next: show that for $s=3$ the linear code in the new basis labels a
+Be my guest - I'm going to bed:)
+
+\bigskip
+
+A few side, symmetry related remarks: we \emph{must} quotient translation
+symmetries, do calculations in the elementary cell or, better still, the
+fundamental domain.
+
+\newpage
+\input{chapter/catHamilton}
+    % PC: restore here, once GHJSC16 finalized              2018-02-11
+    % \subsection{\AW\ partition}
+    % \label{sect:catAdlerWeiss}
+    % \input{../kittens/catAdlerWeiss}
+%\input{../kittens/pos}
+
+\subsection{Adler / Adler98}
+\label{sect:Adler98}
+
+Predrag 2017-10-02 excerpts from or notes on\\
+Adler\rf{Adler98} {\em Symbolic dynamics and {Markov} partitions},
+ \CBlibrary{Adler98}
+an excellent overview of symbolic dynamics techniques.
+ \beq
+ {A} =\left(\begin{array}{cc}
+ a & b \\
+ c & d
+  \end{array} \right)
+\,,
+\ee{Adler98:CatMap}
+where $a,b,c,d$ and
+$\det A=1$.
+The row vectors
+\beq
+\{ \jEigvecT[+],\jEigvecT[-] \} = \left\{
+   [c,\ExpaEig-a]
+    \,,
+    [c,\ExpaEig^{-1}-a] \right\}
+%\,,
+\ee{Adler98:leftEigVecs}
+                                                    \toCB
+are the left expanding / contracting eigen\-vectors. The matrix
+\refeq{Adler98:CatMap} is
+in general not
+symmetric, so $\{\jEigvecT[j]\}$ do not form an orthogonal basis.
+For matrix \refeq{PerViv:2confRepMat} the left eigenvectors are
+\beq
+\{ \jEigvecT[+],\jEigvecT[-] \} = \left\{
+   [-1,\ExpaEig]
+    \,,
+    [-1,\ExpaEig^{-1}] \right\}
+\,,
+\ee{PerViv:leftEigVecs}
+in agreement with \refeq{eigVecs}. I prefer the right eigenvectors basis
+$\{\jEigvec[j]\}$, as it lies in the first quadrant.
+
+
+\subsection{Percival and Vivaldi / PerViv}
+\label{sect:PerViv}
+
+Predrag 2016-05-29 excerpts from or notes on\\
+Percival and Vivaldi\rf{PerViv} {\em A linear
+    code for the sawtooth and cat maps} \CBlibrary{PerViv}
+
+``Completely chaotic systems are comparatively well understood, but they
+have been neglected as a starting point for the study of systems with
+divided phase space. It is the purpose of this and related papers to
+remedy this.''
+
+                                                                    \toCB
+``When one starts with an integrable system, and perturbs it to introduce
+some chaos, new orbits and new classes of orbits keep on appearing by
+bifurcation processes, and they are very difficult to follow or to
+classify. It is better to start with a purely chaotic system and then
+reduce the chaos by \emph{removing} orbits.''
+    \PC{2016-05-29}{totally agree - they say it well}
+
+``In this paper we present the symbolic dynamics of the sawtooth maps,
+and in the companion paper\rf{PerViv87b} {\em Arithmetical properties of
+strongly chaotic motions} the number theory for the \po s of
+the automorphisms of the torus, including the cat maps.''
+
+``we start with the simplest systems that show the phenomena of
+interest-area preserving maps. The sawtooth maps are piecewise linear
+systems. They depend on a parameter K and for positive K they are
+completely chaotic. For positive \emph{integer} K they are automorphisms
+of the torus, of which the simplest is the Arnol'd-Sinai cat map, with K
+= 1. We shall refer to all such toral automorphisms, with positive
+integer K, as cat maps. They are Anosov systems, continuous on the torus.
+On the other hand, when K is not an integer, the sawtooth map is
+discontinuous.''
+
+``Most of this paper is concerned with a `linear code' for the symbolic
+dynamics of the sawtooth maps, including the cat maps. This code is
+chosen for its convenience in practice, and differs from the usual codes
+for the Arnol'd-Sinai cat.''
+
+``In section 3 a practical problem of stabilisation is considered, that
+provides a concrete model for the sawtooth and cat maps, and a natural
+introduction to the linear codes. An explicit linear transformation from
+the itinerary to the orbit is given.''
+
+
+    \PC{2016-06-02}{verbatim from Keating\rf{Keating91a}}
+Every Anosov diffeomorphism of the torus is topologically conjugate to a
+hyperbolic automorphism. These are represented by [$2\!\times\!2$] matrices with
+integer entries (for continuity), unit determinant (for area
+preservation) and real eigenvalues (for hyperbolicity), and are known as
+cat maps.
+
+In order to describe certain collective properties of cat map orbits
+Hannay and Berry\rf{HanBer80} introduced a function  closely related to
+the least common multiple of their periods.
+
+
+
+\subsection{Isola / Isola90}
+\label{sect:Isola90}
+
+Predrag 2016-06-02 excerpts from or notes on\\
+S. Isola\rf{Isola90}
+{\em {$\zeta$}-functions and distribution of \po s of toral automorphisms}
+
+\PCedit{ % 2016-06-02
+Bellissard's friend Isola gives counting formulas of the usual type -
+could easily be turned into examples/exercises for Chaos\-Book. But I am
+looking for symbolic dynamics - not even mentioned here.
+        }
+
+We consider canonical automorphisms of the torus $T^2$, i.e. maps of the form
+\[
+T(x, y) = (ax + by, cx + dy)\quad \mod 1
+\,,
+\]
+which are implemented by the group of [2x2] matrices with integer entries,
+determinant 1, and eigenvalues \refeq{PerViv3.7}.
+
+To study the properties of this dense set of unstable \po s,
+observe that the \po s of T consist precisely of those points
+having rational coordinates $(p_l/q_l, p_1/q_2)$.
+If $p_1$, $q_1$ are coprime and $g$ is the least common multiple of $q_1$
+and $q_z$, then the square lattice of size $l/g$ is invariant under $T$.
+
+In this direction, Percival and Vivaldi\rf{PerViv,PerViv87b,BirViv} have
+constructed a nice translation of the dynamical problem into the language
+of modular arithmetic, allowing a profound understanding of the structure
+of {\po s}.
+Here, however, we follow another approach where a general expression for
+the N's is derived through a simple iterative scheme.
+Consider the numbers
+\beq
+u_n = \frac{\Lambda^n - \Lambda^{-n}}{\surd{D}}
+ \,.
+\ee{Isola90-4}
+The first two terms of the series are $u_0 = 0$, $u_1 = 1$ and each term after
+is given by
+\beq
+u_n = s u_{n-1} -u_{n-2}
+ \,.
+\ee{Isola90-5}
+
+[stuff to work out:
+Isola has nice figures that illustrate the partitions of the 2-torus]
+
+For the number of periodic points he finds, for any integer $s>2$
+\beq
+N_n = \Lambda^n + \Lambda^{-n} -2
+ \,,
+\ee{Isola90-11}
+in agreement with the numerics of \refref{OzoHan84}.
+Walters\rf{Walt82} defines the topological entropy as
+\beq
+h = \lim_{n \rightarrow \infty} \frac{1}{n}{\ln N_n}
+ \,,
+% ChaosBook \label{h-top}
+\ee{Isola90-12}
+This yields $h = \log \Lambda$, \ie, the Sinai theorem for the entropy of an
+automorphism\rf{ArnAve,sinai76}.
+
+The {\tzeta} for cat-map class of models is
+\beq
+\zetatop(z)  = \frac{(1 - \Lambda z) (1 - \Lambda^{-1} z)}
+                  {(1 - z)^2}
+           =  \frac{1 - s z + z^2}
+                  {(1 - z)^2}
+ \,.
+\ee{Isola90-13b}
+The denominator $(1 - z)^2$ takes care of the over-counting of the fixed point
+at the origin due to the 2-periodicity on the torus.
+\PC{2016-06-02}{
+I wonder whether the fact that this is quadratic in $z$ has something to do
+with the time-reversibility, and the unsigned graph's Ihara zeta functions,
+see \refsect{sect:Ihara} and \refeq{AABHM99-56e}.
+        }
+
+He also gives the number of {\orbit}s of period $n$,
+which is as usual given in terms of the Moebius function $\mu(m)$,
+\beq
+P_n = \frac{1}{n} \sum_{m|n}\mu(m) N_{n/m}
+\,.
+\ee{Isola90-16}
+
+
+
+\subsection{Creagh / Creagh94}
+\label{sect:Creagh94}
+
+Predrag 2016-06-02 excerpts from or notes on\\
+Creagh\rf{Creagh94}, {\em Quantum zeta function for perturbed cat maps}
+\CBlibrary{Creagh94}, who says: ``
+The behavior of semiclassical approximations to the spectra of perturbed
+quantum cat maps is examined as the perturbation parameter brings the
+corresponding classical system into the nonhyperbolic regime. The
+approximations are initially accurate but large errors are found to
+appear in the traces and in the coefficients of the characteristic
+polynomial after nonhyperbolic structures appear. Nevertheless, the
+eigenvalues obtained from them remain accurate up to large perturbations.
+''
+
+Thom-Arnol'd cat map
+\beq
+A = \left (
+\begin{array}{cc}
+1 & 1 \\
+1 & 2 \\
+\end{array}
+\right )
+\,,\qquad
+\det A= 1
+\,.
+\ee{Creagh94-1}
+This system can be written as:
+\beq
+\left (
+\begin{array}{c}
+q_{t+1} \\
+p_{t+1} \\
+\end{array}
+\right ) = A \left (
+\begin{array}{c}
+q_t \\
+p_t \\
+\end{array}
+\right ) \mod\: 1
+\ee{Creagh94-11}
+
+It is possible to construct a symbolic coding
+with finite grammar, as described in Devaney\rf{deva87}.
+Robinson\rf{Robinson12} goes through the construction clearly, step by step.
+The coding is constructed for an antisymplectic
+map whose double iteration is \refeq{Creagh94-11} - orbits of the cat
+map are then coded by sequences whose length is even. A
+brief summary of the construction follows (see Devaney\rf{deva87} for
+figures and details). The stable and unstable manifolds coming
+from the fixed point at $(q,p) = (0,0)$ are used to divide
+the phase space into 3 rectangles $R_1$, $R_2$ and $R_3$. Under iteration
+of the antisymplectic map, $R_1$ is mapped into $R_2 \cup R_3$, $R_2$
+into $R_1 \cup R_3$ and $R_3$ is mapped completely into $R_2$. Therefore
+orbits of the antisymplectic map are coded by sequences
+of 3 symbols (1,2,3), where 1 must be followed by 2 or 3, 2
+is followed by 1 or 3, and 3 must be followed by 2. The full
+cat map is coded by even sequences of symbols following
+the same grammar. We can alternatively code orbits of the
+full map with 5 symbols denoting the admissible pairs of the
+symbols above: $(a,b,c,d,e) = (12,13,21,23,32)$.
+
+
+The integers that must be subtracted from the phase
+space coordinates following application of the linear map in
+\refeq{Creagh94-11} in order to take the point back into the unit torus are
+fixed for each pair of symbols.
+The equation
+defining a \po\ can be written out as an
+explicit affine equation and solved for each itinerary.
+In this way a complete list of primitive {\po s} is obtained for the unperturbed map.
+
+
+\subsection{Keating / Keating91}
+\label{sect:Keating91}
+
+Keating\rf{Keating91}
+{\em The cat maps: quantum mechanics and classical motion}.
+
+the action of map on the vector $( p, q)$ can be described as  the
+motion  in  the  phase  space  specified  by  the
+Hamiltonian\rf{Keating91}
+\beq
+H(p , q) = ( k^2 -4 )^{-1/2}\sinh^{-1} [( k^2 -4 )^{-1/2}/2 ][ m_{12} p^2 -
+m_{21} q^2 + ( m_{11} - m_{22} ) pq]
+\,.
+\ee{BarShc06Ham}
+Here, $( p, q)$ are taken modulo 1 at each observation (the integer part
+is ignored), and observations occur at integer points of time.
+
+The paper has a nice discussion of (possible discrete symmetries of
+cat maps.
+
+Keating and F. Mezzadri\rf{KeaMez00} {\em Pseudo-symmetries of {Anosov}
+maps and spectral statistics}.
+    \PC{2016-08-29}{not useful for the deterministic case}
+
+Earlier work:
+Rykken\rf{Rykken98} constructed new types of Markov partitions.
+Snavely\rf{Snavely91} studied the connectivity matrices of Markov partitions
+for hyperbolic automorphisms of $T^2$. He found that for Berg partitions the
+connectivity matrices are conjugated to the dynamics. He also found a way to
+list all such matrices and hence to classify the shapes of Berg partitions. He
+relied on the result of Adler\rf{Adler98} that such partitions are indeed
+present for any toral automorphism.
+Manning\rf{Manning02} gave a powerful generalization of this to $T^n$.
+
+                                                    \toCB
+Anosov, Klimenko and Kolutsky\rf{AnKlKo08} give an introduction to Anosov
+diffeomorphisms, ways to represent their chaotic properties and some historical
+remarks on this subject:
+`` As far as we know, the first example of such kind was
+pointed out by J.~Hadamard about 1900. A couple of decades earlier H. Poincar\'e
+discovered the ``homoclinic points'' which now serve as
+the main ``source'' of ``chaoticity''; however, Poincar\'e himself spoke only
+that the ``phase portrait'' (\ie, the qualitative picture of trajectories'
+behaviour in the phase space) near such points is extremely complicated.
+A couple of decades after Hadamard, E.~Borel encountered a much simpler
+example of the ``chaoticity'' where it is easy to
+understand the ``moving strings'' of this phenomenon. We shall begin with
+a description of his example. About 100 years later it remains the simplest
+manifestation of the fact that a dynamical system (which, by definition, is
+deterministic) can somehow resemble a stochastic process.''
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%\section{Green's  function for 1\dmn\ lattice}
+%\label{sect:Green1d}
+\input{chapter/Green1d}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%\section{Bernoulli map, beta transformation}
+%\label{sect:Bernoulli}
+\input{chapter/Bernoulli}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%\section{Any piecewise linear map has ``linear code''}
+%\label{exam:tentMapSymbDyn}
+\input{chapter/tentMapCode}
+
+\section{Cat map blog}
+\label{sect:CatMapBlog}
+
+\begin{description}
+
+    \PCpost{2016-05-18}{                                        \toCB
+I start with our 2011 \emph{Notes for cat map}\\
+(former \emph{appendStatMnotes.doc} in \emph{dasbuch/book/notes}),\\
+to be eventually merged with \emph{chapter/appendStatM.tex}.
+    }
+
+\item[2011-05-14 Jean-Luc Thiffeault]
+I figured
+out that the grouping of \po s is crucial, and moreover that there is
+something delicate with the fixed point of the cat map, which lies on the
+boundary of Markov boxes.
+
+\item[2011-05-14 Predrag]
+For Anosov (linear Anosov?) - Arnol'd cat map - it should work like ton of
+rocks, but you have to note that because of the periodicity there is one
+fixed point, not two. If you screw up an early term in the series, then
+it converges very slowly. I think the Stephen Creagh\rf{Creagh94} tested
+it on weakly nonlinearly perturbed cat map (weakly, so golden-mean
+grammar is working) and it converged super-exponentially (you know the
+grammar, flow has bounded hyperbolicity, so weight-truncated cycle
+expansions are not needed - they perform less well).
+
+\item[2011-05-14 Jean-Luc Thiffeault]
+I know how to do it with the Markov partition now, and it works much better.
+Keep in mind this is a warmup problem: what I really have in mind (with
+my collaborator Erwan Lanneau\rf{LanThi11}) is to compute {\po s} for
+Teichmuller flow, where the {\po s} themselves are actually now
+pseudo-Anosovs!
+
+\item[2011-05-16 Hans-Henrik Rugh]
+% Hans-Henrik.Rugh@math.u-cergy.fr
+The situation as I recall it is roughly as follows:
+
+When you construct the symbolic dynamics you may start by picking one
+\po, typically the fixed point  $p=f(p)$  (but the following
+depends on the choice).  You then cut the torus into pieces following
+$s/u$-manifolds until you get a small collection of $N$ rectangles.
+\[
+R_1,\cdots,R_N
+\]
+Associated to this collection you have a transition matrix (for SINGLE
+rectangles).  Now, you also need to construct a transition matrix for
+PAIRS of rectangles, e.g.  $(R_1,R_2)  \to  (R_2,R_1)$ and then TRIPLES of
+rectangles ... $(R_1,R_2,R_3) \to (R_2,R_1,R_3)$, etc....
+These k'th - order transitions comes from the fact that there is a fixed
+point/periodic cycle on the boundary of the Markov partition elements.
+
+You get determinants   $d_k(z)$ for each of these k'th–order transition matrices.
+ NB :
+$(R_1,R_2) \to (R_2,R_1)$  is a \po\ of prime length 2 even if
+it represents a fixed point of f. I think (but is not sure?) that the
+weights in the determinant are calculated in the same way...
+
+The final determinant is
+\(
+d(z)=d_1(z)d_3(z)... / (d_2(z) d_4(z)...)
+\)
+if I am not mistaken. This is related to the so-called Manning trick\rf{manning} for
+counting real orbits related to
+\[
+\det (1 - s) = 1 - \tr s + \tr s \wedge s
+- \cdots
+\]
+where $s$ is a permutation.
+What is not obvious is that $d(z)$  is entire, but it is!
+
+%\item[2011-05-18 Hans-Henrik Rugh]
+It's a kind of model problem anyway. In more realistic systems I suppose
+that one may run into the problem of having several orbits on boundaries.
+
+One of the tricky points is to see how such an orbit in the `higher'
+order zeta-functions/Fredholm-det.
+
+As mentioned in e.g. $d_1(z)$ a 'physical' fixed point may appear
+zero times, or twice, or,...? In $d_2(z)$ a fixed point may actually appear
+as a period two orbit, so should be treated as such when looking for
+cancelling terms.
+
+Great, if you have managed to make it work in practice.
+I don't think that one can call it a standard trick but one may perhaps
+get it implicitly from the paper of Ruelle\rf{Ruelle90}. But it is
+difficult to digest and even more difficult to convert into computable
+formulae.
+
+    \PCpost{2018-02-10}{
+Manning\rf{manning} writes: ``
+According to Bowen\rf{Bowen70}, a Markov partition is a finite cover of \statesp\
+by closed subsets called \emph{rectangles}. The rectangles are pairwise disjoint
+except possibly for the intersection of their boundaries.
+[...]
+At the boundaries of the rectangles, that is where they intersect,
+several periodic points individual rectangles may be mapped to the same periodic
+point in the full \statesp.
+''
+
+``
+Counting the periodic points involves also certain auxiliary subshifts of finite
+type to remedy overcounting of points in the boundaries of the rectangles.
+''
+    }
+
+\item[2011-05-18 Jean-Luc Thiffeault] emailed to Predrag
+pdf file {\em Notes on \po\ expansions for Teichm\"uller flow}
+(saved as \emph{POexp.pdf} in \emph{dasbuch/book/notes/}).
+which maybe figures out cat map symbolic dynamics. He writes:
+
+``
+Updated notes: on page 4-5 I used the Markov boxes to compute the PO
+expansion.  I used a trick to deal with the orbit on the boundary:
+include several copies of the orbit, but divide by the correct factor.
+It makes the series very nicely convergent.  I don't know if this is a
+standard trick but it seems to work well.
+''
+
+    \PCpost{2011-05-17}{
+It is standard, it is in ChaosBook.org Chapter {\em Counting}, Sect {\em
+Counting cycles}. I introduced it in Roberto Artuso, Erik Aurell and
+Predrag Cvitanovi\'c\rf{AACII}, {\em Recycling of strange sets: II.
+applications}, see eq.~(4) and Fig.~6, but Manning\rf{manning} did it it
+in 1971 (if that's what he did), and Ruelle\rf{Ruelle90} at the same
+time, according to Hans Henrik.
+Chaos\-Book says: ``Smale\rf{smale_61} conjectured rationality of the zeta
+functions for Axiom A diffeomorphisms, later proved by
+Guckenheimer\rf{Guckenh77} and Manning\rf{manning}," and Chaos\-Book cannot
+be wrong.
+
+The rule of thumb is that all credit should go to old white male
+mathematicians whose names one knows how to spell.
+
+The argument is something like this: the correct object, the Fredholm
+determinant, can be written as ratios of products of skew products (AKA
+determinants of different dimensions), each one being the not correct
+object, but historically the first thing written down (dynamical or
+Ruelle zeta function).
+
+The ones on partition boundaries (what I currently call `ridges') are of
+lower dimensions, either downstairs or upstairs in these rations. They
+account for overcounting of the boundary fixed and periodic points.
+
+Chaos\-Book does something of that when explaining the relation between
+Fredholm determinants and dynamical zeta functions, but is so far silent
+on explicit examples of the Manning multiples. That is why I would really
+like us to write up the cat map symbolic dynamics simply and elegantly.
+Jean-Luc is not the only person who has gotten lost here, anybody
+mathematician who thinks that Arnol'd is the simplest exercise to try
+sinks precisely at this spot (physicists train on unimodal maps and the
+3-disk system, remaining blissfully ignorant of the Manning multiples)
+
+Hans Henrik might have more elegant way of saying this. Vivianne still more elegant.
+    }
+
+    \PCpost{2012-03-01}{
+I've been dreaming about this forever, see for example my post
+of {\bf [2012-03-01]}, \texttt{pipes} repository,
+{\em A letter to our experimental friends}:
+
+``
+For large aspect systems I imagine we fit local \template s whose 2\dmn\
+or 3\dmn\ volume is concentrated on a region big enough to capture
+interaction of close-by structures, but small enough not to track weakly
+interacting ones.
+
+In other words, cover 3\dmn\ volume with a finite-size \template\ that
+tracks a neighborhood for a finite time. It's OK to make it spatially
+periodic, as long as distance is measured in finite size spatiotemporal
+windows. That is what we already do when we use unstable \po s - we use
+ temporally-infinite periodic solution (that cannot be seen in
+experiment) to identify a finite-time neighboring segment of a chaotic
+trajectory.
+
+It has not been tried, so I might be wrong (again).
+''
+    }
+
+    \PCpost{2016-05-04}{
+I am not suggesting that we should study this, but it's something to
+maybe keep in mind:
+Slipantschuk, Bandtlow and Just\rf{SlBaJu16}, {\em Complete spectral data for
+analytic {Anosov} maps of the torus}, construct a family of analytic
+hyperbolic diffeomorphisms of the torus (of which Arnol'd cat map is a special
+case) for which the spectral properties of the associated transfer operator
+acting on a suitable Hilbert space can be computed explicitly. They introduce
+an example of an analytic hyperbolic diffeomorphism on the complex unit
+torus, of which the cat map is a special, linear case. the real
+representation of the map, Eq.~(2) is area-preserving and thus provides an
+example of a chaotic Hamiltonian system. Unlike  the  situation  for
+one-dimensional  non-invertible  maps, here  is  no distinction  between
+{\FPoper}s  and  Koopman  operators  as   diffeomorphism is
+area-preserving.
+
+
+Note that the eigenvalues of the evolution (transfer) operators come in
+doublets or quadruplets, presumably because of the discrete symmetries of the
+unit square.
+
+Just looking at their Figs.~1 is inspirational.
+
+The cat map can always be written as a composition of area preserving
+orientation reversing linear automorphisms.
+They define a two-parameter area-preserving family, Eq.~(85), and show that
+measures for such maps, where the determinant of the Jacobian varies, may have
+fractal properties, see Fig.~2.
+    }
+
+\item[2016-05-16 PC]
+Weirdly, Wolfram's Weisstein\rf{WolframArnCatMap} is wrong: what he calls
+\HREF{http://mathworld.wolfram.com/LyapunovCharacteristicExponent.html}
+{``Lyapunov characteristic exponents''} for Arnol'd cat map are
+certainly not ``exponents'' but multipliers. Maybe you guys could alert
+him, ask him to fix it.
+
+The eigenvectors are correct. They are the same for all periodic points and thus
+parallel: cat map is uniformly hyperbolic (the same stability exponents for all
+orbits), a nice example of the Anosov Axim A system, with the stable and
+unstable manifolds transverse everywhere, at the same intersection angle.
+
+\item[2016-05-16 PC]
+The boyscout version of Chaos\-Book
+Appendix~N \emph{Statistical mechanics applications},
+Artuso's
+Sect.~N.1 \emph{Diffusion in sawtooth and cat maps}
+sure merits a read. The pruning rules are given there.
+Exercise {e-Per-P-Cats} gives the exact number of $T$--periodic
+points of the cat map.
+
+    \PCpost{2016-05-17}{
+I have added for the time being \refchap{c-appendStatM} {\em Statistical
+mechanics applications} from Chaos\-Book to this blog.
+%Sorry about
+%\begin{quote}
+%... $\{4\}$ Rana's blog$\}\{23\}\{$chapter.$4\}$
+%\end{quote}
+%error. I'm too lazy to fix it - just press return.
+Note that there are yet
+more references to read in the Commentary to the
+\refchap{c-appendStatM}.
+    }
+
+    \PCpost{2016-05-21}{
+I had included Percival and Vivaldi\rf{PerViv,PerViv87b,BirViv} among the
+papers to read (search for {\bf 2016-05-16 PC}; see
+\refrem{rem:AnosovMaps}). Percival and Vivaldi\rf{PerViv87b} {\em
+Arithmetical properties of strongly chaotic motions} is about cat maps.
+Chaos\-Book material included in \refsect{s-toral-aut} might be based on
+that, but I do not remember now, I had last worked on that section in
+1996 :)
+
+Maybe working out \refexer{e-Rec-rels} to \refexer{e-Per-P-Cats} is the
+fastest way to make sure one understands this symbolic
+dynamics...
+    }
+
+    \LHpost{2016-05-17}{
+Uploaded to \texttt{siminos/mathematica} two Mathematica notebooks. {\em
+CatMap - single cat map symbolic dynamics and statistics} counts the
+single cat map symbols and determines their statistics. It is interactive
+and one can modify the parameters and play with it. {\em CatMap - single
+cat map {\po s} and \tzeta s} verifies the number of
+{\po s} and the \tzeta s for a single cat map.
+    }
+
+    \PCpost{2016-05-21}{
+Adrien and Rana wondered why are \refeq{ASCatMap} and \refeq{ASCatMap2}
+the same equation. Have a look at the two forms of the
+\HREF{http://www.streamsound.dk/book1/chaos/chaos.html\#85/z} {H\'enon
+equation} in the Chaos\-Book Example 3.6. Or see \refeq{PerViv2.2a} (eq.~(2.2)
+in Percival and Vivaldi\rf{PerViv}). Does that help in understanding the
+relation? Once you do, write it up in your reports.
+    }
+
+    \PCpost{2016-06-01}{
+As no one has written anything down, I am not sure what happened in the
+rest of the WebEx session, but my impression is that perhaps we
+should step a step back back and first work through some
+more introductory material for cat-map dynamics to start making sense.
+Do not be discouraged - it is all very different in flavor from what
+one learns in most traditional physics courses (though once you learn
+the stuff, deep connections to statistical mechanics emerge).
+My recommendation is that Rana and Adrien work through
+\HREF{http://chaosbook.org/course1/Course2w9.html} {week 9},
+\HREF{http://chaosbook.org/course1/Course2w10.html} {week 10},
+and at least parts of
+\HREF{http://chaosbook.org/course1/Course2w12.html} {week 12}
+(skip Chap.~23. Cycle expansions).
+
+Could one of you focus on understanding the cat-map `the linear code'
+part of Percival and Vivaldi\rf{PerViv} - perhaps just complete
+\refsect{sect:PerViv} started by me.
+
+The other one could describe the `standard' generating partition code
+allegedly given in Arnol'd and Avez\rf{ArnAve} and in most of the
+references in \refrem{rem:AnosovMaps}, so we all understand what Boris
+means when he says that code is not good for a study of spatiotemporal
+chaos.
+     }
+
+\LHpost{2016-07-01}{:
+
+code:    \emph{mathematica/Catmap - single cat map symbol diagram and symbol frequencies.nb}
+
+Single cat map symbol diagram and symbol frequencies. Analytical results
+of 2-symbol frequencies, up to a gap of 5. Great thanks to the new
+geometry package in Mathematica 10.
+    }
+
+\LHpost{2016-07-06}{:
+
+code:    \emph{mathematica/Catmap - single cat map symbol diagram and symbol frequencies v2.nb}
+\\
+Modified the form of matrix $A$ so that area calculation is easier;
+\\
+Added
+sections for 3-7 symbol frequencies (joint probability).
+
+Total pruning rules for consecutive n symbols of single Arnol'd cat map,
+$s=\tr[A]=3$, see \reftab{tab:LHarnoldPruned}. Compare with Rana's
+\reftab{RJpruning}: the number of {\inadmissible} sequences that she found
+for $\cl{a}=7$ differs.
+
+It would take ~12 core*hours to run all (up to 6 symbols: ~1 core*hour)
+    }
+\RJpost{2016-07-10}{
+I agree with Li Han \reftab{tab:LHarnoldPruned} on the numbers of pruned {\brick s}.
+}
+
+\LHpost{2016-07-20}{:
+
+code:    \emph{mathematica/Catmap - single cat map symbol diagram and symbol frequencies v3.nb}
+
+Total pruning rules for consecutive n symbols of single Arnol'd cat map,
+$s=\tr[A]=3$ up to length 12, see \reftab{tab:LHarnoldPruned}. Compare with Rana's
+\reftab{RJpruning}: the number of {\inadmissible} sequences that she found
+for $\cl{a}=7$ differs.
+
+For $s=3$ up to ...:\\
+length 7: $\approx 1$ Core*hour\\
+length 10: $\approx 3$ Core*days\\
+length 12: $\approx 15 -- 20$ Core*days\\
+    }
+
+\PCpost{2016-08-01}{:
+According to \reftab{tab:LHarnoldPruned}, there is a single new pruning rule
+for each prime-number period. Li Han lists it as 2, but
+by the reflection symmetry there is only one. One should really
+quotient the symmetry, and it is not just by removing overall factor 2 in the table:
+there are pruning {\brick s} that map into each other by the reflection
+symmetry, and there are pruning {\brick s} that are self-dual under reflection,
+giving one pruning rule rather than two in the not-desymmetrized listing
+of this table.
+\begin{itemize}
+  \item Is this surmise something proved by Dyson\rf{DysFal92}? Or does
+  Behrends\rf{Behrends98,BehFie98} explain it?
+  \item Does this new rule have a simple geometric interpretation, in terms
+  of the inequalities? What is the code of the pruned {\brick}?
+\end{itemize}
+None of
+\\\\
+0, 2, 22, 132, 684, 3164, 13894, 58912, 244678, 1002558, 4073528, 16460290
+\\
+= 2\,(1, 11, 66, 342, 1582, 6947, 29456, 122339, 501279, 2036764, 8230145)
+\\\\
+0, 2, 8, 2, 30, 2, 70, 16, 198, 2, 528, 2, $\cdots$
+\\
+= 2\,(1, 4, 1, 15, 1, 35, 8, 99, 1, 264, 1, $\cdots$)
+\\\\
+sequences is in the \HREF{https://oeis.org/} {On-Line Encyclopedia} of
+Integer Sequences, which is bad news. It means that not only this is a
+number-theoretic problem that has to do with prime factorization (bad
+news) but in addition it is not one of the standard number-theoretic
+problems. Means this is an undoable problem, unlikely to have any simple
+explanation. Do not waste any more time on it.
+    }
+
+\LHpost{2018-07-26}{ \emph{lhan629@gmail.com}
+
+Added to the repo my notes \HREF{../han/catMapItiners.pdf}
+{han/catMapItiners.pdf} on the cat map symbolic sequence, mostly about
+the empirical (polynomial) fit of the total and new pruning rules
+$\tilde{N}_{n}$, table~II, which displays the ``anomalous" behavior with
+periodicity of 6, i.e. at
+\[
+n = 2+6m =  2,8,14,20,\cdots \qquad m=0,1,2,3,\cdots
+\,.
+\]
+At even lengths $n = 2\ell$ there are always 2 new pruning rules
+\\
+$\{-1,0,0,··· ,0,-1\}$ and (reflection symmetry related sequence)
+\\
+$\{s - 1,s - 2,s - 2,··· ,s - 2,s - 1\}$.
+\\
+At $n = 2$ the anomalous new pruning rules are vanishing.
+
+Still a mystery: why anomalies at 2, 8, 14, ...? and
+what will be further occurrences? Explicit formula?
+
+Learning some new math theory in progress, mirror symmetry (here of
+elliptic curve?), topological recursion from random matrix theory, which
+might give clue to these numbers.
+}
+
+
+\PCpost{2018-07-29}{
+My interpretation of \reftab{tab:LHarnoldPruned} is that the ``anomalous"
+behavior happens when $n-1$ is prime, is now confirmed by
+$n-1=3,5,7,11,\cdots$ Li Han's \emph{catMapItiners.pdf} table~II, also for
+$n-1=13,17,19$. Perhaps even higher, as the table is cut off at the right
+edge. I do not see what Li Han's $n = 2+6m$ anomalies are...
+}
+
+\PCpost{2016-08-15}{:
+I need this stupid
+Arnol'd cat map in \wwwcb{}, because an example of a tractable Hamiltonian
+system is useful, and because so many people refer to it.
+
+I say ``stupid'' because it is very seductive (as much of number theory is),
+and totally useless as physics. The moment one goes away from the piece-wise
+linear (and integer!) cat map to any physical nonlinear flow, all this symbol
+counting falls apart, and one needs cycle expansions (\wwwcb{/course1}, the
+2nd course) to describe the physics. I had
+\HREF{http://chaosbook.org/~predrag/papers/preprints.html\#CMrenorm} {wasted
+too much time} on number theory in my life to be ever dragged into that
+again. You have to be very smart, as sooner or later you discover you are
+assuming the Riemann Hypothesis holds true :)
+    }
+
+\PCpost{2016-10-15}{
+Boris is thinking about temporal and spatial correlations
+in \catlatt s. Here is some literature on the topic, just for
+cat maps:
+
+Brini \etal\rf{BSTV97}
+{\em Decay of correlations for the automorphism of the torus {$T^2$}}
+
+Garc{\'\i}a-Mata and Saraceno\rf{GarSar04}
+{\em Spectral properties and classical decays in quantum open systems}
+(who study the  Arnol'd cat  map with a small sinusoidal perturbation
+write that
+Blank, Keller and Liverani\rf{BKL02} and Nonnenmacher\rf{Nonnen03} provide a
+rigorous theoretical underpinning to their calculations for quantum and
+classical maps on the torus.
+
+Blank, Keller and Liverani\rf{BKL02} {\em Ruelle-Perron-Frobenius spectrum
+for Anosov maps}
+extend a number of results from one-dimensional dynamics based on spectral
+properties of the Ruelle–Perron–Frobenius transfer operator to Anosov
+diffeomorphisms on compact manifolds.
+
+Nonnenmacher\rf{Nonnen03} studies classical and quantum maps on the torus
+phase space, in the presence of noise. We focus on the spectral properties of
+the noisy evolution operator, and prove that for any amount of noise, the
+quantum spectrum converges to the classical one in the semiclassical limit.
+    }
+
+    \PCpost{2016-11-11}{
+For fun and games with the cat map, check out Hunt, and B. D.
+Todd\rf{HunTod03,Todd05} {\em On the {Arnol'd} cat map and periodic boundary
+conditions for planar elongational flow}
+        }
+
+
+\item[2016-08-11 Predrag]
+Read Gozzi\rf{Gozzi94}
+{\em Counting periodic trajectories via topological classical mechanics}
+\CBlibrary{Gozzi94}: ``
+We prove that the number of periodic trajectories of arbitrary period T
+on the flow tangent to periodic trajectories in phase space of the same
+period T, is equal to the Euler number of the undelying phase-space. This
+result holds for systems with compact phase-space and isolated periodic
+orbits.
+''
+
+Giulietti, Liverani and Pollicott\rf{GiLiPo13}
+{\em Anosov flows and dynamical zeta functions}
+\CBlibrary{GiLiPo13}: ``
+We study the Ruelle and Selberg zeta functions for an Anosov flow on a
+compact smooth manifold. We prove several results, the most remarkable
+being (a) for $C^\infty$ flows the zeta function is meromorphic on the
+entire complex plane; (b) for contact flows satisfying a bunching
+condition, the zeta function has a pole at the topological entropy and is
+analytic in a strip to its left; (c) under the same hypotheses as in (b)
+we obtain sharp results on the number of periodic orbits.
+''
+A good paper, deserving a deeper study.
+
+A discussion of determinants of graphs -
+says that Levins\rf{PuLev86} illuminated a connection between
+the characteristic polynomial and the feedback loops of a sparse matrix:
+ D. Cates Wylie\rf{Wylie07}
+        {\em Linked by loops: Network structure and switch integration
+                in complex dynamical systems},
+        \arXiv{0704.3640} (2007).
+
+ Wylie\rf{Wylie07}: for the stability of control systems \refref{Sontag98}
+ \CBlibrary{Sontag98}.
+
+
+
+    \PCpost{2016-12-12}{ Percival and Vivaldi\rf{PerViv} write:
+``The linear code described here may be considered as a development of the
+code used by Bullett\rf{Bullett86} for the piecewise linear tent map.''
+But Bullett mentions no tent map, I see nothing there... :)
+His piecewise linear standard map is the simplest possible area preserving
+piecewise linear twist homeomorphism of zero flux.
+
+Beardon, Bullett and Rippon\rf{BeBuRi95}
+{\em Periodic orbits of difference equations} might be of interest
+(but I have not found it online).
+    }
+
+\begin{table}
+\begin{tabular}{r|r|r|l|}
+  % after \\: \hline or \cline{col1-col2} \cline{col3-col4} ...
+  $n$ & $N_n$ & $\tilde{N}_{n-1}$ \\
+  \hline
+  2 & 2 & 0 \\
+  3 & 22 & 2 \\
+  4 & 132 & 8 = $2 \cdot 2 \cdot 2$\\
+  5 & 684 & 2 \\
+  6 & 3164 & 30 = $2 \cdot 3 \cdot 5$\\
+  7 & 13894 & 2 \\
+  8 & 58912 & 70  = $2 \cdot 5 \cdot 7$\\
+  9 & 244678 & 16  = $2 \cdot 2 \cdot 2 \cdot 2$\\
+  10 & 1002558 & 198 = $2 \cdot 3 \cdot 3 \cdot 11$ \\
+  11 & 4073528 & 2 \\
+  12 & 16460290 & 528 = $2 \cdot 2 \cdot 2 \cdot 2 \cdot 3 \cdot 11$\\
+  13 & ?? & 2 \\
+  14 & ?? & 1326 \\
+  15 & ?? & 124 \\
+  16 & ?? & 3410 \\
+  17 & ?? & 2 \\
+  18 & ?? & 9264 \\
+  19 & ?? & 2 \\
+\end{tabular}
+\caption{\label{tab:LHarnoldPruned}
+$N_n$ is the total number of pruned {\brick s} of length  $n=\cl{a}$ for the
+$s=3$ Arnol'd cat map. $\tilde{N}_n$ is the number of \emph{new} pruned
+{\brick s} of length  $\cl{a}$, with all length  $\cl{a}$ {\brick s} that contain
+shorter pruned {\brick s} already eliminated. Note that (empirically) there is
+a single new pruning rule for each prime-number period (it is listed as 2
+rules, but by the reflection symmetry there is only one). $n=14$ to
+$n=19$ added 2018-07-28.
+}
+\end{table}
+
+    \PCpost{2016-12-12}{
+Pondering Li Han's undisputable polynomial fits in $s$ to the (new) pruned
+{\brick s} $\tilde{N}_n$. Li Han now has a set of polynomials that counts the
+number of pruning rules $\tilde{N}_n(s)$ for small finite $n$, but any $s$.
+(\reftab{tab:LHarnoldPruned} lists them only for $s=3$, but Li Han has new
+tables, not included in the blog as yet).
+
+What's so unique about primes? I think that if cycle period $n-1=p$ is a
+prime, there is always one ``most monotone $(p+1)$-cycle'' such that cycle
+points order themselves monotonically along the spatial coordinate $q$,
+\[
+q_{1/(p+1)} < q_{2/(p+1)} < \cdots  < q_{p/(p+1)}
+\,,
+\]
+and one would have to show that this forces $1 < q_{p/(p+1)}$, so that one
+$(p+1)$-cycle is pruned, but all the rest are somehow protected and fall
+within the unit interval. Keating\rf{Keating91a} is all about {\orbit}s,
+so maybe this is explained there - of if not there, maybe in
+\PV\rf{PerViv87b}? Percival and Vivaldi\rf{PerViv} and Boris' Green's
+functions are polynomial functions of $s$, so maybe the answer is there
+already.
+
+What about non-prime periods $n=p_1 p_2 \cdots p_m$? Perhaps on has to
+replace the cat map $f$ by the commuting set of maps $f_{p_\ell} =
+f^{p_\ell}$, one for each prime, and argue about pruning rules for
+$f^n=f_{p_1}\circ f_{p_2}\circ\cdots\circ f_{p_m}$. Will be messy.
+But while cat map $f$ is linear in $s$, $f_{p}$ are polynomial in $s$,
+and that might lead to Li Han's polynomials for $\tilde{N}_{n}(s)$.
+    }
+
+    \PCpost{2016-05-21, -12-12}{
+I had included Bird and Vivaldi\rf{BirViv}
+{\em Periodic orbits of the sawtooth maps} among the
+papers to read, but the paper remained woefully unread. Now Li Han
+has no choice but to read it :)
+
+They assert that for the Arnol'd cat map there are 11\,440\,548 orbits of
+period 20.
+
+                                                                \toCB
+Percival and Vivaldi\rf{PerViv} refer to the discrete Laplacian as the
+``central difference operator.''
+
+The special case $s = 2$ corresponds to an unperturbed twist map, for which
+orbits represent uniform motions of a free rotor.
+
+The one-parameter $s$ family of sawtooth maps (of the 2-torus), within which
+reside infinitely many Anosov diffeomorphisms. Sawtooth maps are piecewise
+linear, and for this reason we are able to construct the parameter dependence
+of the sawtooth orbits explicitly in terms of rational functions with integer
+coefficients.
+
+(i) for integral $s$ the sawtooth map reduces to a toral automorphism, and
+the structure of {\po s} of such maps is known\rf{PerViv87b}. They
+are found to coincide with points having rational coordinates, and can be
+dealt with using arithmetical techniques,  one can locate and
+count all {\po s}.
+
+(ii) if an orbit is known for one value of $s$, it can be computed for any
+other value.
+
+We represent orbits as doubly infinite sequences of integers (words), where
+the integers are drawn from a finite set (alphabet). An orbit is written in
+terms of the configuration coordinate $\ssp_t$ alone and is denoted by  $(\ssp_t)$.
+The word we denote by $(\Ssym{t})$. For $s > 2$ the code is an isomorphism.
+For a given $s$, the possible values of the $\Ssym{t}$ are bounded in magnitude by
+\(
+|\Ssym{t}| \leq Int (1 + s/2)
+\,. %(2.4)
+\)
+The itinerary of a given orbit is independent of the parameter.
+The orbit is recovered by Green's function \refeq{GreenFun00a}:
+\beq
+q_{t} =  \frac{1}{{\surd{D}}}  % 2018-02-15 Predrag error? PV notation: {\surd{D}}
+\sum_{s \in \naturals} \frac{1}{\ExpaEig^{|t-s|}}\,b_{s} \quad,
+\label{BirVivx=b}
+\eeq
+The leading eigenvalue of the cat map {\jacobianM} $M$ is
+given by \refeq{catEigs}.
+% $\ExpaEig= (s+\surd{D})/2$, where $D={s^2 -4}$.
+For an $n$-cycle $\ssp_{t}$ are rational functions of $\ExpaEig$, given by
+the quotient of two reflexive polynomials
+(for example, $P_t(\ExpaEig)= \ExpaEig^n P_t(1/\ExpaEig)$),
+\bea
+\ssp_{t} &=&  \ExpaEig \,{P_t(\ExpaEig)}/{Q(\ExpaEig)}
+        \continue
+P_t(\ExpaEig) &=&  \sum_{\tau=1}^{n-1}
+                   \ExpaEig^{n-\tau}(\ExpaEig\,\Ssym{t+\tau-1} + \Ssym{t-\tau})
+        \continue
+Q(\ExpaEig) &=&  (\ExpaEig^2 - 1)\,(\ExpaEig^n - 1)
+\label{BirViv(3.5)}
+\eea
+Bird and Vivaldi\rf{BirViv} then discuss pruning, give formulas for the
+numbers of {\orbit}s for integer $s$, \etc. Most likely Li Han's
+polynomials are implicit in these formulas.
+
+    }
+
+    \PCpost{2016-12-15}{ to Roberto,
+{\bf Going catty}:
+What is the main question? \textbf{My Question of the Day} is:
+
+In Chaos\-Book Diffusion chapter we show that whenever the critical point of
+the 1D sawtooth map (the rightmost highest point) is pre-periodic, we have
+finite grammar and an analytic cycle expansion formula (essentially the
+\tzeta, with the uniform expansion rate stuck into $z^n$)
+for the diffusion constant.
+
+As far as I can tell, both you and Boris ignore the issues of the grammar,
+get some long-time limit estimate of the diffusion constant.
+
+Usually in 2D there is a fractal set of critical points (AKA pruning front) -
+we had worked it out for the Lozi map and the {\HenonMap}. If the strange set
+is a strange repeller, there we have infinitely many examples of finite
+grammars. But it never happens for non-repelling sets, like the cat map for
+integer trace $s$. There there is a new (only one!) pruning rule for each
+prime period set of cycles (ie, are we on the way to prove Riemann
+conjecture?) and a messy set of rules for non-prime periods (which can be
+described by a polynomial in $s$.
+
+\noindent
+\textbf{The Question}:
+      Is the cat map pruning front a fractal set? Is there a systematic set
+      of formulas for the diffusion constant, one for each set of grammar
+      rules? Is this implicit in papers of Vivaldi and/or Keating?
+
+I'm a attaching the list of \reftab{tab:LHarnoldPruned}, generated by Li Han.
+He (and not only he) operates on a different astral plane, so getting him to
+commit his results to our blog or draft of the paper is harder than pulling
+teeth . He has the grammar rules count to length 17 and the polynomials in
+$s$, but that I have only seen on his laptop screen.
+
+PS - I am throwing in for a good measure a tent map,
+\refsect{exam:tentMapSymbDyn}, to illustrate what these polynomials in the
+stretching rate ($s$ for cat, $\Lambda$ for tent) are.
+
+Now, what was YOUR main question that is still blowing in the wind?
+    }
+
+\item[2016-12-12 Roberto Artuso]
+The main question, as I thought of it in my work of many years
+ago\rf{ArtStr97} (see ChaosBook.org Appendix {\em Statistical mechanics
+applications}, included in this blog as \refchap{c-appendStatM}), was to
+understand the behavior of $D$ as $K \to 0$, since it seems to get an extra
+factor $D\sim K^{2.5}$, while $D\sim K^2$ is the usual quasilinear result.
+The \PV\ linear code seemed to me appealing since it selects
+allowed itineraries within a sort of rhombus in many dimensions, and the
+symbols are directly linked to transport, while usual Markov partitions for
+integer $K$ are not. My thought was that non-integer $K$ behavior could be
+linked to the number of lattice points within the ``rhombus", and that the
+$K$ correction (as well as oscillations with respect to quasilinear
+estimate), could be related to estimates of errors in volumes \emph{vs.}
+number of lattice points (something like
+Dyson-Bleher\rf{BleDys94,BleDys94a,BleDys94b,Bleher99} work for ellipses).
+
+
+\PCpost{2017-09-29}{
+Vaienti\rf{Vaienti92}
+{\em Ergodic properties of the discontinuous sawtooth map}
+might be worthy of a read.
+    }
+
+
+\PCpost{2017-09-27}{
+Vallejos and Saraceno\rf{ValSar99}
+{\em The construction of a quantum {Markov} partition} (1999),
+present in Figure~6 the 5-rectangles Markov partition of the Arnol'd cat map of
+\AW\rf{AdWei70} {\em Similarity of automorphisms of the
+torus}. Work it out for our $A'$.
+
+The three regions partition of the cat map is explained at length in
+\HREF{https://math.berkeley.edu/~peyam/Shifts.pdf}
+{Tabrizian}'s notes.
+
+\HREF{http://people.cas.uab.edu/~mosya/papers/hbook.pdf}
+{Chernov} (see his Fig.~1) writes:
+``If the matrix $A'$ is not symmetric, the stable and unstable lines for on the
+torus may not be orthogonal. Then, the atoms of Markov partitions are,
+geometrically, parallelograms rather than rectangles. In early works on Markov
+partitions\rf{Sinai68}, the term `parallelogram' was used instead of `rectangle'.
+
+Check also
+\HREF{http://ipht.cea.fr/Pisp/stephane.nonnenmacher/notesSD-en.pdf}
+{Nonnenmacher} notes,
+and the Sect.~5 of
+\HREF{https://core.ac.uk/download/pdf/36728011.pdf}
+{Huntsman}'s paper.
+
+From
+\HREF{https://math.stackexchange.com/questions/1198896/how-can-we-construct-markov-partitions-for-smale-horseshoe-and-solenoid}
+{math stockexchange}:
+A reference would be the Handbook of dynamical systems by Hasselblatt and
+Katok\rf{HasKat02}, Volume 1, starting on page 324. The cat map example is on
+pages 327-328. Another good source is the original paper by \AW\rf{AdWei67}
+from 1967 and R. Bowen's paper on Axiom A from 1970. Constructing Markov
+partitions for higher dimensional tori is much more complicated, as the
+borders of their atoms are fractal and not differentiable, hence the nice
+rectangles only happen to exist in 2 dimensions.
+
+The two and $M$ regions partition of the cat map are drawn in
+\HREF{http://www.math.tamu.edu/~yvorobet/MATH614-2016A/Lect2-05web.pdf}
+{Vorobets}' lecture.
+
+Here is a beautifully laid out
+\HREF{https://www.math.cornell.edu/~web6170/homeworks/05.html}
+{problem set}.
+
+For a cat map, the SRB measure is just the Lebesgue measure,
+which also serves as a probability measure.
+
+\HREF{http://www.mat.univie.ac.at/~bruin/ET2.pdf} {Bruin}, in his {Sect.~12}
+discussion of {\em Toral automorphisms}, asserts that Arnol'd didn't seem to
+like cats.
+So, never ever forget to blame the
+\HREF{https://www.alleycat.org/our-work/cats-and-wildlife/}
+{cat}. Whatever you do, the cat will be
+\HREF{https://www.jasondavies.com/catmap/}
+{back}.
+    }
+
+    \PCpost{2018-02-11}{
+Ignore the following cryptic remark about symbolic dynamics intrinsic to being
+in the stable / unstable manifolds coordinates:\\
+The symbolic dynamics is 2\dmn: a partition can be
+$\{\mbox{left,right}\}=\{L,R\}$ with respect to the unstable eigendirection
+through the origin, and $\{\mbox{up,down}\}=\{U,D\}$ with respect to the stable
+eigendirection, so partitions are labeled by pairs of symbols (the canonical
+Arn 3-letter alphabet) \[ \{h_j,v_j\} \in \{RU,LU,RD\} \,, \] with $\{LD\}$
+forbidden.
+    }
+
+    \PCpost{2012-01-15}{
+Read J{\'{e}}z{\'{e}}quel\rf{Jezequel21} {\em Global trace formula for
+ultra-differentiable {Anosov} flows}:
+``[...]
+we prove that a trace formula that holds for Anosov
+flows in a certain class of regularity. The main ingredient of the proof is the
+construction of a family of anisotropic Hilbert spaces of generalized
+distributions on which the generator of the flow has discrete spectrum.
+    }
+
+%\PCpost{2018-02-11}{
+%I had left it as an exercise to any and every cat who wished to be a coauthor
+%of the forthcoming paper\rf{GHJSC16} to construct the \markGraph\ for the
+%generating partition of \reffig{fig:PCLect13p16}\,(b), and show that its
+%{\tzeta} is indeed the one given by Isola\rf{Isola90} (here equation
+%\refeq{Isola90-13b} in \refsect{sect:Isola90}; there is a chapter on {\tzeta s}
+%in Chaos\-Book). But not one putative author responded by a single word, so I
+%had to do the whole thing - here \refsect{sect:catAdlerWeiss}.~{\AW\
+%partition}.
+%
+%Look ma - no pruning!
+%        }
+
+\end{description}
+
+    \Remarks
+
+\remark{Phase space.}{
+The cylinder phase is $[-1/2,1/2) \times
+\reals$: the map is originally defined  definition in $[-1/2,1/2)^2$,
+and is generalized over the cylinder by symmetry requirements.
+    \PC{2016-08-03}{missing eq.~refeq{tra-sym} reference.}
+}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\remark{Pythagorean tiling}{\label{rem:PythagorTiling}
+or \emph{two squares tessellation} is a tiling of a
+Euclidean plane by squares of two different sizes, in which each square touches
+four squares of the other size on its four sides
+(see \HREF{https://en.wikipedia.org/wiki/Pythagorean_tiling}
+{wikipedia.org/wiki/Pythagorean\_tiling}).
+This tiling has four-way rotational symmetry around each of its squares. When
+the ratio of the side lengths of the two squares is an irrational number such
+as the golden ratio, its cross-sections form aperiodic sequences with a
+Fibonacci-type recursive structure.
+It has a cyclic set of symmetries around the corresponding points, giving it
+\textbf{p4} symmetry: square lattice, point group $C_4$, two rotation centres
+of order four (90${}^0$), and one rotation centre of order two (180${}^0$). It has no
+reflections or glide reflections.
+It is a chiral pattern, meaning that it is impossible
+to superpose it on top of its mirror image using only translations and
+rotations;
+a Pythagorean tiling is not symmetric under mirror reflections.
+Although a Pythagorean tiling is itself periodic (it has a square lattice of
+translational symmetries) its cross sections can be used to generate
+one-dimensional aperiodic sequences.
+    \index{Pythagorean tiling}
+} %end \remark{Pythagorean tiling}{rem:PythagorTiling}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\remark{Symmetries of the \topp.}{\label{rem:symmLines}
+For a discussion of symmetry lines
+\PublicPrivate{
+      }{ % switch \PublicPrivate{
+of \refexam{exam:StandMapSymmLin}
+      }% end \PublicPrivate
+see \refrefs{gree79,Mira87,RSW90,ShenKad82,GrMaViFe81}. It is an open
+question (see \refrem{r:symmOther}) as to how time reversal symmetry can
+be exploited for reduction of cycle expansions of \refchap{c-recycle}.
+For example, the fundamental domain symbolic dynamics for reflection
+symmetric systems is discussed in some detail in \refsect{exam:Symm1d},
+% {s-C-2-fact},
+but how does one recode from time-reversal symmetric symbol sequences to
+desymmetrized 1/2 {\statesp} symbols?
+%\PublicPrivate{
+%      }{ % switch \PublicPrivate{
+In discussion of \refexam{exam:RevHenonMap}, we have followed
+\refrefs{SteDuMei99,SteDuMei04,Gomez02}.
+    \PC{2021-04-03}{Improve references; eventually return to ChaosBook \emph{cycles.tex}.}
+%      }% end \PublicPrivate
+} %end \remark{Symmetries of the \topp.}{
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\remark{XXX.}{\label{rem:catMapXXX}
+
+} %end \remark{XXX.}{rem:catMapXXX}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+    \RemarksEnd
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\printbibliography[heading=subbibintoc,title={References}]
+
+\newpage
+  \input{Examples/examBernShad}
+  \input{Examples/examCatMap}
+  \input{Examples/examCatShad}
+  \input{Examples/examDet}
+  \input{Examples/examSawtoothLin}
+  \input{Examples/examTentLCod}
+  \input{Examples/examBelykhLCod}
+  \input{Examples/examLoziLCod}
+%\newpage
+  \input{Problems/exerCatMap}
+  \input{Solutions/soluCatMap}
+
+
+\ChapterEnd % formatted for ChaosBook.org

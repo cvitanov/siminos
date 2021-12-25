@@ -1,0 +1,192 @@
+% siminos/spatiotemp/chapter/KStwots.tex
+% $Author: predrag $ $Date: 2019-07-07 02:39:12 -0400 (Sun, 07 Jul 2019) $
+
+% called by
+%           siminos/spatiotemp/chapter/spatiotemp.tex
+%           siminos/tiles/GuBuCv17.tex
+
+%\section{\KS\ on a torus}
+%\label{sect:KStwots} % KSspacetime}
+
+Here we propose to describe all solutions $u(\conf,\zeit)$ of \KSe\ \refeq{e-ks} as the
+closure of the union of the set of all prime (non-repeating)
+\twots\
+\bea
+u(\conf,\zeit) &=& u(\conf,t+\period{})
+       \;=\; u(\conf+\speriod{},t)
+\continue
+       &=&  u(\conf+\speriod{},t+\period{})
+\,,\quad
+(\conf,\zeit)\in([0,\speriod{}),[0,\period{}))
+\,.
+    \label{e-ksTorus}
+\eea
+
+Consider a torus $(\speriod{},\period{})$ with {\spt}ly
+doubly-periodic $u(\conf,\zeit)=u(x+\speriod{},t+\period{})$,
+$(\conf,\zeit)\in([0,\speriod{}),[0,\period{}))$, see
+\reffig{fig:spaceTime1}\,(c), and combine the discrete spatial
+Fourier modes expansion \refeq{spatFT} with the discrete temporal Fourier
+modes expansion \refeq{BBtemporFourier}.
+Discretize $u(\conf_n,\zeit_m)= u_{nm}$ over
+$N$ points of a periodic spatial lattice $\conf_n = n \speriod{}/N$,
+and
+$M$ points of a periodic temporal lattice $\zeit_m = m \period{}/M$,
+%\beq
+%    \Fu_{k,m}^{(i)} = \frac{1}{M} \sum_{n = 0}^{M-1}
+%    \Fu^{(i)}_{k,n} e^{i \omega_n \zeit_m}
+%    \, , \quad
+%    \Fu^{(i)}_{k,n} = \sum_{m=0}^{M-1}\Fu_{k,m}^{(i)}  e^{-i \omega_n \zeit_m}
+%    \, , \quad
+%    \mbox{where }
+%    \omega_n = 2 \pi n / \period{} \, .
+%\eeq
+%
+\bea
+\Fu_{kj} &=&
+  \frac{1}{NM} \sum^{N-1}_{n=0} \sum^{M-1}_{m=0}
+  u_{mn} \, e^{-i(\wavek \xm + \freqj \tn)}
+    \,,\quad
+\wavek = \frac{2 \pi k}{\speriod{}}
+    \,,\;
+\freqj = \frac{2 \pi j}{\period{}}
+    \continue
+u_{mn} &=&\sum_{k=0}^{M-1}\sum^{N-1}_{j=0}
+   \Fu_{kj} \, e^{i(\wavek \xm + \freqj \tn)}
+\,,
+\label{spattempFT}
+\eea
+In its Fourier discretization, \KS\ PDE \refeq{e-Fks} is a set of $MN$
+algebraic equations for the {\spt} Fourier coefficients $\Fu$,
+\beq
+\left[ i \freqj - ( \wavek^2 - \wavek^4 ) \right]\Fu_{kj}
++ i \frac{\wavek}{2} \!\sum_{k'=0}^{M-1} \sum^{M-1}_{j'=0}\!\!
+\Fu_{k'j'} \Fu_{k-k',j-j'}
+    = 0
+\,.
+\label{e-FksSpattemp}
+\eeq
+In other words, we have reduced the problem of either temporal or
+spatial evolution on a
+{\spt}ly periodic domain to the fixed point problem of determining an
+invariant 2-torus, a fixed point in the $NM$\dmn\ \statesp.
+
+\MNG{2019-05-13}{Elimination of space and time
+translations effectively reduces the codimension of each solution by two, this is
+undesirable when numerically solving the \refeq{e-pseudospectral} in a least-squares sense}
+First, however, we must eliminate the temporal translation marginal eigenmode
+by a {\PoincSec}, and the spatial translation marginal eigenmode by a {\slice}.
+Generically, they both can fixed by the first Fourier mode {\PoincSec} /
+{\slice}.
+The Newton method then requires inversion of $1-J$, \ie,
+$\det(1-J)$, where $J$ is the 2-torus \jacobianM.
+    %
+    \PC{2018-04-08}{see also \refsect{sect:KurSivSpTmpStab}.}
+
+We can generalize the notion of average `energy' density
+\refeq{SCD07ksEnergy} and apply it to any \twot\ $p$ by also
+averaging over time
+\beq
+    \expctE_p=
+  \frac{1}{\speriod{}\period{}}\!\oint d\pSpace\oint d\zeit \frac{u^2}{2}
+  \,,
+  \label{twotEnergy}
+\eeq
+The Fourier space average spatial energy density \refeq{SCD07EFourier}
+generalized to any {\spt} solution \refeq{spattempFT} is then:
+\beq
+\expctE
+          =  \sum_{k=0}^{N-1}\sum^{M-1}_{n=0}
+             {\textstyle\frac{1}{2}}|\Fu_{kn}|^2
+\,.
+\ee{twotEFourier}
+
+
+\subsection{Spatiotemporal $u=0$ equilibrium}
+\label{sect:KSu0equiST}
+
+    \PC{2019-03-16}{
+    Incorporate here the spatial evolution stability analysis of
+    blog posts starting with {\bf 2016-09-02 Matt Stability of u=0 equilibria}.
+   }
+   %
+Consider the $\Fu_{kn}=0$ \eqv\ of \refeq{e-FksSpattemp}. Its
+linearization is
+    \MNG{2016-09-12 }{
+\MNGedit{Added the factor of $i$ that was missing in \refeq{e-FksSpattemp}}
+\PCedit{2016-09-23 restored signs to match \refeq{e-Fks} and \refeq{e-FksSpattemp}}
+    }
+\bea
+i \omega_n  &=&  q_k^2 - q_k^4
+    \continue
+i \frac{2\pi n}{\period{}}   &=&
+\left(\frac{2\pi k}{\speriod{}}\right)^2 - \left(\frac{2\pi k}{\speriod{}}\right)^4
+\,.
+\label{e-FksSpattemp0}
+\eea
+The two special cases are the spatial strip of \refsect{sect:KStimeInt},
+which yields the $2N$ real temporal stability exponents
+$\Lyap_k=i\omega(k)$ for a fixed spatial strip of width $\speriod{}$, and the
+temporal strip of \refsect{sect:KSspaceInt}, which yields the $4+8(M-1)$ complex
+spatial stability exponents $i q^{\pm,\pm}(n)$ for a fixed temporal strip of period
+$\period{}$, as the four solutions of the quartic equation \refeq{e-FksSpattemp}
+for each $i \omega_n$, $n = 0, \pm 1, \pm 2, \pm M/2$ :
+\beq
+(i q_k)^4 + (i q_k)^2 + i \omega_n  =0
+    \quad\Rightarrow\quad
+i q^{\pm,\pm}(n) = \pm \sqrt{(-1\pm \sqrt{1 -4 i \omega_n})/2}
+\ee{spatialStabExp}
+    \MNG{2016-09-20}{
+    I think I should have been looking for $i q_k$ not $q_k$? If so, it
+    matches the stability exponents of \refeq{PCeqvaStblty} %\refeq{MNGeqvaStblty}
+    }
+Each solution appears twice, corresponding to  $(\omega_n,-\omega_n)$,
+except for
+\beq
+q^{\pm,\pm}(0) = \mp i\sqrt{(-1\pm 1)/2} =
+(0,0,-1,1)
+\,.
+\ee{spatialStabExp0}
+There are two root magnitudes for each $n \neq 0$, independent of the
+sign of $n$:
+%\[%beq
+%|q^{\pm,\pm}(n)|^2 = (-1\pm \sqrt{1 +4 i \omega_n})
+%(-1\pm \sqrt{1 -4 i \omega_n})/4
+%\]%ee{spatialStabExp01}
+%
+\beq
+|2q^{\pm,\pm}(n)|^2 = 1+ \sqrt{1 +  16 \omega_n^2}
+\pm \sqrt{1 +4 i \omega_n}
+\pm \sqrt{1 -4 i \omega_n}
+\,.
+\ee{spatialStabExp1}
+
+\subsection{Spatiotemporal stability}
+\label{sect:KurSivSpTmpStab}
+
+Let
+$u_\stagn(\conf,\zeit)$ be a doubly-periodic solution of \refeq{e-FksSpattemp} on the
+$(\conf,\zeit)\in[0,\speriod{})\times[0,\period{})$ torus, a point in the
+$\speriod{}\,\period{}$\dmn\ \statesp. Add an arbitrary small perturbation field
+$\delta u(\conf,\zeit)$, also doubly periodic. Linearize \refeq{e-FksSpattemp}.
+The linearized operator acting on $\delta u(\conf,\zeit)$ must annihilate it, \ie,
+(WRONG AS IT STANDS)
+\[
+(J(u_\stagn) -\ExpaEig_j \matId)\delta u =0
+\]
+where the \jacobianM\ is the linearization over the whole 2-torus
+\beq
+J(\Fu_\stagn)_{kn} =
+\left[ i \omega_n - ( q_k^2 - q_k^4 ) \right]\delta_{kn}
++ i q_k\!\sum_{k'=0}^{N-1} \sum^{M-1}_{m'=0}\!\!
+\Fu_{k'm'} \delta_{k-k',m-m'}
+\,.
+\label{e-FksSpTmpJac}
+\eeq
+In $d=1$ case (pure temporal evolution) $\det(J(u_\stagn) -\matId)$ is the
+usual period $\period{}$ cycle weight, this time obtained not by integration in
+time but by evaluating the determinant of the Toeplitz matrix over the whole
+cycle in one go (this might be familiar to some from the path-integral
+derivation of Gutzwiller formula cycle weight. With \refeq{e-FksSpTmpJac},
+$\det(J(u_\stagn) -\matId)$ is the pattern weight in $d=2$, and this
+generates to defining the invariant weight for any $d$-torus.

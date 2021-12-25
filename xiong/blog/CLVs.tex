@@ -1,0 +1,314 @@
+\ifsvnmulti
+ \svnkwsave{$RepoFile: xiong/blog/CLVs.tex $}
+ \svnidlong {$HeadURL: svn://zero.physics.gatech.edu/siminos/xiong/blog/CLVs.tex $}
+ {$LastChangedDate: 2014-10-01 10:41:30 -0400 (Wed, 01 Oct 2014) $}
+ {$LastChangedRevision: 3707 $} {$LastChangedBy: xiong $}
+ \svnid{$Id: CLVs.tex 3707 2014-10-01 14:41:30Z xiong $}
+\fi
+
+% --------------------------------------------------------
+\subsection{Oseledec splitting}
+\label{sect:CLVs}
+
+\begin{description}
+  
+\item[2013-09-04 \XD] Notes on the Ginelli \etal\
+  method\rf{GiChLiPo12}, \arXiv{1212.3961}.
+
+\item[2013-09-18 \XD]
+  I didn't read Oseledec\rf{lyaos}. I try to summarize the basic ideas
+  of \refref{GiChLiPo12}, which are also abstract to me.
+
+\item[2014-09-30 \XD]
+  I tried to study the Oseledec splitting again, and find that my 
+  previous understanding is wrong, but the notes here may be helpful
+  for me in future. I will rewrite my understanding in the next 
+  subsection.
+
+\end{description}
+
+
+ Let $f^{k}(x) : \pS \mapsto \pS$ be a measure preserving map in \statesp\ \pS. Every point
+ in this $\pS$ is a vector $x_{t}=(x_{t}^{(1)},x_{t}^{(2)},\dots,x_{t}^{(N)})\in \mathbb{R}^N$,
+ where the subscript $t$ denotes instant time. If time is discretized
+ $t=k\Delta t,\quad k=0,1,2...$ , then we can define Jacobina
+ matrix of this system as
+ $M_{k,n}=M^{k\Delta t}(x_n)=\frac{\partial{f(x_{(n+k)\Delta t})}}{\partial{x_{n\Delta t}}}$.
+ Therefore, $M_{k,n}$ evolves the tangent space forward $k$ time steps from a point in tangent
+ space $\delta x_n$.
+
+    \PC{2013-09-15 Define dimension of \statesp\ \pS, you use it later.\\
+    Xiong-2013-09-18: You are
+    right. I define the space to be N-dimensional.}
+    \PC{2013-09-15 What measure? Why measure preserving?\\
+    Xiong-2013-09-18: For this one, I don't
+    know the answer. I will update my opinion later.}
+    \PC{2013-09-15 Index $n$ in $M_{k,n}$ means what? A pair of matrix indices,
+    action on a vector $\ssp \in \pS$? To me it looks like the initial time is $n$,
+    the \jacobianM\ is evaluated $k$ time steps later. Otherwise it would be stupid
+    to have that index ${}_n$ on everything that follows.\\
+    Xiong-2013-09-18: Yes, you are
+    right. It is my mistake.}
+
+
+ If the mapping is invertible, then we have several statements.
+
+ \begin{itemize}
+  \item forward/backward Oseledec matrix:
+    \[
+     \Xi^{\pm}= \lim_{k\to \pm \infty} \frac{1}{2k} \ln [M_{k,n}^{\dagger}M_{k,n}]
+    \]
+     exits.
+
+  \item $\Xi^{\pm}$ share the same eigenvalues
+  $\lambda_{n}^{(1)}> \lambda_{n}^{(2)}> \dots \lambda_{n}^{(m)}$.
+      \PC{2013-09-15 If I reverse dynamics, and go $k\to - \infty$, shouldn't all these
+      exponents change sign?\\
+      Xiong-2013-09-18: Yes. If you reverse dynamics, the exponents of Jacobian
+      matrix will change sign. But
+      the definition of forward Oseledec matrix is the
+      product of two Jacobian matrices. $M_{k,n}^{\dagger}$ evolves the system backward
+      and $M_{k,n}$ evolves system forward, so forward Oseledec matrix will evolve system
+      forward first and then backward, which consists two processes. Similarly, backward Oseledec
+      martrix evolves the system backward first and then forward. For me, the definition
+      of forward/backward Oseledec matrix is time invertible. I am not sure about this point since
+      I don't know
+      how mathmaticians proved this theorem.}
+
+  The corresponding eigenspaces are
+  $(U_{n}^{(1)})^{\pm}, (U_{n}^{(2)})^{\pm}, \dots (U_{n}^{(m)})^{\pm} $,
+  with degeneracies
+  $m_{n}^{(i)}=dim (U_{n}^{(i)})^{\pm}$. Also, we define Oseledec subspaces as
+    \PC{2013-09-15 Are you saying there are $i$ positive $\lambda_{n}^{(\ell)}$,
+    rest are negative? Have you assumed $\lambda_{n}^{(\ell)}\neq 0$?
+    Why is $(U_{n}^{(i)})^{+}$ shared? Why is in $(T_{n}^{(i)})^{-}$?\\
+    Xiong-2013-09-18: I am not assuming that there are $i$ positive exponents, nor
+    they cannot be zero. I just want to construct a subspace $(T_{n}^{(i)})^{+}$
+    which is spaned by the last $m-i+1$ eigenspaces of the forward Oseledec matrix, and
+    a subspace $(T_{n}^{(i)})^{-} $ which is spaned by the first $i$ eigenspaces of the
+    backward Oseledec matrix. So
+    for each vector $u\in (T_{n}^{(i)})^{\pm}\backslash (T_{n}^{(i\pm 1)})^{\pm}$:
+    \[
+     \lim_{k\to \pm \infty} \frac{1}{k} \ln \frac{\| M_{k,n}u \|}{\| u \|} =\lambda_{n}^{(i)}
+    \]
+     by the way,
+     \[
+     \lim_{k\to \pm \infty} \frac{1}{|k|} \ln \frac{\| M_{k,n}u \|}{\| u \|} =\pm \lambda_{n}^{(i)}
+    \]
+    $(U_{n}^{(i)})^{+}$ is not included in the definition of $(T_{n}^{(i)})^{-}$. Sorry for my typo.
+    }
+  \begin{align}
+   (T_{n}^{(i)})^{+} &= (U_{n}^{(i)})^{+} \oplus \dots \oplus (U_{n}^{(m)})^{+}\\
+   (T_{n}^{(i)})^{-} &= (U_{n}^{(1)})^{-} \oplus \dots \oplus (U_{n}^{(i)})^{-}
+   \label{eq::xiong_back}
+  \end{align}
+  The forward Oseledec subspace covers the space
+  spanned by the eigenvectors corresponding
+  to \PCedit{negative} eigenvalues; while, the backward Oseledec subspace
+  covers the space spanned by the eigenvectors corresponding to
+  \PCedit{positive} eigenvalues.
+
+  Then, we have the following identity:
+  \begin{align}
+   &\lim_{k\to \pm \infty} \frac{1}{k} \ln \frac{\| M_{k,n}u \|}{\| u \|}  \\
+   &=\lim_{k\to \pm \infty} \frac{1}{2k} \ln \frac{u^{\dagger}[M_{k,n}^{\dagger}M_{k,n}]u}{u^{\dagger} u}\\
+   &=\frac{u^{\dagger}\Xi^{\pm}u}{u^{\dagger} u}\\
+   &=\lambda_{n}^{(i)}
+  \end{align}
+  for $u\in (T_{n}^{(i)})^{\pm} \backslash (T_{n}^{(i\pm 1)})^{\pm}$
+
+  This is the definition of Covariant Lyapunov Exponents. For
+  ergodic system, these exponents are flow invariant,
+  % which means that they don't depend on there positions.
+  \PCedit{\ie, they almost always do not depend on the initial point $\ssp$
+  at time $n$}.
+    \PC{2013-09-15 not true if $\ssp$ is a fixed or periodic point.}
+  \item Oseledec splitting is defined as
+
+  \begin{equation}
+   \Omega_{n}^{(i)}=(T_{n}^{(i)})^{+}\cup (T_{n}^{(i)})^{-}
+   \label{equa::xiong_splitting}
+  \end{equation}
+   It is the overlap of the \texttt{ith} forward Oseledec subspace
+   and the \texttt{i}th backward Oseledec subspace, so
+   $M_{k,n}\Omega_{n}^{(i)}=\Omega_{n+k}^{(i)}$ for both $k>0$ and
+   $k<0$ (invariant under time reversal). The vectors spanning
+   ${\Omega_{n}^{(i)}}$ are called Covariant Lyapunov Vectors (CLV),
+   and they are obtained by overlapping of forward Oseledec
+   subspaces and backward Oseledec subspaces. Therefore, for a CLV
+   $V_{n}^{(i)} \in \Omega_{n}^{(i)}$, we have
+   $M_{k,n}V_{n}^{(i)}=d_{n,k}^{(i)}V_{n+k}^{(i)}$. That is
+   \begin{equation}
+    M_{k,n}V_{n}=V_{n+k}D_{k,n}
+    \,,
+    \label{eq::xiong_clv_evolve}
+   \end{equation}
+   where, $D_{k,n}$ is a diagonal matrix. In this sense, the CLVs are
+   just eigenvectors of Jacobian matrix.
+
+  \end{itemize}
+
+
+% --------------------------------------------------------------------
+\subsection{The Multiplicative Ergodic Theorem}
+
+\subsubsection{Mathematical preparation}
+
+
+% --------------------------------------------------------------------
+\subsection{Gram-Schmidt vectors}
+
+   We evolve the vectors in the tangent space as
+   \begin{equation}
+    \tilde{G}_{k+n}=M_{k,n}G_{n}
+   \end{equation}
+   where, $G_{n}=(g^{1}_{n},g^{2}_{n},\dots ,g^{N}_{n})$ is a orthogonal matrix
+   whose columns are vectors in tangent space. In order to keep the
+   columns of $\tilde{G}_{k+n}$ from expanding or contracting desperately,
+   we conduct QR decomposition,
+    \begin{equation}
+    M_{k,n}G_{n}=\tilde{G}_{k+n}=G_{k+n}R_{k,n}
+    \,,
+    \label{eq::xiong_qr}
+   \end{equation}
+where, $G_{k+n}$ is a unitary matrix and $R_{k,n}$ is an upper-triangular matrix, whose diagonal
+    elements represent the local expanding rate of CLVs.
+    So, for an initial condition $G_{0}$, we have
+    \begin{align*}
+     G_{mk} &=M_{mk,0}G_{0} \\
+     & =M_{k,(m-1)k}M_{k,(m-2)k}\dots (M_{k,0}G_{0}) \\
+     & =M_{k,(m-1)k}M_{(k,(m-2)k}\dots (M_{k,k}G_{k})R_{0,k} \\
+     & \dots  \\
+     & =G_{mk}R_{(m-1)k,k}R_{(m-2)k,k}\dots R_{0,k} \\
+    \end{align*}
+
+    It provides us a way to calculate the Jacobian matrix. The benefit of QR decomposition is manifest:
+    the product of two upper-triangular matrices is still an upper-triangular matrix, and the diagonal
+    elements of the new matrix are just the product of diagonal elements of old matrices.
+
+    \begin{itemize}
+     \item GS vectors are not invariant under time-reversal.
+     Let $\delta x_{k+n}=M_{k,n} \delta x_{n}$; then
+     $\delta x_{n}^{\dagger}[M_{k,n}]^{\dagger}\delta x_{k+n}=\delta x_{k+n}^{\dagger} \delta x_{k+n}$
+     the right side of this equation is just a number and set it be $C_{k+n}$, so we get
+     $[M_{k,n}]^{\dagger}\delta x_{k+n}=(C_{k+n}/\delta x_{n}^{(i)},
+     \dots C_{k+n}/ \delta x_{n}^{(i)}))^{\dagger}$, so the backward evolution can not take $\delta x_{k+n}$ back to
+     $\delta x_{n}$.
+
+     \item GS vectors are norm-dependent because the process to conduct QR decomposition will use the norm of
+     vectors.
+
+     \item The GS vectors will converge to the eigenvectors of the backward Oseledec matrix.
+      \begin{equation}
+       \lim_{k\to \infty} \| g^{(i)}_{n+k}-(d_{n+k}^{(i)})^{-} \| =0
+      \end{equation}
+
+      This information is very important for us to write the algorithm of calculating CLVs. The \texttt{ith}
+      CLV belongs to the  \texttt{ith} Oseledec splitting space $\Omega_{n}^{(i)}$, and from
+      \eqref{equa::xiong_splitting} and \eqref{eq::xiong_back}, it can seen that the \texttt{ith}
+      CLV is in the space spanned by the first \texttt{i} eigenvectors of the backward Oseledec matrix.
+      Therefore, if we evolve the system long enough to make sure that the GS vectors ${g^{(i)}_{n}}$ converge to
+      the eigenvectors of the backward Oseledec matrix, then we can express the  \texttt{ith}
+      CLV as $v_{n}^{(i)}=\sum_{j=1}^{i}g^{(j)}_{n}c_{n}^{j,i}$, which is just
+      \begin{equation}
+       V_{n}=G_{n}C_{n}
+       \label{eq::xiong_clv}
+      \end{equation}
+
+      The coefficient matrix $C_n$ is an upper-triangular matrix.
+
+      From \eqref{eq::xiong_clv_evolve}, \eqref{eq::xiong_qr} and \eqref{eq::xiong_clv}, we get
+      \begin{equation}
+       G_{n+k}C_{n+k}D_{k,n}=M_{k,n}G_{n}C_{n}=G_{n+k}R_{k,n}C_{n}
+      \end{equation}
+      So
+      \begin{equation}
+       C_{n}=R_{k,n}^{-1}C_{n+k}D_{k,n}
+       \label{eq::xiong_coef}
+      \end{equation}
+
+      This is the backward evolution equation for coefficient matrix $C_n$. Ginelli \etal\
+      have demonstrated that
+      any non-singular upper triangular matrix will converge to the coefficient matrix $C_n$ under
+      backward evolution \eqref{eq::xiong_coef} for sufficient long time.
+
+    \end{itemize}
+
+
+\subsection{Algorithm to calculate CLVs for \po s}
+
+    \begin{itemize}
+     \item \texttt{Forward transient ($ t:0\to T \cdot N_{temp}$):}
+     Evolve the system for $N_{temp}$ periods. Choose $N_{temp}$ large enough to make
+     sure the GS vectors converge to the eigenvectors of
+     the backward Oseledec matrix, so equation
+     \eqref{eq::xiong_clv} holds. The trajectory will repeat the orbit for $N_{temp}$
+     times.
+
+     If we evolve the {\statesp} for long time, the trajectory will depart from the
+     orbit due to the amplification of noise.
+     In order to keep the trajectory trapped in the orbit, every time the state point
+     comes back to the initial point, it is reset to the initial point. Or, you can
+     just evolve the system in {\statesp} for just one period, and record the state
+     for each point. Reuse these states for $N_{temp}$ times when you evolve the system
+     in tangent space.
+
+     In this stage, we only store the last GS vectors $G_{T \cdot N_{temp}}$.
+
+     \item \texttt{Forward dynamics ($t:T \cdot N_{temp}\to T \cdot (N_{temp}+1)$):}
+     After the \texttt{forward transient} step, the GS vectors are converged to the
+     eigenvectors of the
+     backward Oseledec matrix. Now we continue to evolve the {\statesp} and tangent
+     space for just one period. The reason is that if you choose to evolve GS vectors
+     for several periods,
+     you can only get a replica of GS vectors and upper triangular matrix $R_{n}$ for
+     very orbit since GS vectors are already converged to the eigenvectors of the
+     backward Oseledec matrix. But we should be aware that the upper triangular matrix
+     $R_{n}$ will be reused for several times when you conduct \texttt{backward transient}.
+
+     In this stage, we store GS vectors and upper triangular matrix
+     $R_{n}$ for one period.
+
+      \item \texttt{Backward transient ($t:T \cdot (N_{temp}+1)\to T \cdot (N_{temp}+1-N_{temp2})$):}
+      We need use backward evolution equation for coefficient matrix $C_{n}$ by equation
+      \eqref{eq::xiong_coef} in this step.  Since any none-singular upper
+      triangular matrix will converge to the coefficient matrix $C_n$ under
+      backward evolution, an identity matrix can be selected as this initial
+      matrix. In \eqref{eq::xiong_coef}, $R_{k,n}$ is the upper triangular
+      matrix we stored in step \texttt{Forward dynamics}, and $D_{k,n}$ is a diagonal
+      matrix, which will only change the norm of each columns of $C_{n}$ in
+      \eqref{eq::xiong_coef}. Therefore we don't need to care about this diagonal matrix
+      if we normalize every column of $C_{n}$ every step.
+
+       \begin{align}
+       C_{n} & =R_{k,n}^{-1}C_{n+k} \label{eq::xiong_coef_new2}\\
+       C_{n}^{(i)} &=\frac{C_{n}^{(i)}}{\| C_{n}^{(i)} \|}\quad \text{for every column}
+       \label{eq::xiong_coef_new}
+      \end{align}
+
+      \Xiongedit{So I don't understand why Daniel calculates the
+      matrix $D_{k,n}$ in this step.}
+
+      Backward evolve tangent space according to method \eqref{eq::xiong_coef_new} and
+      \eqref{eq::xiong_coef_new2} for
+      $N_{temp2}$ periods, and the upper triangular
+      matrix $R_{k,n}$ from step \texttt{Forward dynamics} will be reused for $N_{temp}2$
+      times. Now, the initial arbitrary none-singular upper
+      triangular matrix converges to the coefficient matrix $C_n$.
+
+      In this step, only the final $C_n$ is stored.
+
+      \item \texttt{Backward dynamics ($t:T \cdot (N_{temp}+1-N_{temp}2)\to T \cdot (N_{temp}-N_{temp}2)$):}
+      We continue backward the tangent space by method \eqref{eq::xiong_coef_new} and
+      \eqref{eq::xiong_coef_new2} for one period,
+      but this time we need to store $C_n$ for each step, so we get the CLVs
+      in each point in the orbit by:
+
+      \begin{equation}
+       V_{n}=G_{n}C_{n}
+      \end{equation}
+
+      Where, the GS matrix $G_{n}$ comes from step \texttt{Forward dynamics}.
+
+
+    \end{itemize}

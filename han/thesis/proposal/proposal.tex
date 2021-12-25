@@ -1,0 +1,72 @@
+% siminos/xiong/thesis/proposal/tex/proposal.tex
+% $Author: predrag $ $Date: 2021-06-22 07:16:06 -0400 (Tue, 22 Jun 2021) $
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+            \newif\ifpaper \newif\ifPDF \newif\ifboyscout
+            %\newif\ifOUP \newif\ifdasbuch \newif\ifarticle
+            %\newif\ifsolutions
+            \boyscouttrue\PDFtrue\paperfalse
+%%%%%% hyperlinked PDF version:
+ \boyscouttrue  % commented, internal version
+%  \boyscoutfalse % public
+%%%%%% uncomment to generate paper B&W pdf for GaTech thesis submission:
+%  \papertrue\boyscoutfalse
+
+\documentclass[reqno,11pt,oneside]{article}
+
+\usepackage[top=1in, bottom=1.2in, left=1.25in, right=1.25in]{geometry}
+\usepackage[intlimits]{amsmath} % Puts the limits of integrals on top and bottom
+\usepackage{amsxtra}     % Use various AMS packages
+\usepackage{amsthm}
+\usepackage{amssymb}
+\usepackage{amsfonts}
+\usepackage{ifthen}
+\usepackage[font=small,labelfont=bf]{caption}
+\usepackage{subcaption}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\ifPDF %%%%%%%% HYPERLINKED VS PAPER PDF VERSIONS %%%%%%%%%%%%%%%%%%%%
+   \usepackage[pdftex]{graphicx} % test switch to pdflatex?
+  \ifpaper % prepare public B&W pdf individual chapters:
+    \newcommand{\color}[1]{}
+  \else    % prepare hyperlinked WWW/chapters/ChaosBook.pdf
+    \usepackage[pdftex]{color}
+            %% pdfmark produces Acroread index:
+    \usepackage[pdfauthor={Xiong Ding}% must be LAST package loaded
+                pdftitle={Just do it: Kuramoto-Sivashinsky state space},%
+                pdftex,colorlinks]{hyperref} %% hyperlinks
+            %% TEMPORARILY COMMENTED OUT backref:
+    %       pdfmark,colorlinks,backref]{hyperref}
+  \fi
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+\graphicspath{{../../../../figs/cqcglFigs/}{../../../../schur/figs/}
+              {../../../../Fig/}{../../../figures/}}
+
+
+
+\newcounter{chapter}
+
+\input ../../../../inputs/def            %% do not edit; update from
+\input ../../../../inputs/defsLyapunov
+\input ../../../../inputs/editsDasbuch   %% editing comments, DasBuch style
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{document}
+
+\title{Recurrent Spatio-temporal Structures in Presence of Continuous Symmetries}
+\author{Xiong Ding}
+\date{September 3, 2015}
+\maketitle
+
+\begin{abstract}
+\input abstract
+\end{abstract}
+
+\input intro
+\input done
+\input future
+
+\bibliographystyle{plain}    % Set the bibliography style. agu04, plain, alpha, etc.
+\bibliography{../../../../bibtex/siminos}   % Use the BibTeX file ``References.bib''.
+
+\end{document}

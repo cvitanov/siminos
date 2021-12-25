@@ -1,0 +1,244 @@
+% siminos/spatiotemp/chapter/examTentLCod.tex
+% $Author: predrag $ $Date: 2018-05-04 12:19:38 -0400 (Fri, 04 May 2018) $
+% called by siminos/spatiotemp/chapter/tentMapCode.tex
+%\section{Any piecewise linear map has ``linear code''}
+%\label{exam:tentMapSymbDyn}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\example{Tent map linear code.}{\label{exam:TentLCod}
+The simplest example of a piece-wise linear unimodal map with a binary (in
+general, pruned) symbolic dynamics is the {\em tent map,}
+%\reffig{f-log-repeller}\,(a),
+\beq
+\flow{}{x} =  \left\{ \begin{array}{ll}
+f_0(x) = \ExpaEig x       & \mbox{ if } x  < 1/2 \\
+f_1(x) =  \ExpaEig (1-x)  & \mbox{ if } x  > 1/2
+         \end{array}\right.
+\,,
+\ee{anyTentSplit}
+with $1<\ExpaEig<\infty$ and $x\in\pS=[0,1]$. (Everything would go through for
+a skew tent map with $\ExpaEig_0\neq-\ExpaEig_1$, but there is no need here
+for that complication.)
+For this family of unimodal maps the coarse (covering) partition of the unit
+interval $\pS=\pS_0\cap{C}\cap\pS_1$ is given by intervals $\pS_0=[0,1/2)$,
+ $\pS_1=(1/2,1]$, and the critical point $C=1/2$.
+Let's rewrite this as a linear first-order difference equation, in the manner
+of cat lovers enamoured of matters feline:
+\beq
+\frac{1}{\ExpaEig}  \, x_{t+1}  +(2\Ssym{t}-1)x_{t} = \Ssym{t}
+\,,\qquad
+\left\{ \begin{array}{ll}
+\Ssym{t}=0 & \mbox{ if }  x_{t}  < 1/2 \\
+\Ssym{t}=1 & \mbox{ if }  x_{t}  > 1/2
+         \end{array}\right.
+\,.
+\ee{TentLinCode}
+That every such code is a `linear code' is best understood by
+computing a periodic orbit for a specified itinerary.
+
+The fixed point condition $\flow{n}{x}=x$ for $n$-cycle
+\cycle{\Ssym{1}\Ssym{2}\Ssym{3}\cdots \Ssym{n-1}\Ssym{n}}
+is a linear relation between the finite alphabet $\Ssym{t}\in\{0,1\}$ code, and
+the $x_{t}\in\reals$ orbit
+\beq
+  \Delta(\Ssym{})q(\Ssym{}) = m(\Ssym{})
+\ee{tentMapDiffEq}
+with orbit-dependent inverse propagator $\Delta(\Ssym{})= $
+\[
+{\small
+\left(\begin{array}{cccccc}
+      {2\Ssym{n}-1}     & 0     &     0  & \dots  & 0 & \ExpaEig^{-1}\\
+      \ExpaEig^{-1}     & {2\Ssym{n-1}-1} &     0     &\dots  &  0 & 0\\
+       0 & \ExpaEig^{-1} &    {2\Ssym{n-2}-1} &\dots  &  0 & 0\\
+      \vdots&\vdots &   \vdots & \ddots &\vdots  &\vdots \\
+       0 &  0 &    0  & \dots  & {2\Ssym{2}-1}& 0\\
+      0     &  0 &    0  & \dots  &\ExpaEig^{-1}  & {2\Ssym{1}-1}\\
+     \end{array} \right)
+\,,
+} % end \small
+\]
+\[
+q(\Ssym{})= \left(\begin{array}{c}
+      x_{{n}}\\
+      x_{{n-1}}\\
+      x_{{n-2}}\\
+      \vdots\\
+      x_{{2}}\\
+      x_{{1}}\\
+     \end{array} \right)
+\,,\qquad
+m(\Ssym{})= \left(\begin{array}{c}
+      {\Ssym{n}}\\
+      {\Ssym{n-1}}\\
+      {\Ssym{n-2}}\\
+      \vdots\\
+      {\Ssym{2}}\\
+      {\Ssym{1}}\\
+     \end{array} \right)
+\,,
+\]
+and $m(\Ssym{})$ is needed to fold the stretched orbit back into the unit
+interval.
+While the off-diagonal ``1''s do generate cyclic shifts, the diagonal $\pm
+\ExpaEig$ terms are not shift invariant, so I do not believe this can be
+diagonalized by a discrete Fourier transform. I had worked it out for
+$\ExpaEig=2$ in Chaos\-Book, but not sure if there are elegant tricks for
+arbitrary $\ExpaEig\neq2$. For an orbit
+\beq
+  q(\Ssym{}) = \Delta(\Ssym{})^{-1}m(\Ssym{})
+\ee{tentMapOrbit}
+to be admissible, no point should be to the right of
+the kneading value $x_\kappa = f(C)$. It follows from
+the kneading theory for unimodal maps (dike map with slope
+$\ExpaEig=2$ being the canonical example) that if a \po \ exists for
+a given $\ExpaEig$, it exists for all larger $\ExpaEig$,
+and that all orbits exist for $\ExpaEig \geq 2$.
+
+In other words, $\ExpaEig$ is the ``stretching parameter'' for this
+problem, and the rational polynomial expressions in $\ExpaEig$
+for $x_{t}$ correspond to Li Han's polynomials for cat maps.
+        \jumpBack{exam:TentLCod}
+    } %end \example{Tent map linear code.}{exam:TentLCod}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\example{Periodic points of a tent map.}{\label{exam:TentCycl}
+
+\paragraph{Exercise}
+Check \refeq{tentMapOrbit} for fixed point(s).
+
+
+\paragraph{Exercise}
+Check \refeq{tentMapOrbit} for the 2-cycle \cycle{01}.
+\[
+\Delta(\Ssym{})=
+\left(\begin{array}{cc}
+      -\ExpaEig& 1\\
+      1     & \ExpaEig
+     \end{array} \right)
+\,,\qquad
+m(\Ssym{})= \ExpaEig \left(\begin{array}{c}
+      0\\
+      1
+     \end{array} \right)
+\,.
+\]
+\[
+\Delta^{-1} =
+\frac{1}{\ExpaEig^2+1}
+\left(\begin{array}{cc}
+      -\ExpaEig& 1\\
+      1     & \ExpaEig
+     \end{array} \right)
+\,,\qquad
+  \det\Delta(\Ssym{})= -(\ExpaEig^2+1)
+\]
+\[
+\left(\begin{array}{c}
+      x_{01}\\
+      x_{10}
+     \end{array} \right)
+=
+\frac{\ExpaEig}{\ExpaEig^2+1}
+\left(\begin{array}{cc}
+      -\ExpaEig& 1\\
+      1     & \ExpaEig
+     \end{array} \right)
+\,\left(\begin{array}{c}
+      0\\
+      1
+     \end{array} \right)
+=
+\frac{\ExpaEig}{\ExpaEig^2+1}
+\,\left(\begin{array}{c}
+      1\\
+      \ExpaEig
+     \end{array} \right)
+\,.
+\]
+For the Ulam tent map this
+yields the correct periodic points
+\(
+\{x_{01},x_{10}\}
+=\{2/5,4/5\}
+\,.
+\)
+In the $\ExpaEig\to1$ limit, this 2-cycle collapses into the
+critical point $C=1/2$.
+
+
+\paragraph{Exercise}
+Check \refeq{tentMapOrbit} for the two 3-cycles.
+For the Ulam tent map case, the periodic points are
+\bea
+\{\gamma_{001},\gamma_{010},\gamma_{100}\}
+&=& \{2/9,4/9,8/9\}
+\continue
+\{\gamma_{011},\gamma_{110},\gamma_{101}\}
+&=& \{2/7,4/7,6/7\}
+\,.
+\nnu
+\eea
+
+
+\paragraph{Exercise}
+Check \refeq{tentMapOrbit} for $\ExpaEig =$ golden mean. The $\cycle{001} \to
+\cycle{0C1}$ as $\ExpaEig \to $ golden mean from above. Do you get all
+admissible cycles? That is worked out in Chaos\-Book, but not in this
+formulation.
+
+\paragraph{Exercise}
+Is there a systematic solution to \refeq{tentMapOrbit} for arbitrary
+$n$-cycle? The $\ExpaEig=2$ case has the elegant solution described in
+Chaos\-Book; whatever polynomials you find, they should agree with that
+particular factorization. In other words, think of the sums
+\refeq{tentEvenCyclePts} and \refeq{tentOddCyclePts} as the expansion of a
+real number in terms of the digits $w_t$ in the nonintegral base $\ExpaEig$.
+As the symbolic dynamics of a cycle is independent of  $\ExpaEig$, the Ulam
+tent map calculation, in the familiar base 2 clinches the arbitrary tent map
+case.
+
+\bigskip
+
+    {\color{red}
+    The rest of the section might even be right - has to factorize in
+    agreement with my Ulam tent map computations. Please fix at your leisure,
+    if I am wrong.
+    }
+
+\bigskip
+
+If the repeating string                                         \toCB
+$\Ssym{1}\Ssym{2}\ldots \Ssym{n}$ contains an even number of
+`1's, the repating string of well ordered symbols $w_1w_2\ldots
+w_{n}$ is of the same length. The cycle-point $x$ is a geometrical sum which we
+can rewrite as the odd-denominator fraction
+\bea
+   x(\cycle{\Ssym{1}\Ssym{2}\ldots \Ssym{n}})
+   &=& \sum_{t=1}^{n} \frac{w_t}{\ExpaEig^{t}}
+      +  \frac{1}{\ExpaEig^{-n}} \sum_{t=1}^{n} \frac{w_t}{\ExpaEig^{t}}
+      + \cdots
+   \continue
+   &=& \frac{1}{\ExpaEig^{n}-1}
+        \sum_{t=1}^{n} {w_t}{\ExpaEig^{n-t}}
+\label{tentEvenCyclePts}
+\eea
+If the repeating string
+$\Ssym{1}\Ssym{2}\ldots \Ssym{n}$ contains an odd number of
+`1's, the string of well ordered symbols $w_1w_2\ldots
+w_{2n}$ has to be of the double length before it repeats
+itself. The cycle-point $x$ is a geometrical sum which we
+can rewrite as the odd-denominator fraction
+\bea
+   x(\cycle{\Ssym{1}\Ssym{2}\ldots \Ssym{n}})
+   &=& \sum_{t=1}^{2n} \frac{w_t}{\ExpaEig^{t}}
+      +  \frac{1}{\ExpaEig^{-2n}} \sum_{t=1}^{2n} \frac{w_t}{\ExpaEig^{t}}
+      + \cdots
+   \continue
+   &=& \frac{1}{(\ExpaEig^{n}-1)(\ExpaEig^{n}+1)}
+        \sum_{t=1}^{2n}{w_t}{\ExpaEig^{2n-t}}
+\label{tentOddCyclePts}
+\eea
+        \jumpBack{exam:TentCycl}
+    } %end \example{Tent map linear code.}{exam:TentCycl}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%

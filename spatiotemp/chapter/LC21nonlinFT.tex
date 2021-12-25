@@ -1,0 +1,277 @@
+% siminos/reversal/LC21nonlinFT.tex      pdflatex LC21; bibtex LC21
+% temporary: siminos/spatiotemp/chapter/LC21nonlinFT.tex
+% $Author: predrag $ $Date: 2021-12-24 01:25:20 -0500 (Fri, 24 Dec 2021) $
+
+% was \section{Nonlinear lattice field theories}
+%\label{s:nonlinFT}
+
+\section{A $\ssp^3$ field theory}
+% was {{\Henlatt}}
+\label{s:henlatt}
+
+The `mod~1' in the definition of the `linear' kicked rotor, the cat map
+\refeq{catMap}, makes cat map a highly nonlinear, discontinuous map. In
+contrast, field theory action $S[\Xx]$ is typically polynomial and
+smooth. The simplest such nonlinear action turns out to correspond to the
+paradigmatic dynamicist's model of a 2\dmn\ nonlinear dynamical system,
+the {\HenonMap}\rf{henon}
+\bea
+    x_{\zeit+1} &=& 1-a\,x_{\zeit}^2 + b\,y_{\zeit}
+        \continue
+    y_{\zeit+1} &=& x_{\zeit}
+\,.
+\label{LC21eq2.1}
+\eea
+For the contraction parameter value $b=-1$ this is a Hamiltonian map.
+
+The \emph{temporal evolution} \jacobianM\ for the $n$th iterate of the
+Hamiltonian {map} is the product of consecutive  one time-step
+\jacobianMs
+\beq
+\jMps^\cl{}(x_0,y_0) =
+\prod_{m=\cl{}-1}^{0}
+            \left(\begin{array}{cc}
+                -2a\,x_m & -1 \\
+                         1 & 0
+            \end{array}\right)
+\,,\qquad x_m = \map^{m}_1 (x_0,y_0)
+\,,
+\ee{Henlatt-e_her}
+where the successive 1-time step \jacobianMs\ are multiplied in the order
+they are applied, as
+$\jMps^\cl{}(x_0)=\jMps(x_{\cl{}-1})\cdots\jMps(x_0)$. So, once we have a
+{\HenonMap} {\po}, we also have its \FloquetM\
+(monodromy matrix). When $\jMps^\cl{}$ is
+hyperbolic, only the expanding
+eigen\-value $\ExpaEig_1=1/\ExpaEig_2$ needs to be determined, as the
+determinant of the {\Henon} 1-time step \jacobianM\ is unity,
+\beq
+\det\jMps = \ExpaEig_1 \ExpaEig_2 = 1
+\,.
+\ee{LC21:HenDet}
+The map is Hamiltonian in the sense that it preserves areas in the
+$[x,y]$ plane.
+
+
+The {\HenonMap} is the simplest map that captures chaos that arises from
+the smooth stretch \& fold dynamics of nonlinear {\PoincMap}s of flows
+such as R\"ossler\rf{ross}.
+Written as a  2nd-order inhomogeneous difference equation\rf{DulMei00},
+\refeq{LC21eq2.1} takes the
+{\em \henlatt} 3-term recurrence form, explicitly time-translation
+and time-reversal invariant Euler–Lagrange equation
+% \refeq{LC21:1dHenlatt}:
+\beq
+-\ssp_{\zeit+1} + {a}\,\ssp_{\zeit}^2 - \ssp_{\zeit-1} = 1
+\,.
+\ee{LC21:2-step}
+Just as the kicked rotor (\ref{LC21PerViv2.1b},\ref{LC21PerViv2.1a}), the map can
+be interpreted as a kicked driven anaharmonic oscillator\rf{Heagy92},
+with the nonlinear, cubic Biham-Wenzel\rf{afind} lattice site potential
+\refeq{LC21:1dTempFT}
+\beq
+V[\ssp_{\zeit}] =
+        \frac{a}{3}\ssp_{\zeit}^3 + \ssp_{\zeit}^2
+\,,
+\ee{LC21BWcubic}
+giving rise to kicking pulse \refeq{LC21PerViv2.1a}.
+    \PC{2021-12-10} {
+Redefined the cubic Biham-Wenzel potential to agree with \refeq{LC21:1dTempFT}.
+Originally
+\beq
+V[\ssp_{\zeit}] - m_\zeit\ssp_\zeit =
+        %\ssp_{\zeit+1}\ssp_{\zeit} + \,\ssp_{\zeit}\ssp_{\zeit-1}
+        \frac{a}{3}\ssp_{\zeit}^3 - \ssp_{\zeit}
+    \,,\qquad
+        m_\zeit = -1
+\,,
+\ee{LC21BWcubicOLD}
+    }
+Devaney, Nitecki, Sterling and Meiss\rf{Devaney79,StMeiss98,SteDuMei99}
+have shown that the Hamiltonian {\HenonMap} has a complete Smale
+horseshoe for sufficiently large `stretching parameter' values
+\beq
+      a > 5.699310786700\cdots
+\;.
+\ee{LC21:SterlHen}
+In numerical and analytic\rf{EndGal06} calculations we fix (arbitrarily) the
+stretching parameter value to $a=6$, in order to guarantee that all
+$2^\cl{}$
+periodic points  $\ssp=\flow{\cl{}}{\ssp}$ of the {\HenonMap}
+\refeq{LC21eq2.1} exist.
+    \PC{2021-12-10} {
+Explain that $\phi^3$ theory is correspond to the unimodal \henlatt, with
+the Smale horseshoe repeller cleanly split into the left (negative) and
+right (positive) lattice site field values.
+This is very much like the temporal Bernoulli, in contrast to the
+\templatt\ which has nontrivial pruning, see \reftab{tab:catMapN_n-s=3}.
+    }
+
+    \PC{2021-06-04}{
+S. Aubry\rf{aub95ant}
+{\em Anti-integrability in dynamical and variational problems}
+
+The \eqva\ and \reqva\ of Frenkel-Kontorova models\rf{AuAb90,MraRin12}, widely studied in
+literature, might be closely related to \henlatt\ and $\phi^4$ lattices.
+
+
+
+D. G. Sterling\rf{SterlingThesis99}
+much (undeservedly)
+un-cited \HREF{https://www.proquest.com/docview/304508605} {PhD thesis},
+Univ. of Colorado,
+{\em Anti-Integrable Continuation and the Destruction of Chaos} has much
+to teach us. He studies \emph{coupled {\HenonMap} lattices} in both
+Hamiltonian and Lagrangian formulations; his definition seems pretty much
+consistent with our \refeq{SVWhenSTlatt}, though he has a coupling
+parameter $c$ used to make spatial couplings weak. The
+``anti-integrable'' refers to our choice $a\geq6$, I believe - parameter
+regimes in which all of the horseshoe orbits exists.
+
+``Specifying the anti-integrable state for an orbit of a coupled map
+lattice requires a multidimensional symbolic object which we call a
+symbol tensor.''
+
+His Figures 6.7, 6.18 are reminiscent of my pruning front.
+
+Sterling and Meiss\rf{StMeiss98}
+{\em Computing periodic orbits using the anti-integrable limit}
+
+    } % end     \PC{2021-06-04}
+
+% \PC{2020-05-31} {
+Politi and Torcini\rf{PolTor92} note that
+a problem in reconstructing the statistical properties of an
+{\spt\ H{\'e}non} attractor
+is ensuring that all \twots\  used are embedded into the inertial manifold.
+For instance, in the single H{\'e}non map, one
+of the two fixed points is isolated and it does not belong to the strange
+attractor.
+
+We resolve this problem by construction, all our solutions belong to the
+non-wondering set.
+%   }
+
+%\section{PolTor92 Periodic orbits in coupled {H{\'e}non} maps}
+%\label{sect:PolTor92}
+%\item[2020-05-31 Predrag]
+Politi and Torcini\rf{PolTor92} {\em Periodic
+orbits in coupled {H{\'e}non} maps: {Lyapunov} and multifractal analysis}
+
+They study \emph{\spt\ \Henon}, a (1+1)-spacetime lattice of
+\Henon\ maps orbits which are periodic both in space and time.
+
+Their numerical method is an extension of Biham and Wenzel\rf{afind} for
+the single \Henon\ map, with symbols $\Ssym{n\zeit}$ in $\A=\{0,1\}$. Any
+fixed point in fictitious time corresponds to a spatio-temporal cycle
+$\BravCell{\speriod{}}{\period{}}{\tilt{}}$.
+
+
+\section{A {$\phi^4$} field theory}
+\label{s:phi4latt}
+
+If a potential that is bounded from below is needed to make sense of the
+probabilistic interpretation of the configuration weight
+\refeq{ProbConf}, or a symmetry forbids the odd-power potentials such as
+\refeq{LC21BWcubic}, one starts instead with a quartic potential
+$\sim{g}\ssp_{\zeit}^4$, leading to the `{$\phi^4$} lattice field theory'
+\refeq{LC21:1dPhi4}. As $\phi^4$ example adds little to understanding
+over what is learned from \henlatt, we will not discus is further in this
+paper.
+    \PC{2021-12-10} {
+No! Explain that $\phi^4$ theory is the bimodal extension of
+what we had learned for the unimodal \henlatt.
+
+The \HenonMap/$\phi^3$ approaches should be safe for multimodal maps with
+complete repelling sets, and it should work for finite-grammar Smale
+horseshoe repellers.
+Smale's original horseshoe\rf{smale}, his fig.~1 was unimodal, but he
+also explicitly gives our $\phi^4$ bimodal repeller, his fig.~5.
+    }
+
+    \PC{2021-10-13}{RECHECK,
+maybe applies to \catlatt: Equilibria or steady solutions of
+Frenkel-Kontorova lattices, the smooth function $V:\reals\to\reals$ is a
+periodic onsite potential, $V[\ssp+1]=V[\ssp]$ for all $\xi\in\reals$.
+
+%\PC{2019-06-26}{
+%Mramor and Rink
+The $d$-dimensional Frenkel-Kontorova Hamiltonian lattice differential
+equation\rf{AuAb90,MraRin12}
+\beq
+\frac{d^2 \ssp_i}{dt^2} + V'[\ssp_i] - \Box\,\ssp_i
+    = 0 \ \mbox{for all} \ i\in\mathbb{Z}^d.
+\ee{LC21FKHam}
+describes the motion of particles under the
+competing influence of an onsite periodic potential field and nearest
+neighbor attraction.
+
+the goal is to find a
+$d$-dimensional ``lattice configuration''
+(for us, {\lattstate})
+$x:\integers^d\to \reals$ that satisfies
+\beq
+V'[\ssp_i] - \Box\,\ssp_i = 0 \  \ \mbox{for all} \ i\in \mathbb{Z}^d
+\,.
+\ee{FKeq} %\ref{RR} in {MraRin12}
+% \PC{2019-06-26}{
+Eq.~\refeq{FKeq}
+is relevant for statistical mechanics\rf{MraRin12}, because it is
+related to Eq.~\refeq(FKeq) describes its stationary solutions.
+%  }
+    }
+
+
+\subsection{Computing {\lattstate}s for nonlinear theories}
+\label{s:nonlinLattStates}
+
+Unlike the {temporal Bernoulli} \refeq{LC21:1dBernLatt} and the
+{\templatt} \refeq{LC21:1dTemplatt}, for which the {\lattstate} fixed
+point condition \refeq{LC21eqMotion}
+% {tempCatFixPoint}
+is linear and easily solved, for
+nonlinear lattice field theories the {\lattstate}s are roots of
+polynomials of arbitrarily high order. While Gallas and collaborators%
+\rf{EndGal01,EndGal02,EG05,EG05a,EndGal06,Gallas18,Gallas20,Gallas20a}
+have developed a powerful theory that yields {\HenonMap} {\po}s in
+analytic form, it would be unrealistic to demand such explicit solutions for
+general field theories on multi-dimensional lattices. We take a
+pragmatic, numerical route, and search for the fixed-point solutions
+\refeq{LC21eqMotion}
+starting with the deviation of an approximate trajectory from the 3-term
+recurrence \refeq{LC21:1dTempFT}, given by the lattice deviation vector
+\beq
+v_{\zeit} = -\ssp_{\zeit+1} + (V'(\ssp_{\zeit})-\Ssym{\zeit}) - \ssp_{\zeit-1}
+\,,
+\ee{LC21BWdeviate}
+and minimizing this error term by any convenient variational or
+optimization method, perhaps in conjunction with a high-dimensional
+variant of the Newton method\rf{CvitLanCrete02,lanVar1}.
+    \PC{2021-12-10} {
+Form $(V'(\ssp_{\zeit})-\Ssym{\zeit})$ looks like the most convenient
+definition of the ``$\Ssym{}$-centered" subregion $\pS_\Ssym{}$ potential,
+applicable to both linear and nonlinear field theories?
+    }
+
+
+
+\subsection{Papers to refer to?}
+
+Sim{\'o}\rf{Simo79} {\em On the {H{\'e}non-Pomeau} attractor}
+is a very fine early paper. Cite it in \Henon\ remark.
+
+Miguel, Sim{\'{o}} and Vieir\rf{MiSiVi13} {\em From the {H{\'{e}}non}
+conservative map to the {Chirikov} standard map for large parameter
+values} \CBlibrary{MiSiVi13}:
+
+Endler and Gallas\rf{EG05}.
+method resembles the methods
+earlier employed for quadratic polynomials (and their Julia sets) by
+Brown\rf{Brown81}
+and Stephenson\rf{Stephen1992A}.
+
+Brown gives cycles up to length 6 for the logistic map,
+employing symmetric functions of periodic points.
+
+Hitzl and Zele\rf{HitZe85}
+study the of the {\HenonMap} for cycle lengths  up to period  6.

@@ -1,0 +1,1484 @@
+% siminos/blog/EuroBlog.tex
+% $Author: predrag $ $Date: 2020-07-26 11:52:37 -0400 (Sun, 26 Jul 2020) $
+
+\chapter{Euro daily blog}
+\label{c-EuroBlog}
+
+\begin{bartlett}{
+Je ne veux pas travailler\\
+Je ne veux pas dejeuner\\
+Je veux seulement oublier\\
+Et puis je fume
+            }
+\bauthor{
+\HREF{http://www.youtube.com/watch?v=MBoTRF2aK4s}
+{China Forbes - Thomas M. Lauderdale (Pink Martini)}
+    }
+\end{bartlett}
+
+\begin{description}
+\item[2020-07-26 Predrag] Moved most of this part of the blog
+to dasbuch/blog/chapters/appendCont.tex, %version of 1feb2014
+except some of the figures
+\end{description}
+
+\section{Snippets from older blogs}
+
+\noindent {\bf  PC 2007-05-17}: {\bf Representations of dihedral group}
+
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% CLEpcSect.png computed by  CLEfinal.nb (repo: vaggelis)
+% CLEpcSect2.png computed by CLEfinal.nb (repo: vaggelis)
+% Predrag's program: wilczak/matmematica/PCsection.nb
+\begin{figure}[ht]
+\begin{center}
+(a) \includegraphics[width=0.40\textwidth]{CLEpcSect}
+(b) \includegraphics[width=0.43\textwidth]{CLEpcSect2}
+\end{center}
+\caption{
+Method of moving frames, \slice\ fixed by a point on the \cLe\
+\reqv\ group orbit, $\slicep  = \ssp_{\REQV{}{}1}$. The strange
+attractor of \cLf\ %\reffig{fig:CLEx1x2z}
+in the \reducedsp:
+% of \refeq{EqMotionMovFramePC}:
+(a) $\{x_1,x_2,z\}$ projection,
+(b) $\{x_1,y_1,z\}$ projection.
+Color-coding indicates $(\hat{\ssp} \cdot \hat{\slicep })_4$
+where $\hat{.}$ stands for unit vector, with green indicating values
+of the inner product close to $1$ and brown indicating values
+close to $0$.
+% \authorES
+    }
+\label{fig:CLEpcSect}
+\end{figure}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% computed by PCunrot.nb
+\SFIG{PCunrot1}
+{}{
+Method of moving frames, continuous time version, for the
+polar coordinates motivated $x'=(0,1,0,0,z)$,
+$x_1=0,\;x_2>0$, \slice. The \cLf\ strange attractor of \cLf\
+% \reffig{fig:CLEx1x2z}
+exhibits a discontinuity at
+$x_2=0$ in the \reducedsp:
+$\{x_2,y_2,z\}$ projection.
+}
+{fig:PCunrot1}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+
+\section{Method of slices for an $\Un{1}$-equivariant linear model}
+\label{HowtoSliceSO2}
+
+\renewcommand{\ssp}{a}
+
+% \section{Symmetry-Reduced Representation (SRR) for KSE}
+
+
+
+%{\em \underline{Preamble:} My gut tells me that the method
+%of moving frames, as described in the Section 4.2 of the
+%thesis will \underline{not} work for KS.  But since my brain
+%is dafter than my gut, I cannot explain why I feel that way.
+%So, in order to make progress in this direction, I'm going to
+%work with a dynamical system similar to KS, but much simpler.
+%If I can figure out how to apply the moving frames to this
+%system, then I can do it for KS as well.  If not, then I hope
+%it will help me understand why my gut is right. \vspace{2ex}}
+
+\medskip\noindent{\bf [2009-08-26 Ruslan]}
+Forget \KS, let's consider a simpler dynamical system.
+Let us say that, just like KS, we have a dynamical system on the space of real function $u(x,t)$ periodic in $x \in [-\pi, \pi)$, i.e. $u(x+2\pi,t) = u(x,t)$.  In the Fourier space $a = \mathcal{F}[u]$, $a = (a_1, a_2, \ldots)$, $a_k \in \mathbb{C}$ and $a_{-k} = a_k^\ast$.
+I will also use polar coordinates, so $a_k = r_k \mathrm{e}^{i \phi_k}$.
+The action of $\Un{1}$ on $u(x,t)$ is $g(\theta) u(x,t) = u(x+\theta,t)$. In the Fourier space
+\[ g(\theta) a_k = \mathrm{e}^{ik\theta}a_k\,, \]
+%In polar coordinates $\tau_{\shift/L} (r_k, \theta_k) = (r_k, \theta_k + q_k \shift)$.
+To define the $\Un{1}$ group rotation tangent $t(a)$, we consider an infinitesimal rotation
+\[ \mathrm{e}^{ik\theta}a_k = (1 + ik\theta)a_k  = a_k + \theta t_k\,, \]
+so $t_k = ika_k$.
+In matrix notation, $\mathbf{T} = \mathrm{diag}(ik)$,
+    so  $t = \mathbf{T}a$.
+
+The equation defining the slice through some point $\slicep$ is
+\[ (\bar{a} - \sliceTan{}) \cdot \sliceTan{} = 0 \]
+By the dot product we mean
+\[ a \cdot b = \sum_{k=-\infty}^\infty a_k b_k^*\,, \]
+which in the space of real periodic functions corresponds to
+\[ f \cdot g = \int_{-\pi}^\pi f(x) g(x) dx\,, \]
+where $f(x) = \mathcal{F}^{-1}[a]$ and $g(x) = \mathcal{F}^{-1}[b]$,
+so this makes sense.  But note that this is not
+the only way of defining the dot product.
+
+\subsection{2009-08-26 Epicycles: 2-Fourier modes}
+\label{sect:epyc2Fourier}
+
+\medskip\noindent{\bf Ruslan}
+Let us define a 2-Fourier modes linear dynamical system
+$\dot{a}_k = v_k(a)$ as follows: $v_k = i \omega_k a_k$,
+$\omega_{-k} = -\omega_k$, where $\omega_k \in \mathbb{R}$ are
+constants.
+\\{\bf Ruslan} $\omega_{-k} = -\omega_k$.
+    I used this in my derivation to get the sign right.\\
+    {\bf Predrag} Agreed - I used that too in rederiving your model.
+This
+\HREF{http://www.c2.com/cgi/wiki?AddingEpicycles}
+     {``epicycles'' model}
+is a linear dynamical system, so we can solve it analytically:
+\[ a_k(t) = a_k(0) \mathrm{e}^{i \omega_k t} \]
+Even simpler, I'm going to use only the first two modes, so $a_k(0) = 0$ for all $|k| \neq 1$ or 2.
+
+We can choose constants $\omega_1$ and $\omega_2$ such that this system can have
+a traveling wave or a RPOs in the original space of periodic functions $u(x,t)$.\\
+{\bf Example 1: \Reqv.} If $\omega_1 = c$ and $\omega_2 = 2c$, then
+\[ a_k(t) = a_k(0) \mathrm{e}^{ikct} = g(ct) a_k(0)\,, \]
+which is a wave traveling with speed $c$.\\
+{\bf Example 2: \Rpo.} For the system to have an RPO, we can choose, for example,
+$\omega_1 = \pi/2$ and $\omega_2 = 3\pi$.  This RPO has period $T = 1$ and shift $\pi/2$, since
+\[ a_1(1) = a_1(0) \mathrm{e}^{i\pi/2} = g(\pi/2) a_1(0) \quad \mathrm{and} \quad
+   a_2(1) = a_2(0) \mathrm{e}^{i3\pi} = a_2(0) \mathrm{e}^{i\pi} = g(\pi/2) a_2(0) \]
+
+Let us now see what happens if we apply the method of slices to these two examples.
+The reconstruction equation is
+\[ \dot{\theta} = \frac{v(\bar{a}) \cdot \sliceTan{}}{t(\bar{a}) \cdot \sliceTan{}} \]
+Let us say the initial condition $a_1(0) = r_1 > 0$, $a_2(0) = r_2 > 0$
+(i.e. $\phi_1 = \phi_2 = 0$) is also the point $\slicep$ defining the slice.  Then
+$\sliceTan{k} = ikr_k$ when $|k| = 1,2$ and zero otherwise.  So,
+\beq
+\dot{\theta} = \frac{\sum_k (i\omega_k \bar{a}_k) (ikr_k)^*}{\sum_k (i k \bar{a}_k)(ikr_k)^*}
+                = \frac{\sum_k k \omega_k \bar{a}_k r_k}{\sum_k k^2 \bar{a}_k r_k}
+\ee{RLDrec}
+The equation for the flow on the slice (aka reduced flow) is
+\beq
+\dot{\bar{a}}_k = v_k(\bar{a}) - \frac{v(\bar{a}) \cdot \sliceTan{}}{t(\bar{a}) \cdot \sliceTan{}} t(\bar{a})
+                   = i\omega_k \bar{a}_k - \frac{\sum_k k \omega_k \bar{a}_k r_k}{\sum_k k^2 \bar{a}_k r_k} ik\bar{a}_k\,.
+\ee{RLDred}
+\medskip\noindent{\bf Predrag}
+I have coded \texttt{wilczak/matematica/PCruslan.nb} also for
+$\slicep$ complex, if we need it - no reason to chose it real,
+though experimentally it seems not to be the cause of the singularity in
+$d\theta/dt$.
+
+\noindent {\bf Example 1: \Reqv.} Here $\omega_k = kc$, so we immediately get
+\[ \dot{\theta} = c \quad \mathrm{and} \quad \dot{\bar{a}}_k = 0\,, \]
+as expected for the traveling wave.\\
+{\bf Example 2:  \Rpo.} In general, for the flow with two non-zero
+modes (remembering that $a_{-k} = a_k^*$ and $\omega_{-k} =
+-\omega_k$):
+\beq
+ \dot{\theta} = \frac{\omega_1 r_1 (\bar{a}_1 + \bar{a}_1^*)
+                  + 2\omega_2 r_2 (\bar{a}_2 + \bar{a}_2^*)
+                  }{r_1(\bar{a}_1 + \bar{a}_1^*) + 4r_2 (\bar{a}_2 + \bar{a}_2^*)}
+\ee{Period1}
+and
+\[ \dot{\bar{a}}_k = i\omega_k \bar{a}_k - \frac{\omega_1 r_1 (\bar{a}_1 + \bar{a}_1^*) + 2\omega_2 r_2 (\bar{a}_2 + \bar{a}_2^*)}{r_1(\bar{a}_1 + \bar{a}_1^*) + 4r_2 (\bar{a}_2 + \bar{a}_2^*)}ik\bar{a}_k \]
+When $\omega_1 = \pi/2$ and $\omega_2 = 3\pi$, the second equation should generate a periodic orbit with period $T = 1$, while the solution of the first equation, starting with $\theta(0) = 0$, should give us $\theta(1) = \pi/2$.  Unfortunately, we cannot solve these equations analytically, so I'll do it numerically for different values of $r_{1,2}$.  I'll set $r_1 = 1$ and increase $r_2$ from zero.  Note that when $r_2 = 0$, we just have a traveling wave with speed $\omega_1$.  Also, when $r_2$ is sufficiently smaller than $r_1$, we will have a traveling wave slightly modulated by the 2nd mode.  This case is shown in the figure below:
+
+\vspace{2ex}\noindent\includegraphics[width=\textwidth]{sliceflow1}
+
+So, everything works well: the reduced orbit is periodic (the beginning of the orbit is denoted by the red circle, while the end is denoted by the black asterisk), and the phase shift at $t = 1$ is equal to $\pi/2$.  We can see similar picture when we increase $r_2$:
+
+\vspace{2ex}\noindent\includegraphics[width=\textwidth]{sliceflow2}
+
+Now, when $r_2$ approaches 0.5, it is clear that the orbit approaches a singularity:
+
+\vspace{2ex}\noindent\includegraphics[width=\textwidth]{sliceflow3}
+
+At $r_2 = 0.5$ we get rubbish:
+
+\vspace{2ex}\noindent\includegraphics[width=\textwidth]{sliceflow4}
+
+which persists for awhile
+
+\vspace{2ex}\noindent\includegraphics[width=\textwidth]{sliceflow5}
+
+until we get back the nice smooth solution:
+
+\vspace{2ex}\noindent\includegraphics[width=\textwidth]{sliceflow6}
+
+which, however, is no longer periodic, while the shift is now $3\pi/2$.  This picture persists for all $r_2 > r_1$.
+
+\vspace{2ex}\noindent\includegraphics[width=\textwidth]{sliceflow7}
+
+So, it looks like the problem with the method of slices is not only due to running into the singularities,
+but also due to the possibility of generating smooth orbits which go around those singularities
+and generate wrong shifts without any indication that something has gone wrong.
+These orbits are no longer periodic in the reduced space.  The only time this method works
+reliably is when the flow is dominated by the first Fourier mode.  If this is not the case,
+as in the KSE regime with multiple active modes, then we cannot expect that it will work.~~{\em Q.E.D.}
+
+\vspace{2ex}
+An old idea presented as a new one:  Why don't we define the dot product in the above equations as follows:
+\beq
+ a \cdot b = a_1 b_1^* + a_1^* b_1
+ \,.
+\ee{RLDfix}
+Then, if I'm not mistaken, the whole thing reduces to my original idea for factoring out the $\Un{1}$
+symmetry from the KS flow.  In this case we won't need to worry about running into, or moving around,
+the singularities while generating spurious phases.  The only singularity will be at $r_1 = 0$,
+which is trivial to deal with.
+
+With the dot product defined as in \refeq{RLDfix},
+\refeq{RLDrec} and \refeq{RLDred} become
+\[
+  \dot{\theta} = \omega_1
+  \quad \mathrm{and} \quad
+  \dot{\bar{a}}_k = i(\omega_k - k\omega_1) \bar{a}_k
+\,.
+\]
+So they (obvious to Ruslan) do the job.
+
+
+\subsection{2009-08-25 Eurosceptics do not like to slice}
+\label{2009-08-25Eurosceptics}
+
+\noindent{\bf Ruslan} (Predrag's translation) one gets a
+phase shift by $\pi$ if one crosses the singularity.
+\\
+{\bf Ruslan} The shifts by $\pi$ is the least of my worries.
+It is the fact that when $r_2 > r_1$ we get a nice smooth
+solution of the reconstruction and reduced equations, yet we
+get obviously wrong results.  I don't want to think why this
+is happening.  I'd rather just stop using the approach where
+such a thing can happen.
+\\
+{\bf Predrag} Your model illustrates why we need
+monotonicity in phase (we are integrating 1d equation,
+velocity cannot change sign?). But I think we will fix it -
+it is like WKB for harmonic oscillator, one gets geometric
+$\pi$ phase for each turn, and a neat way to do it is Maslov
+trick - change slice at $\pi/4$, then change back at
+$3\pi/4$, etc. Looks like something we can figure out. Sure
+cute - getting semiclassical Keller-Maslov phase without
+doing neither wave nor quantum mechanics. At least, not
+consciously.
+
+More interesting will be the phase for the method of
+connections. If we are lucky, it is the same for relative
+periodic orbits.
+\\
+{\bf Ruslan} We had the discussion about monotonicity some
+time ago (see above).  I don't have anything more to add at
+the moment.
+\\
+I don't know much about WKB, or Keller-Maslov
+phase, but I would like to get away from generating all kinds
+of fixes, like using random $\slicep$ or switching between
+slices.
+
+\medskip\noindent{\bf Predrag} 1st mode will not work. Actually,
+what Ruslan has run into so far is the same problem you
+(Evangelos) and Rebecca run into independently; he is
+measuring angle in polar coordinates, where we also run into
+$d\theta/dt$ divergence, and shifts by $\pi$.
+\\
+{\bf Ruslan} I disagree that 1st mode won't work, I think it
+will. And I don't think using polar coordinates is the
+problem.  Forget about dynamics.  Just look at functions
+defined on a circle and ask yourself how to identify
+functions that differ only by a shift.  My answer: The phase
+of the 1st Fourier mode will give you the shift.  So just use
+it to rotate the functions on top of each other.
+
+\noindent {\bf Evangelos} Apart from quantum mechanics there
+are classical systems that exhibit such behavior, see for
+example
+\HREF{dx.doi.org/10.1103/PhysRevLett.103.034301}
+{this PRL paper}. I've only seen it in Hamiltonian systems,
+where this behavior is called monodromy since one studies the
+system as it goes once around a singularity (is the etymology
+clear to non-Greeks too?). It apparently arises when a
+function fails to be single-valued, which again should point
+out why we need monotonicity in phase.\\
+\textit{Question for Ruslan} Is it really trivial to deal
+with the singularity at $r_1=0$?\\
+{\bf Ruslan} Yes, but you should never ever try to
+numerically integrate the reconstruction or the reduced flow
+equations if you expect to get the correct reduced
+representation of the orbits of the original flow.  Instead,
+integrate the original flow and then pull the obtained orbit
+onto the slice while keeping track of the shift you generate
+while doing it.  If the original orbit goes exactly through
+$r_1 = 0$ (within the round-off error), then add (or
+subtract) $\pi$.  That's all.\\
+{\bf Evangelos}  I agree that integrating the equation on the
+slice is not the safest think to do. I would like to
+understand where the spurious shifts that you have discovered
+come from, though. It looks like the reduced space has a
+branch cut and as one integrates the equations around the
+singularity he finds oneself on a different leaf.
+
+There is something I don't understand in the procedure you
+describe here. Does the need to add or subtract $\pi$ come
+from the fact that most implementations of $arg$ or $arctan$
+functions do not distinguish quadrants? I do not understand
+how else it is connected to crossing through $r_1 = 0$ or why
+it does take care of the singularity. You can approach the
+singularity through any direction on the $a_1$ plane, so the
+way to overcome the singularity on a point with $r_1=0$ seems
+to be to use the angle at which you approach to it (that you
+get from the previous point) to correctly rotate it onto the
+slice. The difficulty is that then you are not able to tell
+where $\EQV{2}$ and $\EQV{3}$ lie on this space as they both
+have $r_1=0$: their group orbits do not intersect your slice,
+so you do need another ``coordinate chart'' to cover the
+space.
+\\
+{\bf Evangelos} You still need to cover the reduced space
+with more than one coordinate systems which is essentially
+the same as choosing a new slice.\\
+{\bf Ruslan} No. You don't need more than one coordinate
+system.  Just use the Fourier modes as reduced coordinates,
+with the phase of the 1st mode fixed.  The phase of the 1st
+mode will be the reconstruction shift.\\
+{\bf Evangelos} Even if this doesn't bother us, I am afraid
+that we will get projections that are not more informative
+than Figure 42 in today's version of my thesis, where the
+singularity was dealt with but $\EQV{2}$ and $\EQV{3}$
+collapse to the same point.\\
+{\bf Ruslan} I cannot guarantee that the pictures we get
+will be nice and simple.  Of course, since the reduced space
+is a semi-space (because $r_1 \geq 0$), the reduced orbits
+may not always look pretty and smooth: They will have sharp
+turns when they come close to, or hit, the $r_1 = 0$
+subspace.  But at least when I look at orbits projected onto
+Fourier modes, I know how to interpret them.  When I'm
+looking at the projections onto some exotic curvilinear
+coordinates, the pictures make no sense to me.\\
+{\bf Evangelos} On the utility of Fourier modes as a
+representation I disagree in two levels. I anyway find that
+Fourier modes projection tell us very little about dynamics.
+Wasn't this the reason to use different coordinate systems in
+the KS paper? So as long we can construct dynamically
+meaningful projections in the new variables I do not worry
+how we got them.
+
+Furthermore, what you describe above is equivalent to using
+the invariants of Table 3 in Chapter 8 in my thesis. The new
+coordinates are exactly the Fourier modes rotated back to the
+slice defined by $\Im(c_1)=0$, this is how they were
+obtained. The difference is that in Table 3 the singularity
+is explicit. The important point though is that what you like
+to see as a linear transformation is in fact a nonlinear
+transformation through the dependance of the angle on the
+point in space in which it is evaluated. Whereas in a linear
+transformation all points in space are rotated by the same
+angle. Therefore without knowing it you use exotic
+curvilinear coordinates. The connection to the original
+Fourier modes is that the magnitude in each Fourier plane
+stays invariant. Of course things get even more exotic in my
+thesis, but the motivation behind that was to get projections
+that provide more information about the dynamics.
+
+As a general comment, it appears that when we try to see the
+reduced space as embedded in the original space, no matter
+how we go from $N$ to $N-1$ dimensions we impose a
+conservation law that did not exist in the original system
+(as it was allowed to have motion in the direction of group
+action) that restricts the motion to an $N-1$ dimensional
+space which cannot in general be given a nice structure.
+
+\subsection{2009-08-26 Eurosceptics carry the day}
+\label{sect:2009-08-26}
+
+\noindent{\bf Predrag} OK, now that Ruslan has gone on
+strike I spent a day screwing around with Mathematica,
+checked epicyclist formulas and reproduced Ruslan's graphs.
+As I am using \texttt{NDsolve[\dots]} as a black box, I do
+not get the same screwy details close to $(r_1,r_2)=(1,0.5)$,
+but the result is the same - for $r_2$ sufficiently larger
+than 1/2 one gets extra $\pi$ shift, with no integration hint
+that one is going around a singularity. That is unacceptable.
+As Ruslan expects,
+random choices of complex (not real) \slice\ fixing
+point $\sliceTan{}$ move the singularity around but are essentially no
+help.
+
+I will still try to use Maslov trick and switch the slice
+whenever $\dot{\theta}$ starts misbehaving, but for that I
+need to learn how to use \texttt{Method -> \{"EventLocator"}
+within \texttt{NDsolve[\dots]}, but that sure looks like a
+bitter pill. I do not mind having several slices as long as
+the returns to (dynamical) \PoincSec s trace out
+smooth unstable manifolds suitable to partitioning the
+\reducedsp.
+
+Marsdenites did not note this problem as they only applied
+the method to \reqva, and there it is OK.
+
+I agree that if one is to fix the \slice\ by one Fourier
+mode, \refeq{RLDfix} is the most natural choice, and would be
+easiest to explain in a publication. Unfortunately, we ran
+into singularities when we tried it for \CLe\ in Siminos
+thesis\rf{SiminosThesis} and
+\HREF{http://ChaosBook.org/projects}
+     {Rebecca's summer project}.
+But Ruslan, please do give it a try.
+
+\medskip\noindent{\bf Ruslan}
+Actually, not really on strike, just reluctant to participate
+in your, what I believe to be, futile efforts to apply all
+kinds of fixes and patches to the approach which, I believe,
+is fundamentally incurable when it comes to systems like KS
+in a fully developed chaotic regime. [\dots]
+
+\medskip\noindent{\bf Predrag} Fair enough - way too many fixes and
+patches. We need to quotient the symmetry in order to figure
+out the symbolic dynamics for KS and for plane Couette and
+pipe flows. If something like \refeq{RLDfix} works it would
+be nicer. The reason why we think it will not is that when we
+use the polar coordinates-inspired \slice\ fixing point
+$\ssp^{*}=(0+i,0, \cdots)$, $\Re\ssp_1=0,\;\\Im\ssp_1>0$
+(which I believe for $\Un{1}$ version corresponds to fixing the
+phase of the first Fourier mode) the \reducedsp\ equations
+are given by
+\beq
+\dot{\ssp} = v - \frac{{\Im} v_1}{{\Re}\ssp_1} t(\ssp)
+\,.
+\ee{EqMotionMovFrame}
+Trajectories shown in %\reffig{fig:PCunrot1}
+Siminos thesis\rf{SiminosThesis} and
+\HREF{http://ChaosBook.org/projects}
+     {Rebecca's summer project}
+exhibit jumps by $\pi$. With $\ssp^{*}$ on \reqv\ orbit we
+were luckier, and got a strange attractor which encountered
+no $\dot{\theta}$ singularity. But unhappy, as we did not
+understand why we were lucky.
+
+\subsection{2009-08-27 Don't worry. Be happy}
+
+\begin{description}
+\item[Ruslan]
+    Let me start by answering Evangelos's question about rotation
+by $\pi$.  Forget about multiple modes for the moment.  Just
+consider evolution of the first mode: $a_1(t) =
+r_1(t)\mathrm{e}^{i\phi_1(t)} \in \mathbb{C}$.  If $a_1(t)$
+goes through zero, then $r_1(t)$ bounces off of zero, while
+$\phi_1(t)$ changes by $\pi$ or $-\pi$, (the sign is
+immaterial).   This is just the nature of the polar
+coordinates and has nothing to do with the implementation of
+$arg$.
+
+\item[Evangelos]
+But still I don't understand why would you need to add or subtract
+$\pi$? Doesn't the function you use to calculate the angle in this
+plane take care of that?
+
+\item[Ruslan]
+That's it.  All I was saying
+was that $\phi_1$ would change by $\pi$ or $-\pi$ as $a_1$
+crosses zero.  And that's what the angle function would give
+you.  Nothing else needs to be added.
+
+\item[Ruslan]
+Now about the nature of what you call the 'singularity'.  If
+I understand it correctly, what worries you is that, if we
+take $\phi_1$ as our $\theta$, then each time it changes by
+$\pi$, the $k$-th mode needs to be changed by $k\pi$, $k >
+1$.  You perceive this as a jump, i.e. a discontinuity of the
+reduced orbit, which you don't like.  Is this what you mean
+by the 'singularity'? If `yes', then do you really need to
+worry about it?
+
+\item[Predrag]
+If $1/x$ is considered a
+`singularity' for $x=0$ on small islands off Continent, than
+we will be so bold to call it singularity. As you say, there
+should be simple analytic fixes for going through zero; we
+have to make sure that we teach our numerical routines how to
+implement this. Your pretty and clean epicycle model just
+gave me a new set of ulcers, as for $r_2$ not very larger
+than 1/2 the integrators seem not to know that there was any
+singularity at all, and relative periodic orbits became
+periodic only mod~$\pi$. And $\pi$ or $-\pi$  sign is not
+immaterial - we have to get \rpo s shifts right.
+
+\item[Evangelos]
+I want to add that the singularities in expressions such as
+in Table 3 in Chapter 8 of my
+thesis cannot be essential, in the sense that, since the transformations
+are generated by rotations, the expressions
+cannot really blow up. In practice they pose numerical issues,
+related to the small denominators in these expressions. So I agree there
+should be simple analytic fixes.
+
+\item[Ruslan]
+If you think about it, what you perceive as a jump is
+actually a very fast rotation (infinitely fast if you go
+exactly through zero, but otherwise finitely fast).  If you
+don't like that it rotates so fast, then why don't you just
+rescale the time?  Just slow it down near $r_1 = 0$.  I think
+something like $d\tau = dt/r_1(t)$ might work, since it will
+remove $\Re\ssp_1$ from the denominator in
+\refeq{EqMotionMovFrame}.
+
+\item[Predrag]
+Agreed. I have been also thinking about redefining time.
+That's also in ChaosBook
+\HREF{http://chaosbook.org/chapters/conjug.pdf} {Chapter 6 - Get straight},
+called there the
+Kustaanheimo-Stiefel (also known as KS!) transformation, and
+applied in Example 6.2: what to do with Keplerian ellipses of
+arbitrarily large velocity. That we might need for close
+passages to the $\Un{1}$ invariant subspace, with $r^2 = \sum
+\ssp_k^*\ssp_k$ going small. Fortunately, in KS that never
+happens - strange attractor is safely away from the $u(x)=1$
+\eqv. Our problem with method of slices is more naive, as you
+explain above.
+
+Of course, the real challenge is: who will be the first to read the
+\\
+\HREF{ChaosBook.org/projects/siminos/thesis.pdf}
+      {Thesis that Nobody Reads} first?
+
+\item[Ruslan]
+On the other hand, if our goal is to eventually reduce the
+dynamics to a Poincar\'e map, then why do we need to worry
+about time at all?
+
+\item[Predrag]
+Agreed - anything that gets us the sensible return (or
+forward) maps is good. Just have to make numerics is correct,
+and yields correct \rpo s shifts and periods - at the moment
+we do not know how to do that right even for the 2-mode
+epicycles model.
+
+\item[Evangelos]
+I also agree, that was my thesis final conclusion on what one should do: just
+make sure that the \PoincSec\ is away from problematic regions. It is
+just that finding a good section is not always easy, so one needs some visualization
+that works well in order to get intuition on where to place it.
+\end{description}
+
+\subsection{2009-08-28 On ulcers, singularities, and `tender beasts'}
+
+\noindent{\bf Ruslan} I thought the dot product
+\refeq{RLDfix} would cure your ulcers for the epicycle model,
+and I'm pretty sure for the CL and KS as well, provided you
+stop worrying about the fast rotations in the reduced space.
+I don't mind that you call them `singularities', but, hearing
+your complaints about numerics, I'm pretty sure somebody
+does...  Let me tell you something about computers: they are
+tender beasts and if you say, or even think, this word in
+their presence, they will get spooked and throw all kinds of
+fits.  But seriously, as I already said above, any symmetry
+reduction or other transformations that you want to carry out
+should be done as post-processing, i.e. after you obtain your
+numerical trajectory by integrating the original flow.  That
+way the singularities are much more tractable numerically.
+
+\subsection{2009-08-27 Maslov trick}
+\label{s:MaslovTrick}
+
+\noindent{\bf Predrag}  The Maslov trick is described in
+\HREF{http://chaosbook.org/version12/chapters/WKB.pdf}
+{ChaosBook vers. 12, Chapter 31} - WKB quantization.
+Now I realize I give no references to Maslov paper or other
+relevant sources - if you find them, please let me know so we can
+write up the remark on the Maslov approach. Citing from this
+chapter:
+
+A simple physical picture, due to Maslov, is illustrated by quantization
+of the harmonic oscillator. Semi-classical propagator has
+a factor $1/$(velocity$)^{1/2}$, reminiscent of our $\dot{\theta}$, and
+that blows up at the turning points, points where the particle as viewed
+from the $q$ coordinate frame reverses velocity.
+
+In the $q$ coordinate, the turning points are defined by the
+zero kinetic energy condition,
+and the motion appears singular.
+This is not so in the full \statesp: the trajectory in a smooth confining
+1-dimensional potential is always a smooth loop,
+with the ``special'' role of the turning points $q_L, q_R$ seen to be an
+artifact of a particular choice of the $(q,p)$ coordinate frame
+(in our application, choice of a slice). Maslov's
+idea was to proceed from the initial point
+$(q',p')$ to a point $(q_{A},p_A)$ preceding the turning
+point in the $\psi(q)$
+representation, then switch
+to the momentum representation (in our application, use a slice turned by
+$90^o$)
+continue from $(q_A, p_A)$ to $(q_B, p_B)$, switch back to the coordinate
+representation (in our application, use a slice turned by
+$90^o$), and so on.
+
+In other word, as slices are local, switch to the next one whenever
+convenient, and for recurrent orbits, make sure you are in the original
+slice when you come back, in order to get a return map and hopefully sensible
+symbolic dynamics.
+
+\subsection{2009-08-28 Any 2-mode epicycle reduces to a periodic orbit}
+
+\begin{description}
+\item[Predrag]
+A generic 2-Fourier modes epicycle trajectory runs on a 2-torus in the
+full \statesp. Hence any trajectory is a \po\ in the \reducedsp, not
+only the hand-crafted \rpo\ such as \refeq{RLDrec}.
+(I actually verified this statement by running random trajectories
+in \texttt{Mathematica}, so it is true.)
+For testing methods of symmetry reduction
+it might be a good idea to increase the number of Fourier modes.
+\item[Ruslan]
+That's right.  And thinking about it
+as a 2-torus might hint at why the singularity develops as
+$r_2$ grows. As $r_2$ grows, at some point the torus becomes
+self-intersecting. I'm sure this happens when $r_2 = r_1/2$.
+The $\SOn{2}$ group orbit on this torus is a line that winds once
+around $r_1$ and twice around $r_2$.  As the torus becomes
+self-intersecting this orbit first self-intersects at $r_2 =
+r_1/2$ and then forms a knot.  And that's why an extra $\pi$
+shift appears when we try to project an orbit onto the slice
+normal to this knot.  This is just a speculation, but maybe
+there is something in it.
+\end{description}
+
+\section{2009-08-29 Kuramoto-Sivashinsky \On{2}\ quotienting}
+\label{2009-08-29KS-O2}
+
+\subsection{Back to the future: pasting from 2007-12-31}
+
+\medskip\noindent{\bf Ruslan pasting from siminos/blog/davidchack/071231fundamental.html}
+To fix the notations, let me recap the Kuramoto-Sivashinsky
+equation (KSE) and its representation in Fourier space:
+\[ u_t = -uu_x - u_{xx} - u_{xxxx},  \quad x \in [-L/2, L/2] \]
+with periodic boundary conditions:  $u(x+L,t) = u(x,t)$.  In the Fourier representation
+\[ u(x,t)=\sum_{k=-\infty}^{+\infty} a_k (t) e^{ i q_k x }\,,\]
+where $ q_k = 2\pi k/L$, the KSE takes the form
+\[ \dot{a}_k = v_k(a) = (q_k^2 - q_k^4)a_k - \frac{iq}{2}\sum_{m=-\infty}^{\infty}
+    a_m a_{k-m}\,,\quad a_k \in {\cal C}\]
+It is convenient to represent complex modes as pairs of real
+variables, either in cartesian or polar coordinates:
+\[ a_k = (b_k, c_k) = b_k + ic_k = (r_k, \theta_k) = r_k e^{i\theta_k}\,. \]
+
+\noindent{\bf Symmetries:} If $u(x,t)$ is a solution of the KSE, then so are
+\[ \tau_{\shift/L} u(x,t) = u(x+\shift,t) \quad\mbox{and}\quad R\,u(x,t) = -u(-x,t).\]
+The action of symmetry transformations on Fourier modes is as follows:
+\[ \tau_{\shift/L} a_k = e^{iq_k \shift} a_k = (r_k, \theta_k + q_k \shift) \,,\qquad R\,a_k = -a_k^\ast = (-b_k, c_k)\,.\]
+
+\subsubsection{Defining KSE quotient space $\pS/\On{2}$} % (a.k.a. fundamental domain)}
+\label{sect:RLDslice}
+
+The KSE quotient space $\pS/\On{2}$ is defined in Fourier space as follows:
+\begin{enumerate}
+\item If $r_1 > 0$ then $\theta_1 = \pi/2$ and $\dot{\theta}_1 \leq 0$;
+\item if $r_1 = 0$ then $\arg \dot{a}_1 = \pi/2$;
+\item if $a_1 = \dot{a}_1 = 0$ then the KSE solution lives in
+        the $L/2$-periodic invariant subspace, where $\pS/\On{2}$ is
+        defined as above but for the 2nd mode;
+\item and so on...
+\end{enumerate}
+So the quotient space $\pS/\On{2}$ consists of a hierarchy of
+slices fixed by the $k$-th Fourier mode for the
+$L/k$-periodic invariant subspace.
+
+\begin{description}
+\item[Predrag's comment] I do not find fixing a single
+Fourier coefficient natural, and you pay for it by having to
+deal with discrete shift symmetry subcases separately (fixing
+higher $k$ Fourier coefficients).
+\item[Ruslan's reply] I think it is completely natural that
+for solutions symmetric by $L/k$ shift, we use the $k$-th
+Fourier mode. Since functions in $L/k$-symmetric subspace are
+invariant under KS dynamics, using $k$-th Fourier Mode in
+$[0, L]$ is the same as using the 1st Fourier mode in $[0,
+L/k]$.  Also note that, again because of the invariance of
+these subspaces, the choice of the mode which defines
+$\pS/$\On{2}\ is fixed once and for all times by the initial
+condition, so there is no need to jump between slices when
+following the KS flow.
+\end{description}
+
+\subsubsection{Mapping KSE solutions to $\pS/\SOn{2}$}
+
+Following Predrag's suggestion, I'll split the mapping of KSE solution to
+$\pS/$\On{2} into two parts:
+\\
+1) map to $\pS/\SOn{2}$ by translation $\tau_{\shift/L}$; 2) map from
+$\pS/\SOn{2}$ to $\pS/$\On{2} by reflection $R$.
+
+\medskip\noindent{\em ...to be continued...}
+
+%\vspace{2ex}\noindent\includegraphics[width=\textwidth]{ks22rpo016.31_02.863.pdf}
+
+
+%
+% *Note 1:* The invariant subspace of antisymmetric solutions
+%
+% $$ u(x,t) = R\,u(x,t) = -u(-x,t) \quad\Rightarrow\quad Re\,a_k = 0 $$
+%
+% belongs to the FD.
+%
+% *Note 2:* If both
+%
+% $$ a_1 = 0 \mbox{~~and~~} \dot{a}_1 = 0 $$
+%
+% then the solution lives in the L/2-periodic invariant subspace, and the FD
+% is defined in terms of
+%
+% $$ r_2 \mbox{~~and~~} \theta_2\,. \mbox{~~And so on...} $$
+%
+% A KSE solution
+%
+% $$ (r_1, \theta_1, r_2, \theta_2, \ldots) $$
+%
+% is mapped into the FD by translation
+%
+% $$ \shift/L = \frac{\pi/2 - \theta_1}{2\pi} $$
+%
+% and reflection if
+%
+% $$ \dot{\theta}_1 > 0\,, \mbox{~~or~~} b_1\dot{c}_1 - c_1\dot{b}_1 > 0\,, \mbox{~~since} $$
+%
+% $$ \dot{\theta_k} = \frac{b_k\dot{c}_k - c_k\dot{b}_k}{b_k^2 + c_k^2} $$
+%
+% The map into FD is characterized by two parameters: the translation
+% parameter
+%
+% $$ \shift = \frac{\pi/2 - \theta_1}{2\pi}L $$
+%
+% and the reflection parameter
+%
+% $$ \rho = 1 \mbox{~~when~~} \dot{\theta}_1 \leq 0 \mbox{~~and~~} -1
+% \mbox{~~when~~} \dot{\theta}_1 > 0 $$
+%
+
+\subsection{2009-08-31 A closer look at the singularity}
+
+\noindent{\bf Evangelos}
+Taking \CLe\ as an example I will examine how the invariants
+\beq
+\begin{split}
+        \overline{x}_2 &= \sqrt{x_1^2+x_2^2} \continue
+        \overline{y}_1 &= \frac{x_2 y_1-x_1 y_2}{\sqrt{x_1^2+x_2^2}}\continue
+        \overline{y}_2 &=\frac{x_1 y_1+x_2 y_2}{\sqrt{x_1^2+x_2^2}}\,.
+        \label{eq:invLaser}
+\end{split}
+\eeq
+generated by straightforward application of the moving frame method behave as $x=x_1+i x_2$ approaches
+zero. For the limit to exist we must get a direction independent result as $x\rightarrow 0$.
+Using $x=r_x\, e^{i\theta_x}\,,\, y=r_y\, e^{i\theta_y}$ we can write, for instance, $x_2 y_1-x_1 y_2 = r_x r_y \sin(\theta_x-\theta_y)$
+and therefore,
+\beq
+        \overline{y}_1= r_y\sin(\theta_x-\theta_y)\,.
+\eeq
+Therefore, for any given $y$, the limit of $\overline{y}_1$ for $x
+\rightarrow 0$ does not exist, as the above expression depends on the
+direction on the complex $x$-plane along which we approach zero. In terms
+of projecting dynamics on variables \refeq{eq:invLaser} (or applying the
+equivalent procedure of rotating points back to the \slice) this means
+that we need to take into account the direction along which we approach
+zero and use the `angle of descent' as the angle with which we rotate
+points back to the \slice, if such points have exactly $x=0$ (in CLE this
+does not happen). Since the subspace $x=0$ is not flow invariant we do
+not need to worry about dynamics that stay within the subspace. We need
+to worry about the equilibria that exist in this subspace though, here
+the equilibrium at the origin, as there is no way to transform them to
+the new variables. For KS $\EQV{2}$ and $\EQV{3}$ belong to such a
+subspace.
+
+\begin{description}
+\item[Ruslan's more optimistic view of the singularity] Of
+course, when $x = 0$, the angle $\theta_x$ is undefined.  But
+if you look dynamically at $x(t)$ as it crosses zero at $t =
+t_0$, then you realize that if $\theta_x(t < t_0) = \theta$
+then $\theta_x(t > t_0) = \theta + \pi$ and all you need to
+decide is how to define $\theta_x(t_0)$.  The most natural
+definition is based on the direction of $\dot{x}(t = t_0)$,
+i.e. $\theta_x(t_0) = \arg \dot{x}(t_0) = \theta + \pi$.
+That's the reason I have item 2 in my definition of $M/$\On{2}
+quotient space.  So, as you can see, $\theta_x(t)$ remains
+well defined at all times.
+
+Regarding \EQV{2} and E3 in KS, they live in $L/2$- and
+$L/3$-periodic subspaces, respectively.  So, to map them onto
+$M/$\On{2}, we'll use the 2nd and 3rd Fourier modes,
+respectively, as stated in items 3 and 4.
+
+\item[Evangelos]
+I agree about trajectories that cross zero, but not about
+\EQV{2} and \EQV{3}. As soon as you use 2nd and 3rd Fourier
+modes you effectively use different transformations, so it is
+not obvious to me how you can piece everything together in
+the same space. Fortunately we are not interested on dynamics
+in $L/2$- and $L/3$-periodic subspaces, as they are not
+invariant, but rather on how unstable manifolds of \EQV{2}
+and \EQV{3} organize the $L$-periodic space. As those
+unstable manifolds do not have vanishing first Fourier mode
+we can visualize them and forget the equilibria.
+
+\item[Ruslan]
+  Actually, it's somewhat the other way
+around for me: what worries you, does not worry me and vice
+versa.  The proposed hierarchy of transformations is
+completely consistent, since the higher-mode transformations
+only act on those {\statesp} points which are not influenced
+by the 1st mode transform.  By the way, the $L/k$-periodic
+subspaces \underline{are} invariant: e.g. if $a_1(0) = 0$ and
+$\dot{a}_1(0) = 0$ then $a_1(t>0) = 0$, so the solution is
+$L/2$-periodic (provided $a_2(0) \neq 0$).  And finally, we
+do have to keep track of the special symmetries of the
+unstable manifolds of the equilibria.  For example, once
+$\EQV{2}$ is placed within $M/$\On{2} using the 2-nd Fourier
+mode, its unstable manifold completely lives in the
+anti-symmetric subspace (i.e. $Re\,a_k = 0$). {\color{blue}
+The 1st mode transformation doesn't do anything to it, since
+for any point on the manifold $\theta_1 = \pi/2$ already.}
+So, the manifold we show in our SIADS Fig.~5.6 is already in
+$M/$\On{2}.  What worries me is that $\EQV{2}$ is represented
+here by two different points ($\EQV{2}$ and
+$\tau_{1/4}\EQV{2}$).  This is the result of the additional
+symmetry of $\EQV{2}$.  Whether or not these two points can
+be merged into one $\EQV{2}$ without loss of dynamical
+information about the KS flow, remains to be investigated.
+
+What I wrote above, highlighted in blue, is wrong.  $\SOn{2}$
+still acts in the antisymmetric subspace, since the points
+there can also have $\theta_1 = -\pi/2$.  So they are rotated
+by $\pi$.  Whether or not this will also rotate
+$\tau_{1/4}\EQV{2}$ into $\EQV{2}$ I'm not yet sure.
+
+\item[Evangelos]
+$\SOn{2}$ does not act in the antisymmetric subspace (in the
+sense that it does not leave it invariant as a set) but
+merely on the intersection of antisymmetric subspace and its
+$\tau_{1/4}$ translated copy. The group orbits of points on
+antisymmetric subspace produce a family of copies of it. One
+can identify a single representative by choosing for instance
+$\theta_1=\pi/2$, so I don't see any problem with points on
+the unstable manifolds of $\EQV{2}$. $L/k$-periodic subspaces
+\underline{are not} invariant: if $a_1(0)=0$ then in general
+$\dot{a}_1(0)\neq 0$, due to the nonlinear terms. Right?
+
+\item[Ruslan]
+  I didn't quite understand your
+comments about the translated copies of the antisymmetric
+subspace, but if you think it's not causing any problems, I'm
+happy.  Regarding the $L/k$-periodic subspaces, I guess I
+wasn't defining them correctly.  So, if $\dot{a}_1 \neq 0$
+then we can still map this point to $M/$\On{2} using the 1st
+mode.  I was speaking then about the parts of $L/k$-periodic
+subspaces which remain invariant under the KS flow.  They
+need to be mapped to $M/$\On{2} using higher FMs.
+
+\end{description}
+
+
+\subsection{2009-08-29 - Implementation of Ruslan's $a_1$-fixed slice}
+
+\noindent{\bf Evangelos}
+I thought its time to shut up and compute something, so I've
+implemented first part of (my interpretation of) Ruslan's
+prescription for KS that should take care of $\SOn{2}$. Namely,
+I have fixed the \slice\ following
+the rules of \refsect{sect:RLDslice}:
+\bea
+\Im \bar{a}_1  &=& 0
+\continue
+\mbox{If } r_1 &>& 0\,,\quad \mbox{\ESedit{rotate to the \slice\ by}}
+        -\arctan( \Im a_1/\Re a_1 )
+\continue
+\mbox{If } r_1 &=& 0\,,\quad \mbox{\ESedit{rotate to the \slice\ by}}
+        -\arctan( \Im \dot{a}_1/\Re \dot{a}_1 )
+\,.
+\label{ES-RLDslice}
+\eea
+
+
+\begin{figure}
+ (a)~\includegraphics[width=0.45\textwidth]{ksRotatedTW1um}\,
+ (b)~\includegraphics[width=0.45\textwidth]{ksRotatedE2um}
+\caption{\label{fig-2009-08-29TW1}
+ $(\Re \bar{a}_1,\,\Re \bar{a}_2,\Im \bar{a}_2)$ projections of KS
+ $\SOn{2}$-reduced dynamics by slice \refeq{ES-RLDslice}.
+ Several \rpo s are shown along with the
+ unstable manifolds of (a) \REQV{\pm}{1}, (b) \EQV{2}. $L=22$.
+}
+\end{figure}
+
+I've posted such a figure long ago in Jonathan's blog, but
+nobody got interested. I am also not happy with this figure
+but one might argue that there are implementation problems,
+and this is probably right, so I will have a second look.
+Then, if I am to follow Ruslan's next step in the
+prescription and set $\Im \bar{a}_2 =0$ in order to include
+$\EQV{2}$ in this figure, the equilibrium will not ``meet''
+it's unstable manifold, correct?
+
+\begin{description}
+\item[Ruslan]
+ I agree that the unstable manifold of $\EQV{2}$ reduced by
+ the 1st mode to $\pS/\SOn{2}$ will not meet $\EQV{2}$ reduced by
+ the 2nd mode. \par I have a question: do we expect that an
+ antisymmetric solution of KS will remain antisymmetric in
+ $\pS/\SOn{2}$?  If yes, then we are in trouble, which has
+ nothing to do with using the 1st mode: As I stated above,
+ the only thing $\SOn{2}$ can do to leave an antisymmetric
+ solution antisymmetric is rotate it by $\pi$.  However, in
+ order for the unstable manifold of $\EQV{2}$ (which is
+ antisymmetric) to return to back to $\EQV{2}$ we need the
+ rotations along the orbit to add up to $-\pi/2$ (to
+ compensate for the $\tau_{1/4}$ shift).  So, somewhere along
+ the way the unstable manifold has to leave the antisymmetric
+ subspace.  This doesn't seem natural, since antisymmetric
+ subspace is invariant under KS flow.
+
+\item[Evangelos]
+If we all agree that rotating points back to the slice $\Im\
+a_1=0$ is equivalent to transformations of Table 3 in Chapter
+8 in my thesis (that I copy here for convenience), up to
+treatment of points with $a_1=0$, then my answer would be as
+follows: applying reflections generated by $b_i\mapsto - b_i$
+to the $u_i$ of \reftab{tab:SO2n6} we have $u_3\mapsto -u_3$,
+$u_4\mapsto u_4$, $u_5\mapsto u_5$, $u_6\mapsto -u_6$ and so
+on, so that the reflection matrix $\mathbf{R}$ in new
+coordinates is diagonal, with entries $\pm 1$ and therefore
+satisfies $\mathbf{R}^2=1$, as it should. Points in the
+antisymmetric subspace $b_i=0$ for every $i$, are mapped to
+points in the new coordinates that only depend on the $c_i$'s
+and are therefore invariant under reflections, \ie,
+antisymmetric. I don't see why the unstable manifold in
+reduced space should leave the antisymmetric subspace, since
+we don't even know were the equilibria live in such a reduced
+space.
+
+    \PCedit{
+\item[Evangelos: 2010-04-05]
+We can compute invariants in \reftab{tab:SO2n6} at least to
+dimensions of order 100, I've computed some 256 invariants
+for KS. It's just pointless to use more than order 10 for
+L=22. BUT: They are not a Hilbert basis for the given action
+of \SOn{22}, as they do not span the space. Specifically they
+do not span the discrete cyclic subgroup isotropy subspaces
+$Fix(C_q)$, for any $q$, as the transformations are not
+defined for $a_1=b_1=0$. This should be an example for
+Cartan's moving frame method.
+    }
+
+
+\item[Ruslan]
+Well, we do know that the unstable manifold of $\EQV{2}$
+converges to $\tau_{1/4}\EQV{2}$.  And I also assume that we
+want $\EQV{2}$ and $\tau_{1/4}\EQV{2}$ to be represented by
+the same point in the reduced space.  So, in order to bring
+these two points together in the reduced space, we need to
+rotate $\tau_{1/4}\EQV{2}$ by $-\pi/2$.  This rotation needs
+to occur somewhere along an orbit (a closed loop in the
+reduced space) within the unstable manifold of $\EQV{2}$.
+But since the antisymmetric subspace is \underline{not}
+invariant wrt rotation by $-\pi/2$, the orbit must leave the
+antisymmetric subspace.  Another way to put this, is that, if
+we only look at KS solutions within the antisymmetric
+subspace, then $\EQV{2}$ and $\tau_{1/4}\EQV{2}$ are two
+\underline{distinct} equilibria, since the first one is
+unstable, while the second one is stable.  So, there is no
+way to map these two equilibria into the same point while
+staying within the antisymmetric subspace.
+
+I don't know how much we should care about this, but this
+tells me that, no matter how we construct the reduced space,
+we will not be able to retain the simple structure of the KS
+invariant subspaces within the reduced space.
+
+\item[Ruslan 2009-10-14]
+I still don't see how to reconcile this: On the one hand, it
+would appear natural that the antisymmetric subspace should
+be a part of $\pS/\SOn{2}$, but, on the other hand, the
+antisymmetric subspace contains two distinct images of
+$\EQV{2}$, while, in the reduced representation of the full
+KS flow, we would hope that there would be only one point for
+$\EQV{2}$ in $\pS/\SOn{2}$.  I can see only two possibilities
+here: either we introduce discontinuities of the flow in
+$\pS/\SOn{2}$ (like it is happening with my Fourier modes
+representation), or we collapse the dynamics to a subspace
+that completely ignores the phase information (e.g., like in
+the energy transfer representation).
+
+\item[Predrag 2009-10-15]
+Yes, please quotient the full $\pS/\On{2}$. It's good to do so,
+quotienting discrete symmetries helps a lot, see
+\\
+\wwwcb{/chapter/discrete.pdf}.
+
+\item[Ruslan 2009-10-14]
+Since I don't like collapsing things (I would like to have a
+representation where I can keep track of the phase shift
+$\theta$, which will allow me to reconstruct the original
+dynamics if I wish to do so), and since I don't know how to
+get rid of the discontinuities otherwise, I'm going to go
+crazy and embrace them.  So, my plan here is as follows:
+I'll try to construct a reduced representation (and hopefully
+a Poincar\'e map) for the dynamics in the vicinity of the
+unstable manifold of $\EQV{2}$. I think that if I manage to
+do it here, then there is hope that it can be done for the KS
+flow elsewhere as well.  I may continue using the Fourier
+modes, or I might try something else, like using the
+real-space representation (remember those $u$-$u_x$-$u_{xx}$
+plots?).
+
+\item[Predrag 2009-10-15]
+You keep track of discrete $\LieEl$ for a given full
+\statesp\ trajectory by noting every time you need to apply
+it, upon exit from the fundamental domain, see Lorentz flow
+$\pS/\Ztwo$ Van Gogh attractor in
+\wwwcb{/chapter/discrete.pdf}.
+
+
+\item[Evangelos to Ruslan]
+Sorry that it took so long to get back to you, I am
+just not sure I follow your arguments and I am afraid there
+is a danger that the discussion becomes cyclic. The
+antisymmetric subspace is indeed not invariant under $\pi/2$
+rotations. On the other hand the image of the unstable
+manifold of \EQV{2} under symmetry reduction by
+\refeq{ES-RLDslice} is unique. It belongs to a
+``antisymmetric set'' in the reduced space, in which space the
+action of reflections has been properly re-defined as in my
+previous post. Of course the latter set is not invariant
+under the action of reflection as defined in the original
+space. In other words, if we would like to see the reduced
+space as embedded in the original space we would have to say
+that the linear antisymmetric subspace has been deformed in a
+nonlinear manner through the transformations in
+\reftab{tab:SO2n6} and reflections no longer leave it
+invariant. Then I do not see any problems with identifying
+all copies of \EQV{2} with a single point. I just see greater
+problems with a discontinuous $\pS/\SOn{2}$.
+
+Regarding ignoring phase information. I think we both agree
+that it is safer to integrate only in the original space. So
+no matter how we construct the reduced space we do not need
+to through away any information.
+
+
+\item[Ruslan to Evangelos 2009-10-14]
+I think you nailed it: The transformations that identify all
+copies of \EQV{2} with a single point do not appear to
+respect the reflection symmetry.  If that's the case then how
+can you call it an 'antisymmetric subspace', if it's not
+invariant under reflections?  I thought that this is how we
+define the antisymmetric subspace in the first place (i.e.
+that it's invariant under reflections).  Is it not so?
+
+
+\item[Evangelos: 2009-10-16]
+I call it antisymmetric only because points in the original
+antisymmetric subspace are mapped to it. The correct term
+would be the fixed point subspace of reflections
+$\hat{\Refl}$ in the reduced space with coordinates $u_i$,
+where now reflections $\hat{\Refl}$ are not defined in the
+same way they are for the Fourier modes, but rather as in my
+post of 2009-08-29. Perhaps it might help to have a look at
+\reffig{fig:SO2inv}(a). There we can see that we still have
+reflection symmetry. For instance the traveling waves come in
+pairs. Points on the antisymmetric subspace are mapped on
+points with $u_3=0$ in this projection. Of course this is a
+projection on a modified set of invariants, but the idea is
+the same.
+
+
+\item[Ruslan: 2009-10-17]
+OK, now I see where we differ.  I was hoping, maybe naively,
+to find, for any $u(x) \in \pS$, a unique shift $\theta(u)$
+such that $\tau_{\theta(u)} u(x) = u(x - \tilde{L}\theta(u))
+\in \pS/\SOn{2}$.  I was also hoping that the shift could be
+chosen such that $\theta(u) = 0$ (or $\pi$) for an
+antisymmetric $u(x)$.  That's what I meant when I was saying
+that my hope was that the antisymmetric subspace would belong
+to $\pS/\SOn{2}$.
+
+The phase of the 1st Fourier mode is doing the job quite
+well, until we get to the point where $r_1 = \dot{r}_1 = 0$.
+There I though I could use the 2nd Fourier mode, but
+encountered the problem when looking at the unstable manifold
+of \EQV{2}.  This manifold is antisymmetric, but it links two
+points of \EQV{2} shifted by $\pi/2$ with respect to one
+another.  So, I cannot construct $\theta(u)$ such that
+$\theta(u) = 0$ (or $\pi$) in the antisymmetric subspace and
+which identifies all \EQV{2} with a single point in
+$\pS/\SOn{2}$.  And that's my dilemma...
+
+
+\end{description}
+
+
+\begin{table}[t]
+\caption
+{First $11$ fundamental invariants for the standard action
+  of $\SOn{2}$}
+\scriptsize
+\[
+\begin{array}{ll}
+  u_1=r_1=\sqrt{b_1^2+c_1^2}&  \\ u_3=\frac{b_2 \left(b_1^2-c_1^2\right)+2 b_1 c_1 c_2}{r_1^2}&u_4=\frac{-2
+b_1 b_2 c_1+\left(b_1^2-c_1^2\right) c_2}{r_1^2}\\ u_5=\frac{b_1 b_3 \left(b_1^2-3 c_1^2\right)-c_1 \left(-3
+b_1^2+c_1^2\right) c_3}{r_1^3}&u_6=\frac{-3 b_1^2 b_3 c_1+b_3 c_1^3+b_1^3 c_3-3 b_1 c_1^2 c_3}{r_1^3}\\ u_7=\frac{b_4
+\left(b_1^4-6 b_1^2 c_1^2+c_1^4\right)+4 b_1 c_1 \left(b_1^2-c_1^2\right) c_4}{r_1^4}&u_8=\frac{4 b_1
+b_4 c_1 \left(-b_1^2+c_1^2\right)+\left(b_1^4-6 b_1^2 c_1^2+c_1^4\right) c_4}{r_1^4}\\ u_9=\frac{b_1
+b_5 \left(b_1^4-10 b_1^2 c_1^2+5 c_1^4\right)+c_1 \left(5 b_1^4-10 b_1^2 c_1^2+c_1^4\right) c_5}{r_1^5}&u_{10}=\frac{-b_5
+c_1 \left(5 b_1^4-10 b_1^2 c_1^2+c_1^4\right)+b_1 \left(b_1^4-10 b_1^2 c_1^2+5 c_1^4\right) c_5}{r_1^5}\\ u_{11}=\frac{b_6
+\left(b_1^6-15 b_1^4 c_1^2+15 b_1^2 c_1^4-c_1^6\right)+2 b_1 c_1 \left(3 b_1^4-10 b_1^2 c_1^2+3 c_1^4\right) c_6}{r_1^6}&u_{12}=\frac{-2
+b_1 b_6 c_1 \left(3 b_1^4-10 b_1^2 c_1^2+3 c_1^4\right)+\left(b_1^6-15 b_1^4 c_1^2+15 b_1^2 c_1^4-c_1^6\right) c_6}{r_1^6}\\
+\end{array}
+\]
+\label{tab:SO2n6a}
+\end{table}
+
+\section{2009-10-20 Blogging on}
+
+\begin{description}
+\item[2009-10-20 Predrag] Moved Lyapunov stuff to
+    \refchap{s:LyapunovVec}
+\item[2020-07-26 Predrag] Moved most of the remaining part of the blog
+to dasbuch/blog/chapters/appendCont.tex, %version of 1feb2014
+except some of the figures.
+\end{description}
+
+
+\begin{description}
+\item[2009-10-28 Evangelos to renormalization experts]
+
+One of my border ideas: Repeat the process that led to the
+invariants of \reftab{tab:SO2n6a} in each irreducible subspace
+$i$, \ie, apply the moving frame method by setting $c_i=0$ for
+each $i$, producing invariants $u_k^i$ where $k$ labels
+coordinates. Then $\sum_k u_k$ will be a set of linearly
+independent invariants. We would be able to map all equilibria
+to unique points in this basis if it where not for the
+singularities at $b_i=c_i=0$ for every $i$. So we will need to
+follow a regularization procedure to remove it, but it might
+now be done in a more natural way than simply manipulating the
+denominator. It just reminds me of procedures in which each
+term in a sum diverges but the sum can be regularized. Fels and
+Olver\rf{FelsOlver99} use regularization techniques for group
+actions but it is too technical for me.
+
+The practical problem is that I do not get the simplifications
+that led to simple expressions in \reftab{tab:SO2n6a} when I try
+to apply the moving frames method with $i>1$, I have no idea
+why. So in thesis I add in appropriate places the invariants we
+know that we will always get, \ie\ the Fourier magnitude in
+each subspace.
+
+\item[2009-10-31 Evangelos] Added
+\begin{quote}
+    siminos/rpo\_ks/davidchack/orbits/00README.txt
+\end{quote}
+    with Ruslan's instructions on how to read his data
+    files with \rpo s and pre-\po s.
+
+\item[2009-10-31 Evangelos to Ruslan] I see $10^4$ \rpo s
+    of each kind. Are there any extra short orbits in the
+    rest $4 \times 10^4$ that you have?
+
+\renewcommand{\LieEl}{\ensuremath{g}}  % Predrag Lie group element
+\renewcommand{\gSpace}{\ensuremath{\theta}}   % group rotation parameters
+\renewcommand{\ssp}{x}
+
+\item[2009-12-12 Predrag]
+There is extensive literature on reduction of symplectic manifolds with
+symmetry.
+Marsden and Weinstein 1974 article\rf{MaWe74}
+might be a very early reference for such reduction.
+
+Kirwan\rf{Kirwan88} ``The topology of reduced phase spaces of
+the motion of vortices on a sphere.''
+
+ Rink\rf{Rink200331}
+``Symmetric invariant manifolds in
+  the  {Fermi-Pasta-Ulam} lattice''. He says ``
+The Fermi-Pasta-Ulam (FPU) lattice with periodic boundary
+conditions and n particles admits a large group of discrete
+symmetries. The fixed point sets of these symmetries naturally
+form invariant symplectic manifolds that are investigated in
+this short note. For each k dividing n we find k degree of
+freedom invariant manifolds. They represent short wavelength
+solutions composed of k Fourier modes and can be interpreted as
+embedded lattices with periodic boundary conditions and only k
+particles. Inside these invariant manifolds other invariant
+structures and exact solutions are found which represent for
+instance periodic and quasi-periodic solutions and standing and
+traveling waves. Similar invariant manifolds exist also in the
+Klein-Gordon (KG) lattice and in the thermodynamic and
+continuum limits.
+''
+
+\item[2010-01-05 Ruslan] I'm
+going to spend more time on the KS problem.
+
+Although, the prospects of making sense of its dynamics, even
+for L = 22, appear to me rather dim.
+
+Looking at the Lyapunov vectors, it is clear that there are 8
+nontrivial dimensions in the KS with L = 22.  Even if we
+manage to remove the symmetry and construct a good Poincar\'e
+map, it will be at least a 6 dimensional map.
+
+We barely know how to deal with the 2-dim map such as H\'enon,
+and, once the map becomes a bit thicker, yet still 2-dim,
+(e.g. Ikeda or Duffing), as far as I know, there is no good
+way to map it to the symbolic dynamics (the best thing I know
+in this direction is the construction of the generating
+partition by Christiansen and Politi for the standard map).
+So, what are we going to do with a 6-dim map?
+
+In any case, I'm still not convinced that slices of any form
+will help us, since they are constructed based on the local
+behavior at some point, while the shifts in RPOs have global
+nature.  So, while any particular slice might work for some
+RPOs, it is very likely to fail for others (as observed by
+Evangelos).
+
+I'm going to run with the 1st Fourier mode for now, and will
+try to construct an un-ambiguous Poincar\'e map with all the
+RPOs and PPOs represented uniquely by points in the reduced
+(hopefully 6-dim) space. But how we are going to visualize
+this space, let alone make sense of the dynamics, I have no
+clue.
+
+\end{description}
+
+\section{\Mslices\ applied to KS}
+\renewcommand{\LieElrep}{\ensuremath{g}} % Siminos Lie group element
+
+\begin{description}
+
+\item[2009-12-30 Evangelos, moving frame of $\REQV{-}{1}$.]
+In \reffig{ks22sliceCond} I show that the number of
+solutions of the $U(\gSpace) = 0$ slice fixing condition \beq
+U(\gSpace) = \ssp^T \LieElrep(\gSpace)^T \Lg \,
+\ssp_{\REQV{-}{1}} \ee{slicFixTW1} is greater than two (that
+we had in \cLe) due to large higher harmonics in
+$\ssp_{\REQV{-}{1}}$.
+
+For this rpo (and all I have looked at) we have few ($4$ or
+$6$) solutions corresponding to the fact that high $m$ modes
+fall off rapidly. It appears that there is failure to get $6$
+solutions when the magnitude of any of the first $6$ modes
+becomes small. I cannot find in dasbuch/continuous.tex
+Predrag's explanation of connection with Casimirs but I think
+what he is after is uniqueness of solutions. Still, as the
+traveling wave is not in any \fixedsp\ of a non-trivial
+subgroup it does not posses any vanishing Fourier mode.
+
+\item[2010-01-05 Predrag] I'll update ChaosBook.org soon -
+Casimirs are perhaps still in the dasbuch repository only. I
+did not think of their role in terms of multiple solutions to
+\refeq{slicFixTW1} --good observation-- but it is the same
+epicycles idea. As you can see in \refeq{Period1}, the
+\SOn{2}\ $C_2^{(m)} = m^2$ Casimir shows up in the
+denominator, so if the $m$th component of the slice-fixing
+point \slicep\ is larger than $1/m$ (at least for Ruslan's
+linear, non-coupled epicycles model), it causes the
+retrograde motion and the related troubles for the
+reconstruction equation. So each consecutive epicycle
+magnitude has to be sufficiently small (certainly less than
+$1/m$) so that no $m>1$ dominates the group velocity. As
+Ruslan has shown (and I have rechecked), if $|\ssp_2|$
+magnitude is larger than $|\ssp_2| \geq 1/2$ (\ie, $C_2^{(2)}\,
+\ssp_2^* \ssp_2 \geq 1)$, the group velocity of the slice
+point doubles, and a \rpo\ does not close in one period, but
+only after two periods.
+
+By such criterion $\ssp_{\REQV{-}{1}}$ of
+\reffig{ks22sliceCond} is probably not a good choice of
+slice-fixing point. You can engineer from it something better by
+decreasing manually magnitude of $m=2,3,\cdots$ components.
+
+\item[2010-01-05 Evangelos] There is something I do not
+understand: Where the method of slices fails depends on the
+choice of slice AND the trajectory. So for a \rpo\ we need to
+have a condition on magnitude of $m=2,3,\cdots$ components of
+each point on the \rpo\ rather than of the slice fixing
+point, right? Ruslan in his example uses the initial point as
+the slice fixing point so the two seem to coincide but in
+general it won't be the case.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{figure}
+ (a)\includegraphics[width=0.45\textwidth]{ks22sliceCond}
+ ~~(b)\includegraphics[width=0.45\textwidth]{ks22sliceCond2}
+\caption{\label{ks22sliceCond}
+Two snapshots of slice fixing condition \refeq{slicFixTW1} along \rpo\
+$\RPO{1}=\RPO{16.32}$ with $\period{p}=16.31,\shift_p=-2.863$.
+}
+\end{figure}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+What I find remarkable about \reffigs{ks22rpo16mf}{ks22rposMF} is that
+I see no $ \dot{\gSpace} \to \pm\infty$ jumps.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{figure}
+ (a)\includegraphics[width=0.45\textwidth]{ks22rpo16mf}
+ ~~(b)\includegraphics[width=0.45\textwidth]{ks22rpo16mfAll}
+\caption{\label{ks22rpo16mf}
+\Rpo\ $\RPO{1}=\RPO{16.32}$ with $\period{p}=16.31,\shift_p=-2.863$ on the \refeq{slicFixTW1} slice.
+(a) Tracking solution that corresponds to $\theta$ that maps
+$x_p(0)$ to a point of minimum distance from
+$\ssp_{TW_{-1}}$,
+(b) Accept all $\theta$ and plot all corresponding points.
+Color-coding represents internal numbering of solutions and
+changes along orbits when the number of solutions for
+$\theta$ changes. Note that we have $3$ closed-loop images of
+the rpo and $3$ images that appear to connect to a closed
+loop. It appears there might be a discrete symmetry here but
+I haven't been able to show this.
+}
+\end{figure}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\FIG{
+ (a)\includegraphics[width=0.45\textwidth]{ks22rposMF}
+ ~~(b)\includegraphics[width=0.45\textwidth]{ks22mf3rpo}
+ }{}{
+(a) Sample \rpo s and \po s that appear as closed loops after
+symmetry reduction through a moving frame that maps them on
+on the \refeq{slicFixTW1} slice.
+(b)  \Rpo\ $\RPO{1}=\RPO{16.32}$ with $\period{p}=16.31,\, \shift_p=-2.863$ and \po\ with
+$\period{p}=20.51$ appear as closed loops on the slice. \Rpo\ \RPO{2} with
+$\period{p}=32.80,\, \shift=10.958$ does not appear closed when mapped
+back to the slice (the branch that is at minimum distance
+from $\ssp_{TW_{-1}}$). We could still have a closed loop
+solution but tracking the branches is something I will leave
+for later.
+}{ks22rposMF}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\item[2010-01-04 Evangelos]
+The good news is that using a traveling wave to
+fix a slice was sufficient to reduce about 40\%\ of the short orbits I've
+tested to closed loops. For the rest we need a different slice.
+
+\item[2010-01-05 Predrag] Do not understand. Are you saying that the
+60\%\ of the short orbits you have tried do not close after one relative period,
+or that they encounter the $ \dot{\gSpace} \to \pm\infty$ jumps?
+
+\item[2010-01-05 Evangelos] Sorry, I was not clear on this. 60\%\ of the short orbits
+I have tried do not close after one relative period. Since I just use the finite
+transformations version (the ``moving frame method'') I do not need to worry about
+$ \dot{\gSpace} \to \pm\infty$ jumps. There is some stretching of some orbits even the
+ones that are closed loops after reduction, but it is not a great concern.
+
+I wonder whether method of slices (integration on the slice) and moving
+frame method (post-processing approach followed here) fail at the same
+points. In theory the latter should only fail at points left invariant
+under a continuous subgroup, for KS only at the origin. In practice where
+a moving frame fails also depends on the choice of slice as we have seen
+in \cLe.
+
+\item[2010-01-05 Predrag] If the dot product of slice tangent
+and orbit tangent are dominated by 3rd Fourier mode, \rpo\
+will close only after 3rd repeat, so run them for several
+periods.
+
+\Mslices\ and \mframes\ `fail' at the same point, where the
+denominator in the reconstruction equation goes through zero.
+They do not fail, they just have a $\pi$ jump there.
+
+Why do you guys keep saying that the \mslices\ fails for the
+\Fix{\Group}\ flow-invariant subspace? The subspace is within
+the slice. $\dot{\gSpace}=0$, the slice velocity equals the
+full space velocity, so there is no problem, methinks.
+
+\item[2011-11-04 Predrag] For freezing KS discussions, go to
+\refsect{sect:freeze}
+
+\item[2013-03-14 Evangelos] In
+\emph{Quasiperiodic oscillations and homoclinic orbits in the nonlinear nonlocal
+Schr\"odinger equation} [...]
+
+\item[2013-09-11  Predrag] The last common entry with the git repository
+\texttt{reducesymm/blog/dailyBlog.tex} is the above one
+
+{\bf [2013-03-14 Evangelos]} In
+\emph{Quasiperiodic oscillations and homoclinic orbits in the nonlinear nonlocal
+Schr\"odinger equation}, \arXiv{1303.3213}...
+
+then the two blogs diverge. Then a separate fork is Burak's\\
+\texttt{reducesymm/blog/dailyBlogBB.tex}. Sorry...
+
+
+
+\item[2013-07-07 Predrag] Sorry guys, Divakar says I have to do it:
+    svn is so 20th century now we must git it, so I'm taking a part of
+    siminos repository, converting this
+    \texttt{svn} repository to \texttt{git}, pruning most of it, and
+starting a new theory graduate student Burak (Nazmi B. Budanur
+<budanur3@gatech.edu>) on it. One can continue working on the svn
+repository using
+    \HREF{http://mojodna.net/2009/02/24/my-work-git-workflow.html}
+    {this web page}, but here my ambition is
+    \HREF{http://thomasrast.ch/git/git-svn-conversion.html} {only one
+    way},
+    \HREF{http://git-scm.com/book/en/Git-and-Other-Systems-Migrating-to-Git}
+    {to create} a git repository, and work from then onward only within
+    \texttt{git}. Did this in linux rather than windows, seems easier.
+
+The author map \texttt{users.txt} is a text file
+\begin{verbatim}
+ svn log svn://zero.physics.gatech.edu/siminos |
+ sed -ne 's/^r[^|]*|
+ \([^ ]*\) |.*$/\1 = \1 <\1@zero.physics.gatech.edu>/p' |
+ sort -u > users.txt
+\end{verbatim}
+that maps SVN usernames
+to real names and email addresses for the git
+history, with lines of the form:
+\begin{verbatim}
+svnuser = R. E. Alname <real@email.example.com>
+\end{verbatim}
+The result is pretty useless so it easier to create it by copying from svn@zero
+editing:
+\begin{verbatim}
+repos/siminos/hooks/emaildict
+\end{verbatim}
+The project \texttt{reducesymm} is branchless (consists only of a single line of history), so:
+\begin{verbatim}
+git svn clone -A users.txt --no-metadata \
+svn://zero.physics.gatech.edu/siminos reducesymm
+\end{verbatim}
+add your new Git server as a remote and push to it.
+Here is an example of adding github.com server as a remote:
+\begin{verbatim}
+git remote add origin \
+https://cvitanov:'det(1-zL)'@github.com/cvitanov/reducesymm.git
+\end{verbatim}
+To have all branches and tags go up, first update local rep (pull),
+then push to the server
+\begin{verbatim}
+git pull origin --all
+git push origin --all
+git push origin --tags
+\end{verbatim}
+All branches and tags are now on the Git server in a nice,
+clean import.
+
+\item[2013-09-02 Evangelos] I've tried git before and I do not see many benefits compared
+to svn. I like the decentralized model, but I prefer simpler version control systems than git,
+something like bazaar.
+
+Anyway, I am now a bit stuck... What credential should I use in order to access the repo?
+
+% I've tried to clone the repository locally:
+%
+% git clone https://github.com/cvitanov/reducesymm.git
+%
+% I get the following error message:\\
+% Cloning into reducesymm...\\
+% remote: Counting objects: 26886, done.\\
+% remote: Compressing objects: 100\% (8920/8920), done.\\
+% error: RPC failed; result=18, HTTP code = 200B | 38 KiB/s\\
+% fatal: The remote end hung up unexpectedly\\
+% fatal: early EOF\\
+% fatal: index-pack failed\\
+% warning: https unexpectedly said: '0000'\\
+%
+% I've tried this many times and always get the same error.
+% Is there a better way to clone a repository locally?
+
+\end{description}

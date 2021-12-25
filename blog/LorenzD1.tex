@@ -1,0 +1,516 @@
+% siminos/blog/LorenzD1.tex
+% $Author: predrag $ $Date: 2016-04-27 17:14:34 -0400 (Wed, 27 Apr 2016) $
+
+
+\section{Desymmetrization of Lorenz flow}
+\label{sect:LorenzD1}
+% Predrag 2016-04-11
+
+                        \toCB
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% extracted from ChaosBook
+% \example{Equivariance of the Lorenz flow.}{\label{exam:3dinvDscr}
+\index{Lorenz flow!symmetry}            \toCB
+%(continued from \refexam{exam:3dCoordDscr})~~
+The Lorenz equations\rf{lorenz}
+\beq
+    \left[
+        \begin{array}{c}
+\dot{x} \\ \dot{y} \\ \dot{z}
+    \end{array}
+    \right]
+    =
+    \left[
+        \begin{array}{c}
+\sigma (y-x) \\
+\rho x - y -xz \\
+xy -bz
+    \end{array}
+    \right]
+    =
+  \left(\barr{ccc}
+    -\sigma  & \sigma &  0 \\
+    \rho     &   -1   &  0 \\
+       0     &    0   & -b
+    \earr\right)
+    \left[
+        \begin{array}{c}
+{x} \\ {y} \\ {z}
+    \end{array}
+    \right]
++
+    \left[
+        \begin{array}{c}
+{0} \\ {-xz} \\ {xy}
+    \end{array}
+    \right]
+\ee{LorenzA}
+are equivariant under the action of the
+order-2 group cyclic group $\Ztwo =
+\{e,\Rot{1/2}\}$,
+where $\Rot{1/2}$ is
+$[x,y]$-plane, half-cycle rotation by $\pi$ about the $z$-axis,
+%
+%       } %end \example{Equivariance of the Lorenz flow
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% extracted from ChaosBook
+% \example{Desymmetrization of Lorenz flow:}{ \label{exam:LorenzD1}
+% Predrag                           04apr2008
+% Predrag                           19jan2008
+% moved to here from halcrow/blog/TEX/lorenz.tex
+% \index{Lorenz flow}
+%\PC{ChaosBook: start the discrete.tex example here, link to the intro example in
+%    the flow.tex chapter}
+%(continuation of  \refexam{exam:3dinvDscr})~~
+%
+\beq
+(x,y,z) \to \Rot{1/2}(x,y,z) = (-x,-y,z) \,.
+\ee{LorenzR}
+$(\Rot{1/2})^2=1$ condition decomposes the \statesp\ into two linearly
+irreducible subspaces $\pS = \pS^+ \oplus \pS^-$,
+% the $z$-axis $\pS^+$ and the $[x,y]$ plane $\pS^-$,
+with projection operators
+\(
+\PP^+ = \frac{1}{2}(1 + \Rot{1/2})\,,
+\)
+\(
+ \PP^- = \frac{1}{2}(1 - \Rot{1/2})
+ \,,
+\)
+onto the two subspaces given by
+%(see \refsect{s:ProjOper})
+ \beq
+ \PP^+ % = \frac{1}{2}(1 + \Rot{1/2})
+ =   \left(\barr{ccc}
+    0  &  0 & 0  \\
+    0  &  0 & 0 \\
+    0  &  0 & 1
+    \earr\right)
+     ,\quad
+ \PP^- % = \frac{1}{2}(1 - \Rot{1/2})
+  =   \left(\barr{ccc}
+    1  &  0 & 0  \\
+    0  &  1 & 0 \\
+    0  &  0 & 0
+    \earr\right)
+\,.
+ \label{projOp:sig}
+ \eeq
+%
+%\bea
+%    \left(
+%        \begin{array}{c}
+%0 \\ 0 \\ \dot{z}
+%    \end{array}
+%    \right)
+%&=&
+%  \left(\barr{ccc}
+%       0     &    0   &  0 \\
+%       0     &    0   &  0 \\
+%       0     &    0   & -b
+%    \earr\right)
+%    \left(
+%        \begin{array}{c}
+%{0} \\ {0} \\ {z}
+%    \end{array}
+%    \right)
+%+
+%    \left(
+%        \begin{array}{c}
+%{0} \\ {0} \\ \frac{1}{4}(x_+ + x_-)(y_+ + y_-)
+%    \end{array}
+%    \right)
+%\continue
+%    \left(
+%        \begin{array}{c}
+%\dot{x}_- \\ \dot{y}_- \\ 0
+%    \end{array}
+%    \right)
+%&=&
+%  \left(\barr{ccc}
+%    -\sigma  & \sigma &  0 \\
+%    \rho     &   -1   &  0 \\
+%       0     &    0   &  0
+%    \earr\right)
+%    \left(
+%        \begin{array}{c}
+%{x_-} \\ {y_-} \\ 0
+%    \end{array}
+%    \right)
+%+
+%    \left(
+%        \begin{array}{c}
+%{0} \\ {-z\,x_- } \\ 0
+%    \end{array}
+%    \right)
+%\label{Lorenz-+}
+%\eea
+%or
+%
+In the symmetry-reduced coordinates, the coupled ODEs \refeq{LorenzA}
+decompose into a 2\dmn\ antisymmetric irrep and a 1\dmn\ symmetric
+irrep.
+\bea
+    \left(
+        \begin{array}{c}
+\dot{x}_- \\ \dot{y}_-
+    \end{array}
+    \right)
+&=&
+  \left(\barr{cc}
+    -\sigma  & \sigma \\
+    \rho     &   -1
+    \earr\right)
+    \left(
+        \begin{array}{c}
+{x_-} \\ {y_-}
+    \end{array}
+    \right)
++
+    \left(
+        \begin{array}{c}
+{0} \\ {-z\,x_- }
+    \end{array}
+    \right)
+\continue
+\dot{z}_+ \quad &=& -b\, {z}_+ + \frac{1}{4}x_-y_-
+\,,
+\label{LorenzDesym}
+\eea
+where $z_+ = z$ and $z_- = 0$.
+As $(x,y)$ are odd under rotation by $\pi$, $({x}_+, {y}_+)=(0,0)$.
+This example is too trivial to be instructive, all I have done is add
+subscripts to the variables, but they are unchanged.
+Oh, well.
+
+We define the fundamental domain by the (arbitrary) condition $\hat{x}_-
+\geq 0$, and whenever the trajectory $\ssp(\zeit)$ exits the domain, we
+replace its functional dependence by the corresponding fundamental domain
+coordinates,
+\[(x_-, y_-) = \Rot{1/2}(\hat{x}_-, \hat{y}_-) = (-\hat{x}_-, -\hat{y}_-)
+\quad \mbox{if} \quad {x_-}< 0
+\,,
+\]
+and record that we have applied $\Rot{1/2}$ (that is the `reconstruction
+equation' in the case of a discrete symmetry). When we integrate
+\refeq{LorenzDesym}, the trajectory coordinates
+$(\hat{x}_-(\zeit), \hat{y}_-(\zeit))$
+are discontinuous whenever the trajectory crosses the fundamental domain
+border. That, however, we do not care about - the only thing we need are
+the \PoincSec\ points and the \Poincare\ return map in the fundamental
+domain.
+
+
+There are two kinds of compact (finite-time) orbits. \Po s
+$\ssp(\period{p})=\ssp(0)$ are either self dual under rotation \Rot{1/2}
+(a repeat of a \rpo), or appear in pairs related by \Rot{1/2}; in the
+fundamental domain there is only one copy
+$\sspRed(\period{p})=\sspRed(0)$. \Rpo s (or `\ppo s')
+$\sspRed(\period{p})=\Rot{1/2}\sspRed(0)$ are \po s in the fundamental
+domain.
+
+
+\subsection{\PoincSec s}
+
+\PoincSec\ hypersurface can be specified implicitly
+by a single condition, through a function $\PoincC(\ssp)$ that is zero
+whenever a point $\ssp$ is on the \PoincSec,
+  \beq
+\sspRed \in \PoincS \quad \mbox{iff}
+\quad \PoincC(\sspRed) = 0 \,.
+  \ee{PoincULor}
+In order that there is only one copy of the section in the fundamental
+domain, this condition has to be invariant,
+$\PoincC(\LieEl\sspRed) = \PoincC(\sspRed)$
+for $\LieEl \in \Group$, or, equivalently, the normal to it has to be
+equivariant
+\beq
+\pde_j \PoincC( \LieEl \sspRed) =  \LieEl \pde_j \PoincC(\sspRed)
+\quad \mbox{for} \quad \LieEl \in \Group
+\,.
+\ee{PoincSctEqvLor}
+
+In case at hand, a choice of \PoincSec\  is rather easy.
+By taking as a \PoincSec\ any  $\Rot{1/2}$-equivariant,
+non-self-inter\-sect\-ing surface that contains the $z$ axis, the
+\statesp\ is divided into a half-space fundamental domain
+$\tilde{\pS}=\pS/\Ztwo$ and its $180^o$ rotation $\Rot{1/2}\tilde{\pS}$.
+An example is afforded by the $\PoincS$ plane section of the Lorenz flow
+given in ChaosBook.
+% in \reffig{fig:LorenzSect}.
+Take the  fundamental domain $\tilde{\pS}$ to
+be the half-space between the viewer and $\PoincS$. Then the full Lorenz
+flow is captured by re-injecting back into $\tilde{\pS}$ any trajectory
+that exits it, by a rotation of $\pi$ around the $z$ axis.
+
+As any such $\Rot{1/2}$-invariant section does the job, a choice of a
+`fundamental domain' is here largely mater of taste. For purposes of
+visualization it is convenient to make the double-cover nature of the
+full \statesp\ by $\tilde{\pS}$ explicit, through any \statesp\
+redefinition that maps a pair of points related by symmetry into a single
+point.
+
+\subsection{Invariant subspace}
+
+As the flow is $\Ztwo$-invariant, so is its linearization $\dot{\ssp} =
+\Mvar \ssp$. Evaluated at $\EQV{0}$, $\Mvar$ commutes with  $\Rot{1/2}$,
+and
+%, as we have already seen in  \refexam{exam:LorenzStab},
+the $\EQV{0}$ {\stabmat} $\Mvar $ decomposes into $[x,y]$ and $z$ blocks.
+    \PC{create ChaosBook example in  refsect{s:StabRpo} from the last
+    sentence}
+
+The 1\dmn\ $\pS^+$ subspace contains the fixed-point subspace, with the
+$z$-axis points left \emph{point-wise invariant} under the group action
+\beq
+\Fix{\Ztwo} =
+   \{ \ssp \in \pS \mid \LieEl  \, \ssp = \ssp \mbox{ for } g \in \{e,\Rot{1/2}\} \}
+%\,.
+\ee{dscr:LorFPsubsp}
+(here $\ssp = (x,y,z)$ is a 3\dmn\ vector, not the coordinate $x$). A
+\Ztwo-fixed point $\ssp(t)$ in $\Fix{\Ztwo}$ moves with time, but
+% according to \refeq{flowInv}
+remains within it, $\ssp(t) \in \Fix{\Ztwo}$, for
+all times; the  subspace $\Fix{\Ztwo}$ is {\em flow invariant}.
+In the case at hand, for $(x,y,z)=(0,0,z)$ the Lorenz equation
+\refeq{LorenzDesym} is reduced to the exponential contraction to the
+$\EQV{0}$ \eqv,
+% \PC{pointer to turbulence chapter here}
+\beq
+\dot{z} = -b \, z
+\,.
+\ee{LorenzZaxis}
+For higher-dim\-ens\-ion\-al flows the flow-invariant subspaces
+can be high-dim\-ens\-ion\-al, with interesting dynamics of their own.
+Even in this simple case this subspace plays an important role as a
+topological obstruction: the orbits can neither enter it nor exit it, so
+the number of windings of a trajectory around it provides a natural,
+topological symbolic dynamics.
+
+The $\pS^-/\EQV{0}$ subspace is, however, {\em not} flow-invariant, as the
+nonlinear terms $\dot{z}=xy - bz$ in the Lorenz equation \refeq{LorenzA}
+send all initial conditions within $\pS^-=(x_-(0),y_-(0),0)$ into the full
+% , $z(t) \neq 0$
+\statesp\  $\pS^+\cup\pS^-$.
+
+\bigskip
+
+The exercises that follow are about the basic
+ideas of how one goes from finite groups to the continuous ones.
+The main idea comes from discrete groups, the discrete Fourier transform
+interpreted as the
+{\em projection operators for cyclic group \Zn{N}}. The cyclic group
+$C_N$ is generated by the powers of the rotation by $2\pi/N$, and in
+general, in the $N\to\infty$ limit one only needs to understand the
+algebra of $T_\ell$, generators of infinitesimal transformations,
+$D(\theta) = 1+i \sum_\ell \theta_\ell T_\ell$. They turn out to be
+derivatives.
+
+The $N\to\infty$ limit of \Zn{N} gets you to the continuous Fourier
+transform as a representation of $\Un{1}\simeq\SOn{2}$, but from then on
+this way of thinking about continuous symmetries gets to be increasingly
+awkward. So we need a fresh restart; that is afforded by matrix groups,
+and in particular the unitary group $\Un{n}=\Un{1}\otimes\SUn{n}$, which
+contains all other compact groups, finite or continuous, as subgroups.
+
+    Reading: Chen, Ping and Wang\rf{ChPiWa89}
+    {\em Group Representation Theory for Physicists},
+    \HREF{http://chaosbook.org/library/Chen5-2.pdf}
+    {Sect 5.2} {\em Definition of a Lie group, with examples}.
+
+    Reading:
+\HREF{http://ckw.phys.ncku.edu.tw/} {C. K. Wong} {\em Group Theory} notes,
+\HREF{http://ckw.phys.ncku.edu.tw/public/pub/Notes/Mathematics/GroupTheory/Tung/Powerpoint/6._1DContinuousGroups.ppt}
+{Chap 6 {\em 1D continuous groups}}, % (power point notes)
+Sects. 6.1-6.3 {Irreps of $\SOn{2}$}. In particular, note that while
+geometrically intuitive representation is the set of rotation $[2\!\times\!2]$
+matrices, they split into pairs of 1\dmn\ irreps.
+Also, not covered in the lectures, but worth a read: Sect. 6.6 completes
+    discussion of Fourier analysis as continuum limit of cyclic groups
+    $C_n$, compares $\SOn{2}$, % $\On{2}$,
+    discrete translations group, and continuous translations group.
+
+
+Going through these exercises might be helpful:
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%\Problems{\On{2} reduction}{2016-04-12}
+    \begin{exercises}
+    \begin{enumerate}
+
+\item
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\exercise{Irreps of \SOn{2}.}{  \label{exer:SO2irrep}
+Matrix
+\beq
+\Lg = \MatrixII{0}{-i}{i}{0}
+\ee{SO2gen}
+is the generator of rotations in a plane.
+\begin{enumerate}
+  \item Use the method of projection operators to show that for rotations
+in the $k$th Fourier mode plane, the
+irreducible $1D$ subspaces orthonormal basis vectors are
+\[
+\jEigvec[\pm k] = \frac{1}{\sqrt{2}}
+            \left(\pm {\bf e}_1^{(k)} -i\,{\bf e}_2^{(k)}\right)
+\,.
+\]
+How does $\Lg$ act on $\jEigvec[\pm k]$?
+  \item
+What is the action of the $[2\!\times\!2]$ rotation matrix
+\[
+ D^{(k)}(\theta)= \begin{pmatrix}
+                \cos k\theta & -\sin k\theta\\
+                \sin k\theta   & \cos k\theta
+                  \end{pmatrix}
+\,,\qquad k =1,2,\cdots
+\]
+on the $(\pm k)$th subspace \jEigvec[\pm k]?
+  \item
+What are the irreducible representations characters of \SOn{2}?
+\end{enumerate}
+} %end \label{exer:SO2irrep}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\exercise{Reduction of a product of two \SOn{2} irreps.}{ \label{exer:SO2Clebsch}
+%    \item[Vvedensky exer. PS10.7]
+%% http://www.cmth.ph.ic.ac.uk/people/d.vvedensky/groups/PS10.pdf
+Determine the Clebsch-Gordan series for \SOn{2}. Hint: Abelian
+group has 1\dmn\ characters. Or, you are just multiplying terms in
+Fourier series.
+      } %end \exercise{.}{ \label{exer:XXX}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\exercise{Irreps of \On{2}.}{  \label{exer:O2irrep}
+\On{2} is a group, but not a Lie group, as in addition to continuous
+transformations generated by \refeq{SO2gen} it has, as a group element, a
+parity operation
+\[
+\sigma = \MatrixII{1}{0}{0}{-1}
+\]
+which cannot be reached by continuous transformations.
+\begin{enumerate}
+  \item Is this group Abelian, \ie, does  $\Lg$ commute with $R(k\theta)$?
+Hint: evaluate first the
+ $[\Lg,\sigma]$ commutator and/or show that
+ \(
+ \sigma D^{(k)}(\theta) \sigma^{-1} = D^{(k)}(-\theta) \,.
+ \)
+  \item
+What are the equivalence classes of this group?
+  \item
+What are irreps of \On{2}? What are their dimensions?
+
+Hint: \On{2} is the $n\to\infty$ limit of $D_n$, worked out in
+\refexer{exer:irrepDn}
+{\em Irreducible representations of dihedral group $\Dn{n}$}.
+Parity $\sigma$ maps an \SOn{2} eigenvector into another eigenvector,
+rendering eigenvalues of any $\On{2}$ commuting operator degenerate.
+Or, if you really want to do it right, apply Schur's first lemma to
+improper rotations
+\[
+ R^{'}(\theta)= \begin{pmatrix}
+                \cos k\theta & -\sin k\theta\\
+                \sin k\theta &  \cos k\theta
+                  \end{pmatrix}
+                \sigma
+              = \begin{pmatrix}
+                \cos k\theta &  \sin k\theta\\
+                \sin k\theta & -\cos k\theta
+                  \end{pmatrix}
+\]
+to prove irreducibility for $k\neq 0$.
+  \item
+What are irreducible characters of \On{2}?
+  \item
+Sketch a fundamental domain for \On{2}.
+\end{enumerate}
+} %end \label{exer:SO2irrep}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\exercise{Reduction of a product of two \On{2} irreps.}{ \label{exer:O2Clebsch}
+%    \item[Vvedensky exer. PS10.7]
+%% http://www.cmth.ph.ic.ac.uk/people/d.vvedensky/groups/PS10.pdf
+Determine the Clebsch-Gordan series for \On{2}, \ie,
+reduce the Kronecker product
+\(
+D^{(k)} \bigotimes D^{(\ell)}
+\,.
+\)
+      } %end \exercise{.}{ \label{exer:XXX}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\exercise{A fluttering flame front.}{  \label{exer:O2KS}
+\begin{enumerate}
+  \item
+Consider a linear partial differential equation for a real-valued field
+$u=u(x,t)$ defined on a periodic domain $u(x,t) = u(x+L,t)$:
+\beq
+  u_t + u_{xx} + \nu u_{xxxx}=0
+    \,,\qquad   x \in [0,L]
+    \,.
+\ee{ksLin}
+In this equation $t \geq 0$ is the time and
+$x$ is the spatial coordinate.
+The subscripts $x$ and $t$ denote partial derivatives with respect to
+$x$ and $t$:
+$u_t = \partial u/d\partial $, $u_{xxxx}$ stands for the 4th spatial
+derivative of
+$u=u(x,t)$ at position $x$ and time $t$.
+Consider the form of equations under coordinate shifts $x \to  x+\ell$
+and reflection $x \to -x$. What is the symmetry group of \refeq{ksLin}?
+  \item
+Expand $u(x,t)$ in terms of its \SOn{2} irreducible components
+(hint: Fourier expansion) and rewrite \refeq{ksLin} as
+a set of linear ODEs for the expansion coefficients.
+What are the eigenvalues of the time evolution operator? What is
+their degeneracy?
+  \item
+Expand $u(x,t)$ in terms of its \On{2} irreducible components
+(hint: Fourier expansion) and rewrite \refeq{ksLin} as
+a set of linear ODEs.
+What are the eigenvalues of the time evolution operator? What is
+their degeneracy?
+  \item
+Interpret $u=u(x,t)$ as a `flame front velocity' and add a quadratic
+nonlinearity to \refeq{ksLin},
+\beq
+  u_t + {\textstyle\frac{1}{2}}(u^2)_x + u_{xx} + \nu u_{xxxx}=0
+    \,,\qquad   x \in [0,L]
+    \,.
+\ee{ks}
+This nonlinear equation is known as the \KSe, a baby cousin of \NS.
+What is the symmetry group of \refeq{ks}?
+  \item
+Expand $u(x,t)$ in terms of its \On{2} irreducible components
+(see \refexer{exer:O2irrep}) and rewrite \refeq{ks} as
+an infinite tower of coupled nonlinear ODEs.
+  \item What are the degeneracies of the spectrum
+of the eigenvalues of the time evolution operator?
+\end{enumerate}
+
+} %end {.}{  \label{exer:XXX}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\exercise{\On{2} fundamental domain.}{ \label{exer:O2fund}
+You have $\mathrm{C}_{2}$ discrete symmetry generated by flip $\sigma$,
+which tiles the space by two tiles.
+\begin{itemize}
+  \item Is there a subspace invariant under this $\mathrm{C}_{2}$? What
+form does the tower of ODEs take in this subspace?
+  \item How would you restrict the flow (the integration of the tower of
+coupled ODEs) to a fundamental domain?
+\end{itemize}
+      } %end \exercise{.}{ \label{exer:XXX}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%\ProblemsEnd
+\end{enumerate}
+    \end{exercises}

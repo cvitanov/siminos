@@ -1,0 +1,1419 @@
+\svnkwsave{$RepoFile: siminos/spatiotemp/chapter/blogAKS.tex $}
+\svnidlong {$HeadURL: svn://zero.physics.gatech.edu/siminos/spatiotemp/chapter/blogAKS.tex $}
+{$LastChangedDate: 2021-06-12 01:01:43 -0400 (Sat, 12 Jun 2021) $}
+{$LastChangedRevision: 7184 $} {$LastChangedBy: predrag $}
+\svnid{$Id: blogAKS.tex 7184 2019-12-12 06:24:59Z predrag $}
+
+\chapter{Adrien's blog}
+\label{chap:blogAKS}
+% Predrag                                           12 January 2016
+
+\bigskip
+
+\hfill   {\large Adrien K. Saremi <adriensaremi@gmail.com> work blog}
+
+   % *********************************************************************
+\hfill   {\color{red} The latest entry at the bottom for this blog}
+
+\bigskip
+
+
+%\title{May 12th Report} %\author{Adrien Saremi}
+
+%\section*{\huge{Blog}}
+\section{Introduction}
+\label{sect:introAKS}
+
+Following Gutkin and Osipov\rf{GutOsi15}
+{\em Classical foundations of many-particle quantum chaos},
+we write Hamilton's equations for a set of $N$ particles with generalized
+ coordinates $\{ q_n,p_n\}$ described in the section
+ \textit{3.1~Dynamics}.
+Let
+\[\mathcal{Z}_t = \left \{
+		\begin{array}{c}
+		q_t\\
+		p_t\\
+		\end{array}
+		\right \}
+		= \left \{
+		\begin{array}{c}
+		q_{1,t}\\
+		p_{1,t}\\
+		...\\
+		p_{N,t}\\
+		q_{N,t}\\
+		\end{array}
+		\right \}
+\,.
+\]
+The equations of motion are represented in the matrix form:
+\[ \mathcal{Z}_{t+1} = \mathcal{B}_N \mathcal{Z}_t \]
+with
+\bea
+\mathcal{B}_N &=& \left (
+		\begin{array}{cccccc}
+		A & B & 0 & \dots & 0 & B \\
+		B & A & B & \dots & 0 & 0 \\
+		0 & B & A  & \dots & 0 & 0 \\
+		\vdots  & \vdots & \vdots & \ddots & \vdots & \vdots \\
+		0 & 0 & 0 & \dots & A & B \\
+		B & 0 & 0 & \dots & B & A \\
+		\end{array}
+		\right )
+\continue
+A &=&  \frac{1}{c} \left (
+		\begin{array}{cc}
+		a&1 \\
+		ab - c^2&b \\
+		\end{array}
+		\right )
+\,,\qquad
+B = -\,\frac{1}{c}  \left (
+\begin{array}{cc}
+d & 0 \\
+db & 0 \\
+\end{array}
+\right )
+\eea
+
+\section{Arnol'd cat map}
+\label{sect:catMapAKS}
+
+To start our project, Boris advised us to start with just one particle $N=1$
+and pick the values $a=1$, $b=2$ and $c=-1$
+(Arnol'd cat map) such that
+\[ \mathcal{B}_N = \mathcal{B}_1 = A = \left (
+\begin{array}{cc}
+1 & 1 \\
+1 & 2 \\
+\end{array}
+\right )
+\,,\qquad
+\det A= 1
+\,.
+\]
+This system can be written as:
+\beq
+\left (
+\begin{array}{c}
+q_{t+1} \\
+p_{t+1} \\
+\end{array}
+\right ) = A \left (
+\begin{array}{c}
+q_t \\
+p_t \\
+\end{array}
+\right ) \mod\: 1
+\ee{ASCatMap}
+The goal is now to find prime periodic orbits $p$ of period $\period{p}$  and
+initial points $\left(q_{p,1},p_{p,1}\right)$ such that:
+\[ \left (
+\begin{array}{c}
+q_{p,\period{p}} \\
+p_{p,\period{p}} \\
+\end{array}
+\right ) =
+\left (
+\begin{array}{c}
+q_{p,1} \\
+p_{p,1} \\
+\end{array}
+\right ) \mod\: 1
+\]
+
+\subsection{First approach}
+\label{sect:cat1AKS}
+
+Consider
+\[ \left (
+\begin{array}{c}
+q_\cl{} \\
+p_\cl{} \\
+\end{array}
+\right ) = A^\cl{} \left (
+\begin{array}{c}
+q_0 \\
+p_0 \\
+\end{array}
+\right ) \mod\: 1 \]
+Now demand that $(q_0,p_0)$ is periodic point in a prime periodic orbit
+$p$ on ${\mbox{\bf T}}^{2}$ (two--dimensional torus), \ie, a \rpo\ on
+$\integers^2$, periodic up to a shift by integers $(m_q,m_p)$:
+\[
+\left (
+\begin{array}{c}
+q_0 \\
+p_0 \\
+\end{array}
+\right ) = A^\cl{}
+\left (
+\begin{array}{c}
+q_0 \\
+p_0 \\
+\end{array}
+\right ) + \left (
+\begin{array}{c}
+m_q \\
+m_p \\
+\end{array}
+\right )
+\]
+Therefore:
+\[
+\left (
+\begin{array}{c}
+q_0 \\
+p_0 \\
+\end{array}
+\right ) =
+(\mathds{1} - A^\cl{})^{-1}
+\left (
+\begin{array}{c}
+m_q \\
+m_p \\
+\end{array}
+\right )
+\]
+Boris suggested that we take two random points $(M_q,M_p)$ apply the
+inverse of $\mathds{1} - A^\cl{}$, and remove the integer part (modulo 1) to
+find $(q_0,p_0)$.
+Unfortunately it is hard to find the number $\cl{}$... The number of
+periodic orbits (AKA the number of sets of ($q_0$,$p_0$) would be then
+given by:
+\[
+|\det(\mathds{1} - A^\cl{})| = |(1-\lambda^\cl{})(1-\frac{1}{\lambda^\cl{}})|
+\]
+where $\lambda$ is the largest eigenvalue of $A$:
+$\lambda = \frac{3 + \sqrt{5}}{2} = 2.6180\cdots$.
+
+We also tried two random initial points $q_0 = 0.5$ and $p_0 = 0.4$, and
+applied the $A$ matrix several times in hope that the iteration would
+return to the initial
+points, but this was unsuccessful (as expected)
+
+\subsection{2nd approach}
+\label{sect:cat2AKS}
+
+Here we eliminate $\{p_t\}$ in favor of a 2-step recurrence equation
+for $\{q_t\}$ only.
+Boris gave us a different set of equations of motion, but I believe that
+we can obtain equations only on $\{q_t\}$ the following way:
+\[
+p_t = \frac{q_t - q_{t-1}}{\Delta t} = q_t - q_{t-1}
+\]
+Combined with:
+\[
+q_{t+1} = q_t + p_t
+\]
+We obtain:
+\[
+q_3 - 3q_2 + q_1 = m_2
+\]
+\[
+q_4 - 3q_3 + q_2 = m_3
+\]
+\[\vdots\]
+\[
+q_{\cl{}+1} -3q_\cl{} + q_{\cl{}-1} = m_\cl{}
+\]
+\beq
+q_{\cl{}+2} -3q_{\cl{}+1} + q_\cl{} = m_{\cl{}+1}
+\ee{ASCatMap2}
+Given that we are looking for periodic orbits, and that
+$q_{\cl{}+1} = q_1$ and $q_{\cl{}+2} = q_2$,
+the last equation reduces to:
+\[
+q_2 - 3q_1 + q_\cl{} = m_1
+\]
+This set of equations reduces to the following matrix form:
+\[
+\mathcal{D}Q  =  m
+\]
+With
+$Q = \left (
+\begin{array}{c}
+q_1\\
+q_2\\
+\vdots \\
+q_\cl{}
+\end{array}
+\right ) \,,$
+$m =  \left (
+\begin{array}{c}
+m_1\\
+m_2\\
+\vdots \\
+m_\cl{}
+\end{array}
+\right ) \,,$ and
+$
+\mathcal{D} =  \left (
+\begin{array}{ccccccc}
+-3 & 1 & 0 & 0 & 0 & \dots & 1 \\
+1 & -3 & 1 & 0 & 0 & \dots & 0 \\
+\vdots & & & & & & \\
+1 & 0 & 0 & 0 & \dots & 1 & -3 \\
+\end{array}
+\right )
+$
+
+Boris suggested to pick a random set of integers
+$ \left (
+\begin{array}{c}
+M_1,
+M_2,
+\cdots ,
+M_{\cl{}-1}
+\end{array}
+\right )^T \,$
+apply the $\mathcal{B}$ matrix, and take the modulo.
+
+BUT AGAIN: how are we supposed to get the size of the matrix?!?!
+
+\subsection{Computing periodic orbits}
+
+\begin{description}
+
+
+    \AKSpost{2016-06-01}{
+Since our web meeting of Friday, May 27th, Boris suggested to run
+simulations on Matlab as follows:
+
+\begin{enumerate}
+  \item
+use the 2nd approach, \refsect{sect:cat2AKS}, and start with random $q_1$ and $q_2$
+  \item
+compute $q_3$ and $m_1$ using \refeq{ASCatMap2}
+  \item
+$q_3$ is the decimal part of the equation, while $m_1$ is the integer part
+  \item
+repeat for a large number of iterations
+  \item
+if we come back on our feet, AKA
+  \PCedit{
+  $q_{n+1} = q_1$ and $q_{n+2} = q_2$,
+  }
+  we have a \po\ of period $n$
+\end{enumerate}
+
+I did those simulations, and obtain, as Li Han,
+values of $m_j \in \{-1, 0,  1,2\}$.
+What I also found was that, depending on the few starting point
+of form
+    \PCedit{ %
+$\{q_1, q_2\} = \{\frac{P_1}{10},\frac{P_2}{10}\}$ that I tried,
+the period $n$ is either $1, 6, 7, 10, 30$ or does not converge
+to a \po, computing in Matlab, double precision.
+    }
+
+% I will describe those points in the meeting of Thursday June 2nd.
+    }
+
+    \PCpost{2016-06-17}{
+You are sure the periods were `` $1, 6, 7, 10, 30$'', or is there
+a typo in this list?
+    \PC{}{the correct list is \refeq{AKStenths}}
+    }
+\end{description}
+
+
+\begin{description}
+
+
+ \AKSpost{2016-06-09}{Explaining the results:
+
+    This program allows us to start with many different sets of points $q_1, q_2$. For example, the program will first run the set of points $\{q_1,q_2\} = \{0.0, 0.0\}$, do the computations of $N = 100$ points, and "pray" to find periodicity. What I observed so far was that the largest periodicity for a given starting set would be $n = 30$, otherwise, the orbit would not be periodic.\\
+
+    The next part of the program is to do the same computations for a different starting set, following this method:
+    \[
+    q_1= q_1 + \Delta_1   \quad  q_2 = q_2 + \Delta_2
+    \]
+   such that the starting points remain in the unit interval $[0,1]$.
+
+    For $\Delta_1 = \Delta_2 = 0.1$, we obtain orbits for 100 starting sets:
+    \[
+    \{q_1,q_2\} \in
+    \big\{
+    \{0.0,0.0\}, \{0.0,0.1\} \dots \{0.0,0.9\}, \{1.0,0.0\}, \{1.0,0.1\} \dots \{0.9,0.9\}
+    \big\}
+    \]
+
+These starting sets are rational numbers $P/Q$, $1\leq P < Q$ of form
+$P/10$. I have observed that for several different starting sets, the
+frequency of repetition of symbols $\{-1, 0, 1,2 \}$ has some
+similarities. For example:
+
+    \begin{itemize}
+    \item
+    For $\{q_1, q_2\} = \{0.2, 0.0\}$ the probabilities I obtain are:
+    \[
+    p_{-1} = 0.204, p_{0} = 0.398, p_{1} = 0.194, p_{2} = 0.204
+    \]
+    \item
+    For $\{q_1, q_2\} = \{0.3, 0.6\}$ we get:
+    \[
+    p_{-1} = 0.204, p_{0} = 327, p_{1} = 0.265, p_{2} = 0.204
+    \]
+    \item
+    And for $\{q_1, q_2\} = \{0.8, 0.3\}$ we get:
+    \[
+    p_{-1} = 0.204, p_{0} = 0.337, p_{1} = 0.255, p_{2} = 0.204
+    \]
+
+    \end{itemize}
+
+\vskip 0.1in
+
+     \underline{Observations:}
+
+    \begin{enumerate}
+    \item
+    For those sets, the outer symbols repeat with the same frequency, the inner ones change. Something to look into...
+    \item
+    There are many frequencies that keep reappearing over for
+    different starting sets. Some even have the same $p_{-1}, p_{0},
+    p_{1}, p_{2}$ but different $m_j$ sequences...
+    \item
+    I still happen to find that some orbits, even though all starting sets are rationals, are not periodic. Pretty sure I still have to work on precision and removing error, because I should obtain periodic orbits, or should I??
+
+    \end{enumerate}
+}
+
+\vskip 0.3in
+
+
+
+
+    \PCpost{2016-06-12}{
+Don't you think that if you get more statistics (you put no error brackets on your numbers)
+$p_{2} = 0.204$ will become $p_{2} = 1/5$, for example?
+    }
+
+
+\vskip 0.3in
+
+
+
+     \BGpost{2016-06-13}{ If your starting points $q_1$, $q_2$  are
+     rational,  the resulting   orbit is always periodic by the following
+     reason. Assume the  initial momentum and coordinate are rational
+     numbers with some  common denominator $N$. Since cat map is composed
+     of integers, after $n$ steps momentum and coordinate have  the form
+     $q_n=a_n/N$, $p_n=b_n/N$ i.e., have the same denominator $N$. So
+     you travel on the lattice of the size $N\times N$ and sooner or
+     later must  close the loop. The reason why sometimes you do not find
+     periodic orbits  is due to  round-off errors. Another
+     point  - the frequency of  a symbol appearances  in   periodic
+     orbits  (generated by picking ``random'' rational initial
+     conditions) might be quit  different from    one for a generic
+     non-periodic orbit.
+     }
+
+
+   \AKSpost{2016-06-15}
+   {Explaining results, follow up...:
+
+   If I run the program for $N = 1000$, I find the following
+   probabilities:
+
+    \begin{itemize}
+
+    \item
+    For $\{q_1, q_2\} = \{0.2, 0.0\}$:
+    \[
+    p_{-1} = \frac{1}{5}, p_{0} = \frac{2}{5}, p_{1} = \frac{1}{5}, p_{2} = \frac{1}{5}
+    \]
+    \item
+    For $\{q_1, q_2\} = \{0.3, 0.6\}$:
+    \[
+    p_{-1} = \frac{1}{5}, p_{0} = \frac{1}{3}, p_{1} = \frac{4}{15}, p_{2} = \frac{1}{5}
+    \]
+    \item
+    For $\{q_1, q_2\} = \{0.8, 0.3\}$:
+    \[
+    p_{-1} =\frac{1}{5}, p_{0} = \frac{1}{3}, p_{1} = \frac{4}{15}, p_{2} = \frac{1}{5}
+    \]
+
+   \end{itemize}
+
+   In some rational starting sets, there were also cases where I could
+   not ``come back" to the starting set  $\{q_1, q_2\}$. For those
+   starting sets, the program now looks for periodicity in the $m_j$ sequence.
+   And for all starting sets that I described above, even with
+   $\Delta_1 = \Delta_2 = 0.01$, all $m_j$ vectors exhibit a periodic
+   behavior. The most frequent and highest periodicity I found was $n =
+   30$ for all those starting sets. The periodicities I found were
+\beq
+   1, 2, 3, 6, 10, 30
+   \,.
+\ee{AKStenths}
+
+   The second important observation was that for irrational starting points, such
+   as $\{q_1, q_2\} = \{\frac{\pi}{6},\frac{\pi}{8}\}$, even if $N =
+   20\,000$, the program found no periodicity, neither in the
+   $q_j$'s, nor the $m_j$ sequences. That confirms what Boris
+   mentioned in his previous remark.
+
+   Should I try with other numbers? More rational? More irrational?
+
+  I guess that the next step is what Boris told Rana in their meeting
+  today: looking for frequencies of sequences of 2 symbols, then
+  sequences of 3 symbols,
+  ...
+  }
+
+    \PCpost{2016-06-17}{:
+I assume that you stop your program once a \po\ is found, not always
+go all the way to $N = 1000$?
+\begin{description}
+  \item[[ ]]
+Explain your result for $\{q_1, q_2\} = \{1/5,0\}$
+  \item[[ ]]
+Explain why your results above, for $\{q_1, q_2\} = \{3/10,3/5\}$ and
+$\{q_1, q_2\} = \{4/5,3/10\}$, are wrong for these initial points (but
+not for their irrational approximations).
+  \item[[ ]]
+Derive the
+$\{p_{-1}, p_{0}, p_{1}, p_{2}\} = \{{1}/{5},{1}/{3},{4}/{15},{1}/{5}\}$.
+Hint: derive the $\{m_j\}$ partition of the unit square that Li Han had
+shown you.
+\end{description}
+    }
+
+    \PCpost{2016-06-17}{:
+Determine the possible periodic point denominators, periods for
+\begin{description}
+  \item[[ ]]
+$\{q_1, q_2\} = \{\frac{P_1}{10},\frac{P_2}{10}\}$
+  \item[[ ]]
+$\{q_1, q_2\} = \{\frac{P_1}{100},\frac{P_2}{100}\}$
+  \item[[ ]]
+$\{q_1, q_2\} = \{\frac{P_1}{8},\frac{P_2}{8}\}$
+  \item[[ ]]
+$\{q_1, q_2\} = \{\frac{P_1}{17},\frac{P_2}{17}\}$
+\end{description}
+
+How many decimal digits of accuracy you need to be sure
+that all periodic orbits close with accuracy of $10^{-4}$
+for
+\begin{description}
+  \item[[ ]]
+$\{q_1, q_2\} = \{\frac{P_1}{10},\frac{P_2}{10}\}$ ?
+  \item[[ ]]
+$\{q_1, q_2\} = \{\frac{P_1}{100},\frac{P_2}{100}\}$ ?
+  \item[[ ]]
+$\{q_1, q_2\} = \{\frac{P_1}{8},\frac{P_2}{8}\}$ ?
+  \item[[ ]]
+$\{q_1, q_2\} = \{\frac{P_1}{7},\frac{P_2}{7}\}$ ?
+  \item[[ ]]
+If the program is computing with double precision accuracy,
+what is the longest period that can be determined by mindless computation?
+\end{description}
+Hint: you know Floquet multipliers for all cat map orbits.
+    }
+
+    \PCpost{2016-06-17}{:
+Don't let Matlab prevent you from thinking. You know that periodic points
+are rationals of form $\{q_j, q_{j+1}\} = \{{P_j}/{Q},{P_{j+1}}/{Q}\}$,
+so at every iterate of your trajectory you can correct the 1-step error
+by replacing your decimal number by the nearest correct rational. This
+way you can compute any \po, of any period, as this eliminates the
+exponential accumulation of errors. Write a program that beats Li Han's
+zillion digits accuracy :)
+
+\begin{description}
+  \item[[ ]]
+If the computation is done by thinking (+ a computer program), estimate
+the longest period that can be determined by thoughtful computation.
+\end{description}
+
+Of course, all this is a magic of rationals and number theory - the
+moment the maps go nonlinear, none of this trickery works. Still, it
+might be useful in tracking the symbolic dynamics for nonlinear maps as
+well, in the way in which the ChaosBook dike map captures the correct
+symbolic dynamics of any nonlinear unimodal map. For example, slightly
+deformed cat map still has the same symbolic dynamics as the (piecewise
+linear) Arnol'd cat map\rf{Creagh94}.
+        }
+
+   \AKSpost{2016-06-21: Boris' lecture of today - }{
+
+We're explaining how the symbolic dynamics, in other words the array of $m$, relate to the trajectory in the phase space.\\
+For the Arnol'd cat map we know that:
+\[
+\mathcal{D}_{n} Q_n  =  m_n
+\,,
+\]
+with
+$Q_n = \left (
+\begin{array}{c}
+q_1\\
+q_2\\
+\vdots \\
+q_\cl{}
+\end{array}
+\right )$, $m_n =  \left (
+\begin{array}{c}
+m_1\\
+m_2\\
+\vdots \\
+m_\cl{}
+\end{array}
+\right ) $ and
+\[
+\mathcal{D}_n =  \left (
+\begin{array}{ccccccc}
+-3 & 1 & 0 & 0 & 0 & \dots & 1 \\
+1 & -3 & 1 & 0 & 0 & \dots & 0 \\
+\vdots & & & & & & \\
+1 & 0 & 0 & 0 & \dots & 1 & -3 \\
+\end{array}
+\right )
+\]
+
+\vskip 0.1in
+
+For a given $n$, we define $N_n$ as the total number of orbits with length $n$.
+It is pretty clear that $N_n = |\det(\mathcal{D}_n)|$, which also corresponds to $N_n = |\det(\mathds{1} - A^n)|$ if we follow the first method.
+
+\vskip 0.1in
+
+For a given sequence of length $p$, such as $\{m_1 m_2 \dots m_p\}$, we also
+define $N_n(m_1 m_2, \dots m_p)$ as the number of periodic orbits of length $n$ that generate the given sequence. The probability of obtaining the sequence $\{m_1,m_2, \dots, m_p\}$ is then:
+\[
+p(m_1 m_2 \dots m_p) = \lim_{n\to\infty} \frac{N_n(m_1 m_2 \dots m_p)}{N_n}
+\]
+
+
+\begin{enumerate}
+\item
+Let's now do the case $p=1$, where $m_k = a$ and $a$ is a given symbol. The equations of motion can be rewritten as:
+\[
+\left\{
+\begin {array} {ll}
+q_{i-1} + q_{i+1} = 3q_i + m_i  \hskip 0.1in  \forall i \neq k \\
+q_{k-1} + q_{k+1} = 3q_k + a \\
+\end {array}
+\right.
+ \]
+
+\[
+\left\{
+\begin {array} {lll}
+q_{i-1} + q_{i+1} = 3q_i + m_i  \hskip 0.1in  \forall i \neq k, k-1, k+1 \\
+q_{k-2} + \frac{1}{3}q_{k+1} = \frac{8}{3}q_{k-1} + \frac{a}{3} + m_{k-1} \\
+q_{k+2} + \frac{1}{3}q_{k-1} = \frac{8}{3}q_{k+1} + \frac{a}{3} + m_{k+1} \\
+\end {array}
+\right.
+\]
+
+This system we can write in the matrix form
+\[
+ \mathcal{D}_{n-1} Q_{n-1} = m_{n-1} + \frac{a}{3} J
+ \]
+where $\mathcal{D}_{n-1}, Q_{n-1}$, and $m_{n-1}$ are the same as the
+$\mathcal{D}_{n}, Q_{n}$, and $m_{n}$, with the $k^{th}$ row removed, and
+with:
+\[
+\transp{J} = \left (
+ 0 ,
+ 0 ,
+ \vdots ,
+ 1 ,
+ 1 ,
+ 0 ,
+ \cdots ,
+ 0 ,
+\right )
+\,.
+\]
+
+The three inequalities we "collect" from all this mess are then:
+
+\[
+\begin {array} {c}
+0 \leq q_{k-1} < 1 \\
+0 \leq q_{k+1} < 1 \\
+a \leq q_{k-1} + q_{k+1} < a + 3 \\
+\end {array}
+\]
+
+For $a \in \{-2, -1, 0, 1 \}$, it is pretty clear how to derive the regions admissible in the plane defined by $q_{k-1}$ and $q_{k+1}$
+\item
+For $p=2$ and $n = 4$, we specify $m_2 = a$ and $m_3 = b$ and we limit our study to orbits of length $4$. Indeed, only the outer points of the given sequence (here $q_1$ and $q_4$) span the lattice on which we can derive the admissible regions. For such system, the 4 inequalities that help us doing so are:
+
+\[
+\begin {array} {c}
+0 \leq q_1 < 1 \\
+0 \leq q_4 < 1 \\
+0 \leq \frac{1}{8} (3q_1 + q_4 - 3a + b) < 1 \\
+0 \leq \frac{1}{8} (3q_4 = q_1 - 3b - a) < 1 \\
+\end {array}
+\]
+
+\end {enumerate}
+
+}
+
+
+
+
+
+
+
+   \AKSpost{2016-06-21 Answering Pedrag's questions - }{
+   First of all, I modified my $m_j$ vector such that it is made of the symbols$\{-2, -1, 0, 1\}$. Now answering the questions:
+
+  \begin{enumerate}
+\item
+For $\{q_1, q_2\} = \{\frac{1}{5}, 0\} = \{0.2, 0\}$ (the decimal or rational notation doesn't make a difference), my program actually computes 1000 iteration since it does not find periodicity through the $Q$ matrix.
+Nevertheless, it observes a repetition of symbol in the $m_j$ vector as follow:
+
+   \[
+   m = \left(\begin{array}{c} -2\\ 0\\ 0\\ -2\\ 1\\ 0\\ -1\\ -1\\ 0\\ 1 \end{array}\right)
+   \]
+
+   It is then easy to figure that:
+
+    \[
+     p_{-2} = \frac{1}{5}, p_{-1} = \frac{1}{5}, p_{0} = \frac{2}{5}, p_{1} = \frac{1}{5}
+    \]
+
+\item
+    For $\{q_1, q_2\} = \{\frac{3}{10}, \frac{3}{5}\}$ the $m_j$ vector is:
+    \[
+    m^T = (0,0,-2,1,-1,-2,1,0,0,-2,1,-1,0,-1,-1,0,-1,1,-2,0,0,1,2,-1,1,-2,0,-1,0,0)
+    \]
+
+    and for $\{q_1, q_2\} = \{\frac{4}{5}, \frac{3}{10}\}$
+    \[
+m^T =  (0,0,1,-2,-1,1,-2,0,-1,0,0,-1,0,-2,1,-1,-2,1,0,0,-2,1,-1,0,-1,-1,0,-1,1,-2)
+   \]
+For both cases, the periodicity is $n = 30$.\\
+By counting the frequencies of $-2,-1,0,1$, I confirm the probabilities are different than the ones I wrote earlier. I might have wrongly interpreted the fractions given the decimal approximation of Matlab. For $\{q_1, q_2\} = \{0.3, 0.6\}$:
+    \[
+    p_{-2} = \frac{1}{5}, p_{-1} = \frac{7}{30}, p_{0} = \frac{11}{30}, p_{1} = \frac{1}{5}
+       \]
+   However, for $\{q_1, q_2\} = \{0.8, 0.3\}$, the result is identical:
+    \[
+    p_{-2} =\frac{1}{5}, p_{-1} =  \frac{4}{15}, p_{0} =\frac{1}{3}, p_{1} = \frac{1}{5}
+    \]
+
+\item
+I am not so sure about this question. We know now that the following distribution $p_{-2} =\frac{1}{5}, p_{-1} =  \frac{4}{15}, p_{0} =\frac{1}{3}, p_{1} = \frac{1}{5}$ can be generated from the starting set $\{q_1, q_2\} = \{0.8, 0.3\}$. But we obtain such frequencies after 30 iterations, since it's the length of this periodic orbit. If we refer to what Li Han presented over last week, we actually look at 1 iteration but for a GREAT number of starting sets spread over the unit square.\\
+For $\{q_1, q_2\} = \{ i\Delta_1, j\Delta_2\}$ with $\Delta_1 = \Delta_2 = \frac{1}{200}$ and $i, j = 0, 1, 2, \dots, 199$, we obtain data for $m_1$ over 40,000 points spread over the unit square:
+\[
+p_{-2} =0.16583, p_{-1} = 0.33335, p_{0} =0.33310, p_{1} = 0.16773
+\]
+Which should fit with the theoretical values that we get from "Boris inequalities" that lead to admissible areas in the unit square spanned by $\{q_0, q_2\}$:
+\[
+p_{-2} =\frac{1}{6}, p_{-1} =  \frac{1}{3}, p_{0} =\frac{1}{3}, p_{1} = \frac{1}{6}
+\]
+
+\item
+For "starting sets" of the form $\{\frac{i}{N}, \frac{j}{N} \}$, we obtain the following periodicities:
+
+
+
+
+	\begin {itemize}
+	\item
+	For $\{q_1, q_2\} = \{\frac{i}{10},\frac{j}{10}\}$, the periodicities found were: $n = 1, 2, 3, 6, 10, 30$
+  	\item
+	For $\{q_1, q_2\} = \{\frac{i}{100},\frac{j}{100}\}$, they were: $n = 1, 2, 3, 6, 10, 30, 50, 150$
+  	\item
+	For $\{q_1, q_2\} = \{\frac{i}{8},\frac{j}{8}\}$, $n = 1, 3, 6$
+  	\item
+	And for $\{q_1, q_2\} = \{\frac{i}{17},\frac{j}{17}\}$ $n = 1, 18$
+	\end {itemize}
+
+
+Now if I understand your question carefully, we try to make sure than the final computed value of $q_N$, or $q_n$ for periodic orbits, is within $10^{-4}$ from the actual $q_{n,real}$, in the worst case scenario. Let $n_{max}$ the highest periodicity, and $\epsilon$ the error; then:
+\[
+q_{n,comp} = q_{n,real} + \epsilon \: \lambda^{n_{max}} \text{, where } \lambda = \frac{3+\sqrt{5}}{2} = \text{multiplier}
+\]
+So we want:
+\[
+|\epsilon \: \lambda^{n_{max}}| \leq 10^{-4} \: \Rightarrow \epsilon \leq 10^{-4} \: \lambda^{-n_{max}}\]
+
+	\begin {itemize}
+	\item
+	For $\{q_1, q_2\} = \{\frac{i}{10},\frac{j}{10}\}$, $\epsilon \approx 10^{-18} $
+	\item
+	For $\{q_1, q_2\} = \{\frac{i}{100},\frac{j}{100}\}$, $\epsilon \approx 10^{-68}$
+	\item
+	For $\{q_1, q_2\} = \{\frac{i}{8},\frac{j}{8}\}$, $\epsilon \approx 10^{-8}$
+  	\item
+	And for $\{q_1, q_2\} = \{\frac{i}{17},\frac{j}{17}\}$ $\epsilon \approx 10^{-12}$
+	\end {itemize}
+
+\item
+If we use double digit accuracy, aka 64 bits but 53 bits for accuracy, it means the error $\epsilon = 2^{-53}$. Following the same logic:
+\[
+|\epsilon \: \lambda^{n_{max}}| \leq 10^{-4}
+\]
+\[
+\Rightarrow n_{max} \approx \ln(\lambda) \: \ln(\frac{10^{-4}}{\epsilon})
+\]
+\[
+\Rightarrow n_{max} = 26
+\]
+
+
+
+\item
+Coming soon...
+
+
+    \end{enumerate}
+    }
+
+
+
+   \AKSpost{2016-07-10}{
+   One more thing to add regarding the single Cat Map: the correlation of frequencies. I found interesting how the correlation between future and past symbolic dynamics vanish exponentially. \\
+   I pretty much did what Rana had done before, computing frequency of a given sequence $ A = [a_1, \dots, a_u ] $ of length $u$, another one $ B =  [a_1, \dots, a_v] $ of length $v$, as well as the frequency of seeing one repeated a length $space$ (for example $space = 3$)  after the other. We then increase the \textit{spacing} and observe how the correlation factor:
+\[
+  Correl = p(A,space,B) - p(A) \: p(B) \hskip 0.2in \text{behaves}
+  \]
+   For the ergodic orbit $ \{q_1,q_2\} = \{ \frac{\sqrt{5}}{4}, \frac{\sqrt{2}}{2} \} $, $ A = [-1,1] $, and $B = [-2,0]$ and of length $N = 1,000,000$, we obtain the following:
+\[
+   p(A) = 0.1249 \hskip 0.2in p(B) = 0.0623
+   \]
+
+   \[
+\begin{array}{|c c c|}
+\hline
+Spacing & P(A,space,B) & Correl \\ [0.5ex]
+\hline \hline
+1 & 0.0085 & 7.3567\:10^{-4} \\
+\hline
+2 & 0.0066 & -0.0011\\
+\hline
+3 & 0.0073 & -4.6733\:10^{-4}\\
+\hline
+4 & 0.0080 & 1.8867\:10^{-4}\\
+\hline
+5 & 0.0079 & 6.8666\:10^{-5}\\
+\hline
+6 & 0.0078 & 4.6655\:10^{-6}\\
+\hline
+\end{array}
+\]
+
+
+  For longer sets $A = [-1,-1,-1,-1]$ and $B = [-2,1,-1,0]$, and the same orbit, the probabilities are as follow:
+\[
+   p(A) = 0.0178 \hskip 0.2in p(B) = 0.0151
+   \]
+
+\[
+\begin{array}{|c c c|}
+\hline
+Spacing & P(A,space,B) & Correl \\ [0.5ex]
+\hline \hline
+1 & 2.9400\:10^{-4} & 2.4439\:10^{-5}\\
+\hline
+2 & 2.2400\:10^{-4} & -4.5561\:10^{-5}\\
+\hline
+3 & 2.4900\:10^{-4} & -2.0561\:10^{-5}\\
+\hline
+4 & 2.5100\:10^{-4} & -1.8561\:10^{-5}\\
+\hline
+5 & 2.7300\:10^{-4} & 3.4392\:10^{-6}\\
+\hline
+6 & 2.6900\:10^{-4} & -5.6081\:10^{-7}\\
+\hline
+\end{array}
+\]
+
+\underline{\textbf{Conclusion:}} \: We clearly see that in both scenarios, the Correlation factor diminishes as the separation between the two blocs increases.  We also notice that for longer sets $A$ and $B$, the correlation is small enough (but not zero) even for small spacing...
+
+}
+
+\end{description}
+
+
+\section{Coupled Cat Maps}
+
+We now get to more complicated systems by increasing the number of particle $N$. $T$ will be now known as the period of the orbit, and if it doesn't exist, $T$ will just refer to latest time iteration in the computation of the symbols $m$'s. Another objective of this study is to explain the impact of certain factors such as the trace of the $A$ matrix (that we refer as $s = trace(A)$) on the nature of our alphabet, the frequencies of symbols repetition, the length of periodic orbits. and the admissibility of particular sequences of symbols.
+
+\subsection{Periodic orbits}
+
+We first verify the accuracy of our calculations by checking that rational sets $\{q_{1,1}, p_{1,1}, q_{2,1}, p_{2,1}, \dots, q_{N.1}, p_{N,1} \}$ belong to periodic orbits. To do so, we perform the iteration:
+\[
+\mathcal{Z}_{t+1} = \mathcal{B}_N \: \ \mathcal{Z}_{t}
+\]
+over and over, until we obtain:
+\[
+\mathcal{Z}_{T+1} = \mathcal{B}_N \: \ \mathcal{Z}_1
+\]
+in which case, the periodicity is $T$. We first tried with a number of 3 particles ($N=3$), and picked the same trace $s = 3$ that we used in part 7.2. The initial coordinates of $\mathcal{Z}_1$ are multiples of hundredth, chosen randomly, but above all are \textbf{between $[\frac{-1}{2}, \frac{1}{2}]$}. Therefore, our symbolic dynamic $m = \{m^q, m^p\}$ should be symmetric with respect to 0 (which is the case) and our matrix $\mathcal{B}_3$ is:
+\[
+\mathcal{B}_3 = \left(\begin{array}{cccccc} 2 & 1 & -1 & 0 & -1 & 0\\ 1 & 1 & -1 & 0 & -1 & 0\\ -1 & 0 & 2 & 1 & -1 & 0\\ -1 & 0 & 1 & 1 & -1 & 0\\ -1 & 0 & -1 & 0 & 2 & 1\\ -1 & 0 & -1 & 0 & 1 & 1 \end{array}\right)
+\]
+
+\begin{itemize}
+
+\item
+$
+\text{for} \: \mathcal{Z}_1 = \left\{ \begin{array}{cccccc} \frac{31}{100} & \frac{29}{100} & \frac{7}{50} & - \frac{13}{100} & \frac{31}{100} & \frac{3}{100} \end{array}\right\}
+$
+\vskip 0.1in
+the periodicity is $T = 60$, and the symbolic dynamics is:
+\[
+\begin{array}{c}
+m = -2, p_{-2} = 0.011111 \\
+m = -1, p_{-1} = 0.222222 \\
+m = 0, p_{0} = 0.536111 \\
+m = 1, p_{1} = 0.227778 \\
+m = 2, p_{2} = 0.002778\\
+\end{array}
+\]
+
+\item
+$
+\text{for} \: \mathcal{Z}_1 = \left\{\begin{array}{cccccc} - \frac{3}{20} & \frac{43}{100} & \frac{37}{100} & \frac{1}{20} & \frac{3}{25} & \frac{2}{25} \end{array}\right\}
+$
+\vskip 0.1in
+the periodicity is $T = 60$, and the symbolic dynamics is:
+\[
+\begin{array}{c}
+m = -2, p_{-2} = 0.016667 \\
+m = -1, p_{-1} = 0.222222 \\
+m = 0, p_{0} = 0.511111 \\
+m = 1, p_{1} = 0.244444 \\
+m = 2, p_{2} = 0.005556 \\
+\end{array}
+\]
+
+
+\item
+for $N = 5$ and $
+\mathcal{Z}_1 = \left\{\begin{array}{cccccccccc} - \frac{3}{10} & - \frac{1}{5} & - \frac{3}{100} & - \frac{27}{100} & \frac{17}{50} & - \frac{31}{100} & - \frac{7}{25} & - \frac{33}{100} & - \frac{7}{25} & - \frac{7}{100} \end{array}\right\}
+$
+\vskip 0.1in
+the periodicity is $T = 60$, and the symbolic dynamics is:
+\[
+\begin{array}{c}
+m = -2, p_{-2} = 0.007333 \\
+m = -1, p_{-1} = 0.222667 \\
+m = 0, p_{0} = 0.540667 \\
+m = 1, p_{1} = 0.221333 \\
+m = 2, p_{2} = 0.008000 \\
+\end{array}
+\]
+
+
+\item
+And for $N = 7$ and
+\[
+\mathcal{Z}_1 =
+\left\{ - \frac{19}{100} ~ \frac{21}{50} ~ -
+\frac{7}{100} ~ - \frac{8}{25} ~ \frac{2}{5} ~ \frac{47}{100} ~ -
+\frac{7}{100} ~ - \frac{39}{100} ~ - \frac{1}{4} ~ - \frac{1}{10} ~
+\frac{9}{100} ~ - \frac{6}{25} ~ \frac{1}{10} ~ \frac{21}{100}
+\right\}
+\]
+the periodicity is $T = 2790$, and the symbolic dynamics is:
+\[
+\begin{array}{c}
+m = -2, p_{-2} = 0.012110 \\
+m = -1, p_{-1} = 0.226472 \\
+m = 0, p_{0} = 0.526882 \\
+m = 1, p_{1} = 0.224014 \\
+m = 2, p_{2} = 0.010522 \\
+\end{array}
+\]
+
+\end{itemize}
+
+
+\subsection{Ergodic orbits}
+
+We now focus on the nature of our symbolic dynamics, by choosing ergodic orbits, running for a very very long time $T = 80,000$. To do so, we start with an irrational set $\mathcal{Z}_1$ but $N = 5$ particles. The trace of the $A$ matrix increases from 3 to 7 in order to obtain a larger alphabet of symbols. Remember that the trace $s = a+b$, so we just set $b = 1$ and $a \in \{2, \dots, 7\}$ such that $s \in \{3, \dots, 8\}$. Our initial set is:
+\[
+\mathcal{Z}_1 = \left\{\begin{array}{cccccccccc} \frac{\sqrt{5}}{6} & 0 & -\frac{\sqrt{3}}{6}  & \frac{\sqrt{2}}{8}  & \frac{\sqrt{3}}{14}  & - \frac{\sqrt{5}}{12}  & -\frac{\sqrt{6}}{20}  & \frac{1}{17}  & \frac{3}{10}  & \frac{\sqrt{2}}{10}   \end{array}\right\}
+\]
+
+\underline{Observations:}
+
+\begin{enumerate}
+\item
+The first thing we observe is that the orbit is not periodic. We obviously compute the frequencies of symbol that only appear in our dynamics. The number of particles $N = 5$ clearly has an impact on the nature of our symbols. \\
+We also compute the frequencies of the \textit{Newtonian} dynamics, defined as:
+\[
+c\:(q_{n,t+1} + q_{m,t-1}) + d\:(q_{n+1,t} + q_{n-1,t}) = -(a+b)q_{n,t} + m_{n,t}
+\]
+The code computes our $\{m^q_{n,t}, m^p_{n,t}\}$ by only referring to the equation $\mathcal{Z}_{t+1} = \mathcal{B}_N \: \mathcal{Z}_t$ and by "capturing" the integer parts of the coordinates $q$'s and $p$'s (similarly to the Single Cat Map code I wrote). Once the orbit has been computed, the Newtonian symbolics $m_{n,t}$ (no upper index) can be derived from the position coordinates $q_{n,t}$.\\
+Let's look at the frequencies of every of those symbols, as a function of the trace $s$.
+
+
+\begin{itemize}
+
+\item
+For $s = 3$, the frequencies obtained are: \\
+$
+\begin{array}{l}
+m^{q,p} = -2, p_{-2} = 0.011450 \\
+m^{q,p} = -1, p_{-1} = 0.224397 \\
+m^{q,p} = 0, p_{0} = 0.529401 \\
+m^{q,p} = 1, p_{1} = 0.223045 \\
+m^{q,p} = 2, p_{2} = 0.011706 \\
+\end{array}
+$
+\\And: \\
+$
+\begin{array}{l}
+m = -3, p_{-3} = 0.000850 \\
+m = -2, p_{-2} = 0.067293 \\
+m = -1, p_{-1} = 0.264819 \\
+m = 0, p_{0} = 0.332571 \\
+m = 1, p_{1} = 0.267269 \\
+m = 2, p_{2} = 0.066364 \\
+m = 3, p_{3} = 0.000833 \\
+\end{array}
+$
+\\
+
+\item
+For $s = 4$, the frequencies obtained are:\\
+$
+\begin{array}{l}
+m^{q,p} = -3, p_{-3} = 0.000444 \\
+m^{q,p} = -2, p_{-2} = 0.044169 \\
+m^{q,p} = -1, p_{-1} = 0.258639 \\
+m^{q,p} = 0, p_{0} = 0.394029 \\
+m^{q,p} = 1, p_{1} = 0.257650 \\
+m^{q,p} = 2, p_{2} = 0.044615 \\
+m^{q,p} = 3, p_{3} = 0.000455 \\
+\end{array}
+$
+\\And: \\
+$
+\begin{array}{l}
+m = -3, p_{-3} = 0.010696 \\
+m = -2, p_{-2} = 0.126391 \\
+m = -1, p_{-1} = 0.236452 \\
+m = 0, p_{0} = 0.250635 \\
+m = 1, p_{1} = 0.239835 \\
+m = 2, p_{2} = 0.125378 \\
+m = 3, p_{3} = 0.010613 \\
+\end{array}
+$
+\\
+
+\item
+For $s=5$, the frequencies obtained are: \\
+$
+\begin{array}{l}
+m^{q,p} = -3, p_{-3} = 0.005604 \\
+m^{q,p} = -2, p_{-2} = 0.095479 \\
+m^{q,p} = -1, p_{-1} = 0.254543 \\
+m^{q,p} = 0, p_{0} = 0.290261 \\
+m^{q,p} = 1, p_{1} = 0.252449 \\
+m^{q,p} = 2, p_{2} = 0.095980 \\
+m^{q,p} = 3, p_{3} = 0.005685 \\
+\end{array}
+$
+\\And: \\
+$
+\begin{array}{l}
+m = -4, p_{-4} = 0.000592 \\
+m = -3, p_{-3} = 0.040080 \\
+m = -2, p_{-2} = 0.159941 \\
+m = -1, p_{-1} = 0.198742 \\
+m = 0, p_{0} = 0.199551 \\
+m = 1, p_{1} = 0.201197 \\
+m = 2, p_{2} = 0.159721 \\
+m = 3, p_{3} = 0.039697 \\
+m = 4, p_{4} = 0.000479 \\
+\end{array}
+$
+\\
+
+\item
+For $s = 6$, the frequencies obtained are:\\
+$
+\begin{array}{l}
+m^{q,p} = -4, p_{-4} = 0.000255 \\
+m^{q,p} = -3, p_{-3} = 0.025382 \\
+m^{q,p} = -2, p_{-2} = 0.142405 \\
+m^{q,p} = -1, p_{-1} = 0.220257 \\
+m^{q,p} = 0, p_{0} = 0.224046 \\
+m^{q,p} = 1, p_{1} = 0.218919 \\
+m^{q,p} = 2, p_{2} = 0.143320 \\
+m^{q,p} = 3, p_{3} = 0.025151 \\
+m^{q,p} = 4, p_{4} = 0.000264 \\
+\end{array}
+$
+\\And: \\
+$
+\begin{array}{l}
+m = -4, p_{-4} = 0.006921 \\
+m = -3, p_{-3} = 0.083823 \\
+m = -2, p_{-2} = 0.159604 \\
+m = -1, p_{-1} = 0.167262 \\
+m = 0, p_{0} = 0.165642 \\
+m = 1, p_{1} = 0.166942 \\
+m = 2, p_{2} = 0.159625 \\
+m = 3, p_{3} = 0.083206 \\
+m = 4, p_{4} = 0.006975 \\
+
+\end{array}
+$
+\\
+
+\item
+For $s = 7$, the frequencies obtained are:\\
+$
+\begin{array}{l}
+m^{q,p} = -4, p_{-4} = 0.003830 \\
+m^{q,p} = -3, p_{-3} = 0.061620 \\
+m^{q,p} = -2, p_{-2} = 0.160081 \\
+m^{q,p} = -1, p_{-1} = 0.182371 \\
+m^{q,p} = 0, p_{0} = 0.184342 \\
+m^{q,p} = 1, p_{1} = 0.182932 \\
+m^{q,p} = 2, p_{2} = 0.159601 \\
+m^{q,p} = 3, p_{3} = 0.061515 \\
+m^{q,p} = 4, p_{4} = 0.003706 \\
+\end{array}
+$
+\\And: \\
+$
+\begin{array}{l}
+m = -5, p_{-5} = 0.000363 \\
+m = -4, p_{-4} = 0.028955 \\
+m = -3, p_{-3} = 0.113895 \\
+m = -2, p_{-2} = 0.141662 \\
+m = -1, p_{-1} = 0.142537 \\
+m = 0, p_{0} = 0.144154 \\
+m = 1, p_{1} = 0.142207 \\
+m = 2, p_{2} = 0.142849 \\
+m = 3, p_{3} = 0.114120 \\
+m = 4, p_{4} = 0.028863 \\
+m = 5, p_{5} = 0.000396 \\
+\end{array}
+$
+\\
+
+
+\end{itemize}
+
+=> One thing that boris emphasized on during our last meeting, is how the frequency of the internal Newtonian symbols (\textit{difference internal/external coming soon}...) should be the same for a given $s = trace(A)$. According to Boris, in all the cases, the external symbols are the 6 outer ones in our alphabet. As you can see, the frequencies of the inner symbols tend be the same for a particular s, but still differ by the $\frac{1}{1000}$. I'm going to run longer simulations ($T = 500,000$) but just for one particular trace $s=5$ and the same initial conditions. Hopefully, the frequencies will even be closer...
+
+\item
+The next part is to derive analytically the frequencies for just 1 symbol, by exposing the equations that govern our symbolic dynamics. The number of inequalities we obtain then depends on the system: the number of particle $N$, the trace of A $s$ and the symbol itself $m_0$ (that Boris calls $a$ as well). This is something Rana, Li Han and I will discuss in details tomorrow (Tuesday), before our Wednesday meeting.
+
+\item
+Looking for symmetry between time and space evolution $T$ and $N$.
+
+
+\end{enumerate}
+
+
+
+
+
+
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\newpage
+
+\section{Adrien's blog}
+\label{sect:blogAKS}
+
+\begin{description}
+
+
+    \AKSpost{2016-01-19}{
+Here is an example of \AKSedit{text edit by me},
+and here one of a footnote by me\AKS{2018-01-19}{Adrien test footnote}.
+   }
+
+    \AKSpost{2015-11-20}{
+(Discussion with Predrag, \KS\ \eqva\ and \reqva\ project Spring 2016:
+\begin{itemize}
+\item blog the project progress here
+\item blog whatever I'm reading and learning about
+    dynamical systems here
+\end{itemize}
+    }
+
+    \AKSpost{2016-01-19}{
+ I've been working on reading the ChaosBook materials and doing the
+ online Course 1.
+    }
+
+   \AKSpost{2016-05-13 Report}{
+I am going to upload the tex. version of what I accomplished with Rana and Boris.
+The code can be copy/paste on Latex to be easily read.
+Sorry for taking so long, getting used to Latex is kind of a pain..
+   }
+
+   \PCpost{2016-05-16}{
+I feel no guilt at all, only pride: you cannot be a physicist and write
+in \texttt{Micro\$h!t Word}. What does not kill you will make you
+stronger :). I'll help with LaTeX - but please, do diff the edited files
+(Xiong or I can show you how) so I do not have to do the same edits over
+and over again.
+    }
+
+%   \AKSpost{2016-05-13}{
+%I am trying to get in touch with Boris via Skype, but so far, he hasn't
+%replied to my email.
+%   }
+
+    \PCpost{2016-05-26}{My suggestion is in the blog,
+        but you might have not read it:
+``\textbf{2016-05-21 Predrag}
+Adrien and Rana wondered why are \refeq{ASCatMap} and \refeq{ASCatMap2}
+the same equation. Have a look at the two forms of the
+\HREF{http://www.streamsound.dk/book1/chaos/chaos.html\#85/z} {H\'enon
+equation} in the ChaosBook Example 3.6. Or see \refeq{PerViv2.2a} (eq.~(2.2)
+in Percival and Vivaldi\rf{PerViv}). Does that help in understanding the
+relation? Once you do, write it up in your reports.''
+
+In any case, looks like you have done that, in deriving
+\refeq{ASCatMap2}.
+        }
+
+%  \AKSpost{2016-05-26}{
+%Back from the beach; slightly modified the 2nd approach to Arnol'd cat
+%map. Looking to catch up with Rana and Xiong this afternoon
+%  }
+
+  \item[2016-06-01 Xiong] Equation just above \refeq{ASCatMap}
+    may have a typo because there is a
+    factor $1/c$ in the definition of $A$.
+
+    \PCpost{2016-06-02}{:
+At the start of \refsect{sect:catMapAKS} Adrien sets $c=-1$, so I think
+the rest is correct?
+        }
+
+    \AKSpost{2016-06-06}{:
+List of things to work through:
+	\begin{enumerate}
+\item
+14.1 Qualitative dynamics
+\item
+14.3 Temporal ordering: Itineraries
+\item
+14.4
+\item
+14.6 Symbolic dynamics, basic notions
+\item
+Examples 14.2, 14.3, 14.6, 14.7 and 14.8
+\item
+skip Chapter 15 ``Stretch, fold, prune" for now
+
+\item
+17 Walkabout: Transition graphs
+(skip 17.3.1 ``Converting pruning blocks into transition graphs" for now)
+\item
+Example 17.1 Full binary shift; 17.2 Complete N-ary dynamics;
+17.4 Pruning rules for a 3-disk alphabet;
+17.4 Pruning rules for a 3-disk alphabet;
+17.7 Complete binary topological dynamics;
+17.8 ?Golden mean? pruning;
+
+	\end{enumerate}
+}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{figure}
+  %(a) \includegraphics[width=0.45\textwidth]{AKSmy1stFig}
+  % (b) \includegraphics[width=0.45\textwidth]{AKSmy2ndFig}
+    \caption{\label{fig:AKSmyFig}
+Spatiotemporal plots of the ??.
+(a) this;
+(b) that.
+The initial ?? is given by ???.
+    }
+\end{figure}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+    \PCpost{2016-06-22}{
+
+Save your plots in \emph{siminos/figs/} as {\em AKSmy1stFig.png}
+and {\em AKSmy2ndFig.png} (or {\em AKS*.pdf}), by the names referred
+to in the (currently commented) parts of \reffig{fig:AKSmyFig}.
+
+You can rename the graphical files whatever you find natural, just prefix
+them by {\em AKS} and do not use spaces and to many special characters in
+their names - that might confuse Linux.
+
+Make graphical files modest in size, $\approx 10\,KB$, rather than
+$\approx 100\,KB$, otherwise the whole repository grows to big and
+unwieldy. If do not know how to produce small graphical files, ask Xiong
+for help.
+
+For an example of a table, see \reftab{tab:RJ2letFreq}.
+    }
+
+\AKSpost{2016-07-11}{:
+
+\begin{itemize}
+
+\item
+Thanks for the heads up to include graphs in our blog. For now though, I have no graph, just results in forms of tables mostly (frequencies for example).
+
+\item
+I will complete the rest of my report on coupled maps once I obtain results for long (very long) computations. Probably will run those through the night...
+
+\end{itemize}
+}
+
+    \AKSpost{2016-08-02}{
+I would like to know how can we mention our references (for me, it will
+just Gutkin and Osipov\rf{GutOsi15}) given that we constantly use them? I
+mentioned his paper at the beginning of my report, but it wasn't more
+than that. Do you want us to repeatedly mention his publication, or can
+we mention it just once during the introduction, and make it clear for
+the rest of the document?
+    }
+
+    \PCpost{2016-08-02}{
+Well, if you have not read anything else but the single Gutkin and
+Osipov\rf{GutOsi15} paper, I guess there is not much else to refer to.
+
+But they did not invent cat maps, coupled lattices, cat map symbolic
+dynamics, linear coding, etc., so if you define the project and explain
+what is already known (in order to explain what is new in your work) you
+might need more than one citation. My cat map \refchap{c-catMap} and
+spatial lattice \refchap{c-appendStatM} have about 30 or so citations,
+and the common blog \refchap{chap:dailyBlog} has 57. You can see what
+some of the other student's projects have looked like
+\HREF{http://chaosbook.org/projects/index.shtml} {here}.
+    }
+
+%    \AKSpost{2017-09-06}{
+%I'd like to know if you've deleted our summer reports of last year or if you
+%simply moved them to a different directory? I think these can be useful for
+%me to get back into cat-ing.
+%    }
+
+    \PCpost{2017-09-06}{
+Rana and Adrian reports are in this blog, in
+%have never gone away -that's the whole point of having a
+%repository-- and have found a safe harbor in
+\\
+\texttt{siminos/spatiotemp/chapter/blogCats.tex} (check rev.~5445 message).
+    }
+
+    \AKSpost{2017-09-06}{
+I am not sure if you guys want me to change the symbol representation in the
+current figure~8 (current page 30)? I think I could add the numbers in
+question on top of the colored squares for better visual... but this may
+become overly 'dense.'
+    }
+
+    \PCpost{2017-09-06}{
+I like your colorful figure~8, with the thin and thick square borders around
+the interior regions, and using both colored tiles and numbered tiles
+representations, current figures~10 and~12, just to illustrate the two
+possibilities. Boris and Li Han prefer that all three figures use the number
+representation. If that is the majority decision, I'm fine with it. We have
+the old figure~8 numbered tiles in
+\\
+\texttt{siminos/figs/AKSs7BlockBorderM1*.*}, can restore them.
+    }
+
+    \AKSpost{2017-09-06}{
+What do you mean by
+``integer $s > 4$'' is not the correct condition, for $d = 2$ $s = 4$ is
+already hyperbolic. Give the correct condition on s, explain it.''
+
+I believe that we choose $s>4$ to keep our system hyperbolic and to
+have a sufficiently large number of internal symbols in our alphabet $\A$.
+Would that be the reason you're looking for?
+    }
+
+    \PCpost{2017-09-06}{
+A cat map is a fully chaotic Hamiltonian dynamical system if its
+stability multipliers
+$(\ExpaEig\,,\; \ExpaEig^{-1})$, where
+\beq
+\ExpaEig=(s+\sqrt{(s-2)(s+2)})/2
+\,,\qquad
+\ExpaEig=e^{\Lyap}
+\,,
+\ee{StabMtlprAKS}
+are real, with a positive stability exponent $\Lyap >0$. The eigenvalues are
+functions of a single parameter $s=\tr{A}$, and the map is chaotic if and
+only if $|s| > 2$. Otherwise $\ExpaEig$ is on the unit circle in the complex plane,
+and the map is elliptic.
+
+What is the equivalent statement for the \emph{\catlatt}?
+
+I do not know if it is only a coincidence, but $\R=[2\!\times\!2]$ measure
+inequalities are bounded by $P(s)=s(s-2)(s+2)$.
+
+In your report you look at the linear code for $s=3$ and numerically compute
+the \brick\ measures (relative frequencies) for that case,
+\reffig{fig:AKS2x2all}, so why are we demanding that $s=5$ or larger?
+    }
+
+    \AKSpost{2017-09-07}{
+\begin{itemize}
+%\item
+%Ok glad to know the reports aren't deleted. I didn't realize that you actually used the report's title as the name of the chapter in this very blogCats document.
+\item
+Glad as well than the former figures with numbers weren't deleted, meaning I technically won't have to re-run them unless for my following point.
+\item
+From what I see in my Mathematica notebooks, we set our system with $c =
+d = -1 \text{ and } a+b = s$ and $q_{n,t}, p_{n,t}$ falling in the unit
+interval [0,1] so that our alphabet $\mathcal{A} = \{0, \dots, s - 2 d \}
+= \{0, \dots, s - 4 \}$. Since Boris had requested that the switching of
+'blocks' in array of symbols $m_{n,t}$ would be done on admissible
+sequences, and given that internal symbols simply satisfy this condition,
+we would need to pick an alphabet $\mathcal{A}$ with at least 2 internal
+symbols; otherwise it's no fun. $s=5$ has no internal symbols; $s = 7$
+has two internal symbols ($1$ and $2$) -> which is why we pick $s \geq 7$
+for all these 'switching' experiments.
+\item
+In my summer report however, I believe I was using a different set of conditions for the cat map itself:
+\[a = 2 \, \, b = 1 \rightarrow \, s = 3 \, \, c = d = -1 \text{ but } -1/2 \leq q_{n,t}, p_{n,t} \leq 1/2 \]
+
+We picked the unit interval $[-1/2, 1/2]$ for symmetry reasons,
+but once the summer was over, Boris made it clear that we would now focus on
+[0,1].
+
+With such $q_{n,t}, p_{n,t}$ falling in $[-1/2, 1/2]$, the list of admissible
+symbols was different. I tried to tackle this in my summer report, see
+\refsect{AKSalphabet}.
+\end{itemize}
+    }
+
+    \PCpost{2017-09-08}{
+I always prefer the unit interval $[-1/2, 1/2]$ (but not for this paper -
+that ship is long gone). Asymmetric choice makes both the alphabet and its
+symmetry under time reversal unnecessarily awkward. You use unit interval,
+though, in your \refsect{AKSalphabet1particle}.
+
+In \refref{GHJSC16} I write that the $d=1$ Arnol'd cat map $s = 3$ alphabet
+has 5 letters $\A=\{\underline{2},\underline{1},0,1,2\}$.
+
+I think you meant $d=2$ \catlatt\ $s = 3$ alphabet on
+$[-\frac{1}{2},\frac{1}{2})\times[-\frac{1}{2},\frac{1}{2})$ phase space has
+$s+4=7$ letters? I assume that is what we see in \reffig{fig:AKS2x2all},
+except that the two exterior letters $\{-3,3\}$ seem almost totally pruned.
+Are they, or the little histogram glitches are real? You do not explain how
+the histogram is ordered, I assume that is as explained in \refref{GHJSC16}.
+    }
+
+
+
+\end{description}
+
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\printbibliography[heading=subbibintoc,title={References}]

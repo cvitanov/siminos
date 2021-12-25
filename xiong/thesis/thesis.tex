@@ -1,0 +1,233 @@
+% siminos/xiong/thesis/thesis.tex
+% $Author: predrag $ $Date: 2021-02-01 22:04:33 -0500 (Mon, 01 Feb 2021) $
+
+\input type                        %% type: public/editing version
+\input ../../inputs/setupThesis    %% logical chores (nothing to edit)
+\input ../../inputs/layoutThesis   %% copy to here from dasbuch/book/layout.tex environments
+\input ../../inputs/editsDasbuch   %% editing comments, DasBuch style
+\input ../../inputs/def            %% do not edit; update from dasbuch/book/inputs/def.tex
+\input defsThesis     %% all Xiong Ding edits: \renewcommand, etc
+\input{version}                 %% version      keep updating this!
+
+% ==============================
+% additional setup except for those in setupThesis
+% customized for Xiong
+\usepackage{ifthen}
+\usepackage{tikz}
+\usetikzlibrary{calc}
+\usetikzlibrary{decorations.pathreplacing}
+
+\usepackage{bm}
+\usepackage{array}
+
+\graphicspath{{../../figs/}{../figures/}{../../dimension/}{../../schur/figs/}}
+
+\newcommand{\edit}[1]{{\color{blue} #1}}
+\newcommand{\nssp}{u}
+\newcommand{\sspRedM}{\sspRed^{(-)}}
+\renewcommand{\ssp}{u}
+\renewcommand{\zeit}{t}
+\renewcommand{\jEigvec}[1][]{\ensuremath{{\bf e}_{#1}}} % right jacobiam eigenvector
+\renewcommand{\jEigvecT}[1][]{\ensuremath{{\bf e}_{#1}^\top}} % left jacobiam
+\newcommand{\jEigvecRed}[1][]{\ensuremath{\hat{{\bf e}}_{#1}}}
+
+\renewcommand{\RPO}[1]{\ensuremath{\overline{rpo}_{#1}}} % Xiang experimental
+\renewcommand{\trDiscr}[2]{C_{#1}^{#2}}
+\renewcommand{\Lg}{\ensuremath{\mathbf{T}}}
+\renewcommand{\exampl}[2]{
+  \vskip -13mm
+  %\begin{offset}
+    \begin{exmple}
+      \noindent\small
+      \textsf{\textbf{#1}} ~
+      \slshape\sffamily{#2}
+      % \textsl would not work...
+    \end{exmple}
+  %\end{offset}
+  \vskip -1mm
+}
+
+\DeclareMathOperator{\im}{Im}
+\DeclareMathOperator{\re}{Re}
+\DeclareMathOperator{\diag}{Diag}
+\DeclareMathOperator{\dist}{dist}
+\DeclareMathOperator{\const}{const}
+% ==============================
+
+\title{Geometry of Inertial Manifolds in
+  Nonlinear Dissipative Dynamical Systems}
+\author{Xiong Ding}
+
+\principaladviser{Professor Predrag Cvitanovi\'c}
+% \committeechair{}
+\firstreader{Professor Roman Grigoriev}
+\secondreader{Professor Luca Dieci}[School of Mathematics]
+\thirdreader{Professor Flavio Fenton}
+\fourthreader{Professor Turgay \"Uzer}
+
+\department{School of Physics}
+\degree{Doctor of Philosophy}
+\copyrightyear{2017}
+
+\ifgatech
+ \submitdate{May 2017}
+ \approveddate{March 8, 2017}
+% \figurespagefalse          %% FIX THIS!
+\else                   %% Predrag WHILE EDITING
+ \submitdate{\version}
+ \signaturepagefalse
+ \approveddate{[not yet]}
+ \figurespagefalse    %% drop from th2e web version
+ \tablespagefalse     %% drop from the web version
+ \fi
+%% The following are the defaults
+%% \titlepagetrue
+%% \signaturepagetrue
+\copyrighttrue
+\figurespagetrue
+\tablespagetrue
+%% \contentspagetrue
+%% \dedicationheadingfalse
+%% \thesisproposalfalse
+%% \strictmarginstrue
+
+    \ifgatech               %% GT SUBMISSION
+\bibfiles{../../bibtex/siminos}
+    \else                   %% Predrag
+\input{biblatex}
+	\addbibresource{../../bibtex/siminos.bib}
+% comment out \usepackage[...]{natbib}
+    \fi
+
+% \glossfiles{../bibtex/gloss} % ``List of Symbols or Abbreviations''
+%                % explained in gatech-thesis-gloss.sty.
+\bibpagetrue
+
+
+\begin{document}
+    \ifgatech               %% GT SUBMISSION
+\bibliographystyle{gatech-thesis} %% must place right after \begin{document}
+    \fi
+
+%% Preliminary Stuff
+\begin{preliminary}
+
+  \begin{acknowledgements}
+    \input chapters/acknowledgements
+  \end{acknowledgements}
+
+  % print table of contents, figures and tables here.
+  \contents
+
+  % if you need a "List of Symbols or Abbreviations" look into
+  % gatech-thesis-gloss.sty.
+  \begin{summary}
+    \input chapters/summaryNref
+  \end{summary}
+
+\end{preliminary}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% BEGIN MAIN BODY OF THESIS
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\ifboyscout \pagestyle{headings} \fi  %% Predrag: while editing
+
+\chapter{Introduction}
+\label{chap:intro}
+
+\input chapters/intro
+\input chapters/overview
+\input chapters/dissipative
+\input chapters/covVecs
+\input chapters/cycExp
+
+%% ======================================================================
+
+\chapter{Symmetries in dynamical systems}
+\label{chap:Symmetry}
+
+\input chapters/symIntro.tex
+\input chapters/symGroup.tex
+\input chapters/symReduce.tex
+%\input chapters/symFactor.tex
+
+%% ======================================================================
+\chapter{\KSe}
+\label{chap:ks}
+
+\input chapters/KSintro
+\input chapters/KSsym
+\input chapters/KSinv
+\input chapters/KSfv
+\input chapters/KSshadow
+
+
+%% ======================================================================
+\chapter{The inertial manifold of a \KS\ system}
+\label{chap:im}
+
+\input chapters/KSimintro
+\input chapters/KSbounds
+\input chapters/KSDim
+
+%% ======================================================================
+% \chapter{1d \cqcGLe}
+% \label{chap:cGL}
+
+% \section{Introduction to 1d \cqcGLe}
+% \input chapters/cGLIntro
+
+% \section{Explosive soliton solutions}
+% \input chapters/cGLExplode
+
+%% ======================================================================
+\chapter{\Ped\ algorithm}
+\label{chap:ped}
+
+\input chapters/ped
+
+% \section{Time step adaptive exponential integrator for explosive soliton
+%   integration in 1d \cqcGLe }
+% \input chapters/adaptEI.tex
+
+%% ======================================================================
+\chapter{Conclusion and future work}
+\label{chap:conc}
+
+\input chapters/conclusion
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%% CLOSING STUFF                                     %%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\appendix
+
+%% ======================================================================
+\chapter{Floquet theorem and periodic orbits}
+\label{sec:floq}
+
+\input chapters/Floquet
+
+%% ======================================================================
+\chapter{Proof of proposition \ref{PROP:KS1} }
+\label{chap:ksproof}
+
+\input chapters/KSproof
+
+%% ======================================================================
+\begin{postliminary}
+  \ifgatech               %% GT SUBMISSION
+\references
+  \else
+\printbibliography[heading=bibintoc,title={References}]
+  \fi
+  % \gtindex
+  \ifgatech               %% GT SUBMISSION
+  \begin{vita}
+    \input chapters/vita
+  \end{vita}
+  \fi
+\end{postliminary}
+
+\end{document}

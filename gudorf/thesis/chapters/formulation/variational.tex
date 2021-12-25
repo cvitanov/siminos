@@ -1,0 +1,69 @@
+We still refer to the numerical method as
+the adjoint descent method, because the calculation does require the
+multiplicative action of the adjoint Jacobian. For the
+convergence analysis of the method we refer to proofs for the steepest descent method.
+Define the Lagrangian density or \textit{formal Lagrangian} as
+\beq \label{e-lagrangian}
+\mathcal{L}(t, x, p_i, u, \lambda, u_t, u_x, u_{xx}, u_{xxxx}) = \frac{1}{2} \lambda [u_t + u_{xx} + u_{xxxx} + u u_x],.
+\eeq
+This density is a function defined on the tile $\mathcal{M}$of parameters $p_i$, dependent parameter $u$ and its relevant higher order derivatives,
+and finally the \textit{adjoint variable} $\lambda$. In this context $\lambda$ is analogous to a Lagrange multiplier;
+it is taken to only be dependent on $t, x$.
+The problem of finding solutions to $\goveqn=0$ is reformulated as a
+variational problem whose goal is to find the stationary points of the functional equation
+\beq \label{e-action}
+S(\statev) = \int_{\mathcal{M}}\mathcal{L}(t, x, p_i, u, \lambda, u_t, u_x, u_{xx}, u_{xxxx})\,.
+\eeq
+The specific form of $\phi$ tells us that subject to the constraint $\goveqn=0$, the extrema of
+$\phi$ will all be minima, as $\phi$ is non-negative and $\goveqn=0$ implies $\phi=0$.
+The stationary points of \refeq{e-action} are solutions to the Euler-Lagrange equations, which are derived via
+the functional derivative (this goes by many names, material derivative, total derivative,
+advective derivative, variational derivative) of \refeq{e-lagrangian}.
+The general definition of the functional derivative for a Lagrangian
+with $f_i$ dependent variables in $q_i$ dimensions with derivatives up to order $j$ is
+\beq \label{e-functionalderiv}
+\frac{d}{d f_i}=\frac{\partial }{\partial q_i} + \sum_{j=1}^{n} \sum_{\mu_1\leq\dots\leq\mu_j} (-1)^j \frac{\partial^j}{\partial q_{\mu_1}\dots\partial q_{\mu_j}} \Bigg(\frac{\partial}{\partial f_{i,\mu_1\dots\mu_j}}\Bigg)
+\eeq
+where $d$ is used to indicate the functional derivative and $\partial$ indicates the partial derivatives.
+The bounds on the inner sum simply take care of repeating terms arising from the permutations of derivatives.
+For clarity \refeq{e-functionalderiv} is simply a generalization of the Euler-Lagrange equations to more variables and
+higher order derivatives. This general expression can be confusing at first however it simplifies dramatically upon
+application to \refeq{e-lagrangian}. Namely, the \KSe\ and its adjoint equation % SOURCE
+as well as the derivatives with respect to parameters are recovered
+\bea \label{e-eulerlagrange}
+\frac{d\mathcal{L}}{du} &=& \Bigg(\frac{\partial}{\partial u} - \frac{\partial}{\partial x}\frac{\partial}{\partial u_x} - \frac{\partial}{\partial t}\frac{\partial }{\partial u_t} + \frac{\partial^2 }{\partial x^2}\frac{\partial}{\partial u_{xx}} + \frac{\partial^4}{\partial x^4}\frac{\partial}{\partial u_{xxxx}}\Bigg)\mathcal{L}\continue
+&& \continue
+&=&  - \lambda_t + \lambda_{xx} + \lambda_{xxxx} + u\lambda_x\continue
+&& \continue
+\frac{d\mathcal{L}}{d\lambda} &=&  \goveqn \continue
+&& \continue
+\frac{d\mathcal{L}}{d p_i} &=& \lambda \frac{\partial \goveqn}{\partial p_i}
+\eea
+The system of equations equations are satisfied when $\lambda^{\top}=\goveqn^{\top}$. This specific choice
+of $\lambda$ for the Lagrangian defines
+\bea \refeq{e-costcontinuous}
+S(\statev) &\equiv& \int_{\mathcal{M}} \frac{1}{2}(\goveqn)^2 dt d^dx \continue
+\eea
+A distinction is made between \refeq{e-costcontinuous} and its discrete representation in terms of modes 
+\beq \label{e-cost}
+\phi(\statev) = \frac{1}{2}\sum_{j,k}(\goveqn_{jk})^2 \,.
+\eeq
+Hereafter, the function \refeq{e-cost} will be referred to as the \textit{cost function}; 
+the value returned by evaluated the cost function will be referred 
+to as the \textit{residual}. 
+
+An `orbit guess' is defined as the state vector whose residual is non-zero.
+The `orbit guess' $\statev^{'}$ is a state vector whose residual is non-zero. 
+As a blanket term \textit{the optimization} of 
+a guess state $\statev^{'}$ denotes the process of using numerical algorithms to create the sequence \refeq{e-corrections}
+to $\statev^{'}$ in efforts to bring its residual to $0$. The optimization of $\statev^{'}$ will be said to have
+\textit{converged} if the residual is brought to a value smaller than the
+\textit{tolerance}, $\epsilon$.
+
+The goal then becomes clear; starting from using numerical algorithms create a sequence of
+
+
+
+
+
+

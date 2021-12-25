@@ -1,0 +1,219 @@
+% siminos/gudorf/thesis/chapter/matrixfree.tex
+% $Author: predrag $ $Date: 2020-10-24 01:45:26 -0400 (Sat, 24 Oct 2020) $
+
+
+Our intent of this discussion is to very thoroughly describe what we are doing,
+in part because the notion of approximating the Jacobian via finite-differences
+is seemingly hardwired in certain disciplines.
+In order to do keep the derivations
+as concise and understandable as possible
+we elect to use a ``direct matrix'' notation\rf{Chu09}.
+That is to say, we rewrite \refeq{e-kssFb}
+in terms of linear operators and pointwise multiplications
+\beq \label{e-KSmatrixform}
+(\mathcal{D}_t + \mathcal{D}_{xx} + \mathcal{D}_{xxxx}+\frac{\sigma}{T}\mathcal{D}_x) \utensor
++ \frac{1}{2} \mathcal{D}_{x} \mathcal{F}(\mathcal{F}^{-1}\utensor*\mathcal{F}^{-1}\utensor)
+\eeq
+where subscripts indicate differentiation.
+This notation will simplify the expressions derived for the sensitivity
+matrix and its adjoint. Namely, the columns of the sensitivity matrix
+
+can be written as follows in the direct matrix notation
+\bea \label{e-Partials}
+\frac{\partial F}{\partial \utensor}
+&=& (\mathcal{D}_t + \mathcal{D}_{xx}
++\mathcal{D}_{xxxx}+\frac{\sigma}{\period{}}\mathcal{D}_x)
++\mathcal{D}_{x} \mathcal{F}\cdot \text{Diag}(u)\cdot \mathcal{F}^{-1}
+\continue
+\frac{\partial F}{\partial \speriod{}}
+&=& (\frac{-2}{\speriod{}}\mathcal{D}_{xx}
+-\frac{4}{\speriod{}}\mathcal{D}_{xxxx}
+-\frac{\sigma}{\period{}\speriod{}}\mathcal{D}_x)\utensor
+-\frac{1}{2L} \mathcal{D}_{x}
+\mathcal{F}(\mathcal{F}^{-1}\utensor)*\mathcal{F}^{-1}\utensor)
+\continue
+\frac{\partial F}{\partial \period{}}
+&=& (-\frac{1}{\period{}}\mathcal{D}_{t}
+-\frac{\sigma}{T^2}\mathcal{D}_x)\utensor
+\continue
+\frac{\partial F}{\partial \sigma}
+&=&\frac{1}{\period{}}\mathcal{D}_x \utensor\,.
+\eea
+The adjoint of the first equation of \refeq{e-Partials} is
+\beq \label{e-AdjSens}
+\frac{\partial F}{\partial \utensor}^{\dagger}
+= -\mathcal{D}_t + \mathcal{D}_{xx}
++\mathcal{D}_{xxxx}-\frac{\sigma}{\period{}}\mathcal{D}_x
+-\mathcal{F}\cdot \text{Diag}(u)\cdot \mathcal{F}^{-1}\mathcal{D}_{x}
+\eeq
+The remaining adjoints (row vectors) are not shown because
+the matrix free computation is the same as \refeq{e-Partials}
+merely with an additional transposition.
+In summary, to compute all relevant matrix vector products
+we need matrix free versions of Fourier transforms, differentiation,
+elementwise multiplication. The only difficulty
+that arises are when \emph{symmetry specific} \xDft\ are desired.
+As implied by the name, these are \xDft\ which remove redundant
+\spt\ \Fcs\ which are constrained by symmetry.
+For a discussion of these constraints see \refsect{sect:selectionKS}.
+
+
+
+The main goal is to be able to write the matrix-vector product in terms of
+function calls so that no matrices are explicitly formed. This would
+dramatically increase the speed at which my adjoint descent code runs and due
+to the global convergence of the method, and the speed when used in a hybrid
+method, this might be exactly the robustness that we need to find large
+doubly-periodic spacetime solutions at least.
+
+More work into \rpo\ matrix-vector product formulation of the spatiotemp code.
+Still trying to figure out what I can use as extra constraints.
+For \ppo s I can still constrain to be transverse to time translations
+to give me corrections but because of the reflection symmetry I cannot
+impose tranversality to the spatial translation direction, which is what
+is used to complete the underdetermined linear system. Maybe I'm thinking
+about it the wrong way as usually these are just implemented as constraints
+to prevent the Newton correction from pointing in symmetry directions,
+and so I might be able to use the
+
+I sort of went down a rabbit hole as to test what extra constraints are possible
+I tested a constraint the prevents changes in area. This was easy enough
+to implement, and it worked, but its the exact opposite of what I would
+like to accomplish. The tangent space(s) are what should be telling me
+the correct scales for $L$ and $T$. Because of this I tried to impose
+a constraint such that the area is minimized but I can't currently
+think of a way that doesn't do this \emph{too well}. What I mean by
+this is that if you say that you want to minimize $T*L$ then it will
+just send one of those parameters to $0$, naturally.
+
+One interesting thing that came about from the area constraint is
+that if you tell my code the wrong area. If for instance I changed
+$L_0$ to $L_0 - 2 = 20$ then it had to change the characteristic
+wavelength in time to fit in my box. Including figures for scientific
+curiousity.
+
+The main idea I'm trying to flush out here is that if I cannot use
+tranversality constraints to complete the linear system then
+perhaps I need to complete the linear system by creating constraints
+on the parameters themselves.
+
+Investigated this method in hopes that maybe I could prove Burak wrong
+by including "pseudo arc-length continuation" in the actual spatiotemporal
+code at the same, but sadly it doesn't look like one can have cake and eat
+it too.
+
+Wrote the ``reformulated" (rescaled) version of the mean velocity frame
+code for \rpo\ {\twots}. As expected, it works a lot better
+with iterative methods such as GMRES.
+
+I'm only able to get away with this reformulation because the diagonal
+terms corresponding to laplacian and laplacian squared operators
+dominate. For the mean velocity frame representation of
+%\RPOtwot{22}{16.3}, %\RPO{16.3}
+the condition number is reduced to around $\kappa \approx 2000$ which is
+about an order of magnitude better than \ppo\ {\twots}.
+
+It seems that these reformulations will be necessary as the matrix free
+code relies on approximations to iterative methods. When the iterative
+methods fail for the exact problem (explicitly formed matrices) I know
+I'm in danger. Luckily the test cases I've run through where, for
+instance, GMRES fails for the original equation but succeeds with the
+reformulated equations. Like I have mentioned before the reformulation is
+sort of a cheap trick I am using that could essentially be accomplished
+by preconditioning but I came up with some kooky ideas I want to try out
+to see if the reformulation of {\twots} actually induces
+an iterative map or if I just think it does. Maybe I'm in fantasy land
+but because I am essentially rewriting \refeq{e-FksSpattemp},
+which can
+be drastically simplified as $F(u,T,L,\sigma) = 0$, as another equation
+$\tilde{F}-\utensor = 0$. I think the physical interpretation of the second
+equation is much clearer than the first, but it has its own issues as it
+demands for inversion of an operator that can technically become
+singular. The reformulated equations for the mean velocity frame
+
+This was not the equation I put in practice as the inversion of
+the Laplacian and Laplacian squared term turned out to not be useful.
+
+\beq \label{eqn:MNGspacetime_reform_mvf}
+G(\utensor) = (D_{x x} - D_{x x x x})^{-1}
+    ((D_{t}+S) \utensor + D_{x}F((F^{-1} \utensor)^2)) -\utensor = 0,
+\eeq
+where $S$ is the derivative of the Lie algebra element,
+$\dot{\phi}\cdot \mathbb{T}=  {2 \pi n \sigma}/{TL}$,
+such that ${2\pi \sigma}/{L} =\theta$ is the parameter needed to perform
+\SOn{2} group action.
+\beq \label{eqn:MNGspacetime_mvf}
+G(\utensor) = (D_{t} + S + D_{x x} - D_{x x x x}) \utensor
+          + D_{x}F((F^{-1} \utensor)^2)) = 0,
+\eeq
+where $S$ is the derivative of the Lie algebra element, $\dot{\phi}\cdot
+\mathbb{T}=  {2 \pi n \sigma}/{TL}$, such that ${2\pi \sigma}/{L}
+=\theta$ is the parameter needed to perform \SOn{2} group action.
+
+Now that I am comfortable with saying the direct-matrix (forming matrices explicitly)
+methods will work for both $\Zn{2}$ and \SOn{2} isotropy subgroup (\rpo\ in its mean velocity frame)
+solutions I have been working on the matrix-free methods. This was done in a poor order
+however because I should have made the changes to the automated {\twot}
+finder to run on light while figuring this out.
+
+Realized that perhaps adjoint descent would be better applied to full {\statesp} as opposed to spatiotemporal
+symmetry subspaces because its an integration(descent) type method. I wrote new codes that apply adjoint
+descent to the complex representation of the spatiotemporal \KSe, \ie\
+\refeq{e-FksSpattemp}. % PC: Matt had here {eqn:FksSpattemp}
+The main benefit of doing so is that in the real-valued representation that I
+use for everything it isn't straight forward how to calculate the transpose of
+the Fourier transform and inverse transform operations, but when I use a
+complex representation the transformation is unitary; meaning that the
+conjugate transposes that arise are easily replaced using the unitarity
+property of the Fourier transform (with proper normalization).
+
+Currently running tests on spatiotemporal domains initiated from random noise, large scale domains, and seeing
+what comes out. Random noise on a $T,L = 500,500$ domain ran long enough starts to pick out the length scales of
+the \KSe, and its the matrix-free computation that allows it to run fast enough to do anything.
+
+\refFig{fig:MNGlarge_adjointdescent} is an example of the limits of the method so far. Taking (pseudo) white
+noise on a large space-time domain and then running the adjoint descent reproduces structures that look similar to those
+seen within simulations of the \KSe.
+
+Another topic I need to breach is whether I can constrain the adjoint descent to
+preserve the symmetry subgroup of any solutions found. If I can get the matrix-free
+method to work in the real representations this will automatically hold but not
+so in the complex representation as I'm abusing the extra variables and unitarity
+of the Fourier transform so that everything is unconstrained.
+
+
+The finite difference calculation that is used to approximate the matrix
+vector product is just too inaccurate to be of use for the spatiotemporal
+problem. Comparing the norms of the two vectors, the exact product, $|J \delta \mathbf{x}|$,
+and its approximation,
+$|\frac{F(x+\delta \mathbf{x})-F(x)}{|\delta x|}|$ they're off by almost exactly $|\delta x|$,
+which makes me feel like I had made some stupid mistake but changing this in the GMRES code
+makes it completely worthless.
+
+While these equations are the same for both the IVP and BVP, there are implicit differences
+in what $u$ and $v$ represent. For the IVP, $u(x, t)$ and $v(x,t)$ represent
+a single instant in time, while for the BVP they represent an entire \spt\ area.
+
+Therefore, for the IVP the adjoint equation is another dynamical equation which is arguably
+more complicated than the original \KSe\ because it relies on two field variables instead
+of one. In the context of the BVP, however, it represents an additional differential algebraic
+equation defined on the same domain as $u(x,t)$. This intrinsic difference is the reason
+for the drastic difference in what the ``adjoint operator'' entails. Specifically,
+The adjoint operator for the IVP is the stability matrix\rf{Tabor89} of this adjoint
+equation, that is, the matrix that results from applying the
+gradient operator $\nabla_v$.
+It represents the instantaneous rate of change in a linear neighborhood
+of the co-state space point $v$.  Similar to the stability matrix of the
+\KSe, it is a time-dependent quantity that depends only on the current point in
+state space, $u(x,t)$ as it is linear in $v$. This time dependent nature is
+captured by the time dependent Jacobian operator $J^t$ and its adjoint $(J^{\top})^(t)$.
+These operators map the corresponding linear neighborhoods forward in time
+and evolve according to the differential equation
+\beq \label{jacobiandot}
+\dot{J} = A J
+\eeq
+where $A$ is the stability matrix and $J$ is the Jacobian, $J^(0) \equiv \mathbb{I}$.
+To simplify the notation, we have dropped the implicit time dependence as well as the
+dependence on $u(x,t)$. To solve this equation, that is, to solve for a finite time Jacobian
+matrix, one must numerically simultaneously integrate the augmented system of equations comprised
+of the original dynamical equation and \refeq{jacobiandot}. 

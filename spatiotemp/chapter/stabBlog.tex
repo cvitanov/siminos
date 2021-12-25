@@ -1,0 +1,1223 @@
+% siminos/spatiotemp/chapter/stabBlog.tex
+% $Author: predrag $ $Date: 2021-08-10 11:56:19 -0400 (Tue, 10 Aug 2021) $
+
+% chapter/stability.tex called by blogCats.tex
+% not included in CL18.tex
+
+\section{Stability blog}
+\label{sect:stabBlog}
+
+\begin{description}
+    \PCpost{2016-09-28}{                                        %\toCB
+Amritkar \etal\rf{AGGN91,GadAmr93} have investigated the stability of
+{\spt}ly {\po}s in one- and two-dimensional coupled map lattices, \ie,
+$1+1$ and $1+2$ \spt\ dimensions. The stability matrices for such {\lattstate}s are block circulant and hence can be brought onto a block diagonal
+form through a unitary transformation. They derive conditions for the
+stability of periodic solutions in terms of the criteria for smaller
+orbits.
+
+Zhilin\etal\rf{ZGBG94}
+{\em Spatiotemporally periodic patterns in symmetrically coupled map lattices}
+write: ``
+The stability of the deduced orbits is investigated and we can reduce the
+problem to analyze much smaller matrices corresponding to the building block
+of their spatial periodicity or to the building block of the spatial
+periodicity of the original orbits from which we construct the new orbits. In
+the two-dimensional case the problem is considerably simplified.
+''
+    }
+
+    \PCpost{2019-10-10}{
+Reread Lindstedt-\Poincare\rf{DV02} Fourier method papers by
+Viswanath\rf{DV03,DV04}; his most accurate resolution of fractal
+structure of the Lorenz attractor. It is a very thin fractal, stable
+manifold thickness is of the order $10^{-4}$. He has computed all 111011
+periodic orbits corresponding to symbol sequences of length 20 or less,
+all with 14 digits accuracy.
+    }
+
+    \PCpost{2019-10-13}{
+Viswanath\rf{DV02} writes: ``
+The Lindstedt-\Poincare\ technique uses a nearby periodic orbit of the
+unperturbed differential equation as the first approximation to a
+perturbed differential equation.
+One of the examples presents what is possibly the most accurate
+computation of Hill's orbit of lunation since its justly celebrated
+discovery in 1878.
+
+The eigenvalues excluding 1 are called characteristic multipliers.
+
+AUTO\rf{auto,Doedel97} collocation method, Guckenheimer and
+Meloon\rf{GM00aut}, Choe and Guckenheimer\rf{ChoGuck99} all set up their
+\po s as in \refeq{errorVecs1D}. Since the linear systems that they form
+are sparse, the cost of solution is only linear in the number of mesh
+points.
+
+There are other variants of this forward multiple shooting algorithm: one
+is a symmetric multiple shooting algorithm and another is based on
+Hermite interpolation.
+
+He dismisses harmonic balance methods for computing periodic orbits (Lau,
+Cheung and Wu [?15], and Ling and Wu [?16]) as being too expensive, of
+order $O(n^3)$, where the Fourier series are of width $n$, whereas his
+method is of order $O(n\ln{n})$ .
+
+Wisvanath algorithm for computing periodic orbits is a ``polyphony of
+three themes:'' the Lindstedt-\Poincare\ technique from perturbation
+theory, Newton's method for solving nonlinear systems, and Fourier
+interpolation.
+
+To compute $n$ Fourier coefficients of $\ssp(\zeit)$, the fast Fourier
+transform (FFT) is applied to the function evaluated at $n$ equispaced
+points in $[0,2\pi)$. The width $n$ of the Fourier series must be
+sufficiently large to pick up all the coefficients above a desired
+accuracy threshold.
+
+If $(\ssp_1,\ssp_2,\cdots,\ssp_m)$ are $2\pi$ periodic, so is
+$\map(\ssp_1,\ssp_2,\cdots,\ssp_m)$. To obtain its Fourier series from
+those of the $\ssp_i$, interpolate $\ssp_i$ at equispaced points,
+evaluate $\map$ at those points, and apply the FFT. The inverse FFT can be
+used to interpolate a Fourier series at equispaced points\rf{trefethenSpectral}.
+In $d$ \statesp\ dimensions, one needs
+$d$ Fourier series, one for each coordinate in $\reals^d$.
+
+His 4 coupled Josephson junctions (10\dmn \statesp) uses 64 Fourier modes.
+
+''
+
+The implementation of the algorithm must pay attention to the possibility of
+aliasing.
+    }
+
+    \PCpost{2019-10-13}{
+Viswanath\rf{DV03} writes: ``
+The representation of periodic orbits by Fourier series is both accurate
+and efficient because, when a periodic orbit is analytic, the Fourier
+coefficients decrease exponentially fast, making its Fourier
+representation compact.
+
+''
+    }
+
+    \PCpost{2019-10-13}{
+Guckenheimer and
+Meloon\rf{GM00aut} set up their
+\po s as in \refeq{errorVecs1D}, and have the same $d$\dmn\ orbit  \jacobianM\
+variant of
+\refeq{fcnewt}, but with extra, time-direction fixing diagonals, as they are
+looking at continuous time flows. Instead of the cyclic group, they use
+LU factorization. They get $1-\jMps_p$ matrix.
+    }
+
+    \PCpost{2019-10-14}{
+Notes on Choe and Guckenheimer\rf{ChoGuck99}, a clear and enjoyable read:
+
+Instead of relaying on forward-in-time numerical integration,
+\emph{global methods} for finding periodic orbits view the vector field
+as an equation on a function space of closed curves. Here $\map$ is a
+Lipschitz continuous vector field on a smooth manifold \pS, and $p :
+S^1\to\pS$ is a $C^1$ closed curve in \pS.
+
+Computer implementation of global methods for computing periodic orbits
+requires discretization of closed curves and approximation of the
+periodic orbit equations. One defines finite-dimensional
+submanifolds  of the space  of closed curves and approximates the
+periodic orbit equations as a map defined on this space.
+
+They keep the number of discretization points fixed and increase the
+accuracy by \emph{automatic differentiation}, constructing the Taylor
+series of trajectories at discretization points. They also compute
+\stabmat\ derivatives of the Taylor series coefficients with respect to
+the \statesp\ variables for use in the Newton iteration. As the degree of
+the computed Taylor series increases, their curves converge since the
+trajectories are analytic.
+
+The Taylor series is obtained by repeated differentiation of the
+differential equation
+\(
+\dot{\ssp}=\vel(\ssp)
+\)
+and recursive substitution of
+the values of derivatives $\ssp^{(k)}(\zeit)$ of increasing degree. To
+make the approximate curve smooth and continuous, they use a somewhat
+funky interpolation function they call $\beta(\zeit)$.
+
+[Predrag's aside: hopefully our strategy of using Fourier transforms has
+much faster convergence than Taylor series. Even if one wants
+polynomials, I suspect Chebyshev or Hermite or some other orthogonal sets
+would be better.]
+
+Indeed, the Hermite splines, interpolating functions that arc polynomials
+of degree $2d+1$, gave the best results in their computations.
+
+They eliminate the time translation marginal eigenvalue by using sets of
+\PoincSec\ hyperplanes transverse to the vector field, and solving for
+points that lie on the intersection of \PoincSec\ with the periodic
+orbit.
+They use the orthogonal complements to the vector field $\vel(\ssp_i)$ at
+the mesh points $\ssp_i$. The normal subspace to the vector field at
+$\ssp_i$, is determined by computing the QR factorization of the
+$[d\!\times\!(d+1)]$ matrix. There is a whole PhD thesis worth of detail here.
+
+The structure of the \jacobianMs\ that are used in the root finding has a
+simple sparsity pattern that can be exploited in its inversion. Explicit
+inversion of this block matrix in terms of the inverses of the individual
+blocks yields a relationship between the regularity of the root finding
+problem and the hyperbolicity of the periodic orbit.
+They relate the regularity of orbit \jacobianM\ ${\cal J}$ to the
+\po's \monodromyM, their sect.~3.~{\em Analysis},
+using LU factorization. They show that ${\cal J}$ is invertible
+(needed for Newton schemes) if and only if the \monodromyM\ \monodromy of the
+\PoincSec\ does not have 1 as an eigenvalue.
+
+Since their methods produce smooth approximations to periodic orbits,
+they can evaluate the distance between the tangent vectors to a computed
+curve and the vector field along that curve. These error estimates enable
+them to develop strategies for mesh refinement that balance the error in
+different mesh intervals. Since the approximating solution in a mesh
+interval is determined entirely by its endpoints, mesh refinement is a
+simple process and does not change the structure of the discretized
+periodic orbit equations.
+
+They define the error field \refeq{errorVecs1D} as operator
+$F(p)=\map(p)-\sigma p$, with \po s solutions satisfying $F=0$. $p$ are
+analytic curves, but Choe-Guckenheimer approximations are not analytic.
+
+The starting data is an $N$-point \emph{discrete closed curve}
+\refeq{nXdCycleErr}, a cyclically ordered collection of $N$ points. Given
+a map $S$, on seeks seek systems of $(\cl{p}\!\times\!d)$\dmn\ vector
+field equations $F_S=0$ whose solutions yield good approximations to
+periodic orbits of \map.
+The convergence is takes place on a fixed mesh, but with increasing
+degree $d$ of map $S_d$. They compute the orbit \jacobianM\ ${\cal J}$
+and invert it to use in the Newton routine,
+but do not mention or discus computing $\det\cal J$.
+
+They test their algorithm with the Hodgkin-Huxley equations, a moderately
+stiff 4\dmn\ vector field with strongly stable directions. They do not
+boast, but their residual errors are of order $10^{-11}$.
+    }
+
+
+
+
+
+
+
+\end{description}
+
+
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Hill's formula blog}
+\label{sect:HillBlog}
+
+\hfill   {\color{red} For the latest entry, go to the bottom of this section}
+
+\bigskip
+
+\begin{description}
+
+    \PCpost{2019-10-13}{
+Viswanath\rf{DV02} describes, and numerically solves Hill's problem: ``
+In 1878, Hill\rf{Hill86} derived the equations that describe
+the planar motion of the moon around the earth:
+\bea
+  \ddot{x}-2\dot{y} &=& \frac{\pde\Omega}{\pde x}
+\continue
+  \ddot{y}+2\dot{x} &=& \frac{\pde\Omega}{\pde y}
+\,,\quad
+  \Omega = \frac{3}{2}x^2+(x^2+y^2)^{-1/2}
+\,.
+\label{DV02:HillEq}
+\eea
+The Jacobi integral $2\Omega-\dot{x}^2-\dot{y}^2$ is constant along
+the solutions of Hill's equation, so each orbit is characterized by
+a ``Jacobi constant.''
+The orbits Viswanath (and Hill) computes are symmetric with
+respect to both the $x$ and the $y$ axes - $\Cn{2}\times\Cn{2}$-symmetric,
+so it suffices to compute them to quarter-period $\period{}/4$.
+He uses a Fourier series of width 64 and filters out
+20\% of the frequencies at the high end after each iteration.
+
+I do not see Hill's formula in this paper.
+    ''
+    }
+
+\PCpost{2018-10-27}{
+Petrisor\rf{Petrisor13}
+{\em Twist number and order properties of periodic orbits}
+works mostly with the standard-like maps, but we might find her article
+useful both as a review of the standard
+literature, as well as an aid in understanding the $\jMorb$ of the cat map,
+and perhaps the twisted {\bcs} (relative) \twots\ of \catlatt\ as well.
+
+Petrisor\rf{Petrisor14} {\em Monotone gradient dynamics and the location of
+stationary $(p,q)$-configurations} might also be of interest.
+
+A standard-like map is a twist map $F_\epsilon$, defined by a Lagrangian
+generating function of the form
+\[
+h(x,x') = \frac{1}{2} (x - x')^2 - \epsilon V(x)
+\,,
+\]
+where $V$ is a fixed 1-periodic even function.
+Classical standard map corresponds to the potential
+\(
+V(x) = - \frac{1}{(2\pi)^2}\cos(2\pi x)
+\,.
+\)
+The twist map $F_\epsilon$ is reversible, i.e. it factorizes as $F_\epsilon = I
+\circ R$, where R and I are the involutions. [...] The R-invariant orbits are
+called symmetric orbits.
+
+A numerical
+characteristic associated with a periodic orbit is the rotation number, which
+measures the average rotation of the orbit around the annulus.
+Mather\rf{Mather84} defined also the amount of rotation, which is called twist
+number or torsion number.
+[...]
+Angenent\rf{angen88} proved that in the space of $(p,q)$-sequences a critical
+point of the $W_{pq}$ action [...]  is connected by the negative gradient flow of
+the action.
+    \index{twist number}\index{torsion number}
+
+The 1-cone function is defined on the phase space of a twist map and takes
+negative values within the region where the map exhibits strong folding property.
+We prove that the restriction of this function to a periodic orbit gives
+information on the eigenvalues of the {\jacobianOrb} $\jMorb_q$ associated with that
+orbit.
+
+[...]
+we revisit the definition and properties of the twist number of a periodic orbit
+based on the structure of the universal covering group of the group
+$\SLn{2}{\reals}$. The twist number is defined as the translation number of a circle
+map induced by the monodromy matrix associated with the periodic orbit.
+[...]
+we give the relationship between the twist number value of a
+$(p,q)$-periodic orbit, and the position of the real number 0 with
+respect to the sequence of interlaced eigenvalues of the {\jacobianOrb}
+$\jMorb_q$, associated with the corresponding $(p,q)$-sequence, and of a
+symmetric matrix derived from $H_q$.
+
+Petrisor eq.~(11) expresses the Hessian in terms of the 1-step forward
+{\jacobianM}, and gives references to the related literature. In
+particular, the discrete Hill's formula, the characteristic polynomial of
+a periodic Jacobi matrix, and the Hill discriminant are presented in
+Toda\rf{Toda89}.
+
+The {\jacobianOrb} $\jMorb_q$ of the$W_{pq}$ action associated with a
+$(p,q)$-periodic orbit, $q \leq 3$, is a Jacobi periodic matrix (i.e. a
+symmetric tridiagonal matrix with non-null entries in the upper right,
+and left lower corners, and the next-to-diagonal entries have the same
+sign), see Petrisor eq.~(19). For q = 2, $H_q$ is simply a symmetric
+matrix.
+
+Let $\jMorb_q$ be the {\jacobianOrb} of the action $W_{pq}$ at a critical
+point $\ssp = (\ssp_n)$. The signature (the number of negative and
+positive eigenvalues) of the Hessian $\jMorb_q$, at a non-degenerate
+minimizing sequence is (0, q), while at the corresponding mini-maximizing
+sequence it is (1, q-1). The number of negative eigenvalues is called the
+Morse index of the critical sequence.
+    }
+
+    \PCpost{2020-08-02}{
+Toda\rf{Toda89} {\em Theory of Nonlinear Lattices} \CBlibrary{Toda89},
+Chapt.~4.{\em Periodic Systems} has way more wisdom than what I am
+capable of learning this Sunday.
+
+Toda studies the classical mechanics of one-dimensional
+lattices (chains) of particles with nearest neighbor interaction; they
+are discrete and infinite in space, continuous in time.
+
+When the force is proportional to displacement, that is, when Hooke's law
+is obeyed, the spring is said to be linear, the potential is quadratic.
+While for us that leads to site stretching rate ${s}$, for Toda it leads to the
+Laplacian (${s}=2$), not sure why..
+
+The {\em inverse scattering method} for an infinite lattice makes use of
+the discrete Schrodinger equation. For periodic systems this gives a
+discrete Hill's equation, and in place of the scattering data, it is
+convenient to use the spectrum of the discrete Hill's equation and the
+auxiliary spectrum for fixed boundary conditions of the same equation. In
+this case the fundamental solutions and the discriminant of the discrete
+Hill's equation play important roles. The discriminant is a polynomial of
+the spectrum, and the integral of motion is given in terms of elliptic
+integrals. Thus the initial value problem reduces to the inverse problem
+(Jacobi's inverse problem), or inverse spectral theory.
+
+His discrete Hill's equation is continuous in time, so presumably most
+work is for stationary states; I have probably misunderstood the
+formulation...
+
+He works with a 3-term recurrence (4.1.3a), and defines a 2-configuration
+monodromy matrix (4.1.11).
+
+For special values of A, the solution of (4.1.4) can be periodic, but
+more generally it is relative periodic (4.1.16), or the Bloch function
+(it's existence given by the Floquet theorem) which he relates to the
+trace of the monodromy matrix (4.1.19). The simplest example is his
+(4.1.23). His \jacobianOrb\ (4.1.28) has variable diagonal and off
+diagonal elements, corresponding to nontrivial nonlinear solutions for
+$d=1$ lattice.
+
+He says that the $\speriod{}=3$ three-particle system [4.8] is important
+because, though the simplest, it shows nearly all the characteristic
+features which $\speriod{}$-particle systems exhibit.
+    }
+
+    \PCpost{2020-07-24}{
+Bolotin and Treschev\rf{BolTre10} {\em Hill's formula}:
+give two multidimensional generalizations of Hill's formula:
+\begin{enumerate}
+  \item to discrete Lagrangian systems (symplectic twist maps)
+  \item to continuous Lagrangian systems
+\end{enumerate}
+They discuss additional aspects which appear in the presence
+of symmetries or reversibility.
+\begin{enumerate}
+  \item study the change of the Morse index of a periodic trajectory
+        after the reduction of order in a system with symmetries
+  \item applications to stability of periodic orbits
+\end{enumerate}
+
+
+``In his study of periodic orbits of the 3 body problem, Hill obtained
+a formula relating the characteristic polynomial of the monodromy
+matrix of a periodic orbit and an infinite determinant of the
+Hessian of the action functional. A mathematically correct
+definition of the {\HillDet} and a proof of Hill's formula were
+obtained later by Poincar\'e.''
+
+Hill computed $\det H$ approximately  replacing $H$ by a $3\times 3$
+matrix, which gave  quite a good approximation.
+Hill did not prove convergence for the infinite determinant  $\det H$.
+Poincar\'e\rf{poincare}
+({\rm Vol.~I:} Solutions p\'eriodiques. Non-existence des int\'egrales
+uniformes. Solutions asymptotiques)
+explained the meaning of the {\HillDet} and presented a rigorous
+proof of Hill's formula. The equation
+appeared in 1983 for discrete Lagrangian systems in \refref{MacMei83} and
+independently in ref\{4\}. Here $H$ is the finite Hessian
+matrix associated with the action functional at the critical point
+generated by the periodic solution. In ref\{5\} (see also ref\{6\}) a
+general form of Hill's formula was obtained for a periodic solution
+of an arbitrary Lagrangian system on a manifold. In this case $H$  is a
+properly regularized Hessian operator of the action functional at the
+critical point determined by a periodic solution.
+
+Hill's relates $P$, the monodromy matrix of the periodic trajectory, to
+the second variation of the action functional at the periodic trajectory,
+with $H$ the corresponding  Hessian operator.
+
+                                \toCB
+The first dynamical application of Hill's formula is the well known
+statement that the Poincar\'e degeneracy of a periodic trajectory (that
+is, the condition that 1 is an eigenvalue of $P$) is equivalent to the
+variational degeneracy (the condition $\det H=0$).
+
+
+%\Bibitem{2}
+%\Hrefs{http://www.zentralblatt-math.org/zmath/search/?an=JFM 24.1130.01}
+%\by A.~Poincar\'e
+%\book Les m\'ethodes nouvelles de la m\'ecanique c\'eleste.
+%{\rm Vol.~I:} Solutions p\'eriodiques. Non-existence des int\'egrales uniformes.
+%Solutions asymptotiques
+%\publ Gau\-thier-Villars
+%\publaddr Paris
+%\yr 1892
+%\totalpages 385
+%\zmath{http://www.zentralblatt-math.org/zmath/search/?an=JFM 24.1130.01}
+%\moreref
+%\Hrefs{http://www.zentralblatt-math.org/zmath/search/?an=JFM 25.1847.03}
+%\book {\rm Vol.~II:} M\'ethodes de MM.~Newcomb, Gyld\'en, Lindstedt et Bohlin
+%\totalpages viii+479
+%\yr 1893
+%\zmath{http://www.zentralblatt-math.org/zmath/search/?an=JFM 25.1847.03}
+%\moreref
+%\Hrefs{http://www.zentralblatt-math.org/zmath/search/?an=JFM 30.0834.08}
+%\book
+%{\rm Vol.~III:}
+%Invariants int\'egraux. Solutions p\'eriodiques du deuxi\`eme genre.
+%Solutions doublement asymptotiques
+%\totalpages iv+414
+%\yr 1899
+%\zmath{http://www.zentralblatt-math.org/zmath/search/?an=JFM 30.0834.08}
+%\moreref
+%\Hrefs{http://www.zentralblatt-math.org/zmath/search/?an=Zbl 0651.70002}
+%\yr 1987, Vol.~I
+%\serial  Les Grands Classiques Gauthier-Villars
+%\publaddr Paris
+%\publ Librairie Scientifique et Technique Albert Blanchard
+%\totalpages xii+387
+%\isbn 2-85367-093-7
+%\bookinfo Reprint
+%\mathscinet{http://www.ams.org/mathscinet-getitem?mr=0926906}
+%\zmath{http://www.zentralblatt-math.org/zmath/search/?an=Zbl 0651.70002}
+%% New methods of celestial mechanics. Vol. I. Periodic solutions.
+%% Nonexistence of uniform integrals.  Asymptotic solutions
+%\moreref
+%\Hrefs{http://www.zentralblatt-math.org/zmath/search/?an=Zbl 0651.70002}
+%\totalpages viii+487
+%\bookinfo Vol.~II
+%\isbn 2-85367-093-7
+%\mathscinet{http://www.ams.org/mathscinet-getitem?mr=0926907}
+%\zmath{}
+%% The methods of Newcomb, Gylden, Lindstedt and Bohlin
+%\moreref
+%\Hrefs{http://www.zentralblatt-math.org/zmath/search/?an=Zbl 0651.70002}
+%\bookinfo Vol.~III
+%\totalpages vi+416
+%\isbn 2-85367-093-7
+%\mathscinet{http://www.ams.org/mathscinet-getitem?mr=0926908}
+%\zmath{}
+%% Integral invariants. Periodic solutions of the second kind. Doubly asymptotic solutions
+
+%\bibitem{4} Treschev D.V., On the question of stability of periodic trajectories of the Birkhoff billiard,
+%    {\it Vestnik Moskov. Univ. Ser I Mat-Mekh,} (1988) no 2, 44--50.
+%\RBibitem{4}
+%\zmath{http://www.zentralblatt-math.org/zmath/search/?an=Zbl 0667.58033}
+%\yr 1988
+%\issue 2
+%\pages 44--50
+%\mathscinet{http://www.ams.org/mathscinet-getitem?mr=0938065}
+%\zmath{http://www.zentralblatt-math.org/zmath/search/?an=Zbl 0667.58033}
+%\transl
+%English transl.
+%\Hrefs{http://www.zentralblatt-math.org/zmath/search/?an=Zbl 0667.58033}
+%\by D.\,V.~Treshchev  (Treschev)
+%\paper On the problem of the stability of the periodic trajectories of a Birkhoff billiard
+%\jour Mosc. Univ. Mech. Bull.
+%\vol 43
+%\issue 2
+%\pages 28--36
+%\yr 1988
+
+%\bibitem{5}  Bolotin S.V.,
+%    On the Hill determinant of a periodic orbit.
+%    {\it Vestnik Moskov. Univ. Ser I Mat-Mekh,} 1988, no.~3, 30--34.
+%\RBibitem{5}
+%\Hrefs{http://www.zentralblatt-math.org/zmath/search/?an=Zbl 0712.70023}
+%\by ‘.\,‚.~®«®â¨­
+%\paper Ž¡ ®¯à¥¤¥«¨â¥«¥ •¨««  ¯¥à¨®¤¨ç¥áª®© ®à¡¨âë
+%\jour ‚¥áâ­. Œ®áª. ã­-â . ‘¥à.~1. Œ â¥¬., ¬¥å.
+%\yr 1988
+%\issue 3
+%\pages 30--34
+%\mathscinet{http://www.ams.org/mathscinet-getitem?mr=966862}
+%\zmath{http://www.zentralblatt-math.org/zmath/search/?an=Zbl 0712.70023}
+%\adsnasa{http://adsabs.harvard.edu/cgi-bin/bib_query?1988MVSMM.......30B}
+%\transl
+%English transl.
+%\Hrefs{http://www.zentralblatt-math.org/zmath/search/?an=Zbl 0712.70023}
+%\by S.\,V.~Bolotin
+%\paper The Hill determinant of a periodic orbit
+%\jour Mosc. Univ. Mech. Bull.
+%\yr 1988
+%\vol 43
+%\issue 3
+%\pages 7--11
+
+%\bibitem{6}  Kozlov V.V. and Treschev D.V., {Billiards: a genetic introduction to the dynamics of systems with impacts.}
+%    Translations of Mathematical Monographs, vol. 89, AMS, 1991.
+%\RBibitem{6}
+%\Hrefs{http://www.zentralblatt-math.org/zmath/search/?an=Zbl 0729.34027}
+%\by ‚.\,‚.~Š®§«®¢, „.\,‚.~’à¥éñ¢
+%\book ¨««¨ à¤ë. ƒ¥­¥â¨ç¥áª®¥ ¢¢¥¤¥­¨¥ ¢ ¤¨­ ¬¨ªã á¨áâ¥¬ á ã¤ à ¬¨
+%\publ ˆ§¤-¢® Œƒ“
+%\publaddr Œ.
+%\yr 1991
+%\totalpages 168
+%\isbn 5-211-01566-5
+%\mathscinet{http://www.ams.org/mathscinet-getitem?mr=1157370}
+%\zmath{http://www.zentralblatt-math.org/zmath/search/?an=Zbl 0729.34027}
+%\transl
+%English transl.
+%\Hrefs{http://www.zentralblatt-math.org/zmath/search/?an=Zbl 0729.34027}
+%\by V.\,V.~Kozlov and  D.\,V.~Treschev
+%\book Billiards. A~genetic introduction to the dynamics of systems with impacts
+%\serial Transl. Math. Monogr.
+%\publ Amer. Math. Soc.
+%\publaddr Providence, RI
+%\totalpages viii+171
+%\isbn 0-8218-4550-0
+%\vol 89
+%\yr 1991
+%\mathscinet{http://www.ams.org/mathscinet-getitem?mr=1118378}
+%\zmath{http://www.zentralblatt-math.org/zmath/search/?an=Zbl 0729.34027}
+
+%\bibitem{7}  Liu C. and  Long Y., Iterated index formula for closed geodesics with applications, Science in China, 45(1)(2002) 9--28.
+%\Bibitem{7}
+%\Hrefs{http://www.zentralblatt-math.org/zmath/search/?an=Zbl 1054.53063}
+%\by Ch.~Liu and Y.~Long
+%\paper Iterated index formulae for closed geodesics with applications
+%\jour Sci. China Ser.~A
+%\vol 45
+%\issue 1
+%\yr 2002
+%\pages 9--28
+%\mathscinet{http://www.ams.org/mathscinet-getitem?mr=1894955}
+%\zmath{http://www.zentralblatt-math.org/zmath/search/?an=Zbl 1054.53063}
+
+%\Bibitem{8}
+%\Hrefs{http://www.zentralblatt-math.org/zmath/search/?an=Zbl 1012.37012}
+%\by Y.~Long
+%\paper Index theory for symplectic paths with applications
+%\serial Progr. Math.
+%\vol 207
+%\publ Birkh\"auser
+%\publaddr Basel
+%\yr 2002
+%\totalpages xxiv+380
+%\isbn 3-7643-6647-8
+%\mathscinet{http://www.ams.org/mathscinet-getitem?mr=1898560}
+%\zmath{http://www.zentralblatt-math.org/zmath/search/?an=Zbl 1012.37012}
+
+
+    }
+
+    \PCpost{2019-01-30}{
+Downloaded the monograph by
+Treschev and Zubelevich\rf{TreZub09}
+{\em Introduction to the Perturbation Theory of Hamiltonian Systems}
+\CBlibrary{TreZub09}
+which contains a chapter {\em Hill's formula}. Here are some clippings:
+
+``In 1886, in his study of stability of the lunar orbit, Hill\rf{Hill86} published
+a formula which expresses the characteristic polynomial of the monodromy matrix
+for a second order time periodic equation in terms of the determinant of a
+certain infinite matrix.''
+
+    }
+
+    \PCpost{2018-09-29}{
+Some papers that follow up on Bolotin and Treschev\rf{BolTre10}:
+
+Xu and Weng\rf{XuWen08} {\em The calculation for characteristic
+multiplier of {Hill's} equation in case with positive mean}
+
+Hu and Wang\rf{HuWan11}
+{\em Conditional {Fredholm} determinant for the {S}-periodic orbits in {Hamiltonian} systems}
+
+Hu and Wang\rf{HuWan13}
+{\em Conditional {Fredholm} determinant and trace formula for {Hamiltonian} systems: a survey}
+
+Hu, Ou and Wang\rf{HuOuWa14} {\em Trace formula for linear {Hamiltonian} systems
+with its applications to elliptic {Lagrangian} solutions}. Their eq.~(1.17)
+Krein formula for eigenvalues of a linear Hamiltonian systems with $D$ \dof s
+is intriguing.
+
+Krein\rf{Krein83}
+{\em The basic propositions of the theory of  {$\lambda$}-zones of stability of
+a canonical system of linear differential equations with periodic coefficients}
+(have not found a free version on line)
+
+Davletshin\rf{Davletshin14}
+{\em Hill's formula for {$g$}-periodic trajectories of {Lagrangian} systems}
+
+Hu and Wang\rf{HuWan15}
+{\em Eigenvalue problem of {Sturm-Liouville} systems with separated {\bcs}}
+
+Hu and Wang\rf{HuWan16} {\em Hill-type formula and {Krein}-type trace
+formula for {$S$}-periodic solutions in {ODEs}},
+\arXiv{1504.01815}
+
+Hu, Ou and Wang\rf{HuOuWa17}
+{\em Hill-type formula for {Hamiltonian} system with {Lagrangian} {\bcs}},
+\arXiv{1711.09182}: ``
+The Hill-type formula connects the infinite determinant of the Hessian of the
+action functional with the determinant of matrices which depend on the
+monodromy matrix and {\bcs}. Consequently, we derive the
+Krein-type trace formula and give nontrivial estimation for the eigenvalue
+problem.
+''
+
+Hu, Wu and Yang\rf{HuWuYa18}
+{\em Morse index theorem of {Lagrangian systems} and stability of brake orbit}
+
+Sunada\rf{Sunada80}
+{\em Trace formula for {Hill's} operators}
+
+Carlson\rf{Carlson00} {\em Eigenvalue estimates and trace formulas for
+the matrix {Hill's} equation}
+    }
+
+    \PCpost{2019-01-28}{
+Downloaded monographs (have not started studying them as yet):
+
+Maybe \HREF{https://www.encyclopediaofmath.org/index.php/Hill_equation}
+{encyclopediaofmath.org} \emph{Hill equation} is a starting point for
+this literature.
+
+A whole book on the subject that we might have to have a look at:
+Magnus and Winkler\rf{MagWin66} {\em Hill's Equation}
+\CBlibrary{MagWin66}
+
+Added a Bolotin conference abstract
+\CBlibrary{Bolotin09}
+and a Hu conference abstract
+\CBlibrary{Hu13}.
+    }
+
+    \PCpost{2019-04-21}{
+Kozlov\rf{Kozlov11} {\em Problem of stability of two-link trajectories in a
+multidimensional {Birkhoff} billiard} has a simple derivation of Hill's formula
+for billiards, where the Hessian is the second derivative of the length function.
+    }
+
+    \PCpost{2018-09-29}{
+Agrachev\rf{Agrachev18} {\em Spectrum of the second variation},
+\arXiv{1807.10527} writes:
+Second variation of a smooth optimal control problem at a regular extremal is a
+symmetric Fredholm operator. We study the spectrum of this
+operator and give an explicit expression for its determinant in terms of
+solutions of the Jacobi equation.
+
+We study the spectrum of the second variation $D_u^2\varphi$ that is a
+symmetric Fredholm operator of the form $I+K$, where $K$ is a compact
+Hilbert--Schmidt operator. $K$ is NOT a trace class operator so that the trace
+of $K$ and the determinant of $I+K$ are not well-defined in the standard sense.
+
+[...] A simple example: for the 1\dmn\ linear control system
+$\dot x=ax+u$ with the quadratic cost
+$\varphi(u)=\int_0^1u^2(t)-(a^2+b^2)x^2(t)\,dt$
+our determinantal
+identity reads:
+\beq
+\prod\limits_{n=1}^\infty\left(1-\frac{a^2+b^2}{a^2+(\pi n)^2}\right)=
+\frac{a\sin b}{b\,\mathrm{sh}\,a}
+\,;
+\ee{Agrachev18(1-1a)}
+the case $a=0$ corresponds to the famous Euler identity
+\beq
+\prod\limits_{n=1}^\infty\left(1-\frac{b^2}{(\pi n)^2}\right)=\frac{\sin b}{b}
+\,.
+\ee{Agrachev18(1-1b)}
+The example is simple, but, unfortunately, the paper itself is a hell to read...
+
+    }
+
+
+    \PCpost{2018-12-07}{
+Reread Kook and Meiss\rf{kooknewt}
+{\em Application of {Newton}'s method to {Lagrangian} mappings}.
+They describe an Newton's method algorithm for finding periodic orbits
+of {Lagrangian} mappings. The method is based on block-diagonalization
+of the {\jacobianOrb} of the action function.
+The explicit form of the Hessian displayed by Kook and Meiss reminds me of
+Bolotin discrete Hill's formula (\refsect{LiTom17b:GenFctn}, Predrag post {\bf
+2018-09-29} above, eq.~\refeq{MKMP84(3.6)PC}), maybe that's the way to derive it.
+        }
+
+\HLpost{2018-09-26}{
+I worked through the \refexam{exam:MKMP84(3.4)} cat map example. The equation of motion is:
+\bea
+\left[\begin{array}{c} q_{n+1} \\ p_{n+1} \end{array}\right]
+ = \left[\begin{array}{cc} s-1 & 1 \\ s-2 & 1 \end{array}\right]
+   \left[\begin{array}{cc} q_n \\ p_n \end{array}\right] \quad \mod 1
+\,.
+\label{HL1dCatMap1}
+\eea
+    \PCedit{
+Rewrite this equation as:
+\bea
+q_{n+1} &=&  q_n  + p_n + (s-2) q_n - \Ssym{n+1}^q
+    \continue
+p_{n+1} &=&  p_n  + (s-2) q_n  - \Ssym{n+1}^q - (\Ssym{n+1}^p - \Ssym{n+1}^q)
+\,.
+\label{HL1dCatMap2}
+\eea
+and compare with \refeq{exmPerViv2.1a},
+\bea
+q_{n+1} &=& q_{n}+p_{n+1} \qquad  \mod 1, \label{exmPerViv2.1b}
+    \\
+p_{n+1} &=& p_{n} + P(q_{n})             \label{exmPerViv2.1a}
+\,,
+\eea
+so
+\bea
+q_{n+1} &=& q_{n} + p_{n+1}
+    \continue
+p_{n+1} &=&  p_n + (s-2) q_n - \Ssym{n+1}^p \, .
+\label{PC1dCatMap2}
+\eea
+where the $\Ssym{n+1}^q$ seems happily absorbed into $p_{n+1}$.
+The generating function (1-step Lagrangian density) is
+\beq
+L(q_{n},q_{n+1}) =
+\frac{1}{2}(q_{n+1} - q_{n})^2 - V(q_{n})
+    \,,\qquad
+P(q) = - \frac{dV(q)}{dq}
+\,,
+\ee{MKMP84(3.6)HL}
+and the potential energy is:
+\bea
+V(q_n) = - \frac{s-2}{2} q_n^2 + \Ssym{n+1}^p q_n \, .
+\label{HL1dCatMap3}
+\eea
+The problem with this formulation is that
+the potential energy contribution is
+defined asymmetrically in \refeq{MKMP84(3.6)HL1}.
+We should really follow Bolotin and Treschev\rf{BolTre10} eq.~(2.5),
+and define a symmetric generating function
+\beq
+L(q_{n},q_{n+1}) =
+\frac{1}{2}  (q_{n+1} - q_{n})^2
+    - \frac{1}{2} [V(q_{n}) +V(q_{n+1})]
+\,,
+\ee{MKMP84(3.6)PC}
+The first
+variation \refeq{MacMei83(7)} of the action vanishes,
+\bea
+0 &=& L_2(q_{n+1}, q_n) + L_1(q_{n}, q_{n-1})
+                            \label{HL1dCatMap5PC}\\
+&=& q_n -q_{n+1} + (s-2)q_n - \Ssym{n+1}^p + q_n - q_{n-1} \continue
+&=& - q_{n+1} + s q_n -q_{n-1} - \Ssym{n+1}^p
+\,,
+\nnu
+\eea
+hence
+\beq
+q_{n+1} - s q_n + q_{n-1} = - \Ssym{n+1}^p
+\,.
+\label{HL1dCatMap5aPC}
+\eeq
+Letting $\Ssym{n} = - \Ssym{n+1}^p$, we recover the Lagrangian
+formulation \refeq{eq:CatMapNewton5}.
+    } % end \PCedit
+
+Alternatively,
+Han's generating function (1-step Lagrangian density) is:
+\bea
+L(q_{n+1}, q_n)
+&=& \frac{1}{2} \left[ p_{n+1}(q_{n+1}, q_n) \right]^2 - V(q_n)
+\label{HL1dCatMap4}\\
+&=& \frac{1}{2} (q_{n+1} - q_n +m_{n+1}^q - m_{n+1}^p)^2 + \frac{s-2}{2} q_n^2 -m^p_{n+1} q_n \, . \continue
+\nnu
+\eea
+The action is the sum over the Lagrangian density over the orbit. The first
+variation \refeq{MacMei83(7)} of the action vanishes,
+\bea
+0 &=& L_2(q_{n+1}, q_n) + L_1(q_{n}, q_{n-1})
+    \continue
+&=& q_n -q_{n+1} + m_{n+1}^p - m_{n+1}^q
+\label{HL1dCatMap5}\\
+&& + (s-2)q_n -m^p_{n+1} + q_n - q_{n-1} + m_n^q - m_n^p \continue
+&=& - q_{n+1} + s q_n -q_{n-1} - (m_{n+1}^q - m_n^q + m_n^p)
+\,,
+\nnu
+\eea
+hence
+\beq
+- q_{n+1} + s q_n -q_{n-1} = m_{n+1}^q - m_n^q + m_n^p
+\,.
+\label{HL1dCatMap5a}
+\eeq
+Letting $m_n = m_{n+1}^q - m_n^q + m_n^p$, we recover the Lagrangian
+formulation \refeq{eq:CatMapNewton5},
+    \PCedit{
+except for the wrong sign for $m_n$.
+    }
+Now I see why $m_n$'s are called `sources'.
+
+But I think I missed something. I believe \refeq{ActionPC} is correct.
+Because $\Box - {\mu}^2\mathsf{1}$ has negative determinant, so we can do
+the Gaussian integral. But it seems like the action $S[X]$ is the
+negative of the sum of Lagrangian along the orbit? Because if we sum
+\refeq{HL1dCatMap4} along the orbit, the sign before $s$ should be
+positive but in \refeq{ActionPC} it is negative...
+}
+
+  \item[2019-09-25 PC]
+Levit and Smilansky\rf{LevSmi77} {\em A theorem on infinite products of
+eigenvalues of {Sturm-Liouville} type operators} computes a
+Gaussian path integral with a Laplacian kernel. Looks simple, but
+I do not understand it.
+
+Levit and Smilansky\rf{LevSmi77a} {\em A new approach to {Gaussian} path
+integrals and the evaluation of the semiclassical propagator}.
+
+  \item[2019-09-25 PC]
+Han, can you clean up the rest, make it \refeq{Verdiere07:Sect11.5a}
+and beyond into a derivation of the Hill's
+formula for our paper - what follows is just a sketch in (close to) our
+notations:
+
+\HREF{http://www-fourier.ujf-grenoble.fr/~ycolver/}
+{Colin de Verdi{\`{e}}re}\rf{Verdiere07} {\em Spectrum of the {Laplace}
+operator and periodic geodesics: thirty years after} discusses the
+mathematical history of ``Semi-classical trace formula,'' a formula
+expressing the smoothed density of states of the Laplace operator on a
+compact Riemannian manifold in terms of the periodic geodesics.
+This seems to be an elaboration oof
+\HREF{https://www-fourier.ujf-grenoble.fr/~ycolver/ihp05.pdf}
+{these lectures} from which one can clip \& paste.
+
+{Colin de Verdi{\`{e}}re}\rf{Verdiere07} and Levit and
+Smilansky\rf{LevSmi77a} are deriving ``semiclassical'' or ``Gaussian path
+integral'' evolution trace formulas, which lead to $\oneMinJ{}^{\half}$
+rather than the classical $\oneMinJ{}$. That does not matter for our
+purposes, which is the derivation of the Hill's formula, sketched in
+\refeq{Verdiere07:Sect11.5a}, and on.
+
+What we call \po's {\monodromyM} $\monodromy$ he seems to call (linear)
+\Poincare\ map $\Pi$ a closed orbit computed on a hypersurface transverse
+to the orbit, an ``inversible (symplectic) endomorphism of the tangent
+space''. The \po\ weight $\oneMinJ{}$ shows up in his eq.~(5.5).
+
+In his Theorem~11, Sect.~11, Colin de Verdi{\`{e}}re evaluates the
+integral over $\exp(iS(x)/\hbar)$ in the stationary phase approximation,
+with $S(W)$ having support on a critical manifold $W$ has a measure
+$d\mu_W$ given by the quotient of the measure $|dx|$ by the ``Riemannian
+measure'' on the normal bundle to $W$ associated to the Hessian of $S$
+\beq
+d\mu_W = \frac{|dx|}{|\det(\partial^2_{\alpha\beta}S)|^\half|dz|}
+\,,
+\ee{Verdiere07:The11}
+where $z=(z_\alpha)$ are the coordinates on the normal bundle.
+
+The Hessian is associated to a periodic Sturm-Liouville operator for
+which many regularizations have  been proposed.
+
+Elsewhere\rf{VanVleck28,LevSmi77a} $\det(\partial^2_{\alpha\beta}S)$ is
+known as the Van Vleck determinant. Irrelevant to the problem at hand,
+but a fun history read
+\HREF{https://www.reed.edu/physics/faculty/wheeler/documents/}
+{Nicholas Wheeler} is
+\HREF{https://www.reed.edu/physics/faculty/wheeler/documents/Quantum\%20Mechanics/Class\%20Notes/Chapter\%203.pdf}
+{here}.
+In Sect.~11.6 {\em Regularized Determinants of continuous Sturm-Liouville
+operators} he discretizes the $\cl{}$-cycle Hessian just as we do (except
+he allows $s$ to vary along the path), with Dirichlet, or periodic
+boundary conditions,
+\bea
+\mathcal{H}_\cl{} &=& \left (
+		\begin{array}{cccccc}
+		A & B & 0 & \dots & 0 & \transp{B} \\
+		\transp{B} & A & B & \dots & 0 & 0 \\
+		0 & \transp{B} & A  & \dots & 0 & 0 \\
+		\vdots  & \vdots & \vdots & \ddots & \vdots & \vdots \\
+		0 & 0 & 0 & \dots & A & B \\
+		B & 0 & 0 & \dots & \transp{B} & A \\
+		\end{array}
+		\right )
+\label{Verdiere07:Sect11.5a}
+\eea
+In general the [2$\times$2] matrices
+\bea
+A &=&  \frac{1}{*} \left (
+		\begin{array}{cc}
+		a_{11}&a_{12}\\
+		a_{21}&a_{22}\\
+		\end{array}
+		\right )
+\,,\qquad
+B = -\,\frac{1}{*}  \left (
+\begin{array}{cc}
+* & * \\
+* & * \\
+\end{array}
+\right )
+\label{Verdiere07:Sect11.5b}
+\eea
+are time dependent,
+$(A_\zeit,B_\zeit)$, but for our simple \templatt\ they are
+constant, $(A_\zeit,B_\zeit)=(A,B)$.
+    \ifblog
+For some choices, see \refsect{sect:catMapAKS}~{\em Adrien's blog}.
+    \fi
+Denote $b=-\det B$, and by
+\bea
+ \left (
+		\begin{array}{c}
+		x_1\\
+		x_2-x_1\\
+		\end{array}
+		\right )
+&=& \jMps
+ \left (
+		\begin{array}{c}
+		x_0\\
+		x_1-x_0\\
+		\end{array}
+		\right )
+\label{Verdiere07:Sect11.5c}
+\eea
+the 1-time step symplectic (canonical) transformation
+\beq
+\jMps = \left (
+		\begin{array}{cc}
+		\alpha&\beta\\
+		\gamma&\delta\\
+		\end{array}
+		\right )
+\,.
+\ee{Verdiere07:Sect11.5d}
+From his theorem 13 he gets Hill's formula
+$\det H = \det(1-\jMps_p)$ for the periodic case.
+
+\item[2019-09-28 PC]
+It is clearer and clearer that the smart way of doing the
+multishooting Newton and various related ``noisy'' dynamics problems is
+by discrete Fourier (\Cn{n} cyclic group) irreps diagonalization.
+So I might have to rework several earlier papers:
+
+I had inverted Newton Jacobian matrix often, see for example
+eq.~(16) and onward in Cvitanovi{\'c}, Dettmann, Mainieri and
+Vattay\rf{noisy_Fred},
+\HREF{http://chaosbook.org/~predrag/papers/noise.pdf} {click here}. I
+have also introduced the notation for finite-time (shorter than the
+period) Jacobian matrices, see for example eq.~(69) in Cvitanovi{\'c} and
+Lippolis\rf{CviLip12},
+\HREF{http://chaosbook.org/~predrag/papers/CviLip12.pdf} {click here}.
+But I have never done it the way I should have, by a discrete Fourier
+transform, into sum of irreps of \Cn{n} (AKA Fourier modes). Probably best
+to use characters?
+
+\item[2019-09-28 PC]
+I think I have finally committed the long awaited conceptual
+breakthrough. To remind everyone - one unsolved problem in Matt and my
+work\rf{GuBuCv17} is ``Hill's formula'' for the first-order time
+derivative dissipative dynamics, which relates linear stability of a
+\spt\ pattern to $(1-\jMps)$ temporal evolution stability.
+
+I'm writing this up in \refchap{chap:stability}~{\em \Spt\ stability}.
+
+\item[2019-10-01 PC]
+Cao and Voth\rf{CaoVot96} {\em Semiclassical approximations to quantum
+dynamical time correlationfunctions}
+\HREF{http://web.mit.edu/jianshucaogroup/pdfdir/JCP104-0273-1996-2.pdf}
+{(click here)}: ``
+find an alternative to evaluate the Jacobi matrices and have thereby found
+it necessary to derive the initial-value expression from a new
+perspective. Straight-forward and self-contained, this derivation leads
+to a discretized expression for the Jacobi matrices and a simple
+interpretation of the Maslov-like index.
+''
+
+They derive the Jacobi equations from a dicretization, their Appendix B.
+These equations evolve sublocks of the Jacobian that maintain the
+symplectic invariance.
+
+Langouche, Roekaerts and Tirapegui\rf{LaRoTi81}
+{\em {WKB} Expansion for arbitrary {Hamiltonians}} might be of interest,
+but I have not studied it.
+
+    \PCpost{2019-10-13}{
+Guckenheimer and Meloon\rf{GM00aut} define a ``symmetric multiple
+shooting algorithm'' as is a small modification of the forward multiple
+shooting method that makes the method time reversible. Let
+\(
+p=(\ssp_1,\ssp_2,\cdots,\ssp_\cl{p})
+\,,
+\)
+as in \refeq{nXdCycle}. They evaluate some ``Taylor polynomials'' at
+time-interval midpoints, I admit not to see how their formulas are
+time reversible. I believe they replace \refeq{errorVecs1D}
+by segments that traverse a time interval in both direction
+\beq
+ F_{GM}(\hat{\ssp}) \, = \,
+\left (
+\begin{array}{l}
+  \hat{\map}_\cl{p} - \hat{\map}^{-1}_1 \\
+  \hat{\map}_1 - \hat{\map}^{-1}_2\\
+  ~~~\cdots \\
+  \hat{\map}_{\cl{p}-1} - \hat{\map}^{-1}_\cl{p}
+\end{array}
+\right )
+\,,\qquad \hat{\map}_k = \map(\hat{\ssp}_k)
+\,,
+\ee{errorVecsTrevers}
+Now the orbit \jacobianM\ \refeq{fcnewt} picks up the derivatives of
+inverse map along the diagonal (instead of the identity matrices). They
+manipulate it and show it is the same Jacobian as the forward shooting
+one.
+
+For my taste having a diagonal and sub-diagonal is not time-symmetric
+enough. Inspired by the formula for the discrete Laplacian
+\refeq{PerViv2.2}, % PC 2019-10-13: find a better equation number
+I suggest trying the tri-diagonal vector field
+\beq
+ H(\hat{\ssp}) \, = \,
+\left (
+\begin{array}{l}
+  \hat{\map}^{-1}_2 - 2 \hat{\ssp}_1 + \hat{\map}_\cl{p}\\
+  \hat{\map}^{-1}_3 - 2 \hat{\ssp}_2 + \hat{\map}_1\\
+  ~~~\cdots \\
+  \hat{\map}^{-1}_{\cl{p}-1} - 2 \hat{\ssp}_\cl{p} + \hat{\map}_{\cl{p}-1}\\
+\end{array}
+\right )
+\,,\qquad \hat{\map}_k = \map(\hat{\ssp}_k)
+\,,
+\ee{errorVecsTrv}
+that reverses its direction under time reversal.
+The orbit  \jacobianM\
+\beq
+{\cal H} \,=\,
+ (\sigma \jMps)^{-1} -2\jMps +\sigma \jMps
+\,,
+\ee{PCselfAdjMatr}
+is of self-adjoint form. We have to show that its determinant is
+the Hill's formula.
+
+Is it what we need for the Hessian / Lagrangian case? I suspect
+that the \templatt\ case - uniform stretching, is easily brought
+to the \templatt\ orbit stability form, by rescaling \refeq{PCselfAdjMatr}
+so that off-diagonal $J's$ are absorbed into the diagonal ${\mu}^2$ factors.
+
+Read Doedel \etal\rf{doedel_computation_2003} \CBlibrary{DPKDGV03}. They
+show how two-point boundary value problem continuation software like AUTO
+[Doedel et al., 1997; Doedel et al., 2000] can be used to compute
+families of periodic solutions of conservative systems, \ie\ systems
+having a first integral. Seems the same as chaos book as far as adding
+and additional constraint is concerned. See no word ``determinant''
+anywhere...
+    }
+
+
+    \PCpost{2020-08-01} {
+I guess I should have looked more closely. The original the {\HillDet}
+(see \HREF{https://mathworld.wolfram.com/HillDeterminant.html}
+{mathworld.wolfram}) is, with various terms absorbed into our
+stretching parameter ${s}$, a 3-term recurrence which is \emph{exactly} our
+$d=1$ \templatt, with our {\HillDet}, except Hill did it for the
+oscillatory parameter value ${\mu}^2<0$.
+
+Check Morse, P. M. and Feshbach, H.
+\emph{Methods of Theoretical Physics}, Part I.
+New York: McGraw-Hill, pp. 555-562, (1953).
+
+Magnus and Winkler\rf{MagWin66} {\em Hill's Equation}
+\HREF{http://ChaosBook.org/library/MagWin66djvu} {(click here)}.
+
+Dan Rothman told me to look at J. J. Stoker (but it is not in {\em
+Differential geometry}), so it's in the wave mechanics book...
+Have not found it yet.
+    }
+
+\end{description}
+
+
+\newpage
+\section{Generating function literature}
+\label{sect:GenFuncLit}
+
+
+   % *********************************************************************
+\hfill   {\color{red} For the latest entry, go to the bottom of this section}
+
+\bigskip
+
+
+\begin{description}
+
+    \PCpost{2016-11-11}{
+I still cannot get over how elegant the {\GO}\rf{GutOsi15}
+{\catlatt} is. It is \emph{linear}! ($\mod 1$, that is - the map
+is continuous for integer $s$). A 1\dmn\ cat map has a Hamiltonian
+\refeq{BarShc06Ham}, and they have written down the 2\dmn\ Lagrangian,
+their Eq.~(3.1) (or the ``generating function'', as this is a mapping).
+Their {\catlatt} generating function is defined on a {\spt}
+cylinder, infinite in time direction,
+\bea
+\action(\coord_t,\coord_{\zeit+1})
+    &=&
+- \sum_{n=1}^N \coord_{nt} \coord_{1+n,t}
+- \sum_{n=1}^N \coord_{nt} (\coord_{n,t+1}+m^\coord_{n,t+1})
++\frac{a}{2}\sum_{n=1}^N \coord^2_{nt}
+    \ceq
++\frac{b}{2}\sum_{n=1}^N (\coord_{n,t+1}+m^\coord_{n,t+1})^2-m^p_{n,t+1}\coord_{n,t+1}
+\,,
+\label{GutOsi15-3.1:model}
+\eea
+where $\coord_t=\{\coord_{nt}\}^N_{n=1}$ is a spatially periodic state
+at time $t$, with  $\coord_{nt}$ being  the coordinate of
+$n$th ``particle'' $n=1\dots N$ at the moment of time $t\in\mathbb{Z}$, and
+$m^q_{n,t+1}, m^p_{n,t+1}$ are integer numbers which stand for  winding
+numbers along the $q$ and $p$ directions of the 2N-torus.
+Note that
+\(
+\ssp_{1+n,t} = \ssp_{1+(n\!\!\!\!\!\mod{N}),t}
+\,.
+\)
+The coefficients $a,b$, $s=a+b$ are integers which they specify.
+Gutkin and Osipov refer to the map generated by the action
+(\ref{GutOsi15-3.1:model}) as non-perturbed \textit{coupled cat map}, and to an
+\twot\ $p$ as a ``many-particle periodic orbit'' (MPO) if $q_{nt}$ is
+doubly-periodic, or ``closed,'' \ie,
+\[
+q_{nt} = q_{n+L,t+T}
+    \,,\quad
+n = 1,2,\cdots, L
+    \,,\quad
+t = 1,2,\cdots, T
+    \,.
+\]
+
+{\bf 2D symbolic representation}
+Encode  each \twot\ (many-particle periodic orbit)  $p$ by a
+two dimensional (periodic) lattice of symbols $a_{nt}$,
+$(nt)\in\mathbb{Z}^2$, where symbols  $a_{nt}$ belong to some alphabet $\A$
+of a small size. Each \twot\ $p$ is represented  by
+$L\times T$ toroidal  array of symbols:
+\[
+\Aa_{p}=\{a_{nt}| \, (nt)\in \integers^2_{LT} \}
+\,.
+\]
+The Hamiltonian equations of motion can be generated using \refeq{MKMP84(3.2)}
+but who needs them? Remember, a field theorist would formulate a spacetime
+symmetric field theory in a Lagrangian way, with the invariant action.
+    }
+
+\PCpost{2016-11-11}{
+Percival and Vivaldi\rf{PerViv} state the Lagrangian variational
+principle in
+Sect.~6. {\em Codes, variational principle and the static model}:
+    \PC{2016-11-12}{eventually move to \refrem{rem:AnosovMaps}}
+
+The Lagrangian variational principle for the sawtooth map on the real
+line states that the action sum
+\refeq{MKMP84(3.6)HL1}
+is stationary with respect to variations of any finite set of
+configurations $\ssp_{\zeit}$. Their discussion of how ``elasticity''
+works against the ``potential'' is worth reading. For large values of
+stretching parameter $s$, the potential wins out, and the state
+$\ssp_{\zeit}$ falls into the $m_t$th well:
+``the code may be considered as a labelling of the local minima of the
+Lagrangian variational principle.''
+
+Dullin and Meiss\rf{DulMei98} {\em Stability of minimal periodic orbits}
+does the calculations in great detail.
+    }
+
+\PCpost{2016-11-11}{
+``mean action'' =  the action divided by the period
+    }
+
+    \PCpost{2018-12-07}{
+as shown in (copied here from ChaosBook)
+\refexam{exam:2DHamiltFlow},
+\refexam{exam:Dzeta2dHamMaps}, and
+\refexam{exam:DzetaHam}
+Hamiltonian \Fd\ and \dzeta\ have a special form. Recheck
+against our cat map \zetatop.
+    }
+
+    \PCpost{2019-10-14}{
+The Jacobi operator acts on a discrete periodic lattice as
+\[
+L\,u(t)=a(t+1)u(t+1)+b(t)u(t)+a(t-1)u(t-1)\,,
+\]
+where a(t) and b(t) are real valued for each $t\in\integers$,
+and M-periodic in t.
+Jacobi operators are the discrete analogue of Sturm–Liouville operators, with
+many similarities to Sturm–Liouville theory.
+    }
+
+
+
+
+
+\end{description}

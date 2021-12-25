@@ -1,0 +1,244 @@
+% siminos/spatiotemp/chapter/sFB.tex
+% $Author: predrag $ $Date: 2020-05-07 17:34:06 -0400 (Thu, 07 May 2020) $
+
+    \PC{2019-07-05}{
+    will merge this with \refsect{sect:KStwots}~{\em\KS\ on a torus}
+    into one compact section on Fourier modes.
+    }
+In order to discuss the numerical methods of \refsect{sect:adjointdescent} and
+\refsect{sect:gaussnewton}, \refsect{sect:gmres} in detail with respect to the \KSe, we first need
+to discuss some computational preliminaries that create the setting in which
+numerical methods will be discussed.
+Our goal is to solve \KSe\ \refeq{e-ks} assuming doubly periodic boundary
+conditions. These boundary conditions admits continuous translation symmetries in
+both space and time. As a consequence, it is very natural to utilize a
+{\spt} Fourier basis via a (two-dimensional) discrete Fourier transform.
+Even though a complex valued Fourier basis has simpler expressions for
+differential operators and hence rotations, we utilize a \rv\ Fourier
+basis in our computations. One motivation for this is
+realized in \refsect{sect:selectionKS} where symmetry invariant subspaces
+of \rv\ \Fcs\ are derived. Another reason is simply for computational reasons,
+for instance, it is impossible to implement some necessary constraints when
+solving our equations in a least-squares manner. This can be fixed by tracking
+real and imaginary parts separately, which is equivalent to using a \rv\ Fourier
+basis. Therefore we shall
+begin by defining the discrete (inverse) \rv\ {\spt} Fourier transform for the
+discretized velocity field $u$
+    \PC{2019-07-05}{ to Matt -
+    I'm planing to redefine %$\ajk\to \hat{a}_{\sss{kj}}$ \etc\ so space
+    is always first, time second, throughout all publications. Scriptsize
+    {\em sss} might also go. Essentially, use
+    Gibson, Halcrow and Cvitanovi{\'c}\rf{GHCW07}
+    {\em Visualizing the geometry of state-space in plane {Couette} flow}
+    as the gold standard for notation. Macros are in svn repo
+    {\em gibson/steady/defSteady.tex}.
+    \\
+    Protest before I go further.
+    }
+\beq \label{e-RealFourier}
+\begin{split}
+u_{mn} = u(\xm,\tn) = \sum_{k=1}^{M/2-1}\sum_{j=0}^{N/2-1}
+  & \left(
+    \akj \cos(\wavek\xm)\cos(\freqj\tn) + \bkj \cos(\wavek\xm)\sin(\freqj\tn)
+    \right.\\
+  & \left.+\,
+    \ckj \sin(\wavek\xm)\cos(\freqj\tn) + \dkj \sin(\wavek\xm)\sin(\freqj\tn)
+                        \right)
+\,,
+\end{split}
+\eeq
+where $m=0,\cdots,M-1$, $n=0,\cdots,N-1$, and
+\beq \label{e-discretedefs}
+(\xm,\tn) = (\speriod{}{m}/{M}\,,\period{}{n}/{N})
+\,,\qquad
+(\wavek,\freqj) = (2\pi{k}/{\speriod{}}\,,2\pi{j}/{\period{}})
+\,.
+\eeq
+The exclusion of $k=0$ modes is a consequence of the Galilean invariance
+constraint \refeq{GalInv}.
+    \PC{2019-07-05}{
+    \refeq{e-discretedefs} would be more symmetric if we used
+    the correct dimensionless units (``Raynolds numbers'')
+    $\tilde{\period{}} = \period{}/2\pi$\,,\;
+    $\tildeL = \speriod{}/2\pi$ see \reffig{fig:SCD07ksBifDiag}.
+    But that battle seems lost.
+    }
+    \PC{2019-07-05}{
+    remember: we are not allowed to assume Galilean invariance when we
+    insert a tile into a larger \spt\ pattern. Might have to rethink this
+    also in spatial Fourier series.
+    }
+For our numerical work we shall utilize
+an ansatz for \spt\ \twots\ which is a modification
+of \refeq{e-RealFourier} is capable
+of describing solutions with continuous spatial
+translation symmetry by virtue of \PCedit{refeq{e-spacetimeRotation}}.
+    \PC{2019-12-06}{
+    Reference `e-spacetimeRotation' undefined
+    }
+This shall be
+referred to hereafter as the \emph{co-moving frame ansatz}, which takes the form
+\beq \label{e-ansatz}
+\begin{split}
+u(\xm,\tn) = \sum_{k} \LieEl\bigg(\frac{\sigma \tn}{\period{}}\bigg) \sum_{j} & \akj \cos(\freqj \tn)\cos(\wavek \xm) + \bkj \sin(\freqj \tn)\cos(\wavek \xm) \continue
+                                &+\ckj \sin(\wavek \xm)\cos(\freqj \tn) + \dkj \sin(\wavek \xm)\sin(\freqj \tn)\,.
+\end{split}
+\eeq
+The action of the group element $\LieEl$ here serves as a coordinate transformation
+which makes relative periodic solutions (solutions which spatially shift by $\sigma$ after
+a full period) truly periodic. For solutions with discrete symmetry, $\sigma=0$ such that
+$\LieEl(0)=\mathbb{I}$ is the identity matrix of appropriate dimension.
+Substitution of the ansatz \refeq{e-ansatz} into \refeq{e-ks}
+yields the following system of nonlinear algebraic equations
+\bea\label{e-kssFb}
+-\freqj \ckj -\wavek^2 \akj +\wavek^4 \akj-\frac{\sigma}{\period{}}\wavek \bkj+\wavek \sum_{k',j'}\bkj a_{j-j'k-k'}&=& 0 \continue
+-\freqj \dkj -\wavek^2 \bkj +\wavek^4 \bkj+\frac{\sigma}{\period{}}\wavek \akj-\wavek \sum_{k',j'}\akj b_{j-j'k-k'}&=& 0 \continue
+\freqj \akj -\wavek^2 \ckj +\wavek^4 \ckj-\frac{\sigma}{\period{}}\wavek \dkj+\wavek \sum_{k',j'}\dkj c_{j-j'k-k'}&=& 0 \continue
+\freqj \bkj -\wavek^2 \dkj +\wavek^4 \dkj+\frac{\sigma}{\period{}}\wavek \ckj-\wavek \sum_{k',j'}\ckj d_{j-j'k-k'}&=& 0
+\eea
+which depends explicitly on the \spt\ Fourier coefficients
+and the scalar parameters $(\speriod{},\period{},\sigma)$,which are
+the period, the domain size, and the spatial shift, respectively.
+Instead of including the time dependent spatial rotation $g$
+it is also possible to quotient the continuous symmetry by
+using a method such as
+the first Fourier mode slice method developed in \refref{BudCvi14}.
+We avoid this, however, as
+we find that the co-moving frame ansatz
+is easier to explain as well as easier to implement numerically. \\
+To continue in the vein of numerical computations we
+find that \refeq{e-kssFb} is too convoluted; we shall
+adopt a simpler notation comprised of linear operators
+as opposed to index notation. These linear operators
+will be the foundation for a matrix vector version of
+\refeq{e-kssFb}. To explicitly define the linear operators
+in question, we must first decide on how to order the
+vector comprised of the \spt\ \Fcs. As a random ordering is
+simply not an option, there are two remaining possibilities,
+which order the \Fcs\ based on the indices $k$ and $j$.
+This ordering cycles the indices in a manner that is identical
+to using two ``for'' loops in computational parlance. The
+only decision is to decide on which index is the ``inner''
+loop and which is the ``outer'' loop. We choose to cycle the
+spatial index as the ``inner'' loop; the easiest way to demonstrate
+the order of this vector is to use a matrix, such that the vector
+is equivalent to the rows of this matrix concatenated together. In other
+words, to arrange the \Fcs\ properly, we can store them as a matrix
+of size $N$ by $M$ (this is before symmetry considerations).
+For shorthand let $J=N/2-1$ and $K=M/2-1$, then
+\beq
+U =
+\begin{bmatrix}
+a_{00} & \cdots & a_{K0}& b_{00}&\cdots &b_{K0} \\
+\vdots& \ddots& \vdots& \vdots& \ddots& \vdots\\
+a_{0J} & \cdots & a_{KJ}& b_{0J}&\cdots &b_{KJ}\\
+c_{00}& \cdots& c_{K0}& d_{00}& \cdots& d_{K0} \\
+\vdots& \ddots& \vdots& \vdots& \ddots& \vdots\\
+c_{0J}& \cdots& c_{KJ}& d_{0J}& \cdots& d_{KJ}\\
+\end{bmatrix}\,.
+\label{e-rvmatrix}
+\eeq
+To produce a vector with the desired ordering,
+the rows $U_i$ of \refeq{e-rvmatrix} are concatenated
+in a
+vertical fashion such that
+\beq \label{e-FcsVector}
+\hat{\mathbf{u}} =
+\begin{bmatrix}
+U_0^{\top} \\
+U_1^{\top} \\
+\vdots \\
+U_N^{\top}
+\end{bmatrix}\,.
+\eeq
+As a reminder, the intention of this was to allow us
+to rewrite \refeq{e-kssFb} in a much less confusing manner.
+The specific form we utilize is what is known as
+a \emph{pseudospectral} form\rf{Canuto88}. The general motivation
+is that explicit computation of the nonlinearity via
+summation is not only inefficient but also susceptible to cancellation error.
+Pseudospectral methods compute the
+quadratic nonlinearity as a pointwise product in physical space
+which is equivalent to the spectral convolution. In addition, now
+that we have adopted a vector format for the ordering of \Fcs\ we
+can also introduce and substitute the differential
+operators $\mathcal{D}_x,\mathcal{D}_{xx},\mathcal{D}_{xxxx},
+\mathcal{D}_t$, forward and backwards \xDft\ operators $\mathcal{F}$
+and $\mathcal{F}^{-1}$, and vector of \Fcs, $\Fu$. Note that this
+extra work is merely to increase the transparency of our numerical
+work; in practice the linear operators
+are not constructed once the memory cost becomes
+too great, rather, we deploy functions which have an equivalent effect.
+To begin, let us define the linear operators mentioned shortly before.
+Every such operator can be described by the following prescription:
+construct the operator that would act on a single point in either
+space or time, then extend this operator to act on
+the entire \spt\ domain at once. Because we have ordered the \Fcs\
+in a contiguous manner this extension always takes the form
+of a Kronecker outer product with an appropriately sized identity matrix.
+This outer product is defined for two matrices $A$ and $B$ of sizes
+$N_a \times M_a$ and $N_b \times M_b$ as
+%%%%%%%%%%%%%%%%%%%%%%%%%%
+\beq \label{e-Kronecker}
+A \otimes B \equiv
+\begin{bmatrix}
+a_{00}B & \cdots & a_{0M_a}B \\
+\vdots & \ddots & \vdots \\
+a_{N_a0}B & \cdots & a_{N_aM_a}B \\
+\end{bmatrix}
+\eeq
+Following the ordering of $\Fu$ described by \refeq{e-FcsVector}, the
+differential operators take the following forms
+\bea \label{e-DiffMats}
+\mathcal{D}_t&=& \mathbb{I}_M \otimes\begin{bmatrix} 0 & -\freqj \\ \freqj & 0 \end{bmatrix} \continue
+\mathcal{D}_x&=&\begin{bmatrix}0 & -\wavek \\\wavek & 0\end{bmatrix}\otimes \mathbb{I}_N \continue
+\mathcal{D}_{xx}&=&\begin{bmatrix}-\wavek^2 & 0 \\0& -\wavek^2\end{bmatrix}\otimes \mathbb{I}_N\continue
+\mathcal{D}_{xxxx}&=&\begin{bmatrix}\wavek^4 & 0 \\0 & \wavek^4 \end{bmatrix}\otimes \mathbb{I}_N \,.
+\eea
+
+Likewise, the \spt\ \xDft\ operators can be defined by the composition of the
+extended spatial and temporal Fourier transform operators; the only difference
+between the two (before symmetry considerations) is the order of the outer product.
+The Fourier transform operator before extension via outer product can be explicitly defined
+by the Vandermonde matrix where the factor being exponentiated is the $N$th root of unity
+\beq \label{e-xDft}
+\mathcal{F} =
+\begin{bmatrix}
+1 & 1 & \cdots & 1 \\
+1 & \omega & \cdots & \omega^{N-1} \\
+1 & \vdots & \ddots & \omega^{2(N-1)} \\
+1 & \omega^{N-1} & \cdots & \omega^{(N-1)(N-1)}
+\end{bmatrix}\,.
+\eeq
+for an $N$ point \xDft. Therefore, the spatial ($M$ point)and temporal ($N$ point) transform operators follow as
+\bea \label{e-sptxDft}
+\mathcal{F}_t &=& \mathbb{I}_N \otimes \mathcal{F}_M \continue
+\mathcal{F}_x &=& \mathcal{F}_N \otimes \mathbb{I}_M\,.
+\eea
+In practice the most efficient manner to construct these matrices
+is to simply apply the \xDft\ to the columns of
+an appropriately sized identity
+matrix $\mathcal{F}_N = F(\mathbb{I}_N)_{j}$ (this is prior to
+any outer products). The inverse \xDft\ operators can
+be formed in an analogous manner.
+With the operators defined thusly, we can finally write \refeq{e-kssFb}
+in the desired \emph{pseudospectral} form using matrix operators and
+the vector of \Fcs
+\beq \label{e-pseudospectral}
+(\mathcal{D}_t+\mathcal{D}_{xx}+\mathcal{D}_{xxxx}+\frac{\sigma}{\period{}}\mathcal{D}_x)\Fu +
+\frac{1}{2}\mathcal{D}_x\mathcal{F}(\mathcal{F}^{-1}(\Fu)*\mathcal{F}^{-1}(\Fu))=0\,.
+\eeq
+This derivation is useful to identify the components of \refeq{e-kssFb}
+and their effects but we
+must go even further due to concerns regarding computational memory.
+While this makes the derivation of \refeq{e-pseudospectral} somewhat redundant,
+\refeq{e-pseudospectral} will be useful as a reference for the derivation
+of a matrix-free computation. This is handled in \refsect{sect:matrixfree},
+because it is mainly a computational addition for this problem.
+Now that we have properly defined the equation we desire to solve we
+can move on to the methods with which to do so. \refSect{sect:variational}
+sets the stage by introducing an optimization problem equivalent
+to solving \refeq{e-pseudospectral}. This optimization problem is solved
+by either the adjoint descent method \refsect{sect:adjointdescent},
+various iterative methods \refsect{sect:gaussnewton} \refsect{sect:gmres} or some
+hybrid of these two methods.

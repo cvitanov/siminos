@@ -1,0 +1,311 @@
+\chapter{Statistical mechanics applications}
+\label{c-appendStatM}  % temporary, while being edited in spatiotemp/
+%\Chapter{appendStatM}{22jun2016}{Statistical mechanics applications}
+%\listofsections{0}
+% $Author: predrag $ $Date: 2020-12-18 01:29:07 -0500 (Fri, 18 Dec 2020) $
+% siminos/spatiotemp/chapter/appendStatM.tex
+% Predrag 		22 jun 16
+% Roberto 		 5 jul 00
+% Predrag 		 8 feb 98
+% catmap section from
+% Roberto ~artuso/book/diff/diff.tex	11 oct 96
+% Roberto                16 mar 95
+% Roberto 13 feb 95 --->
+
+\section{Cat map}
+\label{sect:CatMap}
+
+\noindent
+\lettrine[lines=3,lraise=0.1,lhang=0.2]{H}{ere we will deal with}
+%Here we will deal with
+the prototype example of chaotic
+Hamiltonian maps, \emph{hyperbolic toral automorphisms}, % \refref{ArnAve}.
+(subspecies of which, known as the as the `Arnol'd cat
+map', you have most likely already encountered), acting on a
+cylinder or over $\reals ^2$. Their dynamics restricted to the
+elementary cell involves maps on ${\mbox{\bf T}}^{2}$
+(two--dimensional torus). On such torus an action of a matrix in
+$SL_2(\naturals)$ with unit determinant and absolute value of the trace
+bigger than $2$ is known as the Anosov map.
+    \index{Anosov!map}\index{cat map}\index{Arnold!cat map}
+    \index{hyperbolic!toral automorphisms}
+
+\section{New example: Arnol'd cat map}
+\label{sect:ArnCatMap}
+
+\begin{bartlett}{
+the Arnol'd-Sinai cat is a practical cat
+                }\bauthor{
+Ian Percival and Franco Vivaldi\rf{PerViv}
+                }
+\end{bartlett}
+
+% PC 2016-06-01
+The `standard' generating partition code of Arnol'd and Avez\rf{ArnAve}
+is rather simple - it is described in Devaney\rf{deva87}.
+    \PC{2016-08-03}{I do not have either monograph at hand, but
+    Creagh\rf{Creagh94} summary in \refsect{sect:Creagh94} is pretty
+    clear.}
+It relies on a 3-rectangles complete partition of the torus. It is a
+subshift of finite type - it is well suited to the generation and
+counting of \po s on the torus, see Isola\rf{Isola90} rational
+{\tzeta} in \refsect{sect:Isola90}.
+
+However, the Arnol'd--Avez alphabet has no easy translation to the
+integers shift on the unfolded torus (on the lattice, most of torus \po s
+are \rpo s).
+Furthermore, for $N$ coupled cat maps the number of such rectangles would
+grow exponentially\rf{GutOsi15}.
+    \PC{2016-08-03}{Have not checked that, or whether this is explained in
+    \refref{GutOsi15}.}
+
+There is a general consensus in the cat map community\rf{Keating91a} that
+the `linear code' of Percival and Vivaldi\rf{PerViv}
+(here \refsect{sect:PerViv})
+is deeper and more powerful.
+For deterministic diffusion developed in Chaos\-Book
+(\refchap{c-appendStatM} here) that is the only choice, as one needs to
+convert symbolic dynamics of an \rpo\ to the integer shift (translation)
+on the lattice.
+    \PC{2016-08-03}{I do not know why this symbolic dynamics is natural
+    for extensions to $N$ nearest-neighbor coupled maps.}
+The downside is that the Markov/generating partition is infinite,
+meaning that for longer and longer orbits there are more and more new
+pruning ({\inadmissible} blocks) rules, ad infinitum.
+
+    \PC{2016-06-02}{verbatim from Percival and Vivaldi\rf{PerViv}}
+Iterated area preserving maps of the form
+\bea
+p' &=& p + F(x)             \label{PerViv2.1a}
+    \\
+x' &=& x+p' \qquad  \mod 1, \label{PerViv2.1b}
+\eea
+where F(x) is periodic of period 1, are widely studied because of their
+importance in dynamics. They include the standard map of Taylor, Chirikov
+and Greene\rf{Lichtenberg92,Chirikov79}, and also the sawtooth and cat
+maps that we describe here. Because values of x differing by integers are
+identified, whereas the corresponding values of p are not, the phase
+space for these equations is a cylinder.
+
+These maps describe `kicked' rotors that are subject to a sequence of
+angle-dependent impulses F(x), with $2\pi x$ as the configuration angle of
+the rotor, and p as the momentum conjugate to the configuration
+coordinate x.
+    \PCedit{ % 2016-05-29
+The time step has been set to $\Delta t= 1$. Eq.~\refeq{PerViv2.1a} says that
+the momentum $p$ is accelerated to $p'$ by the force pulse $F(x)\Delta
+t$, and eq.~\refeq{PerViv2.1b} says in that time the trajectory $x$ reaches
+$x' = x+p'\Delta t$.
+    }
+
+The phase space of the rotor is a cylinder, but it is often convenient to
+extend it to the plane or contract it to a torus. For the former case the
+``$\mod 1$'' is removed from \refeq{PerViv2.1b} and for the latter it is
+included in \refeq{PerViv2.1a}.
+
+Eqs.~(\ref{PerViv2.1a},\ref{PerViv2.1b}) are a discrete time form of Hamilton's
+equations. But for many purposes we are only interested in the values of
+the configuration coordinate x, which satisfy the second-order difference equation
+        \PCedit{ % 2016-05-29
+(the discrete Laplacian in time)
+        }
+\beq
+\delta^2 x_t \equiv x_{t+1} - 2x_{t} + x_{t-1} = F(x_{t})  \qquad  \mod 1
+\ee{PerViv2.2}
+where t is a discrete time variable that takes only integer values. This
+equation may be considered as the Lagrangian or Newtonian equation
+corresponding to the Hamiltonian form (2.1), with
+\(
+p_t = x_{t} + x_{t-1} \,.
+\)
+
+Rewrite \refeq{PerViv2.2} as
+\beq
+ x_{t+1} =  2x_{t} + F(x_{t}) - x_{t-1} \qquad  \mod 1
+\ee{PerViv2.3}
+Call the 1-step configuration point forward in \refeq{PerViv2.1b} $x_{t}=y$,
+and the next configuration point $x_{t+1} = y'$.
+This recasts the dynamical equation in the form of an area preserving map
+in which only configurations at different times appear,
+\bea
+x' &=& y
+    \continue
+y' &=&  2y + F(y) - x  \qquad  \mod 1
+\,.
+\label{PerViv2.4}
+\eea
+    \PCedit{ % 2016-05-29
+This they call the `two-configuration representation'.
+    }
+
+The sawtooth map represents a rotor subject to
+an impulse F(x) that is linear in x, except for a
+single discontinuity. The impulse is standardised
+to have zero mean, the origin of x is chosen so that F(0)= 0, so
+\beq
+ F(x) = Kx \quad (-1/2 \leq x < 1/2)
+\ee{PerViv2.5}
+With these conventions Hamilton's equations
+for the sawtooth are
+\bea
+x' &=& y        \qquad\qquad  \mod 1
+    \continue
+y' &=&  - x  +sy \quad  \mod 1
+\label{PerViv2.4a}
+\eea
+in the two-configuration representation, where
+\beq
+ s = K+2
+ \,.
+\ee{PerViv2.5a}
+For $s>2$ the map is unstable.
+In the two-configuration representation, Hamilton's
+equations can be written in matrix form as
+\beq
+\left (
+\begin{array}{c}
+x' \\
+y' \\
+\end{array}
+\right ) = {M} \left (
+\begin{array}{c}
+x \\
+y \\
+\end{array}
+\right ) \quad  \mod\: 1
+\ee{PerViv2.9}
+with
+\beq {M}= \left (
+		\begin{array}{cc}
+		0&1\\
+		-1&s\\
+		\end{array} \right)
+\,,
+\ee{PerViv2.10}
+characteristic polynomial
+\beq
+\ExpaEig^2 - s \ExpaEig + 1
+ \,.
+\ee{PerViv2.11}
+and eigenvalues
+\beq
+\ExpaEig  = (s+\surd{D})/2
+\,,\qquad
+\ExpaEig' = (s-\surd{D})/2
+ \,,
+\ee{PerViv3.7}
+where
+\(
+D = s^2-4
+\,.
+\)
+When $s$ is an integer, then the map \refeq{PerViv2.9} is continuous on the
+torus, because the discontinuity of the sawtooth is an integer absorbed
+into the modulus. The map is then continuous; it is a toral automorphism,
+of a class called \emph{cat maps}, of which the Arnol'd-Sinai cat
+map\rf{ArnAve} with $s=3$ is a special case,
+\beq {M}= \left (
+		\begin{array}{cc}
+		0 &1\\
+		-1&3\\
+		\end{array} \right)
+\,.
+\ee{PerViv2.10a}
+
+    \PCedit{ % 2016-05-29
+If instead of \refeq{PerViv2.3} dynamics on a torus, one considers motion on
+a line (no $\mod 1$), one can land in any unit interval along the
+$q$-axis. Let then $-b_t$ be the sequence of integer shifts that ensures
+that for all $t$ the dynamics
+            }
+\beq
+ x_{t+1} =  2x_{t} + F(x_{t}) - x_{t-1} -b_t
+\ee{PerViv3.3}
+    \PCedit{ % 2016-05-29
+stays confined to the elementary cell $x_{t} \in [-1/2,1/2)$.
+}
+The Newton equation \refeq{PerViv2.2} then takes the form
+\beq
+(\delta^2  - K) x_{t} = -b_t
+\ee{PerViv3.6}
+The linear operator or infinite tridiagonal matrix
+on the left of \refeq{PerViv3.6} has a Green's function or inverse
+matrix given by the unique bounded solution $\gd_{ts}$
+of the inhomogeneous equation
+        \PC{2016-05-29}{
+still have to check this calculation
+    }
+\beq
+ \gd_{t+1,t'} -  s\,\gd_{tt'} + \gd_{t-1,t'} =\delta_{tt'}
+ \,,
+\ee{PerViv3.9a}
+which is given by
+\beq
+ \gd_{tt'} = -\ExpaEig^{-|t-t'|}/\surd{D}
+ \,.
+\ee{PerViv3.9ab}
+This solution is obtained by a method that is directly analogous to the
+method used for second order linear differential
+equations\rf{varcyc} \CBlibrary{varcyc}. The solution of \refeq{PerViv3.6} for
+the orbit is therefore
+    \PC{2018-03-11}{Mestel and Percival\rf{varcyc} is very systematic, with
+    Wronskians, \etc, but I do not see this solution there.
+    Percival and Vivaldi\rf{PerViv} state it, say it can be derived
+    by the method of Mestel and Percival\rf{varcyc}, and say ``as may be
+    verified by substitution.''}
+\beq
+ t_{t} = \sum_t' \gd_{tt'} (-b_t)
+  = \frac{1}{\surd{D}} \sum_t' \ExpaEig^{-|t-t'|} b_{t'}
+ =\delta_{tt'}
+ \,,
+\ee{PerViv3.10}
+defining the orbit uniquely in terms of the symbol sequence. That is to
+say that the code is complete. We shall refer to an integer code such as
+$\{b_t\}$ for a linear system as a \emph{linear code}: the orbit and the
+code are related to one another by a linear transformation. Clearly, a
+shift in the symbol sequence $\{b_t\}$ corresponds to an equivalent time
+shift of the orbit.
+
+The past and the future sums in \refeq{PerViv3.10} resembles the expression
+for a real number in terms of the digits $b_t$, using a representation of the
+reals in the nonintegral base $\ExpaEig$, in contrast with the past and
+future coordinates for the baker's transformation, which have a similar form,
+to base 2. The `present' symbol $b_0$ is incorporated with the past in our
+convention.
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\Remarks
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% PC 2018-02-11 merge into
+% \Chapter{appendStatM}{22jun2016}{Statistical mechanics applications}
+\remark{Deterministic diffusion in Hamiltonian maps.}{\label{rem:AnosovMaps}
+~~(Continued from \refrem{rem:DetDiffHam})
+The quasilinear estimate \refeq{qlD} was given in \refref{CarMei}
+and evaluated in \refrefs{ArtStr97,Strepparava95}.
+Circulant matrices are discussed in Aitken\refref{Aitken39} (1939).
+The result \refeq{FinD} agrees with the saw-tooth result of
+\refref{CarMei}; for the cat maps \refeq{FinD}
+is the exact value of the diffusion coefficient.
+This result was also obtained, by using periodic orbits, in
+\refref{dana89}, where Gaussian nature of the diffusion
+process is explicitly assumed.
+Measure polytopes are discussed in \refref{Coxeter12}.
+    } %end \remark{Anosov maps} %{Who's talked about it?}{
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+\RemarksEnd
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+    \PC{2018-12-01}{
+Had here Problems/exerAppStatM until 30dec2017, now only copy is the renamed
+ChaosBook exerAppDiff.tex.\\
+REMEMBER: move the cat map exercises to exerCatMap.tex
+    }
+
+\printbibliography[heading=subbibintoc,title={References}]
+
+\ChapterEnd

@@ -1,0 +1,132 @@
+% siminos/spatiotemp/Problems/exerHamHenonCyc.tex called by Henon.tex
+% $Author: predrag $ $Date: 2021-10-15 15:55:44 -0400 (Fri, 15 Oct 2021) $
+
+\Problems{exerFixed}{14oct2021}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Predrag                   27apr2021, 14oct2021
+% Predrag                   26oct2014
+\exercise{Inverse iteration method for a {\Henon} repeller.}{
+                \label{exer:HamHenonCyc}
+\index{inverse!iteration, Hamiltonian repeller}
+\index{iteration!inverse!Hamiltonian repeller}
+\index{periodic!orbit!Hamiltonian repeller}
+\index{Hamiltonian!repeller, periodic orbits}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{table}
+\caption{\label{gv:cycles}
+ All {\po}s up to $\cl{}=6$
+for the Hamiltonian {\HenonMap} repeller
+%\refeq{e:pere}
+\refeq{pere}
+with $a=6$.
+Listed are the cycle itinerary, its expanding eigenvalue $\ExpaEig_p$,
+and its ``center of mass.'' The ``center of mass'' is listed because
+it turns out that it is often a simple rational
+or a quadratic irrational.
+All {\orbit}s up to topological length $n=20$
+have been computed.
+    }
+\renewcommand{\arraystretch}{0.7}
+\noindent
+{ \small
+\begin{tabular}{lrr}
+% \setdec 00.00000
+% V                    &\dec 1.04323   &\dec 0.48474   &  5&     -1 \\
+~~~~$p$~~~~ & $\ExpaEig_p$~~~~~~~~~~~~
+          &    $\sum \ssp_{p,i}~~~~~$ \\
+    \hline
+0 & 0.715168$\times 10^1$ & -0.607625 \\
+1 &-0.295285$\times 10^1$ &  0.274292 \\
+%   \hline
+10 &-0.989898$\times 10^1$ &  0.333333 \\
+%   \hline
+100 &-0.131907$\times 10^3$ & -0.206011 \\
+110 & 0.558970$\times 10^2$ &  0.539345 \\
+%   \hline
+1000 &-0.104430$\times 10^4$ & -0.816497 \\
+1100 & 0.577998$\times 10^4$ &  0.000000 \\
+1110 &-0.103688$\times 10^3$ &  0.816497 \\
+%   \hline
+10000 &-0.760653$\times 10^4$ & -1.426032 \\
+11000 & 0.444552$\times 10^4$ & -0.606654 \\
+10100 & 0.770202$\times 10^3$ &  0.151375 \\
+11100 &-0.710688$\times 10^3$ &  0.248463 \\
+11010 &-0.589499$\times 10^3$ &  0.870695 \\
+11110 & 0.390994$\times 10^3$ &  1.095485 \\
+%   \hline
+100000 &-0.545745$\times 10^5$ & -2.034134 \\
+110000 & 0.322221$\times 10^5$ & -1.215250 \\
+101000 & 0.513762$\times 10^4$ & -0.450662 \\
+111000 &-0.478461$\times 10^4$ & -0.366025 \\
+110100 &-0.639400$\times 10^4$ &  0.333333 \\
+101100 &-0.639400$\times 10^4$ &  0.333333 \\
+111100 & 0.390194$\times 10^4$ &  0.548583 \\
+111010 & 0.109491$\times 10^4$ &  1.151463 \\
+111110 &-0.104338$\times 10^4$ &  1.366025
+\end{tabular}
+} %end { \small
+\end{table}
+\renewcommand{\arraystretch}{1.0}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+                                                \toCB
+    \PC{14oct2021}{Return to ChaosBook eventually}
+    \PC{27dec2004}{give the center of mass paper reference somewhere}
+%
+Consider the  {\HenonMap} \refeq{eq2.1a}
+for the area-preserving (``Hamiltonian'') parameter value $b=-1$.
+The coordinates of a {\po} of
+length $n_p$ satisfy the  equation
+\index{Henon@H\'enon map!cycles}
+\beq
+\ssp_{p,i+1}+\ssp_{p,i-1}=1 -  a \ssp_{p,i}^2 \, ,
+\quad i=1,...,n_p
+\,,
+\label{pere}
+\eeq
+with the periodic boundary condition
+%$\ssp_{p,n_p +1}=\ssp_{p,1}$ and
+$\ssp_{p,0}=\ssp_{p,n_p}$.
+Verify that the itineraries and the stabilities of the short
+{\po}s for the {\Henon} repeller \refeq{pere}
+at $a=6$ are as listed in \reftab{gv:cycles}.
+
+{\bf Hint}: you can use any cycle-searching routine you wish, but for the
+complete repeller case (all binary sequences are realized), the cycles
+can be evaluated by inverse iteration
+$\ssp_{p,i}^{(m+1)}\to\ssp_{p,i}^{\infty}=\ssp_{p,i}$, estimating
+the midpoint by square-root
+of \refeq{pere}
+\beq
+\ssp_{p,i}^{(m+1)}=\sign{p,i}
+     \sqrt{\frac{1-\ssp_{p,i+1}^{(m)}-\ssp_{p,i-1}^{(m)}}{a}}
+\,.
+\ee{GVinver}
+Here $\sign{p,i}$ are the
+signs of the corresponding periodic point coordinates,
+$\sign{p,i}=\ssp_{p,i}/|\ssp_{p,i}|$,
+% and $i=1,...,n_p$
+related in the obvious way to desired \po's binary itinerary,
+\beq
+\sign{i}+1=2\,\Ssym{i}\,,\quad \Ssym{i}\in\{0,1\}
+\,.
+\ee{henonSigns}
+see \reffig{fig:PChenlatt5cyc}.
+%
+\hfill G.~Vattay
+    } % end \exercise{A Hamiltonian repeller}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\exercise{``Center of mass'' puzzle.}{\label{e:CenterOfMass}
+% \tangent
+Why is the ``center of mass,'' tabulated
+in \refexer{exer:HamHenonCyc}, often a rational number?
+\index{center of mass}
+%    \else listed in \reftab{gv:cycles},
+    } % end \exercise{``Center of mass'' puzzle
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+    \ProblemsEnd

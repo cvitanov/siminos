@@ -1,0 +1,323 @@
+% siminos/gudorf/thesis/chapter/variational.tex
+% $Author: predrag $ $Date: 2020-05-25 15:18:45 -0400 (Mon, 25 May 2020) $
+
+%\section{Variational methods}
+%\label{sect:variational}
+
+%Possible figures
+%Variational loop optimization? like newton descent figure
+
+% PC 2019-09-21 I see no such discussion here, so I dropped this:
+% We begin by discussing the advantages and disadvantages of conventional
+% approaches to chaotic dynamical systems.
+
+In this section we cast the problem of searching for \twots\ as a
+variational optimization problem.
+In variational formulations of the \spt\ problem there is no dynamics,
+and no numerical integrations of the equations of motion. Instead, one
+looks for {\em global} solutions whose tangent space
+satisfies the given set of ODEs or PDEs {\em locally} and everywhere over
+a given spacetime domain \R, with given b.c.'s. For example, consider the
+function
+\beq
+    G = u_\zeit  + u\,u_\conf + u_{\conf \conf} + u_{\conf \conf \conf \conf}
+\ee{e-ksG}
+of the \KS\ field $u$ and its spacetime derivatives. The \KSe\
+\refeq{e-ks} is satisfied only for those spacetime field configurations
+$u(\conf,\zeit)$ for which the spatial and temporal tangent fields (local
+field derivatives) balance each other so that $G(u)=0$.
+
+The standard, simplest approach to numerical determination of a field $u$
+that solve $G(u)=0$ over region \R\ (see, for example,
+\refrefs{CvitLanCrete02,lanVar1}) is to assume that one has a guess field
+configuration $u_g$ that is everywhere close to the desired solution $u$,
+compute $G(u_g)$, and then minimize the error $G(u_g)-G(u)$ over \R\ as a
+least squares sum.
+
+
+
+That requires having a norm XXXXXXXX
+
+
+The functional that is the center of our discussion is the $L_2$ norm of
+\refeq{e-ksG}, known as the \textit{cost functional}
+%\refeq{e-costFctLstSq}.
+\beq
+F[u]
+  = \frac{1}{2} \int_{0}^{\period{}} \int_{0}^{\speriod{}}
+                \!\!\mathrm{d}x \,\mathrm{d}t\,
+  ||G(u(\conf,\zeit))||^2
+\ee{e-costFctLstSq}
+In order to perform numerical compute quantities relevant to this
+problem, we need to discretize the scalar field $u(\conf,\zeit)$. This
+discretizes the expression for the cost functional such that
+\beq
+F(u(\conf,\zeit)) = \frac{1}{2} \sum_{n=0}^{N-1} \sum_{m=0}^{M-1} ||G(u(x_m,t_n))||^2
+\ee{e-costfunctionaldiscretesums}
+where $t_n = \frac{n T}{N}$ and $x_m = \frac{m \speriod{}}{M}$.
+For convenience, we will exchange index notation in favor of vector notation
+\beq
+F = \frac{1}{2}||\mathbf{G}||^2\,.
+\ee{e-costfunctional}
+whose critical points correspond to \twots.
+Intrinsic to the definition \refeq{e-costfunctional}
+is the choice of norm.
+We have not avoided the crutch of choosing an arbitrary
+norm, or so it seems. In the dynamical system context,
+the norm is used as a metric of distance between points in
+\statesp. As previously discussed there is an underlying
+geometry which is not being taken into consideration.
+In our variational formulation however
+the norm merely becomes a measure of whether our
+current state is a solution or not. In other words,
+the use of an arbitrary norm
+in the variational problem does not seem to
+share the same pitfalls as in the dynamical systems
+context. Note that we are not saying that our choice
+of norm is absent of all negative consequences however
+as it may not be the best indicator of whether we are
+numerically close to a solution or not.
+Therefore the
+norm here, while still not motivated by any underlying
+geometry, manages to avoid the previously described pitfall.
+
+The cost functional is a mathematical construction
+that assists the numerical optimization required to find
+the solutions that we desire. The cost functional
+\refeq{e-costfunctional} is a specific
+example of a much broader class of variational problems.
+To avoid confusion,
+the analysis is
+different than the study
+of ``discrete Lagrangian
+systems'', commonly seen in the
+context of variational time integrators
+\refrefs{MarWes01,MPSW01}.
+
+    \PC{2019-09-11}{
+Isn't here a start of a distinct, new section?
+    }
+    \MNG{2019-09-12}{was a leftover chunk of text from when \texttt{variational.tex}
+    was the introduction to the numerical methods section I believe; which it may be better to revert to
+    now that Ibragimov style analysis has been migrated to \texttt{LieGroupAnalysis.tex}}
+
+        \PC{2017-02-12}{
+Transcription of  Wang \etal\rf{WGBGQ13}
+{\em Towards scalable parallel-in-time turbulent flow simulations},
+``least squares shadowing (LSS) method'' to ChaosBookese starts here.
+        }
+For \KS\ they break the reflection symmetry by introducing a constant
+drift $c$, so the remaining symmetry is $\SOn{2}$. They do not remark
+that symmetry should be reduced, perhaps because they break it by
+considering a 2-boundary points problem? We will have to {\slice} the
+equations.
+
+%%%%%%%%%%%%%%%%%%%%% eventually move to def.tex %%%%%%%%%%%%%%%%%
+\newcommand{\lTime}{\tilde{t}}     % time parametrization of a loop
+\medskip
+\noindent
+{\bf Loop} $L$:
+ a smooth, differentiable closed curve $\lSpace(\lTime)\in \Loop \subset
+\pS$,
+parameterized by $\lTime \in [0,\speriod{}]$ with
+$\lSpace(\lTime)=\lSpace(\lTime+\speriod{})$, with the
+magnitude of the loop tangent vector fixed by
+the (so far arbitrary) parametrization of the loop,
+\[
+\lVeloc(\lSpace)=\frac{d \lSpace}{d\lTime}\,, \quad \lSpace=\lSpace(\lTime) \in \Loop
+\,.
+\]
+
+There are other \spt\ variational formulations
+that are worth describing in detail.
+Wang \etal\rf{WGBGQ13} explain
+why in the future \spt\ methods will be required in order
+leverage parallel computing power. The algorithm
+they deploy is standard,
+except for the implicit inclusion of a ``space-time
+parallel iterative solver'' which can take
+many different forms
+depending on the numerical implementations.
+Therefore, instead of worrying about the
+algorithmic details we instead describe
+the general procedure for how they
+setup the variational problem.
+
+Consider a dynamical system
+\beq
+	\dot{\ssp}(t)  =  \vel(\ssp)
+\,.
+\ee{WGBGQ13(1a)} %{odes}
+Rescale the time
+\(
+\frac{\partial\lTime}{\partial t} = 1 + \eta(\lTime)
+\,,
+\)
+so
+\beq
+(1+\eta(\lTime))\frac{\partial\ssp(t(\lTime))}{\partial\lTime}  =  \vel(\ssp)
+\,.
+\ee{WGBGQ13(1b)}
+Assume that the action is given by the integral over a Lagrangian, a
+quadratic cost function together the equations of motion constraint,
+\beq
+S[\Loop] =
+   \int_0^{\period{}} dt\,\left(
+\frac{1}{2}\braket{\ssp-\lSpace}{\ssp-\lSpace}+\frac{1}{2}\eta^2
++ \braket{w}{\dot{\ssp}-\vel(\ssp)}
+    \right)
+\,,
+\label{WGBGQ13(3)}
+\eeq
+where $w(\lTime)$ is the Lagrange multiplier. The critical
+points of this Lagrangian ensures that $\eta$ and $u-u_r$
+is minimized and that $u$ satisfies the equations of motion.
+
+
+Varying the Lagrange function with arbitrary
+perturbations $\delta \ssp, \delta \eta$ and integrating by parts
+yields
+\bea
+\delta S[\Loop]
+    &=&
+   \int_0^{\period{}} dt\,\left(
+\braket{\delta\ssp}{\ssp-\lSpace}+\delta\eta\,\eta
++ \delta\eta \braket{w}{\frac{\partial\ssp}{\partial\lTime}}
++ \braket{w}{\frac{\partial\delta\ssp}{\partial t}-\Mvar\delta\ssp}
+    \right)
+    \continue
+    &=&
+   \int_0^{\period{}} dt\,
+\braket{\delta\ssp}{\ssp-\lSpace
+                    -\frac{\partial w}{\partial t}-\transp{\Mvar}w}
+    \ceq
+   + \int_0^{\period{}} dt\,\delta\eta\,\left(
+\eta + \braket{w}{\frac{\partial \ssp}{\partial \tilde{t}}}
+    \right)
+   +\left. \braket{\delta\ssp}{w}\right|_0^{\period{}}
+\,,
+\label{WGBGQ13(4)}
+\eea
+where $\Mvar$ is the {\em \stabmat} or {\em \velgradmat}, \ie, the
+linearized operator
+\beq
+{\Mvar}_{ij}(\ssp) =\frac{\pde ~}{\pde \ssp_j  } \vel_i(\ssp)
+\ee{WGBGQ13(5)} %{DerMatrix}
+evaluated at $\lSpace$,
+and $\transp{\Mvar}$ is the adjoint of $\Mvar$.
+Setting $\delta S[\Loop]=0$ for arbitrary $\delta\ssp$ and $\delta\eta$
+provides two independent equations
+\bea \label{e-wgbgq13eqns}
+\ssp &=& \lSpace+\frac{\partial w}{\partial t}+\transp{\Mvar}w \continue
+\eta &=& -\braket{w}{\frac{\partial \ssp}{\partial \tilde{t}}}\,.
+\eea
+Whereupon substitution of the expression for $\ssp$ from \refeq{e-wgbgq13eqns} into
+\refeq{WGBGQ13(1a)} produces a second order boundary value problem with
+a transformed time derivative due to the second component of \refeq{e-wgbgq13eqns}.
+The second order boundary value problem can be summarized by the following
+optimality system
+\bea \label{e-wgbgq13optimality}
+u &=& \lSpace+\frac{\partial w}{\partial t}+\transp{\Mvar}w \continue
+0&=&\frac{\partial}{\partial t}( \lSpace+\frac{\partial w}{\partial t}+\transp{\Mvar}w )-v( \lSpace+\frac{\partial w}{\partial t}+\transp{\Mvar}w ) \continue
+\eta &=& -\braket{w}{\frac{\partial \ssp}{\partial \tilde{t}}}\continue
+w|_{\tilde{t}=0}&=&0 \continue
+w|_{\tilde{t}=T}&=&0
+\eea
+where the general procedure would be to solve for $w$ and then substitute into the equation for $u$.
+The solutions $w$ are acquired via a ``space-time parallel iterative solver''
+whose implementation is left to the reader as previously mentioned. The authors
+use Newton's method by solving the linearized system of equations that
+represent the linearization of the double boundary value problem
+in \refeq{e-wgbgq13optimality}. This linearization is the consequence
+of assuming $u-u_r$ and $\eta$ are small and simplifying. This
+linearization is the quintessential piece of the numerical
+process we derive here in the same form as Wang \etal\rf{WGBGQ13}.
+The first term is handled by simple application of the time derivative,
+while the second term is expand as $R(\frac{\partial w}{\partial t}+\mathcal{L}^{*}w +u_r)
+\approx R(u_r) + \mathcal{L}(\frac{\partial w}{\partial t}+\mathcal{L}^{*}w)$ because
+$u-u_r = \frac{\partial w}{\partial t}+\mathcal{L}^{*}w$ is small. This brings
+us to the simplified form
+\beq \label{e-linwgbgqstepone}
+\frac{\partial^2 w}{\partial t^2}+(\frac{\partial}{\partial t}\transp{\Mvar}
+-\Mvar\frac{\partial}{\partial t})w+\Mvar \transp{\Mvar}w =-\frac{\partial}{\partial t}\lSpace+v(\lSpace)\,.
+\eeq
+where we have yet to utilize the assumption that $\eta$ is small which will be used
+in the expression for the transformed time derivative. Assuming that this only
+implies that we discard terms quadratic in $\eta$ we can group the $\eta$ terms
+after substitution of $\frac{\partial}{\partial t}=(1+\eta)\frac{\partial}{\partial \tilde{t}}$
+into \refeq{e-linwgbgqstepone}. This yields
+\beq \label{e-linwgbgqsteptwo}
+\frac{\partial^2 w}{\partial \tau^2}+(\frac{\partial}{\partial \tau}\transp{\Mvar}
+-\Mvar\frac{\partial}{\partial \tau})w+\Mvar \transp{\Mvar}w
++ [\eta \frac{\partial^2 }{\partial \tau^2}+\frac{\partial}{\partial \tau} \eta \frac{\partial}{\partial \tau}
+-\eta \frac{\partial}{\partial \tau}\transp{\Mvar} -\Mvar \eta \frac{\partial}{\partial \tau}]w
+=-(1+\eta)\frac{\partial}{\partial \tau}\lSpace+v(\lSpace)\,.
+\eeq
+Now as one can see this includes a number of terms with the variable $\eta$ which are not present in
+the final representation in \refref{WGBGQ13}. It's apparent that the terms are neglected because
+of the assumption $\eta$ is small, but there is the presence
+of a term $\mathcal{P}w$ which can be accounted for by the term
+$-(1+\eta)\frac{\partial}{\partial \tau}\lSpace$ on the RHS of the
+equation. Specifically, this can be handled by the substitution
+(from the optimality system \refeq{e-wgbgq13optimality}) for
+$\eta$.
+\beq
+(1+\braket{w}{\frac{\partial \ssp}{\partial \tilde{t}}})\frac{\partial \lSpace}{\partial \tau}
+= (1+\braket{w}{\frac{\partial }{\partial \tilde{t}}}(\lSpace+\frac{\partial w}{\partial t}+\transp{\Mvar}w))\frac{\partial \lSpace}{\partial \tau}
+\eeq
+and by using the assumption $u-u_r=\frac{\partial w}{\partial t}+\transp{\Mvar}w$ is small
+this can be rewritten
+\beq
+(1+\braket{w}{\frac{\partial }{\partial \tilde{t}}}(\lSpace+\frac{\partial w}{\partial t}+\transp{\Mvar}w))\frac{\partial \lSpace}{\partial \tau}
+\approx (1+\braket{w}{\frac{\partial \lSpace}{\partial \tau}})\frac{\partial \lSpace}{\partial \tau}
+\eeq
+where the term with the inner product accounts for the term in \refref{WGBGQ13}.
+\beq
+\mathcal{P}w = \braket{w}{\frac{\partial \lSpace}{\partial \tau}}\frac{\partial \lSpace}{\partial \tau}\,.
+\eeq
+We walked through this derivation to attempt to reproduce the same equations as Wang \etal\rf{WGBGQ13} because
+they are general and quintessential to the \spt\ optimization process. As the following
+discussion seems to suggest is that they chose the final form that they did because
+of its numerical properties.
+
+In summary, this section is a survey on the tools and algorithms that are
+relevant for a variational formulation. We reserve discussion regarding
+the optimization of the various functionals described in this section to
+the numerical methods \refsect{sect:adjointdescent},
+\refsect{sect:gaussnewton}, and \refsect{sect:gmres}. All of the
+numerical discussions are centered around finding the minimizers of
+\refeq{e-costfunctional} by a combination of descent and iterative
+methods.
+
+
+The \spt\ reformulation of a dynamical problem also
+requires a reformulation of its linear stability
+analysis.
+
+The absence of this tool in the new variational formulation is
+a large handicap because it disallows one of the most intuitive
+and common types of analysis of time invariant solutions to chaotic
+nonlinear equations (more references for papers that look at linear stability).
+
+Therefore, if possible, we want to find an alternative type of analysis
+which is as useful without having to change our \spt\ formulation.
+There are two avenues of pursuit towards this endeavor. The first is
+known as Hill's formula\rf{BolTre10}. It discusses how the
+determinant of a finite matrix of the Hessian of an action functional
+of a discrete Lagrangian system, can be related to the eigenvalues
+of the monodromy matrix corresponding to a critical point of said action
+functional, which represents a critical point. As stated in\rf{BolTre10},
+Hill proposed this formula without any proof of convergence of the determinant
+(his derivation utilized an infinite dimensional Hessian), but a rigorous
+proof was later presented by Poincar\'e. The application of this formula
+requires a discrete Lagrangian system, which means we need equations which
+have a Lagrangian structure. The cost functional as described by
+\refeq{e-costfunctional}, although a scalar function of our system
+variables, does not have the correct Lagrangian structure that is needed,
+so instead we introduce the concept of \textit{formal Lagrangians}
+\refrefs{KraMaj15,Ibragimov07b,Ibragimov18}. In this context the Lagrangian
+structure is imposed by construction, allowing for a valid application
+of Hill's formula. The interpretation of this application is slightly
+confusing however as the Hessian and monodromy matrix are now functions
+of the ``original'' velocity field and its partial derivatives but also
+a collection of adjoint variables.

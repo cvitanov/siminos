@@ -1,0 +1,477 @@
+On these comments, the main references I have been studying are
+\refrefs{lop05rel, KK04, BroSa90, ChaJac84}.
+
+Now that the \spt\ Fourier transforms and \spt\ symmetries have been properly derived, the
+discussion can finally move on to the \KSe\ itself. The \KSe\ \refeq{e-ks}
+can now be transformed to yield the system of differential algebraic equations which
+are the foundation for everything that follows. The equations will be derived
+by substitution of \refeq{e-rfft} into \refeq{e-ks}; after a closed form expression is
+achieved the \textit{efficient} manner of computing the nonlinear term will be derived.
+
+To most efficiently explain how to compute the nonlinear term and derivatives `element-wise multiplication' must be defined.
+The result of element-wise multiplication will be referred
+to as the \textit{element-wise product}, sometimes referred to as either the Schur product or Hadamard product. The latter two
+names are often used in the context of matrices, but the generalization of this operation to tensors is straightforward.
+Given a pair of rank two tensors, the product will be represented by the operator $\cdot $ and is defined as
+\beq \label{e-ewise}
+\begin{bmatrix}
+m_{11}&\dots&m_{1k} \\
+\vdots&\ddots&\vdots \\
+m_{j1}&\dots&m_{jk} \\
+\end{bmatrix}
+\cdot
+\begin{bmatrix}
+p_{11}&\dots&p_{1k} \\
+\vdots&\ddots&\vdots \\
+p_{j1}&\dots&p_{jk} \\
+\end{bmatrix}
+=
+\begin{bmatrix}
+m_{11}p_{11}&\dots&m_{1k}p_{1k} \\
+\vdots&\ddots&\vdots \\
+m_{j1}p_{j1}&\dots&m_{jk}p_{jk} \\
+\end{bmatrix}
+\,.
+\eeq
+To make the distinction, matrix multiplication will be represented simply by adjacency, i.e. $\mathbf{A}\mathbf{B}$.
+
+The product \refeq{e-ewise} is only well defined for tensors with the same dimensions; in other words, element-wise
+multiplication is only defined for orbits whose tiles' discretizations have the same number of grid points. This is not
+the same as requiring the tile dimensions \tile\ to be identical; although for practical purposes
+this is nearly always the case. With \refeq{e-ewise}, Differentiation in the \spt\ mode basis can be described
+easily. This method, sometimes referred to as \textit{spectral differentiation},
+is performed efficiently by multiplying the modes \refeq{e-modetensor} by
+the appropriate spatial or temporal frequencies noting that the \SOn{2} representation requires
+tracking of an additional factor of $-1$. It follows that derivatives of higher order require
+powers of the frequencies. Explicitly, these details can be represented with the
+differentiation matrices, i.e. the generators of \SOn{2} translations for space 
+\beq
+\mat{\partial_x} \equiv
+\mathbb{I}_{N-1} \otimes
+\frac{2\pi}{\speriod{}}
+\begin{bmatrix}
+0 & -k \\
+k & 0
+\end{bmatrix}
+\equiv
+\mathbb{I}_{N-1} \otimes
+\begin{bmatrix}
+0 & \wavek \\
+-\wavek & 0
+\end{bmatrix}
+\,.
+\eeq
+and for time
+\beq \label{e-dt}
+\mat{\partial_t} =
+\begin{bmatrix}
+0 & 0 & 0\\
+0 & 0 & -\omegaj \\
+0 & \omegaj & 0
+\end{bmatrix}
+\otimes \mathbb{I}_{x}
+\,.
+\eeq
+There is a sign change in \refeq{e-dt} resulting from the time ordering of \ufield\ as discussed in the definition
+of the \spt\ Fourier transform.
+The time differentiation is close to the same form as \refeq{e-spacederiv}
+except for the inclusion of the zeroth time mode. At this point the reader is reminded
+to recall the conventions of the signs of the frequencies \refeq{e-sptfreq}. 
+The derivatives of higher order which are relevant are defined 
+\begin{align*} \label{e-dxm}
+\mat{\partial_x} &=
+\mathbb{I}_{N-1} \otimes
+\begin{bmatrix}
+0 & \wavek \\
+-\wavek & 0
+\end{bmatrix}
+&
+\mat{\partial_{xx}}&=
+\mathbb{I}_{N-1} \otimes
+\begin{bmatrix}
+-\wavek^2 &  0\\
+0& -\wavek^2
+\end{bmatrix}  \\ \\
+\mat{\partial_{xxx}}&=
+\mathbb{I}_{N-1} \otimes
+\begin{bmatrix}
+0&  -\wavek^3\\
+\wavek^3 & 0
+\end{bmatrix}
+&
+\mat{\partial_{xxxx}}&=
+\mathbb{I}_{N-1} \otimes
+\begin{bmatrix}
+\wavek^4 &  0\\
+0& \wavek^4
+\end{bmatrix}
+\end{align*}
+Spectral differentiation can be calculated in two ways: the first method is to explicitly construct the
+matrices \refeq{e-spacederiv} and \refeq{e-timederive} and then multiply by the vector of modes \uvec.
+The second method is element-wise product of modes and frequencies. In
+the tensor representation \refeq{e-modetensor} the element-wise products are the following
+\begingroup
+\renewcommand*{\arraystretch}{1.5}
+\begin{align*}
+\partial_x\utensor &=
+\begin{bmatrix}
+-\wavek\cjk & \wavek\ajk \\
+-\wavek\djk & \wavek\bjk
+\end{bmatrix}
+&
+\partial_{xx}\utensor &=
+\begin{bmatrix}
+-\wavek^2\ajk & -\wavek^2\cjk \\
+-\wavek^2\bjk & -\wavek^2\djk
+\end{bmatrix}  \\ \\
+\partial_{xxx}\utensor&=
+\begin{bmatrix}
+\wavek^3\cjk & -\wavek^3\ajk \\
+\wavek^3\djk & -\wavek^3\bjk
+\end{bmatrix}
+&
+\partial_{xxxx}\utensor&=
+\begin{bmatrix}
+\wavek^4\ajk & \wavek^4\cjk \\
+\wavek^4\bjk & \wavek^4\djk
+\end{bmatrix}
+\end{align*}
+\beq \label{e-dt}
+\partial_{t}\utensor=
+\begin{bmatrix}
+0 & 0 \\
+-\omegaj\bjk & -\omegaj\djk \\
+\omegaj\ajk & \omegaj\cjk
+\end{bmatrix}
+\eeq
+\endgroup
+The formulation of the \KSe\ \refeq{e-ks} in terms of modes will be a \textit{pseudospectral} formulation.
+The nonlinearity will be computed as an element-wise product in physical space as opposed to a convolution
+in spectral space. In operator notation the \KSe\ \refeq{e-ks} is written
+\beq \label{e-fks}
+\goveqn \equiv
+(\partial_t + \partial_{xx} + \partial_{xxxx})\utensor + \frac{1}{2}\partial_x\FFT((\IFFT(\utensor)\cdot\IFFT(\utensor)) \,.
+\eeq
+ %cancellation error, pseudospectral factoids
+Because they are never actually calculated the convolution sums will not be derived; it is much
+easier to express this in terms of components of the products in physical space.
+Using the derivatives in tensor notation \refeq{e-dt}, \refeq{e-dx} the linear component of the \KSe\ as a system of differential algebraic equations is written (in the tensor format) as
+\begingroup
+\renewcommand*{\arraystretch}{1.5}
+\beq \label{e-fkslinear}
+\begin{bmatrix}
+(-\wavek^2 + \wavek^4)\ajk - \omegaj\bjk & (-\wavek^2 + \wavek^4)\cjk - \omegaj\djk\\
+(-\wavek^2 + \wavek^4)\bjk + \omegaj\ajk & (-\wavek^2 + \wavek^4)\djk + \omegaj\cjk
+\end{bmatrix}
+\eeq
+\endgroup
+Computation of the nonlinear component of \goveqn\ is performed in physical space as
+an element-wise product, as opposed to a (2-d) convolution in Fourier space.
+This can easily be computed using a \textit{pseudospectral} method; which is represented in
+operator notation as
+\beq \label{e-fksnonlinearop}
+\tilde{N} \equiv \FFT(u\cdot u) \equiv \FFT(\IFFT(\utensor)\cdot\IFFT(\utensor))\:.
+\eeq
+The expression \refeq{e-fksnonlinearop} clearly does not specify the blocks, however;
+this is derived for posterity before moving on.
+
+
+The product in physical space $u^2$ corresponds to convolutions of the
+products of sums in \rfft{e-rfft} in spectral space.
+Because convolution, Fourier transforms are linear transformations,
+the product $u^2$ is equal to the sum of the products of each of its components. Each block
+of modes corresponds to a \spt\ parity of its corresponding field. For example,
+the field $\IFFT(\ajk)$ would be even with respect
+to $\period{}/2$ and $\speriod{}/2$ because the basis functions are cosines.
+The parity of the product can easily be determined by the parity of products of
+sines and cosines. For example, the parity of the product $\IFFT(\ajk)*\IFFT(\cjk)$
+results from the parity of the products of the general form which can be crudely represented by
+$\cos(\omegaj\tn)\cos(\wavek\xm) * \cos(\omegaj\tn)\sin(\wavek\xm)$.
+The product is therefore odd with respect to space
+and even with respect to time; the correspondence is then $\cos(\omegaj)\sin(\wavek)$ hence it lies
+in the $\tilde{N}_{\cjk}$ mode block. Applying this logic to all other products yields an expression of the
+components of \refeq{e-fksnonlinearop}; let $\cdot$ represent the element-wise product.
+
+
+\begingroup
+\renewcommand*{\arraystretch}{1.5}
+\bea \label{e-fksnonlinear}
+\begin{bmatrix}
+\tilde{N}_{\ajk} & \tilde{N}_{\cjk} \\
+\tilde{N}_{\bjk} & \tilde{N}_{\djk}
+\end{bmatrix}
+&=&
+\begin{bmatrix}
+-\wavek\FFT(a\cdot c + b\cdot d))&
+\frac{\wavek}{2}\:\FFT((a\cdot a) + (b\cdot b)+(c\cdot c) + (d\cdot d)))\\
+-\wavek\:\FFT(a\cdot b + c\cdot d)) &
+\wavek\:\FFT(a\cdot d + b\cdot c))\\
+\end{bmatrix}\continue
+&\quad&\mbox{where}\continue
+&\quad& a = \IFFT(\ajk),\: b = \IFFT(\bjk),\: c = \IFFT(\cjk),\: d = \IFFT(\djk)\,.
+\eea
+The dependence of \refeq{e-fks} on the parameters $\period{}, \speriod{}$ is implicit by definition of
+$\wavek, \omegaj$. The spatial derivative within the nonlinear term is inserted between the
+temporal and spatial transform for details relevant to the
+As a shorthand notation is can be convenient to condense \refeq{e-fks} into a more compact notation
+
+\beq \label{e-fksmodes}
+\goveqn \equiv
+\begin{bmatrix}
+(-\wavek^2 + \wavek^4)\ajk - \omegaj\bjk +\tilde{N}_{\ajk}& (-\wavek^2 + \wavek^4)\cjk - \omegaj\djk+\tilde{N}_{\cjk}\\
+(-\wavek^2 + \wavek^4)\bjk + \omegaj\ajk +\tilde{N}_{\bjk}& (-\wavek^2 + \wavek^4)\djk + \omegaj\cjk+\tilde{N}_{\djk}
+\end{bmatrix}
+\eeq
+This is the form of \refeq{e-ks} in terms of the \spt\ mode blocks of \refeq{e-modetensor}.
+
+This represents the explicit expression in the \spt\ mode basis, however, symmetries have yet to be incorporated.
+Before deriving the variants of \refeq{e-fksmodes} a modification to the pseudospectral product must be made. 
+Prior to any modifications, the nonlinear term \refeq{e-fks} for modes constrained to either $\bbU^{0}$, $\bbU^{\sigma}$, 
+or $\bbU^{\sigma\tau}$ \refeq{e-invariantsubspaces} yields
+$P^{i}\FFT(\IFFT(\utensor^2)) = \mathbf{0}$. The projection operator $P^{i}$ is made explicit here 
+but is typically baked into the time transform. In other words, the modes $\FFT(\IFFT(\utensor^2))$ lie
+in the complement to whichever invariant subspace is being considered. 
+This can be corrected however by exchanging the order of the spatial derivative and projection operators using the relations
+\refeq{e-K4projderive}. The accommodation employed is to do just this; 
+take the spatial derivative in the spatial mode basis, preempting the
+time transform. With this modification we are now fully equipped to handle the symmetry
+variants of \refeq{e-fksmodes}.
+
+In the $\bbU_{0}$ subspace of antisymmetric equilibria the only non-zero
+modes are given by \refeq{e-eqvrules}; discarding all vanishing modes from \refeq{e-fksmodes} yields
+\beq \label{e-fkstensorU0}
+\mathbf{f}_{\bbU^{0}}(\statev) \equiv
+\begin{bmatrix}
+(-\wavek^2 + \wavek^4)\czk + \frac{1}{2}\FFT_t(\wavek\FFT_x(\IFFT(\czk) \cdot \IFFT(\czk)))
+\end{bmatrix}
+\eeq
+Continuing on with the antisymmetric subspace $\bbU^{\sigma}$ using the selection rules \refeq{e-reflrules}
+\beq \label{e-fkstensorUsigma}
+\mathbf{f}_{\bbU^{\sigma}}(\statev)  \equiv
+\begin{bmatrix}
+(-\wavek^2 + \wavek^4)\cjk + \omegaj\djk + \frac{1}{2}\FFT_t(\wavek\FFT_x((c\cdot c) + (d\cdot d))\\
+(-\wavek^2 + \wavek^4)\djk - \omegaj\cjk + \FFT_t(\wavek\FFT_x(c\cdot d))
+\end{bmatrix}\,.
+\eeq
+Unfortunately there is no useful simplification for the shift reflection subspace as each block
+has non-vanishing modes; however it should be noted that the components of \refeq{e-fkstensor}
+also obey the selection rules \refeq{e-srrules}.
+
+For relative periodic orbits and relative equilibria, substitution of the comoving frame ansatz \refeq{e-comoving}
+into \refeq{e-ks} generates an additional linear term via the time derivative of terms with $\xm-\frac{S\tn}{T}$.
+The result can explicitly be represented by action of the operator $\frac{S}{T}\partial_x$
+\bea \label{e-fkstensorrpo}
+&f_{S}(\statev)&\equiv
+\begin{bmatrix}
+(-\wavek^2 + \wavek^4)\ajk - \omegaj\bjk +\tilde{N}_{\ajk}& (-\wavek^2 + \wavek^4)\cjk - \omegaj\djk+\tilde{N}_{\cjk}\\
+(-\wavek^2 + \wavek^4)\bjk + \omegaj\ajk+\tilde{N}_{\bjk}& (-\wavek^2 + \wavek^4)\djk + \omegaj\cjk+\tilde{N}_{\djk}
+\end{bmatrix}
+\continue
+&&+
+\begin{bmatrix}
+-\wavek\frac{S}{T}\cjk&\wavek\frac{S}{T}\ajk\\
+-\wavek\frac{S}{T}\djk&\wavek\frac{S}{T}\bjk
+\end{bmatrix}
+\eea
+\endgroup
+
+For a \statev\ the equation \refeq{e-fks} is comprised of the same number of components as non-vanishing modes; there
+are no components for the parameters $\period{}, \speriod{}, \tilt{}$.
+For a state \statev\ with $|\utensor|$ non-vanishing modes and $p$ parameters
+
+
+These equations can also be written in terms of matrices, this is useful for the derivation of
+the Jacobian matrix later on.
+
+
+
+I was hung up on how to actually compute these ``matrix-vector approximations"
+in my context, after some exploring \refref{BoFra05, seg05, EshSle04}.
+I think I've figured them out but I plan on talking to J. F. Gibson to confirm.
+The other things I am trying to reconcile between the different notations is
+how L{\'o}pez \etal\rf{lop05rel} handles symmetries of solutions as it's slightly different
+than when one has a forward time mapping, I believe. These things and working in
+the class objects I've defined in python turned out to be somewhat trickier
+than I had first intended but I hope to get things up and running by the
+weekend.
+Today's dealings mainly involved working through the "direct matrix method" in \refref{Chu09}.
+In order to explicitly construct the Jacobian of \goveqn\ and its adjoint it will be helpful to construct
+\refeq{e-fks} using matrices where possible. The three general cases are considered; orbits without symmetry,
+discrete symmetry, and continuous symmetry. Element-wise multiplication can be represented by multiplication
+of a vector with a diagonal matrix; however, it will be written in pseudospectral form for reasons
+relevant to the gradient of \goveqn. Much like \refeq{e-fks} the nonlinear term
+is written in a term to accomodate orbits with discrete symmetries,  $\mathbf{\tilde{M}}[\partial_x] = \mat{\IFFT_x}\mat{\partial_x}\mat{\FFT_x}$
+\begin{flalign}
+\label{e-fksmatrix}
+&\goveqn=(\mat{\partial_{t}}+\mat{\partial_{xx}}+\mat{\partial_{xxxx}})\uvec
++ \frac{1}{2}\mat{\FFT_t}\,\mathbf{\tilde{M}}[\partial_{x}]\,\mat{\FFT_x}\,(\IFFT(\uvec)\cdot\IFFT(\uvec))\continue
+&f_{S}(\statev)=\goveqn+\frac{S}{T}\mat{\partial_{x}}\uvec
+\end{flalign}
+Solving for the roots of the expression \refeq{e-fks} and its symmetry subspace variants are
+the core of all \spt\ computations. To do so it will be very important to derive the
+gradient of \goveqn with respect to all variables represented in \statev. The gradient
+of \goveqn\ is defined as The resulting
+matrix is non-square as there as there are no components of \goveqn for the parameters.
+\begin{alignat}{2}\label{e-jacobian}
+&\nabla_{\statev}\goveqn\ &=&
+\begin{bmatrix}
+\nabla_{\utensor}\goveqn\ &
+\nabla_{\mathrm{\period{}}}\goveqn\ &
+\nabla_{\mathrm{\speriod{}}}\goveqn\
+\end{bmatrix}
+\continue
+&\nabla_{\statev}\mathbf{f}_{0}(\statev)&=&
+\begin{bmatrix}
+\nabla_{\utensor}\mathbf{f}_{0}(\statev) &
+\nabla_{\mathrm{\speriod{}}}\mathbf{f}_{0}(\statev)
+\end{bmatrix}
+\continue
+&\nabla_{\statev}f_{S}(\statev)&=&
+\begin{bmatrix}
+\nabla_{\utensor}f_{S}(\statev) &
+\nabla_{\mathrm{\period{}}}f_{S}(\statev) &
+\nabla_{\mathrm{\speriod{}}}f_{S}(\statev) &
+\nabla_{\mathrm{S}}f_{S}(\statev)
+\end{bmatrix}
+\end{alignat}
+These Jacobian matrices are defined by $|\utensor|$ equations (number of modes) and $|\utensor| + p$ unknowns (modes and parameters).
+
+
+For an arbitrary matrix $\mathbf{A}$ (independent of $\utensor$), functions $\mathbf{F}(\utensor), \mathbf{G}(\utensor)$, the relevant chain
+and product rules are
+\bea \label{e-DMdiffrules}
+\frac{\partial}{\partial \utensor}(\mathbf{A}\utensor) &=& \mathbf{A} \continue
+\frac{\partial}{\partial \utensor}(\mathbf{F}(\utensor) \cdot \mathbf{G}(\utensor)) &=& \mathrm{Diag}[G(\utensor)]\frac{\partial \mathbf{F}(\utensor)}{\partial \utensor} + \mathrm{Diag}[\mathbf{F}(\utensor)]\frac{\partial \mathbf{G}(\utensor) }{ \partial \utensor} \continue
+\frac{\partial}{\partial \utensor}(\mathbf{A}\mathbf{F}(\utensor))&=& \mathbf{A} \frac{ \partial F(\utensor) }{ \partial \utensor }
+\eea
+
+The gradient $\mathbf{J}\equiv\nabla_{\utensor}\goveqn$ is written in terms of matrices as opposed to individual matrix elements \refeq{e-fks}
+will be used to write. $\mathbf{J}$ will be used
+\begin{alignat}{2}\label{e-fksjacobian}
+&\nabla_{\utensor}\goveqn&=&\:\mat{\partial_{t}}+\mat{\partial_{xx}}+\mat{\partial_{xxxx}}
++\mat{\FFT_t}\mathbf{\tilde{M}}[\partial_{x}]\;\mat{\FFT_x}\;\mat{\IFFT(\uvec)}\;\mat{\IFFT} \continue
+&\nabla_{\utensor}f_S(\statev)&=&\:\nabla_{\utensor}\goveqn+\frac{S}{T}\mat{\partial_{x}}
+\end{alignat}
+where $\mathrm{Diag}[\IFFT(\uvec)]$ is a diagonal matrix with $u$ as its elements. This result is derived from
+what \rf{Chu09} denotes as `direct-matrix notation'.
+
+The derivatives with respect to the parameters $\period{}, \speriod{}, S$ apply to the frequencies within \refeq{e-fks}.
+All of the terms with dependence on $\period{}$ and $\speriod{}$ have inverse proportionality therefore the derivatives
+can always be written, for example, as $\frac{-p}{\speriod{}}q_k^p$. This is the convention used here; computationally it allows
+for scalar multiplication of previously defined functions.
+If the symmetry variants of the equations are no different from the general expression or are not relevant (i.e.
+time is not relevant for equilibria) then they are not defined.
+\begin{alignat}{2}\label{e-fksjacobianT}
+&\nabla_{\mathrm{\period{}}}\goveqn&=&\:-\frac{1}{T}\mat{\partial_{t}}\uvec\continue
+&\nabla_{\mathrm{\period{}}}f_S(\statev)&=&\:\nabla_{\period{}}\goveqn-\frac{S}{T^2}\mat{\partial_{x}}\uvec
+\end{alignat}
+
+\begin{alignat}{2}\label{e-fksjacobianL}
+&\nabla_{\mathrm{\speriod{}}}\goveqn&=&\:(-\frac{2}{\speriod{}}\mat{\partial_{xx}}-\frac{4}{\speriod{}}\mat{\partial_{xxxx}})\uvec
+-\frac{1}{2\speriod{}}\mat{\FFT_t}\mathbf{\tilde{M}}[\partial_{x}]\,\mat{\FFT_x}\,(\IFFT(\uvec)\cdot\IFFT(\uvec))\continue
+&\nabla_{\mathrm{\speriod{}}}f_S(\statev)&=&\:\nabla_{\speriod{}}\goveqn-\frac{1}{\speriod{}}\frac{S}{T}\mat{\partial_{x}}\uvec
+\end{alignat}
+
+\beq\label{e-fksjacobianS}
+\nabla_{\mathrm{S}}f_S(\statev)=\:\frac{1}{T}\mat{\partial_{x}}
+\eeq
+
+Another component required for the numerical techniques is to derive the adjoint of \refeq{e-fksjacobian}. For now,
+this will be accomplished by taking the transposition of \refeq{e-fksjacobian} this was
+most easily done in the context of \textit{formal Lagrangians}.
+
+For now, it is suitable to reverse engineer the adjoint equation by simply taking the transpose of \refeq{e-fksjacobian}.
+As the matrices are all either skew-symmetric, diagonal, or orthogonal with respect to the respective subspace
+these can be derived as
+\begin{alignat}{2}\label{e-fksjacobianadjoint}
+&\nabla_{\utensor}^{\top}\goveqn=&& -\mat{\partial_{t}}+\mat{\partial_{xx}}+\mat{\partial_{xxxx}}
+-\mat{\IFFT}\;\mat{\IFFT(\uvec)}\;\mat{\IFFT_x}\mathbf{\tilde{M}}[\partial_{x}]\;\mat{\IFFT_t} \continue
+&\nabla_{\utensor}^{\top}\goveqn_S=&&\nabla_{\utensor}^{\top}\goveqn-\frac{S}{T}\mat{\partial_{x}}
+\end{alignat}
+Unlike the Jacobian \refeq{e-fksjacobian} the adjoint is rarely ever explicitly constructed. Instead, it is the product
+of matrix and vector which is important. In conventional numerical studies, matrix-vector products most commonly arise as
+finite-difference approximations of tangent space evolution. The Jacobian in the dynamical systems context maps a linear neighborhood
+forward in time,
+
+On these comments, the main references I have been studying are
+\refrefs{lop05rel, KK04, BroSa90, ChaJac84}.
+
+in my context, after some exploring \refref{BoFra05, seg05, EshSle04}.
+I think I've figured them out but I plan on talking to J. F. Gibson to confirm.
+The other things I am trying to reconcile between the different notations is
+how L{\'o}pez \etal\rf{lop05rel} handles symmetries of solutions as it's slightly different
+than when one has a forward time mapping, I believe. These things and working in
+the class objects I've defined in python turned out to be somewhat trickier
+than I had first intended but I hope to get things up and running by the
+weekend.
+
+You can think of the way it was traditionally done in continuing solutions.
+First we fixed the spatial domain to a constant $L$, varied $\period{}$ to
+$\period{}+\delta\period{}$ in order to find a spatiotemporally periodic
+solution $u^{(1)}(x,t)$. Then we increased the spatial domain size $L$ to
+$L+\delta L$, and used $u^{(1)}(x,t)$ (the same $N$ Fourier modes) as a
+starting guess, varied $\period{}$ to $\period{}+\delta\period{}$ and
+determines the spatiotemporally periodic solution $u^{(2)}(x,t)$,
+parametrized by $(L+\delta L,\period{}+\delta\period{})$.
+
+
+As a reminder, the intention of this was to allow us
+to rewrite \refeq{e-fks} in a much less confusing manner.
+The specific form we utilize is what is known as
+a \emph{pseudospectral} form\rf{Canuto88}. The general motivation
+is that explicit computation of the nonlinearity via
+summation is not only inefficient but also susceptible to cancellation error.
+Pseudospectral methods compute the
+quadratic nonlinearity as a pointwise product in physical space
+which is equivalent to the spectral convolution.
+Note that this
+extra work is merely to increase the transparency of our numerical
+work; in practice the linear operators
+are not constructed once the memory cost becomes
+too great, rather, we deploy functions which have an equivalent effect.
+To begin, let us define the linear operators mentioned shortly before.
+Every such operator can be described by the following prescription:
+construct the operator that would act on a single point in either
+space or time, then extend this operator to act on
+the entire \spt\ domain at once. Because we have ordered the \Fcs\
+in a contiguous manner this extension always takes the form
+of a Kronecker outer product with an appropriately sized identity matrix.
+This outer product is defined for two matrices $A$ and $B$ of sizes
+$N_a \times M_a$ and $N_b \times M_b$ as
+
+There is a storm in the distance however, as this general procedure is ruined for the spatial problem.
+As we know from the chronotopic literature \refrefs{LePoTo96, LePoTo97, PoToLe98, GiLePo95},
+that iteration in space typically does not converge to the same attractor as iteration in time,
+and generally corresponds to a strange repeller. Therefore I cannot hope to form an initial
+guess loop from using a Poincar\'e section in the spatial direction, as typically all of my
+Fourier coefficients go off to infinity before a recurrence is found.
+
+I thought that I would have to somehow permute the elements \refeq{e-FvndBAD} of the "Loop Vector" (vector that
+encodes the parameterization of initial condition for periodic orbit search). The reasoning behind this
+was in order to use differentiate with respect to a parameterization variable $s$, I would need
+the elements to be in sequential order with respect in parameterization variable $s$, in order to
+multiply by vector $i \vec{m}$, where $m$ is the conjugate variable (in a Fourier transform sense)
+to $s$. This is \textbf{\emph{not}}
+the case, as I can merely exploit the Kronecker outer product to produce a diagonal matrix such that
+along the diagonal there are $M$ duplicates of each element of $\vec{m}$
+
+Began parsing through the literature on (variational) {newton descent},
+specifically \refrefs{CvitLanCrete02,lanVar1} and for invariant tori
+\refref{LCC06}.
+
+A useful class of numerical methods often used in optimization\rf{BoyVan04, Dennis96} are known
+as \textit{descent methods}. In our context, optimization denotes the numerical process
+of finding minimizers of a scalar valued cost function which vector valued inputs, the \spt\
+Fourier modes and \spt\ parameters. Broadly speaking, descent methods are numerical methods
+which iteratively solve unconstrained optimization. These methods accomplish this by one
+way or another providing a direction to step in which monotonically decreases the value of
+the cost functional, hence ``descent'' (assuming a non-negative scalar cost function).
+The method with which to compute the descent direction is the distinguishing property
+between descent methods. In the limit of an infinitesimal step size, the iterative descent
+can be characterized as a fictitious flow with respect to a fictitious time\rf{LCC06}.
+The advantages of descent methods are that they do not require the construction nor
+the inversion of any matrices. The computational and memory requirements
+are relatively cheap in comparison to direct methods but the trade off is the
+rate of convergence.
+
+

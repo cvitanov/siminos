@@ -1,0 +1,31 @@
+\section{Study notes of (periodic) Krylov-Schur algorithm}
+\label{sect:KrylovSchur}
+
+For a large eigenvalue problem or Floquet analysis in a high dimensional dynamical system,
+only a subset of its eigenvalues is of interest. To achieve this goal, Sorensen 
+\etc\rf{Sorensen1992} proposed
+implicit restarted Arnoldi method with polynomial filter. This method restricts the dimension
+of Krylov subspace and substantially saves the storage space; at the same time, 
+this algorithm is implemented in ARPACK and is free to use. 
+However, its deflating strategy is complicated\rf{Lehoucq1996}. Later on,
+G. W. Stewart\rf{Stewart02} relaxed the Hessenberg form of Arnoldi iteration, and proposed the 
+Krylov decomposition. Moreover, he proved that this new algorithm is equivalent to
+Sorensen's algorithm but much easier to understand and implement. It requires
+Schur decomposition, so it is named Krylov-Schur algorithm.
+
+Later, D. Kressner\rf{Kressner2006} 
+extends Krylov-Schur algorithm to solve product eigenvalue 
+problem\rf{Wat2005, Wat07}, which
+is called periodic Krylov-schur algorithm.  
+
+A few remarks about the implementation:
+\begin{itemize}
+\item The case that the initial vector is within an invariant subspace of the 
+  matrix concerned. Suppose the dimension of this subspace is $k$, then the 
+  usual Arnoldi process terminates after $k$ iterations because the $k$-th
+  diagonal element of Hessenberg matrix is very small. However, for our 
+  purpose, I think it is fine to continue no matter how small this element 
+  is because our goal is to obtain a set of orthonormal vectors. The double
+  orthonormalizaiton trick guarantees that the $(k+1)$-th vector is perpendicular
+  to the first $k$ vectors.
+\end{itemize}

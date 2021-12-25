@@ -1,0 +1,103 @@
+% $Author: predrag $ $Date: 2021-12-20 09:38:42 -0500 (Mon, 20 Dec 2021) $
+% siminos/spatiotemp/Solutions/soluHenlatt.tex called by blogSVW.tex
+
+% \section{Sidney solutions}  % TEMPORARY
+% \Solution{blogSVW}{soluHenlatt}{23jan2018}{Sidney's blog}
+
+% Predrag                                               2020-12-27
+%  moved GitHub/reducesymm/Solutions/soluHenlatt.tex to here
+% Predrag                                               2020-11-30
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\solution{exer:tempHen}{H\'enon temporal lattice.}{
+
+(a) Here's my initial attempt, I'm trying to see if the flow conservation
+law CL18 eq.~{Det(jMorb)eights} still works for the {\Henon} map:
+$$\phi_{n+1}+a\phi^2_n-b\phi_{n-1}=1$$
+The first step seems to be to construct the {\jacobianOrb} $\mathcal{J}$:
+\begin{equation}\label{1}
+F[\mathbf{\Phi}]=\mathcal{J}\mathbf{\Phi}-I
+\end{equation}
+Where $I$ is the identity matrix, and $F$ is the function where we want to find the zeros for (the orbits). We can rewrite this as:
+\begin{equation}\label{2}
+\left(\sigma+aI\mathbf{\Phi}-b\sigma^{-1}\right)\mathbf{\Phi}=I
+\end{equation}
+Therefore, $\mathcal{J}$ is
+\begin{equation}\label{3}
+\mathcal{J}=\sigma+aI\mathbf{\Phi}-b\sigma^{-1}=
+  \left[ {\begin{array}{ccccc}
+   a\phi_1 & 1 & 0 & \cdots & -b \\
+   -b & a\phi_2 & 1 & \cdots & 0 \\
+   0 & \ddots & \ddots & \ddots & \vdots \\
+   \vdots & \cdots & -b & a\phi_{n-1} & 1 \\
+   1 & 0 & \cdots & -b & a\phi_n\\
+  \end{array} } \right]
+\end{equation}
+
+Before I take a crack at seeing if this flow conservation still holds, I do have some questions:
+\begin{itemize}
+\item[Q1 Sidney]
+It appears that the derivation from chapter 23 (eqn 23.17, I don't know
+how to cite that specifically) the denominator of the sum rule is a
+product of the eigenvalues $\Lambda_{pi}$, which (if I remember
+correctly) are just the eigenvalues of the {\jacobianOrb} of the flow or
+map, which from basic linear algebra I know to be just the determinant of
+the {\jacobianOrb}. It cannot be that straightforward, where is the flaw
+in my logic?
+
+\item[Q2 Sidney]
+How do I go from the periodic orbit formulation of the sum rule from Ch 23 to the lattice formulation? My initial thought is that since {\lattstate}s are akin to a periodic orbit (right?) that the sum can just be immediately changed from a sum over all periodic orbits, to a sum over all {\lattstate}s. Is this reasoning correct?
+
+\item[Comment Sidney]
+I now realize that the flow sum rule involving the {\jacobianOrb} (NOT the Hill matrix) is a fundamental property that applies to all systems (at least all closed systems), what I now know is that I need to work out if I can convert between the determinant of the {\jacobianOrb} and the determinant of the Hill matrix.
+
+\item[Plan Sidney]
+I am going to try to see what I can do with the block matrix proof, and I will get back to everyone on Friday
+
+\item[Update Sidney]
+I tried working out the proof with the block matrices for just the
+regular Bernoulli map, I understand everything except the sentence "For a
+period-$\cl{}$ {\lattstate} $\mathbf{\Phi}_M$, the {\jacobianOrb}
+(15) is now a $[ndXnd]$ matrix function of the $[dXd]$ block matrix J."
+It sort of seemed like it was much like "poof! And then a miracle
+happens!" I will keep exploring.
+
+I shall now correct my mistake with the derivation of the {\jacobianOrb}/Hill matrix $\mathcal{J}$ I shall use the differential definition:
+$$\mathcal{J}_{ij}=\frac{\delta F[\Phi]_j}{\delta\phi_i}$$
+Which gives us that $\mathcal{J}=\sigma+2aI\Phi_n-b\sigma^{-1}$. Now I will use the differential definition of the local Jacobian, where f is a functions such that $f(\phi_n)=\phi_{n+1}$
+$$J_{ij}=\frac{\partial f(\phi_n)_i}{\partial \phi_{nj}}$$
+Which gives us that $J(\phi_n)=-2a\phi_n$. So we can rewrite $\mathcal{J}=\sigma-J(phi_n)I-b\sigma^{-1}$, with the understanding that J changes along the diagonal. I am not quite sure how to bring this to the sum rule, but I will soon (hopefully), how do I math things like $\phi\text{ and }\Phi$ bold?
+
+\item[Update Sidney]
+I need to do a proper mathematical look at the flow conservation, but the
+H\'enon map is not flow conserving (some trajectories are inadmissible)
+so the sum rule does not equal $1$, I will try later to look at what it
+does equal analytically, but until then I will tackle the computation. I
+have made great progress with that, with help from Matt I was able to
+create a working code that gave me the correct {\orbit}s up to length
+10 (I could not check past that). The code is in my blog. Once Matt has
+completed the current round of OrbitHunter updates I shall try to use
+that to reproduce my results.
+
+\item[Solution Sidney]
+(a) The flow conservation sum rule does not sum to $1$ so it does not
+work as before, I still need to try to relate the global Hill matrix to
+the local Jacobian matrix, I think I may be close to reworking the block
+matrix proof. Anyway, here are the periodic points I found (please note
+that the code cannot be used to find fixed points (n=1) so I just did it
+analytically, I will try to add that to the code later):
+$$n=1\quad -1.13135447$$
+$$n=1\quad 0.63135447$$
+$$n=2\quad [0.97580005, -0.47580005]$$
+$$n=4\quad [1.12506994,-0.70676678,0.63819399,0.21776177]$$
+$$n=6\quad [1.03805954, -0.41515894, 1.07011813, -0.72776163, 0.57954366, 0.31145232]$$
+$$n=6\quad [1.1579582, -0.8042199, 0.44190995, 0.48533586, 0.80280173, 0.2433139]$$
+When I tried to find $n=3$ and $n=5$ the code returned nothing, this
+matches with what is tabulated in table 34.2. I will try using some of
+the analytical pruning techniques to prove that $n=3$ and $n=5$ are not
+allowed.
+
+\end{itemize}
+\hfill (Sidney Williams 2021-01-20)
+    } % end \solution{exer:catMapGreenInf}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%

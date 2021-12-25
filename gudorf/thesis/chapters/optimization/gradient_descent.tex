@@ -1,0 +1,89 @@
+
+While this theoretically guarantees convergence it does not guarantee the \textit{rate} of
+convergence. The fictitious time derivative's dependence on $G(u)$ necessarily
+indicates that as magnitude of the cost functional approaches zero so does the gradient.
+Therefore, it is like that the adjoint descent method becomes less effective as it approaches a solution.
+
+The intent is that these details will not serve as a guideline
+for the reader but also demonstrate that the implementation is relatively easy and
+straightforward. To begin our computational discussion, we note that even though
+the descent direction includes the adjoint of the Jacobian, $\frac{\partial F}{\partial u}^{\top}$, this
+matrix is never explicitly formed. This is important because the computational
+cost, in terms of time and resources, becomes prohibitive as the dimensionality of
+the system increases. Instead, we only ever compute the matrix-vector \textit{product}
+that appears in \refeq{e-adjointdescent}. This is done in a matrix-free manner without
+the use of finite-difference approximations found in\rf{KK04,Brown87}.
+
+Computation of \refeq{e-descentdirection} in a matrix-free manner
+is much more efficient than explicitly constructing the adjoint matrix.
+All that is left is to numerically integrate \refeq{e-descentdirection} until
+some error tolerance is met.
+Because the intermediate states represent
+approximate solutions the accuracy of such states has no meaning, we only
+require that the cost functional \refeq{e-costfunctional} is decreasing.
+While the adjoint descent does guarantee this
+the integration scheme we employ, explicit Euler method, does not. The reason
+for using such a simple method is merely due to its speed; one could apply a higher
+order method but once again, the accuracy of intermediate states is not important.
+We have found that decreasing the step size
+is sufficient to ensure that the cost functional always decreases.
+This covers the basic implementation of the adjoint descent method. There
+are other modifications which can be made that improve the rate of convergence.
+The only change that seems to have a drastic effect is known as preconditioning .
+The discussion regarding preconditioning, its
+formulation and effects, is located in \refsect{sect:preconditioning}.
+Differentiation of \refeq{e-cost} with respect to fictitious time $\tau$ induces
+the fictitious flow which defines the numerical descent method.
+\beq \label{e-fictitiousflow}
+\partial_{\tau} \phi(\statev)=[(\nabla\goveqn)^{\top}\goveqn]^{\top}\partial_{\tau}\statev
+\eeq
+The term $\partial_{\tau}\statev$ is free to be defined by the numerical method. The specific selection
+\beq \label{e-descent}
+\partial_{\tau}\statev = -[(\nabla\goveqn)^{\top}]\goveqn
+\eeq
+defines the gradient descent method as \refeq{e-descentdirection} equals $-\nabla \phi$.
+This choice ensures that the cost function is non-increasing as a function of $\tau$
+\beq \label{e-adjointdescent}
+\partial_{\tau}\phi(\statev) = -([\nabla^{\top}\goveqn]\goveqn)^2 < 0 \,.
+\eeq
+
+
+The iteration \refeq{e-euler} is the most basic explicit method that could be applied to this problem.
+There are a number of motivations behind this choice. Numerically \refeq{e-euler} is fast and,
+practically speaking, the residual can is preferred the intermediate states do not matter so long as the
+residual is decreasing, as this stipulations 
+
+This is implemented numerically using Euler's method. Let $\statev^{'}$ represent
+an initial guess for which $\phi(\statev^{'})\neq0$. The sequence of corrections
+\beq \refeq{e-euler}
+\statev^{'}_{n+1} = \statev^{'}_{n} - \nabla\phi(\statev)\Delta\tau
+\eeq
+approaches a minima of $\phi$; if this happens to be a local minimum then the optimization
+of $\statev^{'}$ will be considered a failure.
+The distinction is made between this numerical integration and time evolution; in this case
+the steps are in a fictitious time direction and represent successive variational corrections.
+The only requirement that is stipulated is that the residual is non-increasing.
+The sequence of intermediate states parameterized by discrete $\tau$ are not of consequence, as
+any state that does not satisfy \refeq{e-fks} is not a solution. Therefore the choice \refeq{e-euler}
+is made as to favor computational speed over computational accuracy.
+Define the residual of a state $\statev^{'}$ near an orbit \statev\ as the following.
+
+'
+To ensure that the residual
+is non-increasing, $\tau$ must be chosen to be sufficiently small, and is chosen by the following prescription.
+Let $\tau_0=1$, while $r(\statev^{'}_{n+1}) = r(\statev^{'}_{n} - \nabla\phi(\statev)\Delta\tau) \geq r(\statev^{'}_{n})$,
+set $\tau_{j+1} = tau_j / 2$. Computationally the smallest accepted $\tau_j$ is chosen to be quite small, $\min\tau = 10^{-8} \approx 2^{-26}$
+however in practical terms the termination of \refeq{e-euler} is controlled by the condition
+\beq
+r_{n+1}
+\eeq
+such that the optimization process is subject to the following condition
+\beq \refeq{e-ftol}
+\frac{r_n - r{n+1}}{\max[1, r_n]} \geq \epsilon_f
+\eeq
+if for whatever reason \refeq{e-ftol} 
+
+
+
+These conditions are similar but less precise than the Wolfe conditions or Armijo-Goldstein conditions; the optimization
+considered here does not concern itself with finding an optimal step length as defined by a line-searching procedure.

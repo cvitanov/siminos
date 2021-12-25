@@ -1,0 +1,83 @@
+% siminos/spatiotemp/chapter/iterativemethods.tex
+% $Author: mgudorf3 $ $Date: 2019-08-19 21:51:01 -0400 (Mon, 19 Aug 2019) $
+
+%This is important, but doesn't really fit without first writing the equations in terms of
+%spatiotemporal Fourier modes, likewise with a description about calculating the adjoint
+%descent direction in a matrix-free manner.
+%To improve the rate of convergence, we modify the adjoint descent
+%direction by performing what is conventionally called preconditioning. The main concept
+%behind this procedure is that the adjoint descent direction \refeq{e-descentdirection} is
+%dominated by the higher order spatial derivatives.
+%Describe the intergration procedure? general convergence behavior?
+In contrast to descent methods,
+iterative methods are defined by repeatedly
+solving the linearized system of equations that result
+from the Taylor expansion of $\mathbf{G}$.
+
+In light of this, we instate a hybrid numerical method which uses the
+adjoint descent method initially but switches to an iterative method
+after some criterion is met. Typically this occurs when either the cost
+functional or the magnitude of the gradient falls beneath some
+predetermined value. There are two main classes of algorithms that we use
+which can be modified and tweaked on a case-by-case basis. Both of these
+two classes, Krylov subspace methods and least-squares Newton methods,
+formulate the problem in the same manner. The derivation of the
+minimization problem begins with the first-order Taylor expansion of
+$\mathbf{G}$ around $\mathbf{z}_0$. Indices which track the iteration
+number are left off initially so that the derivation is less confusing;
+these will be reinstated once the proper formulation is completed. The
+Taylor expansion
+\beq
+\mathbf{G}(\mathbf{z}) \approx \mathbf{G}(\mathbf{z}_{0}) + DG(\mathbf{z}_{0})(\mathbf{z}-\mathbf{z}_0)\,.
+\ee{e-taylorexp}
+By substituting $\mathbf{G}(\mathbf{z})=0$ and $\mathbf{z}-\mathbf{z}_{0} \equiv \Delta \mathbf{z}_0$
+\refeq{e-taylorexp} takes the form
+\beq
+DG(\mathbf{z}_{0})\Delta \mathbf{z} = -\mathbf{G}(\mathbf{z}_{0})
+\ee{e-newtonequation}
+this is equivalent to the minimization problem
+\beq
+\min_{\Delta \mathbf{z}}  ||DG\Delta \mathbf{z} +\mathbf{G}(\mathbf{z})||_2
+\ee{e-lstsq}
+    %\PC{2019-04-17}{where is \refeq{e-linearminimization}?}
+In practice \refeq{e-lstsq} is solved iteratively
+\beq \label{e-lstsqiteration}
+\min_{\Delta \mathbf{z}_{i}}  ||DG(\mathbf{z}_{i-1})\Delta \mathbf{z}_{i} +\mathbf{G}(\mathbf{z}_{i-1})||_2
+\eeq
+for $i = 1,2,3,...$.
+This produces a sequence of approximate solutions
+$\{\mathbf{z}_i = \mathbf{z}_{i-1}+\Delta \mathbf{z}_{i-1} \}$
+which we require to monotonically decrease the value of the cost
+functional \refeq{e-costfunctional}. If this monotonic behavior is
+violated then we deem the trial a failure. Some common ways of reducing
+the likelihood of failure include introducing a line-search,
+trust-region, and backtracking techniques\rf{Dennis96}. We elect to
+introduce a scalar ``damping'' parameter $\rho$ which modifies the
+magnitude of each step produced by any of our iterative methods. The
+recursive equation for the sequence of approximate solutions to
+\refeq{e-lstsqiteration}
+    %\PC{2019-04-17}{where is \refeq{e-}?}
+\beq \label{e-dampednewtonstep}
+\mathbf{z}_i = \mathbf{z}_{i-1} + \rho_{i-1}^{n} \Delta \mathbf{z}_{i-1}
+\eeq
+where
+\beq \label{e-dampingparameter}
+\rho_i^{n} = \frac{1}{2^n}
+\eeq
+for $n \in \mathbb{Z}^+$. In practice, if $F(\mathbf{z}_i)>F(\mathbf{z}_{i-1})$ then
+$n$ is increased until either the cost functional's value decreases $F(\mathbf{z}_i)<F(\mathbf{z}_{i-i}$,
+or $\rho_i^n = {1}/{2^8}$.
+
+This proceeds until either the cost functional is within double floating
+point precision of zero or the magnitude $|z_i|$ becomes too small.
+When computationally viable we elect to use a direct method to solve
+\refeq{e-newtonequation}. This entails using a subroutine
+which computes the pseudo-inverse of the matrix $DG$. This process
+has been optimized by the creators of LAPACK, a Fortran package.
+Specifically we use a SciPy's implementation of the linear least
+squares solver (LSTSQ) which uses the GELSD driver. This driver solves
+the linear least squares problem via a divide and conquer
+singular value decomposition (SVD) process to compute
+the pseudoinverse.
+
+

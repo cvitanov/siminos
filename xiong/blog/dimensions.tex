@@ -1,0 +1,119 @@
+% siminos/xiong/thesis/chapters/dimensions.tex
+% $Author: predrag $ $Date: 2017-03-09 17:25:05 -0500 (Thu, 09 Mar 2017) $
+
+% this file is not called by Xiong's thesis
+\section{Dimensions}
+
+                                            \toCB
+{\bf [2017-03-08 Predrag]} Included parts not in the thesis.
+
+\begin{description}
+
+    \item[2015-10-12 Predrag]
+Barreira\rf{Barreira15} {\em Dimension theory of flows: {A} survey}
+might be of scholarly interest - mathematical literature on the notion
+of dimension. Or other articles in the same issue of the journal, see
+\HREF{http://aimsciences.org/journals/contentsListnew.jsp?pubID=808}
+{here}. Three of them are meant to be reviews.
+
+\item[2015-10-12 Xiong to Predrag] Thanks for pointing these review paper
+    to me. They are difficult. I need to read the books in their
+    reference first.
+
+    \end{description}
+
+
+%\subsection{A short survey of various dimensions}
+%\label{sect:varDims}
+
+%    \PC{2014-09-22 please merge \texttt{fractDim.tex} into this file,
+%        then remove fractDim.tex from \texttt{thesis/chapters}, and
+%        link to the thesis draft.}
+    \subsection{Kaplan-Yorke}
+      \label{s-KapYorke}
+
+                                            \toCB
+{\bf [2017-03-08 Predrag]} merge with the thesis befor moving to ChaosBook.
+
+%        \item[2014-07-21 Predrag]
+In a brief glance at the Kaplan and Yorke\rf{KapYor79}
+\HREF{http://chaosbook.org/library/KapYor79.pdf} {paper}
+I do not recognize the formula for the Kaplan-Yorke dimension
+\beq
+    D_{KY}= k + \frac{1}{|\Lyap^{(k+1)}|} \sum_{i=1}^k \Lyap^{(i)}
+\,,
+\ee{KapYorDim}
+where $k$ is the largest integer such that the Lyapunov exponents sum
+$\sum_{i=1}^k \Lyap^{(i)}>0$, \ie\ such that the volume of the parallelepiped
+subtended by the leading $k$ covariant vectors (for us, the leading
+Floquet vectors $\jEigvec[j]$) is expanding.
+I see it in \refref{FKYY83} where Yorke calls it `Liapunov
+dimension' (careful, here the symbol for multipliers are $\lambda_i$).
+
+I think we want to
+list this dimension for \rpo s and \reqva\ in terms of Floquet /
+stability exponents \eigRe[i],
+\beq
+    D_{KY}= k + \frac{1}{|\eigRe[k+1]|} \sum_{i=1}^k \eigRe[i]
+\,.
+\ee{KapYorFloq}
+
+
+Let $\lambda_1 \ge \lambda_2, \ge \cdots, \ge \lambda_n$
+are the Lyapunov spectral
+of a n dimensional chaotic system($\lambda_1 > 0$), now we try to
+determine how many cubes needed to cover the neighborhood of a template
+point $x(0)$ as system evolves. Suppose the neighborhood is a
+n\dmn\ parallelogram with each side oriented in the covariant
+direction at $x(0)$ initially, and the number of $\epsilon$-cubes needed
+to cover this parallelogram is $N(\epsilon)$; then after an infinitesimal
+time $\delta t$, the neighborhood moves to $x(\delta t)$ the parallelogram
+gets stretched/contracted along each side. For some $j+1$ which
+$\lambda_{j+1} < 0$, we use a smaller cube with length
+$e^{\lambda_{j+1} \delta t}\epsilon$ to cover the new neighborhood, then
+\begin{equation}
+N(e^{\lambda_{j+1} \delta t}\epsilon) =
+\left\{ \prod_{i=1}^{j} e^{(\lambda_i - \lambda_{j+1})\delta t}\right\}
+N(\epsilon)
+\label{eq:ky_relation}
+\end{equation}
+Let's explain the coefficient above.
+For side number $i<j+1$, it has been stretched $e^{\lambda_i \delta t}$, and the
+new cube side length is $e^{\lambda_{j+1} \delta t}\epsilon$, so it needs
+$\exp((\lambda_i - \lambda_{j+1})\delta t)$ more cubes along this direction.
+For $i > j+1$, the original number of cubes along this side is enough to
+cover it, which means the above formula is actually
+over-counting in this direction. Now suppose the exponential law is valid
+when $\epsilon \ll 1$ as the box-counting dimension
+$N(\epsilon) \propto \epsilon^{-d}$. Then \eqref{eq:ky_relation} reduces to
+$(e^{\lambda_{j+1} \delta t}\epsilon)^{-d}  =
+\prod_{i=1}^{j} e^{(\lambda_i - \lambda_{j+1})\delta t} \epsilon^{-d}$. We get
+\[
+d_j = j - \frac{\sum_{i=1}^{j} \lambda_i}{\lambda_{j+1}}
+\,.
+\]
+Just as stated above, this is just an uper bound of the dimension,
+$D_{KY} = \min\{d_j | \lambda_{j+1} < 0\}$.
+\begin{align*}
+  d_{j+1} - d_j &= 1 -\frac{\sum_{i=1}^{j+1} \lambda_i}{\lambda_{j+2}}
+  + \frac{\sum_{i=1}^{j} \lambda_i}{\lambda_{j+1}} \\
+  & = \frac{(\lambda_{j+2} - \lambda_{j+1})(\lambda_1 + \cdots + \lambda_{j+1})}
+  {\lambda_{j+2}\lambda_{j+1}}
+\end{align*}
+Let $\lambda_1 + \cdots + \lambda_k \ge 0$ and
+$\lambda_1 + \cdots + \lambda_{k+1} < 0$, then $d_{k+1} > d_{k}$ and
+$d_k < d_{k-1}$, therefore
+\begin{equation}
+  D_{KY} = k + \frac{\sum_{i=1}^{k} \lambda_i}{|\lambda_{k+1}|}
+\end{equation}
+with $k$ the largest number making $\lambda_1 + \cdots + \lambda_k$
+non-negative.
+
+\paragraph{Summary}
+                                            \toCB
+The fractal dimension is important in a geometric point of view; however,
+when dealing with system average, dimension which takes the probability
+distribution into account is more informative. On the other hand, these
+dimensions are in general difficult to calculate numerically for high
+dimensional systems (except the KY dimension), so that is why cycle
+expansion is more powerful when dealing with ergodic averages.

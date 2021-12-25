@@ -1,0 +1,135 @@
+% examDet.tex called by {det}{9mar2015}{Spectral determinants}
+% $Author: predrag $ $Date: 2021-08-10 11:56:19 -0400 (Tue, 10 Aug 2021) $
+
+% Predrag if edited, return to ChaosBook    2018-12-13
+% Predrag  added Examples                    9mar2015
+% Raenell                                   19Apr2005
+
+
+%\section{Examples}
+%\label{exam:det}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\example{Two-\dofs\ Hamiltonian flows:}{\label{exam:2DHamiltFlow}
+    \PC{2018-12-13}{if edited, return to ChaosBook}
+For a 2-{\dofs} Hamiltonian flow the energy conservation eliminates one
+phase-space variable, and restriction to a \PoincSec\ eliminates the
+marginal longitudinal eigenvalue $\ExpaEig=1$, so a periodic orbit of
+2-{\dofs} hyperbolic Hamiltonian flow (or of a 1-{\dof} hyperbolic
+Hamiltonian map) has one expanding transverse eigenvalue $\ExpaEig$,
+$|\ExpaEig|>1$, and one contracting transverse eigenvalue $1/\ExpaEig$.
+The weight in \refeq{prod-Lamb} is expanded as follows:
+\beq
+{1 \over \oneMinJ{r} }
+ =  {1 \over |\ExpaEig|^r (1-1/\ExpaEig_p^{r})^2 }
+ =   {1 \over |\ExpaEig|^r} \sum_{k=0}^\infty {k+1 \over \ExpaEig_p^{kr}}
+\,\, .
+\ee{Jac-exp}
+The \Fd\ exponent can be resummed,
+\[
+   - \sum_{r=1}^\infty \frac{1}{r}
+    {       e^{(\beta \Obser_p-\eigenvL \period{p}) r}
+         \over \oneMinJ{r} }
+ =  %\sum_p
+     \sum_{k=0}^\infty (k+1)
+         \log \left( 1 -  { e^{\beta \Obser_p -\eigenvL \period{p} } %z^{\cl{p}}
+                \over
+                           |\ExpaEig_p| \ExpaEig_p^{k} } \right)
+\,\, ,
+%\label{expa}
+\]
+and the \Fd\ for a  2-dimen\-si\-on\-al hyperbolic Hamiltonian flow rewritten
+as an infinite product over {\orbit}s
+% Selberg-type product %\rf{pexp}
+\index{Hamiltonian!flow!spectral determinant}
+\index{Hamiltonian!map!spectral determinant}
+\index{spectral!determinant!$2$\DOF\ hyperbolic Hamiltonian flow}
+\index{spectral!determinant!$1$\DOF\ hyperbolic Hamiltonian map}
+\beq
+\det(\eigenvL - \Aop) =  \prod_p  \prod_{k=0}^\infty
+                        \left( 1 -   t_p /\ExpaEig_p^k \right)^{k+1}
+% \, , \quad\quad
+% t_p =  z^{\cl{p}}  e^{\beta \Obser_p-\eigenvL \period{p}} / |\ExpaEig_p|
+% t_p = {e^{-\eigenvL \period{p}} g_p \over |\ExpaEig_p| } z^{\cl{p}}
+\,\,.
+\label{2d-Fred} %cl_weig1}
+\eeq
+    \PC{2015-03-09}{state here also the $d$-dimensional result ala Gaspard}
+                                            \exerbox{e_2-d_prod}
+                                            \jumpBack{exam:2DHamiltFlow}
+    } %end \example{Two-degree of freedom Hamiltonian flows:}{
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\example{\Dzeta\ in terms of determinants,  $2$\dmn\ Hamiltonian maps:}{
+                    \label{exam:Dzeta2dHamMaps}
+    \PC{2018-12-13}{if edited, return to ChaosBook}
+    For 2-dimen\-si\-on\-al Hamiltonian flows the above identity yields
+\PC{2015-03-09}{define $\det(1-z\Lop_{(2)})$}
+\[
+{1\over |\ExpaEig|} =
+{1 \over {|\ExpaEig|(1-1/\ExpaEig)^2}}(1 - 2/\ExpaEig+1/\ExpaEig^2)
+\,,
+\]
+so
+\beq
+1/\zeta = {\det(1-z\Lop) \, \det(1-z\Lop_{(2)}) \over \det(1-z\Lop_{(1)})^2 }
+\,.
+\ee{Hami-rat}
+\PC{2015-03-09}{compare with $1/\zeta= {F^2 \over F_{1} F_{-1} }$
+    of the preceeding section}
+This establishes that for nice $2$\dmn\ hyperbolic flows the
+\dzeta\ is meromorphic.
+\PC{2015-03-09}{write out Ruelle's alternating product for any dimensions}
+\index{hyperbolic!systems}
+\index{dynamical system!hyperbolic}
+                                            \jumpBack{exam:Dzeta2dHamMaps}
+    } %end \example{\Dzeta\ $2$\dmn\ Hamiltonian maps:}{
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\example{\Dzeta s for $2$\dmn\ Hamiltonian flows:}{ \label{exam:DzetaHam}
+    \PC{2018-12-13}{if edited, return to ChaosBook}
+The relation \refeq{Hami-rat} is not particularly useful for our purposes.
+Instead we insert the identity
+\[
+1= {1 \over {(1-1/\ExpaEig)^2}}
+   -{2\over \ExpaEig} {1 \over {(1-1/\ExpaEig)^2}}
+   + {1 \over {\ExpaEig^2}} {1 \over {(1-1/\ExpaEig)^2}}
+\]
+\PC{2015-03-09}{seems the same as \refeq{Hami-rat}?}
+into the exponential representation \refeq{dynzeta} of $1/\zeta_k$,
+and obtain
+\PC{2015-03-09}{recheck, looks wrong}
+\beq
+1/\zeta_k = {   { \det(1-z\Lop_{(k)}) \det(1-z\Lop_{(k+2)}) }
+        \over
+        \det(1-z\Lop_{(k+1)})^2
+        }
+% 1/\zeta_k = { {F_k F_{k+2}} \over {F_{k+1}^2}}
+\,\, .
+\ee{doub_pole}
+Even though we have no guarantee that $\det(1-z\Lop_{(k)})$ are entire, we
+do know
+      \PublicPrivate{
+      }{% switch \PublicPrivate{
+(by arguments explained in sect.~?!)
+\PC{2015-03-09}{find the sect. referred to}
+      }% end \PublicPrivate{
+that the
+upper bound on the leading zeros of $\det(1-z\Lop_{(k+1)})$ lies strictly
+below the leading zeros of $\det(1-z\Lop_{(k)})$, and therefore we expect
+that for 2-dimensional Hamiltonian flows the
+\dzeta\  $1/\zeta_k$ generically has a {\em double} leading pole
+coinciding with the leading zero of the $\det(1-z\Lop_{(k+1)})$
+\Fd.  This might fail if the poles and leading eigenvalues come in
+wrong order, but we have not encountered such situations in our numerical
+investigations.
+This result can also be stated as follows: the theorem establishes that
+the \Fd\  \refeq{2d-Fred}
+is entire, and also implies that the
+poles in $1/\zeta_k$ must have the right multiplicities to cancel in the
+$ \det(1-z\Lop) = \prod 1/\zeta_k^{k+1}$ product.
+                                            \jumpBack{exam:DzetaHam}
+    }   %end \example{\Dzeta s for $2$\dmn\ Hamiltonian flows}{
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%

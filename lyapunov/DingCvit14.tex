@@ -1,0 +1,559 @@
+% siminos/lyapunov/DingCvit14.tex  in flotsam.tex
+% $Author: predrag $ $Date: 2016-03-06 15:29:29 -0500 (Sun, 06 Mar 2016) $
+
+
+\section{Edits, Schur decomposition DingCvit14}
+
+\begin{description}
+
+\item[2014-05-01 XD]
+Should I just skip the discussion of degeneracy? I am not 100
+percent sure about this case.
+
+\item[2014-05-21 PC] Skip it. I have removed: ``
+The case that the sum of
+dimensions of eigenspaces of ${\bf J}{0}$ is less then $n$ resulted
+from degeneracy means that the \ped\ does not exist. However, numerically,
+degeneracy can be destroyed by numerical noise, so the analysis for
+the case of complex eigenvalue pairs could be applied here similarly.
+''
+``, especially when the elements of all $\jMps_{i}$ at the same position
+have similar order''
+
+%\item[2014-05-01 PC] have you assumed that $\Lambda_1>0$ ?
+%\\
+%{\bf Xiong}: There is
+%no such assumption and it is irrelevant to the content.
+%\\
+%{\bf Predrag}: OK
+
+\item[2014-05-24 Predrag]
+\HREF{http://en.wikipedia.org/wiki/Computational_complexity_theory}
+{Computational complexity} is a bit too fancy word. I'll try
+`computational effort'.
+
+\item[2014-06-04 Predrag]
+Replaced \reftab{tab:floquet_ppo1Old} which lists
+the (wrapped) frequency $\omega^{(i)}$ by the same table, but
+with multiplier phase $\theta$. Needs macros, so table itself is commented out.
+
+\item[2014-06-06 Xiong]
+Delete my footnote argument: \\
+Xiong: You are concerned about this statement. I remember I
+copied it from Wikipedia. Different eigenspaces are linearly independent,
+so if the total dimensions of eigenspaces is n, then there exist n
+linear independent eigenvectors. If I am wrong, please correct me.
+
+\item[2014-06-06 Xiong]
+Delete my footnote argument: \\
+Here you would like to insert ``Assuming that
+eigenspaces are only 1- and 2-dimensional'', but I don't think
+we need this assumption. If eigendecomposition exists, then
+$R_m$ has this structure, and it does not depend on the dimension
+of each eigenspace.
+
+\item[2014-05-01]
+You use ``resorting to'' here, but I don't
+think it is appropriate. I will explain it to you.
+\textbf{Predrag 2014-05-01} ``restoring PRSF'' makes no sense. You can
+restore a building, but PRSF?
+
+\item[2014-06-06]
+Predrag: I think it would be good to include the figures from the blog and your group presentation. Xiong: at present, could we omit this
+figure because SIAM is a very serious journal. The figure in the blog looks a little silly. If we are rejected by SIAM and try to submit this manuscript to another two column journal, then maybe we can include the figure. This is just my opinion.
+
+\item[2014-05-21]
+  Predrag: Algorithm~\ref{ag:simuliter} looks a bit simple? Is it worth
+  having here? I do not know.
+  Xiong: I agree with you. I find the 'algpseudocode' package has a
+  conflict definition on command 'Loop' with ``inputs/def.tex", so
+  I comment out the algorithm below.
+
+%%\begin{algorithm}[H]
+%%  \caption{Simultaneous Iteration}
+%%  \label{ag:simuliter}
+%%  \begin{algorithmic}
+%%    \State $\tilde{Q}_{0}$: an arbitrary orthogonal $n\!\times\! n$ matrix
+%%    \For{$i=1,2,\cdots$}
+%%    \For{$s=1:m$}
+%%    \State $\jMps_{s}\tilde{Q}_{s-1}=\tilde{Q}_{s}\tilde{R}_{s}$
+%%    \EndFor
+%%    \State $\tilde{Q}_{0}=\tilde{Q}_{m}$
+%%    \EndFor
+%%  \end{algorithmic}
+%%\end{algorithm}
+
+\item[2014-05-21]
+  Predrag: $D$ makes one think of `diagonal', as in \eqref{eq:diagonal}.
+  Can you find some other letter for the matrix $d$ here?
+  Xiong : changed it to $C$
+\item[2014-05-01]
+  $a_{i}$ could be complex. The only constraint is that $a_{i-1}$is real.
+
+\item[2014-06-07]
+Predrag: changed
+\[
+r_{k}=
+\begin{pmatrix}
+  \cos(q_{k}l) & \sin(q_{k}l) \\
+  -\sin(q_{k}l) & \cos(q_{k}l)
+\end{pmatrix}
+,\quad k=1,2,\cdots,N/2-1
+\]
+to
+\[
+r_{k}=
+\begin{pmatrix}
+  \cos(q_{k}l) & -\sin(q_{k}l) \\
+  \sin(q_{k}l) & \cos(q_{k}l)
+\end{pmatrix}
+,\quad k=1,2,\cdots,N/2-1
+\,.
+\]
+Xiong: You are right, I made a mistake here. The reason I use the former
+form for group rotation is that relative periodic orbit is defined
+as $g_px(0)=x(T_P)$ in Ruslan's Matlab database other than
+$x(0)=g_px(T_p)$. I guess it is also the reason why Siminos also took
+the former form in the appendix B of \cite{SCD07}.
+
+\item[2014-05-31 Predrag]
+Inset in \reffig{fig:ppo1state}\,(c):
+I think we need at least first 10, perhaps 12 Floquet exponents.
+Compare with my figures in the Lyapunov blog. \\
+Xiong: The 9th and 10th exponents are about $-0.1960\cdots$ which
+is much smaller than the 7th and 8th exponents, so if I include 9th
+and 10th exponents in the inset figure, it will make the first few hard to
+distinguish.
+
+\item[2014-05-31 Predrag]
+As the wrapped $\omega$ have no meaning, I think we should switch to
+Floquet multiplier phases $\theta =\period{} \omega$. Or some other letter.
+
+\item[2014-06-03]
+We need AMS classification numbers?
+
+\item[2014-06-04]
+ \refFig{fig:ppo1state}\,(d). Would it be more informative
+to plot the modulus rather than the real and imaginary parts of
+ Floquet vectors?
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{table}[h]
+  \footnotesize
+  \centering
+  \caption{The first eight and last four real Floquet exponents and
+    Floquet multiplier phases
+    $ \ExpaEig_i= \exp(\period{} \mu^{(i)} \pm \theta^{(i)})$ for
+    orbits $\cycle{ppo1}$ and
+    $\cycle{rpo1}$ for truncation number
+    $N=32$ respectively. $\omega^{(i)}$ column lists either the (wrapped)
+    frequency,
+    if the Floquet multiplier is complex exponent, or the '-' sign if the
+    multiplier is real, but inverse hyperbolic.
+  }
+  \label{tab:floquet_ppo1Old}
+%  \begin{tabu}{l  c c|[1pt]l c c}
+%    \tabucline[1pt]{-}
+%    \multicolumn{3}{c|[1pt]}{$\cycle{ppo1}$} & \multicolumn{3}{c}{$\cycle{rpo1}$}\\
+%    $i$ & $\eigRe[i]_p$  & $\omega^{(i)}_p$  & $i$ & $\mu^{(i)}_p$ & $\omega^{(i)}_p$  \\
+%    \tabucline[1pt]{-}
+%    1,2 &  0.033209  & $\pm$0.19583i   &  1 &      0.32791  &            \\
+%    3 & -2.0317e-14  &                 &  2 &   5.0352e-09  &              \\
+%    4 & -2.4267e-09  &    -1           &  3 &  -1.2399e-08  &              \\
+%    5 &  -0.21637    &                 &  4 &     -0.13214  &        -1    \\
+%    6,7 &  -0.26524  & $\pm$0.25559i   &  5,6 &   -0.28597  & $\pm$0.16993i \\
+%    8 &  -0.33073    &    -1           &  7 &     -0.36242  &               \\
+%    $\cdots$ &  $\cdots$    & $\cdots$ &  8 &     -0.32821  &        -1    \\
+%     27 &  -239.52   &                 & $\cdots$ & $\cdots$ &  $\cdots$    \\
+%    28 &  -239.22    &    -1           &  27,28 &    -239.41& $\pm$0.054036 \\
+%    29 & -307.47     &    -1           &  29 &      -313.98 &              \\
+%    30 & -332.74     &                 &  30 &      -323.41 &              \\
+%   \tabucline[1pt]{-}
+%\end{tabu}
+\end{table}
+
+\item[2014-05-01 Xiong Ding]
+For Ginelli you want to add ``only after infinite
+periodic orbit repetition limit.'', but I do not think it is necessary
+because the CLVs are already defined as this limit. This information
+sounds redundant.
+
+\item[2014-06-10]
+    Xiong:You suggest using modulus of the complex vector in Figure 1. I
+    cannot see the benefit.
+        \\
+    PC 2014-06-14: Instead of the real, imaginary parts, each mode would be
+    only one positive function (you might even plot the log of the
+    magnitude).
+        \\
+    Left axis labels in \reffig{fig:ppo1state}\,(c) are not obvious.
+        \\
+    It is not clear what is plotted for the 25th and 30th Floquet
+    vectors.
+
+\item[2014-11-29 Xiong Ding] Some sentences removed from previous
+edition. They may be used in future.
+
+We start by
+defining the relevant nonlinear dynamics concepts, following conventions
+of \href{http://ChaosBook.org}{ChaosBook.org} \rf{DasBuch} .
+
+
+In case that the \statesp\ is equipped with a notion of
+distance, one can, following Lyapunov\rf{Lyap1892}, characterize the mean
+growth rate of the distance between neighboring trajectories during time
+$\zeit$, by the leading {Lyapunov exponent}
+
+The connection between the two characterizations is asymptotic in time,
+and provided by the Oseledec Multiplicative Ergodic Theorem\rf{lyaos}
+which states that the long time limits  of \refeq{e:ftLyapStretch} exist
+for almost all points $\xInit$ and vectors $\unitVec$, and that there are
+at most $n$ distinct Lyapunov exponents $\eigExp[j](\xInit)$ as
+$\unitVec$ ranges over the tangent space. For \po s these $\eigExp[j]$
+(evaluated numerically as $\zeit\to\infty$ limits of many repeats of the
+prime period $\period{}$) coincide with Floquet exponents $\eigRe[j]$
+(computed in one period of the orbit).
+However --and demonstrating this is the main
+goal of this paper-- the group property of Jacobian matrix multiplication
+(chain rule) along the orbit,
+enables us to factorize it into a product of short-time matrices with
+matrix elements of comparable magnitudes. \Ped\ can then be used to
+calculate all Floquet multipliers and Floquet vectors along a periodic
+orbit.
+
+An algorithm for computation of eigenvalues of the {\em \psd} of a
+product of matrices was given by Bojanczyk
+\etal\rf{Bojanczyk92theperiodic}, as an extension to the standard QR
+iteration (Francis algorithm\rf{Francis61}). The eigenvectors can then be
+obtained by Granat  \etal\rf{GranatK06} reordering algorithm for a given
+periodic real Schur form (PRSF). The algorithm can switch any two
+diagonal blocks and relies on the \pqr\ to restore PRSF. For our
+purposes, it suffices to consider two special cases and the relation
+between the solution of \pse\ and its eigenvectors in order to obtain
+\ped.
+
+In nonlinear dynamics applications such as
+periodic orbit theory\rf{DasBuch}, each periodic orbit comes equipped
+with a set of Floquet multipliers $\ExpaEig_{j}$ (eigenvalues of its
+Floquet matrix $\ps{\jMps}{0}$) and Floquet vectors $\jEigvec[j]$
+(eigenvectors of Floquet matrix).
+
+\item[2015-07-11 Predrag]
+recheck if any of these (or others?) apply:
+    35B05, 35B10, 37L05, 37L20, 76F20, 65H10, 90C53.
+
+removed ``
+stratified from the eigenspaces of Oseledets matrix \eqref{eq:oseledets}.
+
+Highly contracting directions usually mean the attractor is every thin
+in these directions.
+
+and is a crucial prerequisite for the success of this \emph{cycle
+expansion} approach to predict system-wide properties.
+    ''
+
+\item[2015-07-12 Xiong]
+AMS No. : added 35B10 (Periodic solutions)\\
+		 37L20 Symmetries \\
+		 76F20 Dynamical systems approach to turbulence \\
+		
+removed these two paragraphs because after you change the
+structure of introduction part these two look irrelevant: ``
+More importantly, invariant directions along periodic orbits could be
+used to compute stable/unstable manifolds and help us understand the
+geometry of chaotic attractor.
+
+Fluid dynamics, a major target in
+studying turbulence, is usually written in form of
+partial differential equations, such as Navier-Stokes equation of fluid
+dynamics. They are in principle $\infty$-dimensional dynamical systems.
+''
+
+\item[2015-07-12 Predrag] removed again ``65H10 Systems of equations"
+
+ removed ``Its strict error analysis and the ability
+to conserve symmetries are our future work.''
+
+\item[2015-8-26 Xiong]
+  Here, we have used
+  $\norm{Av}^2 = v^\top A^\top Av =
+  v^\top (A^\top A)^{1/2}(A^\top A)^{1/2} v
+  = \norm{(A^\top A)^{1/2} v}^{2}$, and a relation
+  $\norm{[J^t(x)^\top J^t(x)]^{1/2}u}\simeq e^{\Lyap_i t}$. For a strict
+  $\epsilon$-$\delta$ argument of the second equality in \eqref{eq:lyapunov},
+  please see\rf{ruelle79}. For simplicity, we use Euclidean norm here, but
+  relation \eqref{eq:lyapunov} does not depend on the choice of norm.
+  Since
+  any norm is equivalent by a constant factor in a finite dimensional
+  vector space, and the constant will disappear in \eqref{eq:lyapunov} when
+  divided by an infinite long time after taking the logarithm.
+
+\item[2015-8-26 Xiong]
+  A symmetric matrix $A$ can be decomposed as $A = Q^\top \Sigma Q$
+  with $Q$ an orthogonal matrix
+  and $\Sigma$ a diagonal matrix. Its fraction power is defined as
+  $A^{p/q} = Q^\top \Sigma^{p/q} Q$.
+
+\item[2015-8-26 Xiong]
+  Numerically, one cannot integrate a system for an infinite long time,
+  thus we turn to the {finite-time} {Lyapunov} or {characteristic} exponents,
+  \beq
+  \eigExp(\xInit,\unitVec;\zeit)
+  = \frac{1}{\zeit} \ln \norm{{\jMps}^\zeit \unitVec}
+  = \frac{1}{2\zeit}\ln\left(
+    \transp{\unitVec} \transp{\jMps^\zeit}\!\jMps^\zeit {\unitVec}
+  \right)
+  \,,
+  \ee{e:finTimeLyapExp}
+  where $\transp{\jMps}\!\jMps$ is the right Cauchy-Green strain tensor of
+  continuum mechanics. If the unit vector $\unitVec$, $\norm{\unitVec} =1$
+  is aligned along the $j_{th}$ {principal stretch} at the initial time,
+  \(
+  \unitVec = {u}_{j}
+  \,,
+  \)
+  then the corresponding finite-time Lyapunov exponent is given by
+  \beq
+  \eigExp[j](\xInit;\zeit) =
+  % \max_{\|\unitVec\|=1}
+  \eigExp(\xInit,{u}_{j};\zeit)
+  = \frac{1}{\zeit}\ln\sigma_j(\xInit;\zeit)
+  \,,
+  \ee{e:ftLyapStretch}
+  where $\sigma_j$ is the $j_{th}$ singular value of
+  matrix $\jMps^\zeit(\xInit)$. Its long time limit is given by
+  \eqref{eq:lyapunov}.
+
+\item[2015-8-26 Xiong]
+  Furthermore, the principal axes have to be recomputed from the scratch
+  for each time $\zeit$ since the strain tensor $\transp{\jMps}\!\jMps$
+  satisfies no multiplicative group property \refeq{eq:xjacobian}: unlike
+  the \po\ \jacobianM, the strain tensor $(\transp{\jMps}{})^r\!\jMps^r$
+  for the $r_{th}$ repeat of a prime cycle is not given by a power of
+  $\transp{\jMps}\!\jMps$ for the single traversal of the prime cycle.
+
+\item[2015-8-26 Xiong]
+  The deep reason for these shortcomings of singular values
+  $\{\sigma_{j}\}$ and principal axes is that they depend on the choice of
+  a norm \eqref{e:finTimeLyapExp}. A norm is largely arbitrary, and externally
+  imposed upon the dynamics. The Euclidean (or $L^2$) distance is
+  natural in the theory of $3D$ continuous media, but what the norm should
+  be for other \statesp s is far from clear, especially in high dimensions
+  and for discretizations of PDEs.
+
+  To summarize, based on geometric considerations, we would much prefer to
+  compute Floquet eigenspectrum of a periodic orbit $\jMps$ directly,
+  rather than via the singular values, $\jMps^\top \jMps$ detour.
+  However, as stated in \refsect{sect:intro},
+  the Floquet matrix and its spectrum cannot be computed straightforward
+  as the magnitude of matrix elements may range over 100's or
+  more orders of magnitude. The whole \JacobianM\ needs to be factorized into
+  a product of a sequence of short time \JacobianMs\ by chain rule
+  \eqref{eq:xjacobian}.
+  Before we dive into the algorithm of dealing with this sequence of matrices,
+  let us first review some existing algorithms closed related to our goal.
+
+\item[2015-8-26 Xiong]
+  In the first two stages, we follow a
+  The two common two algorithms used to extract \cLv s from GS vectors
+  A common way to calculate
+  Lyapunov exponents numerically is persistently
+  conducting \emph{QR decomposition} of the \JacobianM\
+  along an ergodic trajectory, $J_iQ_i=Q_{i+1}R_i$\rf{bene80a}.
+
+\item[2015-8-26 Xiong]
+  When
+  $\tilde{q}_{j-1}$ converges to
+  $q_{j-1}=\jEigvec[j-1]-\sum_{s=1}^{j-2}(q_{s}^\top \jEigvec[j-1])q_{s}$,
+  we have
+  $\langle v_{1},v_{2},\cdots,v_{j-1}\rangle=\langle
+  q_{1},q_{2},\cdots,q_{j-1}\rangle$. Choose an arbitrary vector
+  $\tilde{q}_{j}$ perpendicular to subspace $\langle
+  v_{1},v_{2},\cdots,v_{j-1}\rangle$:
+  $\tilde{q}_{j}=\sum_{i=j}^{n}\alpha_{i}^{(j)}[\jEigvec[i]-\sum_{s=1}^{j-1}
+  (q^\top _{s}\jEigvec[i])q_{s}]$. After one iteration,
+  \begin{align*}
+    \ps{\jMps}{0}\tilde{q}_{j}
+    = & \sum_{i=j}^{n}\alpha^{(j)}_{i}\ExpaEig_{i}
+        \left[\jEigvec[i]-\sum_{s=1}^{j-1}(q_{s}^\top \jEigvec[i])q_{s}\right]
+        + \sum_{i=j}^{n}\alpha^{(j)}_{i}\sum_{s=1}^{j-1}(\ExpaEig_{i}-\ExpaEig_{s})
+        (q_{s}^\top \jEigvec[i])q_{s}
+        \,.
+  \end{align*}
+  The second term is a polynomial of $q_{1},q_{2},\cdots,q_{j-1}$ which is
+  also a polynomial of $\jEigvec[1], \jEigvec[2], \cdots, \jEigvec[j-1]$,
+  so it disappears after
+  orthonormalization and the first term will converge to
+  $q_{j}=\jEigvec[j]-\sum_{s=1}^{j-1}(q_{s}^\top \jEigvec[j])q_{s}$ (not normalized).
+
+  \[
+    \begin{aligned}
+      & q_{1} = \jEigvec[1]\,,\qquad
+      q_{2} = \frac{\jEigvec[2]-(\jEigvec[2]{}^\top q_{1})q_{1}}{||\cdot ||}\,,\\
+      & q_{3} = \frac{\jEigvec[3]-(\jEigvec[3]{}^\top q_{1})q_{1}-
+        (\jEigvec[3]{}^\top q_{2})q_{2}}{||\cdot ||}\,,\quad \cdots\,,\quad
+      q_{n} = \frac{\jEigvec[n]-\sum_{i=1}^{n-1}(\jEigvec[n]{}^\top
+        q_{i})q_{i}}{||\cdot ||}
+      \,.
+    \end{aligned}
+  \]
+
+  \subsubsection{Shifted power iteration}
+
+In the above, we have implemented power iteration to obtain all the real
+and complex eigenvectors of matrix $\ps{R}{k}$. The convergence rate of
+this pure power iteration method depends on the ratio of magnitude among
+the eigenvalues of $\ps{R}{k}$, so the performance is relatively poor for
+systems like \KSe, for which the strongly contracting multipliers
+(eigenvalues of \JacobianM) appear in closely spaced pairs. Thus,
+here
+we slightly modify the above method to deal with this situation.
+For a
+single matrix, inverse iteration\rf{Trefethen97} is effective to isolate
+one eigenvalue from the others and thus accelerate the converging
+process; however, the expected improvement is limited
+because of the heavy cost
+associated with solving linear equation $((\ps{R}{k})^{-1}-sI)y=x$ at one
+intermediate step of this method, where $s$ is the shift. Instead, we
+obtain a better convergence rate by combining the pure power iteration
+with the `shifted power iteration'. The shifted power iteration is based
+on the observation that matrix $(\ps{R}{k})^{-1}-sI$ has the same
+eigenvectors as $(\ps{R}{k})^{-1}$, but with eigenvalues shifted by an
+arbitrary number $s$, which can be tuned to optimize the convergence.
+
+We follow the same notation in \refsect{sect:intro}, and assume
+Floquet multipliers (eigenvalues)
+$\ExpaEig_{i} =\exp(i\theta_i+\period{p}\eigRe[i])$ are
+arranged in descending order
+by magnitude: $|\ExpaEig_{1}|\geq |\ExpaEig_{2}| \geq\cdots\geq
+|\ExpaEig_{n}|$. Here $\theta_i$ distinguishes among positive real
+($\theta_i=0$), negative real ($\theta_i=\pi$) and complex
+($\theta_i\neq 0,\pi$).
+We also assume that $\eigRe[i]\approx
+\eigRe[i-1]$, so pure power iteration converges slowly for the $i_{th}$
+eigenvector [...] %$\Rve{i}$.
+The shift power iteration takes different forms for the case
+$\ExpaEig_{i-1}$ is real and $\ExpaEig_{i-1}$ is complex. Consider the
+former case first. In this case,  shift $\ExpaEig_{i-1}^{-1}$ is chosen
+to eliminate the $i-1$ eigenvector, that is,
+$\ExpaEig_{i-1}(\ps{R}{k})^{-1} -I$
+is used instead of $(\ps{R}{k})^{-1}$ for power iteration. Note that
+$\ExpaEig_{i-1}$ is the product of the diagonal elements at position
+$(i-1)$ of matrices $R_1, R_2,\cdots,R_m$ :
+$\ExpaEig_{i-1} = \prod_{k=1}^m r^{(i-1)}_k$.
+So numerically,  term $\ExpaEig_{i-1}(\ps{R}{k})^{-1}$
+is split as
+$(r^{(i-1)}_{k+1}R_{k+1}^{-1})\cdots
+(r^{(i-1)}_mR_{m}^{-1})(r^{(i-1)}_1R_{1}^{-1})\cdots (r^{(i-1)}_kR_{k}^{-1})$
+for implementation
+stability. As the
+same with the pure power iteration, we start with an arbitrary real vector
+whose first $i$ elements are nonzero,
+$ x=\sum_{j=1}^{i}\alpha_{j}$ [...] %\Rve{j}$
+Note if [...] %$\Rve{j}$
+for $j\neq i-1$ is complex, its complex conjugate
+should also be added to this expression, which however,
+does not change the result as follows.
+After one iteration,
+\[
+\left(\ExpaEig_{i-1}(\ps{R}{k})^{-1} -I\right)x
+=
+\sum_{j=1}^{i-2}\alpha_{j}\left(\frac{\ExpaEig_{i-1}}{\ExpaEig_{j}}-1\right) [...] %\Rve{j}
++\;
+\alpha_{i} \left(\frac{\ExpaEig_{i-1}}{\ExpaEig_{i}}-1\right) [...] %\Rve{i}
+\,.
+\]
+Although, term $a_{i-1}$  [...] %\Rve{i-1}$
+is annihilated in just one iteration,
+problem arises for the first $i-2$ terms. They may expand
+during this process because the coefficient in the last term
+\[
+\frac{\ExpaEig_{i-1}}{\ExpaEig_{i}}-1 =
+e^{\eigExp[i-1]-\eigExp[i]}-1\simeq e^{-i\theta_i}(1+\period{p}\eigRe[i-1]-
+\period{p}\eigRe[i])-1
+\,,
+\]
+which has small magnitude when $\theta_i$ is close to zero. In order
+to restrain the growth of the first $i-2$ terms,
+combination of pure power iteration and
+shifted power iteration is required.
+\[
+\left|
+\left(\frac{\ExpaEig_{i}}{\ExpaEig_{j}}\right)^{N}
+\cdot
+\frac{\ExpaEig_{i-1}/\ExpaEig_{j} - 1}{\ExpaEig_{i-1}/\ExpaEig_{i} - 1}
+\right|=r_{0}
+\,,
+\]
+where $r_{0}$ is the desired convergence rate. We get the number of
+pure power iterations prior one shifted power iteration,
+\begin{equation}
+  \label{eq:numshifted}
+  N=\max_{j=1}^{i-2}\dfrac{\ln
+\left(r_{0}\left|\dfrac{\ExpaEig_{i-1}/\ExpaEig_{i}-1}
+{\ExpaEig_{i-1}/\ExpaEig_{j}-1}\right|\right)}{\ln|\ExpaEig_i| - \ln|\ExpaEig_j|}
+\,.
+\end{equation}
+Numerically, $a_{i-1}$  [...] %\Rve{i-1}$
+cannot be annihilated completely, but
+this method still works if the shift chosen here is  ``closer'' to
+$\ExpaEig_{i-1}$ than $\ExpaEig_{i}$. On the other hand, expression
+\eqref{eq:numshifted} will not change if some Floquet multipliers
+are complex since term $|\exp{(\eigExp[i-1]-\eigExp[j])}-1|$ is invariant
+for conjugate pairs.
+
+When $\ExpaEig_{i-1}$ is complex, the situation is a bit more
+complicated. Now the shifted power iteration takes the form
+\[
+(\ExpaEig_{i-1}(\ps{R}{k})^{-1} -I)
+(\ExpaEig_{i-1}^{*}(\ps{R}{k})^{-1} -I)
+=|\ExpaEig_{i-1}|^2 (\ps{R}{k})^{-2}
+-2|\ExpaEig_{i-1}|\cos\theta_{i-1}(\ps{R}{k})^{-1}+I
+\]
+in order to annihilate both $a_{i-1}$  [...] %\Rve{i-1}$
+and
+$(a_{i-1}$  [...] %\Rve{i-1})^{*}$.
+The number of pure power iteration prior
+one shifted power iteration can be determined in a similar way,
+\begin{equation}
+  \label{eq:numshifted2}
+  N=\max_{j=1}^{i-3}\dfrac{\ln \left(r_{0} \left|
+        \dfrac{|\ExpaEig_{i-1}|^2/\ExpaEig_{i}^2 -
+          2\cos\theta_{i-1}|\ExpaEig_{i-1}|/\ExpaEig_{i}
+          +1}
+        {|\ExpaEig_{i-1}|^2/\ExpaEig_{j}^2 -
+          2\cos\theta_{i-1}|\ExpaEig_{i-1}|/\ExpaEig_{j}
+          +1
+        }
+      \right|\right)}{\ln|\ExpaEig_i| - \ln|\ExpaEig_j|}
+  \,.
+\end{equation}
+
+\item[2015-8-26 Xiong]
+\[
+(\ps{R}{k})^{-\ell}x
+ =\frac{1}{\ExpaEig_{i}^{\ell}}
+  \left(
+    \sum_{j=1}^{i-1}
+    \alpha_{j}\frac{\ExpaEig_{i}^{\ell}}{\ExpaEig_{j}^{\ell}} [...] %\Rve{j}
+    + \alpha_{i} [...] %\Rve{i}
+  \right)
+\,.
+\]
+
+\[
+a_{k}(t)=\mathcal{F}[u]_k=\frac{1}{N}\sum_{n=0}^{N-1}u(x_{n},t)e^{-iq_{k}x_{n}}
+\,,\quad
+u(x_{n},t)=\mathcal{F}^{-1}[a]_n=\!\!\sum_{k=-N/2+1}^{N/2}\!\!a_{k}(t)e^{iq_{k}x_{n}}
+\,,
+\]
+
+
+
+In our implementation of the code we use Fast Fourier Transform packages,
+such as Matlab \texttt{fft()} function (note, however, that Matlab
+\texttt{fft()} orders wave numbers as $k=0,1,2,\dots , N-1$, which is
+mapped to $k=0,1,\dots , N/2-1, N/2, -N/2+1,\dots, -1$ in \KS\ system).
+
+\end{description}

@@ -1,0 +1,26 @@
+
+This is implemented by introducing the preconditioning matrix $M$ such that the new adjoint direction
+is given by  $\partial_\tau \Fu = -M\transp{J}(\Fu) F(\Fu)$
+
+The other advancement is described in (its a secret Russian paper that only few may read apparently)
+\rf{Nesterov83} that proves that by including a 'momentum' term in the iterative process, then
+the descent process can be sped up by including a contribution from the previous fictitious time
+direction. The algorithm that this manifests in is given by
+
+\bea \label{eqn:Nesterov_factor}
+\mu_0 &=& 1 \continue
+\mu_k &=& \frac{1 + \sqrt{1+4*\mu_k^2}}{2} \continue
+\delta \Fu_{k+1} &=& \delta \Fu_k + \frac{\mu_k-1}{\mu_k +1} \delta \Fu_{k-1}
+\eea
+
+If the residual increases then the momentum is restarted at $\mu = 1$ and the iterative
+procedure begins again.
+
+Now specifically, I haven't found an initial condition that the full hybrid process
+in conjunction with Newton works yet. So the next steps are to implement Newton-Krylov
+hookstep methods (finally getting to it after everything else) and clean up the initial
+condition generation code (which I started today).
+
+If both of these changes does nothing then the last resort will be to pass close recurrence
+initial conditions to a Newton-descent in time in order to give one of the tangent spaces the
+correct shape before starting the spatiotemporal hybrid descent.

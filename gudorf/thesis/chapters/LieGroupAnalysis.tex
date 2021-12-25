@@ -1,0 +1,461 @@
+% siminos/gudorf/thesis/chapter/LieGroupAnalysis.tex
+% $Author: predrag $ $Date: 2020-05-25 15:18:45 -0400 (Mon, 25 May 2020) $
+
+    \PC{2019-09-11}{
+I am thinking of moving everything from \refeq{e-formallagrangian} to
+\refeq{e-conservedvector}
+into a Chapter of your thesis, remarking here briefly that Ibragimov
+methods seem to have not worked for you?
+    }
+To explore this we will introduce what is sometimes
+referred to as the
+\textit{formal Lagrangian}
+\refrefs{BorSch11,WeiWan19,Ibragimov11,Ibragimov10,Ibragimov07b,Ibragimov18,KraMaj15}
+\beq \label{e-formallagrangian}
+\mathcal{L} = v G(u(\conf,\zeit),\dots,u_{(n)}(\conf,\zeit))\,.
+\eeq
+This construction introduces the adjoint variable
+$v$, which is quitessentially a Lagrange multiplier
+as the form of \refeq{e-formallagrangian} implies.
+Although relatively simplistic in its construction, the
+corresponding Euler-Lagrange equations of the
+formal Lagrangian \refeq{e-formallagrangian} provide
+us with the \KSe\ \refeq{e-ks}
+and its adjoint \refeq{e-adjointeqn}.
+The Euler-Lagrange equations can be produced
+by taking the variational derivative \refeq{e-variationalderivative}
+of \refeq{e-formallagrangian}
+with respect to either $u$ and $v$ separately.
+\beq \label{e-variationalderivative}
+\frac{\delta }{\delta u} = \frac{\partial}{\partial u} + \sum_{n=1}^{\infty} (-1)^s D_{i_1} \dots D_{i_n} \frac{\partial}{\partial u_{i_1\dots i_n}}
+\eeq
+which is the operator that
+produces the Euler-Lagrange equations of the
+corresponding Lagrangian\rf{Ibragimov10}.
+
+The recovery of the original equation is self evident as
+$\frac{\delta \mathcal{L}}{\delta v}=\frac{\partial \mathcal{L}}{\partial v}=G$.
+For the adjoint equation we have
+\beq \label{e-adjointeqn}
+\frac{\delta \mathcal{L}}{\delta u}
+= G^*(x,t,u,v,v_t,v_x,v_{xx},v_{xxxx}) =  - v_t + v_{xx} + v_{xxxx} - u v_x
+\eeq
+both \refeq{e-adjointeqn} and \refeq{e-ks} create
+what is known as the \textit{optimality system}
+of equations\rf{Gunzburger02}, show in \refeq{e-optimalitysystem} for completeness.
+\bea \label{e-optimalitysystem}
+\frac{\partial \mathcal{L}}{\partial v} &\equiv& G =  u_t + u_{xx} + u_{xxxx} + u u_x \continue
+\frac{\partial \mathcal{L}}{\partial u} &\equiv& G^* =  -v_t + v_{xx} + v_{xxxx} - uv_x
+\eea
+
+The adjoint variable $v$ is to eventually be replaced by a function of
+$u$ and its derivatives such that the system of equations
+\refeq{e-optimalitysystem} is solved whenever $u$ is a solution. The main
+method to determine the explicit form of this substitution is to find the
+form of $v$ which transforms the adjoint equation into the original
+equation. If the substitution $v=u$ satisfies this requirement, then the
+equation is said to be \textit{self adjoint}. Specifically, the operator
+resultant from linearization of \refeq{e-ks} is the actual object with
+this property. Other than self-adjointness there are also the notions of
+quasi-self adjoint equations and nonlinearly adjoint equations
+\refrefs{WeiWan19, Ibragimov10,Ibragimov11,Ibragimov18}. The
+substitutions that define quasi self-adjoint equations and nonlinearly
+self-adjoint equations are functions $v = \phi(u)$ and
+$v=\phi(x^i,u,u^{(n)})$ that transform \refeq{e-adjointeqn} into
+\refeq{e-ks} (the term $u^{(n)}$ represents all derivatives up to order
+$n$).
+Upon substitution,
+the self-adjoint condition can be written explicitly
+as
+\beq \label{e-selfadjoint}
+G^*(x,t,u,\phi(x,t,u,u^{(n)})) = \lambda G(x,t,u)\,,
+\eeq
+For the adjoint
+equation \refeq{e-adjointeqn}
+the only solution that guarantees the adjoint equation \refeq{e-adjointeqn}
+is satisfied when $u$ is a solution is $v=c$ where $c$ is a constant.
+This is determined by making the substitution $v=\phi(x^i,u,u^{(n)})$
+and solving the set of equations similar to the determining
+equations which produced the generators of the Lie
+algebra of infinitesimal symmetries. Specifically, the result
+of matching terms in \refeq{e-selfadjoint}
+can be summarized by two of the resulting equations,
+\bea
+\phi_u &=& \lambda \continue
+\phi_u &=& -\lambda \,,
+\eea
+which in turn implies that $\lambda$ is equal to zero.
+This might seem like a red flag, the \twots\ of the \KSe\
+are critical points of \refeq{e-formallagrangian} and this
+seems to indicate that is not possible; but $v=G(u)$
+is actually a representation of the trivial solution when $u$
+is a solution because $G(u)=0$, so there is no contradiction.
+
+There is an another  whose
+Euler-Lagrange equations are the same.
+Following the analysis of Burgers' equation and
+the prescription of\rf{IbragiKols04}
+we find an alternative form of the Lagrangian for the \KSe\ to be
+\beq
+\mathcal{L} = \frac{1}{2}(v u_t - u v_t) -u_x v_x + u_{xx}v_xx + \frac{u}{3}(vu_x - uv_x)
+\eeq
+There are a number of mathematical and
+numerical techniques available
+to our doubly periodic variational problem
+and not the
+equivalent dynamical system. For instance, we can utilize
+Lie group analysis
+to derive continuous symmetries pertaining to our Lagrangian.
+y Noether's
+Theorem these symmetries imbue the corresponding
+Euler-Lagrange equations with conservation laws\rf{Noether15}.
+On the numerical front we can utilize \spt\ two dimensional
+spectral methods (collocation methods, technically).
+
+Pertaining
+to our system of equations, \refeq{e-ks} and \refeq{e-adjointeqn}.
+There are a number of different paths we can take for this
+type of analysis but for now we present the investigation of
+whether or not there are any non-trivial conservation laws
+involving the Euler-Lagrange equations resulting from
+the Lagrangian density \refeq{e-formallagrangian}.
+As a note we could write \refeq{e-formallagrangian}
+in an alternate manner, and then search for variational
+symmetries\rf{liede}. These would be imparted
+onto \refeq{e-ks} and \refeq{e-adjointeqn}
+because they are the corresponding Euler-Lagrange equations.
+
+We already know the equations with which we intend
+to work so we may begin after introducing some notation.
+In order to derive conserved quantities using the
+machinery of\rf{Ibragimov07a} we first need
+to find the vector fields that span the Lie
+algebra of infinitesimal symmetries of our
+equations. Our description
+follows Theorem 2.36 from\rf{liede}
+in terms of notation.
+
+%%%%%%%%%
+
+
+To begin, take an arbitrary
+ vector field defined on the space $X \times U$
+which contains the independent variables $x^i$ and
+dependent variables $u^{\alpha}$ such that
+\beq \label{e-generalvectorfield}
+\mathbf{v} = \xi^i(x^i,u^{\alpha}) \frac{\partial}{\partial x^i}
++ \phi_{\alpha}(x^i,u^{\alpha})\frac{\partial}{\partial u^{\alpha}}\,,
+\eeq
+where summation is implied by repeated indices.
+To create a vector field applicable to our equations,
+we need to ``prolong''
+\refeq{e-generalvectorfield} or perform a ``jet prolongation''
+to the jet space of the same order as our equations,$n$.
+Informally this just means extending the definition \refeq{e-generalvectorfield}
+to the same order as the equations being studied.
+The general formula for the prolongation to
+the $n$th jet bundle is
+\beq
+\mathbf{\text{pr}}^{(n)}v = v + \phi_{\alpha}^J \frac{\partial}{\partial u_J^{\alpha}}\,,
+\eeq
+where the coefficients $\phi_{\alpha}^J$ are
+given by
+\beq \label{e-vectorcoeff}
+\phi_{\alpha}^J(x,u^{(n)} = D_J (\phi_{\alpha}-\xi^i u_i^{\alpha}) + \xi^{i} u_{J,i}^{\alpha}.
+\eeq
+
+We can now begin to apply this
+to our equation of interest, the \KSe, \refeq{e-ks}.
+Starting with the prolongation of
+the general vector field, We need the fourth
+prolongation which seems like a lot of work
+(there is a coefficient for every combination of
+partial derivatives, and each higher order
+coefficient becomes more involved due to increased
+numbers of differentiation operations). Luckily,
+we already know that we are going to apply
+the vector field to the \KSe\ such that instead
+of calculating all $2+4+8+16$ jet prolongation
+coefficients (all combinations of
+$t,x$ derivatives of order one, two, three and four)
+we only need the coefficients which accompany
+vectors $\frac{\partial}{\partial u_J}$ which
+appear in the \KSe. Namely, $\{\phi^J\} = \{\phi^t,\phi^x,\phi^{xx},\phi^{xxxx} \}$,
+which in turn creates the vector field
+specific to the \KSe
+\bea \label{e-prolong4}
+\mathbf{\text{pr}}\,v^{(4)} &=& \epsilon(x,t,u)\frac{\partial}{\partial x}
+                            +\tau(x,t,u)\frac{\partial}{\partial t}
+                            +\phi(x,t,u)\frac{\partial}{\partial u}
+                            +\phi^t(x,t,u^{(1)})\frac{\partial}{\partial u_t} \continue
+                            &+&\phi^x(x,t,u^{(1)})\frac{\partial}{\partial u_x}
+                            +\phi^{xx}(x,t,u^{(2)})\frac{\partial}{\partial u_{xx}}
+                            +\phi^{xxxx}(x,t,u^{(4)})\frac{\partial}{\partial u_{xxxx}}\,.
+\eea
+
+All other higher order terms will annihilate when
+acting on the \KSe. Note that the higher the ``order'' of the
+coefficient, the higher the order of the jet bundle that
+the coefficients depend on. This can
+be seen by the definition of the coefficients
+\refeq{e-vectorcoeff}, the higher the ``order'' of
+the coefficients, the more derivatives are taken to define
+it.
+Now that we have the general
+form of the vector field we can begin to derive
+the \textit{infinitesimal generators} which span
+the Lie algebra. To accomplish this, we will derive
+the \textit{determining equations} which are produced
+by applying \refeq{e-generalvectorfield} to the system of differential
+equations and equating to zero, that is
+\beq  \label{e-phicoefficients} % label added by \PC{2019-09-11}, could be wrong
+\mathbf{\text{pr}}\,v^{(4)}(G(u^{(\alpha)}(\conf,\zeit),u_{(1)}^{(\alpha)}(\conf,\zeit),\dots,u_{(n)}^{(\alpha)}(\conf,\zeit))) = 0
+\,.
+\eeq
+Performing this operation yields
+\beq \label{e-KSEcoeff}
+\phi^t + \phi^{xx} + \phi^{xxxx} + u \phi^x + \phi u_x = 0
+\,.
+\eeq
+
+We finally are forced to derive the coefficients $\phi^J$
+and to include as many details as possible
+we will write the exact formulas needed to derive them
+as well as the long form expressions that they are equal to.
+
+\bea
+\phi^t &=& D_t (\phi(x,t,u) -\epsilon(x,t,u) u_x -\tau(x,t,u) u_t) + \tau(x,t,u) u_tt + \epsilon(x,t,u) u_xt \continue
+\phi^x &=& D_x (\phi(x,t,u) -\epsilon(x,t,u) u_x -\tau(x,t,u) u_t) + \tau(x,t,u) u_tx + \epsilon(x,t,u) u_xx  \continue
+\phi^{xx} &=& D_{x}^2 (\phi(x,t,u) -\epsilon(x,t,u) u_x -\tau(x,t,u) u_t) + \tau(x,t,u) u_{txx} + \epsilon(x,t,u) u_{xxx} \continue
+\phi^{xxxx} &=& D_{x}^4 (\phi(x,t,u) -\epsilon(x,t,u) u_x -\tau(x,t,u) u_t) + \tau(x,t,u) u_{txxx} + \epsilon(x,t,u) u_{xxxx}
+\eea
+
+where $D_t$ and $D_x$ represent \textit{total differentiation} operators,
+
+\beq
+D_i = \frac{\partial}{\partial x^i} + u_i \frac{\partial}{\partial u} + u_{ii} \frac{\partial}{\partial u_i} + \dots
+\eeq
+
+the long form expressions from each of these are
+\beq
+\phi ^t=u_t^2 \left(-\tau _u\right)-\tau _t u_t-u_t u_x \epsilon _u-\epsilon _t u_x+u_t \phi _u+\phi _t
+\eeq
+
+\beq
+\phi ^x=-u_t \tau _u u_x-u_t \tau _x+u_x^2 \left(-\epsilon _u\right)-u_x \epsilon _x+u_x \phi _u+\phi _x
+\eeq
+
+\bea
+\phi ^{\text{xx}}&=&-u_t u_x^2 \tau _{\text{uu}}-2 u_t u_x \tau _{\text{xu}}-u_t \tau _u u_{\text{xx}}\continue
+&-&u_t \tau _{\text{xx}}+u_x^3 \left(-\epsilon _{\text{uu}}\right)+u_x^2 \phi _{\text{uu}}\continue
+&-&2 \tau _u u_x u_{\text{xt}}-2 u_{\text{xt}} \tau _x-2 u_x^2 \epsilon _{\text{xu}}\continue
+&+&2 u_x \phi _{\text{xu}}-3 u_x u_{\text{xx}} \epsilon _u-u_x \epsilon _{\text{xx}}\continue
+&-&2 u_{\text{xx}} \epsilon _x+u_{\text{xx}} \phi _u+\phi _{\text{xx}}
+\eea
+
+\bea
+\phi ^{\text{xxxx}}&=&-4 u_t u_x u_{\text{xxx}} \tau _{\text{uu}}-3 u_t u_{\text{xx}}^2 \tau _{\text{uu}}-6 u_t u_x^2 u_{\text{xx}} \tau _{\text{uuu}}-u_t u_x^4 \tau _{\text{uuuu}} \continue
+&-&12 u_t u_x u_{\text{xx}} \tau _{\text{xuu}}-4 u_t u_x^3 \tau _{\text{xuuu}}-6 u_t u_x^2 \tau _{\text{xxuu}}-4 u_t u_x \tau _{\text{xxxu}}-4 u_t u_{\text{xxx}} \tau _{\text{xu}}\continue
+&-&6 u_t u_{\text{xx}} \tau _{\text{xxu}}-u_t \tau _u u_{\text{xxxx}}-u_t \tau _{\text{xxxx}}-12 u_x u_{\text{xt}} u_{\text{xx}} \tau _{\text{uu}} \continue
+&-&15 u_x u_{\text{xx}}^2 \epsilon _{\text{uu}}-6 u_x^2 u_{\text{xxt}} \tau _{\text{uu}}-10 u_x^2 u_{\text{xxx}} \epsilon _{\text{uu}}+4 u_x u_{\text{xxx}} \phi _{\text{uu}} \continue
+&+&3 u_{\text{xx}}^2 \phi _{\text{uu}}-4 u_x^3 u_{\text{xt}} \tau _{\text{uuu}}-10 u_x^3 u_{\text{xx}} \epsilon _{\text{uuu}}+6 u_x^2 u_{\text{xx}} \phi _{\text{uuu}}\continue
+&+&u_x^5 \left(-\epsilon _{\text{uuuu}}\right)+u_x^4 \phi _{\text{uuuu}}-12 u_x^2 u_{\text{xt}} \tau _{\text{xuu}}-12 u_x u_{\text{xt}} \tau _{\text{xxu}}\continue
+&-&12 u_x u_{\text{xxt}} \tau _{\text{xu}}-16 u_x u_{\text{xxx}} \epsilon _{\text{xu}}-24 u_x^2 u_{\text{xx}} \epsilon _{\text{xuu}}+12 u_x u_{\text{xx}} \phi _{\text{xuu}}\continue
+&-&4 u_x^4 \epsilon _{\text{xuuu}}+4 u_x^3 \phi _{\text{xuuu}}-18 u_x u_{\text{xx}} \epsilon _{\text{xxu}}-6 u_x^3 \epsilon _{\text{xxuu}}+6 u_x^2 \phi _{\text{xxuu}}\continue
+&-&4 \tau _u u_x u_{\text{xxxt}}-4 u_{\text{xxxt}} \tau _x-4 u_x^2 \epsilon _{\text{xxxu}}+4 u_x \phi _{\text{xxxu}}-5 u_x u_{\text{xxxx}} \epsilon _u-u_x \epsilon _{\text{xxxx}}\continue
+&-&4 u_{\text{xxxx}} \epsilon _x-12 u_{\text{xt}} u_{\text{xx}} \tau _{\text{xu}}-4 \tau _u u_{\text{xt}} u_{\text{xxx}}-4 u_{\text{xt}} \tau _{\text{xxx}}\continue
+&-&12 u_{\text{xx}}^2 \epsilon _{\text{xu}}+4 u_{\text{xxx}} \phi _{\text{xu}}-6 \tau _u u_{\text{xx}} u_{\text{xxt}}-6 u_{\text{xxt}} \tau _{\text{xx}}\continue
+&+&6 u_{\text{xx}} \phi _{\text{xxu}}-10 u_{\text{xx}} u_{\text{xxx}} \epsilon _u-6 u_{\text{xxx}} \epsilon _{\text{xx}}-4 u_{\text{xx}} \epsilon _{\text{xxx}}\continue
+&+&u_{\text{xxxx}} \phi _u+\phi _{\text{xxxx}}
+\eea
+
+upon substitution into \refeq{e-KSEcoeff} we can separate the terms by coefficients
+of monomials which gives us the determining equations as previously mentioned
+\beq
+\begin{array}{c}
+ \phi _t+\phi _{\text{xx}}+\phi _{\text{xxxx}}=0 \\
+ -4 \tau _x=0 \\
+ -6 \tau _{\text{xx}}=0 \\
+ -2 \tau _x-4 \tau _{\text{xxx}}=0 \\
+ -4 \epsilon _x+\tau _t+\tau _{\text{xx}}+\tau _{\text{xxxx}}=0 \\
+ 4 \phi _{\text{xu}}-6 \epsilon _{\text{xx}}=0 \\
+ -4 \tau _u=0 \\
+ 4 \tau _{\text{xu}}=0 \\
+ -2 \epsilon _x-4 \epsilon _{\text{xxx}}+\tau _t+\tau _{\text{xx}}+\tau _{\text{xxxx}}+6 \phi _{\text{xxu}}=0 \\
+ -6 \tau _u=0 \\
+ -12 \tau _{\text{xu}}=0 \\
+ 6 \tau _{\text{xxu}}=0 \\
+ 4 \tau _{\text{xu}}-10 \epsilon _u=0 \\
+ -12 \epsilon _{\text{xu}}+6 \tau _{\text{xxu}}+3 \phi _{\text{uu}}=0 \\
+ 3 \tau _{\text{uu}}=0 \\
+ 3 \tau _{\text{uu}}=0 \\
+ \phi -\epsilon _t-\epsilon _{\text{xx}}-\epsilon _{\text{xxxx}}+2 \phi _{\text{xu}}+4 \phi _{\text{xxxu}}=0 \\
+ -4 \tau _u=0 \\
+ -12 \tau _{\text{xu}}=0 \\
+ -2 \tau _u-12 \tau _{\text{xxu}}=0 \\
+ -4 \epsilon _u+2 \tau _{\text{xu}}+4 \tau _{\text{xxxu}}=0 \\
+ 4 \phi _{\text{uu}}-16 \epsilon _{\text{xu}}=0 \\
+ 4 \tau _{\text{uu}}=0 \\
+ -2 \epsilon _u-18 \epsilon _{\text{xxu}}+2 \tau _{\text{xu}}+4 \tau _{\text{xxxu}}+12 \phi _{\text{xuu}}=0 \\
+ -12 \tau _{\text{uu}}=0 \\
+ 12 \tau _{\text{xuu}}=0 \\
+ 4 \tau _{\text{uu}}=0 \\
+ 12 \tau _{\text{xuu}}-15 \epsilon _{\text{uu}}=0 \\
+ -2 \epsilon _{\text{xu}}-4 \epsilon _{\text{xxxu}}+\phi _{\text{uu}}+6 \phi _{\text{xxuu}}=0 \\
+ -6 \tau _{\text{uu}}=0 \\
+ -12 \tau _{\text{xuu}}=0 \\
+\end{array}
+\eeq
+
+\beq \nonumber
+\begin{array}{c}
+ \tau _{\text{uu}}+6 \tau _{\text{xxuu}}=0 \\
+ -10 \epsilon _{\text{uu}}=0 \\
+ -24 \epsilon _{\text{xuu}}+\tau _{\text{uu}}+6 \tau _{\text{xxuu}}+6 \phi _{\text{uuu}}=0 \\
+ 6 \tau _{\text{uuu}}=0 \\
+ 6 \tau _{\text{uuu}}=0 \\
+ -\epsilon _{\text{uu}}-6 \epsilon _{\text{xxuu}}+4 \phi _{\text{xuuu}}=0 \\
+ -4 \tau _{\text{uuu}}=0 \\
+ 4 \tau _{\text{xuuu}}=0 \\
+ 4 \tau _{\text{xuuu}}-10 \epsilon _{\text{uuu}}=0 \\
+ \phi _{\text{uuuu}}-4 \epsilon _{\text{xuuu}}=0 \\
+ \tau _{\text{uuuu}}=0 \\
+ \tau _{\text{uuuu}}=0 \\
+ -\epsilon _{\text{uuuu}}=0 \\
+ \phi _x=0 \\
+ \tau _x=0 \\
+ \tau _x=0 \\
+ -\epsilon _x+\tau _t+\tau _{\text{xx}}+\tau _{\text{xxxx}}=0 \\
+ 4 \tau _{\text{xu}}=0 \\
+ 6 \tau _{\text{xxu}}=0 \\
+ 3 \tau _{\text{uu}}=0 \\
+ 2 \tau _{\text{xu}}+4 \tau _{\text{xxxu}}=0 \\
+ 4 \tau _{\text{uu}}=0 \\
+ 12 \tau _{\text{xuu}}=0 \\
+ \tau _{\text{uu}}+6 \tau _{\text{xxuu}}=0 \\
+ 6 \tau _{\text{uuu}}=0 \\
+ 4 \tau _{\text{xuuu}}=0 \\
+ \tau _{\text{uuuu}}=0 \\
+ \tau _x=0 \\
+\end{array}
+\eeq
+
+While initially intimidating, these equations can be solved by noticing
+the lower order equations such as $\tau_x = \tau_u = 0$ which means
+that $\tau$ can only be a function of $t$. Following this reasoning
+we find that in fact
+
+\bea
+\tau(x,t,u) &=& \tau = c_1 \continue
+\epsilon(x,t,u)&=&\epsilon(t)= c_3 t + c_1 \continue
+\phi(x,t,u)&=& \phi = c_3
+\,,
+\eea
+such that the Lie algebra of infinitesimal symmetries
+is spanned by
+\bea \label{e-ksegenerators}
+v_1 &=& \partial_x \continue
+v_2 &=& \partial_t \continue
+v_3 &=& t \partial_x + \partial_u
+\,,
+\eea
+which are the generators of space and time translations, and Galilean
+transformations. This is not surprising, as these symmetries have been
+previously described\rf{BudCvi14}. The reason why this calculation was pursued
+in the first place was to see if there were any ``hidden'' continuous symmetries
+afforded by a \spt\ formulation that were not present when
+the problem was viewed as a dynamical system.
+This is true for \textit{discrete symmetries}, but unfortunately not so
+for continuous symmetries.
+To carry the calculation through to finality
+we need to know the prolongations of \refeq{e-ksegenerators}
+and their extensions
+to the adjoint variables present in \refeq{e-adjointeqn}, as
+the Lie algebra needs to be extended to account for
+both Euler-Lagrange equations.
+
+The prolongations of \refeq{e-ksegenerators} result in
+\bea \label{e-ksegeneratorsprolong}
+\mathbf{\text{pr}}\,v_1 &=& y_1 = \partial_x \continue
+\mathbf{\text{pr}}\,v_2 &=& y_2 = \partial_t \continue
+\mathbf{\text{pr}}\,v_3 &=& y_3 = \partial_x + \partial_u - u_x \partial_{u_t}
+\,.
+\eea
+
+We can now derive the extended versions of \refeq{e-ksegeneratorsprolong}
+such that we can apply them to the formal Lagrangian
+\refeq{e-formallagrangian}. Once again we deploy the machinery of
+Ibragimov to extend \refeq{e-ksegeneratorsprolong} to the adjoint
+variables. Unfortunately it seems that the symmetries were too simple to
+actually have extensions to the adjoint variables, but we can still go
+forward with the conservation law calculations regardless. Both
+Ibragimov\rf{Ibragimov07a} and Olver\rf{liede} work through the
+proof that there is a conserved vector (as Ibragimov names it) such that
+its divergence provides a conservation law (technically infinite number
+of conservation laws because they are equations involving PDE solutions).
+The components of the conserved vector (one for each independent
+variable) are given by
+\bea \label{e-conservedcomponent}
+C^i &=& \xi^i \mathcal{L} + W^{\alpha}[\frac{\partial \mathcal{L}}{\partial u^{\alpha}_i}-D_j \frac{\partial \mathcal{L}}{\partial u^{\alpha}_{ij}}
+    +D_j D_k \frac{\partial \mathcal{L}}{\partial u^{\alpha}_{ijk}} - +D_j D_k D_l \frac{\partial \mathcal{L}}{\partial u^{\alpha}_{ijkl}}] \continue
+    &+& D_j(W^{\alpha})[\frac{\partial \mathcal{L}}{\partial u^{\alpha}_{ij}}-D_k \frac{\partial \mathcal{L}}{\partial u^{\alpha}_{ijk}}
+    +D_k D_l \frac{\partial \mathcal{L}}{\partial u^{\alpha}_{ijkl}}] \continue
+    &+& D_j D_k (W^{\alpha})[\frac{\partial \mathcal{L}}{\partial u^{\alpha}_{ijk}}-D_l \frac{\partial \mathcal{L}}{\partial u^{\alpha}_{ijkl}}
++D_k D_j \frac{\partial \mathcal{L}}{\partial u^{\alpha}_{ikj}} - +D_k D_j D_l \frac{\partial \mathcal{L}}{\partial u^{\alpha}_{ikjl}}]\continue
+&+& D_j D_k D_l (W^{\alpha})[\frac{\partial \mathcal{L}}{\partial u^{\alpha}_{ijkl}}]\,,
+\eea
+where the equation has been extended to include
+all possible non-zero terms in the context of the \KSe, $W^{\alpha}$ is shorthand
+for $\phi^{\alpha} + \xi^i u_i^{\alpha}$. Applying this to our generators
+yields one unique conservation law which we shall now detail.
+
+For the Galilean transformation generator $\mathbf{\text{pr}}\,v_3 = t \partial_x + \partial_u -u_x \partial_{u_t}$
+the components equal
+\bea
+C^x &=& t*\mathcal{L} + W[\frac{\partial \mathcal{L}}{\partial u_x}-D_x\frac{\partial \mathcal{L}}{\partial u_{xx}}-D_x^3\frac{\partial \mathcal{L}}{\partial u_{xxxx}}] \continue
+    &+& D_x(W)[\frac{\partial \mathcal{L}}{\partial u_{xx}}+D_x^2\frac{\partial \mathcal{L}}{\partial u_{xxxx}}]\continue
+    &+& D_x^2(W)[-D_x\frac{\partial \mathcal{L}}{\partial u_{xxxx}}]\continue
+    &+& D_x^3(W)[\frac{\partial \mathcal{L}}{\partial u_{xxxx}}]\continue
+C^t &=& 0*\mathcal{L} + (1-t u_x)[\frac{\partial \mathcal{L}}{\partial u_t}]
+\,.
+\eea
+Both expressions simplify to
+    \PC{2019-09-11}{
+not sure about $v_{t t}$ term...
+    }
+\MNG{2019-09-12}{Accidentally wrote down the divergence $D_t C^t$ instead of $C^t$}
+\bea
+C^x &=& t(u_tv+u_xv_x+u_xv_{xxx}+u_{xxx}v_x+u_{xx}v_{xx})+uv-v_x-v_{xxx}
+    \continue
+C^t &=& (1-t u_x)v
+\,,
+\eea
+such that the conservation law is given by the divergence
+\bea \label{e-conservedvector}
+D_x (C^x) + D_t (C^t) &=& 0 \continue
+                      &=& v_t - v u_x - u_x v_t t + uv_x +vu_x - v_{xx} - v_{xxxx}\ceq
+                       +\,t(v_x(u_t+u_{xx}+u_{xxxx})+u_x(v_{xx}+v_{xxxx})+2D_x(u_{xx}v_{xx}))\continue
+                      &=& t(v_x(u_t+u_{xx}+u_{xxxx})+u_x(-v_t+v_{xx}+v_{xxxx})+2D_x(u_{xx}v_{xx}))
+                      \continue
+                      &=& 2D_x(u_{xx}v_{xx})
+\,.
+\eea
+
+This analysis is only relevant if there are non-trivial
+solutions to the
+adjoint equation \refeq{e-adjointeqn},
+because otherwise one does not know how to evaluate
+\refeq{e-conservedvector}. As we claimed previously,
+the only solutions to \refeq{e-adjointeqn} are constant in nature;
+implying that the conserved vector \refeq{e-conservedvector}
+is unfortunately a trivial conservation law.
+There are a number of reasons why we believe
+this analysis fails to yield anything useful, the
+most obvious being that the Lie algebra of infinitesimal
+symmetries is too simple.
+    \PC{2019-09-11}{
+I am thinking of moving everything from \refeq{e-formallagrangian} to
+%\refeq{e-conservedvector}
+here into a Chapter of your thesis, remarking here briefly that Ibragimov
+methods seem to have not worked for you?
+    }

@@ -1,0 +1,2242 @@
+\ifsvnmulti
+ \svnkwsave{$RepoFile: lyapunov/Lyapunov.tex $}
+ \svnidlong {$HeadURL: svn://zero.physics.gatech.edu/siminos/lyapunov/Lyapunov.tex $}
+ {$LastChangedDate: 2020-07-02 12:19:27 -0400 (Thu, 02 Jul 2020) $}
+ {$LastChangedRevision: 7451 $} {$LastChangedBy: predrag $}
+ \svnid{$Id: Lyapunov.tex 7451 2020-07-02 16:19:27Z predrag $}
+\fi
+
+\chapter{Lyapunov vectors}
+\label{s:LyapunovVec}
+
+This part of the blog focuses on the use of `{\cLvs}' (CLV) to identify the
+number of degrees of freedom that capture the physics of a `turbulent' PDE on
+a spatial domain.
+
+As material is written up, parts of it will migrate from its
+current placement into coherent sections, suitable for
+inclusion into ChaosBook.org, or, God Forbid, actual {\em
+publications}.
+
+\begin{description}
+
+\item[2009-09-04 Predrag]
+Talked to  Hugues Chat\'{e}, got very
+enthused about their results about splitting the KS
+eigenvectors into the `{\entangled}', inertial manifold ones,
+and the `hyperbolically isolated', transient ones. We should
+reexamine eigenvectors of our solutions, might find the split
+already on our very small system sizes (they work at $L=96$).
+
+Here is my email to Chat\'{e}:
+
+\end{description}
+
+Iggy (as Anglos spell it),
+%
+now that I have become your fan - I just love all those `unphysical,'
+lonely, isolated, alienated eigenvectors banished into their neurotic
+transitory world off the inertial manifold -  I'm entering following
+references to your papers:
+\refrefs{PoGiYaMa06,ginelli-2007-99,YaTaGiChRa08,TaGiCh09}
+in the final final edits of to be published in SIADS\rf{SCD07} (part I;
+part II is still being penned - 60,000 relative {\po s} and no
+place to go). Let me know if these are the right ones, add/correct what
+needs to be edited, corrected.
+
+I have no clue why you guys call linearized stability
+eigenvectors `Lyapunov' (in My Book Lyapunov has to do with
+the $J^T J$ symmetric matrix, with only real parts of Floquet
+multipliers captured, and eigenvectors that do not seem to
+mean anything), but you must have your reasons. We have 10-30
+leading eigenvectors for our `narrow cell' with $L=22$, for
+each one of the 60,000 invariant solutions that clever but
+mindless computation has handed us, and nothing interesting
+we had found to do with them, but they should presumably fit
+into your bigger L eigenvectors as into a glove. We see
+`unphysical' eigenvalues drop like a ton of rocks - only 4
+leading eigenvalues really matter, 2 of them marginal at
+$L=22$.
+
+PS - for something more `physical,' check out
+\HREF{http://www.warwick.ac.uk/~masax/}{Dwight Barkley}'s long pipe calculations with
+\HREF{http://adsabs.harvard.edu/abs/2008APS..DFD.BD008B}{David Moxley}.
+You'll find them inspirational. Probably the same story as KS, but explaining the
+phase transition between frozen puffs and turbulent puffs would make plumbers happy.
+
+\section{Reading assignments}
+
+\begin{description}
+\item[2014-10-25 Predrag] Moved most of the literature discussions to
+\\
+\texttt{siminos/xiong/thesis/chapters/cLvsLit.tex}
+
+\end{description}
+
+
+\section{QR decomposition}
+\label{QRdecomp}
+
+\begin{description}
+\item[2009-10-10 Sara and Predrag] Understood
+    \refref{ginelli-2007-99} (might want to check
+    \refref{PoGiYaMa06} as well). Still need to copy
+    relevant definitions from ChaosBook.org here.
+\end{description}
+
+Consider a $d$-dimensional discrete-time dynamical system. Let
+$\ssp_{n}\in \pS \subset \reals^d$ denote the \statesp\ point
+at time $t_{n}$ and let $\{{\bf g}_{n}^{(\ell)}\}$, $\ell=1,
+\ldots d$, be a set of $d$ orthogonal vectors, ${\bf
+g}_{n}^{(\ell)} \cdot {\bf g}_{n}^{(k)} = \delta_{\ell k}$,
+that span the tangent space $T\pS$ of the flow at time $t_{n}$.
+Collect these into the $n$th \emph{GS basis} (or GS fundamental
+matrix), written as the orthogonal matrix
+\[
+{\bf G}_n = ({\bf g}_n^{(1)} , \ldots ,  {\bf g}_n^{(d)})
+\]
+whose columns are the basis vectors $\{{\bf g}_{n}^{(\ell)}\}$.
+Start now at $t_{n-1}$. Iterating the evolution equations once
+maps the ${\bf G}_{n-1}$ orthogonal basis into a set of
+non-orthogonal, non-unit basis vectors $\overline{\bf G}_n =
+(\overline {\bf g}_n^{(1)} , \ldots , \overline {\bf
+g}_n^{(d)})$,
+\[
+\overline {\bf g}_n^{(\ell)} =\jMps_{n-1}
+            \, {\bf g}_{n-1}^{(\ell)}
+\,,
+\]
+where $\jMps_{n-1}$ is the \jacobianM\ of the
+transformation evaluated at time $t_{n-1}$.
+The $n$th GS basis is now obtained by applying the
+Gram-Schmidt orthogonalization to the vectors
+$\overline {\bf g}_n^{(\ell)}$. Pick
+$\overline{\bf g}_n^{(1)}$ as the direction of the first
+Gram-Schmidt vector,
+${\bf g}_n^{(1)} = \overline{\bf g}_n^{(1)}/|\overline{\bf g}_n^{(1)}|$.
+Pick the component of
+$\overline{\bf g}_n^{(2)}$ normal to ${\bf g}_n^{(1)}$
+as the direction of the second
+Gram-Schmidt vector, normalize to the unit eigenvector,
+\bea
+{\bf g}_n^{(2)} &=& \frac{1}{|\cdots|}
+            \left(\overline{\bf g}_n^{(2)}
+                  - (\overline{\bf g}_n^{(2)} \cdot {\bf g}_n^{(1)})
+                      \, {\bf g}_n^{(1)}
+            \right) \,,
+\continue
+{\bf g}_n^{(3)} &=& \frac{1}{|\cdots|}
+            \left(\overline{\bf g}_n^{(3)}
+                  - (\overline{\bf g}_n^{(3)} \cdot {\bf g}_n^{(2)})
+                      \, {\bf g}_n^{(2)}
+                  - (\overline{\bf g}_n^{(3)} \cdot {\bf g}_n^{(1)})
+                      \, {\bf g}_n^{(1)}
+            \right) \,,
+\nnu
+\eea
+and so on.
+Thus the Gram-Schmidt orthogonalization  amounts to the $\overline{\bf G} =
+{\bf Q}{\bf R}$ decomposition, where
+\[
+\overline{\bf G}_n =
+ {\bf G}_n ({\bf G}_n^T \overline{\bf G}_n) =
+ {\bf Q}_n {\bf R}_n \,.
+\]
+The columns of the orthogonal matrix ${\bf Q}_n = {\bf G}_n$
+are the elements of the $n$th GS basis, while ${\bf R}_n= {\bf
+G}_n^T \overline{\bf G}_n$ is an upper-triangular matrix whose
+nonzero elements are obtained by projecting each vector
+$\overline {\bf g}_n^{(j)}$ onto the subspace spanned by $\{
+{\bf g}_n^{(k)}\}$ with $k \leq j$.
+        \PC{${\bf R}_n= {\bf
+G}_n^T \overline{\bf G}_n$ formula is reminiscent of the
+expression for the \jacobianM\ in terms of fundamental ones,
+$\jMps_n= {\bf G}_n {\bf G}_{n-1}^{-1}$.}
+        \PC{the reminder of this entry is clippings from \refref{PoGiYaMa06},
+        still needs to be edited; there is more QR algebra to fill in. Apologies.
+        }
+
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\SFIG{GinelliFrames} {}{ \JacobianM\ transports initial
+orthogonal frame into a non-orthogonal one. This frame is then
+QR decomposed into an $R$-matrix and the next Gram-Schmidt
+frame, which is then transported by the next \jacobianM, and so
+on. A vector that starts within the subspace spanned by such
+finite Gram-Schmidt basis stays within the subspace spanned by
+the successive orthogonal frames.
+}{fig:GinelliFrames}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+
+What we have is a succession of co-moving re-orthogonalized
+frames, \reffig{fig:GinelliFrames},
+\[
+{\bf G}_{n-1} \to \overline{\bf G}_n =
+ {\bf G}_n {\bf R}_n
+ \to
+{\bf G}_{n+1} {\bf R}_{n+1}{\bf R}_n
+\]
+where ${\bf G}_n$ is an orthogonal frame spanning the tangent
+space at $\ssp_n$, and
+ \[
+{\bf R}_n{\bf R}_{n-1} {\bf R}_{n-1}\cdots {\bf R}_1
+ \]
+ is the \jacobianM\ computed within the
+co-moving frame. It keeps track of stretching along
+eigen-directions, but not rotations of the frame, that
+information is contained in the imaginary parts of
+eigen-exponents of the linearized flow. At each iteration
+the linearized flow stretches and squashes the hypercube
+whose edges are the $n$th GS basis into a parallelepiped
+whose edges are the vectors forming the columns of
+$\overline{\bf G}_{n+1}$. Projections of these
+vectors onto the $(n\!+\!)$th GS hypercube form
+the upper-triangular co-moving frame representation
+of the \jacobianM\ $R_{n+1}$.
+
+Ershov and Potapov have shown\rf{ErshPot98} that, by repeating
+the above procedure up to a time $t_m$ for $m$ much larger than
+$n$,  the GS basis converges to an orthogonal set of vectors
+$\{{\bf e}_m^{(k)}\}$, $k=1,\ldots, d$ - the $m$th Gram-Schmidt
+vectors - which solely depend on the \statesp\ point
+$\ssp_{m}$. Thus the {\cLvs} are independent
+of where the backward evolution is started along a given
+trajectory, provided that it is sufficiently far in the future.
+    \PC{For \po s, we need no Ershov and
+    Potapov\rf{ErshPot98}. Oseledec arguments are only
+    needed for a generic long-time chaotic trajectory}
+
+The Lyapunov exponents $\lambda_1 \geq \lambda_2 \geq \ldots
+\geq \lambda_d$ are the time-averaged values of the logarithms
+of the diagonal elements of ${\bf R}_n$.
+        \PC{Ginelli's talk shows that that diagonal elements of ${\bf R}_n$
+            are the eigenvalues of the \jacobianM\ $\jMps_n$.}
+
+Assume that a set of Gram-Schmidt vectors at $\ssp_m$ has been
+generated by iterating the generic initial condition $\ssp_0$.
+Let ${\bf u}_m^{[j]}$ be a generic vector inside the subspace
+$\pS^{[j]}$ spanned by $\{{\bf g}_m^{(k)}\}$, $k=1,\ldots, j$,
+\ie, by the first $j$ Gram-Schmidt vectors at time $t_m$. This
+vector can be iterated backward in time by inverting the
+upper-triangular matrix ${\bf R}_m$: if the $c_m^{i}=({\bf
+g}_m^{(i)} \cdot {\bf u}_m^{[j]} )$ are the coefficients
+expressing ${\bf u}_m^{[j]}$ in terms of the Gram-Schmidt
+vectors at $\ssp_m$, then $c_{m-1}^{i}= \sum_k [{\bf
+R}_m^{-1}]_{ik} c_m^{k}$. Since ${\bf R}_m$ is
+upper-triangular, it is easy to verify that ${\bf u}_n^{[j]}
+\in T\pS^{[j]}_n$ at all times $t_n$.
+
+
+Iterating ${\bf u}_m^{[j]}$ backward for a sufficiently large
+number $(m-n)$ of times, it eventually aligns with the
+(backward) most expanding direction within $T\pS^{[j]}$. This
+defines  ${\bf e}_n^{(j)}$, our intrinsic $j$-th (forward)
+expanding direction at the \statesp\ point $\ssp_n$.
+
+In order to verify that ${\bf e}_n^{(j)}$ is covariant, define
+the matrix $[{\bf C}_m]_{ij} = c_m^{ij}$,
+\[
+{\bf C}_m = {\bf R}_m {\bf C}_{m-1}
+\,.
+\]
+By multiplying both sides by ${\bf Q}_m$ and substituting
+$\overline {\bf G}_m$ for its QR decomposition on the resulting
+right hand side, one is left with ${\bf
+e}_{m}^{(j)}=\jMps_{m-1} {\bf e}_{m-1}^{(j)}$ for $j=1,\ldots,
+d$.
+
+{\CLvs} $\{{\bf v}_{m}^k\}$ constitute an
+intrinsic, covariant basis defining expanding/contracting
+directions in \statesp.
+In the presence of degeneracies {\cLvs}
+have to be grouped according to the multiplicity of the
+corresponding Lyapunov exponent.
+
+The $i$th Lyapunov exponent is the average of the growth rate
+of the $i$th the {\cLv}. For 2\dmn\ maps and
+3\dmn\ flows this has been shown by B. Eckhardt, D. Yao,
+Physica D {\bf 65}, 100 (1993); G. Froyland, K. Judd and A. I.
+Mees, Phys. Rev. E {\bf 51}, 2844 (1995); and A. Politi
+\etal\rf{PoGiYaMa06}.
+
+Evidence of the validity of the approach was given in
+\refref{PoToLe98}, where {\cLvs} were
+introduced to characterize time {\po s} in a 1D
+lattice of coupled maps. There, it was found that the number
+of nodes (changes of sign) in a {\cLvs} is
+directly connected to the position of the corresponding
+Lyapunov exponent within the Lyapunov spectrum.
+
+
+The {\cLvs} are also well defined for
+non-invertible dynamics, since it is necessary and sufficient
+to follow backward a trajectory previously generated forward in
+time. The determination of the {\cLvs} is
+very efficient. The main computational bottleneck is the memory
+required to store the matrices ${\bf R}_n$ and the $n$-time
+Gram-Schmidt vectors during the forward integration. The memory
+required can be substantially reduced by occasionally storing
+the instantaneous configuration in real and tangent space and
+re-generating the rest when needed.
+
+
+\section{{\CLvs}, an algorithm}
+
+\begin{description}
+\item[2009-10-10 Sara and Predrag] Understood
+\refref{ginelli-2007-99} (might want to
+check \refref{PoGiYaMa06} as well).
+\end{description}
+
+\paragraph{
+A general method to
+determine {\cLvs} in both discrete- and
+continuous-time dynamical systems.
+            }
+
+The Benettin \etal\rf{bene80a} algorithm to calculate the
+Lyapunov exponents relies on construction of orthogonal sets of
+Gram-Schmidt vectors. They  are not covariant, \ie, the
+Gram-Schmidt vectors at a given \statesp\ point are not mapped
+by the linearized dynamics into the Gram-Schmidt vectors of the
+forward images of this point. In contrast, the \jacobianM\
+$\jMps_n$ eigenvectors \jEigvec[i] also span the
+$d$-dimensional tangent space, but are generically not normal.
+In numerical work, frequent Gram-Schmidt re-orthogonalization
+of the tangent coordinate frame is necessitated by the
+exponential growth-rate separation along $\jMps_n$
+eigendirections as $n$ increases; for a long orbit direct
+computation of eigenvalues of $\jMps_n$ yields a set of
+exponentially separated leading multipliers
+$\{\ExpaEig_1,\ExpaEig_2,\cdots\}$, subset of which can
+resolved within a given machine precision.
+
+The method of \refref{ginelli-2007-99} enables computation of
+{\em all} eigenvectors of $\jMps_n$. The two key ides are:
+\begin{enumerate}
+  \item
+Due to the upper-triangular structure a Gram-Schmidt
+re-orthogonalization matrix ${\bf R}_n$, a vector $\deltaX$
+that starts within the tangent subspace $\deltaX \in
+T\pS_{\ssp}^{[j]}$ spanned by the first $j$ Gram-Schmidt basis
+vectors, {\em stays} within that subspace spanned by a comoving
+frame under subsequent evolution and re-orthogonalizations.
+\item Once a set of $\{{\bf R}_1,{\bf R}_2,\cdots,{\bf R}_n\}$
+along trajectory $\{\ssp_1,\ssp_2,\cdots,\ssp_n\}$ has been
+computed and stored in the memory, it can be used to describe
+the action of the the linearized flow \jacobianM\ $\jMps_n$
+both \emph{forward} and \emph{backward} in time.
+
+So far, this is true of any QR decomposition. Now to
+hyperbolic dynamics; order the \jacobianM\ $\jMps_n$
+eigenvectors \jEigvec[\ell] by the real parts of their
+eigen-exponents, and let $T\pS^{[j]}$ be the tangent
+subspace spanned by the leading $j$ eigenvectors.
+
+Strongly contracting $\ExpaEig^{(j)}$ multiplier forward in
+time, becomes the leading $1/\ExpaEig^{(j)}$ multiplier
+backward in time. Matrix power method then pulls out this
+eigenvalue as the leading one within the subspace
+$T\pS^{[j]}$. \emph{Presto:} Increase the dimension of the
+subspace by one, and you get the next $\ExpaEig^{(j+1)}$.
+Repeat, and you get all eigenvalues and eigenvectors, even
+those insanely contacting ones, like $\ExpaEig^{(j)}
+\approx 10^{-137}$.
+
+\end{enumerate}
+\emph{Bonus points:}
+\begin{enumerate}
+  \item For {\po s} we need to evaluate ${\bf R}_n$ for
+  only one traversal of the cycle: the method then yields {\em
+  all} Floquet vectors and Floquet exponents (no need to mess
+  with convergence of `Lyapunov' eigenvectors). As unstable \po
+  s fill the ergodic component of the \statesp\ hierarchically,
+  their linearized stable / unstable manifolds tessellate the
+  stable / unstable foliation with exponentially increasing
+  accuracy. No need to explore the \statesp\ by mindless
+  numerics, starting with a random initial point.
+	\PC{for
+  ChaosBook; define Floquet vector to be eigenvector, so change
+  all `Floquet eigenvectors' to `Floquet vectors.'}
+
+  \item \emph{Unexpected bonus:} Near-orthogonality of
+      these eigenvectors appears to separate the women from
+      girls. According to Ginelli
+      \etal\rf{ginelli-2007-99}, it gives us apparently a
+      sharp criterion to count the number of `{\entangled}'
+      degrees of freedom for a PDE solved on a compact
+      domain.
+\end{enumerate}
+
+A coordinate-independent, local decomposition of \statesp\
+into covariant Lyapunov directions is called Oseledec
+splitting\rf{ruelle79,EckmannRuelle1985}.
+Its numerical implementation in \refref{ginelli-2007-99}
+is based on forward/backward
+iterations of the tangent dynamics and determination
+a set of dynamics covariant directions,
+called `{\cLvs} (CLV).'
+
+\begin{description}
+  \item[Ruslan 2009-10-14] I'm sorry to ruin your optimism
+      here, but I don't think this procedure is numerically
+      stable: The round-off errors will spill outside
+      $T\pS^{[j]}$ and then $1/\ExpaEig^{(k)}$ multipliers
+      for $k > j$ will stretch these errors.
+
+\item[Predrag 2009-10-15]
+You are right that as it stands, we have not explained the
+algorithm. The answer seems to be in Wolfe and
+Samelson\rf{WoSa07} (above and in ChaosBook.org/library, link
+below), perhaps the most important article to understand.
+If Ginelli \etal\rf{ginelli-2007-99} say the key thing (how
+to compute covariant eigenvectors, actually) they hide it
+well.
+
+  \item[Ruslan 2009-10-14]
+Another thing that you have noticed is that they don't say
+anything about complex eigenvalues.  This is because in the
+construction of the algorithm they assume that all Lyapunov
+exponents are distinct, which implies that all Floquet
+multipliers of {\po s} are real and distinct as well
+(Even though they write $\lambda_1 \geq \lambda_2 \cdots$
+instead of $>$, this is mentioned in one of the papers you
+discussed above, but I don't remember which one).  I just
+hope that, if we do have a pair of complex conjugate
+eigenvalues, the corresponding two Lyapunov vectors will span
+the same subspace as the real and imaginary parts of the
+corresponding eigenvector.  But this needs to be verified.
+
+\item[Predrag 2009-10-15]
+You are right that Wolfe and Samelson\rf{WoSa07} cannot prove
+that their method converges for degenerate sets of eigenvalues
+(complex pairs being a particular case - real parts are
+equal, and the method maps orthogonal frame to orthogonal
+frame, codes stretching/shrinking into $R_{ij}$ matrix,
+ignores frame rotations. Ginelli \etal\rf{ginelli-2007-99}
+deal with complex eigenvalues (see the plots I copied to the
+blog above), so I guess it works. I might ask Takeuchi how
+they really do it.
+
+  \item[Ruslan 2009-10-14]
+ This may be the best
+algorithm we have for determining Lyapunov vectors along a
+typical chaotic orbit, but if we want to determine them for a
+PO or a RPO, then I think that the best way to do this is to
+find out how to solve the eigen-problem for a very badly
+conditioned matrix $J$ which can be represented as a product
+$J = J_{n}J_{n-1}\cdots J_1$ of not-so-badly conditioned
+matrices $J_j$.  You seem to have something along these lines
+in the extract `Transport of vector fields', \refappe{sect:transport}, but I
+would prefer to see this construction done for maps, since
+\emph{computers don't do flows}.
+
+
+\item[Predrag 2009-10-15]
+It's usually easier for maps than flows, and as this is all
+formulated for finite times, I think it works for discrete
+and continuous finite times equally well. Computers do flows
+pretty well, that's how we compute \FloquetM\ \monodromy.
+Wolfe and Samelson\rf{WoSa07} did not do it for Floquet
+eigenvectors. Trevisan and Pancotti (see above, and
+\wwwcb{/library}) apparently need to be cited for the
+observation that {\cLvs} reduce to Floquet
+eigenvectors in the particular case of a {\po}.
+Seems so obvious it is in ChaosBook without attribution, and
+Ruelle and Eckmann\rf{EckmannRuelle1985} surely say that.
+
+\item[Ruslan 2009-10-15]
+Sure, all I'm saying is that a flow in a computer is actually
+a map, since it's represented by a numerical integration
+scheme.  Anyway, I'll read Wolfe and Samelson\rf{WoSa07}
+next.  By the way, cannot download Trevisan and Pancotti from
+the library, please check the link.  Also, regarding the
+relationship between  {\cLvs} and Floquet
+eigenvectors: I can see that it will work for real distinct
+eigenvalues (aka Floquet multipliers), but again it is not
+clear how they are related in the case of complex or repeated
+eigenvalues.
+
+\end{description}
+
+
+\section{Separate the women from girls:
+		 Hyperbolicity}
+
+
+\begin{description}
+\item[2009-10-15 Predrag]
+Added references \refref{WoSa07,KaCoCa02,TrePan98,PaSzLoRo09}
+(discussed above) to
+\\
+\wwwcb{/library}. As far as I can tell, the important one is
+\refref{WoSa07}.
+
+\item[2009-10-15 Predrag to Ruslan]
+I have lost interest in quotienting $\SOn{2}$? Nothing could
+be further from the actual state of affairs. Ashley Willis
+has made a slice work for a down-stream traveling wave in
+pipe (downstream we have pure $\SOn{2}$, and for
+angular-traveling waves we have $\On{2}$), and we might soon have a
+neighborhood spiral-out. His plots of $\dot{\theta}$ already
+show hiccups with velocity going large every so often.
+
+But computing Lyapunov vectors seems important as well. I've
+put all the papers you did not yet read onto the
+\wwwcb{/library}.
+
+\item[2009-10-15 Ruslan]
+I believe slices will work for traveling waves and other
+types of relative steady (or nearly steady) states, but not
+for generic \rpo s and other 'moving' states.  There we will
+probably have to learn how to live with a discontinuous
+$\theta(t)$.
+
+\item[2009-10-29 Predrag] Tend to agree.
+
+%\RLDedit{
+%\item[2009-10-15 Ruslan]
+%I cannot download Trevisan and Pancotti from
+%the library, please check the link.
+%}
+%
+%\item[2009-10-15 Predrag]
+%Sorry, forgot the *.pdf suffix - now Trevisan and Pancotti is
+%downloadable from the library.
+%
+\end{description}
+
+\section{``Lyapunov analysis'' workshop}
+\label{iscpif}
+
+\begin{description}
+
+\item[2009-10-27 Predrag] Evangelos (physicist formerly known
+as Vaggelis) and I are at the ``Lyapunov analysis from theory
+to geophysical applications,''
+\HREF{http://iscpif.fr/LTG09}{www.iscpif.fr/LTG09} meeting with
+all the Lyapunov heavies. I have put the Ginelli, Pikovsky and
+Talagrand talks into \wwwcb{/library}; all talks are eventually
+meant to be on their website.
+\end{description}
+
+\begin{itemize}
+  \item F. Ginelli, {\em Characterizing dynamics with
+      covariant Lyapunov vectors.} Please read this, it
+      addresses directly the questions in the blog above,
+      concerning details of the QR algorithm. Francesco
+      credits Abarbanel \etal\rf{AbBrKe91,AbBrKe91a} and
+      Politi \etal\rf{PoToLe98} for earlier Lyapunov
+      vectors. He says that the distinction from the Wolfe
+      and Samelson\rf{WoSa07} `intersection algorithm' is
+      that their key formula \beq
+   D^{(n)}  y^{(n)} = 0 \ee{eq:WoSa07} is unstable as it
+  needs inversion of $D^{(n)}$, whereas the dynamical
+  algorithm requires only matrix multiplication and is thus
+  more reliable.
+
+  \item G. Radons, {\em Lyapunov modes in extended
+      dynamical systems.} See Predrag's 2009-10-29 notes below.
+  \item V. Lucarini, {\em Parametric smoothness and
+      self-scaling of the statistical properties of a
+      minimal climate model} is closely related to
+      Siminos thesis, with 5-dimensional \cLe\ as a
+      special case, and a 10-dimensional variant of
+      Lorenz that has also 2nd Fourier modes, but (do
+      not understand why) those can be rotated
+      independently, so the symmetry is
+      $\SOn{2}\times\SOn{2}$. He keeps the term that
+      accounts for heat generation by viscosity, and
+      this seems to break the symmetry.
+\begin{description}
+\item  Evangelos: Talked to Lucarini. The			
+symmetry is $\SOn{2}\times\SOn{2}$ since
+the model is a truncation of Boussinesq equation
+in two spatial dimensions. Lucarini claims that
+the viscosity term does not break the symmetry in
+Boussinesq equation but does break it in its truncation.
+It sounds more like he does not truncate correctly. Without
+the viscosity term his truncation behaves like \cLe\ in the
+degenerate case of coexisting, symmetry related attractors.
+One should be able to also get a version analogous to the generic
+situation in \cLe\ with dynamics along the direction of group action.
+
+\item[2009-12-02 Evangelos] Read part of Lucarini and Saltzman papers. It
+appears that Lucarini is wrong, the system cannot have
+$\SOn{2}\times\SOn{2}$. Boundary conditions in both papers are periodic
+in $x$ direction and free in upper and lower boundary (along the $z$
+direction), which implies a vanishing stream function and vorticity,
+while we also have $\theta=0$ along the vertical boundaries. Lucarini
+uses a complex Fourier expansion in both directions therefore arguing he
+has $\SOn{2}\times\SOn{2}$ symmetry, but fails to notice he cannot
+satisfy boundary conditions. Saltzman (and of course Lorenz) appears to
+get the right truncation by fixing certain terms in his Fourier series
+(but I have not checked the details of his calculation.)
+
+\end{description}
+  \item K. A. Takeuchi, {\em Lyapunov analysis captures
+      the collective dynamics of large chaotic
+      systems.} Kazumasa AKA Kazz is our best hope for
+      computing Floquet eigenvectors for our KS \rpo s,
+      unless we do it ourselves.
+
+  \item A. Pikovsky, {\em An introduction to Lyapunov
+      analysis
+        }
+  \end{itemize}
+The remaining talks were by the weathermen and women. They were
+very fascinating, as there is amazing amount of atmospheric and
+ocean data available.
+  \begin{itemize}
+  \item A. Trevisan and O. Talagrand, {\em On the
+      existence of an optimal subspace dimension for
+        4DVar }
+  \item M. Ghil, {\em Data assimilation and predictability
+      in climate models} explained Kalman filters in detail
+      that might be useful for including into Lippolis
+      thesis. While I am at it; we had heard
+      Abarbanel\rf{ACFK09} talk about that, it might be a
+      better reference.
+  \item G. Lapeyre, {\em Nonlinear singular vectors and
+      atmospheric predictability }
+  \end{itemize}
+The next bunch showed very pretty signatures of
+Lyapunov-exponent colored 2-dimensional ocean dynamics and
+high atmosphere (Antarctic ozon hole) dynamics. Legras has
+interesting formulas for diffusion enhanced by stretching
+of unstable manifold fronts.
+  \begin{itemize}
+  \item F. d'Ovidio, {\em Lyapunov analysis for ocean
+      front detection }
+  \item B. Legras, {\em Transport and Mixing}
+  \item E. Shuckburgh, {\em Particle dispersion and
+      effective diffusivity }
+  \item J. B. Sallee, {\em Observed Lagrangian
+      dispersion of surface drifters in the Southern
+      ocean }
+  \item E. Hernandez-Garcia, {\em Stretching structures
+      from finite-size Lyapunov exponents: their impact
+      across all biological scales.}
+ \item J. Verron and O. Titaud, {\em On the
+     assimilation of submesoscale observations into
+     ocean models }
+  \end{itemize}
+
+\begin{description}
+
+\item[2009-10-29 G. Radons talk]  Gunther says `orthogonal'
+(rather than Gram-Schmidt) vectors. This seems more
+descriptive, but I am not sure we should adopt this usage, as
+the use of Gram-Schmidt sequential orthogonalizations is
+crucial in imposing the upper-triangular structure on $R$'s in
+the $QR$ decomposition.
+
+In his monograph\rf{Gas97} Gaspard talks of `Mather
+decomposition' (rather than Oseledec); recheck Gaspard's
+discussion.
+\[
+J^t = {\bf f}^{(j)}(t){}^T \Gamma_j {\bf e}^{(j)}(0)
+\]
+where ${\bf e}^{(j)}(0)$ are the initial {\cLvs},
+${\bf f}^{(j)}(t){}^T$ the final {\cLvs}, and $\Gamma$ encodes
+`stretching factors.'
+
+\item[2009-10-29 Predrag on G. Radons talk]
+CVLs he calls  `Lyapunov modes'. That is
+motivated by thinking of these eigenvectors as a generalization
+of `normal modes' of mechanical systems.						\inCB
+
+Radons \etal\ central result: Lyapunov modes split in (a)
+infinitely many `trivial,' hyperbolically decaying modes that
+are isolated and do not mix and (b) finite number of
+`{\entangled},' entangled modes, in the tangent space of the
+attractor, whose number is proportional to the size $L^D$ of
+the $D$-dimensional PDE system. Schematically, the `{\entangled}'
+ones are pointing along the `entangled,' {\entangled} tangent
+directions.
+
+In his talk, Radons shows examples of Lyapunov modes evolving
+in time with $\ssp(t)$. Physical ones seem localized,
+hyperbolic ones seem very Fourier-mode like. Spatial Fourier
+spectrum averaged of the time peaks with increase in $k$, peak
+at $k$. Physical ones are flat.
+
+Probability density of angles between adjacent {\entangled}
+eigenvectors computed over long time is flat, not peaked at
+$90^o$, see \reffig{fig:lyapSpecCLG} above. In this way the
+`{\entangled}' tangent space is transported across the whole curved
+strange manifold ergodically, and nonhyperbolicity of the
+attractor is used as a test that trajectory initiated along a
+given direction stays within the attractor. The `trivial,'
+hyperbolically decaying eigen-directions that are isolated
+exhibit no such small inter-angles anywhere along the chaotic
+trajectory.
+
+The very dramatic drop between decaying and entangled modes is
+seen in the Domination of Oseledec Splitting (DOS), a figure in
+Yang \etal\rf{YaTaGiChRa08} that I did not include in
+\reffig{fig:lyapSpecCLG}. The idea is this: there is always a
+long finite time $\tau$ Lyapunov exponent time for which
+eigenvalues are correctly ordered. For short a time $\tau$
+`{\entangled}' ones violate the ordering -\ie, nearby finite time
+Lyapunov exponent values cross as $\tau$ increases. They plot a
+fraction of the time this happens along a long trajectory, for
+a $\tau=0.2$, and for $\tau=2$ - both very sharp. Now,
+$\tau=0.2$ seems very short on the scale where shortest
+periodic solutions are of order $T=20$. Predrag thinks that DOS
+might be more important than angles, as separation should also
+work for Smale horseshoes repellers embedded in high
+dimensions. Chat\'e says the information in angles is equally
+good. {\bf A. Pikovsky} is unconvinced about the angles
+approach, and thinks one can construct counter-examples where
+it would fail.
+
+While it is very impressive for KS, with {\entangled} modes sharply
+separated into a low-$j$ rectangle, DOS is not a rectangle for
+CGL equation, but more of a sausage along the diagonal, and it
+might reflect different kinds of turbulence (`phase' turbulence
+vs. `amplitude' turbulence). Predrag thinks quotienting the
+symmetry might help, see blog entry of 2009-10-30 below.
+
+
+
+\end{description}
+
+\section{Hydrodynamic Lyapunov modes}
+\label{sect:HDLmodes}
+
+\begin{description}
+
+\item[2013-04-06 Predrag] I admit to not having yet developed any
+appreciation of `hydrodynamic Lyapunov modes' or `Lyapunov modes'.
+But they must mean something, as Eckmann,
+Posch\rf{PoHi00,HooPoFoDeZh02}, \HREF{http://williamhoover.info/}
+{Hoover}, and Morriss study them.
+
+Eckmann\rf{EckGat00} writes:
+``Hydrodynamic behavior in phase space is present in every
+extended system with a continuous symmetry. In the models considered
+in \refref{DePoHoo96} the symmetries in question are translation and
+Galilei invariance, precisely those which enable the hydrodynamic
+description of a fluid in terms of the Navier-Stokes equations.
+However, it is for the first time that a similar phenomenon is
+observed in tangent space.''
+
+\item[2012-02-12 Predrag]
+{\em Covariant hydrodynamic Lyapunov modes and strong stochasticity threshold
+ in Hamiltonian lattices}
+by M. Romero-Bastida, Diego Paz\'o, and Juan M. L\'opez\rf{romero-bastida2012},
+\arXiv{1202.3476}. They scrutinize
+``
+the reliability of covariant and Gram-Schmidt Lyapunov vectors for
+capturing hydrodynamic Lyapunov modes (HLMs) in one-dimensional
+Hamiltonian lattices and show that, in contrast with previous claims,
+HLMs do exist for any energy density, so that strong chaos is not
+essential for the appearance of genuine (covariant) HLMs. In
+contrast, Gram-Schmidt Lyapunov vectors lead to misleading results
+concerning the existence of HLMs in the case of weak chaos.
+''
+\item[2013-04-07 Evangelos] This is a helpful paper.
+They clearly demonstrate the perils of using OLVs instead of {\cLvs}, by varying the
+scalar product used in Gram-Schmidt orthogonalization. It answers some of my questions
+for now (except for physical motivation - the argument is the usual, they study
+it because it has recently received much attention).
+
+\item[2013-04-07 Predrag] Eckmann\rf{EckGat00} might be right,
+but it is not the obvious that random matrices are enlightening
+in this context. They do some numerics, and show a counter-example
+where Lyapunov (or GS) vectors do not work.
+
+\item[Comparison of covariant] and orthogonal {Lyapunov
+vectors} by Yang and Radons\rf{YaRa10}. They compare
+covariant and orthogonal Lyapunov vectors (CLVs/OLVs), with
+respect to the hydrodynamic Lyapunov modes (HLMs). Both
+Hamiltonian and dissipative HLMs formerly detected via OLVs
+survive if {\cLvs} are used instead. Moreover the previous
+classification of two universality classes works for {\cLvs} as
+well, i.e. the dispersion relation is linear for Hamiltonian
+systems and quadratic for dissipative systems respectively.
+The significance of HLMs changes in different ways for
+Hamiltonian and dissipative systems with the replacement of
+OLVs by {\cLvs}. For general dissipative systems with
+nonhyperbolic dynamics the long wave length structure in
+Lyapunov vectors corresponding to near-zero Lyapunov
+exponents is strongly reduced if {\cLvs} are used instead,
+whereas for highly hyperbolic dissipative systems the
+significance of HLMs is nearly identical for {\cLvs} and OLVs.
+In contrast the HLM significance of Hamiltonian systems is
+always comparable for {\cLvs} and OLVs irrespective of
+hyperbolicity.
+
+Appendices are potentially useful: Transformation properties
+of Lyapunov exponents, {\cLvs} and hyperbolicity under changes
+of coordinate are discussed.
+
+\item[2013-03-31 Evangelos] Could somebody please explain a few points about HLMs studied
+in the above Yang and Radons paper?
+
+a) Why are HLMs worth studying. The argument seems to be that since they correspond to
+almost zero Lyapunov exponents they are ``slow modes'' of the system and thus they could be
+useful in some multiple scale analysis. Moreover, since they correspond to positive Lyapunov
+exponents they should participate in the dynamics (and thus they are not like the trivial
+modes one finds in e.g. KSe). However, I cannot see the value of such modes, when there are
+a few hundred modes corresponding to larger positive Lyapunov exponents (as seems to be the typical
+case). How could scale separation work, and how could any role be played by these HLMs when there
+exist multiple more ``unstable'' modes of various time-scales.
+
+b) I cannot see why they say that OLVs and {\cLvs} give the same results. A look at their
+figure 3 suggests that OLVs basically give nonsense. Isn't that what one would expect?
+Aren't OLVs (especially the ones corresponding to near-zero Lyapunov exponents) just a
+byproduct of the Gram-Schmidt method? Aren't the {\cLvs} valuable exactly because they are the
+only vectors that have some invariant meaning?
+
+c) I do not understand what the acceptable standards are in statistical physics in order to
+establish a universality class are. For instance in Fig. 2 of \refref{YaRa06}, it seems that
+points for small $k$ (exactly where universal behavior is supposed to occur) span an order of
+magnitude for the XY model, while for the rest of the systems studied, one would have to be
+very optimistic in order to read a single slope.
+
+d) What do we learn from such universality classes?
+
+e) They say that these HLMs appear because of continuous symmetries. As they study
+coupled map lattices, they say that the relevant symmetry is a shift in the dependent
+variable (in all lattice points). However, it seems to me that the relevant symmetry is
+a discrete lattice translation symmetry, which in the continuous limit (number of points
+on the lattice going to infinity) becomes a continuous translation symmetry. This would
+be the only common (non-trivial) symmetry of these systems with KSe for which the same authors
+also find HLMs in \refref{YaRa06}.
+
+\item[2013-04-06 Predrag] Can you have a look at the `Lyapunov modes'
+source literature: Eckmann, Posch\rf{PoHi00,HooPoFoDeZh02},
+\HREF{http://williamhoover.info/} {Hoover}? Not sure what is the best
+review (I have saved the articles in ChaosBook.org/library, as
+usual.) It might work better than trying to decode Yang... Blog as
+you progress/regress...
+
+
+\item[2013-04-08 Kazumasa]
+I agree with Predrag that we should not worry so much
+ about what Yang and Radons write on the hydrodynamic Lyapunov modes
+ (because they have to sell HLMs at any rate)
+ and that we do not expect HLMs in the KS equation.
+At least for the KS equation,
+ they just mistook the {\transient} modes (as in \refref{YaTaGiChRa08}) for HLMs
+ (because of the sinusoidal structure).
+Concerning the dispersion relation, we showed
+ in \refref{YaTaGiChRa08} that
+ $\lambda$ for large $k$ is given by the highest-order term in $k$,
+ i.e., $\lambda \sim -k^4$ for KS,
+ while $\lambda$ for small $k$ plotted by Yang and Radons are
+ modes near the {\entangled}-{\transient} threshold (at least for KS),
+ where everything is mixed up and hard to extract meaningful information...
+
+\item[2013-04-08 Kazumasa]
+Moreover, I and Hugues doubt that HLMs are well-defined
+ even in Hamiltonian systems,
+ based on preliminary (but time- and memory-consuming) data.
+We tried to reproduce Yang and Radons' results
+ in \rf{Yang.Radons-PRL2008}
+ for their symplectic coupled map lattice and found that
+ one cannot set any threshold between ordinary and hydrodynamic Lyapunov modes
+ on the basis of the domination of Oseledec splitting,
+ as opposed to their claims
+ (e.g., blue curve in their Fig.1b seems to suggest a threshold,
+ but in logarithmic scales
+ it decreases monotonously over the full index range).
+Second, when we increase the system size,
+ the apparent fraction of the modes with sinusoidal structure
+ (which is the sign of HLMs here) decreases (slowly and irregularly).
+This suggests that HLMs, if exist, might not occupy
+ a finite fraction of the spectrum in the infinite-size limit...
+I don't hate the idea of HLMs, rather I like it and hope to see them
+ in a clear way, but I don't have chance to do so yet.
+
+\item[2013-04-08 Kazumasa]                      \inCB
+By the way, Hugues and I do not omit ``hydrodynamic'' when calling HLMs,
+ in order to reserve the term ``Lyapunov mode'' to mean simply a set
+ of a Lyapunov exponent and its associated vector.
+
+\end{description}
+
+
+
+\section{2009-12-14 Getting fussy}
+
+\begin{description}
+\item[Strict and fussy modes splitting in the tangent space]
+of the Ginzburg-Landau equation
+by Pavel V. Kuptsov, Ulrich Parlitz (G\"{o}ttingen University),
+\HREF{http://arxiv.org/abs/0912.2261v1}{arXiv:0912.2261}. They say:
+``
+In the tangent space of some spatially extended dissipative
+systems one can observe `{\entangled}' modes which are highly
+involved in the dynamics and are decoupled from the remaining set
+of hyperbolically `isolated' degrees of freedom representing
+strongly decaying perturbations. This modes splitting is studied
+for the Ginzburg--Landau equation at different strength of the
+spatial coupling. We observe that isolated modes coincide with
+eigenmodes of the homogeneous steady state of the system; that
+there is a local basis where the number of non-zero components of
+the state vector coincides with the number of `{\entangled}' modes;
+that in a system with finite number of degrees of freedom the
+strict modes splitting disappears at finite value of coupling;
+that above this value a fussy modes splitting is observed.
+''
+
+The big mystery is that I have met them and wrote ton of notes into
+this blog (I believe) but have never found these notes again. Well...
+Briefly: I'm impressed with Pavel's computations of {\cLvs}.
+In his way of computing their relative angles one sees: (1) the separation
+of positive exponents from negative ones (that's what {\po} theory likes)
+(2) a range of vectors up to Kaplan-Yorke (3) a different range of vectors
+up to Ginelli \etal\ cliff.
+
+\item[2010-11-12 Predrag to
+\HREF{http://www.coas.oregonstate.edu/faculty/samelson.html}{Roger M. Samelson}:]
+We still do not have a working code, but we will eventually need to get
+something running if we hope to count the number of '{\entangled}' degrees of
+freedom for our plane Couette and pipe transitional boundary shear
+turbulence simulations with Gibson and assorted gentlemen.
+
+\item[2010-11-24 Samelson writes to Predrag:]
+Many thanks for the interest in the paper and the
+approach.  It's great to hear that Christopher's insight and method is
+gaining some adherents.
+
+Juan Lopez (Cantabria, Spain) has been using it also, and invited me (us;
+only I could go) to a workshop on this topic in Dresden last January
+\HREF{http://www.pks.mpg.de/~ecodyc10/}
+{www.pks.mpg.de/$\sim$ecodyc10},
+where we had a mild competition of views with Ginelli.   Juan has also
+invited us (this time Christopher Wolfe <clwolfe@ucsd.edu> will
+represent) to a symposium on this topic at the SIAM Snowbird meeting May
+2011.  If you end up publishing something that uses the approach, we'd
+definitely be interested to hear.
+
+Re the codes, Christopher may still have something or be able to assist,
+though he's been working on other topics during his postdoc at SIO with
+Paola Cessi.  I'm copying this reply to him, so that he can comment.
+Juan seemed a generous fellow and perhaps may also be willing to share
+something from his group.
+
+\item[2010-12-30 Bounds on Floquet multipliers]
+from Random Matrix Theory,
+by Alejandro Gabriel Monastra <monastra@tandar.cnea.gov.ar>,
+\\
+\HREF{http://arxiv.org/abs/1012.5952}{arXiv:1012.5952}. Predrag
+wrote him an email:
+
+(1)
+this is a bit of nitpicking, but I have to get it right, so let me know what you
+think (and what authoritative references we are supposed to follow). In
+Chaobook.org chapters
+4 Local stability
+and
+5 Cycle stability
+I define the real part $i$th Floquet exponent of a prime {\po} $p$
+in units of time,
+
+$ \lambda_{p,i} = (1/T_p) \ln |\ExpaEig_{p,i}| ,$
+$\ExpaEig_{p,i}$ the Floquet multiplier,
+
+otherwise I cannot identify the mean long time average expansion rate
+as a Lyapunov exponent: Lyapunovs are measured in time units, right?
+What you call `Lyapunov' is a dimensionless number,
+the logarithm of the Floquet multiplier?
+
+(2)
+Next remark I have not thought through, so I'm probably wrong - your bound
+on Floquet multipliers is  $|\ExpaEig_{p,i}| > \exp(0.850738) =2.34137...$. As
+multipliers of unstable orbits grow exponentially, for a chaotic flow this
+constrains only a few shortest {\po s}, unless there are sequences of
+orbits of nearly marginal stability (but then the flow probably has a mixed,
+non-hyperbolic phase space).
+
+For short {\po s} anything larger than 1 goes. For example, in
+\HREF{http://www.cns.gatech.edu/~predrag/papers/preprints.html\#akp}
+{``Periodic orbit quantization} of the anisotropic Kepler problem''
+(with F. Christiansen), CHAOS 2, 61 (1992),\rf{CC92} I see numbers like
+$|\ExpaEig_{p,i}| = 1.167...$, and could probably dig up lots of small
+instability {\po s} in other systems. Of course, anisotropic Kepler
+is not a nice hyperbolic system at all, might work for something nicer.
+
+\item[2011-01-17 Characteristic {Lyapunov} vectors]
+in chaotic time-delayed systems
+by Paz{\'o} and L{\'o}pez\rf{PaLo10},
+\HREF{http://arxiv.org/abs/1101.2779}{arXiv:1101.2779}. They say:
+``
+We compute Lyapunov vectors (LVs) corresponding to the largest Lyapunov
+exponents in delay-differential equations with large time delay. We find
+that characteristic LVs, and backward (Gram-Schmidt) LVs, exhibit
+long-range correlations, identical to those already observed in
+dissipative extended systems. In addition we give numerical and
+theoretical support to the hypothesis that the main LV belongs, under a
+suitable transformation, to the universality class of the
+Kardar-Parisi-Zhang equation. These facts indicate that in the large
+delay limit (an important class of) delayed equations behave exactly as
+dissipative systems with spatiotemporal chaos.
+''
+
+\item[2011-03-04 PC]
+\emph{Probing the local dynamics of periodic orbits by
+      the generalized alignment index (GALI) method}
+by T. Manos, Ch. Skokos and  Ch. Antonopoulos\rf{MaSkAn11},
+\HREF{http://arxiv.org/abs/1103.0700}{arXiv:1103.0700}. They say:
+``
+We extend GALI realm of applicability to the
+local dynamics of periodic orbits. We show theoretically and verify
+numerically that for stable periodic orbits the GALIs tend to zero
+following particular power laws for Hamiltonian flows, while they
+fluctuate around non-zero values for symplectic maps. The
+GALIs of unstable periodic orbits tend exponentially to zero, both for
+flows and maps. We also apply the GALIs for investigating the dynamics in
+the neighborhood of periodic orbits, and show that for chaotic solutions
+influenced by the homoclinic tangle of unstable periodic orbits, the
+GALIs can exhibit a remarkable oscillatory behavior during which their
+amplitudes change by many orders of magnitude. Finally, we use the GALI
+method to elucidate further the connection between the dynamics of
+Hamiltonian flows and symplectic maps. In particular, we show that, using
+for the computation of GALIs the components of deviation vectors
+orthogonal to the direction of motion, the indices behave for flows as
+they do for maps.
+''
+
+\item[2011-03-05 PC] I keep returning to this article,
+\emph{Geometrical constraints on finite-time
+    		{Lyapunov} exponents in two and three dimensions},  by
+Thiffeault and Boozer\rf{ThiBoo99}. They say ``
+Constraints are found on the spatial variation of finite-time Lyapunov
+exponents of two and three-dimensional systems of ordinary differential
+equations. In a chaotic system, finite-time Lyapunov exponents describe
+the average rate of separation, along characteristic directions, of
+neighboring trajectories. The solution of the equations is a coordinate
+transformation that takes initial conditions (the Lagrangian coordinates)
+to the state of the system at a later time (the Eulerian coordinates).
+This coordinate transformation naturally defines a metric tensor, from
+which the Lyapunov exponents and characteristic directions are obtained.
+By requiring that the Riemann curvature tensor vanish for the metric
+tensor (a basic result of differential geometry in a flat space),
+differential constraints relating the finite-time Lyapunov exponents to
+the characteristic directions are derived. These constraints are realized
+with exponential accuracy in time. A consequence of the relations is that
+the finite-time Lyapunov exponents are locally small in regions where the
+curvature of the stable manifold is large, which has implications for the
+efficiency of chaotic mixing in the advection-diffusion equation. The
+constraints also modify previous estimates of the asymptotic growth rates
+of quantities in the dynamo problem, such as the magnitude of the induced
+current.
+''
+
+Or perhaps this is more useful:
+Thiffeault\rf{Thiffeault2001},
+\emph{Derivatives and constraints in chaotic flows:
+asymptotic behaviour and a numerical method.}
+He says: ``
+In a smooth flow, the leading-order response of trajectories to
+infinitesimal perturbations in their initial conditions is described by
+the finite-time Lyapunov exponents and associated characteristic
+directions of stretching. We give a description of the second-order
+response to perturbations in terms of Lagrangian derivatives of the
+exponents and characteristic directions. These derivatives are related to
+generalised Lyapunov exponents, which describe deformations of phase
+space elements beyond ellipsoidal. When the flow is chaotic, care must be
+taken in evaluating the derivatives because of the exponential
+discrepancy in scale along the different characteristic directions. Two
+matrix decomposition methods are used to isolate the directions of
+stretching, the first appropriate in finding the asymptotic behaviour of
+the derivatives analytically, the second better suited to numerical
+evaluation. The derivatives are shown to satisfy differential constraints
+that are realised with exponential accuracy in time. With a suitable
+reinterpretation, the results of the paper are shown to apply to the
+Eulerian framework as well.
+''
+
+See \refappe{sect:stabComoving} for further discussion.
+
+Also \emph{Matrix exponential-based closures for 		the turbulent
+subgrid-scale stress tensor} by Chevillard, Li, Eyink and  Meneveau, is
+of potential interest, because they express the stress tensor as the
+product of the matrix exponential of the resolved velocity gradient
+tensor multiplied by its transpose - of import here, and perhaps also for
+Domenico's noisy cigars. They say ``
+Two approaches for closing the turbulence subgrid-scale stress tensor in
+terms of matrix exponentials are introduced and compared. The first
+approach is based on a formal solution of the stress transport equation
+in which the production terms can be integrated exactly in terms of
+matrix exponentials. This formal solution of the subgrid-scale stress
+transport equation is shown to be useful to explore special cases, such
+as the response to constant velocity gradient, but neglecting
+pressure-strain correlations and diffusion effects. The second approach
+is based on an Eulerian-Lagrangian change of variables, combined with the
+assumption of isotropy for the conditionally averaged Lagrangian velocity
+gradient tensor and with the `Recent Fluid Deformation' (RFD)
+approximation. It is shown that both approaches lead to the same basic
+closure in which the stress tensor is expressed as the product of the
+matrix exponential of the resolved velocity gradient tensor multiplied by
+its transpose. Short-time expansions of the matrix exponentials are shown
+to provide an eddy-viscosity term and particular quadratic terms, and
+thus allow a reinterpretation of traditional eddy-viscosity and nonlinear
+stress closures. The basic feasibility of the matrix-exponential closure
+is illustrated by implementing it successfully in Large Eddy Simulation
+of forced isotropic turbulence. The matrix-exponential closure employs
+the drastic approximation of entirely omitting the pressure-strain
+correlation and other `nonlinear scrambling' terms.
+''
+
+\item[2011-03-24 PC] \arXiv{1103.4536},
+\emph{Extensive and sub-extensive chaos in globally-coupled dynamical systems},
+by Takeuchi, Chat\'e, Ginelli, Politi, and Torcini. They say:
+
+``
+Using a combination of analytical and numerical techniques, we show that
+chaos in globally-coupled identical dynamical systems, be they
+dissipative or Hamiltonian, is both extensive and sub-extensive: their
+spectrum of Lyapunov exponents is asymptotically flat (thus extensive) at
+the value $\lambda_0$ given by a single unit forced by the mean-field,
+but sandwiched between sub-extensive bands containing typically
+$\mathcal{O}(\log N)$ exponents whose values vary as $\lambda \simeq
+\lambda_\infty + c/\log N$ with $\lambda_\infty \neq \lambda_0$.
+''
+
+\item[2009-10-27 Predrag]
+J. Kurchan, {\em Studying unusually regular or unusually chaotic
+trajectories } uses a bunch of cloned trajectories, with probability of
+cloning largest for the extremal values of finite-time Lyapunov exponent,
+in order to detect fine, structures, such as minuscule elliptic islands
+within a chaotic sea. Seems to work impressively well, and mindlessly
+detect features that otherwise would require real thinking.
+      	[search for Kurchan in channelflow.org]
+
+\item[2011-06-30 Predrag] Above observation is in agreement with
+\emph{Manifold structures of unstable periodic orbits and the appearance of periodic
+windows in chaotic systems},
+by Miki U. Kobayashi and Yoshitaka Saiki\rf{KoSa11}.
+They say
+``
+Manifold structures of the Lorenz system and the Kuramoto-Sivashinsky
+system are investigated in terms of unstable periodic orbits embedded in
+the attractors. Especially, the change of manifold structures are focused
+on when some parameter values are varied. It is found that the angle
+between a stable manifold and an unstable manifold (manifold angle) at
+sample points on an unstable periodic orbit, which is measured by using
+the {\cLvs}, characterizes the parameter at which the
+periodic window corresponding to the unstable periodic orbit vanishes,
+that is a saddle- node bifurcation point. In particular, when the minimum
+value of the manifold angle along an unstable periodic orbit at a
+parameter is small (large), the corresponding periodic window exists near
+(away from) the parameter. It is concluded that the window sequence in a
+parameter space can be predicted from the manifold angles of unstable
+periodic orbits at some parameter. This approach helps us and periodic
+windows including quite small ones.
+''
+
+They go off on a tangent (it's pretty obvious that tangencies have to do
+with small angles, nein?), but such is life.
+Lorenz system is hyperbolic at $r = 28$ (as proven by Tucker\rf{tucker1-2}),
+so they study larger $r$ when it starts developing folds.
+
+I have the paper and can put it into our Zotero library, if there is
+anyone out there that is actually interested in the research discussed in
+this blog.
+
+\item[2011-07-02 Predrag]
+Masanobu Inubushi, Miki U. Kobayashi, Shin-ichi Takehiro,
+and Michio Yamada,
+\emph{Covariant {Lyapunov} analysis of chaotic {Kolmogorov} flows
+and time-correlation functions}
+
+``
+We study a hyperbolic/non-hyperbolic transition of the flows on
+two-dimensional torus governed by the incompressible Navier-Stokes
+equation (Kolmogorov flows) using the method of covariant Lyapunov
+analysis developed by Ginelli et al.(2007). As the Reynolds number is
+increased, chaotic Kolmogorov flows become non-hyperbolic at a certain
+Reynolds number, where some new physical property is expected to appear
+in the long-time statistics of the fluid motion. Here we focus our
+attention on behaviors of the time-correlation function of vorticity
+across the transition point, and find that the long-time asymptotic form
+of the correlation function changes at the Reynolds number close to that
+of the hyperbolic/non-hyperbolic transition, which suggests that the
+time-correlation function reflects the transition to non-hyperbolicity.
+''
+
+I have the talk (110702Inubush.pdf) and can put it into our Zotero
+library, if there is anyone out there that is actually interested in the
+research discussed in this blog.
+
+\item[2013-03-05 Predrag]
+Now we should also read \refref{InKoTaYa12,InKoTaYa12a}, and there is also a 122
+pages report \emph{``Covariant Lyapunov Analysis of Navier-Stokes
+Turbulence''} that might be Inubushi's thesis\rf{Inubushi13}.
+
+\item[2011-07-07 Predrag] Overheard Skokos apologizing to Miki Kobayashi
+for not citing the original Japanese paper that introduced the method for
+computation of Lyapunov {\cLvs}. Have to find that reference...
+
+\item[2011-07-08 PC]                                        \toCB
+Gave major PR to Kazzmania: check my
+\HREF{http://chaosbook.org/version13/Maribor11.shtml}{Maribor lectures},
+\HREF{http://chaosbook.org/overheads/dimension/dimension.pdf}{piece
+\#5}: ``Dynamics in infinitely many dimensions.''
+
+
+\item[2011-07-09 Predrag]
+Gerlach, Eggl, and {Skokos}\rf{GeOgSk11},
+``Efficient integration of the variational equations of
+    multi-dimensional {Hamiltonian} systems: {Application} to the
+    {Fermi-Pasta-Ulam} lattice'' say:
+
+``
+According to Tangent Map method, a symplectic integrator is used to
+approximate the solution of the Hamilton's equations of motion by the
+repeated action of a symplectic map S, while the corresponding tangent
+map TS, is used for the integration of the variational equations.
+''
+
+``
+We study the problem of efficient integration of variational equations in
+multi-dimensional Hamiltonian systems. For this purpose, we consider a
+Runge-Kutta-type integrator, a Taylor series expansion method and the
+so-called `Tangent Map' (TM) technique based on symplectic integration
+schemes, and apply them to the Fermi-Pasta-Ulam $\beta$ (FPU-$\beta$)
+lattice of $N$ nonlinearly coupled oscillators, with $N$ ranging from 4
+to 20. The fast and accurate reproduction of well-known behaviors of the
+Generalized Alignment Index (GALI) chaos detection technique is used as
+an indicator for the efficiency of the tested integration schemes.
+Implementing the TM technique--which shows the best performance among the
+tested algorithms--and exploiting the advantages of the GALI method, we
+successfully trace the location of low-dimensional tori.
+''
+
+\item[2011-07-21 Kazz] \arXiv{1107.2567},
+\emph{Hyperbolic decoupling of tangent space
+      and effective dimension of dissipative systems},
+by Takeuchi, Yang, Ginelli, Radons, and Chat\'e\rf{TaGiCh11}.
+They say:
+
+``
+We show, using {\cLvs}, that the tangent space of
+spatially-extended dissipative systems is split into two hyperbolically
+decoupled subspaces: one comprising a finite number of frequently
+entangled {\entangled} modes, which carry the physically relevant
+information of the trajectory, and a residual set of strongly decaying
+`{\transient}' modes. The decoupling of the {\entangled} and {\transient} subspaces
+is defined by the absence of tangencies between them and found to take
+place generally; we find evidence in partial differential equations in
+one and two spatial dimensions and even in lattices of coupled maps or
+oscillators. We conjecture that the {\entangled} modes may constitute a local
+linear description of the inertial manifold at any point in the global
+attractor.
+''
+
+\item[2011-09-30 Kazz] \arXiv{1109.6452},
+\emph{Chaos in the Hamiltonian mean field model},
+by  Ginelli, Takeuchi, Chat\'e, Politi and Torcini\rf{GiKaChPoAl11}.
+They say:
+``
+ We study the dynamical properties of the canonical ordered phase of the
+Hamiltonian mean-field (HMF) model, in which $N$ particles, globally-coupled
+via pairwise attractive interactions, form a rotating cluster. Using a
+combination of numerical and analytical arguments, we first show that the
+largest Lyapunov exponent remains strictly positive in the infinite-size limit,
+converging to its asymptotic value with $1/\ln N$ corrections. We then
+elucidate the scaling laws ruling the behavior of this asymptotic value in the
+critical region separating the ordered, clustered phase and the disordered
+phase present at high energy densities. We also show that the full spectrum of
+Lyapunov exponents consists of a bulk component converging to the (zero) value
+taken by a test oscillator forced by the mean field, plus subextensive bands of
+${\cal O}(\ln N)$ exponents taking finite values. We finally investigate the
+robustness of these results by studying a "2D" extension of the HMF model where
+each particle is endowed with 4 degrees of freedom, thus allowing the emergence
+of chaos at the level of single particle. Altogether, these results illustrate
+the subtle effects of global (or long-range) coupling, and the importance of
+the order in which the infinite-time and infinite-size limits are taken: for an
+infinite-size HMF system represented by the Vlasov equation, no chaos is
+present, while chaos exists and subsists for any finite system size.
+''
+
+
+\item[2011-09-10 Predrag 2 Dan Goldman: Templates in locomotion]
+You might find this paper,
+\emph{Dimension reduction near periodic orbits of hybrid systems}"
+by Burden, Revzen and Shankar Sastry\rf{BuReSh11}, \arXiv{1109.1780},
+(and the earlier ones on 'templates')
+interesting. The funny thing is that we think of the dimensional
+reduction and control in fluids and cardiac dynamics in a similar way,
+and even use the word `template' for important periodic solutions.
+They say
+``
+When the {\Poincare} map associated with a periodic orbit of a hybrid
+dynamical system has constant-rank iterates, we demonstrate the existence of a
+constant-dimensional invariant subsystem near the orbit which attracts all
+nearby trajectories in finite time. This result shows that the long-term
+behavior of a hybrid model with a large number of degrees-of-freedom may be
+governed by a low-dimensional smooth dynamical system. The appearance of such
+simplified models enables the translation of analytical tools from smooth
+systems -such as Floquet theory- to the hybrid setting and provides a bridge
+between the efforts of biologists and engineers studying legged locomotion.
+''
+
+``[...]
+the main result of this paper: when
+iterates of the \Poincare map associated with a periodic orbit
+of a hybrid dynamical system have constant rank, trajectories
+starting near the orbit converge in finite time to an embedded
+smooth dynamical system.
+''
+
+``
+[...]
+the large number of DOF available to an animal are collapsed
+during regular motion to a low-dimensional dynamical attractor
+that may be captured by a template model embedded
+within a higher-dimensional model anchored to the animal's
+morphology.
+[...]
+hybrid
+dynamical systems are comprised of differential equations
+written over disparate domains together with rules for switching
+between the domains. Of particular interest to us are
+periodic orbits of such systems. From a modeling viewpoint,
+a stable hybrid periodic orbit provides a natural abstraction
+for the dynamics of steady-state legged locomotion.
+[...]
+In certain cases, it has
+been possible to formally embed a low-dimensional abstraction
+in a higher-dimensional physically-realistic model.
+[...]
+Under the condition that iterates of the \Poincare map associated with a periodic orbit are constant rank,
+we demonstrate the existence of a constant-dimensional
+invariant subsystem which attracts all nearby trajectories in
+finite time.
+[...]
+the results of this paper
+imply that hybrid dynamical systems may exhibit dimension
+reduction near periodic orbits solely due to the interaction
+of the switching dynamics with the smooth flow.
+[...]
+The hybrid systems we consider are constructed using
+switching maps defined between boundaries of smooth dynamical
+systems. The behavior of such systems can be
+studied by alternately applying flows and maps.
+''
+
+                                                \toCB
+They discuss covering a smooth $n$-dimensional manifold $M$ by a
+collection of smooth coordinate charts. They use hyperplanes to define
+`slice coordinates' for the embedded submanifolds. They refer to
+trajectories as `integral curves'. The Jacobian matrix is a `linear map
+called the pushforward'. The glue two smooth dynamical systems
+(time-to-impact maps) together along their boundaries to obtain a new
+smooth system.
+
+
+``[...]
+the class of hybrid systems considered in this paper
+[...]
+has not been defined before.
+[...]
+it encompasses many closed-loop models of legged locomotion.
+[...]
+This definition supports powerful geometric analysis of the dynamics near
+a hybrid periodic orbit.
+[...]
+A \emph{periodic orbit} of a hybrid dynamical system is a hybrid
+dynamical embedding  of the dynamical system onto $S_1$, the unit circle.
+                                                \toCB
+They alternately refer to {periodic orbit} as a \emph{periodic trajectory}.
+[...]
+The Floquet multipliers are the eigenvalues of the linearized
+\Poincare map associated with a periodic orbit.
+[...]
+It may be easier to evaluate the rank of the \Poincare map in some
+domains than others.
+''
+
+{\bf Predrag:} I am worried that the transients following a transition from one
+`time-to-impact map' to the next explore much higher dimensional space
+than their hybrid models? There is too much math blah blah in this paper...
+
+I do not understand how this `constant rank' is realistic, or
+how is it enforced in modeling - seems by fiat. There are two examples,
+the first too abstract, and the second, `model for forced
+vertical hopping,' does not seem to have any dimension reduction:
+``
+[...]
+\Poincare map has full rank equal to 2 near its fixed point.
+Therefore
+[...] the system's dynamics collapse
+to a smooth 3-dimensional subsystem after one hop.''
+
+
+\HREF{http://www.eecs.berkeley.edu/~sburden/res.html}{Sam Burden} is a
+recovering Matlab user, tired of the sluggish performance, the lackluster
+feature set, and the vicious unending fee escalation. In Python he found
+a simple, cross-platform computational environment with straightforward
+capabilities to wrap fast C or Fortran code and display results with ease
+in plots and GUIs. The simulation code can be downloaded from
+\HREF{http://www.eecs.berkeley.edu/~sburden/cdc2011/}{here}.
+
+\item[2011-09-10 Goldman] I was with Bob Full as a postdoc and he and Dan
+Koditschek were the first in this field to push the templates for
+locomotion idea. Revzen was a grad student with Full back then, and Sam
+is a grad student with Sastry now, so I know these guys, and the general
+idea, pretty well.
+
+I've been tasked by the head of a grant I'm on with Sastry to try to
+interpret the Burden stuff, and I had been hoping to engage the 5th floor
+in such  pursuits. My feeling is that they (Burden et al)  love some kind
+of math. I would be VERY interested to chat with you about this.
+
+I've been collaborating with another robot guy, Howie Choset, recently,
+and he and his student have used their Wilczek inspired geometric
+mechanics to predict optimal 3-link swimming in sand, which we've tested
+in experiment. Choset is a smart guy and will give a RIM seminar I think
+around Oct 18. You might like to talk with him?
+
+\item[2011-10-05 Predrag 2 Dan Goldman]
+I asked Louis to apply for PURA with me - that is Friday;
+and come talk to you about the intersection of our interests.
+He seems smart, might be able to get a start on something.
+
+That's our only chance - no professor is ever going to do any
+actual work.
+
+\item[2011-10-05 Goldman]
+I'll be happy to chat with him. If you can forward him the Full and
+Koditschek paper that I sent before, I've attached a longer review\rf{KoHoGu06} that
+might be of interest. It should give him an idea.
+
+\item[2011-10-05 Predrag]
+Holmes, Full, Koditschek and Guckenheimer\rf{KoHoGu06} is
+an oldie - but perhaps papers that follow it are worth a look:
+
+\emph{Lateral stability of the spring-mass hopper suggests a two-step control strategy for running}
+    Sean G. Carver, Noah J. Cowan, and John M. Guckenheimer, Chaos 19, 026106 (2009)
+
+\emph{A model for insect locomotion in the horizontal plane: Feedforward activation of fast muscles, stability, and robustness}
+    Raghavendra P. Kukillaya et al., Journal of Theoretical Biology 261, 210 (2009)
+
+\emph{Steering by transient destabilization in piecewise-holonomic models of legged locomotion}
+    J. Proctor et al., Regular and Chaotic Dynamics 13, 267 (2008)
+
+\emph{A hexapedal jointed-leg model for insect locomotion in the horizontal plane}
+    Raghavendra P. Kukillaya and Philip J. Holmes, Biological Cybernetics 97, 379 (2007)
+
+\emph{Molecular spiders in one dimension}
+    Tibor Antal, P. L. Krapivsky and Kirone Mallick,
+    Journal of Statistical Mechanics Theory and Experiment 2007, P08027 (2007)
+
+    \emph{A Twenty-First Century Guidebook for Applied Dynamical Systems}
+    A. R. Champneys, J. Comput. Nonlinear Dynam. 1, 279 (2006). He says~rf{Champ06}
+``The impact of the book
+Nonlinear Oscillations, Dynamical Systems and Bifurcations of Vector
+Fields by John Guckenheimer and Philip Holmes
+(Springer-Verlag, Berlin, 1983): If
+one were to write a similar book for the 21st century, which topics
+should be contained and what form should the book take in order to have a
+similar impact on the modern generation of young researchers in applied
+dynamical systems? ''
+
+
+    Harry Dankowicz and Oliver M. O' Reilly~rf{Holmes06},
+J. Comput. Nonlinear Dynam. 1, 271 (2006) have 167 Holmes related
+references.
+
+    Double impact periodic orbits for an inverted pendulum
+    Jun Shen et al., International Journal of Non-Linear Mechanics 46, 1177 (2011)
+
+    Neuromechanical models for insect locomotion: Stability, maneuverability, and proprioceptive feedback
+    R. Kukillaya et al., Chaos 19, 026107 (2009)
+
+    Improving horizontal plane locomotion via leg angle control
+    A. Wickramasuriya et al., Journal of Theoretical Biology 256, 414 (2009)
+
+\emph{On Synchronization and Traveling Waves in Chains of Relaxation
+Oscillators with an Application to Lamprey CPG}
+    Peter L. Varkonyi et al., SIAM J. Appl. Dyn. Syst. 7, 766 (2008)
+
+    R. Ronsse et al., IEEE Transactions on Robotics 23, 790 (2007)
+
+\item[2011-10-07 Hong-liu Yang] sent us a PRL submission
+Hong-liu Yang and G\"unter Radons\rf{YaRa11},
+\emph{Local geometry of inertial manifold probed via Lyapunov projection of recurrent
+states},
+(click \HREF{http://ChaosBook.org/library/YaRa11.pdf}{here}),
+and Yang's Oldenburg DDays2011 talk
+(click \HREF{http://ChaosBook.org/library/YangDDs11.pdf}{here}). He says:
+``
+[...] our paper about the relation between
+the phase space structure of PDEs and the hyperbolicity of their tangent
+space dynamics. It is along the line of our previous PRL on that topic.
+Instead of the local linear stability (Lyapunov) analysis used
+previously, we focus here on the finite length difference vectors between
+a reference state and the recurrent states. It fits quite well to your
+picture of ``turbulence'' figured out at Maribor.
+''
+
+\item[2011-10-21 Predrag] some papers we should probably have a look at
+again: Check out Paz\'o \refrefs{szendro-2007,PaSzLoRo09} (and references
+therein) on uses of Lyapunov vectors in spatiotemporal chaos.
+
+``Lyapunov modes'' in Hamiltonian setting are in discussed in
+\emph{Lyapunov Mode Dynamics in Hard-Disk Systems}, by D. J. Robinson, G.
+P. Morriss\rf{RoMo08}. It is all about Hamiltonian dynamics. It has nice
+formulas for tangent space evolution in $N$-hard balls systems, and
+physical interpretation of `hydro-dynamic' modes.
+
+\item[2011-10-21 Predrag] Remember to mention that UDV, or the unstable
+dimension variability\rf{kostelich97} is an indicator of
+non-hyperbolicity of the chaotic attractor. The classical papers are, for
+example, R. Abraham and S. Smale\rf{AbSm70} and Dawson, Grebogi, Sauer,
+and Yorke\rf{DaGrSaYo94}.
+
+\item[Fast numerical test of hyperbolic chaos]
+by Pavel V. Kuptsov,
+\HREF{http://arxiv.org/abs/1111.4828}{arXiv:1111.4828}, says:
+``
+The effective numerical method is developed performing the test of the
+hyperbolicity of chaotic dynamics. The method employs ideas of algorithms for
+{\cLvs} but avoids their explicit computation. The outcome
+is a distribution of a characteristic value which is bounded within the unit
+interval and whose zero indicate the presence of tangency between expanding and
+contracting subspaces. To perform the test one needs to solve several copies of
+equations for infinitesimal perturbations whose amount is equal to the sum of
+numbers of positive and zero Lyapunov exponents. Since for high-dimensional
+system this amount is normally much less then the full phase space dimension,
+this method provide the fast and memory saving way for numerical hyperbolicity
+test of such systems.''
+
+\item[2012-04-18 Predrag]
+Froyland \etal\rf{FrHuMoWa12},
+\emph{Computing {\cLvs}, {Lyapunov} vectors, {Oseledets}
+        vectors, and dichotomy projectors: {A} comparative numerical study},
+\arXiv{1204.0871} says: ``
+Covariant vectors, Lyapunov vectors, or Oseledets vectors are
+increasingly being used for a variety of model analyses in areas such as
+partial differential equations, nonautonomous differentiable dynamical
+systems, and random dynamical systems. These vectors identify spatially
+varying directions of specific asymptotic growth rates and obey
+equivariance principles. In recent years new computational methods for
+approximating Oseledets vectors have been developed, motivated by
+increasing model complexity and greater demands for accuracy. In this
+numerical study we introduce two new approaches based on singular value
+decomposition and exponential dichotomies and comparatively review and
+improve two recent popular approaches of Ginelli et al. (2007) and Wolfe
+and Samelson (2007). We compare the performance of the four approaches
+via three case studies with very different dynamics in terms of symmetry,
+spectral separation, and dimension. We also investigate which methods
+perform well with limited data.
+''
+
+\item[2013-02-15 Predrag to Kazumasa] Is Froyland
+\etal\rf{FrHuMoWa12}, \emph{Computing {\cLvs}, {Lyapunov}
+vectors, {Oseledets} vectors, and dichotomy projectors: {A}
+comparative numerical study}, \arXiv{1204.0871}, a paper one should
+study? They say that they ``review and improve two recent popular
+approaches of Ginelli et al. (2007)\rf{ginelli-2007-99} and Wolfe and
+Samelson (2007)\rf{WoSa07}.''
+
+\item[2013-02-21 Kazumasa]
+Concerning Froyland \etal\ paper\rf{FrHuMoWa12}, while it may
+complement some aspects that are not discussed in other reviews, I
+don't think it has priority over them. In particular, their
+``improvement" on Ginelli \etal's method is quite minor and in my view
+can be even harmful, losing speed (and simplicity of the code) for
+somewhat decreasing a risk of numerical instability; however, this
+instability can be overcome easily in Ginelli \etal's original
+algorithm, by changing the time step and the period between
+consecutive Gram-Schmidt orthogonalizations. Anyhow, strangely
+enough, they do not compare their improved algorithms with the
+original ones when evaluating the performance of the different
+schemes. They seem to like so much the singular value decomposition
+which is a numerically heavy task to do, and do not discuss practical
+issues like memory storage and numerical complexity.
+For reviews, I recommend Ginelli \etal, \arXiv{1212.3961},
+and Kuptsov and Parlitz\rf{KuPa12},
+ \HREF{http://dx.doi.org/10.1007/s00332-012-9126-5}{J. Nonlinear Sci. (2012)}.
+
+\item[2011-05-27, 2013-02-22 Predrag] in
+\emph{Theory and computation of covariant Lyapunov vectors},
+\arXiv{1105.5228}, Kuptsov and Parlitz\rf{KuPa12} write: `` Covariant
+(or characteristic) Lyapunov vectors indicate growth rates of
+perturbations applied to a trajectory of a dynamical system in
+different state space directions. They became practically computable
+only recently due to algorithms of Ginelli et al. [Phys. Rev. Lett.
+99, 2007, 130601] and by Wolfe and Samelson [Tellus 59A, 2007, 355].
+We summarize the available information related to Lyapunov vectors
+and provide a detailed explanation of both the theoretical basics and
+numerical algorithms. We introduce the notion of adjoint covariant
+Lyapunov vectors. The angles between these vectors and the original
+{\cLvs} are norm-independent and can be considered as
+characteristic numbers. Moreover, we present and study in detail an
+improved approach for computing {\cLvs}s. Also we
+describe how one can test for hyperbolicity of chaotic dynamics
+without explicitly computing {\cLvs}. ''
+
+\item[2012-08-11 Predrag]
+Takeuchi and Chat\'{e}\rf{TaCh12},
+\emph{Collective {Lyapunov} modes},
+\arXiv{1207.5571} say: ``
+We show, using covariant Lyapunov vectors in addition to standard
+Lyapunov analysis, that there exists a set of collective Lyapunov modes
+in large chaotic systems exhibiting collective dynamics. Associated with
+delocalized Lyapunov vectors, they act collectively on the trajectory and
+hence characterize the instability of its collective dynamics. We further
+develop, for globally-coupled systems, a connection between these
+collective modes and the Lyapunov modes in the corresponding
+Perron-Frobenius equation. We thereby address the fundamental question of
+the effective dimension of collective dynamics and discuss the
+extensivity of chaos in presence of collective dynamics.
+,,
+
+\item[2012-09-15 Predrag]
+Hugues\rf{ChaMann91,CLMM96} gets the terrible name of 1991 prize for
+introducing NTCB = `non-trivial collective behavior'. Twenty one years later
+we are stuck with it...
+
+                                                    \inCB
+{\CLvs} (CLVs) are the vectors spanning the subspaces
+of the Oseledec decomposition of tangent space. Each Lyapunov exponent
+\eigExp[j] has its associated normalized {\cLv} \jEigvec[j] at any point on
+the trajectory $\ssp(t)$, which provides the intrinsic direction of
+perturbation growing at the rate \eigExp[j] (Predrag note: this has to be
+fine tuned for complex eigenvector pairs).
+
+                                                    \toCB
+The {\FP} equation describes the evolution of the instantaneous
+distribution function of the dynamical variables.
+
+They also study tangent space dynamics of their nonlinear {\FP}
+equations. They find themselves compelled to use the finite support,
+twice differentiable the Kumaraswamy noise distribution (instead of the
+unbounded Gaussian noise).
+
+They give a definition of the collective and microscopic modes, or the
+delocalized and localized modes by the mean value of the inverse
+participation ratio (IPR), \ie, the type of fluctuation of $\sum_j^d
+|\jEigvec[j]|^4$ averaged along an chaotic trajectory, as a function of the
+system size, and which also serves as a criterion for distinguishing
+them. They also showed, for globally-coupled maps with additive noise,
+that the collective modes in the standard Lyapunov analysis also arise as
+Lyapunov modes for the corresponding Perron-Frobenius dynamics, further
+justifying their definition of the collective modes.
+
+Having read Takeuchi and Chat\'{e}\rf{TaCh12},
+\emph{Collective {Lyapunov} modes} paper,
+I am impressed by the amount of work and analysis that went into their
+simulations. The paper is an important contribution to the study of
+non-trivial collective behavior in coupled lattices, initiated in
+1988-1991 by Chate and Manneville.
+I still have not developed appreciation for the importance of
+collective Lyapunov modes, but hopefully that day will come too...
+
+\item[2013-03-21 Predrag]
+Reading old literature on Lyapunovs for ChaosBook.org LyapunovCB.tex
+chapter. Here is a paper by Shimada\rf{Shimada79} on {\em Gibbsian
+distribution on the {Lorenz} attractor} of kind that worries me: ``A
+representation of the Lorentz attractor by a 1-dimensional Ising
+system is constructed. Gibbsian distribution function which describes
+the irregular motion of this dissipative dynamical system is
+investigated, as well as the relation between measure-theoretical
+entropy and positive Lyapunov characteristic exponent. The following
+conclusions are obtained: (1) The statistical properties of the
+Lorenz system can be reduced to those of 1-dimensional Ising system
+with short-range interaction, in other words, the time correlation
+function of the Lorenz system shows no singular long-time behaviour.
+(2) The positive Lyapunov characteristic exponent of the Lorenz
+system is almost equal to its measure-theoretical entropy.'' I doubt
+this is right...
+
+\item[2013-04-08 Kazumasa]
+Concerning the importance of the collective Lyapunov modes,
+ what we usually argue are, for example, that (i) their existence indicates
+ that the extensivity of chaos does not hold as it is
+ in the presence of collective behavior, and that (ii) since
+ collective modes characterize macroscopic instability, one can know
+ the effective dimension in collective dynamics, use collective modes
+ for controlling collective dynamics, etc.
+In addition, my interest is that collective modes may have
+ very rich bifurcation structure.
+Not only may their exponents change the sign as usual,
+ but they can also be created and annihilated,
+ because the number of collective modes is not determined \textit{a priori}.
+I'm wondering if one can consider a kind of normal forms
+ for bifurcation of these collective modes
+ and its relation to phase transitions in such systems,
+ but the current numerical power does not allow us to study them right now...
+
+\item[2013-04-08 Kazumasa]
+About Shimada's paper, first I'd like to note that,
+ since he coarse-grained the Lorentz attractor into two states
+ (two wings of the butterfly correspond to up and down spins),
+ his description cannot capture chaotic dynamics in finer scales.
+Second, the effective spin-spin interaction he found
+ is not like that of the Ising model,
+ but rather goes beyond the nearest neighbors
+ (with interaction strength decaying exponentially in distance).
+Given this, his conclusion that the time correlation decays exponentially
+ seems to me a sound result in such long time/length scales.
+On the other hand, since he was not able to give an explicit expression
+ for the spin-spin interaction, I think his argument does not strictly rule out
+ the possibility of a singularity...
+
+\item[2013-04-29 Predrag]                       \toCB
+Reading old literature on Lyapunovs for ChaosBook.org LyapunovCB.tex
+chapter. Here is a paper by Voth, Haller and Gollub\rf{voth02} which says
+``To define stretching, consider an infinitesimal circular fluid element.
+After time $\Delta \zeit$, the flow has stretched it into an ellipse, and
+the amount of stretching is defined as the major diameter divided by its
+initial diameter. To measure the stretching, we first determine the flow
+map, a function that specifies the destination vector at time $\zeit+
+\Delta \zeit$ of any fluid particle starting from $x$ at time $\zeit_0$.
+(For $\Delta \zeit$ equal to one period,  the flow map becomes the
+\Poincare map of the flow.) The stretching experienced by a fluid
+element is determined by the gradients of the flow map. In particular,
+the stretching is the square root of the largest eigenvalue of the right
+Cauchy-Green strain tensor. The largest finite-time Lyapunov exponent is
+given by the logarithm of the stretching after division by $\Delta
+\zeit$.'' The paper then shows very beautiful snapshots of Lagrangian
+mixing.
+
+I wonder, however, whether the finite-time Lyapunov exponents are what
+describes the mixing. I would think that streamlines along the unstable
+manifolds would be the right thing...
+
+\item[2013-06-29 Predrag] Because of the special issue of \emph{J. Physics A},
+there is a deluge of new Lyapunov articles to have a look at:
+
+Overview of the issue is given by
+M. Cencini and F. Ginelli\rf{CenGin13},
+{\em Lyapunov analysis: from dynamical systems theory to applications}.
+
+L.-S. Young writes in {\em Mathematical theory of {Lyapunov}
+exponents}\rf{Young13} review: ``
+[...] discuss relations between Lyapunov exponents
+and several dynamical quantities of interest, including entropy, fractal
+dimension and rates of escape. The second half of this review focuses on
+observable chaos , characterized by positive Lyapunov exponents  [...].
+Paradoxical as it may seem, given a concrete system, it is generally
+impossible to determine with mathematical certainty if it has observable
+chaos  [...] noisy or stochastically perturbed
+systems, for which we present a dynamical picture simpler than that for
+purely deterministic systems. ''
+
+M. Cencini and A. Vulpiani\rf{CenVul13}, {\em Finite size {Lyapunov}
+exponent: review on applications}: ``[...] finite amplitude perturbations
+ are ruled by nonlinear
+dynamics out of tangent space, and thus cannot be captured by the
+standard Lyapunov exponents. We review the application of the finite
+size Lyapunov exponent (FSLE) for the characterization of
+non-infinitesimal perturbations in a variety of systems. In particular,
+we illustrate their usage in the context of predictability of systems
+with multiple spatio-temporal scales of geophysical relevance, in the
+characterization of nonlinear instabilities, and in some aspects of
+transport in fluid flows. We also discuss the application of the FSLE
+to more general aspects such as chaos-noise detection and
+coarse-grained descriptions of signals.
+''
+
+Laffargue, Nguyen Thu Lam, Kurchan  and Tailleur\rf{LaNgKuTa13},
+{\em Large deviations of {Lyapunov} exponents} write: ``
+[...] A generic system also has trajectories with exceptional
+  values of the exponents, corresponding to unusually stable or chaotic
+  situations [...] large deviations of
+  Lyapunov exponents characterize phase-space topological structures such
+  as separatrices, homoclinic trajectories and degenerate tori.
+  Numerically sampling such large deviations using the Lyapunov Weighted
+  Dynamics allows one to pinpoint, for example, stable configurations in
+  celestial mechanics or collections of interacting chaotic `breathers'
+  in nonlinear media. Furthermore, we show that this numerical method
+  allows one to compute the topological pressure of extended dynamical
+  systems, a central quantity in the thermodynamic of trajectories of
+  Ruelle.
+''
+
+Palmer and L. Zanna\rf{PalZan13}, write in the review article
+{\em Singular vectors, predictability and
+         ensemble forecasting for weather and climate}: ``
+[...] The leading singular vectors are perturbations with the
+  greatest linear growth and are therefore key in assessing the system's
+  predictability [...] singular vectors for the
+  predictability of weather and climate and ensemble forecasting is
+  discussed [...] the error growth rate in numerical models of the atmosphere is
+  given. [...] Singular vectors for the ocean and coupled
+  ocean-atmosphere system in order to understand the predictability of
+  climate phenomena such as ENSO and meridional overturning circulation
+  are reviewed [...] As stochastic parameterizations are being
+  implemented, some speculations are made about the future of singular
+  vectors for the predictability of weather and climate for theoretical
+  applications and at the operational level.
+''
+
+Paz\'o, L\'opez and Rodr\'iguez\rf{PaLoRo13},
+{\em On the angle between the first and second
+          {Lyapunov} vectors in spatio-temporal chaos},
+          write: ``
+[...] the first Lyapunov vector (LV) is
+  associated with the largest Lyapunov exponent and indicates
+  the direction of maximal growth in tangent
+  space. The LV corresponding to the second largest Lyapunov exponent
+  generally points in a different direction, but tangencies between both
+  vectors can in principle occur. [...] the probability
+  density function of the angle spanned by the first and second
+  LVs should be approximately symmetric around $\pi/4$ and
+  peak at 0 and $\pi/2$ . [...] for small angles we uncover a scaling law
+  for the PDF [...] we justify the
+  scaling form and why it should be universal for spatio-temporal chaos in one spatial
+  dimension.
+''
+
+Paz\'o\etal\rf{PaLoPo13},
+{\em Universal scaling of {Lyapunov}-exponent fluctuations in space-time chaos},
+write: ``
+Finite-time Lyapunov exponents of generic chaotic dynamical systems fluctuate in time. These fluctuations are due to the different degree of stability across the accessible phase-space. A recent numerical study of spatially-extended systems has revealed that the diffusion coefficient D of the Lyapunov exponents (LEs) exhibits a non-trivial scaling behavior, $D(L) ~ L^{-\gamma}$, with the system size L. Here, we show that the wandering exponent $\gamma$ can be expressed in terms of the roughening exponents associated with the corresponding "Lyapunov-surface".
+''
+
+
+Kuptsov\rf{Kuptsov13}, {\em Violation of hyperbolicity via unstable
+dimension variability in a chain with local hyperbolic chaotic
+attractors}, writes: `` consider a chain of oscillators with hyperbolic
+chaos coupled via diffusion. When the coupling is strong, the chain is
+synchronized and demonstrates hyperbolic chaos so that there is one
+positive Lyapunov exponent. With the decay of the coupling, the second
+and the third Lyapunov exponents approach zero simultaneously. The second
+one becomes positive, while the third one remains close to zero. Its
+finite-time numerical approximation fluctuates changing the sign within a
+wide range of the coupling parameter. These fluctuations arise due to the
+unstable dimension variability which is known to be the source for
+non-hyperbolicity. ''
+	
+\item[2013-07-03 Kazz]
+In addition to what Predrag suggested, I would like to recommend
+ the Special Issue paper by Kantz \textit{et al.}\rf{KaRaYa13}
+ on the method to measure Lyapunov exponents from time series analysis,
+ which is a follow-up paper to their PRL \rf{YaRaKa12}.
+This is another interesting and important application of the {\cLvs},
+ I think.
+When one wants to measure Lyapunov exponents in an experiment, one usually uses
+ embedding constructed with Takens' time delay coordinates.
+Because the embedding space has usually larger dimension
+ than the original phase space (at least twice the attractor dimension),
+ one then finds, in addition to the ``true'' exponents of the original system,
+ `{\transient} exponents' corresponding
+ to the extra dimension of the embedding space.
+There had been no practical method to distinguish true from {\transient} exponents
+ before, until Kantz \textit{et al.} found that the angle between
+ a {\cLv} and attractor tangent space provides a clear criterion
+ to do this (though I think there remains some ambiguity in how to construct
+ this attractor tangent space).
+Apart from the clear results presented in the paper,
+ I think it is a good review on this problematic (except that
+ they underestimate the work by Sano and Sawada,
+ which was actually submitted before the famous review by Eckmann and Ruelle).
+
+
+\item[2013-07-22 Yohann Duguet] duguet@limsi.fr writes: ``
+I got involved with my student into computing the leading Lyapunov exponent for what we believe are strange nonchaotic attractors. We encountered so many difficulties on the way that my understanding of the concept of Lyapunov exponents is constantly evolving. Anyway I will send you my notes this week, I just updated them. My main point (related to my own experience) is related to the leading exponent, for which there are already enough open questions, especially for flows (how do you choose the time horizon non-ambiguously? maps are way easier) and even more in the case where you have strong non-normality. I discussed with Pikovsky at this very good Russian conference. His point about the Lyapunov exponents is about `scalability'. He claims that this is one of the few concepts in nonlinear dynamics for which you can extend the definition to any arbitrary level of complexity (space dimension, chaos or not etc...).
+
+I read less about {\cLvs} these last months, but I received (as you probably) \HREF{http://iopscience.iop.org/1751-8121/46/25} {this link} to \emph{J. Phys A} with a special issue on the subject. It looks like a gold mine but I admit I did not find time to get into it.
+''
+
+\item[2014-02-22 Predrag] in
+\emph{Predictable nonwandering localization of covariant Lyapunov vectors for
+  scale-free networks of chaotic maps},
+\arXiv{1402.4971}, Pavel V. Kuptsov and Anna V. Kuptsova write: ``
+For scale-free networks of Henon maps we show that the first covariant
+Lyapunov vectors demonstrate high nonwandering localization. The nodes of
+localization are not synchronized with others, and the distributions of square
+deviations of dynamical variables from their neighborhood have identical power
+law shapes for all of such nodes. The revealed features of the localization
+nodes allow to find them without computing of the vectors.''
+
+\item[2014-11-13 Predrag]
+Takayuki Yamaguchi and Makoto Iima,
+{\em Numerical analysis of transient orbits by the pullback method for
+covariant Lyapunov vector}, \arXiv{1411.2794}, write:
+``In order to analyze structure of tangent spaces of a transient orbit,
+we propose a new algorithm which pulls back vectors in tangent spaces
+along the orbit by using a calculation method of covariant Lyapunov
+vectors. As an example, the calculation algorithm has been applied to a
+transient orbit converging to an equilibrium in a three-dimensional
+ordinary differential equations. We obtain vectors in tangent spaces that
+converge to eigenvectors of the linearized system at the equilibrium.
+Further, we demonstrate that an appropriate perturbation calculated by
+the vectors can lead an orbit going in the direction of an eigenvector of
+the linearized system at the equilibrium.''
+
+\item[2015-02-25 Predrag] Study
+\emph{Oseledets' Splitting of Standard-like Maps} by
+Matteo Sala and Roberto Artuso\rf{SalArt15}, \arXiv{1203.4187}. They write:
+``
+    For the class of differentiable maps of the plane and, in
+    particular, for standard-like maps (McMillan form), a simple
+    relation is shown between the directions of the local invariant
+    manifolds of a generic point and its contribution to the
+    finite-time Lyapunov exponents (FTLE) of the associated orbit. By
+    computing also the point-wise curvature of the manifolds, we
+    produce a comparative study between local Lyapunov exponent,
+    manifold's curvature and splitting angle between stable/unstable
+    manifolds. Interestingly, the analysis of the Chirikov-Taylor
+    standard map suggests that the positive contributions to the FTLE
+    average mostly come from points of the orbit where the structure of
+    the manifolds is locally hyperbolic: where the manifolds are flat
+    and transversal, the one-step exponent is predominantly positive
+    and large; this behaviour is intended in a purely statistical
+    sense, since it exhibits large deviations. Such phenomenon can be
+    understood by analytic arguments which, as a by-product, also
+    suggest an explicit way to point-wise approximate the splitting.
+''
+
+\item[2015-10-02 Predrag]
+\emph{Statistical and Dynamical Properties of Covariant Lyapunov Vectors in a
+  Coupled Atmosphere-Ocean Model - Multiscale Effects, Geometric Degeneracy,
+  and Error Dynamics}
+by Vannitsem and Lucarini,
+\arXiv{1510.00298}: ``
+We study a simplified coupled atmosphere-ocean model using the formalism of
+covariant Lyapunov vectors (CLVs), which link physically-based directions of
+perturbations to growth/decay rates. The model is obtained via a severe
+truncation of quasi-geostrophic equations for the two fluids, and includes a
+simple yet physically meaningful representation of their
+dynamical/thermodynamical coupling. The model has 36 degrees of freedom, and
+the parameters are chosen so that a chaotic behaviour is observed. One finds
+two positive Lyapunov exponents (LEs), sixteen negative LEs, and eighteen
+near-zero LEs. The presence of many near-zero LEs results from the vast
+time-scale separation between the characteristic time scales of the two fluids,
+and leads to nontrivial error growth properties in the tangent space spanned by
+the corresponding CLVs, which are geometrically very degenerate. Such CLVs
+correspond to two different classes of ocean/atmosphere coupled modes. The
+tangent space spanned by the CLVs corresponding to the positive and negative
+LEs has, instead, a non-pathological behaviour, and one can construct robust
+large deviations laws for the finite time LEs, thus providing a universal model
+for assessing predictability on long to ultra-long scales along such
+directions. It is somewhat surprising to find that the tangent space of the
+unstable manifold has strong projection on both atmospheric and oceanic
+components. Our results underline the difficulties in using hyperbolicity as a
+conceptual framework for multiscale chaotic dynamical systems, whereas the
+framework of partial hyperbolicity seems better suited, possibly indicating an
+alternative definition for the chaotic hypothesis. Our results suggest the need
+for accurate analysis of error dynamics on different time scales and domains
+and for a careful set-up of assimilation schemes when looking at coupled
+atmosphere-ocean models.
+''
+
+\item[2016-05-07 Predrag]
+Gritsun and Lucarini\rf{LucGri16}, \arXiv{1604.04386},
+{\em Fluctuations, response, and resonances in a simple atmospheric model},
+looks worth a detailed read.
+
+\item[2009-10-27 Predrag]
+Harold Posch -always totally reliable- says that his group
+has switched from their older Lyapunov spectra codes to
+Ginelli \etal\ algorithm, and it works much better.
+
+\item[2013-04-06 Predrag]                    \inCB
+{Hoovers}\rf{HooHoo12} write: ``Our treatment is intended to be
+pedagogical.'' And indeed, their Sect.~2~\emph{Lyapunov spectrum
+using Lagrange multipliers} is something we should study for
+Lyapunov.tex chapter of ChaosBook (but is no help in understanding
+`modes').
+
+\item[2013-04-07 Predrag] Posch\etal\rf{HooPoFoDeZh02} write:
+``some of
+the Lyapunov exponents, those describing relatively-weak instabilities with
+near-zero growth rates, correspond to wavelike eigenvectors, both longitudinal
+and transverse. The phase relations in these eigenvectors differ from
+those of acoustic waves. The coordinate and momentum displacements in
+the Lyapunov `modes' are `in phase' reflecting the exponential time
+dependence $\exp(\zeit\lambda)$ of Lyapunov instability.''
+
+The language sounds Hamiltonian, but I know that thermostats that
+they work with are not. Also, seems that the evidence for these modes
+is unclear: ``We have to conclude that the modes have no special
+hydrodynamic significance, since their very existence seems to hinge
+on the detailed nature of the interparticle forces and, perhaps, on
+system size.'' Which disagrees with McNamara and Mareschal\rf{McNMar01},
+{\em Origin of the hydrodynamic {Lyapunov modes}}.
+
+Maybe that is the article to read; but they credit
+\refref{DePoHoo96}, and write: ``we present an explanation for the
+`hydrodynamic' Lyapunov modes first observed by Posch and
+Hirschl\rf{PoHi00} [PC: an article in a book, have not found it
+alone]. We consider the components of the Lyapunov vector associated
+with each particle to be quantities carried by that particle. We then
+look at how these quantities change during a collision, and we find
+that certain combinations of these quantities are conserved. The
+hydrodynamic Lyapunov modes arise from these new conservation laws in
+the same way the hydrodynamic modes arise from the conservation of
+mass, momentum, and energy. [...] We are able to explain a number of
+properties of the exponents: the existence of two `shear'  modes and
+four `sound' modes for each wave number, and an estimate of the
+Lyapunov exponent associated with the shearing mode. [...]
+combination of success and failure leads us to the conclusion that
+the link between the conserved quantities and the hydrodynamic
+Lyapunov modes is correct, but it must be elaborated in a way
+different than the kinetic theory approach presented here.''
+
+It all seems very Hamiltonian and Boltzmann to me, not sure why we
+should ponder this when working with \KS....
+
+Wm. G. Hoover and Carol G. Hoover, \arXiv{1106.2367},
+``Local Gram-Schmidt and Covariant Lyapunov Vectors and Exponents for
+ Three Harmonic Oscillator Problems.'' They say
+
+``
+We compare the Gram-Schmidt and covariant phase-space-basis-vector
+descriptions for three time-reversible harmonic oscillator problems, in two,
+three, and four phase-space dimensions respectively. The two-dimensional
+problem can be solved analytically. The three-dimensional and four-dimensional
+problems studied here are simultaneously chaotic, time-reversible, and
+dissipative. Our treatment is intended to be pedagogical, for use in an updated
+version of our book on Time Reversibility, Computer Simulation, and Chaos.
+,,
+
+\item[2013-06-29 Predrag]
+Posch\rf{Posch13},
+{\em Symmetry properties of orthogonal and
+   covariant {Lyapunov} vectors and their exponents}, writes:
+   ``Lyapunov exponents [...] are most naturally defined in terms of
+the time evolution of a set of so-called {\cLvs}, co-moving
+with the linearized flow in tangent space. Taking a simple spring
+pendulum and the H\'enon-Heiles system as examples, we demonstrate the
+consequences of symplectic symmetry and of time-reversal invariance for
+such vectors, and study the transformation between different
+parameterizations of the flow.''
+
+\item[2015-10-19 Predrag]
+Hadrien Bosetti and Harald A. Posch\rf{BosPos14} write in
+{\em What does dynamical systems theory teach us about fluids?}:
+``We use molecular dynamics simulations to compute the Lyapunov spectra
+of many-particle systems resembling simple fluids in thermal equilibrium
+and in non-equilibrium stationary states. Here we review some of the most
+interesting results and point to open questions.''
+
+The truth is, there is much of interest to read by Posch,
+\refref{DePoHoo96,PoHi00,HooPoFoDeZh02,Bosetti2010,BoPo10,Posch13,BosPos14}.
+
+\item[2015-10-20 Evangelos] I should be preparing my move to Sweden but
+reading Bosetti and Posch~\cite{BosPos14} is much more fun. I did not get
+very far yet, but they define the local Lyapunov exponents in the same
+way as Xiong Ding (see their equation 15). They also go one step further
+and write it in terms of what Predrag calls (maybe not anymore?) the
+matrix of variations (as suggested by Predrag in the last webex meeting).
+This shows explicitly that the local Lyapunov exponent only depends on
+the given point on the trajectory.
+
+\item[2015-10-20 Predrag]                 \toCB
+I meant `stability matrix', used for example by Tabor\rf{Tabor89} but
+what it is is not obvious from the name; or the very explicit,
+descriptive ``matrix of velocity gradients".
+
+\HREF{https://en.wikipedia.org/wiki/Strain_rate_tensor}
+{Strain rate tensor wiki} says:
+
+\begin{quote}
+In continuum mechanics, the strain rate tensor is a physical quantity
+that describes the rate of change of the deformation of a material in the
+neighborhood of a certain point, at a certain moment of time. It can be
+defined as the derivative of the strain tensor with respect to time, or
+as the symmetric component of the gradient (derivative with respect to
+position) of the flow velocity, a standard notion in fluid dynamics.
+\end{quote}
+It is my curse that next they come up with `Jacobian matrix', meaning
+stability matrix:
+\begin{quote}
+
+$\nabla v$ is the Jacobian matrix of the field,
+\[
+    \nabla v = J =
+    \begin{bmatrix} \displaystyle{\partial_1 v_1}
+                     & \displaystyle{\partial_2 v_1}
+                       & \displaystyle{\partial_3 v_1}\\
+                    \displaystyle{\partial_1 v_2}
+                      & \displaystyle{\partial_2 v_2}
+                        & \displaystyle{\partial_3 v_2}\\
+                    \displaystyle{\partial_1 v_3}
+                      & \displaystyle{\partial_2 v_3}
+                         & \displaystyle{\partial_3 v_3}
+    \end{bmatrix}.
+\]
+[...]  decomposed into the sum of a symmetric matrix and an antisymmetric
+matrix [...]
+The antisymmetric part represents a \emph{rigid-like rotation} of the
+fluid about the point \ssp. Rigid rotation does not change the relative
+positions of the fluid elements, so the antisymmetric part of the
+velocity gradient, or the \emph{rate of rotation tensor},  does not
+contribute to the rate of change of the deformation. The actual strain
+rate is therefore described by the symmetric part, the \emph{strain rate
+tensor}
+\beq
+D = \frac{1}{2}\left(\nabla \cdot v + \transp{\nabla \cdot v}\right)
+\,.
+\ee{StrainRateTens}
+
+The symmetric part of velocity gradient (the rate-of-strain tensor) can
+be broken down further as the sum of a scalar times the unit tensor, that
+represents an isotropic expansion or contraction (changes the volume);
+and a traceless symmetric tensor which represents a shearing deformation,
+with no change in volume (a deviatoric component which tends to distort
+the infinitesimal body element).
+
+The \emph{expansion rate}  is $1/d$ of the divergence of the velocity field:
+\[
+    \nabla \cdot v = \partial_1 v_1 + \partial_2 v_2 + \partial_3 v_3;
+\]
+which is the rate at which the volume of a fixed amount of `fluid'
+changes at that point.
+
+Some random Googling:
+
+The velocity gradient tensor has been used in vortex detection (swirling
+strength) in turbulent flows. See
+\emph{Analysis and interpretation of instantaneous turbulent velocity fields},
+ Adrian, Christensen, Liu, \emph{Experiments in fluids} 29 (2000) 275-290.
+ See also  Chong et al. (JFM 357), Ooi et al. (JFM 381) and other papers
+ by Cantwell in J. of Fluid Mech.
+
+The gradient of the velocity vector produces (in 3D) a 3x3 matrix of
+derivatives. These matrix is not a tensor in its own right because is not
+``objective" or ``frame indifferent"... In fluid mechanics, we usually
+refer to the symmetric part of the velocity gradient, which is objective
+and frame indifferent.
+
+``shear strain rate" is used as the measure of gradient of velocity
+
+\emph{Continuum Mechanics: Concise theory and problems}
+by Peter Chadwick is worth looking at.
+\end{quote}
+
+The velocity gradient $\nabla v$ is a 2-index matrix. Is it a (an
+invariant or `equivariant') tensor? A tensor is defined only with respect
+to a symmetry group. If we assume that there is an invariant $L^2$ norm
+(length) in $d$ dimensions, its Euclidean group contains the special
+orthogonal group \SOn{d}, with group elements $R$. Under coordinate
+rotation $\nabla v$ transforms as
+\[
+\nabla v' = R\,\nabla v \transp{R} + \dot{R}\transp{R}
+\,,
+\]
+so the velocity gradient matrix is not a tensor,
+\(
+\nabla v' \neq R\,\nabla v \transp{R}
+\,.
+\)
+The {strain rate tensor} \refeq{StrainRateTens} is, however, a tensor.
+
+\item[2014-10-16 Predrag]
+N. V. Kuznetsov, T. A. Alexeeva and G. A. Leonov write in \emph{Invariance
+of Lyapunov characteristic exponents, Lyapunov exponents, and Lyapunov
+dimension for regular and non-regular linearizations},
+\arXiv{1410.2016},
+(Keywords: chaos, Lyapunov exponent, Lyapunov characteristic exponent,
+Lyapunov dimension of attractor, time-varying linearization, regular and
+non regular linearization, time reparametrization, change of coordinates,
+Perron effect of Lyapunov exponent sign reversal):
+``
+The question of invariance of Lyapunov exponents for regular and
+non-regular linearizations under the change of coordinates and time
+reparametrization is considered. The relation between Lyapunov exponents and
+Lyapunov characteristic exponents is discussed. Definition of Lyapunov
+dimension is generalized for non-regular linearization. The invariance of
+Lyapunov dimension under time rescaling, which preserves direction, and
+under diffeomorphism of the phase space is demonstrated.
+''
+
+\item[2015-08-29 Predrag]
+Leonov, Kuznetsov, Korzhemanova and Kusakin write in {\em The Lyapunov
+dimension formula for the global attractor of the Lorenz system},
+\arXiv{1508.07498} (text overlap with \arXiv{1505.04729}):
+``
+  The exact Lyapunov dimension formula for the Lorenz system has been
+analytically obtained by G.A.Leonov in 2002 under certain
+restrictions on parameters, permitting classical values. He used the
+construction technique of special Lyapunov-type functions developed by
+him in 1991 year. Later it was shown that the consideration of larger
+class of Lyapunov-type functions permits proving the validity of this
+formula for all parameters of the system such that all the equilibria
+of the system are hyperbolically unstable. In the present work it is
+proved the validity of the formula for Lyapunov dimension for a wider
+variety of parameters values, which include all parameters satisfying
+the classical physical limitations. One of the motivation of this work
+is the possibility of computing a chaotic attractor in the Lorenz
+system in the case of one unstable and two stable equilibria.
+''
+
+\item[2015-09-25 Predrag]
+Should read Kuznetsov, Mokaev and ,Vasilyev\rf{KuMoVa14}.
+Leonov, Kuznetsov and Mokaev, \emph{The Lyapunov dimension formula of
+self-excited and hidden attractors in the Glukhovsky-Dolzhansky system},
+\arXiv{1509.09161}, write: ``
+  In the past two decades Lyapunov functions are used for the estimation of
+attractor dimensions. By means of these functions the upper estimate of
+Lyapunov dimension for R\"{o}ssler attractor and the exact formulas of Lyapunov
+dimension for H\'{e}non, Chirikov, and Lorenz attractors are obtained.
+  In this report the simplest model, suggested by Glukhovsky and Dolzhansky,
+which describes a convection process in rotating fluid, is considered. A system
+of differential equations for this model is a generalization of Lorenz system.
+For the Lyapunov dimension of attractor of the model, the upper estimate is
+obtained.''
+
+\item[2015-10-14 Farizmand]
+Leonov and Kuznetsov\rf{LeoKuz15} {\em A short survey on {Lyapunov}
+dimension for finite dimensional dynamical systems in {Euclidean} space},
+\\
+\arXiv{1510.03835} may be of  interest. They refer to at least 25 of their own
+papers on the subject...
+
+\item[2016-04-13 Predrag]
+Pavel V. Kuptsov and Sergey P. Kuznetsov,
+\arXiv{1604.03521},
+{\em Numerical test for hyperbolicity of chaotic dynamics in time-delay
+  systems}
+write: ``
+  We develop the numerical test of hyperbolicity of chaotic dynamics in
+time-delay systems. The test is based on the angle criterion and includes the
+computation of angle distribution between expanding, contracting and neutral
+manifolds of trajectories on the attractor. Three examples are tested. For two
+of them previously predicted hyperbolicity is confirmed. The third one provides
+an example of time-delay system with non-hyperbolic chaos.''
+
+\item[2016-07-27 Predrag] Yet another article about computing Lyapunov
+exponents: following up on Aston and Dellnitz\rf{AstDel99} {\em The
+computation of {Lyapunov} exponents via spatial integration with
+application to blowout bifurcations}, Beyn and Lust\rf{BeyLus09,BeyLus13}
+{\em A hybrid method for computing Lyapunov exponents}, compute all ``all
+Lyapunov coefficients (?)''.
+
+\item[2016-08-11]
+Should (re)read Gozzi and Reuter\rf{GozReu94} {\em Lyapunov exponents,
+path-integrals and forms}. There must be a local measure (perhaps a
+2-form?) of the physical dimension, rather than our cockeyed
+norm-dependent close passages\rf{DCTSCD14}.
+
+\item[2016-08-13 Xiong]
+Paper \rf{GozReu94} is hard for me. It seems about stochastic Hamiltonian
+system.
+
+
+\item[2016-08-07 Predrag]                                       \toCB
+Two papers to study:
+Franzosi, Poggi and Cerruti-Sola\rf{franzosi-2004}
+{\em {Lyapunov} exponents from unstable periodic orbits in the {FPU}-beta model},
+
+  and
+Franzosi, Poggi and Cerruti-Sola\rf{FrPoCe05}
+{\em Lyapunov exponents from unstable periodic orbits},
+
+also, \HREF{https://scholar.google.com/citations?hl=en&user=pHUTWi8AAAAJ}
+{Franzosi} has  several Lyapunov exponent papers of possible interest
+
+{\em Analytic {Lyapunov} exponents in a classical nonlinear field equation}
+
+{\em Lyapunov exponents from geodesic spread in configuration space}
+
+{\em Riemannian geometry of Hamiltonian chaos: Hints for a general theory}
+
+
+
+\end{description}
+
+\renewcommand{\ssp}{a}

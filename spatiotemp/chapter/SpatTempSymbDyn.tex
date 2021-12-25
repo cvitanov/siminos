@@ -1,0 +1,261 @@
+% siminos/spatiotemp/chapter/SpatTempSymbDyn.tex
+% $Author: mgudorf3 $ $Date: 2019-09-24 18:35:59 -0400 (Tue, 24 Sep 2019) $
+
+% called by
+%           siminos/spatiotemp/chapter/spatiotemp.tex
+%           siminos/tiles/GuBuCv17.tex
+
+%\section{Spatiotemporal symbolic dynamics}
+%\label{sect:SpatTempSymbDyn}
+
+\renewcommand{\shift}{\ensuremath{\sigma}}
+\renewcommand{\Xx}{\ensuremath{\mathsf{U}}}
+
+%\PCpost{2018-07-27, 2018-08-08}{ {\bf spacetime indices convention}
+The square lattice discretization $u_z$ of a spacetime field $u(\ssp,\tau)$ is
+obtained by
+specifying its values $u_{mn}= u(\ssp_m, \zeit_n)$ on lattice points $z=(m,n)
+\in \integers^2$. Examples are diffusive coupled map
+lattices\rf{Kaneko83,Kaneko84} and Gutkin \etal\ \catlatt\rf{GutOsi15,GHJSC16,CL18}.
+In this paper the first index will refer to configuration space, and the second to time.
+In the Fourier representation $\Fu_{kj}$, the first index will refer to the spatial
+Fourier mode, and the second to the frequency.
+
+There are two lattices at play here: (i) the spacetime discretization
+\refeq{spattempFT}, and (ii) the symbolic dynamics discretization. What follows refers
+to as yet unattained latter.
+
+{\bf Lattices.}
+Consider a $2$\dmn\ square lattice infinite in extent, with each site
+labeled by $2$ integers $z=(m,n)\in \integers^{2}$. Assign to each site $z$ a
+letter \Ssym{z}\ from a finite alphabet $\A$. A particular fixed set
+of letters  \Ssym{z}\ corresponds to a particular lattice state
+\(
+\Mm= \{\Ssym{z}\} % \in \A \,,\; z\in \integers^d \}
+\,.
+\)
+%infinite in extent along all directions.
+In other words, a $2$\dmn\ lattice requires a {$d$\dmn\ code}
+\(
+% \{\m_{z}\}
+\Mm = \{\m_{n_1 n_2}\}
+%\,,
+\)
+for a complete specification of the corresponding state $\Xx$.
+The {\em full shift} is the set of all $2$\dmn\
+symbol \brick s that can be formed from the letters of the alphabet $\A$
+\beq
+% \A^{\integers^d}   2017-08-05 Predrag dropped this notation
+\hat{\AdmItnr} = \{ \{\Ssym{z}\} % (\Ssym{z}) %_{z\in\integers^d}
+              : \Ssym{z} \in \A \quad \mbox{for all} \quad z \in  \integers^2\}
+\,.
+\ee{LatticeFullSh}
+
+%\noindent
+{\bf Multidimensional shifts.}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%    \PC{2016-01-12} {
+% in the spirit of \refRefs{PetCorBol07}:
+For an autonomous dynamical system, the evolution law $f$ is of the same form for all times.
+If $f$ is also of the same form at every lattice site, the
+group of lattice translations, acting along the spatial lattice direction by
+shift \shift{}, is a spatial symmetry that commutes with the temporal
+evolution. A temporal mapping $f$ that satisfies
+$f\circ\shift{j}=\shift{}\circ{f}$ along the spatial lattice
+direction is said to be {\em shift invariant}, with the associated
+symmetry of dynamics given by the $d$\dmn\ group of discrete
+{\spt} translations.
+
+%\noindent
+{\bf {\Brick s}.} Let
+$\R_{z}\subset\integers^2$  be a finite
+$[\ell_1\!\times\!\ell_2]$ rectangular lattice region,
+$\ell_k\geq1$,
+whose lower left corner is the $z=(n_{1}n_{2})$ lattice site
+\beq
+  \R = \R_{n}^{[\ell_1\!\times\!\ell_2]}
+  =\{(n_1+j_1,\cdots n_2+j_2) \mid 0\leq j_k\leq \ell_k-1\}
+\,.
+\ee{dDimRect}
+The associated finite {\brick} of symbols $\Ssym{z}\in\A$ restricted to  \R,
+\(
+\Mm_{\R}=\{\Ssym{z}| z\in \R \} \subset \Mm
+\)
+is called the \brick\ $\Mm_{\R}$ of area
+$\cl{\R} = \ell_1 \ell_2$. For example,
+a
+$\R = [3\times 2]$ \brick\ is of form
+\beq
+\Mm=\left[\begin{array}{c}
+\Ssym{12} \Ssym{22} \Ssym{32}\\
+\Ssym{11} \Ssym{21} \Ssym{31}
+\end{array}\right]
+\ee{3times2brick}
+and volume (in this case, an area) equals $3\times 2 = 6$.
+In our convention, the first index is `space', increasing from left to right,
+and the second index is `time', increasing from bottom up.
+
+%\noindent
+{\bf Cylinder sets.}
+While a particular admissible infinite symbol array
+\(
+\Mm= \{\Ssym{z}\} % \in \A \,,\; z\in \integers^d \}
+\)
+defines a point $\Xx$ (a unique lattice state) in the \statesp,
+the \emph{cylinder set}
+$\pS_{\R}$,
+corresponding to the totality  of
+\statesp\ points $\Xx$ that share the same given finite {\brick} $\Mm_{\R}$
+symbolic representation over the region \R. For example, in $d=1$ case
+\beq
+\pS_{\R} =
+    \{\cdots a_{-2} a_{-1}\,.\,
+   \Ssym{1}\Ssym{2}\cdots \Ssym{\ell}
+   a_{\ell+1}a_{\ell+2}\cdots\}
+\,,
+\ee{finiteBlock}
+with the symbols outside of the block unspecified.
+
+%\noindent
+{\bf \twoTs.}
+A {\statesp} point is {\em {\spt}ly periodic} if
+it belongs to a \twot, \ie, its symbolic representation is a \brick\
+over region $\R$ defined by \refeq{dDimRect},
+\beq
+  \Mm_{p} = \Mm_{\R}
+  \,,\qquad
+  \R = \R_{0}^{[\speriod{}\!\times\!\period{}]}
+\,,
+\ee{dTorus}
+that
+tiles the lattice state  $\Mm$ periodically, with period $\speriod{}$ in the
+spatial lattice direction, and period $\period{}$ in the
+time lattice direction.
+
+
+%\noindent
+{\bf Subshifts.}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%    \PC{2016-10-11} { inspired by {Ban} \etal\rf{BHLL11}
+Let $\hat{\AdmItnr}$ be the full lattice shift
+\refeq{LatticeFullSh}, \ie, %{CMFullSh}
+the set of all possible lattice state $\Mm$ labelings by the alphabet
+$\A$, and $\hat{\AdmItnr}(\Mm_{\R})$ is
+the set of such {\brick s} over a region {\R}. The principal task
+in developing the symbolic dynamics of a dynamical system is to determine
+$\AdmItnr$, the set of all \emph{admissible} itineraries/lattice states,
+\ie, all states that can be realized by the given system.
+
+%\noindent
+{\bf Pruning, grammars, recoding.}
+If certain states are inadmissible, the alphabet must be supplemented by a
+{\em grammar},
+a set of pruning rules.
+Suppose that
+the grammar can be stated as a finite number of pruning rules, each
+forbidding a {\brick} of finite size,
+\beq
+ {\cal G} = \left\{
+        b_1, b_2, \cdots b_k
+        \right\}
+\,,
+\ee{grammar}
+where a {\em pruned {\brick}} $b$ is an array of symbols defined over a
+finite $\R$ lattice region of size $[ \speriod{1}\!\times\!\speriod{2}]$. In
+this case we can construct a finite Markov partition by replacing finite
+size \brick s of the original partition by letters of a new alphabet. In
+the case of a 1\dmn, the temporal lattice, if the longest forbidden {\brick}
+is of length $\speriod{}+1$, we say that the symbolic dynamics is Markov, a shift
+of finite type with {$\speriod{}$-step memory}.
+
+Let
+\(
+\Xx=\{u_{z} \in  \mathbb{T}^{1},\, z\in \integers^2\}
+\)
+be a {\spt}ly infinite  solution of \KSe\ \refeq{spattempFT},
+and let
+\(
+\Mm= \{\Ssym{z} \in \A \,,\; z\in \integers^2 \}
+\)
+be its symbolic representation. By the presumed connection between \Xx\ and
+\Mm, the corresponding symbolic dynamics {\brick} \Mm\ is unique and
+admissible, \ie, \Mm\ defines the unique {\spt} state \Xx\ and
+vice-versa.
+
+Assume now that only partial information is available, and we know
+only a finite \brick\ of symbols $\Mm_{\R}\subset\Mm$,
+over a finite lattice region $\R\subset \integers^2$. What information
+about the local {\spt} pattern
+%$\ssp_{z},z\in\R$
+\(
+\Xx_{\R}=\{\ssp_{z} \in  \mathbb{T}^{1},\, z\in\R\}
+\)
+does this give us?
+To be specific, let \R\  be a   rectangular $[\ell_1\!\times\!\ell_2]$
+region (see \refeq{dDimRect} for the definition),
+and let
+\(
+\Mm_{\R} % =\{\Ssym{z}\in \Mm | z\in \R \}
+\)
+be the  $[\ell_1\!\times\!\ell_2]$
+\brick\ of \Mm\ symbols.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%This next part assumes that the concepts of symbolic dynamics
+%have been adequately explained
+
+This formalism is necessary for us to interpret results but
+it cannot inform us of the grammar (rules which dictate admissible combinations)
+of the symbolic dynamics. To uncover the grammar of the
+symbolic dynamics we can combine tile solutions numerically
+and find which combinations are inadmissible. The manner
+with which we combine such tiles is described in \refsect{sect:tiles}.
+This can proceed in an automated manner, taking all possible
+\spt\ combinations of tiles. This portion has not been
+completed just yet and there are some key details
+that must be worked out before we can proceed.
+The main problem is in regards to false negatives. Because
+the gluing procedure of \refsect{sect:glue} is a numerical
+effort, utmost care must be taken in combining solutions.
+If the tiles are not combined properly, the combination
+of tiles may be falsely deemed an inadmissible combination
+which would give us the incorrect grammar or set
+of pruning rules. We will provide a number
+of examples of what can go wrong but the list
+is far from exhaustive. The first example of how a false negative may
+occur is that if the wrong members of the continuous families
+are combined then the combination may not converge even
+though the corresponding symbolic block is admissible.
+Another example is that when the tiles are being combined
+there must be some numerical procedure for how to smooth
+discontinuities where the boundaries of the tiles are conjoined.
+This typically isn't a huge issue but it definitely has a larger effect
+on smaller combinations. One must also take into consideration
+the initial conditions for the extent of the \spt\ domain $[T\!\times\!L]$.
+For this we approximate the \spt\ domain as simply being the
+arithmetic average of the dimensions but this may be too crude
+as it does not take into account how the coupling between tiles
+affects the domain size. Our last example
+is a debate between whether to
+glue progressively larger symbolic blocks together (\ie, the ``tiles''
+are replaced by larger and larger numerically converged \twots\ ).
+Alternatively, we can start each attempt by gluing the
+indivisible elements, the tiles. These two methods both
+take combinations of numerically converged \twots. The
+difference lies in the size of the continuous families of solutions.
+Anecdotal evidence seems to suggest that
+the tiles exist on a smaller interval of spatial
+domain sizes $L \pm \epsilon$ when compared to
+larger \twots.
+
+The goal of the previous discussion is to enumerate
+and describe the ``best'' method to produce the grammar
+of the \spt\ symbolic dynamics. Once the details are
+in place, the combinations would be tested in an automated
+fashion which would hopefully produce a consistent
+set of pruning rules which could be used to define
+the inadmissible symbolic blocks of the \spt\
+symbolic dynamics.
+
+\renewcommand{\shift}{\ensuremath{d}}
+\renewcommand{\Xx}{\ensuremath{\mathsf{X}}}

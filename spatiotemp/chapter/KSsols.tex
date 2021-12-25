@@ -1,0 +1,189 @@
+% KSsols.tex
+% $Author: mgudorf3 $ $Date: 2020-01-14 00:04:09 -0500 (Tue, 14 Jan 2020) $
+
+% \section{Exact solutions of \KS}
+% \label{sect:KSsols}
+%   TEMPORARY, ELIMINATE EVENTUALLY
+%   was KSe.tex, copied from siminos/rpo_ks/current/
+
+\subsection{\Eqva\ and \reqva}
+\label{sec:stks}
+
+\Eqva\  (or the steady solutions)
+are the fixed profile time-invariant solutions,
+\beq
+ u(\conf,\zeit) = u_\stagn(x)
+\,.
+\ee{eqva}
+Due to the spatial translational symmetry,
+the \KS\ system also allows for
+\reqva\ (traveling waves, rotating waves),
+characterized by a fixed profile $u_\stagn(x)$
+moving with constant speed $c$, {\ie}
+\beq
+ u(\conf,\zeit) =  u_\stagn(x-ct)
+\,.
+\ee{reqva}
+Here suffix ${}_\stagn$ labels a particular invariant solution.
+Because of the reflection symmetry \refeq{SCD07:KSparity},
+the \reqva\ come in counter-traveling pairs
+$u_\stagn(x-ct)$, $-u_\stagn(-x+ct)$.
+
+The \reqv\ condition for the {\KS} PDE \refeq{e-ks} is the ODE
+\beq
+{\textstyle\frac{1}{2}}(u^2)_x-c\,u_x+u_{xx}+ u_{xxxx}=0
+\ee{KSeqvCond}
+which can be analyzed as a dynamical system in its own right.
+Integrating once we get
+\beq
+{\textstyle\frac{1}{2}}u^2 - c u + u_x + u_{xxx}=\expctE
+\,.
+\label{eq:stdks}
+\eeq
+        \PC{2019-09-21}{
+Is this an interesting form?
+\[
+{\textstyle\frac{1}{2}}(u-c/2)^2  + u_x + u_{xxx}=\expctE+{c^2}/{8}
+\,.
+\]
+
+    }
+This equation can be interpreted as a 3-dimen\-si\-on\-al dynamical system
+with spatial coordinate $x$ playing the role of `time,'
+and the integration constant \expctE\ can be interpreted as `energy,'
+see \refsect{sect:KSenerg}.
+
+For $\expctE>0$ there is rich $\expctE$-dependent dynamics,
+with fractal sets of bounded solutions investigated in depth
+by Michelson\rf{Mks86}.
+
+From \refeq{SCD07:expan} we see that the origin $u(\conf,\zeit) = 0$
+has Fourier modes as the linear stability eigenvectors.  The $|k|<\tildeL$
+long wavelength perturbations of the flat-front {\eqv}
+are linearly unstable, while all
+$|k|> \tildeL$ short wavelength perturbations are strongly contractive.
+The high $k$ eigenvalues, corresponding to rapid variations of
+the flame front, decay so fast that the corresponding eigendirections
+are physically irrelevant.
+The most unstable mode, nearest to $|k|=\tildeL/\sqrt{2}$,
+sets the scale of the mean wavelength $\sqrt{2}$
+of the \KS\ `turbulent' dynamics,
+see \reffig{f:ks_largeL}.
+
+\MNG{2019-05-13}{\Spt\ symmetries are discussed in \refsect{sect:KSsymm}, I think it
+is worthy to elaborate on the different classes of solutions but I don't think
+\ppo{}s should be referred to as \rpo{} solutions with reflection}
+
+\subsection{\Rpo s, symmetries and \po s} \label{sec:KSePO}
+
+\KSe\ \refeq{e-ks} is time translationally invariant, and
+space translationally invariant under the 1-$d$ Lie group of $\On{2}$
+rotations: if $u(\conf,\zeit)$ is a solution, then $u(x+\shift,t)$ and
+$-u(-x,t)$ are equivalent solutions for any $-\speriod{}/2 < \shift \leq
+\speriod{}/2$.
+As a result of invariance under $\Shift_{\shift/\speriod{}}$,
+\KSe\ can have \rpo\ solutions
+with a profile $u_p(x)$, period $\period{p}$, and a
+nonzero shift $\shift_p$
+\beq
+  \Shift_{\shift_p/\speriod{}}u(x,\period{p}) =
+  u(x+\shift_p,\period{p}) = u(x,0) = u_p(x)\,.
+\label{KSrpos}
+\eeq
+{\Rpo s} \refeq{KSrpos} are periodic in
+$v_p=\shift_p/\period{p}$ co-rotating frame,
+%(see \reffig{f:MeanVelocityFrame}),
+but in the stationary frame their
+trajectories are quasiperiodic.  Due to the reflection symmetry
+\refeq{SCD07:KSparity} of \KSe, every {\rpo} $u_p(x)$ with shift
+$\shift_p$ has a symmetric partner $-u_p(-x)$ with shift $-\shift_p$.
+
+Due to invariance under reflections, \KSe\ can also have
+\rpo s {\em with reflection}, which are
+characterized by a profile $u_p(x)$ and
+period $\period{p}$
+\beq
+  \Refl u(x+\shift,\period{p}) =
+  -u(-x-\shift,\period{p}) = u(x+\shift,0) = u_p(x)
+  \,,
+\label{KSpos}
+\eeq
+giving the family of equivalent solutions
+parameterized by $\shift$
+(as the choice of the reflection point is arbitrary,
+the shift can take any value in $-\speriod{}/2 < \shift \leq \speriod{}/2$).
+
+As $\shift$ is continuous in the interval $[-\speriod{}/2, \speriod{}/2]$,
+the likelihood of a \rpo\ with $\shift_p = 0$ shift is zero,
+unless an exact periodicity is enforced by a discrete symmetry,
+such as the dihedral symmetries discussed above.
+If the shift $\shift_p$ of a \rpo\ with period $\period{p}$ is such
+that $\shift_p /\speriod{}$ is a rational number, then the orbit is
+periodic with period $n\period{p}$.  The likelihood to find such \po s is
+also zero.
+
+However, due to the \KSe\ invariance under
+the dihedral $\Dn{n}$ and cyclic $\Cn{n}$ subgroups, the following
+types of \po s are possible:
+
+{\bf (a)} The \po\ lies
+within a subspace pointwise invariant under the action of
+$\Dn{n}$ or $\Cn{n}$. For instance, for $\Dn{1}$ this is the
+$\bbU^+$ antisymmetric subspace, $-u_p(-x) = u_p(x)$, and
+$u(x,\period{p}) = u(x,0) = u_p(x)$. The periodic orbits
+found in \refrefs{Christiansen97,lanCvit07} are
+all in $\bbU^+$, as the dynamics is restricted to
+antisymmetric subspace. For $\speriod{}=3.5014087480216975$ the dynamics in $\bbU^+$
+is dominated by attracting (within the subspace)
+heteroclinic connections and thus we have no periodic orbits
+of this type, or in any other of the $\Dn{n}$--invariant
+subspaces.
+
+{\bf (b)} The \po\ satisfies
+\beq
+	 u(x,t+\period{p})=\LieEl u(\conf,\zeit)\,,
+	\label{eq:POspattemp}
+\eeq
+for some group element $\LieEl\in \On{2}$ such that
+$\LieEl^m=e$ for some integer $m$ so that the orbit repeats
+after time $m \period{p}$ (see
+\refref{golubitsky2002sp} for a general discussion of
+conditions on the symmetry of \po s).
+If an orbit is of reflection type \refeq{KSpos},
+$\Refl\Shift_{\shift/\speriod{}} u(x,\period{p}) =
+-u(-x-\shift,\period{p}) = u(x,0)$, then it is pre-periodic
+to a \po\ with period $2\period{p}$. Indeed, since
+$(\Refl\Shift_{\shift/\speriod{}})^2 = \Refl^2 = 1$, and the KS
+solutions are time translation invariant, it follows from
+\refeq{KSpos} that
+\[
+  u(x,2\period{p}) = \Refl\Shift_{\shift/\speriod{}} u(x,\period{p}) =
+  (\Refl\Shift_{\shift/\speriod{}})^2 u(x,0) = u(x,0)\;.
+\]
+Thus any shift acquired during time $0$ to
+$\period{p}$ is compensated by the opposite shift during
+evolution from $\period{p}$ to $2 \period{p}$.
+\Ppo s are a hallmark of any dynamical system
+with a discrete symmetry, where they have a natural
+interpretation as \po s in the fundamental
+domain\rf{CvitaEckardt,DasBuch}.
+
+
+
+    \PCedit{ % 2019-09-21
+For any given \rpo\ a convenient visualization is offered by the {\em
+mean velocity frame}, {\ie}, a reference frame that rotates with velocity
+$v_p=\shift_p/\period{p}$. In the mean velocity frame a \rpo\ becomes a
+\po. However, each {\rpo} has its own mean velocity frame and thus sets
+of \rpo s are difficult to visualize simultaneously.
+
+\section{\Ppo s} \label{ssec:po}
+
+As discussed in \refSect{sec:KSePO}, a \rpo\ will be
+periodic, \ie, $\shift_p = 0$, if it either {\bf (a)} lives
+within the $\bbU^+$ antisymmetric subspace, $-u(-x,0) =
+u(x,0)$, or {\bf (b)} returns to its reflection
+or its discrete rotation after a period:
+$u(x,t+\period{p})=\LieEl u(\conf,\zeit)$, $\LieEl^m=e$,
+and is thus periodic with period $m\period{p}$.
+    }

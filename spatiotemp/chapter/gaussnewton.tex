@@ -1,0 +1,84 @@
+% siminos/spatiotemp/chapter/iterativemethods.tex
+% $Author: predrag $ $Date: 2020-05-07 17:34:06 -0400 (Thu, 07 May 2020) $
+
+In contrast to descent methods we can also
+solve the linearized system of equations or Newton equations
+by either iterative methods or direct methods. Direct methods
+solve linear systems of equations by creating the inverse (or
+pseudo-inverse) $x = A^{-1}b$. Because the period and
+spatial domain size are maintained as variables
+the linear system of equations is represented by a rectangular matrix,
+which can be solved by either applying a least-squares solver
+or forming the \textit{normal equations} which creates a square
+linear system by multiplying by the transpose of the rectangular matrix.
+\beq
+A^{\top}Ax = A^{\top}b\,.
+\eeq
+As $A$ in our case is already ill-conditioned because of the stiff linear components;
+that is, the higher order spatial derivatives dominate the spectrum of eigenvalues
+by manifesting as diagonal matrices with large magnitudes when compared to the typical
+matrix element magnitude. Because of this, the product $A^{T}A$ would be affected in turn.
+The linear system in question is the Newton system derived from the linear expansion of the
+root finding problem $F=0$. First order Taylor expansion of $F$ around $u + \Delta u$ 
+yields
+\beq
+F(u + \Delta u) \approx F(u) + \frac{\partial F}{\partial u} \Delta u
+\eeq
+Because $u + \Delta u$ represents the root of $F$ the equation can be rewritten
+as
+\beq
+\frac{\partial F}{\partial u} \Delta u = -F(u)\,,
+\eeq
+which is of the form $Ax=b$. This can be reformulated
+as the least-squares minimization problem
+\beq
+\text{minimize} ||Ax - b|| 
+\ee{lstsq}
+    %\PC{2019-04-17}{where is \refeq{e-linearminimization}?}
+In practice \refeq{lstsq} is solved iteratively by constructing the Moore-Penrose
+pseudo-inverse, which provides the least-squares solution to \refeq{lstsq} of minimum
+norm.
+\beq \label{e-lstsqiteration}
+\min_{\Delta \mathbf{z}_{i}}  ||DG(\mathbf{z}_{i-1})\Delta \mathbf{z}_{i} +\mathbf{G}(\mathbf{z}_{i-1})||_2
+\eeq
+for $i = 1,2,3,...$.
+This produces a sequence of approximate solutions
+$\{\mathbf{z}_i = \mathbf{z}_{i-1}+\Delta \mathbf{z}_{i-1} \}$
+which we require to monotonically decrease the value of the cost
+functional \refeq{e-costfunctional}. If this monotonic behavior is
+violated then we deem the trial a failure. Some common ways of reducing
+the likelihood of failure include introducing a line-search,
+trust-region, and backtracking techniques\rf{Dennis96}. We elect to
+introduce a scalar ``damping'' parameter $\rho$ which modifies the
+magnitude of each step produced by any of our iterative methods. The
+recursive equation for the sequence of approximate solutions to
+\refeq{e-lstsqiteration}
+    %\PC{2019-04-17}{where is \refeq{e-}?}
+\beq \label{e-dampednewtonstep}
+\mathbf{z}_i = \mathbf{z}_{i-1} + \rho_{i-1}^{n} \Delta \mathbf{z}_{i-1}
+\eeq
+where
+\beq \label{e-dampingparameter}
+\rho_i^{n} = \frac{1}{2^n}
+\eeq
+for $n \in \mathbb{Z}^+$. In practice, if $F(\mathbf{z}_i)>F(\mathbf{z}_{i-1})$ then
+$n$ is increased until either the cost functional's value decreases $F(\mathbf{z}_i)<F(\mathbf{z}_{i-i}$,
+or $\rho_i^n = {1}/{2^8}$.
+
+This proceeds until either the cost functional is within double floating
+point precision of zero or the magnitude $|z_i|$ becomes too small.
+When computationally viable we elect to use a direct method to solve
+\refeq{e-newtonequation}. This entails using a subroutine
+which computes the pseudo-inverse of the matrix $DG$. This process
+has been optimized by the creators of LAPACK, a Fortran package.
+Specifically we use a SciPy's implementation of the linear least
+squares solver (LSTSQ) which uses the GELSD driver. This driver solves
+the linear least squares problem via a divide and conquer
+singular value decomposition (SVD) process to compute
+the pseudoinverse.
+
+%Global convergence properties
+This method of solving the least-squares problem established by
+construction of the Newton system\rf{BoyVan04,Visw08,Visw07b}
+
+%Rate of convergence

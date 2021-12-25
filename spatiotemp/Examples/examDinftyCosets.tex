@@ -1,0 +1,133 @@
+% siminos/spatiotemp/Examples/examDinftyCosets.tex
+% $Author: predrag $ $Date: 2021-08-10 11:56:19 -0400 (Tue, 10 Aug 2021) $
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\example{\Dn{\infty} subgroups and cosets.}{ \label{exam:DinftyCosets}
+                                       \toCB
+%\item[2021-07-23 Han]
+%The structure of the quotient groups $\Dn{\infty}/H(\cl{})$ and
+%$\Dn{\infty}/H(\cl{},k)$:
+%
+$H(\cl{})$, any $\cl{}$, is a translation subgroup of
+$\Dn{\infty}$ (a 1\dmn\ {Bravais sublattice} \lattice\
+\refeq{1DBravaisLattice},
+with a {basis} vector $\mathbf{a}$ that defines
+the {Bravais cell} of length \cl{}) with group elements
+$\langle\shift^n\rangle>$, or, more explicitely:
+\beq
+H(\cl{}) = \{ \cdots, \shift_{-2 \cl{}}, \shift_{-\cl{}},
+1, \shift_{\cl{}}, \shift_{2 \cl{}}, \cdots\} \, .
+\ee{H(n)subgroup}
+There are a $2\cl{}$ left cosets of subgroup $H(\cl{})$ in $\Dn{\infty}$:
+\bea
+H(\cl{}) &=& \{ \cdots, \shift_{-2 \cl{}}, \shift_{-\cl{}},
+1, \shift_{\cl{}}, \shift_{2 \cl{}}, \cdots\}
+    \label{H(n)cosets}\\
+\Refl H(\cl{}) &=& \{ \cdots, \Refl_{-2 \cl{}}, \Refl_{-\cl{}},
+\Refl, \Refl_{\cl{}}, \Refl_{2 \cl{}}, \cdots\} \continue
+\shift H(\cl{}) &=& \{ \cdots, \shift_{-2 \cl{} + 1}, \shift_{-\cl{} + 1},
+\shift, \shift_{\cl{}+1}, \shift_{2 \cl{}+1}, \cdots\} \continue
+\Refl_{1} H(\cl{}) &=& \{ \cdots, \Refl_{-2 \cl{} + 1}, \Refl_{-\cl{} + 1},
+\Refl_{1}, \Refl_{\cl{}+1}, \Refl_{2 \cl{}+1}, \cdots\} \continue
+&\vdots& \continue
+\shift_{\cl{}-1} H(\cl{}) &=& \{ \cdots, \shift_{-\cl{}-1}, \shift_{-1},
+\shift_{\cl{}-1}, \shift_{2\cl{}-1}, \shift_{3\cl{}-1}, \cdots\} \continue
+\Refl_{\cl{}-1} H(\cl{}) &=& \{ \cdots, \Refl_{-\cl{}-1}, \Refl_{-1},
+\Refl_{\cl{}-1}, \Refl_{2\cl{}-1}, \Refl_{3\cl{}-1}, \cdots\}
+\,. \nnu
+\eea
+Using elements
+\(
+\{1,\Refl, \shift, \Refl_{1}, \cdots, \shift_{\cl{}-1}, \Refl_{\cl{}-1}\}
+\)
+as representatives of these cosets we
+see that the quotient group $\Dn{\infty}/H(\cl{})$ is isomorphic to the
+dihedral group $\Dn{\cl{}}$.
+
+There are $\cl{}$ infinite dihedral $H(\cl{},k)$ subgroups  of
+$\Dn{\infty}$, for any $\cl{}$, $0\leq{k}<\cl{}$
+({Bravais cell} of length \cl{}, with reflection point shifted $k$ steps):
+\[
+H(\cl{},k) = \{
+\cdots, \shift_{-2 \cl{}}, \Refl_{-2\cl{}+k}, \shift_{-\cl{}},
+\Refl_{-\cl{}+k}, 1,
+\Refl_{k}, \shift_{\cl{}}, \Refl_{\cl{}+k}, \shift_{2 \cl{}},
+\Refl_{2\cl{}+k}, \cdots
+             \}
+\,.
+\]
+
+The left cosets of the subgroup $H(\cl{},k)$ in $\Dn{\infty}$ are:
+    \PC{2021-07-24}{
+Explain that $\Refl_{j} H(\cl{},k)$ is a rearrangement.
+    }
+\bea
+H(\cl{},k) &=& \{ \cdots, \shift_{-2 \cl{}}, \Refl_{-2\cl{}+k}, \shift_{-\cl{}},
+\Refl_{-\cl{}+k}, 1, \continue
+&& \Refl_{k}, \shift_{\cl{}}, \Refl_{\cl{}+k}, \shift_{2 \cl{}},
+\Refl_{2\cl{}+k}, \cdots\}
+    \label{H(n,k)cosets}\\
+\shift H(\cl{},k) &=& \{ \cdots, \shift_{-2 \cl{}+1}, \Refl_{-2\cl{}+k+1},
+\shift_{-\cl{}+1},
+\Refl_{-\cl{}+k+1}, \shift \continue
+&& \Refl_{k+1}, \shift_{\cl{}+1}, \Refl_{\cl{}+k+1}, \shift_{2 \cl{}+1},
+\Refl_{2\cl{}+k+1}, \cdots\} \continue
+&\vdots& \continue
+\shift_{\cl{}-1} H(\cl{},k) &=& \{ \cdots, \shift_{-\cl{}-1},
+\Refl_{-\cl{}+k-1}, \shift_{-1},
+\Refl_{k-1}, \shift_{\cl{}-1}, \continue
+&& \Refl_{\cl{}+k-1}, \shift_{2\cl{}-1}, \Refl_{2\cl{}+k-1}, \shift_{3\cl{}-1},
+\Refl_{3\cl{}+k-1}, \cdots\}
+\,.
+\nnu
+\eea
+Using $\{1$, $\shift, \cdots, \shift_{\cl{}-1}\}$ as representatives of
+these cosets we see that the quotient group $\Dn{\infty}/H(\cl{},k)$ is
+isomorphic to the cyclic group $\Cn{\cl{}}$.
+
+%\item[2021-07-27 Han]
+To show that $H(\cl{},k)$ is not a normal subgroup: using \refeq{D_nConj} we have:
+$\shift_i\,\Refl_k\shift_i^{-1} = \Refl_{k-2i}$. For $i \neq \cl{}$, generally
+$\Refl_{k-2i} = \shift_{2i}\Refl_{k}$ is not an element of $H(\cl{},k)$.
+
+%\item[2021-07-27 Han]
+Let $\phi(\cl{})$ be a {\lattstate} that is invariant under the action
+of subgroup $H(\cl{})$:
+\bea
+H(\cl{}) \phi(\cl{}) = \phi(\cl{}) \, ,
+\eea
+and $\phi(\cl{},k)$ be a {\lattstate} that is invariant under the action
+of subgroup $H(\cl{},k)$:
+\bea
+H(\cl{},k) \phi(\cl{},k) = \phi(\cl{},k) \, .
+\eea
+Since $H(\cl{})$ is a normal subgroup of $\Dn{\infty}$, we have:
+\bea
+H(\cl{}) g \phi(\cl{})
+&=& g H(\cl{}) g^{-1} g \phi(\cl{}) \continue
+&=& g H(\cl{}) \phi(\cl{}) \continue
+&=& g \phi(\cl{}) \, ,
+\quad g \in \Dn{\infty} \, .
+\eea
+So $g \phi(\cl{})$ with $g \in \Dn{\infty}$ is also a {\lattstate} that
+is invariant under $H(\cl{})$. For the {\lattstate} $\phi(\cl{},k)$ we
+have:
+\bea
+g H(\cl{},k) g^{-1} g \phi(\cl{},k)
+&=& g H(\cl{},k) \phi(\cl{},k) \continue
+&=& g \phi(\cl{},k) \, ,
+\quad g \in \Dn{\infty} \, .
+\eea
+Since $H(\cl{},k)$ is not a normal subgroup, $g H(\cl{},k) g^{-1}$ is a
+conjugate subgroup of
+$H(\cl{},k)$. So $g \phi(\cl{},k)$ with $g \in \Dn{\infty}$ is not
+invariant under $H(\cl{},k)$, but invariant under a conjugate subgroup of
+$H(\cl{},k)$.
+
+
+
+
+                                      \jumpBack{exam:DinftyCosets}
+\authorHL{2021-07-28}
+    } %end \example{Symmetry groups  in physics:}{ \label{exmp:DinftyCosets}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%

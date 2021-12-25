@@ -1,0 +1,116 @@
+Extracted information from \refref{Canuto88} on what I thought was one of the gaps in my code
+which was the fact that it seemed to perform much better as a fully aliased pseudospectral
+calculation rather than a de-aliased calculation. I feared that this would bring criticism
+so as I tried to armor myself by actually \emph{reading}. My argument is that while aliasing
+can be devastating for temporal evolution due to the contamination of the higher Fourier
+mode components by their aliases, ($k' = k + N$) where $N$ is the number of collocation
+points, the spatiotemporal problem should be fine as long as the calculation is well
+resolved enough. In fact, this is likely why I have solutions that "converge" on larger
+spatial domains than the discretizations can seem to resolve.
+
+Aliasing commments:
+\begin{quote}
+For evolution problems  one must address the issue of the temporal numerical
+stability of the calculation. Collocation approximations must be formulated
+with more care than Galerkin approximations. The reason is that for evolution
+problems with quadratic conservation properties, the Galerkin formulation
+will automatically yield semi-discrete quadratic conservation laws.
+\end{quote}
+
+\begin{quote}
+Numerous comparisons have been performed for aliased and de-aliased
+calculations of the periodic, multidimensional Navier-stokes equations.
+Useful discussions may be found in
+\rf{Orszag72,FoxOrs73,Montigny82,Kerr85}.  All of these authors conclude
+that with sufficient resolution, aliased calculations are quite acceptable.
+\end{quote}
+
+
+\begin{quote}
+Moser, Moin and Leonard\rf{MML83} caution against aliased calculations.
+They present a single, poorly resolved, aliased calculation and compare it with three
+de-aliased calculations, one poorly resolved, one moderately resolved, and one well
+resolved. Their single aliased result is certainly much worse than their well resolved,
+de-aliased case, but their poorly resolved, de-aliased case is no better than the aliased
+one. Hence, their conclusion is not supported by their evidence.
+\end{quote}
+
+In light of these comments and discussions I believe that de-aliasing is more
+important in the context of accurate temporal evolution, but not required in
+the spatiotemporal fixed point problem as long as the patterns are
+sufficiently resolved. One way of thinking about this is that in the
+discretization of the spatiotemporal \KSe\ we could add a term that
+represents the aliasing,
+
+as it is implicit in the fully aliased representation of the equations.
+
+I believe the spectrum of the \KSe\ plays a role, and it might be wise to at
+least dealias the temporal convolution sum as there is less of a precedent
+for ignoring it; In the spatial case we can at least claim the hyperdiffusion
+term diminishes the amount of corruption in the spatial wave number, but this
+is harder to motivate for the temporal terms.
+More motivation from Canuto, Hussaini, Quateroni and Zhang\rf{Canuto88} are
+their fig.~7.1 and fig.~7.4, where the fully aliased but more resolved terms seem
+to beat out even the dealiased computations in energy conservation of the KdV
+equation for fig.~7.1.
+Their fig.~7.4 is a reproduction of the effects of aliasing in the transition
+to turbulence in channel flow by  Krist and Zang\rf{KrZa87}. Only the high
+resolution (aliased) seems to be physically representative of the actual
+solution, and even the dealiased computation on a coarser discretization
+(while better than the equivalent aliased discretization) still does not
+prevent artificial oscillations. This is also a temporal evolution problem
+which we are not dealing with.
+
+Implement a number of various means for rediscretization,
+reordered a bunch of processes.
+List of rediscretization processes, ``Residual guided rediscretization'':
+ Lower $N$ and $M$ while $|F|^2$ is decreasing
+``Converged Solution guided rediscretization'': Lower $N$ to minimum
+value dependent on period, incrementally increase until solution converges,
+then do
+the same with $M$.
+
+The first of these is the cheap, expedient procedure that should
+ be used to produce initial conditions that
+have a smaller discretization that one started with; The second
+tries is a much more expensive procedure
+because it tries to find the minimal discretization for \emph{converged}
+solutions; therefore, it requires
+a bit of computational time. From testing it seems much better to
+ increase the discretization at all points
+in the calculation, and then as the very last preprocessing step,
+ decrease the discretization.
+The motivation for this increased cost is because the second
+ procedure has repeated gluings in mind; not only
+do we want a converged solution, but also the converged solution
+with minimal discretization. Because the convergence
+seems to be much more finicky with respect to changes in the
+spatial discretization when working at a fixed
+length $L=22$.
+
+A correction was made that more fairly weights solutions
+depending on their initial parameters; I was mistakenly
+creating initial conditions where solutions with drastically
+different periods were receiving equal number of points
+in the final discretization, as opposed to being weighted by
+how much they contribute to the final periods. In other
+words I wasn't incorporating the correct scales in the
+initial conditions.
+
+In terms of specific testing, the main parameters that I tested were,
+\begin{itemize}
+\item Rediscretization before and after adjoint descent
+\item The size of the discretization of the buffers
+\item The method of creating the buffers
+\item The use of the ``residual-guided'' rediscretization
+\end{itemize}
+
+which lead to the following conclusions. It's always better to rediscretize before
+before numerical methods. A moderate buffer size is $5$, a moderate number of points and
+likely should be proportional to the total number of points; still testing.
+Use of the residual guided rediscretization routine should always
+be used on the dimension perpendicular to the gluing dimension first.
+Some (seemingly) improved lower bounds on the number of points in the discretization
+is something like $M = 2^(\log_2 L + 1)$ and $N = 2^(\log_2 L -1)$.
+Main point: less sensitive to changing (reducing) the maximum frequency
+mode (less points in time). 

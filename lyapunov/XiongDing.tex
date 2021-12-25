@@ -1,0 +1,2794 @@
+\ifsvnmulti
+ \svnkwsave{$RepoFile: lyapunov/XiongDing.tex $}
+ \svnidlong {$HeadURL: svn://zero.physics.gatech.edu/siminos/lyapunov/XiongDing.tex $}
+ {$LastChangedDate: 2017-03-29 23:38:45 -0400 (Wed, 29 Mar 2017) $}
+ {$LastChangedRevision: 5740 $} {$LastChangedBy: xiong $}
+ \svnid{$Id: XiongDing.tex 5740 2017-03-30 03:38:45Z xiong $}
+\fi
+
+\chapter{Xiong Ding's project}
+\label{sect:introXD}
+
+\begin{bartlett}{
+Sometimes a scream is better than a thesis.
+                }
+\bauthor{
+Ralph Waldo Emerson
+        }
+\end{bartlett}
+
+\bigskip
+
+The goal of the summer/fall 2013 project is that \XD\ adopts the Ginelli
+\etal\rf{GiChLiPo12} method for computation of {\cLvs} to
+computation of \po\ Floquet vectors,  and implement it for the \po s and
+\rpo s in our \KS\ database.
+
+
+\begin{description}
+
+\item[2013-06-27 Predrag] Our first goal is to learn
+how to compute \emph{all} eigenvectors (CLVs) and Floquet multipliers
+(in literature mistakenly often called `Lyapunov exponents') of
+\JacobianMs\ for \po s computed in \refref{SCD07}.
+Please study this reference in depth. For \KS\
+calculations of \refchap{sect:LyapKS}, system size $L=22$, this is 62
+eigenvectors. We have at least 40,000 \rpo s.
+
+%fine tuned 2013-08-02
+You will first check whether your numerical code for \jacobianM\
+integration
+\beq
+ \frac{d}{dt}J^t=A J^t \quad J^0=I
+\ee{XD-JacobianEq}
+reproduces the analytic eigenvalue and eigenvector
+linear stability spectrum for the simplest \eqv\ solution $u(x)=0$. Next
+you will check how well do you compute the stability exponents for the
+three numerical \eqva\ and the two \rpo s of section {\em 2.2.
+Equilibria and relative equilibria}
+ of \refrefs{SCD07}.
+
+Then you will check
+whether you agree with Kazumasa's results for his
+favorite \po\ \PO{10.3} with $\period{p} = 10.253$.
+\PO{10.3} is the prime orbit period of a pre-\po,
+the full period is twice that, see Fig. 6.1\,(i) \emph{Selected
+relative periodic and pre-\po s} in \refref{SCD07}.
+
+
+%fine tuned 2013-08-02
+Now the new work starts. What is clearly dumb about the numerical
+method described in Francesco
+    \etal\ review paper\rf{GiChLiPo12} is that one mindlessly
+    integrates the \jacobianM\  $\jMps^\zeit$
+for arbitrarily long times, but for the invariant solutions \emph{no}
+time integration is needed (\eqva), or \emph{only one time period}
+\period{} integration is needed (\po s).
+\\(Kazz) This is true, but as you know, Ginelil's algorithm was
+invented to study chaotic systems. Therefore, application of Ginelli's
+method to fixed points or periodic orbits (if they do) should only be
+meant to compare with Floquet eigenexponents and eigenvectors. They
+(including me in the same group) are not so dumb...
+
+Your project is to rethink the linear algebra of \refref{GiChLiPo12}
+so that you can compute all stability eigenexponents and eigenvectors
+of $\jMps^\zeit$ for a numerically given \eqv\ solution,
+\emph{without} the mindless time integrations.
+It should not be too hard :). The reasons why it has not been done
+because all the people involved so far are happiest running long-time
+mindless simulations.
+\PCedit{ %fine tuned 2013-08-05
+But I might be too flippant here:
+    }
+fluid dynamicists (see for example
+Appendices \HREF{http://www.cns.gatech.edu/~predrag/papers/steady.pdf}
+{A.2 and A.3} in \refref{GHCW07}) do compute stability of \eqva\ using
+time integration and Krylov spaces...
+
+Save your code in a \texttt{siminos/xiong/} subfolder. You want to
+confirm the result in \refref{SCD07}, see
+\HREF{http://www.cns.gatech.edu/~predrag/papers/SCD07.pdf}{sect. 4} in
+that paper:
+    \PC{the source file is in \texttt{siminos/rpo\_ks/}}
+
+\begin{quote}
+``[...] Indeed, numerically the {\cLvs}\rf{ginelli-2007-99} of the $L=22$ chaotic attractor separate
+into 8 ``physical'' vectors with small Lyapunov exponents
+$(\Lyap_j) = (0.048,$ 0, 0, $-0.003$, $-0.189$, $-0.256$,
+$-0.290$, $-0.310$),
+and the remaining 54 ``hyperbolically isolated'' vectors with rapidly
+decreasing exponents
+$(\Lyap_j)
+= (-1.963$,   $-1.967$,   $-5.605$,   $-5.605$,  $-11.923$,  $-11.923$,
+ $\cdots) \approx -(j/\tildeL)^4$,
+in full agreement with the Yang \etal\rf{YaTaGiChRa08} investigations
+of KS for large systems sizes.
+ [...]''
+\end{quote}
+
+\item[2013-06-27 Predrag]
+This section up to \refsect{sect:dailyBlXD} are an evolving draft of
+\XD\'s project report; daily progress is reported in
+\refsect{sect:dailyBlXD}~{\em Daily blog}.
+
+Please {\color{red} write down here}, in your project's
+log, the equations you are integrating (you can clip and paste
+equations from elsewhere in this repository to save time).
+This will be a continuously evolving draft of the project report.
+When you
+write up the project report it will all be needed, so you might just
+as well do it now.
+
+If we know where are you in the project, we can help you.
+Write up full fledged
+derivations and explanations of what you are learning - clear enough
+that some of that text can be later used in your project report, or a
+publication, if we get that far. Clear exposition is 1/3 of research.
+
+My vision of the project is sketched in \refchap{c-draft}. Studying
+\refchap{s:LyapunovVec} is also a good idea. \refChap{sect:LyapKS}
+deals specifically with the \KS\ calculations.
+Search for\\
+``2012-02-06 Evangelos Talked with Hugues at MPIPKS, created a to-do list:''
+\\
+to see Evangelos and Hugues work plan.
+
+\item[2013-06-27 Predrag]
+Setting up \XD\ for the svn (subversion) repository access
+
+\texttt{svn://zero.physics.gatech.edu/siminos}
+
+you will
+need this userID, password, so save it in your secret stash of magic
+words:
+\\
+user: xiong  password: Lyapunov
+
+to access repositories read about subversion/svn and VPN access on
+\HREF{http://cns.gatech.edu/CNS-only} {cns.gatech.edu/CNS-only} - to
+access any of the internal CNS pages you will need
+
+cnsuser           cnsweb
+
+\HREF{http://ChaosBook.org/library}{Click here} for internal reprints and
+books collection. You will need
+
+student           Lautrup
+
+I do not have the patience to enter every paper in the listing on this
+internal home page, so many papers are there but not listed. Their PDF
+file name is the same as their bibTeX name for the publication. For
+example, a book by Wassim M. Haddad\rf{HaCh08} has BibTeX name
+\texttt{HaCh08}, so I put a copy of their book into the
+ChaosBook.org/library as
+
+\HREF{http://ChaosBook.org/library/HaCh08.pdf}
+{ChaosBook.org/library/HaCh08.pdf}.
+
+If you download some publications that would be nice to save for other
+people, let me know, and I'll show you how to do it.
+
+To compile the blog,
+\begin{verbatim}
+ cd siminos/lyapunov/
+ pdflatex blog; bibtex blog; pdflatex blog
+\end{verbatim}
+
+To help a bit with starting writing, I will
+edit your text (you can see edits by using diff in Tortoise).
+
+Here is how you can
+\Xiongedit{highlight your edits}, and here is how you can add a dated
+footnote\Xiong{2013-03-03}{This is a footnote. Always enter the date, so
+we know how old it is.}.
+
+In the first draft, do not worry about
+English, just focus on the formulas. Write
+down what a starting graduate student would need to know to be able
+to set up the calculation.
+
+If you want source files for ChaosBook.org to clip and past from, you can
+\begin{verbatim}
+  svn checkout svn:\\zero.physics.gatech.edu\dasbuch
+\end{verbatim}
+
+Always trim the figures, avoid lots of white
+space around the edges.
+
+If you look into directory
+siminos/chaos/ and pdflatex blog.tex, you can see an example of what
+a student work log looks like (after a semester of so of work).
+For examples of
+what final reports look like, see \wwwcb{/projects}.
+
+Come to me or Skype me if there is something you
+cannot figure out.
+
+\item[2014-10-27 Predrag]
+to Xiong Ding: in the future, please diff my edits of your siminos.bib
+entries, so not to make same errors again and again. We use
+\begin{itemize}
+  \item abbreviations, not full journal names
+  \item initials, not full person names
+  \item page numbers, volume numbers
+  \item doi without \texttt{http://}
+  \item chapter in a collection is not cited as an article with the title of
+         the book cited as `journal'
+\end{itemize}
+If the bibliography is messy, the reader will assume that the article
+itself is not proofread either, and thus not trustworthy.
+\end{description}
+
+    \newpage
+\input{../xiong/blog/CovVecs}
+    \newpage
+\input{../xiong/blog/CLVs}
+    \newpage
+\input{../xiong/blog/DiffMat}
+    \newpage
+\input{../xiong/blog/KrylovSchur}
+    \newpage
+\input{../xiong/blog/KSe}
+    \newpage
+\input{../xiong/blog/Per_Schur}
+    \clearpage
+\input{../xiong/blog/UPOs}
+    \clearpage
+\input{../xiong/blog/dimensions}
+    \clearpage
+\input{../xiong/blog/Sym}
+    \clearpage
+\input{../xiong/thesis/chapters/symFactor} % 2017-03-08 omitted from the thesis
+    \clearpage
+\input{../xiong/blog/ReadList}
+
+\section{WebEx discussions \& to do list}
+
+\subsection{2014-01-30}
+
+Xiong explained the progress since the last WebEx meeting,
+mainly about the shadowing reported in \refsect{sect:Shadowing}.
+He thought that he had found a new periodic orbit \cycle{xdpo1},
+but it seems it is actually already in Ruslan's list
+(Kazz: but I'm not sure I correctly followed discussions about it;
+please add more precise information).
+
+The main results are those shown in \reffig{fig:ang789}
+ and \reffig{fig:angle_subspace}.
+About \reffig{fig:ang789}, the ``entangled'' dimension 8 obtained
+ for the pair \cycle{ppo34} and \cycle{ppo191} agrees with
+ that measured in \rf{TaCh11} for the pair of \PO{10.25} (periodic orbit)
+ and an ergodic trajectory, 9, because in the latter the Lyapunov spectrum
+ includes an extra neutral exponent corresponding to the 0th Fourier mode.
+Although the result is very good, we are worried about the ``oscillations''
+ apparent in the figure.
+Xiong explained that it is because of the separation of the longer orbit
+ \cycle{ppo191} from the shorter one \cycle{ppo34}.
+To elucidate what's going on, Hugues suggested [1] plotting only data points,
+ without the lines connecting consecutive points.
+In this way we can know if the ``oscillatory'' part really shows oscillations
+ or it actually consists of two branches.
+In any case, we have to confirm that this is not due to numerical problems.
+Predrag also suggested [2] using only the interval
+ during which the two orbits stay close to each other
+ (i.e., omitting the deviation part).
+
+About \reffig{fig:angle_subspace}, Xiong grouped the Floquet modes
+ (pairs of the Floquet exponent and vector) two by two,
+ but this is not the right way in the entangled region.
+Instead, he should group Floquet modes in such a way that
+ each group corresponds to a real Floquet exponent
+ or to a pair of complex conjugates,
+ so that the grouping should be 1, 2-3, 4, 5, 6, 7, 8 $\dots$
+ for \cycle{ppo34} (note that it is different for each orbit).
+[3] Xiong has to remake \reffig{fig:angle_subspace} in this way.
+Then, the minimal angle along the orbit provides a measure
+ of hyperbolicity of the orbit.
+Kazz suggested [4] measuring this hyperbolicity and the entangled dimension
+ (as in \reffig{fig:ang789}) for different periodic orbits,
+ to infer how the latter depends on the hyperbolicity of the orbits.
+
+Hugues suggested [5] making ``statistics'' of the angles:
+ for a collection of periodic orbits, measure the minimum angles
+ between neighboring Floquet vectors
+ (or subspaces in case of degeneracy / complex pairs)
+ and make a histogram, for example.
+It could be that, only for indices below a threshold (hopefully 8),
+ the distribution of the minimum angles can reach zero.
+When collecting orbits, we should use those visited (approached)
+ by ergodic orbits, i.e., those living in the attractor.
+Ruslan (not sure it was he, though) suggested collecting orbits
+ along an ergodic trajectory: use each neighborhood of an ergodic trajectory
+ to search for periodic orbits.
+In a sense this can reflect a measure of the ergodic trajectory.
+
+\paragraph{To do list:}
+\begin{itemize}
+\item Follow the suggestions [1-5] above ([1-3) are easy).
+\end{itemize}
+
+\subsection{2015-10-15}
+\label{sect:2015-10-15}
+
+Discussed Xiong's first draft of \refref{DCTSCD14}
+
+\begin{enumerate}
+  \item
+eq.~(2) is measuring the instantaneous matrix of velocity derivatives
+(\stabmat) $\Mvar$, not the \jacobianM\ ${\jMps}^\zeit$, so it makes not
+much sense to call it `local Floquet experiment'. Still, it is striking
+that there is such clear separation of \entangled\ and \transient\
+Floquet eigen-directions.
+
+Kaz says that he observed the same in testing Dominated Oseledec
+Splitting (MS-DOS~OS); while theory demands the shortest $\zeit_0$ beyond
+which the ordering of finite time Lyapunov exponents remains stable, in
+his numerics he almost always sees correct ordering already at one
+computational step
+  \item
+Fig.~1: move frames (c) and (d) to Xiong's thesis, replace here by a
+sentence.
+  \item
+Kaz will explain DOS and the previous work with ergodic trajectories.
+\end{enumerate}
+
+
+\section{Daily log}
+\label{sect:dailyBlXD}
+
+This section is the daily (or at least, bi-weekly)  log of the \XD's
+work.
+
+\begin{description}
+
+\item[2013-06-27 Predrag] Xiong Ding  <dingxiong203@gmail.com>,
+1. year Georgia Tech physics graduate student, joined the
+collaboration as a summer research project.
+\XD\ will enter notes on his day-to-day progress into this log.
+
+\item[2013-06-27 Evangelos] Maybe \XD\ could start with Francesco
+    \etal\ review paper\rf{GiChLiPo12} instead of the blog? Francesco
+    gave a talk here and made it seem very easy task to implement the
+    method for a system of ODEs and also his paper seems readable.
+    \\
+{\bf [2013-06-27 Predrag]}
+I agree, that's why the paper is referred to in the 1. line of
+\refsect{sect:introXD} :) So does Kazumasa, see the next entry.
+
+\item[2013-06-27 Kazumasa  to \XD]
+Great! Please read (apart from ChaosBook.org)
+%Francesco
+Ginelli \etal\rf{ginelli-2007-99}
+\HREF{http://prl.aps.org/abstract/PRL/v99/i13/e130601}{PRL}, and the
+\HREF{http://arxiv.org/abs/1212.3961}{long follow-up paper}\rf{GiChLiPo12},
+(much more detailed than the PRL).
+Otherwise you will not understand anything on the codes (and the project).
+
+\item[2013-06-27 Predrag]
+I agree with Kazumasa: you want to write your own code,
+but not necessarily reinvent the wheel. There is KS code various
+places in this svn repository, for example in
+\texttt{siminos/matlab/}, that you might want to compare performance
+of your code with. Evangelos can help you with that.
+
+
+\item[2013-06-14 Predrag]
+Take a few days to read through this blog, and then we talk,
+Skype or in person.
+Enjoy :)
+
+To start working on the {\cLvs} project,
+the
+\HREF{http://www.cns.gatech.edu/CNS-only/subv.html} {subversion repository}
+(type   cnsuser   cnsweb) is called
+\begin{verbatim}
+svn checkout svn://zero.physics.gatech.edu/siminos
+username, password:     xiong and Lyapunov
+\end{verbatim}
+Chris Marcotte <christopher.marcotte@gmail.com, can help you get
+started. Daniel Borrero dborrero@gatech.edu and Qi Ge
+    qge30@gatech.edu also know how to do it. Failing that, I'll help
+you via Skype predragcvitanovic.
+
+\item[2013-07-04 Predrag] I assume we are going to work on the
+    {\cLvs} project, so please try to learn how to check out
+    the repository (see {\bf [2013-06-14 Predrag]} above).
+
+\item[2013-07-05 \XD] I tried to read the \emph{Appendix C - Linear
+    Stability} in ChaosBook, but it was hard for me to understand the
+    `Fundamental matrix' and the `Dual space'. I don't know what book
+    or paper covers this material. Could you give me some suggestion?
+
+For now we do use either for time being - `fundamental matrix' is
+discussed a bit in
+    \PC{the pdf file text in purple is a hyperlink - click on it to
+    see the file I am referring to...}
+\emph{\HREF{http://chaosbook.org/paper.shtml\#stability} {Section 4.3} A
+linear diversion}, but only for completeness, and `dual spaces' we might
+have to define once we start using norms other than $L2$ for \KS. For
+now, ignore them. We should remember to rewrite `fundamental matrix'
+discussion in
+\emph{\HREF{http://chaosbook.org/paper.shtml\#appendStability} {Appendix
+C} - Linear Stability} later on - I agree that it is confusing.
+
+\item[2013-07-05 \XD]
+You want me to check the material in Chapter 27. I
+will try, but now I only finish reading the first eight chapters. I am
+\PCedit{stuck}
+    \PC{here purple indicates Predrag's edit. Nobody's perfect.}
+at Chapter 9 (groups and symmetries). So I am not sure when I can
+understand Chapter 27.
+
+\item[2013-07-05 Predrag] Chapter 27? Do you mean \emph{
+\HREF{http://chaosbook.org/paper.shtml\#PDEs}{Chapter 26} - Turbulence?}
+ChaosBook is not sequential - to understand this chapter you only need
+chapters 2-6 and 11-12. For the time being you can skip
+{\em Chapter 9 - World in a mirror} and
+{\em Chapter 10 - Relativity for cyclists}, jump straight from
+{\em Chapter 6 - Lyapunov exponents} to {\em {Chapter 26} - Turbulence}.
+
+\item[2013-07-07 Predrag] Our man Xiong
+(\HREF{http://www.youtube.com/watch?v=0t1_usmB30s}{agent 007})
+has mastered VPN and can check out / commit this repository.
+
+\item[2013-07-10 \XD]
+% I am not sure whether my system can handle VPN now.
+The structure of this repository is very complicated.
+
+\item[2013-07-07 Predrag to 007] For now you care only about
+\begin{verbatim}
+siminos/lyapunov/blog.tex
+\end{verbatim}
+ but the wisdom accrued
+elsewhere in \texttt{siminos} repository might come in handy -
+we'll point you to relevant files as the need arises. The
+published papers are in the blog - you might find that useful
+for clip \& paste, rather than typing everything from the scratch...
+
+\item[2013-07-12 Predrag to \XD]
+I have \HREF{http://www.bmp.ds.mpg.de/philip-bittihn.html} {Philip
+Bittihn} PhD thesis\rf{BittihnThesis} for you. Philip has been
+co-advised by Flavio, and in his thesis he carries out {\cLv} calculations based on Ginelli
+\etal\rf{ginelli-2007-99} method. He applies them to the Barkley
+model (I have asked Kamal Sharma to do that), and to the Fenton-Karma
+model (Chris Marcotte is working on that). I suggest you study that
+part of the thesis, and after you have read relevant sections, we can
+ask Philip to give us informal webinar, where he can answer your
+questions.
+
+\item[2013-07-22 Predrag to \XD] Are you OK, or should I ask police to check
+your apartment :) Have not seen anything in the blog since 2013-07-12. Let's
+make a schedule for updates: how about no later than 5PM on Tuesdays and Thursdays?
+Propose some other times if these are not optimal...
+
+I'm in Chicago and
+\HREF{http://www.cns.gatech.edu/~predrag/schedule/travel.txt} {Woods Hole}
+until Aug 17, but we can meet on Skype whenever you would like to discuss
+something. I have asked building manager to give you temporarily a key to
+W501B (desk to the left, as you enter, is empty), until Aug 7.
+Thereafter Greg Byrne, our new
+postdoc arrives. If this is too much trouble for too short time, do not move.
+I am away, but Chris and Adam are nearby, and they are good to talk to.
+
+\item[2013-07-22 \XD\ to Predrag] I am writing the code these
+    days. I follow the instructions in paper \refref{ks05com} to update
+    the \KS\ equation in \statesp\ and the movement in tangent space. I
+    record the diagonal elements of the up-triangular matrix to
+    calculate the Lyapunov exponents. The code written in Matlab gave
+    me inconsistent results; while the code written in C++ doesn't work
+    because of overflow. I am sorry I didn't update the blog these days
+    because I haven't achieved anything sensible.
+
+\item[2013-07-22 Predrag] This is too telegraphic. People just say 'Lyapunov
+exponents' without a definition, usually meaning something that is not
+a 'Lyapunov exponent'. Are you computing
+stability multipliers (or stability exponents, logarithms of multipliers
+divided by
+time) of \jacobianMs, or are computing the long time limits of
+singular values of (\jacobianM$\transp{)}\times($\jacobianM)?
+If you do not understand the question (and that is OK - the literature is
+very confusing), reread stability and Lyapunov
+chapters of ChaosBook.
+
+\item[2013-07-22 \XD\ to Predrag] Sorry for my telegraphic report. I mean I update
+the orthogonal tangent vectors for several steps and then conduct $QR$ factoring.
+I record the diagonal elements of the up-triangular matrix $R$ and use the formula
+in \rf{GiChLiPo12} to calculate these exponents. So it refers to the stability multipliers
+of \jacobianMs.
+\[
+ \lambda_i=\lim_{T\to \infty} \frac{1}{T} \sum_{h=0}^{T-1}
+  \ln\gamma_{k,n+hk}^{(i)}
+ \,.
+\]
+I uploaded my C++ code to folder \texttt{xiong/c/}
+and two Matlab codes to folder \texttt{\texttt{xiong/matlab/}}.
+One of them, \texttt{etdrk4.m}, is just a copy from \refref{ks05com}. I tried to increase
+the total time and found that the recorded data overflew. I changed the length of space period
+to be 22 in other two files, but the exponents were different from those in paper \refref{SCD07}.
+
+
+\begin{quote}
+``[...] Indeed, numerically the {\cLvs}\rf{ginelli-2007-99} of the $L=22$ chaotic attractor separate
+into 8 ``physical'' vectors with small Lyapunov exponents
+$(\Lyap_j) = (0.048,$ 0, 0, $-0.003$, $-0.189$, $-0.256$,
+$-0.290$, $-0.310$),
+and the remaining 54 ``hyperbolically isolated'' vectors with rapidly
+decreasing exponents
+$(\Lyap_j)
+= (-1.963$,   $-1.967$,   $-5.605$,   $-5.605$,  $-11.923$,  $-11.923$,
+ $\cdots) \approx -(j/\tildeL)^4$,
+in full agreement with the Yang \etal\rf{YaTaGiChRa08} investigations
+of KS for large systems sizes.
+ [...]''
+\end{quote}
+
+Maybe the problem lies in the my code structure, or I misunderstand the algorithm described in
+\rf{GiChLiPo12}. Also, I am wondering whether it is correct to select an arbitrary inital
+condition for the dynamics in phase space because it may not enter the ``inertial manifold''.
+
+I think I should study paper \refref{SCD07} thoroughly first and then turn to coding again. I
+cannot stand writing another hundreds of lines in C++ for next few days.:)
+
+\item[2013-07-22 \XD]
+Now I try to focus on those codes and locate the problems with them.
+Do you have any suggestion?
+
+\item[2013-07-22 Predrag] It's a big project, and these codes are not written
+in a week. One step at the time. Before implementing them for \KS,
+test them on simple things, like Lorenz and R\"ossler. Write down here,
+in the blog, the
+formulas your code is supposed to implement. Save programs
+(but usually not data other than parameters, initial conditions and such,
+especially if it takes lots of space)
+and document them in your
+directories under \texttt{siminos/xiong/} so Kazumasa and/or Evangelos
+can test them, help you debug them. Once the problem is explained
+here, ask Kazumasa for advice (I have not done serious coding in years :).
+
+\item[2013-07-22 Predrag] For a few suggestions for simple models to
+test on, see \refsect{sect:CovVecs}.
+
+\item[2013-07-23 Kazumasa via Predrag]
+I cannot read and update the blog while travelling, but has Xiong has
+tried my code? My C++  code \texttt{lyap-upo.cpp} and \texttt{README.txt}
+are in \texttt{siminos/kazz/code/}. You compile and run it as C++. Note
+that, though I extracted a part of my long code relevant to our project,
+it contains many functions which you probably will not need.
+
+I strongly recommend that you write your own code from zero, without
+reference to mine. This is the best way to learn what's going on in
+the code. Don't try to write a code with full functionality from the
+beginning, but start with a minimal code, which only computes, say,
+Lyapunov exponents.
+Confirming that this works as you expect, you can add a code to compute
+the {\cLvs} from a simple forward-backward process (and
+check if the exponents values computed from the {\cLvs}
+agree with those from the Gram-Schmidt method). For practical use,
+you have to implement the "block-by-block" computation of the
+vectors, to overcome memory issues (see discussions in Sec. 4.2 in
+Ginelli \etal\rf{GiChLiPo12}, \arXiv{1212.3961}). This is
+the first step you should reach in this project.
+
+For numerical integration of the KS equation, I used the
+operator-splitting algorithm (Adams-Moulton method + Heun's method),
+typically with time step 0.005. For more detail, read Sect.~II~A in
+Takeuchi \etal\rf{TaGiCh11}. Stiffness matters, implicit methods are
+common ways to overcome this problem,
+ and that's why I used the Adams-Moulton method. To further improve,
+it's better to split the linear and non-linear terms
+ by the operator splitting method and use the implicit method only to
+ the linear terms where the stiffness is.
+I'm not saying that my algorithm is the best way to simulate the KS
+equation, but at least it's suited to practical use.
+
+
+\item[2013-07-28  \XD] I tried to calculate the Floquet exponents of the \po\ $T_{10.25}$
+according to the evolution law of \JacobianMs\ \refeq{XD-JacobianEq}.
+I evolve the system for 10.25 time units, and get the \jacobianMs\ which is initially an identity matrix.
+The Floquet exponents are defined as $\Lyap_i=\ln \ExpaEig_i /\period{}$, where $\ExpaEig_i$ is an
+eigenvalue of $J^{10.25}$. What I got is:
+\\
+
+   0.23258 - 0.00000i          \\
+   0.14955 + 0.12659i          \\
+   0.14955 - 0.12659i          \\
+   0.03606 - 0.09769i          \\
+   0.03606 + 0.09769i          \\
+   0.00000 + 0.00000i\\
+   0.00000 + 0.00000i\\
+  -0.12645 - 0.00000i          \\
+  -0.26741 + 0.00000i          \\
+  -0.31008 + 0.00000i          \\
+  -2.08643 + 0.00031i          \\
+  -2.08643 - 0.00031i          \\
+  -3.75575 - 0.12337i          \\
+  -3.85635 + 0.02976i          \\
+         (the rest are commented out in the printout) \\
+%  -3.89556 + 0.23714i\\
+%  -3.96240 - 0.16580i\\
+%  -3.98168 - 0.03617i\\
+%  -4.25816 - 0.24501i\\
+%  -4.32998 - 0.19698i\\
+%  -4.35308 + 0.16783i\\
+%  -4.37326 - 0.09470i\\
+%  -4.51263 + 0.18201i\\
+%  -4.59075 + 0.01169i\\
+%  -4.65092 + 0.22378i\\
+%  -4.72197 - 0.21302i\\
+%  -4.75598 - 0.14938i\\
+%  -4.77917 + 0.15105i\\
+%  -4.91567 - 0.28930i\\
+%  -4.99471 - 0.12117i\\
+%  -4.96573 + 0.12500i\\
+%  -5.07246 + 0.22152i\\
+%  -5.17096 - 0.17295i\\
+
+However, when I tried to check my result against the data in
+\\
+\texttt{siminos/matlab/ruslan/ks22f90h25t100.mat},
+\\
+I find they are different. The eigenvalues there are
+
+      -0.59458 + 1.27298i\\
+      -0.59458 - 1.27298i\\
+      -1.00000 + 0.00000i\\
+       1.00000 + 0.00000i\\
+       0.10870 + 0.00000i\\
+      -0.05706 + 0.03281i\\
+      -0.05706 - 0.03281i\\
+      -0.03366 + 0.00000i\\
+       0.00000 + 0.00000i\\
+       (the rest are all zeros) \\
+   %   -0.00000 + 0.00000i\\
+%       0.00000 + 0.00000i\\
+%      -0.00000 + 0.00000i\\
+%      -0.00000 + 0.00000i\\
+%      -0.00000 + 0.00000i\\
+%       0.00000 + 0.00000i\\
+%      -0.00000 + 0.00000i\\
+%      -0.00000 + 0.00000i\\
+%      -0.00000 + 0.00000i\\
+%       0.00000 + 0.00000i\\
+%      -0.00000 + 0.00000i\\
+%       0.00000 + 0.00000i\\
+%       0.00000 + 0.00000i\\
+%      -0.00000 + 0.00000i\\
+%       0.00000 + 0.00000i\\
+%      -0.00000 + 0.00000i\\
+%      -0.00000 + 0.00000i\\
+%      -0.00000 + 0.00000i\\
+%      -0.00000 + 0.00000i\\
+%      -0.00000 - 0.00000i\\
+%       0.00000 + 0.00000i\\
+
+I don't know the meaning of eigenvalues in this file. And, why are there
+so many zeros?
+
+\item[2013-07-30 Evangelos to Xiong]
+The file under question provides Floquet multipliers (eigenvalues of the Jacobian). This is documented here in this blog, I think (but it's too hard to trace it).
+The lack of a symmetric partner for your largest Floquet exponent indicates something might be wrong. When you integrate the trajectory, how close does it get to
+the initial value? Also, please recheck your definition of Floquet exponents.
+
+\item[2013-07-30 Predrag to Xiong] My guess is that you have not read
+    Ruslan's instructions for how to read the data sets. As long as
+    your integration of a periodic point on \po\ \PO{10.25} does not
+    close after one period, there is no point of computing Floquet
+    exponets; everything computed on a wrong orbit is wrong, right?
+    Once your code verifies the periodicity (to machine precision, not
+    to 1\%), then go for the Floquet exponents. What about plotting
+    your Floquet exponents in the style of \reffig{fig:lyapSpec1} and
+    other figures in the blog, and seeing how they compare with your
+    exponents? How do you compare to \reftab{tab:ks22po10.25FloqExp}?
+    If you search for 10.25 throughout this blog, you will find much
+    discussion of this \po, and its properties.
+
+\item[2013-07-30 Predrag to Xiong] The period of \po\
+    \PO{10.25} is not $\period{}=10.25$ it is
+    $\period{}=10.25336729174627$, or whatever full precision number
+    you are given in Evangelos and/or Ruslan data sets. You are
+    computing all properties of an invariant solution to machine
+    precision, not to 1\% accuracy; the whole problem with the naive
+    integration of \refeq{XD-JacobianEq} is that it can compute only a
+    few leading Floquet multipliers / exponents, while the method you
+    are going to adopt from Ginelli \etal\rf{GiChLiPo12} is supposed to
+    give you {\em all} exponents to the full precision.
+
+\item[2013-07-30 Predrag to Xiong] Please write out here explicitly, in
+    formulas, Evangelos computation that gives $a_{N/2}=0$, so we are
+    sure that you and Evangelos agree.
+
+\item[2013-08-01 \XD\ to Predrag and Evangelos] Thank you for the analysis to my
+problem and useful suggestions. I really appreciate your reply. :)
+
+First, I want to write down my understanding on code \\
+\texttt{siminos/matlab/ruslan/ksfmetd2.m} \\
+and give my opinion about $a_{N/2}=0$.
+
+\KS\ equation is
+\[
+ u_t=-\frac{1}{2}(u^2)_x-u_{xx}-u_{xxxx}
+ \,.
+\]
+We perform a Fourier transform,
+\begin{align*}
+ \hat{u}_{k} &= F[u]_{k}= \frac{1}{L}\int_{0}^{L} u(x,t)e^{-iq_{k}x}dx\\
+ u(x,t) &= F^{-1}[\hat{u}] = \sum_{k=-\infty}^{+\infty} \hat{u}_{k} e^{iq_{k}x}
+\end{align*}
+In the Fourier space the \KS\ equation is
+\begin{align}
+ \dot{\hat{u}}_{k} &= (q^{2}_{k}-q^{4}_{k})\hat{u}_{k}-\frac{iq_{k}}{2}F[(F^{-1}[\hat{u}])^{2}]_{k}\nonumber\\
+ &= (q^{2}_{k}-q^{4}_{k})\hat{u}_{k}-\frac{iq_{k}}{2} \sum_{m=-\infty}^{+\infty} \hat{u}_{m}\hat{u}_{k-m}\nonumber\\
+ & \doteq (q^{2}_{k}-q^{4}_{k})\hat{u}_{k}-\frac{iq_{k}}{2} \sum_{m=-N}^{N} \hat{u}_{m}\hat{u}_{k-m}\label{xfft1}
+\,,
+\end{align}
+where in \refeq{xfft1}, I make a truncation of the wave number from $-N$ to $N$, which is just a approximation, and we have
+a relation $\hat{u}_{-k}=\hat{u}_{k}^{*}$ since $u(x,t)$ is a real function.
+
+On the other hand, when implementing this equation into numerical
+analysis, we turn to discrete Fourier transform:
+\begin{align*}
+ a_{k} &= F_{N}[u]_{k}= \sum_{n=0}^{N-1} u(x_{n})e^{-iq_{k}x_{n}}\\
+ u(x_{n}) &= F_{N}^{-1}[a]_{n} = \frac{1}{N}\sum_{k=0}^{N-1} a_{k} e^{iq_{k}x_{n}}
+\,.
+\end{align*}
+The \KS\ equation then becomes
+\begin{align}
+ \dot{a}_{k} &= (q^{2}_{k}-q^{4}_{k})a_{k}-\frac{iq_{k}}{2}F_{N}[(F_{N}^{-1}[a])^{2}]_{k}\nonumber\\
+ &= (q^{2}_{k}-q^{4}_{k})\hat{u}_{k}-\frac{iq_{k}}{2} \frac{1}{N} \sum_{m=0}^{N-1} a_{m}a_{k-m} \label{xfft2}
+\end{align}
+Here, we have similar relation $a_{N-k}=a_{k}^{*}$. Therefore, we can see that $a_{N/2}$ is a real number, but I
+don't understand why we can assume such a real number to be zero as the system evolves. It is clear that
+$\dot{a}_{N/2}\ne 0$.
+
+\item[2013-08-02 Predrag to Evangelos] Clear enough. Can you take
+the discussion from here?
+
+\item[2013-08-01 \XD]
+Note that there are two major differences between \refeq{xfft1} and \refeq{xfft2}. First, the limit of the sum in the
+last term is from $-N$ to $N$ in \refeq{xfft1}; which is from $0$ to $N-1$ in \refeq{xfft2}. Second, the coefficient of
+the nonlinear term in \refeq{xfft1} is $-\frac{iq_{k}}{2}$, which is $-\frac{iq_{k}}{2} \frac{1}{N}$ in \refeq{xfft2}.
+I think these differences are closely related to code\\
+\texttt{siminos/matlab/ruslan/ksfmetd2.m} and the code in \rf{ks05com}.\\
+
+The first time I read these two codes, I was curious about the manner they set the wave numbers. Both of them
+set the wave numbers like this: \\
+\texttt{k = (2.*pi./d).*[0:N/2-1 0 -N/2+1:-1]}\\
+the index goes as $0,1,2,...N/2-1, 0, -N/2+1,-N/2+2,...-3,-2,-1$, which are equally distributed around $0$.
+However, if we follow the discrete Fourier transform, the index should goes as $0,1,2,....N-1$, so I think maybe
+these two codes were written to simulate equation \refeq{xfft1} not \refeq{xfft2}.
+\\
+
+Let's turn to \refeq{xfft1}, the spectrum of $\hat{u}_{k}$ is \\
+
+\begin{tabular}{c || c | c | c | c | c | c | c | c | c }
+\hline
+ wave number: & -N & -N+1 & ... & -1 & 0 & 1 & ... & N-1  & N \\ \hline
+ spectrum:    & $\hat{u}_{-N}$ & $\hat{u}_{-N+1}$ & ... & $\hat{u}_{-1}$
+ & $\hat{u}_{0}$ & $\hat{u}_{1}$ & ... & $\hat{u}_{N-1}$ & $\hat{u}_{N}$ \\
+\hline
+ \end{tabular}
+
+ We know $\dot{\hat{u}}_{0}=0$ so we can set
+ $\hat{u}_{0}=0$.\\
+
+ When implementing \refeq{xfft1}, the index of an array in Matlab can not start from $-N$,
+ so we shift the index of the spectrum to be as in \reftab{xtab1}.
+%
+ \begin{table}[H]
+ \centering
+\begin{tabular}{c || c | c | c | c | c | c | c | c | c }
+\hline
+ wave number: & -N & -N+1 & ... & -1 & 0 & 1 & ... & N-1  & N \\ \hline
+ spectrum:    & $\hat{u}_{1}$ & $\hat{u}_{2}$ & ... & $\hat{u}_{N}$ &
+ $\hat{u}_{N+1}$ & $\hat{u}_{N+2}$ & ... & $\hat{u}_{2N}$ & $\hat{u}_{2N+1}$ \\
+\hline
+ \end{tabular}
+ \caption{Shifted Spectrum}
+ \label{xtab1}
+ \end{table}
+%
+ Note that $\hat{u}_{0}$ has been shifted to $\hat{u}_{N+1}$, so $\hat{u}_{N+1}=0$ .
+ Also we know that there are $2N+1$
+ modes in the spectrum in table \reftab{xtab1}, which is an odd number. So maybe we can add a trivial
+ term to the spectrum to make it contain even modes. Therefore, $\hat{u}_{0}$ with wave number $0$
+ is added to \reftab{xtab1}. We stress that $\hat{u}_{0}=0$ is ensured only if we set the initial
+ value of $\hat{u}_{0}$ to be zero because its wave number is zero. Therefore, this term indeed has
+ nothing to do with the dynamics and it is introduced just for convenience of calculation.
+ The new table is now:\\
+
+\begin{tabular}{c || c | c | c | c | c | c | c | c | c | c }
+\hline
+ wave number:& 0 & -N & -N+1 & ... & -1 & 0 & 1 & ... & N-1  & N \\ \hline
+ spectrum:   & $\hat{u}_{0}$ & $\hat{u}_{1}$ & $\hat{u}_{2}$ & ... &
+ $\hat{u}_{N}$ & $\hat{u}_{N+1}$ & $\hat{u}_{N+2}$ & ... & $\hat{u}_{2N}$ & $\hat{u}_{2N+1}$ \\
+\hline
+ \end{tabular}
+
+ Let $N=2N+2$, then the above table is transformed to
+
+\begin{tabular}{c || c | c | c | c | c | c | c | c | c | c }
+\hline
+ wave number:& 0 & -N/2+1 & -N/2+2 & ... & -1 & 0 & 1 & ... & N/2-2  & N/2-1 \\ \hline
+ spectrum:   & $\hat{u}_{0}$ & $\hat{u}_{1}$ & $\hat{u}_{2}$ & ... & $\hat{u}_{N/2-1}$ &
+ $\hat{u}_{N/2}$ & $\hat{u}_{N/2+1}$ & ... & $\hat{u}_{N-2}$ & $\hat{u}_{N-1}$ \\
+\hline
+ \end{tabular}
+
+
+So now we see that both $\hat{u}_{N/2}$ and $\hat{u}_{0}$ correspond
+to wave number $0$. which is
+why we can set them to be zero. Also it seems plausible now
+Ruslan set the wave numbers like this: \\
+\texttt{k = (2.*pi./d).*[0:N/2-1 0 -N/2+1:-1]}.\\
+As conjectured by me, the fast Fourier transform is used in the code just
+for the purpose of simplifying the
+calculation, and Ruslan's code was written to simulate \refeq{xfft1}
+(the truncated version of
+continuous Fourier transform), not \refeq{xfft2}.
+
+What I said is just a hypothesis in my head, on which I rely to continue my project. If it is
+totally wrong, please give me a little hint. :)
+
+\item[2013-08-01 \XD] Thank Evangelos for pointing out that
+my Floquet spectrum has no symmetry, so I can found an error in
+my code yesterday. For the \po\ $\period{10.25}$,
+$\period{}=10.25336729174627$ is
+only half of the period of the full \statesp\ \po, isn't it?
+
+\item[2013-08-02 Predrag to Xiong] Yes, if orbit has a symmetry, one
+always lists its \emph{prime period}, the period of the \rpo. Have you
+read the 2. paragraph of your project description,
+\refsect{sect:introXD}? If it is any consolation, Kazumasa made the
+same error, search  above in the pdf file for {\bf [2011-02-18 Kazz]}.
+
+Please read
+{\em Chapter 9 - World in a mirror} and enter your understanding and the
+relevant definitions \underline{here}. You can clip and paste from
+the source files you have in the svn repository \texttt{dasbuch/}. Once the text is
+finalized, you will move it to your project report, currently germinating
+somewhere in \refsect{sect:introXD}.
+
+\item[2013-08-01 \XD]
+My current values for Floquet exponents are listed in \reftab{xiong_fe1025}:
+
+\begin{table}% [H]
+\caption{2013-08-01 \XD\ Floquet exponents of \po\ \PO{10.25}.}
+\label{xiong_fe1025}
+\begin{center}
+\begin{tabular}{c}
+
+   3.32413672481036e-02\\
+   3.32413672481033e-02\\
+   0.00000000000000e+00\\
+   0.00000000000000e+00\\
+  -8.26724618513977e-06\\
+  -8.26724618489602e-06\\
+  -2.16423793092645e-01\\
+  -2.65327123259045e-01\\
+  -2.65327123259020e-01\\
+  -3.30829831748078e-01\\
+  -1.66204011393299e+00\\
+  -1.69740366321360e+00\\
+  -1.70826901496309e+00\\
+  -1.81300026797917e+00\\
+  -1.85651558865934e+00\\
+  -1.89664182987626e+00\\
+  -1.95007591326600e+00\\
+  -2.00587519517270e+00\\
+  -2.04680171520099e+00\\
+  -2.12558084365374e+00\\
+  -2.16967619477208e+00\\
+  -2.25757216993449e+00\\
+  -2.26194070595541e+00\\
+  -2.37115492487369e+00\\
+  -2.38361926615575e+00\\
+  -2.40620809750389e+00\\
+  -2.46769749751231e+00\\
+  -2.48775082154666e+00\\
+  -2.49457229340377e+00\\
+  -2.63407572757270e+00\\
+  -2.61332280903346e+00\\
+  -2.57797836245960e+00\\
+\end{tabular}
+\end{center}
+\end{table}
+
+My result is very close to  \reftab{tab:ks22po10.25FloqExp} for those numbers whose
+magnitude is small; however, my large Floquet exponents are extremely different from those
+in \reftab{tab:ks22po10.25FloqExp}. The reason may lie in the fact that I use 20.507 as
+the period, but, actually, the exact period is slightly different from this number. So
+should I learn how to find unstable \po s from now on?
+At the same time, my eigenvalues are still
+different from those in \\
+\texttt{siminos/matlab/ruslan/ks22f90h25t100.mat}.
+
+\item[2013-08-02 Predrag to Xiong] Yes, as I asked you to do above, in
+    {\bf [2013-07-30 Predrag to Xiong]} (please diff the svn versions,
+    so you read all our comments), you \emph{must use the full machine
+    precision} both for the period \period{} and the initial point
+    $\xInit$ on the \po. Even then, different integration routines and
+    different truncations $N$ will introduce exponentially growing
+    errors, so for longer \po s you will have to use a set of points on
+    the orbit ('multiple shooting') to pin it down accurately.
+    Typically these points sit on {\PoincSec s}, with flight times
+    in-between sufficiently short that errors do not grow exponentially
+    large.
+
+\item[2013-08-02 Predrag to Xiong] When integrating \refeq{XD-JacobianEq},
+you are computing \emph{Floquet multipliers} $\ExpaEig_i$,
+not the \emph{Floquet exponents} $\Lyap_i=\ln \ExpaEig_i /\period{}$.
+These are either exponentially large or exponentially small, and cannot
+be all computed simultaneously, due to numerical over/under-flows. See
+\reffig{fig:lyapSpec1}\,(a) - everything we plot above $k=8$ is numerical
+noise.
+
+Anyway, now you are developing an appreciation for what our big problem
+is... Computing all Floquet exponents accurately is \emph{precisely} what
+your project is, as defined in \refsect{sect:introXD}.
+
+\item[2013-08-02 Predrag to Xiong] I moved the two
+0.00000000000000e+00 to be in-between the expanding and the contracting
+eigenvalues; they are important, as a \po\ has to have one zero
+Floquet exponent, and the periodic boundary condition $\SOn{2}$
+invariance should give you the second zero Floquet exponent: can you
+check that the corresponding eigenvector is a generator of $SOn{2}$? That
+is explained in ChaosBook.org {\em Chapter 10 - Relativity for cyclists}.
+
+0.00000000000000e+00 is really zero to machine precision??? Looks unlikely...
+
+\item[2013-08-01 \XD]
+On the other hand, when I choose an arbitrary initial
+condition for \KS\ equation, I find that it cannot produce a chaotic system; whereas, the
+trajectory in \statesp\ just runs away and doesn't come back, so the simulation terminates
+soon. What is the restriction on the initial condition to produce chaotic behaviour or at least
+seem to be chaotic for a sufficient long period?
+
+\item[2013-08-02 Predrag to Xiong]
+That would be very worrisome - there is no place for a $\KS$ trajectory
+to run away, it is a dissipative system. If it does, your integration
+routine is very sick. The crudest way to think of
+`chaos' and `ergodicity' is that no generic trajectory ever ``comes
+back,'' they always wander around and come arbitrarily close (a
+`recurrence') infinitely often; read \refsect{sec:TaCh11}.
+ Time to reread the first few chapters of
+ChaosBook.org? Start looking whether your spatial plots look right, like
+those of \reffig{kaz-evolution}, and corresponding spatial / time evolution
+plots in \refrefs{lanCvit07,SCD07}.
+
+
+
+
+\item[2013-08-02 Predrag to Xiong] I'm doing lots of little proof-reading
+edits - to see them, use svn diff of this version with yours. Also, how
+about using a spell checker to catch the typos?
+
+\item[2013-08-01 \XD] Should I delete the table of Floquet
+exponents I got before because it wastes so much space?
+
+\item[2013-08-02 Predrag] I commented some out - best not to delete
+them, as might want to cross-check them sometime later.
+In future, you probably want to list only the
+few leading numbers here in the blog, and refer to the full data file
+which you save in the appropriate subdirectory of \texttt{siminos/xiong/}
+with a standard suffix, such as \texttt{*.dat}, \texttt{*.txt} or
+whatever is natural, in the same format as the corresponding Ruslan or
+Evangelos data file, so we can look at them easily side-by-side. For
+example, see \texttt{siminos/kazz/data/UPOa-lyap.dat}. Each set of data
+files has to be documented in accompanying \texttt{00ReadMe.txt},
+otherwise nobody (including you) will be able to figure out what it is 6
+months later. The pain you are already experiencing as you try to use
+your colleagues old data sets to test your work :)
+
+\item[2013-08-02 Predrag to Xiong] Please read your revised project
+    description, \refsect{sect:introXD}.
+
+\item[2013-08-05 Daniel Crane] Hi all, I'm the aforementioned student of
+Ruslan. Ruslan suggested that I write in the blog to update you all on my
+progress.
+
+\item[2013-08-05 Predrag to Daniel] Welcome aboard! For now I've moved
+you to Xiong's blog, as you are working on the same project, but if you
+start writing regularly, perhaps you want your own part, within this
+blog? Let me know. \\
+{\bf [2013-08-06 Daniel]} I think for now it would probably be best to
+keep this all contained in one place, since we're both working on the
+same thing. I'll leave this down to your discretion, though.
+
+\item[2013-08-05 Daniel]
+So far I have implemented Ginelli et al.'s method for computing CLVs of
+\rpo s \& pre-\po s of the \KS\ flow in MATLAB, and am able to obtain these CLVs
+and their corresponding stretching rates - which agree quite well with
+the Floquet multipliers obtained by calculating the eigenvalues of the
+{\stabmat}. By splitting the mantissa and exponent I am able to
+avoid any kind of overflows. As an example, I get
+$0.678019316970120\,e-300$
+as one of the Floquet multipliers for the 15th Fourier mode of $RPO_1$
+(period $\period{}=16.316$).
+
+\item[2013-08-05 Predrag to Daniel and Xiong] We have no idea \emph{how}
+you do it, so both for your thesis, and for Xiong and the rest of us,
+write your algorithm up here. Then we have to make a collective strategic
+decision; we all believe that having independent codes is healthier than
+using codes other people wrote (search for {\bf 2013-07-23 Kazumasa via
+Predrag} above), but it might be more economical that Xiong either
+implements your algorithm (preferable) or joins forces with you and uses
+your code for what comes next...
+\\
+{\bf [2013-08-06 Daniel]} As it happens, I'm currently in the process of
+writing up all of the work I've been doing on CLVs in my personal ``blog"
+- including an in-depth description of every line of my code, drawing
+comparisons to the 2013 paper of Ginelli et al.\rf{GiChLiPo12}.
+When I finish writing this up (hopefully today or tomorrow),
+I could create a \texttt{siminos/daniel} folder and post the relevant sections there.
+Once I've finished commenting and polishing my MATLAB codes off a bit,
+I can happily post them there too, if you'd like.
+\\
+{\bf [2013-08-06 Predrag]} That's great! I created \texttt{siminos/crane} for you,
+as we have another Daniel in the collaboration :)
+
+\item[2013-08-05 Daniel]
+For the more strongly contracting directions, my stretching rates agree
+quite well with the linear approximation, $e^{(q^2-q^4)\period{p}}$, at least
+in terms of magnitude, which I believe to be a good indication that my
+implementation is working correctly.
+\\
+{\bf [2013-08-05 Predrag]} Agreed. You should also check the eigenvectors - they
+should be converging to pure Fourier modes.
+
+\item[2013-08-05 Daniel]
+Now that we have a working algorithm to calculate CLVs \& stretching
+rates, what should we do with it?
+
+\item[2013-08-05 Predrag] I have lots of suggestions for what to test
+once the code runs in discussions above - see project description,
+\refsect{sect:introXD}. Also, if you read the \refchap{sect:LyapKS} you will
+see what Kazamusa and Hugues think is the way to use \po\ solutions.
+
+\item[2013-08-05 Predrag] Can your algorithm be adopted to
+\eqva\ and \reqva, without (what for me are) artificial time integrations?
+\\
+{\bf [2013-08-06 Daniel]} It can be, but Ruslan asks: Since we have
+already calculated the Floquet multipliers \& eigenvectors for them
+precisely without any overflow issues, why this would be needed?
+\\
+{\bf [2013-08-06 Ruslan]} Just to add: We simply use a constant matrix
+$M$ (in a co-moving frame for \reqva), rather than the one that changes
+along the orbit.  But why would you want to do it?  The CLVs for \eqva\
+and \reqva\ are trivially related to the eigenvectors of the {\stabmat}
+$\Mvar(\ssp_q)$ (in the notations of Eq. (B.2) in \refref{SCD07}), which
+we can calculate with good accuracy (I have calculated and saved them
+in\\ \texttt{matlab/ruslan/kse22orbits.mat}.).
+
+Well, maybe Daniel
+could do the calculation of CLVs for \eqva\ and \reqva\ in order to test
+his implementation of Ginelli's et al. algorithm?
+\\
+{\bf [2013-08-06 Predrag]} I agree - in low dimensions you can evaluate
+{\stabmat} $\Mvar(\ssp_q)$, so what you do is good enough. But you also want to
+test your \po\ algorithms on \eqva\ and \reqva, where you have alternative
+calculation. What I am worried about is going to $10^6$ dimensions of
+fluid dynamics; there there is no computer big enough to store
+$\Mvar(\ssp(\zeit))$, let alone integrate it in time. That's why one goes to
+Krylov spaces. For finite period \po s we should be able to do better; go to
+{\cLvs} basis, and keep only the small number (in 100's) of
+local `physical' dimensions? Just speculating...
+
+\item[2013-08-05 Predrag]
+The plot of what you get for $L=22$
+Lyapunov spectrum should confirm the published results (see
+{\bf [2009-09-13 Ruslan]} on \refpage{sect:LyapKS},
+\reffig{fig:lyapSpecCLG}, \reffig{fig:lyapSpec1},
+\reffig{fig:lyapSpec}, and \reftab{tab:ks22shad}) and the
+figure\PC{which one? Always state the number} in Kazumasa \etal\
+paper\rf{TaGiCh11}. Please use my scaling for the eigenvalue
+axis, and not theirs (mine tries to account for the $\On{2}$
+near eigenvalue degeneracies).
+
+\item[2013-08-13 \XD] I registered two courses for the coming fall
+semester. The first one is your ``Quantum Field Theorem", and the second
+one is ``High Performance Parallel Computing". In fact, taking two courses
+may take a lot of time and delay my progress in research, so I hope to
+receive your opinion.
+
+\item[2013-08-13 Predrag]
+I promise there will be not a `Theorem' in my QFT course. ``High
+Performance Parallel Computing" should be useful in the long run,
+especially if we are successful with computation of {\cLvs} for
+Kuramoto-Sivashinsky, and ready to try the method to determine 'physical
+dimension' of 3D Navier-Stokes or 2D cardiac dynamics. I've been told
+that Tobias Kreilos in Marburg has parallelized Channelflow.org, but the
+code is not yet on the repository - you might be able to test it as a
+part of your course.
+
+\item[2013-08-13 \XD] Would you want me to get minor on Maths or
+Computer science \& Engineering? I think these two are most related to my
+research.
+
+\item[2013-08-13 Predrag]
+As far as I know, our physics PhD students do not usually have minors,
+but please check this first with senior students (Adam Kamor, Chris Marcotte)
+and then, if unclear, with Professor Zangwill.  Either maths or computer
+science might be helpful later on, but as long as you are in academia, a
+good PhD in Physics is the only thing that counts in getting a postdoc. I
+believe - I might be wrong :)
+
+\item[2013-08-18 Predrag to \XD]
+I have a copy of the whole Cencini and Ginelli\rf{CenGin13}
+{\em Lyapunov analysis: from dynamical systems theory to applications} journal
+issue for you to loan; have put it into your mailbox.
+
+\item[2013-08-17 \XD]
+Sorry for not updating the blog for so long. I am reading Evangelos's thesis\rf{SiminosThesis}
+these days. I put aside the calculation of Floquet exponents for relative \po s
+because I think I need to understand two things first. The first one is how to find
+\po s for \KS\ system, and the second one is to understand symmetry reduction.
+For the first task, I tried to read Crofts' thesis\rf{Crofts07thesis},
+but I haven't tried the method in my code.
+For the second task, I read ChaosBook
+    \PC{In six months these chapters will be rewritten, and might have
+    different numbers (but the same link), that's why I keep editing `Chapter 10', etc.}
+\HREF{http://chaosbook.org/paper.shtml\#discrete} {Chapter
+    9} - {\em World in a mirror}
+ and
+ \HREF{http://chaosbook.org/paper.shtml\#continuous}
+ {Chapter 10} - {\em Relativity for cyclists},
+but got lost in those definitions
+and symbols, so I turned to \refrefs{SiCvi10,SiminosThesis}.
+I am not sure whether it is
+the right order for me conduct my research.
+
+\item[2013-08-18 Predrag] Too telegraphic - I would like you to write down
+things relevant to
+your project  either here, or in \refsect{sect:introXD}, as you learn them.
+And when someone asks you something, do not just leave it hanging
+in limbo, as many exchanges
+above currently are. Respond by saying you agree or disagree (and why), have done
+what was suggested, or not and why not; close the discussion thread.
+
+
+The most pressing thing now for you is to understand what Daniel Crane has done,
+and get your code running and make sure you two are getting the same results.
+
+\HREF{http://chaosbook.org/paper.shtml\#discrete} {Chapter
+    9} - {\em World in a mirror}
+ and
+\HREF{http://chaosbook.org/paper.shtml\#continuous}
+ {Chapter 10} - {\em Relativity for cyclists} are less pressing, but
+do go discuss them with Burak who has already read them and is
+trying to implement them on a 4\dmn\ model.
+
+\item[2013-08-19 Predrag to Daniel] You did well not to check in the source
+but just the pdf version of the
+\HREF{../crane/CalculatingCLVs.pdf} {first installment} of your saga. My paper
+version is all scratched with red pen, but you are spared, because I have neither
+time nor inclination to add comments to temporary pdf files. I propose that
+\XD, you, me (and perhaps Ruslan, if he has time) have a web video conference
+as soon as \XD\ has studied your notes and has questions to ask. He is
+running our ``Wet \& Wild'' study group Tuesdays at 10am (5 hours later in UK),
+so one possibility is that you give a 1 hour informal seminar reasonably soon.
+The group should first study stability, Floquet theory, and finite time
+Lyapunov vectors (singular vectors of $\transp{\jMps}\jMps$) before they are ready for your
+exposition of {\cLvs}.
+
+Until then, please decapitalise most of your capitialised names of things -
+your style is very Germanic, British tend to be more tight lipped. Also, I expect you to use
+words like `presently' with natural fluidity, like `how lovely!', and correctly.
+Follow the conventions of IOP journal issue {\em Lyapunov analysis: from dynamical systems theory to applications} edited by Cencini and Ginelli\rf{CenGin13}. Note, Only `Lyapunov' Is Capitalised :)
+
+My big gripes are already in the blog, but {\em repetitio est mater studiorum}
+(thanks to Google, Chinese students are no longer exempt from learning some Latin),
+so here are the biggies,  repeated:
+
+\begin{enumerate}
+  \item
+{\bf[2013-06-27 Predrag]} What is clearly dumb about the numerical
+method described in Francesco
+    \etal\ review paper\rf{GiChLiPo12} is that one mindlessly
+    integrates the \jacobianM\  $\jMps^\zeit$
+for arbitrarily long times, but for the invariant solutions \emph{no}
+time integration is needed (\eqva), or \emph{only one time period}
+\period{} integration is needed (\po s).
+
+Your project is to rethink the linear algebra of \refref{GiChLiPo12}
+so that you can compute all stability eigen-exponents and eigenvectors
+of $\jMps^\zeit$ for a numerically given \eqv\ solution,
+\emph{without} the mindless time integrations.
+It should not be too hard :). The reasons why it has not been done
+because all the people involved so far are happiest running long-time
+mindless simulations.
+But I might be too flippant here:
+fluid dynamicists (see for example
+Appendices \HREF{http://www.cns.gatech.edu/~predrag/papers/steady.pdf}
+{A.2 and A.3} in \refref{GHCW07}) do compute stability of \eqva\ using
+time integration and Krylov spaces...
+
+  \item
+Your GS method uses $L2$ norm. A choice of norm is totally arbitrary (most
+norm choices are based on no thinking at all, and we pay a price for that),
+and no matter what norm you use, you destroy
+the symmetry of original problem. That's doubly dumb, because the final
+product --{\cLvs} and stability exponents-- does not depend on
+the choice of norm at all.
+
+\end{enumerate}
+
+Finally, to help \XD, can you store somewhere your machine-precision
+wondrous Floquet vectors and multipliers, in a format that all of you who
+compute understand and agree on? With select ones listed in a form
+that makes it easy to compare with \reftab{tab:ks22po10.25FloqExp}?
+
+\item[2013-08-21 Predrag to \XD], your CNS linux network account is
+\\
+xiong@zero.physics.gatech.edu,
+% adduser --home /home/xiong --shell /bin/tcsh --uid 1054 --gid 502 xiong
+% Xiong Ding <dingxiong203@gmail.com>
+Passwd: EveryTueThu!
+
+\item[2013-08-21 \XD]
+Thank you for giving me an account. I changed my password. I don't
+need a homepage in cns.gatech.edu.
+
+\item[2013-08-21 \XD]
+I use the initial condition in\\
+\texttt{siminos/matlab/ruslan/ks22f90h25t100.mat}
+for unstable \po\ $T_{10.25}$. The orbit is almost periodic for the
+first few rounds, but it wanders away as I increase observation time to 170s.
+The code I used is\\
+\texttt{siminos/xiong/octave/kse\_fft\_period\_qr.m}
+\\
+Could some one have a look at it? it is very short.
+
+\begin{figure}%[h]
+ \centering
+% \captionsetup{width=.6\textwidth}
+ \includegraphics[angle=-90,width=0.6\textwidth]{upo1}
+ \caption{the x,y,z axis are the real parts of modes  $a_2$,$a_3$ and $a_4$ respectly. The
+ observation time is 170s.}
+ \label{xiongupo1}
+\end{figure}
+
+Also, when it comes to the wave numbers, I just follow those predecessors.
+$k=[0,1,2,...N/2-1,0,-N/2+1,..,-2,-1]$. I don't know why. For me, it
+is just a consideration of symmetry. However, Chirs told me it comes from
+\textit{Aliasing}. Is he in this blog?
+
+\item[2013-08-23 \XD]
+I tried to used the previous codes\\
+\texttt{ksfmetd2.m} and \texttt{ksfmstp.m} in folder \\
+\texttt{siminos/matlab/ruslan/}.
+However, I got the same result with my code: the trajectory runs away as
+in \ref{xiongupo1}.
+
+You can easily check the behaviour of the system:\\
+\texttt{\# cd siminos/matlab/ruslan}\\
+\texttt{\# octave}\\
+\texttt{> [t,y]=ksfmetd2(init,22,0.25,170,1);}\\
+\texttt{> plot(t,y(3,:))}\\
+
+where, `init' is a 30*1 vector containing the initial condition for $T_{10.25}$
+orbit.
+
+Then you will get a graph like this:
+\begin{figure}[h]
+ \centering
+ \captionsetup{width=.6\textwidth}
+ \includegraphics[angle=-90,width=0.6\textwidth]{upo1025_a3real}
+ \caption{real part of $a_3$ versus time. the total time is 170s.}
+ \label{xiong_upo1025_a3real}
+\end{figure}
+
+In about 160s, the real part of $a_3$ begins to run away.
+By the way, could my graphs be displayed successfully?
+
+\item[2013-08-02 Predrag to Xiong]
+Maybe there is no problem - your trajectory goes somewhere, but
+not off to infinity. Start looking whether your spatial plots look right, like
+those of \reffig{kaz-evolution}\,(a), and corresponding spatial / time evolution
+plots in \refrefs{lanCvit07,SCD07}.
+
+\item[2013-08-23 \XD]
+For the time evolution of the UPO $T_{10.25}$, I got the same figure as in
+\reffig{kaz-evolution}. In \refeq{upo1025_statespace}, there are ten
+prime periods, so the total time is 102.5s. If the total time is increased,
+then this figure collapses. Sorry for bad adjustment of this figure, it takes
+a lot of space.
+
+\SFIG{upo1025_statespace}{}{
+Xiong's time evolution of \po\ \PO{10.25} for 10 periods,
+compare with Kazumasas's \reffig{kaz-evolution}\,(a).}
+{upo1025_statespace}
+
+\item[2013-08-23 Predrag]
+What do you mean by 'then this figure collapses'?
+It is supposed to look like generic turbulence for
+$L=22$ system, \reffig{kaz-evolution}\,(c), does it?
+
+\item[2013-08-23 Predrag]
+Please, do not put into a repository 1/2\,MB files like
+\\
+\texttt{upo1025\_statespace.eps},
+generate figures of reasonable size (5 to 30\,KB) before committing,
+see for example \texttt{siminos/figSrc/00ReadMe.txt}
+(add to it, if you learn some good tricks for making figs small).
+I replaced it by a 13\,KB \texttt{*.png}. Also, it costs you nothing
+to plot them in color, is on page 36 of
+\HREF{http://chaosbook.org/overheads/PDEs/UMich07.pdf}
+{these overheads}: the result is much prettier.
+
+There is no need to generate \texttt{*.eps} files, small \texttt{*.png}'s are probably all
+that is needed for the blog. Otherwise
+the repository will become huge in no time. For comparison, entire Oxford publication
+version of ChaosBook.pdf
+is 4.3\,MB. If I used your figures, it would be 43\,GB :)
+
+I create a new \texttt{00ReadMe.txt} by copying it from some other one,
+then editing it, then (in linux, for example):
+\begin{verbatim}
+svn add 00ReadMe.txt
+svn propset svn:keywords "Date Author" 00ReadMe.txt
+\end{verbatim}
+
+\item[2013-08-23 \XD]
+Sorry for my carelessness in dealing with figures.
+
+By saying ``then this figure collapses'', I mean the date will increase
+monotonously until it reaches the
+maximal value of double precision float type (approximate at t=330m),
+after which it is stored as: \texttt{NaN (not a number)}.
+The figure for $t<300$ is periodic.
+
+\item[2013-08-26 \XD]
+From the description of my project goal, I am supposed to calculate
+the stability
+( = covariant Lyapunov) exponents associated with \eqva, so I think I
+should first try to reproduce Fig~2.2 in \refref{SCD07}, that is why
+I am reading \refref{ksgreene88} today. Is it the right way for me?
+
+\item[2013-08-27 Predrag] It is not a pressing issue, but it is
+ a good thing to understand the bifurcations of Fig~2.2 in
+\refref{SCD07}. You do not want to reproduce the entire graph, but
+you certainly should understand bifurcations off the$E=0$ laminar state.
+That is analytic, the rest is numerical - do not spend much time on
+it.
+
+\item[2013-08-26 \XD]
+Also, last week I tried to calculate the eigenvalues of product of
+two matrices: $J=QR$. I don't know how to do it, or should I know? My
+method to calculate stability exponents may be awkward.
+
+\item[2013-08-27 Predrag]
+The $QR$ decomposition is a standard numerical method described in
+many books, referred to in most of the articles you are reading. If
+you search for QR in this blog you will find, for example Ginelli
+\etal\rf{ginelli-2007-99} as a reference, as well as Dieci
+\etal\rf{DJRV07} on QR method (the paper is on
+\\
+\HREF{http://www.math.ku.edu/~evanvleck/papers.html}
+{www.math.ku.edu/$\sim$evanvleck/papers.html}), and many other
+references. Does reading of
+\refsect{QRdecomp} and \refsect{iscpif} help?
+
+
+\item[2013-08-27 Predrag]
+Have you solved your {\bf [2013-08-23 \XD]} then ``then this
+figure collapses'' problem? I cannot figure out how you could
+accurately integrate an unstable \po\ and get decent leading Floquet
+multipliers with your code, but have it fail once you leave the that
+\po? Mysterious.
+
+Burak can give you a 4\dmn\ system to test your codes on - should be
+easier than the full \KS.
+
+\item[2013-08-27 \XD]
+It seems that the problem lies in the \textit{aliasing} of Fast Fourier
+Transform. The nonlinear term will produce large wave numbers which
+will be aliased to the lower wave number. In this way, the numerical error
+will accumulate at lower wave modes. I will try out the ``3/2''
+method to solve it. But I am not sure whether it will work or not.
+
+\item[2013-08-28 Predrag] Keeping blogging; for example explain what
+is the problem that aliasing fixes? Is this problem not taken care
+off in Trefethen, Davidchack, Siminos, and Takeuchi codes? How is it
+possible that your code is very accurate on a \po, but fails once you
+leave it? That I find very puzzling... There is also a problem of
+\KS\ being `stiff'. Have you now read up on the QR decomposition and
+understood what is good about it? All this merits writing up. You
+have not written up anything that you are learning since {\bf
+[2013-08-01 \XD]}. Two tweets a week are better than none, but
+you have to write up important things as you learn them.
+
+\item[2013-08-28 \XD]
+Aliasing is not the problem. I tried to dealias \textit{fft}, but it failed.
+
+I gave up using Octave to run codes now. I tried to use Matlab on
+the computer downstairs today, and the data did not run away in Matlab.
+Sorry for my embarrassing situation.
+
+\item[2013-08-28 Predrag] Good news. It's life coding - what can you do.
+But you lost a month being stuck, so now go back to writing about important
+things in life. For example, read, understand (or say what you do not understand)
+Daniel's notes and code, compare your Floquet multiplier to his, etc..
+Deal with open questions above that you never closed. Let's
+get back on the roll, start looking at different \po s / \rpo s and
+connecting them with their stable / unstable manifolds. Etc.
+
+\item[2013-08-30 Kazumasa]
+Great! (though it must sound frithening to those using Octave... not me!)
+Xiong, have you also computed Floquet multipliers?
+(Predrag's treets suggest you did, but I can't find...)
+I'm wondering how many multipliers you can compute accurately
+ with the method you use.
+Strongly contracting directions result in nearly zero eigenvalues (multipliers)
+ of the Jacobian, which are then much more difficult
+ to estimate numerically than those for expanding directions.
+For comparison, you can find a list of ``Lyapunov exponents''
+ [$=(1/\text{period})\log\text{(Floquet multiplier)}$] of this orbit at\\
+\texttt{siminos/kazz/data/UPOa-lyap.dat} .
+
+This problem will be more severe when you want to measure longer orbits
+ (remember that \PO{10.25} is the shortest we have),
+ but it is those multipliers / eigenvectors that may play an important role
+ when we try to construct the dimension of the inertial manifold from orbits
+ (if you don't see what I mean, have a look at \refrefs{YaTaGiChRa08,TaGiCh11}
+ -- constructing the inertial manifold in terms of orbits
+ is one of the (ultimate) goals of the project, at least to Hugues and me).
+
+ \item[2013-08-30 \XD\ to Kazumasa]
+ Thank you for your suggestion. I will read \refrefs{YaTaGiChRa08,TaGiCh11}.
+ My Floquet multipliers are posted in \reftab{xiong_fe1025}. My result is
+ very crude, and the exponents corresponding to strongly contracting directions
+ are totally wrong. I just evolve the system for one period (20.50s), and then
+ calculate the eigenvalues of the Jacobian matrix. Therefore, I get 32 exponents.
+ Since the eigenvalues expand a huge range and I don't know how to control
+ precision, my result is by no way reliable. Your smallest exponent is
+ about $-90$, so the corresponding eigenvalue is about $exp(-90*20.50)$.
+ What did you do to get the exponents precisely?
+
+ I read your file \\
+ \texttt{siminos/kazz/data/UPOa-lyap.dat}\\
+ Why do you have 23 exponents?
+
+\item[2013-08-30 Kazumasa to Xiong]
+Thank you for referring me to your data set.
+This is what I anticipated and an annoying problem
+ when computing Floquet exponents from the Jacobian matrix...
+In my case, I used the Gram-Schmidt algorithm
+ (or equivalently the QR decomposition) to compute the exponents,
+ as if to compute Lyapunov exponents of a chaotic trajectory
+ (with a small trick to keep the trajectory ``trapped'' on the orbit).
+This is a great advantage of the Gram-Schmidt method,
+ because one can shorten the time step as much as one wishes
+ so as to achieve a desired precision of the computed exponents.
+The time step I chose for computing the posted exponents was 0.005,
+ for which the vector associated with the exponent $-90$ shrinks
+ on average by the factor $\exp(-90 \times 0.005) \approx 0.64$,
+ and I performed the Gram-Schmidt orthogonalization
+ at every 40 time steps, for which the shrinking factor is
+ $\exp(-90 \times 0.005 \times 40) \approx 10^{-8}$,
+ still sufficiently above the machine precision.
+
+One can compute as many exponents as one wishes by increasing the number
+ of Fourier modes and collocation points.
+For the Gram-Schmidt method, the number of the exponents is also limited
+ by the time step you choose (this is the advantage I've just mentioned).
+In my case I chose the time step that gave me the first 23 exponents reliably,
+ and I didn't want to shorten the time step further
+ to compute more unnecessary exponents by spending longer time
+ (the chaotic trajectories of the KS equation for $L=22$ has
+ 9 physical exponents,
+ ``physical'' in the sense of \refrefs{YaTaGiChRa08,TaGiCh11},
+ while the remaining exponents are all conjectured to be
+ unnecessary to describe the dynamics... but we need to compute
+ at least some of these unnecessary modes for our project).
+
+Anyway, I think you/we should consider
+ how to compute negative exponents reliably
+ (not necessarily up to -90, but hopefully to -10),
+ if you prefer using the Jacobian.
+I guess you can implement the Gram-Schmidt method
+ on the Trefethen algorithm when needed.
+
+ \item[2013-09-02 \XD\ to Kazumasa]
+ Thank you for all the valuable information. Now I realize the value of
+ analyzing what precision I could get before running the code.
+
+ I have tried to
+ use QR decomposition before, and
+ the formula of the exponents I used is:
+
+ \[
+ \lambda_i=\lim_{T\to \infty} \frac{1}{T} \sum_{h=0}^{T-1}
+  \ln\gamma_{k,n+hk}^{(i)}
+ \,.
+\]
+
+However, I gave up after several trials because the trajectory began to
+depart from the \po\ around 400s.
+The problem may lie in my implementation of
+Trefethen's algorithm, but it still exits when the time
+step was reduced to 0.005s. So I am curious what kind of trick you used to keep the trajectory
+trapped on the orbit?
+
+\item[2013-09-02 Ruslan to \XD] The orbit is unstable, so you cannot expect
+for the numerical solution (whatever the numerical method) to stay on it forever.
+The trick is to integrate it only for as long as necessary, i.e. up to its period,
+and then re-use these points as necessary.
+Kazumasa wrote about this somewhere else in
+this blog and this is what Daniel does as well.
+
+\item[2013-09-02 \XD\ to Ruslan]
+The trick requires me to know the exact period.
+
+\item[2013-09-02 Predrag to \XD] It's not a trick, a \po\ is a compact set
+of periodic points, so staying on it is perfectly legal - and for very unstable orbits
+mindless integration forward in time might be impossible even for a
+single period (see complex Lorentz flow in ChaosBook, Siminos thesis, etc:
+the full \statesp\ \reqv\ cannot be integrated for 1 period).
+You just check every so often how far are
+you from the (numerically) exact \po, and reset your point
+$\ssp(\zeit)$ to it, if you have started to stray off.
+You have 18 significant digits of $\period{p}$,
+Floquet multiplier along of the flow is exactly 1, so it would take
+a very long time to lose accuracy in time. As to exact period,
+(re)read my {\bf [2013-07-30 Predrag to Xiong]} comment.
+You write above:
+``I just evolve the system for one period (20.50s)''. This is a
+`preperiodic', or \rpo\ whose period is $\period{}=10.25336729174627$
+in the time units defined by the form of \KSe\ you chose to use
+(see \refeq{eq:GKscale}, for example). Seconds are used in
+cardiac dynamics, if your parameters are physiological ones, but
+usually one non-dimensionalizes one's equations as the first
+step, to count the parameters. You traverse the orbit twice. Here
+the orbit is short, so does not matter much, but later on already
+twice the period might suffice to lose the orbit.
+
+\item[2013-08-29 \XD\ to Evangelos] I have a simple question about Lyapunov exponents.
+You set the truncation number $N=64$, and you get 62 Lypunov exponents.
+I am confused why the number is two less than the dimension. Are the extra zero?
+
+\item[2013-08-30 Evangelos to \XD] Do you refer to Ruslan's matlab code
+in your question? The answer is probably related to the fact that there are
+two Fourier modes (zero and the last one) that are set identically equal to zero.
+
+\item[2013-08-31 \XD\ to Evangelos] Yes, I am referring to Ruslan's code.
+He sets the wave number to be $[0:N/2-1, 0, -N/2+1,-1]$,
+so the time derivative of  tangent vector $b_0$ and $b_{N/2}$ is zero.
+These two vectors will not expand or contract.
+Therefore, the corresponding exponents are zero,
+but my problem is that $b_0$ and $b_{N/2}$ will be changed after
+QR decomposition. I don't know whether this is a problem.
+
+\item[2013-09-02 Evangelos to \XD] I think that you should not include
+$b_0$ and $b_{N/2}$ in your calculation of the Jacobian (i.e. you should work
+with a $(N-2)\times (N-2)$ matrix right from the outset. Maybe someone could
+verify or dispute this point?
+
+
+\item[2013-09-02 Ruslan to \XD]
+I think it would be good for you, Daniel,
+me and Predrag to have a discussion (over Skype or Zoom), so we can come to a common
+understanding of what we are trying to do and what's the best way forward.
+
+\item[2013-09-02 \XD\ to Ruslan] Thanks.
+I will contact Prof. Predrag to arrange a webinar
+between us, and hope it will be held in this week as soon as possible.
+My progress is very slow!
+
+\item[2013-09-02 Predrag] Good idea. \XD, go ahead and propose a
+when to meet, try to find time good for all. Blog it, so
+other collaborators can join if they want to. Skype is fine if we only talk; if we
+want to show slides, formulas, etc, WebEx is better - \XD\ can learn from
+Chris how to schedule a meeting. My calendar is on my home page; Wednesday
+cardiac group meets at 11am, so we have to finish by then.
+
+We are planning to have Daniel do a webinar presentation of his work
+(Tue 10am New York time,
+3pm in England, 4pm in Germany), but the study group is not ready for that yet.
+
+\item[2013-09-02 Predrag to \XD]
+Please study and write up here, or in \refsect{sect:introXD} \ABedit{by Thursday night}
+(see {\bf [2013-08-18 Predrag]} above, etc.) your understanding of
+(\HREF{../crane/CalculatingCLVs.pdf} {click here}) first installment of Daniel's saga.
+Working assumption for Ruslan and me is that what ever you have not written
+down, you have not studied and/or understand, and if you are not prepared,
+we are not going to get much out of a meeting.
+
+\item[2013-08-31 \XD\ to Daniel Borrero]
+My code is not written in a flexible form, so I need to define the
+function for the \KS\ system. One of my major problems is the control of
+precision. I got a similar result as Siminos, but I don't think my result
+is reliable because the exponents are reluctant to converge in my code.
+Last time, I saw your post in the blog, saying that the Lyapunov
+eXPONENTS you got are well fitted to $(q^2-q^4)$, so I assumed that you
+are working on \KS\ system, but I was wrong.
+
+I will try to read your code and apply it to \KS\ system.
+
+\item[2013-09-03 Daniel B to \XD]
+I don't know if I would necessarily waste my time calculating Lyapunov
+exponents in the sense that is calculated in my code. That was state of
+the art in 1985 but there are much smarter things to do in 2013. The
+reasons why Lyapunov exponents in the sense calculated in my code are the
+wrong thing to calculate is explained
+\HREF{http://www.streamsound.dk/book1/chaos/chaos.html\#137/z} {here}. As
+far as I know there is no direct way to compare this kind of Lyapunov
+exponents with the results that you would get from {\cLvs}, so I think
+the very best, you might find that you have the same number of unstable
+and stable ones, but they won't be related in any way. I just did what I
+did because it was an easy, dirty way to figure out whether my parameter
+set was giving me chaotic dynamics but like I wrote in the blog, it
+probably doesn't do much more than that. I think Predrag would be WAY
+happier if we computed {\cLvs} for our 4D system, than Lyapunov exponents
+for your 64D system, so I would put my efforts there.
+
+Then again, it quick and easy, feel free to try and implement it. It
+shouldn't be too hard to generate the extended ODE system automatically.
+It might take a while to compute for a 64 dimensional system...
+
+
+\item[2013-09-03 Predrag to \XD]
+I realize thinking is extra cost, but there is no substitute for it - coding comes only \emph{after} one has understood the theory, it is an implementation of one's understanding.
+We were computing \jacobianMs\ like you do in 1996\rf{Christiansen97}. Since
+2007\rf{ginelli-2007-99} the community has a better method\rf{GiChLiPo12}. It's unlikely
+you would reinvent it on your own, as it took more than 20 years to get to the
+present state, and that is not for the lack of codes, but for the lack of critical
+rethinking.
+
+As long as you avoid to do what a scientist must do - sit down in a quiet room with the printed paper of \refref{GiChLiPo12}, a pencil and a pad, work through every line of the paper and understand it, and reemerge after you have mastered it, you cannot code anything, and getting someone's else code will only hamper your progress in the long run.
+There is no short cut to understanding - every great physicist that we know of
+works very hard to come up with something simple and beautiful, from the guy with
+wild white hair to Feynman to Shina Tan.
+
+Once you have mastered the current state of art, you can lean back and start dreaming. I have a concrete suggestion {\bf [2013-08-19 Predrag to Daniel]}, but maybe you will do something truly elegant instead. But if you cannot play the instrument, you cannot make beautiful music.
+
+
+\item[2013-09-29 Daniel to Xiong]
+I apologize for not having written in the blog for a while, I've had a
+busy few weeks - and unfortunately right now I'm in the middle of writing
+an end of year report to summarise my progress. Once I'm done with this
+report, I'll hopefully work on finishing up the documentation of my code,
+which will mostly be concentrating on how I used the CLV method of
+Ginelli et al. to calculate the stretching rates (which correspond to the
+Floquet Eigenvalues) of the CLVs. I'll also try to post up some examples
+of the results that I get for some of the shorter \rpo s / pre-\po s, so that you
+can compare results.
+
+I noticed that you were confused about why I needed to calculate the matrix \textbf{D} in my script - which was in fact a great point, as it's completely unnecessary for us to use this diagonal matrix \textbf{D} since we're normalising the columns of \textbf{C} at each step anyway. I've updated my code to remove \textbf{D} accordingly, and will update the documentation to match. Thanks for pointing this out!
+
+I was wondering if you have any other questions that you'd like for me to answer regarding my workings?
+
+\item[2013-10-05 Xiong to Daniel]
+Sorry to reply you so late. I uploaded my Matlab code in
+\texttt{siminos/xiong/matlab} and the local Lyapunov exponents for the
+orbit $T_{10.25}$. It seems that your code calculates the Floquet
+exponents, but I calculated the Lyapunov exponents. What confused me is
+the number of exponents. If I set truncation number $N=32$, then I will
+get $32$ exponents because the flow in tangent space is 32-dimensional,
+but you get $30$. I know one exponent should be zero due to symmetry
+(which I haven't implemented yet), but what about the other one? Can you
+recommend some paper for me to read?
+
+\item[2013-10-07 Daniel to Xiong]
+I believe that this is explained in Appendix A of \refref{SCD07}. It's because the first Fourier mode is set to 0, and stays there - meaning that $a_0 = b_0 + ic_0 = 0$.
+
+\item[2013-10-11 Xiong to Daniel]
+$a_{0}$ is just a real number.  Should ther reason be that both $a_{0}$ and$a_{N/2}$ are zero ?
+
+\item[20313-10-22 Xiong to Daniel]
+I have a problem recently with Ginelli \etal\ method.  In the forward transient stage, we evolve the state in the tagent space and
+conduct $QR$ decomposition very certain time interval. The purpose of this stage is to make the orthonormal basis $g_{n}^{(i)}$
+converge to eigenvectors ${(d_{n}^{(i)})_{-}}_{i=1,\cdots,N}$ of the backward Oseledets' matrix. But what I found is that
+$g_{n}^{(1)}$, $g_{n}^{(2)}$, $g_{n}^{(6)}$ and $g_{n}^{(7)}$ do not converge. $g_{n}^{(1)}$ and $g_{n}^{(2)}$ are rotating
+in a two-dimensional subspace and the rotated angle is different from cycle to cycle. The same is with $g_{n}^{(6)}$ and
+$g_{n}^{(7)}$.
+
+I guess the reason is that the first and second eigenvalues are degenerate, the same goes with the sixth and seventh
+eigenvalues. Do you have same problem? How do you handle it?
+
+\item[2013-10-24 Predrag] Complex eigenvalue / eigenvector pairs
+is the second thing (after discussing the non-degenerate
+case) that methods for
+finding eigenvectors by multiplication along the trajectory
+must deal with. Does this paper by
+\HREF{http://journal.taiwanmathsoc.org.tw/index.php/TJM/article/view/336}
+{Ruhe}\rf{Ruhe10} answer your question?
+
+There is this secret fraternity of
+nerds called `Google' that has lots of suggestions: search for `complex' in
+\HREF{http://books.google.com/books?hl=en&lr=&id=wE0NrHkrqRAC&oi=fnd&pg=PR11&dq=Krylov+method+\%22complex+eigenvalues\%22&ots=t1Gb0AGWN4&sig=KVftvLx0yoczpXG7EMfAgFOWxr4\#v=onepage&q=complex\%20eigenvalues&f=false}
+{here}, or
+\HREF{http://www.siam.org/books/ot101/OT101Sample.pdf} {here}, or ....
+If Lyapunov is your thing,
+\HREF{http://www.science.gov/topicpages/l.html\#target765} {try this:)}
+
+\item[2013-10-29 Predrag] Reading {Ruhe}\rf{Ruhe10} we learn that
+the complex eigenvalue pair case is treated by `the double shift
+QR or QZ algorithm'. It is probably in {\em  Numerical Recipes}\rf{nr},
+in Golub and Van Loan\rf{GoVanLo96}, or any other text on QR decomposition such as \HREF{http://people.inf.ethz.ch/arbenz/ewp/Lnotes/chapter3.pdf}
+{this one}, randomly spewed out by Google.
+
+\item[2013-11-10 \XD]
+Sorry for not updating the blog for long time. The Lyapunov exponents I got are documented in the figure below. For the first, second, sixth and seventh
+exponents, the averaged value converges very slowly, So I use large time step $h=T/50$,
+where $T$ is the prime period $10.25\cdots $, to get the first 10 Lyapunov exponents, but for the remaining
+ones, I used small time step $h=T/2000$.
+
+\begin{figure}[h]
+ \centering
+ \includegraphics[width=0.8\textwidth]{lyaExp.pdf}
+ \caption{Lyapunov exponents for for trunction number N=32 (red) and N=64 (green).}
+ \label{fig:lyaExp}
+\end{figure}
+
+When evolving the system in tangent space, I conduct QR decomposition regularly. The Gram-Schmidt vectors should
+converge to the backward Oseledec vectors ( eigenvectors of backward Oseledec matrix). However, what I found is not
+converging vectors but converging subspaces, which are due to the complex pair of eigenvalues of Jacobian matrix. Each such
+subspace consists of two rotating vectors.  From my code, only the 5th and 8th vectors are not rotating.  I computed the convergence
+of subspace in Fig \ref{fig:diff_subspace}. The residue of projecting one subspace onto another one is very small, so these
+sbuspaces converge.
+
+\begin{figure}[h]
+ \centering
+ \includegraphics[width=0.8\textwidth]{diff_subspace.pdf}
+ \caption{
+ I computed the Gram-Schmidt vectors of cycle 60 and those of cycle 70.
+ The convergence is computed as following: let the index of vectors be
+ $i$, which can be $1,2,3, \cdots , 30$. If $i\neq 5  $ and $i\neq 8$,
+ then $v_{i}^{(70)}$ and $v_{i+1}^{(70)}$  is projected to  the subspace
+ spanned by $v_{i}^{(60)}$ and  $v_{i+1}^{(60)}$,  $ i=1,3,6,9,11,\cdots
+ ,29$ and then the norm of the residue is recorded. If $i=5$ or $i=8$,
+ then the subspace is one-dimensional, then $v_{5}^{(70)} $ is projected
+ onto $v_{5}^{(60)} $ and $v_{5}^{(70)} $ is projected onto $v_{5}^{(60)}
+ $.}
+ \label{fig:diff_subspace}
+\end{figure}
+
+I got the {\cLvs} and tried to verify whether they are correct or not.  I
+think {\cLvs} should satisfy two conditions: First the expansion or
+contraction rate of these vectors should be the corresponding Lyapunov
+exponents.  The asymptotic forward Gram-Schmidt vectors also satisfy this
+requirement, so we need at another criteria. Second, the {\cLvs} should
+vary consistently as system evolves, that is
+\begin{equation}
+v(x_2, t_2)=J(t_2, t_1)v(x_1, t_1)
+\label{eq:clv_consistance}
+\end{equation}
+without Gram Schmidt orthogonization.  $v(x_2, t_2)$ and  $v(x_1, t_1)$
+are {\cLv} at position $x_2$ ,  $x_1$ and time $t_2$, $t_2$
+respectively. Since the first asymptotic forward Gram-Schmidt vector is
+just the first {\cLv}, it satisfies this requirement, but
+others do not.  I checked whether my {\cLvs} satisfy
+\ref{eq:clv_consistance}, and my result shows that the maximal norm of
+$v(x_2, t_2)-J(t_2, t_1)v(x_1, t_1)$ is around $10^{-5}$. I don't know
+whether it is good enough.
+
+\item[2013-11-18 \XD]
+I used the \textit{Periodic Schur decomposition}\rf{Bojanczyk92theperiodic}
+to calculate the Floquet exponents and {\cLvs}. This method has been
+documented before,
+on page \pageref{2013-11-18XD}
+% see \refchap{sect:LyapKS}, entry  {\bf 2009-09-12 Ruslan}.
+Did Ruslan implement this method before?
+
+\item[2013-11-20 Ruslan] Yes I tried it. I used routine MB03WD in the
+\HREF{http://slicot.org/objects/software/shared/libindex.html}{slicot.org}
+library.  But for some reason it did not work.  Some of the \rpo\ \& pre-\po\
+eigenvalues appeared correct, while others did not.  I don't remember the
+details now.
+
+\item[2013-11-20 Predrag] Day before yesterday \XD\ showed up
+clutching a secret, un-blogged piece of paper, which seemed to contain a
+table of all Floquet exponents and eigenvectors for the second repeat of
+the relative prime orbit \PO{10.25} to machine precision. That is
+impressive, considering that the Floquet multipliers span hundred or so
+orders of magnitude. \XD\ has not learned yet how the group factor
+enters the \JacobianM\ for a \rpo, so he insist on computing 2 repeats
+of relative prime orbit \PO{10.25}. That is possible in this example, as
+the symmetry is $Z-2$ - a reflection, but not advisable, and will be
+impossible for \rpo s with continuous phase shifts.
+
+The calculation proceeds in two steps - a \JacobianM\ is split into a
+product of short time steps. Each is $QR$-ed to upper triangular form.
+That is fast. The result is a Hessenberg matrix with one subdiagonal (due
+to the degenerate complex eigenvalue pairs). Then the Hessenberg matrix
+is brought to upper triangular form, except for a [2$\times$2] dimple for
+every complex eigenvalue pair. That is expensive, but can still be done
+for \KS\ with 30 or so modes - will not be doable for very high
+dimensions. For our problem at hand, this is good enough. Now that
+everyone is upper triangular, each Floquet multipliers is a products of
+single number from each matrix's diagonal (or [2$\times$2] matrix for a
+complex pair). Instead of multiplying them, one adds up their logarithms,
+so all Floquet exponents come out accurate to machine precision.
+
+For \KS\ this seems to obviate the need for computing these things by
+`{\cLvs}' methodology of
+\refref{GiChLiPo12}; have precise Floquet vectors and can implement the grand
+plan of the Skype Supreme Plenum of {\bf 2013-10-18}.
+However, no one seems to evince a slightest interest into the {\em To do list} of
+\refsect{sect:ToDo}, and \XD\ will spend next two weeks doing his
+project for the parallel computation course.
+
+\item[2013-11-20 Predrag]
+Today \XD\ turns 24, so as a birthday present I have reorganized
+his blog (moving stuff that might go into his thesis into
+\\
+\cycle{siminos/xiong/blog/}), and - most appreciated - I promise not to
+ask him to blog anything for two weeks.
+
+\item[2013-12-12 Xiong to Predrag]
+I found an iteration method to calculate the eigenvectors of Jacobian
+matrix for relative periodic orbits. The converging rate is at least
+$e^{-1}$ for one iteration, but I need more time to test this algorithm.
+Hope my idea turns to be right.
+
+\item[2013-12-19] I have uploaded my poster for `DDaysUS14' in the folder \\
+\textit{xiong/DDaysUS14/poster\_DDay}. Have a look at it.
+
+\item[2014-01-11 Predrag] \XD\ has made a significant bit of
+progress on the {\em To do list} of \refsect{sect:ToDo}, see the
+new \refsect{sect:Shadowing}. I have taken his clever 3D video and turned it into
+what, I hope, will be a prototype 4 min. video snippet for ChaosBook.org,
+click on
+\YTlink{chaosbook.org/videos/XiongShadowing1/XiongShadowing1.html}. I
+recorded the accompanying narration and combined the two and edited them
+in Camtasia. What is lacking is a video of the third orbit \cycle{xdpo1}
+- it is plotted here \YTlink{www.youtube.com/watch?v=KsKJlqanhzI}, but as
+I have used most of this Saturday to learn how to make the existing
+video, I give up on incorporating it, for now.
+
+\XD\ has posted three more videos:
+the 1st and 2nd Floquet vectors of
+the pre-periodic orbit \cycle{ppo34}
+\YTlink{www.youtube.com/watch?v=_7GYSWUhjU0},
+the pre-periodic orbit \cycle{ppo191}
+\YTlink{www.youtube.com/watch?v=HSwF4FHcKP8},
+and of
+\XD's very first own \KS\ \po\
+\cycle{xdpo1}
+\YTlink{www.youtube.com/watch?v=KsKJlqanhzI}
+(not in Ruslan's list of \rpo s).
+Click on the little gear, lower edge of the video, and increase
+the resolution.
+
+The orbits wiggle a lot, as \XD\ is using a projection on the old
+fashioned XXth century projections onto (unspecified) Fourier components
+of \refref{Christiansen97}, instead of the modern projections onto
+physical coordinates\rf{GibsonMovies,SCD07,SCD07}.
+
+I have no idea what `local Floquet exponent' might be. It wiggles too much.
+Eigen-exponent of
+a finite time Jacobian multiplier? That has no meaning...
+
+
+I believe that ``the 1st and 2nd Floquet vectors''
+ illustrate the single expanding transverse eigendirection, and
+the first marginal Floquet vector, the one for time (\ie,
+the velocity vector $\vel{\ssp(\zeit)}$). It would be of interest
+to plot a few instances of the other marginal direction Floquet vector
+$\groupTan(\ssp(\zeit))$,
+the one along the group tangent for \SOn{2} group orbit.
+
+It might be of interest to also plot the
+angle
+between pairs of vectors, so important in \reffig{fig:lyapSpecCLG}.
+
+One needs to discuss the symmetries of these orbits: \po\ \cycle{xdpo1}
+is not self-dual, so it is presumably one a symmetry pair within the
+invariant antisymmetric subspace. Existence of pre-periodic orbits is due
+to \On{2} symmetry (as opposed to \SOn{2}) in a way I never fully
+understood. Ruslan does understand them. Of course, the most
+important are the \rpo s, but \XD\ has not started slicing as yet.
+Presumably in the slice and after quotienting by $\mathbf{Z}_2$ these will
+be half period and much less wiggly.
+
+Camtasia will be installed in the Windows
+virtual machine on \texttt{light.physics}, so \XD\ will be able to
+edit this video, and/or create similar narrations by himself in the future.
+
+I'm grateful for any suggestions and/or critical input on this video,
+as the plan is to make hundreds of such, and sprinkle them all over
+ChaosBook.org.
+
+\item[2014-01-17 Xiong Ding] By implementing the reordering algorithm
+described in \refref{GranatK06},  I get all the Floquet eigenvectors
+(eigenvectors of the Floquet matrix of a \po) along the orbit,
+\emph{without iteration}. This is method is superior and much faster than
+the method described in \refsect{sect:PSDimpl1}. The method seems stable
+for \KS\ system; however, I am undertaking further tests.
+
+\item[2014-01-31 Xiong Ding] I checked \cycle{ppo2} and \cycle{xdpo1} and
+found that \cycle{xdpo1} is just a shifted version of \cycle{ppo2} as
+Ruslan and Siminos said. The two orbits have the same Floquet exponents and
+sit in the same torus. I am sorry for misleading everyone. I haven't found
+a new orbit.
+
+\item[2014-02-09 Predrag]
+Dear {comrade Ding}, the time has come to take the teaching of the
+Little Internet Book, and fix the symmetry-ignorant
+embarrassment that is plotted in
+\HREF{http://www.youtube.com/watch?v=SbmIQBdvmlw} {here}.
+Please write up solution (template is here already) to
+\refexer{exer:fludProbsSymms} {\em Classify possible symmetries of
+solutions for your research problem} well enough that it can be used as a
+draft for the \KS\ symmetry section in your thesis.
+
+The \On{2}\ \KS\ symmetry analysis now needs to be written up: The
+anti-symmetric invariant subspace takes out 1/2 of Fourier modes (see
+symmetry discussions of \refref{Christiansen97,SCD07,HGC08},
+and probably many better papers out there that I'm not aware of).
+Define it and nail it down.
+That is the space of solutions self-dual under complex conjugations. All
+other solutions came as pairs under the discrete `reflection'. You can
+perhaps replot the shadowing orbits in `angle double' polar coordinate
+as we do for the Lorenz
+attractor.
+
+It's the mandatory problem set for the denizens of 3rd and 5th floor
+Howey, and that means YOU :)  Also needs to be written up as the problem/solution
+pair for this, if not the next Tuesday.
+
+\item[2014-02-18 Xiong Ding]
+I uploaded my manuscript for a paper in folder: \\
+\emph{siminos/xiong/paper}. To compile it, use the following command:\\
+\textit{latex paper.tex \&\& dvipdf paper.dvi}. I use a template from
+SIAM, so it may not support pdflatex.
+
+There are several problems with this manuscript:
+
+1. The are only two figures in the manuscript. I am not sure whether
+they are enough, and I need to replot the Floquet
+spectrum. On the other hand, plots projected in Fourier modes seem
+not appropriate, but how can I show the Floquet vectors are
+tangent to the orbit in a color map figure? I am lost.
+
+2. I am really concerned that the content is too silly to be published.
+I mean there is nothing new in this manuscript. Everything for the
+algorithms is grasped from other established algorithms.
+
+3. The symmetry staff. I showed in the manuscript that one marginal
+vector lies in the direction of group tangent, but again I plotted
+it in the Fourier subspace, is there a way to do it better?
+
+4. Anything else in the manuscript is missing ?
+
+\item[2014-02-25 Xiong Ding to Kazumasa]
+
+I am a little concerned about the definition of difference vector between
+two orbits: $\Delta u(\zeit)=u_{p_1}(t)-u_{p_2}(t-\tau)$. Since $u_{p_2}$ has
+translation symmetry, we can transform $u_{p_2}$ to another place,
+then the corresponding difference vector will change; at the same time,
+the {\cLvs} along orbit $u_{p_1}$ keep unchanged. Therefore,
+the angle between the difference vector and the subspace spanned by
+{\cLvs} will change. This definition is not invariant
+under group transformation. I am not
+sure whether I understand difference vector correctly.
+On the other hand, if you choose a slice in the Fourier space and
+reduce the \SOn{2} symmetry, should the angle depend on the choice of
+slice?
+
+\begin{figure}[h]
+  \centering
+  \includegraphics[width=0.7\textwidth]{ppo2_state}
+  \caption{
+Pre-periodic orbit \cycle{ppo2} of prime period  $\period{ppo2} =14.33...$
+in configuration space
+(a) without symmetry reducing reduction;
+(b) after the first Fourier mode \SOn{2} slicing the orbit
+closes after two periods;
+(c) after \On{2} symmetry reduction the orbit closes after one
+period.
+    }
+  \label{fig:ppo2_states_reduced}
+\end{figure}
+
+\item[2014-05-06 Predrag] Can you write down $\period{ppo2} =??$
+    wherever you define \cycle{ppo2} first?
+
+\begin{figure}[h]
+  \centering
+  \includegraphics[width=0.7\textwidth]{rpo2_state}
+  \caption{Configurations space evolution of
+$u(x,\zeit)_{rpo2}$ for four prime periods \period{rpo2}: (a) without reducing symmetry,  (b)
+\SOn{2}-symmetry reduced, in the 1. Fourier mode
+\slice, and  (c) state reduced \On{2}\ symmetry.}
+  \label{fig:rpo2_states_reduced}
+\end{figure}
+
+
+\begin{figure}[h]
+  \centering
+  \includegraphics[width=\textwidth]{ppo2_O2}
+  \caption{State \cycle{ppo2} space after reduction of \On{2}\ symmetry projected into
+  Fourier space}
+  \label{fig:ppo2_O2}
+\end{figure}
+
+\item[2014-02-28 Predrag]
+
+Presumably there is only one difference vector between
+two orbits: $\Delta u(\zeit)=u_{p_1}(\zeit)-u_{p_2}(\zeit-\tau)$, such that
+$\norm{\Delta u(\zeit)}$ is minimized with respect to variations in both
+the time $\tau$ and shifts $l$.
+
+
+Since $u_{p_2}$ has
+translation symmetry, we can transform $u_{p_2}$ to another place,
+then the corresponding difference vector will change; at the same time,
+the {\cLvs} along orbit $u_{p_1}$ keep unchanged. Therefore,
+the angle between the difference vector and the subspace spanned by
+{\cLvs} will change. This definition is not invariant
+under group transformation. I am not
+sure whether I understand difference vector correctly.
+On the other hand, if you choose a slice in the Fourier space and
+reduce the \SOn{2} symmetry, should the angle depend on the choice of
+slice?
+
+\item[2014-02-28 Predrag]
+Presumably there is only one difference vector between
+two orbits: $\Delta u(\zeit)=u_{p_1}(\zeit)-u_{p_2}(\zeit-\tau)$, such that
+$\norm{\Delta u(\zeit)}$ is minimized with respect to variations in both
+the time $\tau$ and shifts $l$. Read my post in daily blog,
+on page \pageref{2014-03-01PC}.
+
+\item[2014-03-01 Predrag to Xiong Ding]
+Today would have been my mother's 90th birthday, so I'm happy,
+remembering what extraordinary woman she was. She never had a paid position
+at any institution, and still (or because of it) she was one of the most
+productive Croatian art historians. We are such woosies, compared to
+the generations that preceded us.
+
+I've started working on the draft of your paper.
+    \PC{remember to add the bib entry for the paper}
+It's very impressive, and a pleasure to read. Of course, it is totally
+unmotivated, and fails to emphasize what is new and important, but that we
+can fix in a few iterations, and testing the paper on you colleagues and friends.
+
+Now that you have mastered linear stability and symmetry reduction,
+how about revisiting your \reffig{fig:ang789}, this time including only the
+short distance segments, and excluding marginal eigenmodes from these
+computations?
+Then call in the meeting of the elders.
+
+Once you figure out what \statesp\ is, I'll have nothing
+more to teach you.
+
+\item[2014-03-06 Xiong Ding]
+I tried to minimize distance $|u_{p_1}(t_1)-g(\theta)u_{p_2}(t_2)|$ for all
+$\theta\in[0,2\pi]\,, t_{2}\in [0,2T_{p_2}]$, but could not figure it out
+until now. First, I tried to use $u_{p_1}(t_1)$ as the template point
+of the slice. Since each element of $u_{p_1}(t_1)$ is nonzero,
+then the slice condition reduces to a polynomial equation of
+$\sin \theta$ and $\cos\theta$ : $p_{d/2}(\sin\theta, \cos\theta)$, here
+$d$ is the dimension.
+I haven't found a good method to find the roots of this equation.
+Secondly, I tried to run thorough $\theta$ in its domain $[0,2\pi]$,
+which is very expensive. It is nearly numerically forbidden because there
+are thousands of points on each of these two orbits.
+
+\item[2014-03-07 Predrag]
+We talked about it already, that's why I wrote my post in daily blog
+on page \pageref{2014-03-01PC}. You do not solve
+the slice condition
+\[
+\frac{\partial}{\partial \gSpace} \norm{\ssp - \LieEl(\gSpace)\,\slicep}^2
+   =
+2\, \braket{\sspRed}{\sliceTan{}}
+   = 0
+        \,,\quad
+\ssp = \LieEl(\gSpace) \sspRed
+\,,
+\]
+as a trigonometric polynomial in $\gSpace$; you solve it like you solve
+for a {\PoincSec}, by Newton's method. This is presumably described in
+the Thesis That Nobody Reads\rf{SiminosThesis}, in \refref{FrCv11} and
+Ruslan has the code for it.
+
+\item[2014-03-07 Xiong to Predrag]
+I am not sure whether I understand the Newton's method you
+are referring to correctly. For a specific point $u_{p_2}(t_2)$ on
+the second orbit, $g(\theta)u_{p_2}(t_2)\,, \theta\in [0,2\pi]$
+traces out a closed loop group orbit in the {\statesp}, so I will check whether
+two adjacent points on this group orbit are at the opposite side of
+the slice, which means that I still need go through $\theta$ in its
+domain $[0,2\pi]$ and find the intersection point
+which minimizes the distance. Sure, I can repeat this process for a few
+points $u_{p_1}(t_1)$ on the first periodic orbit, but, as I said,
+ this process is very expensive because there
+are thousands of points on each of these two periodic orbits.
+
+
+\item[2014-03-07 Xiong]
+I plan to write a parallelized C code or CUDA code for these loops. Hope
+what I learned in the CSE course last semester could help me.
+
+\item[2014-03-07 Predrag]                                   \toCB
+One does not check whether two adjacent points are on opposite sides of
+the slices, one solves the slice condition (ie, determine the point
+\underline{in} the slice) by Newton method. There can be a number of
+points at which the group orbit pierces the slice; some of them go
+through the slice in the opposite direction, and some of them are not
+local minima. For the reminder (if there are still a few solutions left)
+you pick the closest one. Discrete symmetry might make pairs of them
+equally distant, that is why we need to quotient it out as well. In any case,
+if you start your next $\ssp_1(\zeit_1)$ distance measurement in
+the slice of the previous one, distance to the nearest point
+on $\ssp_2(\zeit_1)$ will smoothly deform, you will have excellent
+Newton guess and
+you do not care about far-away intersections which are in the \slice\
+hyperplane, but not in the
+\slice. (If you do not understand this sentence, please provide the definition
+of the slice in the appropriate place in your thesis / article notes, and
+refer to it here :)
+
+From \refref{FrCv11} - you have it in this repository, as well as
+The Thesis That Nobody Reads\rf{SiminosThesis}- might be worth studying
+earlier work - also Kimberly and Ashley routinely solve numerically
+the problem
+of intersection of a group orbit with the slice:
+
+Consider next the general form \refeq{SO2irrepAlg-m} of action of an
+$\SOn{2}$ symmetry on arbitrary Fourier coefficients of a spatially
+periodic function \refeq{FourierExp}. Substituting this into the slice
+condition %\refeq{PCsectQ}
+and using $g^{(m)}(\gSpace)=\cos(m\gSpace)\id^{(m)} +\sin(m\gSpace)
+\frac{1}{m}\Lg^{(m)}$, see \refeq{SO2irrepAlg-m}, we find that
+\bea
+\braket{e^{-\gSpace \Lg}\ssp}{\groupTan(\slicep)}
+=\braket{\ssp}{\sum\limits_m \left(\cos(m\gSpace) \id^{(m)}
+     +\sin(m\gSpace) \frac{1}{m}\Lg^{(m)}\right) \sliceTan{}}
+\continue
+=\sum\limits_m
+    \left(
+    \braket{\ssp}{\Lg^{(m)} \slicep} \cos(m\gSpace)
+  - m\braket{\ssp}{\id^{(m)} \slicep} \sin(m\gSpace)
+   \right)
+   =0
+\,.
+\label{eq:so2sing}
+\eea
+This is a polynomial equation, with coefficients determined by
+$\braket{\ssp}{\Lg^{(m)} \slicep}$ and $\braket{\ssp}{\id^{(m)}\slicep}$,
+as we can see by rewriting $\cos(m\gSpace)$, $\sin(m\gSpace)$ as
+polynomials of degree $m$ in $\sin(\gSpace)$ and $\cos(\gSpace)$. Each
+phase $\gSpace$ that rotates $\ssp$ into any of the group-orbit
+traversals of the slice hyperplane corresponds to a real root of this
+polynomial.
+
+As a generic group orbit is a smooth $N$\dmn\ manifold embedded in the
+$d$\dmn\ \statesp, several values of $\gSpace$ might be local extrema of
+the distance function. % \refeq{minDistance}.
+Our prescription is to pick the closest \reducedsp\ point as the unique
+representative of the entire group orbit. \ie, determine the global
+minimum (infimum) of distance. % \refeq{minDistance}.
+For example, group orbits of
+\SOn{2}\ are topologically circles, and the distance function
+has maxima, minima and inflection points as {critical points}:
+if \gSpace\ is a solution of the slice condition % \refeq{SL:CLEsliceRot}
+for \cLe,
+so is $\gSpace+\pi$. We can pick the closest by noting that
+the local minima have positive curvature,
+\beq
+\frac{\partial^2}
+     {\partial \gSpace^2}
+        |\sspRed - \slicep|^2
+    =
+\edit{- 2 \, \braket{\sspRed}{\Lg^2\slicep}}
+\,.
+\ee{SO2inflPoint}
+For the \cLe, this determines which moving frame angle will be used since
+\edit{the} distance function %\refeq{minDistance}
+has only a minimum and a maximum.
+It does not matter
+whether the group is compact, for example $\SOn{n}$, or noncompact, for
+example the Euclidean group $E_2$ that underlies the generation of spiral
+patterns\rf{Barkley94}; in either case any group orbit has one or several
+locally closest passages to the {\template} state, and generically only
+one that is the closest one.
+(Here we focus only on continuous symmetries - discrete symmetries that
+flows such as the \KS\ and {\pCf} exhibit will also have to be taken into
+account\rf{SCD07,HGC08,DasBuchMirror}.)
+
+\item[2014-03-09 Evangelos] I copy from my handwritten notes of October 2011,
+you should check this if you intent to use it.
+In order to see why \refeq{eq:so2sing} is polynomial,
+it is convenient to use the trigonometric definition of Chebishev polynomials of
+the first $T_n(x)$ and second $U_n(x)$ kind, followed by the substitution
+$\theta=\arccos y$
+\bea
+\braket{e^{-\gSpace \Lg}\ssp}{\groupTan(\slicep)}
+=\sum\limits_m
+    \left(
+    \braket{\ssp}{\Lg^{(m)} \slicep} T_m(y)
+  - m\braket{\ssp}{\id^{(m)} \slicep} \sqrt{1-y^2} U_{m-1}(y)
+   \right)
+   \continue
+   = -\sum\limits_m m
+    \left(
+    (c_m'\, b_m - b_m'\, c_m) T_m(y)
+  + (b_m' b_m + c_m' c_m) \sqrt{1-y^2} U_{m-1}(y)
+   \right) = 0
+\,.
+\label{eq:so2sliceCheb}
+\eea
+
+Actually, I do not know if we can call \refeq{eq:so12sliceCheb} polynomial in y, because of
+the presence of the $\sqrt{1-y^2}$ term, but this does not change anything in practice.
+You should be able to solve \refeq{eq:so2sliceCheb} for $y$ iteratively by Newton's method,
+and then transform back to get $\theta$. When taking derivatives, it will be convenient to use
+appropriate identities involving Chebishev polynomials.
+
+I regret to say that I have not done this myself, but instead used the internal solver of Mathematica to
+postprocess trajectories. In Mathematica, NSolve, uses the same Newton method to solve the equation numerically,
+given an initial guess (but works with $\theta$, I suppose).
+In practice for every point on a trajectory, I've used as initial guess $\theta$
+from previous point. What I find bewildering is that as dimensionality of phase space increases, we should
+get more and more solutions of \refeq{eq:so2sliceCheb}, and these will probably not be well isolated.
+The reason I wrote \refeq{eq:so2sliceCheb} was that I wanted to know how many solutions I should expect,
+but I did not make any progress. For the \twomode\ system, Mathematica can also solve slice condition
+with Solve, which seems to mean it knows how to handle the equation exactly.
+
+For any single Fourier mode slice, \refeq{eq:so2sliceCheb} simplifies considerably. Essentially, the
+moving frame angle is given by simple trigonometry on the appropriate Fourier mode plane (see my thesis
+for first mode\ES{yes, Predrag, you forgot my thesis in first Fourier mode history.}). Actually, using
+a single Fourier mode, make life a lot easier, because any trouble with multiple solutions only comes
+from trigonometry, and is therefore easy to address after some thought.
+
+
+\item[Predrag 2014-03-19] Your
+\HREF{http://www.cns.gatech.edu/~xiong/} {home pages} on \texttt{zero.physics}
+    are in your home directory, \texttt{public\_html/}. I used Siminos as a
+    template, edit them so they are yours.
+
+\item[Xiong Ding 2014-03-22]
+Does anyone have the initial conditions for \po s
+(not \rpo s) in the full {\statesp} for \cLe\ or
+\twomode\ system? I want to use a low dimensional system to demonstrate
+projection of {\cLvs} from full {\statesp} to slice. I could
+not find such data in the repository. Please help me.
+
+I tried to find some periodic orbits in the \twomode\ system by myself
+but got nothing. As pointed out in Chaosbook, the probability of finding
+periodic orbits in a system without discrete symmetry is nearly zero, so
+it is not surprising that the multi-shooting algorithm refuses to
+converge.
+
+I just want to show how the covariant vectors are projected onto the
+slice, and I hope some low dimensional system will serve the purpose.
+
+\item[Predrag 2014-03-23]                               \toCB
+I wish we had something like a theorem (it might be in the literature, but
+we have not identified it as yet) that says that if we have only continuous
+but no discrete symmetry, generically there are no non-trivial
+\eqva\ and no \po s. Both \cLe\ and \twomode\ system are by design of that type,
+with \SOn{2} symmetry.
+
+As shown in Siminos thesis Sect.~4.2.5, for parameters value where \cLe\
+has \On{2} symmetry, it decomposes into a family of rotated Lorenz
+systems, so no interesting 4\dmn\ dynamics there; imposition of extra
+$\Dn{1}$ symmetry renders dynamics 3\dmn. Note that if one starts in the
+4\dmn, one still converges to a 3\dmn\ Lorenz system.
+
+\texttt{gitHub} repo \texttt{reducesymm/cgang} has some discussion of
+the \On{2}-equivariant \twomode\ system.
+Read {\bf 2012-03-26 Predrag} and following pages: ``Evangelos in his
+thesis and Kohler in his ChaosBook.org project got nothing of interest
+out of the \On{2}-equivariant Armbruster~\etal\rf{AGHO288} system. As far
+as we can tell, it exhibits no chaos.'', \etc. Unfortunately, the
+\texttt{cgang/2modes.tex} is again in limbo, and Burak has not started
+the discussion of the \On{2} case in the paper proper yet. Search for
+{\em 2013-10-15 Burak} and beyond. In {\em 2013-11-19 Burak} argues that
+the \On{2}-equivariance effectively reduces the dimension by one: if one
+starts in the 3\dmn\ \slice, one still converges to a 2\dmn\ subspace.
+So also in the \twomode\ case the \On{2} dynamics is trivial.
+
+I wish we would prove the above claims, or finds proofs in the
+literature: I find it amazing that imposition of a simple $\Dn{1}$
+symmetry lowers the dimensionality of the system. We have not studied
+other \On{2}-equivariant low-dimensional systems, so all I can suggest is
+to use the reflection-invariant subspace of
+\KS\rf{Christiansen97,lanVar1,lanCvit07}. We have \po s for them
+someplace in \texttt{siminos} and/or \texttt{vaggelis} repositories, on
+\texttt{ChaosBook/extras}, and Adam Fox has computed them recently. Is that
+helpful to you?
+
+\item[Predrag 2014-03-25]                       \toCB
+Here is a cheap way of converting \rpo s to \po s:
+go to the `mean' comoving frame for a given \rpo\, see fig.~10.8 in
+\HREF{http://www.streamsound.dk/book1/chaos/chaos.html\#209/z} {ChaosBook}.
+This is not a global symmetry reduction, it only applies to the single
+\rpo, so I am not sure it applies to its Floquet vectors.
+
+\item[Xiong to Predrag 2014-03-31]
+I am confused today on pre-periodic orbits. According to \refref{SCD07}, no
+periodic orbits have been found in the antisymmetric
+subspace \KSe for $L=22$. {\bf Predrag:} They show up for larger $L$. I think
+it is probably obvious if you look at the bifurcation diagram in
+\refref{Christiansen97} - physical reason is that it is a smaller space
+than
+
+
+Also I checked pre-periodic orbit \cycle{ppo1}
+and the result is that $u(x,T_{p})=Ru(x,0)$ holds but $u(x,0)\neq -u(-x,0)$.
+so the angle for a point on a pre-periodic orbit to be group transformed
+onto a slice is not the same throughout this orbit, am I right?
+
+\item[Predrag 2014-04-04]
+
+
+\item[Xiong to Predrag 2014-04-04]
+When using the first few covariant vectors to span the covariant subspace and find the angle
+between the difference vector and subspace, I realize that there is no need to use covariant
+vectors because the orthogonal Lyapunov vectors are enough. As pointed out in my manuscript,
+the first k orthogonal Lyapunov vectors span the same subspace as the first k Floquet vectors.
+
+So for the physical dimension problem, now it seems that Floquet vectors are only needed when
+we want to compute the angles between different Floquet vectors along a single periodic orbit.
+Furthermore, we even don't need to calculate each Floquet vector but just a subspace spanned
+by a few Floquet vectors. If this is what we only need, I can not see the necessity of periodic
+Schur decomposition. On the other hand, all the experiments by Kaza, Hong-liu Yang
+are conducted statistically, could we just rely on a few periodic orbits?
+
+\item[Ruslan 2014-04-30] The data for all RPOs and PPOs which I found
+with period $T \leq 200$ can be downloaded from
+\HREF{https://dl.dropboxusercontent.com/u/70198652/ks22f90h25t200.mat}{here}.
+
+\item[Ruslan 2014-04-30] To obtain RPOs and PPOs with time step smaller than $h=0.25$, do not attempt to obtain the orbit from the initial condition by integrating the KS equation with smaller time step. Instead, use time step $h=0.25$ and either a) interpolate between the points (I think {\tt pchip} in Matlab is the best for this), or b) integrate with smaller time step only up to $t = h$.
+
+
+\item[2014-05-06 Predrag to Xong Ding]
+Referring to
+\reffig{fig:ppo2_states_reduced}
+- the pre-periodic orbit \cycle{ppo2} is
+the 2nd one in Ruslan's database. Can you write down in the appropriate place
+ what $\period{ppo2}
+=??$?
+Please correct me if I am wrong:
+
+Upon quotienting with \Dn{1}, a pre-periodic orbit \cycle{ppo} of prime period
+$\period{ppo}$ becomes a \rpo\ of period $\period{ppo}$ in the \Dn{1}
+fundamental domain.
+Upon subsequent
+\SOn{2} reduction,
+this \rpo\ becomes a \po\ in the \slice Plane. If one reduces
+\SOn{2}\ first, in the slice this becomes a single \po\ of period
+$2\,\period{ppo}$, self-dual under \Dn{1} reflection. Under the full
+$\On{2}$ reduction the orbit becomes a single \po\ in
+the fundamental domain. In the antisymmetric
+flow-invariant subspace, one only has \po s and \eqva, all (by
+construction) self-dual under \Dn{1} reflection.
+
+I'm mention this to help you in account for the the antisymmetric
+flow-invariant subspace contributions to your \On{2} factorization of
+{\Fd s}.
+
+\item[2014-05-06 Xiong to Predrag]
+For a pre-periodic orbit, it becomes a periodic orbit after quotienting
+out $D_1$ in the fundamental domain.
+
+\item[2014-05-11 Xiong to Predrag]
+Could we revise the Schur manuscript section by section ? I think it is
+easier for you to edit one section each time. The introduction part is
+most important, hope we can set it down soon, then we can go to other
+sections.
+
+\item[2014-05-13 Xiong]
+I followed Ruslan's second advice in [Ruslan 2014-04-30], but the
+result is not satisfactory.
+\begin{table}[h]
+  \centering
+  \begin{tabular}{c|c|c|}
+    \hline
+   1 & 0.310946583335604      &   0.310972724308594     \\
+   2 & 1.88469322815085e-14   &   0.000101809742589787  \\
+   3 & -3.43919763286876e-09  &   -3.83922548097721e-05 \\
+   4 & -0.201501630580307     &   -0.201384000162758    \\
+   5 & -0.121542996659319     &   -0.121753062427539    \\
+   6 & -0.292651011576665     &   -0.292599056406584    \\
+   7 & -0.343131307056955     &    -0.34311251627547    \\
+   8 & -0.343131307056955     &    -0.34311251627547    \\
+  \end{tabular}
+  \label{tab:comp_divide}
+  \caption{Real part of the Floquet exponent $\mu_{p}$ for pre-periodic
+ orbit \cycle{ppo2}. The left column comes from \psd\ with refined
+initial condition and $h=0.02018\cdots$. The right column is obtained
+following Ruslan's
+advise; namely, I integrate the system with time step $h=0.25$ and then
+I divide each time unit into 13 smaller pieces, and integrate with smaller
+time step ($h=1/52$) in each time unit.}
+\end{table}
+As we can see from table \reftab{tab:comp_divide}, the accuracy of the
+right column compared with the left column is at most $10^{-4}$, which
+is especially obvious for the two marginal exponents. Moreover, I don't
+think the interpolation method will give me a more accurate result than
+the right column, so it seems I need to refine the initial condition if
+the accuracy needs to be kept.
+
+\item[2014-05-19 Xiong]
+I plotted several figures to show that \psd\ is capable of determining
+the subspace spanned by the two marginal Floquet vectors of relative
+periodic orbits.
+
+Initially I tried ``matlplotlib'' package to draw these figures, but it
+seemed impossible for me to figure out how to show the intersections and
+shadowing of 3-D objects correctly, so I turned to \texttt{Mayavi} and
+ its python
+interface \texttt{mayavi.mlab} is easy to use. Small planes are plotted using
+\texttt{mlab.mesh} command.
+
+These figures are the same except the viewing angle, because I want to
+choose one of them as an illustration in my manuscript.
+
+\begin{figure}[h]
+  \centering
+  \includegraphics[width=1.0\textwidth]{rpo1_marginal}
+  \caption{Projection of relative periodic orbit rpo(1) onto the Fourier
+    subspace $[b_2,c_2,b_3]$ (red curve). The lime curve is group orbit
+    connecting the initial and final points. blue and magenta arrows
+    represent the velocity field and group tangent along the orbit
+    respectively. Those cyan two-dimensional planes are spanned by the
+    two marginal Floquet vectors at each yellow point along the orbit.
+  }
+  \label{fig:rpo1_marginal}
+\end{figure}
+
+\begin{figure}[h]
+  \centering
+  \includegraphics[width=1.0\textwidth]{rpo1_marginal2}
+  \caption{ The same as Fig.~\ref{fig:rpo1_marginal}
+  }
+  \label{fig:rpo1_marginal2}
+\end{figure}
+
+\begin{figure}[h]
+  \centering
+  \includegraphics[width=1.0\textwidth]{rpo1_marginal3}
+  \caption{ The same as Fig.~\ref{fig:rpo1_marginal}
+  }
+  \label{fig:rpo1_marginal3}
+\end{figure}
+
+\begin{figure}[h]
+  \centering
+  \includegraphics[width=1.0\textwidth]{rpo1_marginal4}
+  \caption{ The same as Fig.~\ref{fig:rpo1_marginal}
+  }
+  \label{fig:rpo1_marginal4}
+\end{figure}
+
+\item[2014-05-19 Predrag] Wow, these figures are really pretty. There is no
+point of using them as examples in \refref{DingCvit14}, there a single
+pre-periodic orbit should suffice as an example, but we'll use them
+someplace else.
+
+\item[2014-05-19 Predrag  to Xiong Ding]                   \toCB
+A question (on behalf of Kimberly and Ashley).
+
+For cyclical processes, such as rotation, frequency is defined as a
+number of cycles per unit time. Angular frequency $\omega =
+2\pi/\period{*}$ is the rate of change $\dot{\theta} = \omega$ of angular
+displacement $\theta$, where period $\period{*}$ is the duration of one
+$2\pi$ rotation.
+
+My definition of the imaginary part of the
+Floquet exponent \eigIm[k]\ in ChaosBook.org is not good:
+\beq
+\jMps_p\, \jEigvec[j]
+   = \ExpaEig_{p,j} \,\jEigvec[j]
+\,,\qquad
+j = 1,2, \cdots,d
+\,,
+\ee{cplxExpaEig1edited}
+where $\ExpaEig_{p,j}$ denotes the $j$th
+{eigen\-value} (the {Floquet multiplier}) of
+[$d\!\times\!d$] {\FloquetM} $\jMps_p$
+(the \jacobianM\ evaluated on one period \period{p} of the periodic
+orbit $p$),  and
+$\eigExp[p,j]$ denotes the $j$th {Floquet exponent},
+with real part $\eigRe[p,j]$ and angular frequency $\eigIm[p,j]$:
+    \PC{2014-05-20 not 'phase'}
+        \index{stability!multiplier}
+        \index{stability!exponent}
+\beq
+\ExpaEig_{p,j} = e^{\period{p} \eigExp[j]_p}
+    \,\qquad
+\eigExp[j]_p = \eigRe[j]_p+i\eigIm[j]_p
+\,.
+\ee{DBstabExpon}
+In ChaosBook I say `phase' instead of `frequency' and
+I might be off by factor $2\pi$:)
+Let us focus on the phase of a
+single repeat of $p$,
+\[
+ \ExpaEig_{p,j}/|\ExpaEig_{p,j}|
+     =
+ e^{i\,\theta_1}
+\,.
+\]
+This formula gives us only the fractional part
+\beq
+\theta_1/2\pi = \theta/2\pi - \lfloor\theta/2\pi \rfloor
+\ee{wrappedPhase}
+so in general
+$\eigIm_1 = \theta_1/\period{}$ is not the
+frequency, which depends on the total winding phase $\theta$ accrued in
+one prime cycle period $\period{}$. The problem becomes clear when you
+look at the $r$th repeat of the prime cycle:
+\begin{equation}
+\eigIm_r =\frac{2\pi}{r\period{}}
+    \left(
+\frac{r\theta_1}{2\pi} - \lfloor\frac{r\theta_1}{2\pi}\rfloor
+    \right)
+\,.
+\label{eq:multp}
+\end{equation}
+This generates a sequence of $\eigIm_r\to 0$ as $r\to\infty$, whereas we
+need the single frequency $\omega=\theta/\period{}$ for any number of
+repeats. I believe we need the correct $\omega=\dot{\theta}(\ssp(\zeit))$,
+because if two orbits
+shadow each other, their local winding rates $\eigIm[k]$ should also
+locally shadow each other.
+
+In your calculations you have complex Floquet eigenvector pairs all
+along a \rpo\ or pre-periodic orbit, so I believe you can calculate the
+accumulated phase $\phi$ for each such pair.
+
+In general, I believe the phase $\theta$ can be calculated for a \po\ by
+first finding it, and finding the complex eigenvector pair at the initial
+point on the orbit. Then track a vector in this plane - let's say
+$e^{-\zeit\eigRe[j]} \Re \jEigvec[j](\ssp(\zeit))$ - for one period, and
+record the total rotation $\theta$ in this plane.
+
+Maybe I should reread J. M. Robbins and other quantum chaos literature on
+Maslov index of a \po? Usually that is a number of negative values of a
+Hessian - that is specific to Hamiltonian and quantum mechanics, nothing to
+do with the problem at hand...
+
+\item[2014-05-20 Xiong to Predrag] I just try to write down my
+understanding about complex Floquet vectors here. Hope I understand you
+correctly. We are concerned about the wrapped 'frequency'
+$\theta_1/2\pi = \theta/2\pi - \lfloor\theta/2\pi \rfloor$, and you believe
+that \ped\ will give the correct
+instantaneous angular velocity (local winding rates $\omega^{(k)}$),
+but I think the rotated angle $\theta$ in the subspace spanned by the real
+and imaginary parts of a complex Floquet vector can only be calculated at
+each $nT_p\,, n=1,2,\cdots$; at other time $t\neq nT_p$, vectors initially
+residing in this subspace are evolved outside this subspace.
+
+Numerically, a Floquet matrix is decomposed into a product of matrices
+$J_p=J_n\cdots J_2J_1$. Let $[e(t_k), e^*(t_k)]$ be two complex Floquet
+vectors at time $t_k$, then
+\[
+e(t_k)=J_k\cdots J_2J_1 e(0)
+\,.
+\]
+Split the real and imaginary part $e(t_k)=e_R(t_k)+ie_I(t_k)$, and choose
+an arbitrary initial vector inside subspace $[e_R(0),e_I(0)]$,
+\[
+v(0)=ae_R(0)+be_I(0)
+\,.
+\]
+At time $t_k$, it evolves to
+\[
+v(t_k)=J_k\cdots J_2J_1 v(0)
+=ae_R(t_k)+be_I(t_k)
+\,.
+\]
+So, $v(t_k)$ has the same coefficient at the covariant frame
+$[e_R(t_k),e_I(t_k)]$. Now the problem of investigating how
+an vector evolves inside this subspace turns out to be investigating
+how $e_R(0)$ and $e_I(0)$ evolve.
+Obviously, after one exact prime period $T_p$,
+\begin{equation}
+[e_R(T_p),e_I(T_p)]=J_p [e_R(0),e_I(0)]=
+\begin{pmatrix}
+  \cos(T_p\omega_p) & -\sin(T_p\omega_p) \\
+  \sin(T_p\omega_p) & \cos(T_p\omega_p) \\
+\end{pmatrix}
+[e_R(0),e_I(0)]
+\label{eq:accum_ang}
+\,.
+\end{equation}
+we see that after one prime period, the two vectors are again
+inside the subspace spanned by $[e_R(0),e_I(0)]$, so basically,
+we can regard $\omega_p$ as the average angular velocity
+without considering the aliasing effect caused by multiple
+$2\pi/T_p$, but the problem arises here if we evolve the system for
+multiple $T_p$ as shown in \eqref{eq:multp}. I am sorry I don't know
+how to resolve this problem, but what I going to say is that at time
+$t\neq nT_P$, $e_R(t)$ and $e_I(t)$ are evolved outside the subspace
+ $[e_R(0),e_I(0)]$ as shown in Fig.~\ref{fig:ang_evolution}; in this
+sense, it seems that the definition of an instantaneous angular velocity
+describing the rotation inside this subspace is problematic.
+In my opinion, rotation only holds at $nT_P$.
+
+  \begin{figure}[h]
+    \centering
+    \includegraphics[width=1.0\textwidth]{ang_evolution}
+    \caption{pre-periodic orbit \cycle{ppo1} in \KS\ system.
+      (a) the red curve (blue curve) denotes the cosine of angle
+      between $e_R(t)$ ($e_I(t)$) and subspace $[e_R(0),e_I(0)]$
+      for one $T_p$.
+      (b) the cosine of the principal angle between subspace
+      $[e_R(t),e_I(t)]$
+      and subspace $[e_R(0),e_I(0)]$ for two $T_P$.
+    }
+    \label{fig:ang_evolution}
+  \end{figure}
+
+\item[2014-05-21 Predrag]
+I totally agree that the plane spanned by $[e_R(\zeit),e_I(\zeit)]$
+moves and differs from
+the initial plane $[e_R(0),e_I(0)]$ for $0<\zeit<\period{p}$. Think of it this way:
+as the orbit $\ssp(\zeit)$ evolves, the tip of the vector $e_R(\zeit)$ traces
+out a spiral around it. By the time it returns to the initial plane at \period{p},
+it has accumulated phase $\theta$, and generically $\theta>2\pi$.
+
+You have the eigendecomposition of cyclic rotations
+${\bf J}_{k}=J_{k}J_{k-1}\cdots J_{1}J_{m}\cdots J_{k+1}$ for
+$k=1,2,\dots,m\!-\!1$. As you go around a \po, doesn't that
+enable you to track that spiral, and compute the accumulated phase $\theta$?
+
+Something else:
+\\
+LaTeX Error: File `ppo1rpo1figure' not found. The same for rpo1\_marginal3.png.
+
+\item[2014-05-21 Predrag] Talking to Ashley we came up with another
+suggestion how to track the winding phase $\theta$ in
+\refeq{wrappedPhase} accrued in one prime cycle period $\period{}$. Start
+with a short vector in the the complex eigenvector plane, let's say
+$\ssp'(0) = \ssp(0) + \epsilon \, \Re \jEigvec[j](\ssp(0))$ at the initial point $\ssp(0)$ on
+the orbit. Then plot the trajectory of the tip of the rescaled
+difference vector
+\begin{equation}
+\ssp''(\zeit) = \ssp(\zeit) + e^{-\zeit\eigRe[j]}(\ssp'(\zeit) - \ssp(\zeit))
+\label{eq:evolve_diff}
+\end{equation}
+for one period, and record the total rotation
+$\theta$ in this plane, and count the number of crossings of the orbits
+$\ssp(\zeit)$ and $\ssp''(\zeit)$ in any 2D projection. One needs oriented
+crossings, and that one can get from any 3D projection. I would test this
+first on a case of real Floquet multiplier; for inverse hyperbolic case
+(\po\ has a negative Floquet multiplier) the number of windings has to be
+odd. For a general complex case, with generic accumulated phase
+$\theta(\period{p})$, the number of crossing might depend on the
+projection.
+
+\item[2014-05-28 Xiong to Predrag] You have a good idea. Thank you
+for the suggestion.
+I am just a litter concerned about the stability of the evolution
+of \eqref{eq:evolve_diff}. Meanwhile, these days I am trying to
+project $e_R(t)$ and $e_I(t)$ onto the 2-d subspace $[e_R(0),e_I(0)]$,
+\[
+e_R(t)=a(t)e_R(0)+b(t)e_I(0)+\text{components outside this subspace}
+\,,
+\]
+record coefficients $[a(t),b(t)]$ along the orbit and calculate the
+cumulative angle. Only pre-periodic orbits have been tested so far.
+\begin{figure}[h]
+  \centering
+  \includegraphics[width=1\textwidth]{alias_ppo1v1}
+  \caption{the 1st and 2nd Floquet vectors of \cycle{ppo1}
+  form a complex pair. (a) projection coefficients $[a(t),b(t)]$
+  for $e_R(t)$ and $e_I(t)$ respectively. The black dots are the
+  starting points. (b) the accumulative angle corresponding to (a).
+}
+  \label{fig:alias_ppo1v1}
+\end{figure}
+\begin{figure}[h]
+  \centering
+  \includegraphics[width=1\textwidth]{alias_ppo1v6}
+  \caption{ The same as Fig.~\ref{fig:alias_ppo1v1} except the
+    6th and 7th Floquet vectors are considered here.
+  }
+  \label{fig:alias_ppo1v6}
+\end{figure}
+Figs.~\ref{fig:alias_ppo1v1} and \ref{fig:alias_ppo1v6} show the case for
+\cycle{ppo1}. According to \eqref{eq:accum_ang}, after $2T_p$,
+the accumulative angle for $e_R(t)$ and $e_I(t)$ are
+\[
+\phi_R=-2\omega_p T_p + 2k_R\pi \,,\quad
+\phi_I=-2\omega_p T_p + \pi/2 + 2k_I\pi \,
+\,.
+\]
+The aliasing integers $(k_R, k_I)$ now could be determined. For
+fig.~\ref{fig:alias_ppo1v1}, $(k_R, k_I)=(0,1)$. For
+fig.~\ref{fig:alias_ppo1v6}, $(k_R, k_I)=(2,2)$. The aliasing numbers
+for the real and imaginary part of a Floquet vector could be different.
+I think it is just the effect of projection.
+
+
+\item[2014-06-27 Xiong]
+
+I found it is very hard to classify the shadowing orbits for a large
+number of long orbits, so I turn to the {\PoincSec} and hope the
+Floquet vectors projected on the {\PoincSec} can give me some hint. As
+shown in figure \ref{fig:poinc_191_34_2}, the three Floquet vectors at
+different locations from these three orbits respectively have similar
+direction on {\PoincSec}. For me, the direction just says the
+trajectories will tell apart, but nothing more special could be found.
+I am not sure whether I understand the meaning correctly.
+  \begin{figure}[h]
+    \centering
+    \includegraphics[width=0.9\textwidth]{poinc_191_34_2}
+    \caption{(a) Shadowing preperiodic orbits \cycle{ppo191} (blue),
+      \cycle{ppo34} (green) and \cycle{ppo2} (red)
+      after reducing SO(2) symmetry projected onto $[a_2,b_2,a_3]$.
+      For clarity, only part of these orbits are shown. {\PoincSec}
+      is constructed by three points (the green and blue points are on the
+      top. The red one is at the lower left)
+      from each of these orbits. (b) The
+      projected Floquet vectors at the intersection points in (a).
+    }
+    \label{fig:poinc_191_34_2}
+  \end{figure}
+
+\item[2014-06-29 Evangelos] The matlab scripts I've written to
+detect shadowing of (relative) periodic orbits are in
+\texttt{siminos/matlab/ruslan}, files  \texttt{ks22ppo\_cr\_inv.m},
+\texttt{ ks22ppo\_rpo\_cr\_inv.m} and \texttt{ks22rpo\_cr\_inv.m}.
+They automate the procedure of finding the minimum distance of two
+rpo's or po's or an rpo and a po. Plotting the minimum distance in
+log scale one can locate pairs of shadowing cycles.
+The pairs I have detected are the
+ones discussed earlier in this blog, but you should be able to
+detect many more with these routines.  Please let me know if
+you need help to make it work.
+
+\item[2014-06-29 Evangelos] Probably we need to think a bit more
+about how we detect shadowing. Currently we are limited by
+time step, but we might need to interpolate between timesteps to
+really detect minimum distance.
+
+\item[2014-06-29 Xiong to Evangelos] Thank you for your codes.
+I tried to read your code, but have one question. What is function
+\texttt{mfinv()} doing?
+
+\item[2014-07-02 Evangelos to Xiong] Function \texttt{mfinv()}
+projects trajectories to invariant polynomials defined in
+\texttt{siminos/ksReduced/obsolete/ksReduced.tex}. Eventually,
+I would like to update the scripts to use slicing. However,
+I think that what variables you use to detect shadowing is not
+important. Once you have a pair of possible shadowed orbits you
+can always check the minimum distance on any slice you choose.
+
+\item[2014-07-15 Xiong to Predrag]
+The {\Poincare} intersection points of \cycle{rpo1} in the 1st mode
+slice cross the border after three returns.
+
+\begin{figure}[h]
+  \centering
+  \includegraphics[width=0.8\textwidth]{rpo1poincare}
+  \caption{
+    Intersection points of the 3 returns of point $x(0)+10^{-6}e_1$,
+    where $x(0)$ is the closest point to the slice boarder on
+    \cycle{rpo1}, and $e_1$ is the only expanding direction at $x(0)$
+    in the slice. After each return, the line space is linearly filled and
+    are used as initial points to get another return. Black point is
+    $x(0)$, and the four disconnected points are on the {\PoincSec}
+    boarder. Three coordinate axes are $[\hat{b}_1, \hat{b}_2, \hat{c}_2]$.
+  }
+  \label{fig:rpo1poincare}
+\end{figure}
+
+
+\item[2017-03-29 Xiong]
+I plan to give an example of calculating the escaping rate in logistic 
+map in my thesis to show the amazing convergence of cycle expansion of
+a spectral determinant. But now it seems too late. Apr 7 is the 
+deadline!  I produced several figures that may be used in future.
+\begin{figure}[!ht]
+  \centering
+  \includegraphics[width=0.45\textwidth]{logistic_PO001}
+  \includegraphics[width=0.45\textwidth]{logistic_PO011}
+  \includegraphics[width=0.45\textwidth]{logistic_PO0001}
+  \includegraphics[width=0.45\textwidth]{logistic_PO0011}
+  \includegraphics[width=0.45\textwidth]{logistic_PO0111}
+  \caption{Logistic map $x_{n+1} = Ax_n(1-x_n)$. Here $A=5.0$. 
+    for left to right: 001, 011, 0001, 0011, 0111.
+  }
+  \label{fig:logisticMapPOs}
+\end{figure}
+
+\end{description}
+
+\renewcommand{\ssp}{a}

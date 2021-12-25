@@ -1,0 +1,548 @@
+% siminos/spatiotemp/chapter/KSsymm.tex
+% $Author: predrag $ $Date: 2020-05-07 17:34:06 -0400 (Thu, 07 May 2020) $
+
+% called by
+%           siminos/spatiotemp/chapter/spatiotemp.tex
+%           siminos/tiles/GuBuCv17.tex
+
+%\section{Symmetries of \KSe}
+%\label{sect:KSsymm}
+
+The \KSe\ \refeq{e-ks} is equivariant under spatial translations, spatial
+reflections and temporal translations and Galilean transformations.
+The Galilean symmetry $u(\conf,\zeit)$ is a solution,
+then $u(x -ct,t) -c $, with $c$ an arbitrary constant
+speed, is also a solution. Without loss of generality, in our
+calculations we shall set the mean velocity of the front to zero,
+\beq
+\spaceAver{u}(\zeit)
+  \,=\, \int_0^{\speriod{}} d\conf \, u(\conf,\zeit) = 0
+\,.
+\ee{GalInv}
+
+If the system is compactified on a
+2-torus, with periodic boundary conditions
+$u(\conf,\zeit)=u(\conf+\speriod{},t+\period{})$, the symmetry group is
+\beq
+\Group = \On{2}_\conf \times \SOn{2}_\zeit
+        = \Dn{1,\conf} \ltimes \SOn{2}_\conf \times \SOn{2}_\zeit
+\,.
+\ee{KSsymms}
+The elements of the 1-parameter group of spatial shifts and reflections are
+$\On{2}_\conf:\{\Shift_{\shift/\speriod{}},\Refl \}$, and
+the elements of the 1-parameter group of temporal shifts are
+$\SOn{2}_\zeit:\{\Shift_{\shift/\period{}}\}$.
+If $u(\conf,t)$ is a solution, then $\Shift_{\shift/\speriod{}}\, u(\conf,t) =
+u(\conf+\shift,t)$ is an equivalent solution for any shift $0 \leq \shift <
+\speriod{}$, as is the reflection (`parity' or `inversion')
+\beq
+    \Refl \, u(\conf,\zeit) = -u(-\conf,\zeit)
+\,.
+\ee{KSparity}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% from \example{Invariance under fractional rotations.}{\label{exam:FractRot}
+Consider a cyclic group
+\[
+\Cn{m} = \{e,\trHalf{},\trHalf{}^{2},\cdots,\trHalf{}^{m-1}\}
+\,,\qquad \trHalf{}^m= e
+\,.
+\]
+where $\trHalf{}$ is an \SOn{2} rotation by $2\pi/m$. $\Cn{m}$
+is a discrete subgroup of \SOn{2} for any $m=2,3,\cdots$ .
+
+A field $u$ on the $2\pi/m$ domain is now a
+tile whose $m$ copies tile the entire domain. It is periodic on the
+$2\pi/m$ domain, and thus has Fourier expansion with Fourier modes
+$\exp(2\pi\ii m j \ssp)$. This means that $\SOn{2}$ always has an
+infinity of discrete subgroups $\Cn{2}, \Cn{3}, \cdots,\Cn{m}, \cdots$;
+for each the non-vanishing coefficients are only for Fourier modes whose
+wave numbers are multiples of $m$.
+%  } %end\example{exam:FractRot}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+If we take discrete subgroups in $\Cn{2,\conf}$ in place of both \SOn{2} groups
+then the order of the discrete group
+\(
+\tilde{\Group} = \Dn{1,\conf} \ltimes \Cn{2,\conf} \times \Cn{2,t}
+\)
+is of order $8$.
+All \spt\ symmetries of discussion can be described by \emph{isotropy subgroups},
+which are symmetry subgroups which leave solutions invariant.
+Specifically the discrete symmetries,
+spatial reflection symmetry and \spt\ shift-reflection symmetry. These particular
+symmetries have isotropy subgroups
+\(
+\Group = \Dn{1,\conf}
+\)
+and
+\(
+\Group = \Cn{2,t}
+\)
+respectively. To cover the discrete \spt\ symmetries that
+are realized by \twots\ we need to investigate the group
+\(
+\Group = \Dn{1,\conf} \times \Cn{2,t}\,,
+\)
+because its description includes
+reflection and shift-reflection symmetries. The term shift-reflection
+denotes solutions which are left invariant only after spatial reflection
+and a time translation by half a period. We have disregarded
+\Cn{2,\conf} for the discussion of discrete symmetries. This is
+permitted because spatial half-cell shifts, even in combination
+with other group elements only permit equivariant solutions,
+not invariant. Solutions invariant under half-cell shifts in
+space would have to be doubly periodic in space. For combination
+with the cyclic group in time it would be a yet undiscovered
+\twot which is invariant after a half-cell shifts in space and
+then time. The general $\Cn{M,\conf} \times \Cn{N,t}$ case
+is harder to describe; if $M=N$ then one example of a way
+to construct an invariant solution would be to construct
+a solution which would be invariant after $N$ total rotations.
+For instance, a solution with the form
+\beq
+u(x,t) =\left[\begin{array}{c}
+1\,2\,3 \\
+3\,1\,2 \\
+2\,3\,1
+\end{array}\right]
+\ee{e-uCmCn}
+would be invariant after a cycle consisting of
+one space rotation and two time rotations or
+two space rotations and one time rotation (each by one third
+of the domain in the respective, positive directions). This
+seems incredibly unlikely as it requires the solution to be comprised of
+permutations of three patterns which are all equivalent in domain size.
+This unlikelihood only gets worse for higher order cyclic groups
+We return from our tangent by getting into the meat of the
+discussion by analyzing the group $ \Dn{1,\conf} \times \Cn{2,t}$.
+We demonstrate some standard group theoretic calculations such as
+looking at the character table \reftab{D1C2table} and projection operators
+\refeq{e-D1C2operators}.
+
+%%%%%%%%%%%%%%%%%%%%
+\begin{table}[h!]
+\caption{\label{D1C2table}
+Because the direct product group is abelian we only have one dimensional
+representations and as such the character table follows directly.
+    }
+\centering
+\begin{tabular}{|c|c|c|c|c|}
+\quad & $e$ & $\Refl_x$ & $\trHalf{t}$ & $\Refl_x \trHalf{t}$ \\
+\hline
+$E$ & 1 & 1 & 1 & 1 \\
+$\Gamma_1$ & 1 & 1 & -1 & -1 \\
+$\Gamma_2$ & 1 & -1 & 1 & -1 \\
+$\Gamma_3$ & 1 & -1 & -1 & 1 \\
+\end{tabular}
+\end{table}
+The character table \reftab{D1C2table}, leads
+to the construction of four linear projection operators
+\bea \label{e-D1C2operators}
+P^{++} &=& \frac{1}{4}(1 +\Refl_x +\trHalf{\zeit}+ \Refl_x \trHalf{\zeit}) \continue
+P^{+-} &=& \frac{1}{4}(1 +\Refl_x - \trHalf{\zeit}- \Refl_x \trHalf{\zeit}) \continue
+P^{-+} &=& \frac{1}{4}(1 -\Refl_x  + \trHalf{\zeit} - \Refl_x \trHalf{\zeit}) \continue
+P^{--} &=& \frac{1}{4}(1-\Refl_x  - \trHalf{\zeit} + \Refl_x \trHalf{\zeit})
+\,,
+\eea
+where $\Refl_x$,$\trHalf{\zeit}$ denote spatial reflection about the $x=0$ line and time translation
+by half a period, respectively.
+The solution space can be decomposed into the irreducible subspaces produced
+by these projection operators
+$\bbU = \bbU^{++} \oplus \bbU^{+-} \oplus \bbU^{-+} \oplus \bbU^{--}$.
+In the context of a \rv\ \spt\ Fourier basis each of these subspaces corresponds
+to a subset of coefficients in the expansion \refeq{e-RealFourier}
+\bea \label{D1C2subspaces}
+u^{-+}(\conf,\zeit) &=& \sum_{k} \sum_{j} \akj \cos(\freqj \tn)\cos(\wavek \xm) \continue
+u^{--}(\conf,\zeit) &=& \sum_{k} \sum_{j} \bkj \sin(\freqj \tn)\cos(\wavek \xm) \continue
+u^{++}(\conf,\zeit) &=& \sum_{k} \sum_{j} \ckj \sin(\wavek \xm)\cos(\freqj \tn) \continue
+u^{+-}(\conf,\zeit) &=& \sum_{k} \sum_{j} \dkj \sin(\wavek \xm)\sin(\freqj \tn) \,.
+\eea
+We won't use these equations just yet but they are good for classifying what each
+projection operator corresponds to. This classification comes naturally
+from the parity (odd, even) of the trigonometric functions therein. They can later
+be used to derive constraints on the \spt\ \Fcs\ pertaining to invariance
+under certain symmetry operations.
+
+Before we continue,
+it will first be convenient to calculate the relationships between
+the projection operators \refeq{e-D1C2operators} and the spatial differentiation operator.
+The utility comes later when we apply these projection operators to the \KSe, specifically
+when considering the nonlinear term.
+\bea \label{D2C2projopderivx}
+D_{\conf} P^{++} &=& \frac{1}{4}D_{\conf}(1 +\Refl_x  + \trHalf{\zeit} + \Refl_x \trHalf{\zeit}) \continue
+                 &=& \frac{1}{4}(1 -\Refl_x  + \trHalf{\zeit}- \Refl_x \trHalf{\zeit})D_{\conf} \continue
+                 &=& P^{-+}D_{\conf} \continue
+D_{\conf} P^{+-} &=& \frac{1}{4}D_{\conf}(1 + \Refl_x  - \trHalf{\zeit}- \Refl_x \trHalf{\zeit}) \continue
+                 &=& \frac{1}{4}(1 -\Refl_x  - \trHalf{\zeit}+ \Refl_x \trHalf{\zeit})D_{\conf} \continue
+                 &=& P^{--}D_{\conf} \continue
+D_{\conf} P^{-+} &=& \frac{1}{4}D_{\conf}(1 -\Refl_x  + \trHalf{\zeit} - \Refl_x \trHalf{\zeit}) \continue
+                 &=& \frac{1}{4}(1 +\Refl_x + \trHalf{\zeit} + \Refl_x \trHalf{\zeit})D_{\conf} \continue
+                 &=& P^{++}D_{\conf} \continue
+D_{\conf} P^{--} &=& \frac{1}{4}D_{\conf}(1 -\Refl_x  - \trHalf{\zeit} + \Refl_x \trHalf{\zeit}) \continue
+                 &=& \frac{1}{4}(1 +\Refl_x  - \trHalf{\zeit} - \Refl_x \trHalf{\zeit})D_{\conf} \continue
+                 &=& P^{+-}D_{\conf}\,.
+\eea
+These identities allow us to rewrite the nonlinear terms
+present in each projection of the \KSe\ as derivatives
+of projection components as opposed to projections of derivatives,
+which we believe leads to less confusing analysis. Note that
+the effect can be summarized by flipping the first $\pm$, pertaining
+to the coefficient of the spatial reflection terms in \refeq{e-D1C2operators}
+The surviving nonlinear terms after the application of each projection operator are
+as follows
+\bea \label{e-D1C2nonlinear}
+P^{++}(u\partial_x u) &=& u^{\pm \pm}\partial_{\conf}(u^{\pm \pm})\continue
+P^{+-}(u\partial_x u) &=& u^{\pm \pm}\partial_{\conf}(u^{\pm \mp})\continue
+P^{-+}(u\partial_x u) &=& u^{\pm \pm}\partial_{\conf}(u^{\mp \pm})\continue
+P^{--}(u\partial_x u) &=& u^{\pm \pm}\partial_{\conf}(u^{\mp \mp})\,.
+\eea
+Using these relations \refeq{e-D1C2nonlinear} we can produce the projections
+of the \KSe\ onto the different irreducible subspaces, noting that the projection operator
+commutes with the linear terms such that
+\bea \label{e-KSEprojections}
+P^{++}F(u) &=& u_{\zeit}^{++}+u_{\conf \conf}^{++}+u_{\conf \conf \conf \conf}^{++} \continue
+           &+& (u^{++}\partial_{\conf}(u^{++}) + u^{+-}\partial_{\conf}(u^{+-}) \continue
+           &+& u^{-+}\partial_{\conf}(u^{-+}) + u^{--}\partial_{\conf}(u^{--}))  \continue
+P^{+-}F(u) &=& u_{\zeit}^{+-}+u_{\conf \conf}^{+-}+u_{\conf \conf \conf \conf}^{+-}\continue
+           &+&(u^{++}\partial_{\conf}(u^{+-}) + u^{+-}\partial_{\conf}(u^{++}) \continue
+           &+& u^{-+}\partial_{\conf}(u^{--}) + u^{--}\partial_{\conf}(u^{-+}))  \continue
+P^{-+}F(u) &=& u_{\zeit}^{-+}+u_{\conf \conf}^{-+}+u_{\conf \conf \conf \conf}^{-+}\continue
+           &+&(u^{++}\partial_{\conf}(u^{-+}) + u^{+-}\partial_{\conf}(u^{--}) \continue
+           &+& u^{-+}\partial_{\conf}(u^{++}) + u^{--}\partial_{\conf}(u^{+-})) \continue
+P^{--}F(u) &=& u_{\zeit}^{--}+u_{\conf \conf}^{--}+u_{\conf \conf \conf \conf}^{--}\continue
+           &+&(u^{++}\partial_{\conf}(u^{--}) + u^{+-}\partial_{\conf}(u^{-+}) \continue
+           &+& u^{-+}\partial_{\conf}(u^{+-}) + u^{--}\partial_{\conf}(u^{++}))\,.
+\eea
+Solutions to \refeq{e-ks} satisfy $F = 0$ by definition so
+by extension solutions must also satisfy $P^{\pm \pm}F=0$.
+With this we can determine the combinations of projection operators whose equations
+are ``self contained''. This is similar to the notion of \textit{flow invariant subspaces}
+but because we do not have dynamics we can't really use this term. Instead,
+these subspaces correspond to a constrained set of equations that solutions with
+particular discrete symmetries must adhere to.
+For example, assume that the only nonzero component $u$ is $u=u^{++}$.
+Substitution of \refeq{e-KSEprojections} yields
+\bea \label{e-KSplusplus}
+P^{++}F(u^{++}) &=& u_{\zeit}^{++}+u_{\conf \conf}^{++}+u_{\conf \conf \conf \conf}^{++}
+                +u^{++}\partial_{\conf}(u^{++}) \continue
+P^{+-}F(u^{++}) &=& 0 \continue
+P^{-+}F(u^{++}) &=& 0 \continue
+P^{--}F(u^{++}) &=& 0 \,,
+\eea
+so $\bbU^{++}$ is
+an invariant subspace. In fact,
+this subspace
+corresponds to equilibria solutions which
+live on the $\period{}=0$ line. The meaning
+of self contained in this example is that we
+assumed that $u=u^{++}$ and the only nonzero part
+of \refeq{e-KSplusplus} is the $P^{++}F(u^{++})$ component.
+Perhaps a more elucidating example is generated
+by the assumption that $u=u^{--} \neq 0 $. Substitution
+yields
+\bea \label{e-KSminusminus}
+P^{++}F(u^{--}) &=& u^{--}\partial_{\conf}(u^{--}) \continue
+P^{+-}F(u^{--}) &=& 0 \continue
+P^{-+}F(u^{--}) &=& 0 \continue
+P^{--}F(u^{--}) &=& u_{\zeit}^{--}+u_{\conf \conf}^{--}+u_{\conf \conf \conf \conf}^{--}
+\eea
+which indicates that the equations are not self contained as components
+other than $P^{--}F(u^{--})$ are non-zero. Recall that each of these
+components is equivalently equal to zero. Because these equations represent
+scalar field values defined at every $\conf, t$ this implies that in order
+to satisfy
+$u^{--}\partial_{\conf}(u)^{--}=0$
+either $u^{--}$, its derivative $\partial_{\conf}(u)^{--}$, or both must equal
+to zero at every point on the \spt\ domain. The only nontrivial
+possibility is if there are (at least)
+two disjoint regions such that $\Omega_u=\{(\conf,\zeit):u(\conf,\zeit)=0\}$
+and $\Omega_{u_x}=\{(\conf,\zeit):u_x(\conf,\zeit)=0\}$. By smoothness, if
+$u=0$ then $u_x=0$. This implies
+that $u_x=0$ for all $(\conf,\zeit)$; if
+$u_x=0$ everywhere and $u=0$ for some $(\conf,\zeit)$ then it must
+be the case that $u=0$ everywhere
+which contradicts our
+original assumption that $u=u^{--} \neq 0 $.
+The rest of the symmetry invariant subspaces follow from a
+similar substitutions. To expedite the derivation process, note
+that the equation for $P^{++}F$ contains
+all of the symmetric terms $u^{\pm \pm}\partial_{\conf}(u^{\pm \pm})$
+such that there is no
+possibility of an invariant subspaces
+which does not intersect $\bbU^{++}$.
+Following a process of elimination we can show that the possible
+symmetry invariant subspaces are $\bbU^{++}$, $\bbU^{++}\oplus \bbU^{--}$,
+$\bbU^{++}\oplus \bbU^{+-}$ and $\bbU^{++}\oplus \bbU^{-+}$ and
+of course the full space $\bbU$. There are no triplet subspaces
+(comprised of three components) which can be shown using
+the parity of the different subspaces. We can interpret
+these subspaces by addition of the corresponding projection
+operators \refeq{e-D1C2operators}
+\bea \label{e-invariantoperators}
+P_{0}\equiv P^{++} &=& \frac{1}{4}(1 +\Refl_x +\trHalf{\zeit}+ \Refl_x \trHalf{\zeit}) \continue
+P_{\Refl_x}\equiv P^{++}+P^{+-} &=& \frac{1}{2}(1 + \Refl_x) \continue
+P_{\trHalf{\zeit}}\equiv P^{++}+P^{-+} &=& \frac{1}{2}(1 + \trHalf{\zeit}) \continue
+P_{\Refl_x \trHalf{\zeit}}\equiv P^{++}+P^{--} &=& \frac{1}{2}(1+\Refl_x \trHalf{\zeit})
+\,.
+\eea
+With these projection operators we can interpret the symmetry
+invariant subspaces as follows:
+$\bbU^{++}$ represents the fixed point ($\period{}=0$) subspace,
+$\bbU^{++}\oplus \bbU^{+-}$ the spatial reflection invariant subspace,
+$\bbU^{++}\oplus \bbU^{--}$ the shift-reflection invariant subspace,
+and lastly $\bbU^{++}\oplus \bbU^{-+}$ which
+contains solutions that are invariant after a half period shift
+in time. This subspace of
+``twice repeating'' solutions is trivial and not useful; doubly periodic solutions
+can always be made to repeat twice in time by definition. The interpretation
+of the corresponding subspace is therefore not very intuitive.
+
+The next question to answer is how continuous spatial translation symmetry
+manifests itself in this \spt\ context.
+How do these subspaces relate to the continuous spatial translation symmetry?
+The three subspaces $\bbU_0,\bbU_{\Refl_x},\bbU_{\Refl_x \trHalf{t}}$
+share an interesting property in a real valued (\SOn{2}) representation.
+Specifically, the subspaces of \spt\ \Fcs\ corresponding
+to invariance under these discrete symmetries
+are all orthogonal to the space of spatial translations. This can
+be seen by acting on the different orbits with the spatial
+derivative operator which is the generator of infinitesimal translations.
+The subgroup
+\(
+H = \Cn{M,\conf}
+\)
+represents continuous spatial translation symmetry after discretization.
+We utilize a co-moving frame ansatz to handle this
+symmetry, which we will now develop. As previously mentioned,
+we use a \rv\ ($\SOn{2}$)
+representation for the \spt\ \Fcs. This choice makes the matrix
+representations of the group elements slightly more complicated
+as they will be block diagonal as opposed to exactly diagonal.
+Note that because of doubly periodic boundary conditions,
+translations
+are the same as rotation.
+The matrix representation of the group element which spatially rotates $M$
+Fourier modes by a value $\theta$ is a block diagonal matrix with $M$ blocks; each
+block being a representation of two dimensional
+rotations for the corresponding wavenumber $k$
+\beq \label{e-SOnGroupElement}
+\tilde{\LieEl}(\theta) \equiv
+\begin{bmatrix}
+\cos \wavek\theta  & -\sin \wavek\theta \\
+\sin \wavek\theta & \cos \wavek\theta
+\end{bmatrix}\,.
+\eeq
+This block diagonal matrix acts on $M$ Fourier modes;
+the corresponding extension to the set of \spt\ \Fcs\
+is simply $N$ copies of \refeq{e-SOnGroupElement}. In other
+words we have $N$ blocks of \refeq{e-SOnGroupElement}.
+This form lends itself to the matrix representation
+for the co-moving reference frame transformation.
+The co-moving reference frame is the reference
+frame which makes {\rpo}s periodic by applying
+a time-dependent spatial translation to every
+point of the \twot. Using
+\refeq{e-SOnGroupElement} the matrix representation
+of the co-moving frame transformation is as follows
+\beq \label{e-comovingRotation}
+\LieEl(\frac{\sigma \tn}{\period{}}) \equiv
+\begin{bmatrix}
+\tilde{\LieEl}(\frac{\sigma t_1}{\period{}}) & 0 & \cdots & 0 \\
+0 & \tilde{\LieEl}(\frac{\sigma t_2}{\period{}}) & \cdots & 0 \\
+\vdots & \vdots & \ddots & \vdots \\
+ 0 & 0 & 0 & \tilde{\LieEl}(\frac{\sigma t_{\scalebox{.4}{$N$}}}{\period{}})
+\end{bmatrix}
+\,.
+\eeq
+Transformations of the type \refeq{e-comovingRotation}
+will be used in our ansatz for doubly periodic solutions of
+the \KSe\ which are relatively periodic.
+
+
+
+\subsection{OLD: Symmetries of \KSe}
+\label{sec:KSeSymm}
+% KSe.tex     copied from siminos/rpo_ks/current/
+% TEMPORARY, ELIMINATE EVENTUALLY  \label{s-KS}
+
+%MOVED TO KSsymm.tex
+
+%The \KSe\ is Galilean invariant: if $u(\conf,\zeit)$ is a solution,
+%then $u(x -ct,t) -c $, with $c$ an arbitrary constant
+%speed, is also a solution. Without loss of generality, in our
+%calculations we shall set the mean velocity of the front to zero,
+%\beq \int dx \, u = 0 \,. \ee{GalInv}
+%As $\dot{a_0}=0$ in
+%\refeq{SCD07:expan}, $a_0$ is a conserved quantity
+%fixed to $a_0=0$ by the condition \refeq{GalInv}.
+
+
+$G$, the group of actions $ g \in G $ on a
+\statesp\ (reflections, translations, \etc) is a symmetry of the KS
+flow \refeq{e-ks} if $g\,u_t = F(g\,u)$.
+The \KSe\ is time translationally invariant, and space translationally invariant
+on a periodic domain under
+the 1-parameter group of
+$\On{2}: \{\Shift_{\shift/\speriod{}},\Refl \}$.
+If $u(\conf,\zeit)$ is a solution, then
+$\Shift_{\shift/\speriod{}}\, u(\conf,\zeit) = u(x+\shift,t)$
+is an equivalent solution for any shift
+$-\speriod{}/2 < \shift \leq \speriod{}/2$,
+as is the
+reflection (`parity' or `inversion')
+\beq
+    \Refl \, u(x) = -u(-x)
+\,.
+\ee{SCD07:KSparity}
+The translation operator action on the Fourier coefficients \refeq{eq:ksexp},
+represented here by a complex valued vector
+$a = \{a_k\in\mathbb{C}\,|\,k = 1, 2, \ldots\}$, is given by
+\beq
+  \Shift_{\shift/\speriod{}}\, a = \mathbf{g}(\shift) \, a \,,
+  \label{eq:shiftFour}
+\eeq
+where $\mathbf{g}(\shift) = \mbox{diag}( e^{i q_k\, \shift} )$ is a complex
+valued diagonal matrix, which amounts to the $k$-th mode complex plane
+rotation by an angle $k\, \shift /\tildeL$.  The reflection acts on
+the Fourier coefficients by complex conjugation,
+\beq
+  \Refl \, a = -a^\ast
+\,.
+\ee{FModInvSymm}
+Reflection generates the dihedral subgroup $\Dn{1} = \{1, \Refl\}$
+of $\On{2}$.  Let $\bbU$ be the space of
+real-valued velocity fields periodic and square integrable
+on the interval $\Omega = [-\speriod{}/2,\speriod{}/2]$,
+\begin{align}
+ \bbU  &= \{u \in \speriod{}^2(\Omega) \; | \; u(x) = u(x+\speriod{})\}  \,.
+\end{align}
+A continuous symmetry maps each state $u \in \bbU$
+to a manifold of functions with identical dynamic behavior.
+Relation $\Refl^2 = 1$ induces linear decomposition
+$u(x) = u^+(x)+ u^-(x)$,
+$u^\pm(x)= P^\pm u(x) \in  \bbU^\pm$,
+into irreducible subspaces
+$
+\bbU = \bbU^+
+       \oplus \bbU^-
+$, where
+\beq
+    P^+=(1+\Refl)/2
+    \,,\qquad
+    P^-=(1-\Refl)/2
+\,,
+\ee{SCD07:P1P2proj}
+are the antisymmetric/symmetric projection operators.
+Applying $P^+,\,P^-$ on the \KSe\ \refeq{e-ks} we have\rf{KNSks90}
+\bea
+ u_t^+ &=& - (u^+u^+_x + u^-u^-_x )
+                - u^+_{xx} - u^+_{xxxx}
+    \continue
+ u_t^- &=& - (u^+u^-_x + u^-u^+_x )
+                - u^-_{xx} - u^-_{xxxx}
+\,.
+\label{SCD07:KSD1}
+\eea
+If $u^- = 0$, \KSf\ is confined to
+the antisymmetric $\bbU^+$ subspace,
+\beq
+ u_t^+ = - u^+u^+_x
+                - u^+_{xx} - u^+_{xxxx}
+\,,
+\label{SCD07:KSU+}
+\eeq
+but otherwise the nonlinear terms in \refeq{SCD07:KSD1}
+mix the two subspaces.
+
+Any rational shift $ \Shift_{1/m}u(x)=u(x+\speriod{}/m)$ generates a discrete
+cyclic subgroup $\Cn{m}$ of $\On{2}$, also a symmetry of \KSe.
+Reflection together with $\Cn{m}$ generates another
+symmetry of \KSe, the dihedral subgroup $\Dn{m}$ of $\On{2}$.
+The only non-zero Fourier components of a solution invariant
+under $\Cn{m}$ are $a_{jm} \neq 0$, $j =1,2,\cdots$, while for a
+solution invariant under $\Dn{m}$ we also have the condition
+$\Re a_j=0$ for all $j$.
+$\Dn{m}$ reduces the dimensionality of \statesp\ and aids computation of
+\eqva\ and \po s within it. For example, the 1/2-cell translations \beq
+    \Shift_{1/2}\, u(x)=u(x+\speriod{}/2)
+\ee{KSshift}
+and reflections generate $\On{2}$
+subgroup $\Dn{2} = \{1, \Refl,\Shift,\Shift\Refl\}$,
+which
+reduces the \statesp\ into four irreducible subspaces
+(for brevity, here $\Shift = \Shift_{1/2}$):
+\begin{align}
+ & \qquad\qquad\qquad\qquad\qquad
+              ~~~ \Shift ~~ \Refl  ~\;  \Shift\Refl
+    \nnu\\
+P^{(1)} &= \frac{1}{4} (1 + \Shift + \Refl + \Shift\Refl)
+           ~~~~  S  ~~  S   ~~   S
+    \nnu\\
+P^{(2)} &= \frac{1}{4} (1 + \Shift - \Refl - \Shift\Refl)
+            ~~~~  S  ~~  A   ~~   A
+    \nnu\\
+P^{(3)} &= \frac{1}{4} (1 - \Shift + \Refl - \Shift\Refl)
+           ~~~~  A  ~~  S   ~~   A
+     \label{ek_defn}\\
+P^{(4)} &= \frac{1}{4} (1 - \Shift - \Refl + \Shift\Refl)
+          ~~~~  A  ~~  A   ~~   S
+\,.
+    \nnu
+\end{align}
+$P^{(j)}$ is the projection operator onto
+$u^{(j)}$ irreducible subspace, and the last 3 columns
+refer to the symmetry (or antisymmetry) of
+$u^{(j)}$ functions under reflection and
+1/2-cell shift.
+By the same argument that identified \refeq{SCD07:KSU+},
+the \KSf\
+stays within the
+ $\bbU^S =  \bbU^{(1)}+ \bbU^{(2)}$
+irreducible invariant $\Dn{1}$ subspace  of
+$u$ profiles symmetric under 1/2-cell shifts.
+
+While in general the bilinear term $(u^2)_x$  mixes the
+irreducible subspaces of $\Dn{n}$, for $\Dn{2}$ there are
+four subspaces invariant under the flow\rf{KNSks90}:
+\begin{itemize} %{romannum}
+ \item
+    $\{0\}$:~~~~~~ the $u(x)=0$ {\eqv}
+ \item
+    $\bbU^+ = \bbU^{(1)}+ \bbU^{(3)} $:\\
+    the reflection $\Dn{1}$ irreducible space of antisymmetric $u(x)$
+ \item
+    $\bbU^S =  \bbU^{(1)}+ \bbU^{(2)}$:\\
+    the shift $\Dn{1}$ irreducible space of $\speriod{}/2$ shift symmetric  $u(x)$
+ \item
+    $\bbU^{(1)}$:~~~~~\\
+    the $\Dn{2}$ irreducible  space of $u(x)$ invariant under
+    $x\mapsto \speriod{}/2-x,\ u\mapsto -u$.
+\end{itemize} %{romannum}
+With the continuous
+translational symmetry eliminated within each subspace, there are no
+\reqva\ and \rpo s, and one
+can focus on the \eqva\ and \po s only, as was done
+for $\bbU^+$ in \refrefs{Christiansen97,LanThesis,lanCvit07}.
+In the Fourier
+representation, the
+$u \in \bbU^+$
+antisymmetry amounts to having purely imaginary
+coefficients, since $a_{-k}= a^\ast_k = -a_k$.
+The 1/2 cell-size shift $\Shift_{1/2}$
+generated 2-element discrete subgroup
+$\{1,\Shift_{1/2}\}$ is
+of particular interest
+because in the $\bbU^+$ subspace the translational invariance of the full system reduces to
+invariance under discrete translation \refeq{KSshift} by half a
+spatial period $\speriod{}/2$.
+
+Each of the above dynamically invariant subspaces is unstable
+under small perturbations, and generic solutions of \KSe\ belong to
+the full space.
+Nevertheless, since  all \eqva\ of the KS flow studied in \refref{SCD07}
+lie in the $\bbU^+$ subspace, $\bbU^+$  plays important role for the global
+geometry of the flow.
+However, linear stability of these \eqva\ has
+eigenvectors both in and outside of $\bbU^+$, and needs to be
+computed in the full \statesp.

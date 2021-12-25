@@ -1,0 +1,66 @@
+Sources for the BudCviDav14 figures
+
+Tested on ubuntu12.04 and Fedora 20 with octave 3.8.0 + python 2.7.3
+
+Required python packages: 
+
+SciPy stack (http://www.scipy.org/install.html)
++ 
+oct2py
+
+others:
+
+Imagemagick (http://www.imagemagick.org/) used for trimming png outputs
+
+pdfcrop (http://www.ctan.org/tex-archive/support/pdfcrop ships with texlive-full)
+is used for trimming pdf outputs.
+
+Files and their functions:
+
+octave files:
+
+gradV.m : KS stability matrix in real representation
+
+gradVred.m : KS reduced stability matrix
+
+ksETDRK4.m : KS solver in full state space
+
+ksETDRK4red.m : KS solver in the first-mode slice
+
+Lg.m : SO(2) generator
+
+LieEl.m : SO(2) element
+
+SliceCond.m : Slice condition
+
+slicep.m : Slice fixing point (0,1,0,0,...) 
+
+vel.m : Velocity function in real representation
+
+vksred.m : Reduced velocity function in real representation
+
+ks_statesp_red.m : Reads TW_1, TW_2 and a rpo (specified in the code) from 
+solution database, integrates them in the reduced state space and saves the 
+data.
+
+ks_statesp_full.m : Same with ks_statesp_red, only on the full state space
+
+python files: 
+
+fssp.py: Plots data produced by ks_statesp_red
+
+fsspfull.py: Plots data produced by ks_statesp_full
+
+fks.py : Plots KS trajectories in full statespace and reduced statespace
+
+fksconf.py : Plots KS trajectories in configuration space using imshow
+
+fksconfsurf.py : Plots KS trajectories in configuration space using 
+plt.pcolormesh (USE THIS)
+
+fksconfsurftau.py : Plots KS trajectories in configuration space using 
+plt.pcolormesh (USE THIS)
+
+ftw.py : Plots the unstable manifold of the TW_1 (MUST BE RUN AFTER RUNNING TW.m)
+
+tw.py : Incomplete python attempt for TW.m

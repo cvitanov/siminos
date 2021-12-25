@@ -1,0 +1,205 @@
+% siminos/reversal/LC21.tex      pdflatex LC21; bibtex LC21
+% $Author: predrag $ $Date: 2021-12-24 01:25:20 -0500 (Fri, 24 Dec 2021) $
+
+% Title:    "A chaotic lattice field theory in one dimension"
+% Authors:  Han Liang and Predrag Cvitanovi{\'c}
+% web, BibTex name:      LC21.pdf  \cite{LC21}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+             \newif\ifboyscout\boyscouttrue          %% comments     %%
+             \newif\ifsubmission\submissionfalse     %% internal     %%
+             \newif\ifblog\blogfalse %% section shared with blogCats %%
+%%%%% Toggle between draft and public versions:  %%%%%%%%%%%%%%%%%%%%%%
+% \boyscoutfalse                         % public, hyperlinked       %%
+% \boyscoutfalse\submissiontrue          % for J Phys A              %%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% arXiv-v1/ commit                                      2019-11-0?
+% jphysa-v1/ submission #??????                         2019-1?-0?
+
+% Predrag   LC21 version 2.0            2021-12-15
+% Predrag   LC21 version 1.1            2021-08-12
+% title was      {Time reversal for discrete time dynamical systems}
+% Predrag   LC21 version 0.1            2021-05-15
+%           started with CL18 kittens/*.tex
+% Predrag   CL18 version 1.0            2020-09-19
+% Predrag   CL18 version 0.1            2019-08-15
+% Predrag   GHJSC16 draft               2017-09-26
+
+\documentclass[12pt]{iopart}
+% loads AMS amsgen, amsfonts, amsbsy, amssymb:
+\usepackage{iopams} % to load AMS extension fonts msam and msbm
+                     % the blackboard bold alphabet, extra maths symbols
+                     % and extra definitions for bold Greek letters.
+                     % do not use amsmath.sty
+
+\pdfminorversion=4  % the very start the TeX file, so PDF or bitmap figures
+                    % are PDF version 1.4 or lower
+
+
+\usepackage[pdftex]{graphicx}
+\graphicspath{{../figs/}{../Fig/}}  %% directories with graphics files
+% for submission, copy figures into /jphysa-v1/ rename them, then
+% comment out the \graphicspath{
+
+\ifsubmission
+\else % prepare hyperlinked
+    \usepackage{color} % dvips allows for colors
+    \usepackage[colorlinks]{hyperref} %% hyperlinks
+\fi
+
+%\hypersetup{
+%   pdfauthor=Space is the Place Collective,
+%   pdfkeywords=spatiotemporal,
+%   pdftitle=herding cats
+%            }
+
+    \ifsubmission\else
+\input{biblatex}    % this makes references hyperlinked
+\addbibresource{../bibtex/siminos.bib}
+    \fi
+\input{defsReversal}      %% all article-specific edits: \renewcommand, etc
+
+
+\begin{document}
+
+\title[chaotic lattice field theory]
+      {A chaotic lattice field theory in one dimension}
+    % If title too long, [...] is a running head at the top of each page
+    % experimental titles
+% \title[Time reversal]
+%     {Time reversal for lattice field theories}
+%     {Time reversal for discrete time dynamical systems}
+
+    \author{
+H Liang
+         and
+P Cvitanovi{\'c}
+    }\address{
+            % Center for Nonlinear Science,
+            School of Physics,
+            Georgia Institute of Technology,
+            Atlanta, GA 30332-0430, USA
+    } \ead{predrag.cvitanovic@physics.gatech.edu}
+    \vspace{10pt}
+    \begin{indented}
+    \item[]
+    \ifboyscout\today\else
+    {\color{red}
+DRAFT ver. 1.3, November 6, 2021
+% August 22, 2021
+% July 21, 2021
+% December 18, 2020
+    }
+    \fi
+    \end{indented}
+
+    \begin{abstract}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Predrag 2021-08-12 started with CL18 kittens/*.tex
+\input{../spatiotemp/chapter/LC21abstract}
+% \input{abstract} eventually, return to here
+    \end{abstract}
+
+\pacs{02.20.-a, 05.45.-a, 05.45.Jn, 47.27.ed
+% 02.20.-a  Group theory, mathematics
+% 05.45.-a 	Nonlinear dynamics and chaos
+% 05.45.Jn 	High-dimensional chaos
+% 47.27.ed 	Dynamical systems approaches (turbulent flows)
+      }
+
+% Uncomment for keywords
+%\vspace{2pc}
+%\noindent{\it Keywords}: XXXXXX, YYYYYYYY, ZZZZZZZZZ
+
+\submitto{\jpa} % J. Phys. A: Math. Theor.
+    \ifsubmission
+\maketitle % Uncomment if a separate title page is required
+    \fi
+
+%%%%%% BORIS convention %%%%%%%%%%%%%%%%%%%%%
+%\renewcommand{\statesp}{phase space}
+%\renewcommand{\Statesp}{Phase space}
+%\renewcommand{\stateDsp}{phase-space}
+%\renewcommand{\StateDsp}{Phase-space}
+%\renewcommand{\Ssym}[1]{{\ensuremath{m_{#1}}}}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\input{../spatiotemp/chapter/LC21intro}
+    \ifboyscout\clearpage\fi
+\input{../spatiotemp/chapter/LC21FT}
+    \ifboyscout\clearpage\fi
+\input{../spatiotemp/chapter/LC21Bernoulli}
+\input{../spatiotemp/chapter/LC21cat}
+\input{../spatiotemp/chapter/LC21nonlinFT}
+    \ifboyscout\clearpage\fi
+\input{../spatiotemp/chapter/LC21recip1d}
+    \ifboyscout\clearpage\fi
+\input{../spatiotemp/chapter/LC21JacobianOrb}
+    \ifboyscout\clearpage\fi
+\input{../spatiotemp/chapter/LC21Hill}
+    \ifboyscout\clearpage\fi
+\input{../spatiotemp/chapter/LC21latt1d}
+    \ifboyscout\clearpage\fi
+\input{../spatiotemp/chapter/LC21zeta1d}
+    \ifboyscout\clearpage\fi
+\input{../spatiotemp/chapter/LC21Lind1d}
+    \ifboyscout\clearpage\fi
+\input{../spatiotemp/chapter/LC21summary} %\input{summary}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\ack
+Work of P.~C. and H.~L. was in part supported by the family of late G. Robinson,
+Jr..
+No actual cats, graduate or undergraduate %, have shown interest in, or
+were harmed during this research. This paper sets up the necessary
+underpinnings for the quantum field theory of \catlatt, the details of
+which we leave to our % always trustworthy
+friends Jon Keating and Marcos Saraceno.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%    \ifboyscout
+%%    \clearpage
+%\bigskip\noindent
+%    {\scriptsize
+%To obtain a simple heading of `Appendix' use the code
+%\verb"\section*{Appendix}". If it contains numbered equations, figures or
+%tables the command \verb"\setcounter{section}{1}" must follow it.
+%    }
+%    \fi %end of the internal draft switch
+
+%\appendix
+%   \ifboyscout\clearpage\fi
+%\input{appeLiangstein}
+
+    \ifsubmission
+\section*{References}
+    % from ctan.org/tex-archive/biblio/bibtex/contrib/iopart-num/ :
+\bibliographystyle{iopart-num}       % APS-like style for physics
+\bibliography{../bibtex/siminos}
+    \else
+\printbibliography[
+heading=bibintoc,
+title={References}
+				  ] %, type=online]  % if not using default "Bibliography"
+    \fi
+
+%%%%%%%%%% Submission: cut here  %%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+    \ifboyscout
+%    \clearpage
+%\input{censored}
+%    \PCedit{ %2019-05-27
+%\section{Hill's formula}
+%\label{c-Hill}  % temporary, while being edited in spatiotemp/
+%\input{../spatiotemp/chapter/action}
+%\input{../spatiotemp/chapter/Hill} % eventually move to here
+%    } %end \PCedit{
+
+    \clearpage
+    \input{../spatiotemp/chapter/lattLit}
+    \input{../spatiotemp/chapter/LC21blog}
+    \fi %end of the internal draft switch
+
+\end{document}

@@ -1,0 +1,182 @@
+\chapter{Integration of the 1d \KSe\ on the 1st mode slice}
+\label{append:ksint}
+
+\renewcommand{\Im}{\mathtt{Im}}
+\renewcommand{\Re}{\mathtt{Re}}
+
+In the full \statesp\ \refeq{eq:fourierspace}, the evolution of a state
+vector and a vector in the linearized tangent space are governed
+by, respectively
+\begin{align*}
+  \dot{a}_k & = \vel_k(\ssp) =
+              ( q_k^2 - q_k^4 )\, a_k
+              - i \frac{q_k}{2} \sum_{m=-\infty}^{+\infty} a_m a_{k-m} \\
+  \dot{y}_k & = (Ay)_k =
+              ( q_k^2 - q_k^4 )\, y_k
+              - i q_k \sum_{m=-\infty}^{+\infty} y_m a_{k-m} \\
+\end{align*}
+For a reduced \statesp\ point \refeq{eq:KSspred}, which is 
+a $(N-3)$-element vector, the corresponding group tangent in the full
+\statesp\ is 
+$\groupTan(\sspRed) = (0, -\hat{b}_{1}, 2\hat{c}_{2}, -2\hat{b}_{2}, \cdots, 
+(N/2-1)\hat{c}_{N/2-1}, -(N/2-1)\hat{b}_{N/2-1})^\top$. 
+Choosing the template point $\slicep=(1,0,\cdots,0)$;
+then $\sliceTan{} = (0, -1, 0, \cdots, 0)$.
+From \refeq{MFdtheta}
+we get the dynamics in the slice 
+\[
+  \velRed(\sspRed) = \vel(\sspRed)
+  \,-\, \dot{\gSpace}(\sspRed) \groupTan(\sspRed)
+  \,,\quad
+  \dot{\gSpace}(\sspRed) = \frac{-\Im[\vel_1(\sspRed)] }{ \hat{b}_{1} }
+  \,.
+\]
+The appearance of $\hat{b}_{1}$ in the denominator causes rapid jumps close the 
+slice border. In order to make the trajectories in the slice smoother, we 
+rescale the time step by $dt=\hat{b}_1 d\tau$. 
+Thus the time rescaled dynamics in the slice is
+\[
+  \frac{d \sspRed}{d\tau} = \hat{b}_1 v(\sspRed) + \mathtt{Im}[v_1(\sspRed)] t(\sspRed)
+  \,,
+\]
+Moreover, for the time rescaled
+in-slice dynamics, we can also analyze its stability but with more effort.
+In complex format, the $k$th element of group tangent is given by 
+$t_k(\sspRed) = -ik \hat{a}_k = -ik(\hat{b}_k + i\hat{c}_k)$, so 
+the elements of the {\stabmat} are
+\[
+  \left\{
+    \begin{aligned}
+      \frac{\partial \hat{v}_k}{\partial \hat{b}_j} & =
+      \delta_{j1}v_k \;\;+ & \hat{b}_1 \frac{\partial v_k}{\partial  \hat{b}_j} - ik
+      \frac{\partial \Im[v_1]}{\partial \hat{b}_j} \hat{a}_k - ik \Im[v_1]\delta_{kj} \\
+      \frac{\partial \hat{v}_k}{\partial \hat{c}_j} & =
+      & \hat{b}_1 \frac{\partial v_k}{\partial \hat{c}_j} - ik
+      \frac{\partial \Im[v_1]}{\partial \hat{c}_j}] \hat{a}_k + k\Im[v_1] \delta_{kj} \\
+    \end{aligned}
+  \right.\,.
+\]
+Dynamics in the tangent space is given as
+\begin{align*}
+  (\frac{dy}{d\tau})_k
+  = & \sum \frac{\partial \hat{v}_k}{\partial b_j} \Re[y_{j}]
+      + \sum \frac{\partial \hat{v}_k}{\partial c_j} \Im[y_{j}] \\
+  = & y_1 v_k + a_1 (Ay)_k - ik\mathtt{Im}[(Ay)_1]a_k - ik\mathtt{Im}[v_1]y_k
+      \,.
+\end{align*}
+where $A=A(\sspRed)$ is the {\stabmat} in the full state space
+evaluated at $\sspRed$. Realizing that
+\[
+\mathtt{Im}[v_1] =  - \frac{q_k}{2} \mathtt{Re}[\sum a_m a_{k-m}]
+\;,\quad
+\mathtt{Im}[v_1] = -  q_k \mathtt{Re}[\sum y_m a_{k-m}]
+\]
+we finally get the evolution equation in the slice and the associated
+tangent space evolution:
+\begin{equation}
+\left\{
+\begin{aligned}
+  \frac{d\sspRed}{d\tau} = & \hat{b}_1 \left(( q_k^2 - q_k^4 )\, \hat{a}_k
+  - i \frac{q_k}{2} \sum \hat{a}_m \hat{a}_{k-m} \right) +
+  i \frac{q_k}{2} \hat{a}_k \mathtt{Re}[\sum \hat{a}_m \hat{a}_{1-m}]\\
+  \\
+  \frac{d\hat{y}_k}{d\tau} = &
+  \hat{b}_1 \left(( q_k^2 - q_k^4 )\, \hat{y}_k
+  - i q_k \sum \hat{a}_{k-j} \hat{y}_j \right)
+  + i \frac{q_k}{2} \hat{y}_k \mathtt{Re}[\sum \hat{a}_m \hat{a}_{1-m} ] \\
+  &
+  \hat{y}_1 \left(( q_k^2 - q_k^4 )\, \hat{a}_k
+  - i \frac{q_k}{2} \sum \hat{a}_{m} \hat{y}_{k-m} \right)
+  + i q_k \hat{a}_k \mathtt{Re}[\sum \hat{a}_m \hat{y}_{1-m} ] \\
+\end{aligned}
+\right.\,.
+\label{eq:ksfjacoM1}
+\end{equation}
+Equation \eqref{eq:ksfjacoM1} is the formula implemented in the code with
+initial condition for $\hat{y}_k$:
+\[
+  \hat{y}(0) =
+  \begin{pmatrix}
+    0 & 0 & 0 & 0 & 0 & \cdots & 0 \\
+    1 & 0 & 0 & 0 & 0 & \cdots & 0 \\
+    0 & 1 & i & 0 & 0 & \cdots & 0 \\
+    0 & 0 & 0 & 1 & i & \cdots & 0 \\
+    &&& \cdots & & & \\
+    0 &   &   &   & \cdots & 1 & i \\
+    0 &   &   &   &   & \cdots & 0 \\
+  \end{pmatrix}
+\]
+
+I follow Burak's trick to extract linear term
+$( q_k^2 - q_k^4 )\hat{a}_k$ out of the velocity field and
+leave the nonlinear term to be stiff as it is, then implement ETDRK4 to
+integrate the trajectory and the Jabobian together. I don't know why
+this trick works but I found that now smaller time step is required
+to resolve all the Floquet exponent compared to the case in the unreduced
+full space.
+
+\KSe\ also has reflection symmetry, so what is the reflection rule after
+quotienting out the SO(2) symmetry? Reflection and SO(2) satisfy relation
+\[
+Rg(\gSpace) = g(-\gSpace)R \,\quad \text{and}\quad R\mathbf{T}=-R\mathbf{T}
+\,,
+\]
+where $\mathbf{T}$ is the generator of SO(2). Suppose two points are related by reflection
+in the unreduced space $x(0)=Rx(T_p)$; after projected onto 1st mode slice, they are
+$\sspRed(0)=g(\gSpace)x(0)$, $\sspRed(T_p)=g(\pi-\gSpace)x(T_p)$. Here the rotation angle
+for the second point is $\pi-\gSpace$ because reflection matrix in the 1st mode subspace is
+$R_1=diag(-1,1)$ which only flips the sign of $b_1$. Note, for 1st mode slice,
+\[
+g(\pi-\gSpace) = Sg(-\gSpace)
+\]
+with $S=diag(-1,-1,1,1,\cdots,-1,-1)$ the sign flip matrix. If different mode is chosen as
+template point, then the explicit form $S$ will change accordingly. Now
+\begin{align*}
+  R\sspRed(T_p) & = RSg(-\gSpace)x(T_p) \\
+  & = S Rg(-\gSpace)x(T_p)  \\
+  & = Sg(\gSpace)Rx(T_p) \\
+  & = Sg(\gSpace)x(0) \\
+  & = S\sspRed(0)
+  \,,
+\end{align*}
+which is $\sspRed(0)=SR\sspRed(T_p)$. This is the reformed reflection rule in the 1st mode
+slice. For a preperiodic orbit, initial point $x(0)$ returns to $SRx(0)$ after one prime period;
+while for a relative periodic orbit, if $\sspRed(0)$ is the initial condition on the slice, then
+$SR\sspRed(0)$ is the initial condition for its dual orbit on the slice.
+
+To justify that this approach faithfully recover the dynamics on the slice,
+we can compare the Floquet exponents and Floquet vectors of the same
+relative periodic orbit \cycle{rpo1} in the unreduced space and on the
+slice.
+
+\paragraph{Floquet exponents}
+Table \ref{tab:floquetM1} compares the Floquet exponents of the relative periodic orbit
+\cycle{rpo1} for SO(2) unreduced full space and the 1st mode slice. Note that after
+quotient out SO(2), the number of marginal exponents decreases by one. The difference
+of two groups of exponents has relative error of order $10^{-4}$.
+
+\begin{table}[ht]
+  \centering
+  \begin{tabular}{l l l |l l l}
+    \multicolumn{3}{c}{unreduced} & \multicolumn{3}{c}{1st mode reduced}\\
+    $i$ & ~~~~~$\eigRe[i]$  & $\gSpace_{i}$  & $i$ & ~~~~~$\eigRe[i]$ & $\gSpace_{i}$  \\
+    \hline
+    1  &     0.3279115945    &               & 1  &   0.3279115925      &                \\
+    2  &     5.035248171e-09 &               & 2  &   6.260337858e-13   &                \\
+    3  &    -1.239861439e-08 &               &    &                                      \\
+    4  &    -0.1321427982    &  -1           & 3  &   -0.1321425658     &  -1            \\
+    5,6&    -0.2859700678    &  2.772432014  & 4,5&   -0.2859702314     &  2.772428566   \\
+    7  &    -0.3624170728    &               & 6  &   -0.3624170063     &                \\
+    8  &    -0.3282144959    &  -1           & 7  &   -0.3282144430     &  -1            \\
+    9,10&   -1.961696302     &  2.241071099  & 8,9&   -1.961695814      &  2.241069955   \\
+    11,12&  -5.601557908     &  1.366329853  &10,11&  -5.601555218      &  1.366329998   \\
+    13,14&  -11.92077356     &  0.5548983577 &12,13&  -11.92076874      &  0.5548953759  \\
+         &   $\cdots$        &               &    &  $\cdots$           &                \\
+    27,28&  -239.4071347     &  0.8815898981 & 27 &   -239.3090112      &                \\
+    29   &  -313.9806680     &               & 28 &   -312.9057132      &                \\
+    30   &  -323.4121827     &               & 29 &   -315.0643644      &                \\
+  \end{tabular}
+  \caption{comparision of Floquet exponents of \cycle{rpo1} for SO(2) unreduced space and
+    the 1st mode reduced space. }
+  \label{tab:floquetM1}
+\end{table}

@@ -1,0 +1,804 @@
+% siminos/xiong/thesis/chapters/symGroup.tex
+% $Author: predrag $ $Date: 2021-06-19 11:30:00 -0400 (Sat, 19 Jun 2021) $
+
+\section{Group theory and symmetries: a review}
+\label{sect:group}
+
+In quantum mechanics, whenever a system exhibits some symmetry, the
+corresponding symmetry group commutes with the Hamiltonian of this
+system, namely, $[U(\LieEl), H] = U(\LieEl)H - HU(\LieEl) = 0$. Here
+$U(\LieEl)$ denotes the operation corresponding to symmetry $g$ whose
+meaning will be explained soon. The set of eigenstates with degeneracy
+$\ell$, $\{\phi_1, \phi_2, \cdots, \phi_\ell\}$, corresponding to the same
+system energy $H\psi_i = E_n\psi_i$, is invariant under the symmetry
+since $U(\LieEl)\psi_i$ are also eigenvectors for the same energy.
+This information helps us understand the spectrum of a Hamiltonian and
+the quantum mechanical selection rules. We now apply the same idea to
+the classical {\evOper} $\Lop^t(\ssp_e, \ssp_s)$
+for a system $\flow{t}{\ssp}$ equivariant under a discrete symmetry group
+$\Group=\{e, \LieEl_2, \LieEl_3,\cdots, \LieEl_{|\Group|}\}$ of order
+$|\Group|$:
+\begin{equation}
+  \label{eq:equiva}
+  \flow{t}{{D}\LieEl}\ssp)={D}(\LieEl)\,\flow{t}{\ssp} \quad \text{for}
+  \quad \forall
+  \LieEl\in\Group
+  \,.
+\end{equation}
+We start with a review of some basic facts of
+the group representation theory. Some examples of good references
+on this topic are \refref{Hamermesh62, Tinkham}.
+
+Suppose group $\Group$ acts on a linear space $V$ and function
+$\rho(\ssp)$ is defined on this space $\ssp\in V$. Each element
+$\LieEl\in\Group$ will transform point $\ssp$ to ${D}(\LieEl)\ssp$. At
+the same time, $\rho(\ssp)$ is transformed to $\rho'(\ssp)$. The value
+$\rho(\ssp)$ is unchanged after state point $\ssp$ is transformed to
+${D}(\LieEl)\ssp$, so $\rho'({D}(\LieEl)\ssp) = \rho(\ssp)$. Denote
+$U(\LieEl)\rho(\ssp)=\rho'(\ssp)$, so we have
+\begin{equation}
+  \label{eq:ogfx}
+  U(\LieEl)\rho(\ssp) = \rho({D}(\LieEl)^{-1}\ssp)
+  \,.
+\end{equation}
+This is how functions are transformed by group operations. Note, $D(\LieEl)$
+is the representation of $G$ in the form of space transformation matrices.
+The
+operator $U(\LieEl)$, which acts on the function space, is not the same as
+group operation ${D}(\LieEl)$, so \refeq{eq:ogfx} does not mean that
+$\rho(\ssp)$ is invariant under $\Group$. \refExam{exam:C3matrRep} gives
+the space transformation matrices of $\Zn{3}$.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\exampl{A matrix representation of cyclic group $\Zn{3}$.}{
+  \label{exam:C3matrRep}                                    \inCB
+  A 3\dmn\ matrix representation of the 3-element cyclic group
+  $\Zn{3}=\{e,C^{1/3},C^{2/3}\}$ is given by the three rotations by
+  $2\pi/3$ around the $z$-axis in a 3\dmn\ \statesp,
+  \bea
+  {D}(e) &=&
+  \begin{bmatrix}
+    1 & & \\
+    & 1 & \\
+    & & 1
+  \end{bmatrix}
+  \,,\quad
+  {D}(C^{1/3}) =
+  \begin{bmatrix}
+    \cos\frac{2\pi}{3}  & -\sin\frac{2\pi}{3} & \\
+    \sin\frac{2\pi}{3}  & ~\cos\frac{2\pi}{3}  & \\
+    & & 1
+  \end{bmatrix}
+  \,,
+  \continue
+  {D}(C^{2/3}) &=&
+  \begin{bmatrix}
+    \cos\frac{4\pi}{3}  & -\sin\frac{4\pi}{3}  & \\
+    \sin\frac{4\pi}{3}  & ~\cos\frac{4\pi}{3}  & \\
+    & & 1
+  \end{bmatrix}
+  \,.
+  \nnu
+  \eea
+  %\index{matrix rep!cyclic group}
+  ~~(continued in \refexam{exam:C3regularRep})
+}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\subsection{Regular representation}
+An operator $U(\LieEl)$ which acts on an infinite\dmn\ function space
+is too abstract to analyze.
+We would like to represent it in a more familiar way.
+Suppose there is a function $\rho(\ssp)$ with symmetry $\Group$ defined in full
+\statesp\ $\pS$, then full \statesp\ can be decomposed as a union
+of $|\Group|$ tiles each of which is obtained by transforming the fundamental
+domain,
+\begin{equation}
+  \label{eq:domain}
+  \pS =  \bigcup_{g\in \Group}g\pSRed
+  \,,
+\end{equation}
+where $\pSRed$ is the chosen fundamental domain.
+So $\rho(\ssp)$ takes $|G|$ different forms by \refeq{eq:ogfx} in each sub-domain
+in \refeq{eq:domain}. Now, we obtained a natural choice of a set of bases in this
+function space called the \emph{regular bases},
+\beq
+\label{eq:RegBasis}
+\{ \rho_1^{reg}(\sspRed), \rho_2^{reg}(\sspRed), %\rho_3^{reg}(\sspRed),
+\cdots, \rho_{|\Group|}^{reg}(\sspRed)\}
+=
+\{
+\rho(\sspRed), \rho(\LieEl_2\sspRed), % \rho(\LieEl_3\sspRed),
+\cdots, \rho(\LieEl_{|\Group|}\sspRed) \}
+\,.
+\eeq
+Here, for notation simplicity we use
+$\rho(\LieEl_i\sspRed)$ to represent $\rho(D(\LieEl_i\sspRed))$ without
+ambiguity.
+These bases are
+constructed by applying $U(\LieEl^{-1})$ to $\rho(\sspRed)$ for each
+$\LieEl\in\Group$, with $\sspRed$ a point in the fundamental domain.
+The [$|G|\!\times\!|G|$] matrix representation of the
+action of $U(\LieEl)$ in bases \refeq{eq:RegBasis} is called the \emph{(left)
+regular representation} $D^{reg}(\LieEl)$. Relation \refeq{eq:ogfx} says that
+$D^{reg}(\LieEl)$ is a permutation matrix, so each row or column has only one nonzero
+element.
+
+We have a simple trick to obtain the regular representation quickly.
+Suppose the element at the $i$th row and
+the $j$th column of $D^{reg}(\LieEl)$
+is $1$. It means
+$\rho(\LieEl_i\sspRed) = U(\LieEl) \rho(\LieEl_j\sspRed)$, which
+is $g_i=\LieEl^{-1}g_j \implies g^{-1} = g_i g_j^{-1}$. Namely,
+\beq
+D^{reg}(\LieEl)_{ij} = \delta_{\LieEl^{-1},\, g_i g_j^{-1}}
+\,.
+\ee{eq:RegRep}
+So if we arrange the
+columns of the multiplication table by the inverse of the group elements,
+then setting positions with $\LieEl^{-1}$ to 1 defines the regular
+representation $D^{reg}(\LieEl)$. Note, the above relation can
+be further simplified to $g = g_jg_i^{-1}$, but it exchanges the rows and
+columns of the multiplication table, so $g = g_jg_i^{-1}$
+should not be used to get $D^{reg}(\LieEl)$.
+On the other hand, it is easy to see
+that the regular representation of group element $e$ is always the identity matrix.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{table}[h]
+  \caption[ The multiplication tables of the $\Zn{2}$ and $\Zn{3}$]{
+    The multiplication tables of the (a) group $\Zn{2}$ and (b) $\Zn{3}$.
+  }
+  \label{tab:C3MultTab}
+  \begin{center}
+    \centering
+    (a)
+    \begin{tabular}{c | c c}
+      $\Zn{2}$         & $e$        & $\sigma^{-1}$  \\ \hline
+      $e$              & $e$        & $\sigma$   \\
+      $\sigma$ & $\sigma$  & $e$         \\
+    \end{tabular}
+    \quad
+    (b)
+    \begin{tabular}{c | c c c}
+      $\Zn{3}$         & $e$        & $(C^{1/3})^{-1}$ & $(C^{2/3})^{-1}$ \\ \hline
+      $e$              & $e$        & $C^{2/3}$ & $C^{1/3}$  \\
+      $C^{1/3}$ & $C^{1/3}$  & $e$       & $C^{2/3}$   \\
+      $C^{2/3}$ & $C^{2/3}$  & $C^{1/3}$ & $e$
+    \end{tabular}
+  \end{center}
+\end{table}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\exampl{The regular representation of cyclic group $\Zn{3}$.}{
+  \label{exam:C3regularRep}                                    \inCB
+  (continued from \refexam{exam:C3matrRep})~~
+  Take an arbitrary function $\rho(\ssp)$ over the \statesp\ $\ssp \in \pS$, and
+  define a fundamental domain $\pSRed$ as a 1/3 wedge, with axis $z$ as its
+  (symmetry invariant) edge. The \statesp\ is tiled with three copies of the wedge,
+  \[
+    \pS =  \pSRed_1\cup\pSRed_2\cup\pSRed_3
+    =  \pSRed\cup C^{1/3}\pSRed\cup C^{2/3}\pSRed
+    \,.
+  \]
+  Function $\rho(\ssp)$ can be written as the 3\dmn\ vector of functions
+  over the fundamental domain $\sspRed \in \pSRed$,
+  \beq
+  (\rho_1^{reg}(\sspRed),\rho_2^{reg}(\sspRed),\rho_3^{reg}(\sspRed))
+  = (\rho(\sspRed),\rho(C^{1/3}\sspRed),\rho(C^{2/3}\sspRed))
+  \,.
+  \ee{eq:C3RegRep}
+  The multiplication table of $\Zn{3}$ is given in \reftab{tab:C3MultTab}.
+  By \refeq{eq:RegRep}, the regular representation matrices
+  $D^{reg}(\LieEl)$ have `1' at the location of $\LieEl^{-1}$ in the
+  multiplication table, `0' elsewhere. The actions of the operator
+  $U(\LieEl)$ are now represented by permutations matrices (blank entries
+  are zeros):
+  \beq
+  D^{reg}(e) = %&=&
+  \begin{bmatrix}
+    1 & & \\
+    & 1 & \\
+    & & 1 \\
+  \end{bmatrix} \,,  \quad
+  % \continue
+  D^{reg}(C^{1/3}) = %&=&
+  \begin{bmatrix}
+    ~ & 1 & ~\\
+    ~ & ~ & 1\\
+    1 & ~ & ~ \\
+  \end{bmatrix}\,,  \quad
+  D^{reg}(C^{2/3}) =
+  \begin{bmatrix}
+    ~ & ~ & 1\\
+    1 & ~ & ~\\
+    ~ & 1 & ~ \\
+  \end{bmatrix}
+  \,.
+  \label{eq:C3reg}
+  \eeq
+  %\index{regular rep!cyclic group}
+} %end \exampl{A regular representation of cyclic group $\Zn{3}$.}{
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{table}[h]
+  \caption[The multiplication table of  $\Dn{3}$]{
+    The multiplication table of  $\Dn{3}$, the group of symmetries of an equilateral
+    triangle.
+  }
+  \label{tab:D3MultTab}
+  \begin{center}
+    \centering
+    \begin{tabular}{c | c c c c c c}
+      $D_3$ & $e$ & $(\sigma_{12})^{-1}$ & $(\sigma_{23})^{-1}$ & $(\sigma_{31})^{-1}$
+      & $(C^{1/3})^{-1}$ & $(C^{2/3})^{-1}$ \\ \hline
+      $e$ & $e$ & $\sigma_{12}$ & $\sigma_{23}$ & $\sigma_{31}$  & $C^{2/3}$ & $C^{1/3}$\\
+      $\sigma_{12}$ & $\sigma_{12}$ & $e$ & $C^{1/3}$ & $C^{2/3}$  & $\sigma_{31}$ & $\sigma_{23}$\\
+      $\sigma_{23}$ & $\sigma_{23}$ & $C^{2/3}$ & $e$ & $C^{1/3}$  & $\sigma_{12}$ & $\sigma_{31}$\\
+      $\sigma_{31}$ & $\sigma_{31}$ & $C^{1/3}$ & $C^{2/3}$ & $e$  & $\sigma_{23}$ & $\sigma_{12}$\\
+      $C^{1/3}$ & $C^{1/3}$ & $\sigma_{31}$ & $\sigma_{12}$ & $\sigma_{23}$ & $e$ & $C^{2/3}$   \\
+      $C^{2/3}$ & $C^{2/3}$ & $\sigma_{23}$ & $\sigma_{31}$ & $\sigma_{12}$ & $C^{1/3}$ & $e$
+    \end{tabular}
+  \end{center}
+\end{table}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\exampl{The regular representation of dihedral group $\Dn{3}$.}{
+  \label{exam:D3regularRep}                                    \inCB
+  $\Dn{3} = \{ e, \sigma_{12}, \sigma_{23}, \sigma_{31}, C^{1/3}, C^{2/3}\}$
+  represents the symmetries of a triangle with equal sides.
+  $C^{1/3}$ and  $C^{2/3}$ are rotations by $2\pi/3$ and $4\pi/3$ respectively.
+  $\sigma_{12}, \sigma_{23}$ and $\sigma_{31}$ are 3 reflections.
+  The regular bases in this case are
+  \[
+    \left(\rho(\sspRed),\,\rho(\sigma_{12}\sspRed) ,\, \rho(\sigma_{23}\sspRed) ,\,
+      \rho(\sigma_{31}\sspRed) ,\, \rho(C^{1/3}\sspRed) ,\, \rho(C^{2/3}\sspRed)\right)
+    \,.
+  \]
+  It helps us obtain the multiplication table quickly by the following relations
+  \begin{equation}
+    \label{eq:C3relations}
+    \sigma_{31} = C^{1/3}\sigma_{12} \,,\quad
+    \sigma_{23} = C^{2/3}\sigma_{12}\,,\quad
+    C^{1/3}\sigma_{12} = \sigma_{12}C^{2/3} \,,\quad
+    C^{2/3}\sigma_{12} = \sigma_{12}C^{1/3}
+    \,.
+  \end{equation}
+  The multiplication table of
+  $\Dn{3}$ % = \{ e, \sigma_{12}, \sigma_{23}, \sigma_{31}, C^{1/3}, C^{2/3}\}$
+  is given in \reftab{tab:D3MultTab}.
+  By \refeq{eq:RegRep}, the 6 regular representation matrices
+  $D^{reg}(\LieEl)$ have `1' at the location of $\LieEl^{-1}$
+  in the multiplication table, `0' elsewhere.
+  For example, the regular representation of the action of
+  operators $U(\sigma_{23})$ and
+  $U(C^{2/3})$ are, respectively:
+  \[
+    D^{reg}(\sigma_{23}) =
+    \begin{bmatrix}
+      0 & 0 & 1 & 0 & 0 & 0 \\
+      0 & 0 & 0 & 0 & 0 & 1 \\
+      1 & 0 & 0 & 0 & 0 & 0 \\
+      0 & 0 & 0 & 0 & 1 & 0 \\
+      0 & 0 & 0 & 1 & 0 & 0 \\
+      0 & 1 & 0 & 0 & 0 & 0
+    \end{bmatrix}
+    \,,\quad
+    D^{reg}(C^{1/3}) =
+    \begin{bmatrix}
+      0 & 0 & 0 & 0 & 1 & 0 \\
+      0 & 0 & 0 & 1 & 0 & 0 \\
+      0 & 1 & 0 & 0 & 0 & 0 \\
+      0 & 0 & 1 & 0 & 0 & 0 \\
+      0 & 0 & 0 & 0 & 0 & 1 \\
+      1 & 0 & 0 & 0 & 0 & 0
+    \end{bmatrix}
+    \,.
+  \]
+  %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+} %end \exampl{The regular representation of dihedral group $\Dn{3}$.}{
+
+\subsection{Irreducible representations}
+
+$U(\LieEl)$ is a linear operator under the regular bases.
+Any linearly independent combination of the regular bases can be used as
+new bases, and then the representation of $U(\LieEl)$ changes respectively.
+So we ask a question: can we find a new set of bases
+\begin{equation}
+  \rho^{irr}_i=\sum_j S_{ij}\rho^{reg}_j
+  \label{eq:trans}
+\end{equation}
+such that the new representation $D^{irr}(\LieEl) = SD^{reg}(\LieEl)S^{-1}$ is block-diagonal
+for any $\LieEl\in\Group$ ?
+\begin{equation}
+  D^{irr}(\LieEl) =
+  \begin{bmatrix}
+    D^{(1)}(\LieEl) & & \\
+    & D^{(2)}(\LieEl) & \\
+    & & \ddots \\
+  \end{bmatrix}
+  = \bigoplus_{\mu=1}^{r} d_\mu D^{(\mu)}(\LieEl)
+  \,.
+  \label{eq:irre}
+\end{equation}
+In such a block-diagonal representation, the
+subspace corresponding to each diagonal block is invariant under $\Group$
+and the action of $U(\LieEl)$ can be analyzed subspace by subspace.
+It can be easily checked that for each $\mu$, $D^{(\mu)}(\LieEl)$ for all
+$\LieEl\in\Group$ form another representation (\emph{irreducible
+  representation}, or \emph{irrep}) of group $\Group$.
+Here, $r$ denotes the total number of
+irreps of $\Group$. The same irrep may show up more than once in the decomposition
+\refeq{eq:irre}, so the coefficient $d_{\mu}$ denotes the number of its
+copies.  Moreover, it is proved\rf{Hamermesh62} that $d_{\mu}$ is also equal to the dimension
+of $D^{(\mu)}(\LieEl)$ in \refeq{eq:irre}.
+Therefore, we have a relation
+\[
+  \sum_{\mu=1}^r d_\mu^2 = |G|
+  \,.
+\]
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\exampl{Irreps of cyclic group $\Zn{3}$.}{
+  \label{exam:C3irReps}                                     \inCB
+  (continued from \refexam{exam:C3regularRep})~~
+  For $\Zn{2}$ whose multiplication table is in \reftab{tab:C3MultTab}, we can form
+  the symmetric base $\rho(\sspRed) + \rho(\sigma\sspRed)$
+  and the antisymmetric base $\rho(\sspRed) - \rho(\sigma\sspRed)$. You can verify
+  that under these new bases, $\Zn{2}$ is block-diagonalized.
+  We would like to generalize this symmetric-antisymmetric
+  decomposition to the order 3 group $\Zn{3}$. Symmetrization
+  can be carried out on any number of functions, but there is no obvious
+  anti-symmetrization. We draw instead inspiration from the Fourier
+  transformation for a finite periodic lattice, and construct from the
+  regular bases \refeq{eq:C3RegRep} a new set of bases
+  \bea
+  \rho^{irr}_0(\sspRed) &=& \frac{1}{3}\left[
+    \rho(\sspRed) ~+~ \rho(C^{1/3} \sspRed) ~+~ \rho(C^{2/3} \sspRed)
+  \right]
+  \label{eq:c3f1}\\
+  \rho_1^{irr}(\sspRed) &=& \frac{1}{3}\left[
+    \rho(\sspRed) + \omega\,\rho(C^{1/3} \sspRed) + \omega^2 \rho(C^{2/3} \sspRed)
+  \right]
+  \label{eq:c3f2}\\
+  \rho_2^{irr}(\sspRed) &=& \frac{1}{3}\left[
+    \rho(\sspRed) + \omega^2 \rho(C^{1/3} \sspRed) + \omega\,\rho(C^{2/3} \sspRed)
+  \right]
+  \label{eq:c3f2}
+  \,.
+  \eea
+  Here $\omega = e^{2i\pi/3}$.
+  The representation of group $\Zn{3}$ in this new bases is block-diagonal
+  by inspection:
+  \begin{equation}
+    D^{irr}(e) =
+    \begin{bmatrix}
+      1 & & \\
+      & 1 & \\
+      & & 1 \\
+    \end{bmatrix} \,,\quad
+    D^{irr}(C^{1/3}) =
+    \begin{bmatrix}
+      1 & 0 & 0\\
+      0 & \omega & 0\\
+      0 & 0 & \omega^2 \\
+    \end{bmatrix}  \,,\quad
+    D^{irr}(C^{2/3}) =
+    \begin{bmatrix}
+      1 & 0 & 0\\
+      0 & \omega^2 & 0\\
+      0 & 0 & \omega \\
+    \end{bmatrix}
+    \,.
+    \label{eq:c3irr}
+  \end{equation}
+  So $\Zn{3}$ has three 1\dmn\ irreps. Generalization to any
+  $\Zn{n}$ is immediate: this is just a finite lattice Fourier transform.
+}% end \exampl{Irreps of cyclic group $\Zn{3}$
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\paragraph{Character tables.}
+Finding a transformation $S$ which simultaneously block-diagonalizes the
+regular representation of each group element sounds difficult.
+However, suppose it can be achieved and we obtain a set of irreps $D^{(\mu)}(\LieEl)$,
+then according to Schur's lemmas\rf{Hamermesh62}, $D^{(\mu)}(\LieEl)$ must satisfy a set of
+orthogonality relations:
+\begin{equation}
+  \label{eq:ortho}
+  \frac{d_\mu}{|G|} \sum_g D_{il}^{(\mu)}(\LieEl) D_{mj}^{(\nu)}(g^{-1}) = \delta_{\mu \nu}
+  \delta_{ij} \delta_{lm}
+  \,.
+\end{equation}
+Denote the trace of irrep $D^{(\mu)}$ as $\chi^{(\mu)}$, which is referred to as
+the \emph{character} of $D^{(\mu)}$. Properties of irreps can be derived from
+\refeq{eq:ortho}, and we list them as follows:
+\begin{enumerate}
+\item The number of irreps is the same as the number of
+  classes.
+\item Dimensions of irreps satisfy
+  $\sum_{\mu=1}^{r} d^2_\mu = |G| $
+\item Orthonormal relation I :
+  $\sum_{i=1}^{r} |K_i| \chi_i^{(\mu)} \chi_i^{(\nu)*} = |G|\delta_{\mu \nu} $. \\
+  Here, the summation goes through all classes of this group, and $|K_i|$ is
+  the number of elements in class $i$. This weight comes from the fact that
+  elements in the same class have the same character. Symbol $*$ means
+  the complex conjugate.
+\item Orthonormal relation II :
+  $\sum_{\mu=1}^{r} \chi_i^{(\mu)} \chi_j^{(\mu)*} = \frac{|G|}{|K_i|}\delta_{ij} $. \\
+\end{enumerate}
+The characters for all classes and irreps of a finite group are
+conventionally arranged into a \emph{character table}, a square matrix
+whose rows represent different
+classes and columns represent different irreps.
+Rules 1 and 2 help determine the number of irreps and
+their dimensions. As the matrix representation of class $\{e\}$ is always the
+identity matrix, the first row is always the dimension of the
+corresponding representation. All entries of the first column are always 1,
+because the symmetric irrep is always one\dmn. To compute the
+remaining entries, we should use properties 3, 4 and the class multiplication
+tables.   Spectroscopists conventions use labels $A$ and $B$ for
+symmetric, respectively antisymmetric nondegenerate irreps, and
+$E$, $T$, $G$, $H$ for doubly, triply, quadruply, quintuply degenerate irreps.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{table}[h]
+  \caption[Character tables of $\Zn{2}$, $\Zn{3}$ and $\Dn{3}$]{
+    Character tables of $\Zn{2}$, $\Zn{3}$ and $\Dn{3}$.
+    The classes
+    $\{\sigma_{12},\sigma_{13},\sigma_{14}\}$, $\{ C^{1/3}, C^{2/3} \}$
+    are denoted $3\sigma$, $2C$, respectively.
+  }
+  \label{tab:D3charac}
+  \centering
+  \begin{tabular}{c|ccc}
+    $\Zn{2}$ & $A$ & $B$ \\
+    \hline
+    $e$  & 1 & 1  \\
+    $\sigma$ & 1 & -1
+  \end{tabular}
+  \qquad
+  \begin{tabular}{c|ccc}
+    $\Zn{3}$ & $A$ & \multicolumn{2}{c}{$E$}  \\
+    \hline
+    $e$ & 1 & 1  & 1 \\
+    $C^{1/3}$ & 1 & $\omega$ & $\omega^2$ \\
+    $C^{2/3}$ & 1 & $\omega^2$  & $\omega$
+  \end{tabular}
+  \qquad
+  \begin{tabular}{c|ccc}
+    $\Dn{3}$ & $A$ & $B$ & $E$ \\
+    \hline
+    $e$ & 1 & 1  & 2 \\
+    $3\sigma$ & 1 & -1 & 0 \\
+    $2C$   & 1 & 1  & -1
+  \end{tabular}
+\end{table}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\exampl{Character table of $\Dn{3}$.}{\label{exam:D3charTab}         \inCB
+  (continued from \refexam{exam:D3regularRep})~~
+  Let us construct \reftab{tab:D3charac}.
+  one\dmn\ representations are denoted by $A$ and $B$, depending on
+  whether the basis function is symmetric or antisymmetric with respect to
+  transpositions $\sigma_{ij}$. $E$ denotes the two\dmn\ representation.
+  As
+  $\Dn{3}$ has 3 classes, the dimension sum rule $d_1^2+d_2^2+d_3^2 = 6$
+  has only one solution $d_1=d_2=1$, $d_3=2$. Hence there are two one\dmn\
+  irreps and one two\dmn\ irrep. The first row is $1,1,2$, and the first
+  column is $1,1,1$ corresponding to the one\dmn\ symmetric representation. We take
+  two approaches to figure out the remaining 4 entries. First, since $B$
+  is an antisymmetric one\dmn\ representation, so the characters should be $\pm 1$.
+  We anticipate $\chi^{B}(\sigma) = -1$ and can quickly figure out the
+  remaining 3 positions. Then we check that the obtained table satisfies the
+  orthonormal relations. Second, denote $\chi^{B}(\sigma)=x$ and
+  $\chi^E(\sigma)=y$, then from the orthonormal relation of the second
+  column with the first column and itself, we obtain $1+x+2y=0$ and
+  $1+x^2+y^2=6/3$. Then we get two sets of solutions, one of which is
+  incompatible with other orthonormal relations, so we are left with
+  $x=-1$, $y=0$.
+  Similarly, we can get the other two characters.
+} %end \exampl{Character table of $\Dn{3}$.}{\label{exam:D3charTab}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\subsection{Projection operator}
+We have listed the properties of irreps and the
+techniques of constructing a character table, but we still do not know how to
+construct the similarity transformation $S$ which takes a regular representation into a
+block-diagonal form. Think of it in another way,
+each irrep is associated with an invariant subspace, so by
+projecting an arbitrary function $\rho(\ssp)$ into its invariant subspaces, we
+find the transformation \refeq{eq:trans}.
+One of these invariant subspaces is $\sum_g \rho(g\sspRed)$, which is the basis of
+the one\dmn\ symmetric irrep $A$. For $\Zn{3}$, it is \refeq{eq:c3f1}.
+But how to get the others? We resort to the projection operator:
+\begin{equation}
+  \label{eq:projecIrre}
+  P^{(\mu)}_{i} = \frac{d_\mu}{|G|}\sum_g \left(D^{(\mu)}_{ii} (\LieEl)\right)^* U(g)
+  \,.
+\end{equation}
+It projects an arbitrary function into the $i$th basis of irrep
+$D^{(\mu)}$ provided the diagonal elements of this representation
+$D^{(\mu)}_{ii}$ are known. $ P^{(\mu)}_{i} \rho(\ssp) = \rho^{(\mu)}_i$.
+Here, symbol $*$ means the complex conjugate. For unitary groups
+$\left(D^{(\mu)}_{ii} (\LieEl)\right)^* = D^{(\mu)}_{ii} (\LieEl^{-1})$.
+Summing $i$ in \refeq{eq:projecIrre} gives
+\begin{equation}
+  \label{eq:projectSum}
+  P^{(\mu)} = \frac{d_\mu}{|G|}\sum_g \left(\chi^{(\mu)}(\LieEl)\right)^*U(g)
+  \,.
+\end{equation}
+This is also a projection operator which projects an arbitrary function onto
+the sum of the bases of irrep $D^{(\mu)}$.
+
+Note, for one\dmn\ representations, \refeq{eq:projectSum}
+is equivalent to \refeq{eq:projecIrre}. The projection operator is
+known after we obtain
+the character table, since the character of an one\dmn\ matrix is the matrix itself.
+However, for two\dmn\ or higher\dmn\ representations, we need to know the
+diagonal elements $D^{(\mu)}_{ii}$ in order to get the bases of invariant subspaces. That is to say,
+\refeq{eq:projecIrre} should be used instead of \refeq{eq:projectSum} in this case.
+\refExam{exam:D3irrepBases} illustrates this point. The two one\dmn\ irreps are obtained
+by \refeq{eq:projectSum}, but the other four two\dmn\ irreps are obtained by
+\refeq{eq:projecIrre}.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\exampl{Bases for irreps of $\Dn{3}$.}{
+  \label{exam:D3irrepBases}                                       \inCB
+  (continued from \refexam{exam:D3regularRep})~~
+  We use projection operator \refeq{eq:projectSum} to obtain the
+  bases of irreps of $\Dn{3}$.
+  From \reftab{tab:D3charac}, we have
+  \begin{align}
+    P^{A}\rho(\sspRed)
+    & = \frac{1}{6}
+      \left[
+      \rho(\sspRed) + \rho(\sigma_{12}\sspRed) + \rho(\sigma_{23}\sspRed)
+      + \rho(\sigma_{31}\sspRed) + \rho(C^{1/3} \sspRed) + \rho(C^{2/3} \sspRed)
+      \right] \\
+    P^{B}\rho(\sspRed)
+    & = \frac{1}{6}
+      \left[
+      \rho(\sspRed) - \rho(\sigma_{12}\sspRed) - \rho(\sigma_{23}\sspRed)
+      - \rho(\sigma_{31}\sspRed) + \rho(C^{1/3} \sspRed) + \rho(C^{2/3} \sspRed)
+      \right]
+      \,.
+  \end{align}
+  For projection into irrep E, we need to figure out the explicit
+  matrix representation first. Obviously, the following 2 by 2 matrices are E irreps.
+  \begin{equation}
+    D^E(e) =
+    \begin{bmatrix}
+      1 & 0\\
+      0 & 1 \\
+    \end{bmatrix} \,,\quad
+    D^E(C^{1/3}) =
+    \begin{bmatrix}
+      \omega & 0 \\
+      0 & \omega^2 \\
+    \end{bmatrix}  \,,\quad
+    D^E(C^{2/3}) =
+    \begin{bmatrix}
+      \omega^2 & 0 \\
+      0 & \omega \\
+    \end{bmatrix}  \,
+    \label{eq:c3E_1}
+  \end{equation}
+  \begin{equation}
+    D^E(\sigma_{12}) =
+    \begin{bmatrix}
+      0 & 1 \\
+      1 & 0\\
+    \end{bmatrix} \,,\quad
+    D^E(\sigma_{23}) =
+    \begin{bmatrix}
+      0 & \omega^2 \\
+      \omega & 0 \\
+    \end{bmatrix}  \,,\quad
+    D^E(\sigma_{31}) =
+    \begin{bmatrix}
+      0 & \omega  \\
+      \omega^2 & 0 \\
+    \end{bmatrix}  \,.
+    \label{eq:c3E_2}
+  \end{equation}
+  So apply projection operator \refeq{eq:projecIrre} on $\rho(\sspRed)$ and
+  $\rho(\sigma_{12}\sspRed)$, we get
+  \begin{align}
+    P^E_1\rho(\sspRed)
+    & = \frac{1}{6}
+      \left[
+      \rho(\sspRed) + \omega \rho(C^{1/3} \sspRed) + \omega^2 \rho(C^{2/3} \sspRed)
+      \right] \\
+    P^E_2\rho(\sspRed)
+    & = \frac{1}{6}
+      \left[
+      \rho(\sspRed) + \omega^2 \rho(C^{1/3} \sspRed) + \omega \rho(C^{2/3} \sspRed)
+      \right]  \\
+    P^E_1\rho(\sigma_{12}\sspRed)
+    & = \frac{1}{6}
+      \left[
+      \rho(\sigma_{12}\sspRed) + \omega \rho(\sigma_{31} \sspRed) + \omega^2 \rho(\sigma_{23} \sspRed)
+      \right] \\
+    P^E_2\rho(\sigma_{12}\sspRed)
+    & = \frac{1}{6}
+      \left[
+      \rho(\sigma_{12}\sspRed) + \omega^2 \rho(\sigma_{31} \sspRed) + \omega \rho(\sigma_{23} \sspRed)
+      \,.
+      \right]
+  \end{align}
+  The above derivation has used formulas \refeq{eq:C3relations}.
+  Under the invariant bases
+  \[
+    \left\{
+      P^A\rho(\sspRed), P^B\rho(\sspRed), P^E_1\rho(\sspRed), P^E_2\rho(\sigma_{12}\sspRed),
+      P^E_1\rho(\sigma_{12}\sspRed),  P^E_2\rho(\sspRed)
+    \right\}
+    \,,
+  \]
+  we have
+  \[
+    D^{irr}(\sigma_{23}) =
+    \begin{bmatrix}
+      1 & 0 & 0 & 0 & 0 & 0 \\
+      0 & -1 & 0 & 0 & 0 & 0 \\
+      0 & 0 & 0 & \omega^2 & 0 & 0 \\
+      0 & 0 & \omega & 0 & 0 & 0 \\
+      0 & 0 & 0 & 0 & 0 & \omega^2 \\
+      0 & 0 & 0 & 0 & \omega & 0 \\
+    \end{bmatrix}
+    \quad
+    D^{irr}(C^{1/3}) =
+    \begin{bmatrix}
+      1 & 0 & 0 & 0 & 0 & 0 \\
+      0 & 1 & 0 & 0 & 0 & 0 \\
+      0 & 0 & \omega & 0 & 0 & 0 \\
+      0 & 0 & 0 & \omega^2 & 0 & 0 \\
+      0 & 0 & 0 & 0 & \omega & 0 \\
+      0 & 0 & 0 & 0 & 0 & \omega^2 \\
+    \end{bmatrix}
+    \,.
+  \]
+} % \exampl{Basis for irreps of $\Dn{3}$.}{\label{exam:D3irrepBases}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+The $C_3$ and $D_3$ examples used in this section can be generalized
+to any $C_n$ and $D_n$. For references, \refExam{exam:CnChars}, \refexam{exam:DnOddChars}
+and \refexam{exam:DnEvenChars} give the character tables of $C_n$ and $D_n$.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\exampl{Character table of cyclic group \Zn{n}.}{\label{exam:CnChars}
+                                                                     \inCB
+  The symmetry under a discrete rotation by angle $2\pi/n$ gives birth to a
+  cyclic group $\Zn{n}=\{e,C_n,C_n^2,\cdots,C_n^{n-1}\}$.
+  Since $\Zn{n}$ is Abelian, each element forms a separate class, and thus
+  $\Zn{n}$ has $n$ one\dmn\ irreducible representations. The
+  characters multiply as group elements:
+  \(\chi_\alpha (C_n^i)\chi_\alpha
+  (C_n^j)=\chi_{\alpha} (C_n^{i+j})
+  \, \mod n
+  \,.
+  \)
+  Therefore, we get \reftab{tab:CnChars}.
+}% end \exampl{Character table of \Zn{n}.}{\label{exam:DnChars}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{table}[h]
+  \caption[Character table of cyclic group \Zn{n}]{
+    Character table of cyclic group \Zn{n}. Here $k,j=1,2,\cdots,n-1$.
+  }
+  \label{tab:CnChars}
+  \begin{center}
+    \begin{tabular}{c|cr}
+      $\Zn{n}$       & $A$& $\Gamma_{j}$ \\
+      \hline
+      $  e  $        &   1  &   1  \\
+      $C^{k}_{n} $        &   1  &   $\exp(\frac{i2\pi kj}{n})$   \\
+    \end{tabular}
+  \end{center}
+\end{table}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\exampl{Character table of dihedral group $\Dn{n}=C_{nv}$, $n$ odd.}{
+  \label{exam:DnOddChars}                                           \inCB
+  The  \Dn{n} group
+  \[
+    \Dn{n}=\{e,C_n,C_n^2,\cdots,C_n^{n-1},\sigma,C_n\sigma,\cdots,
+    \Zn{n}^{n-1}\sigma\}
+  \]
+  has
+  $n$ rotation elements and $n$ reflections.
+  Group elements satisfies $C_n^i\cdot C_n^j\sigma=C_n^j\sigma\cdot C_n^{n-i}$,
+  so $C_n^i$ and $C_n^{n-i}$ form a class. Also,
+  $C_n^{n-i}\cdot C_n^{2i+j}\sigma=C_n^j\sigma\cdot C_n^{n-i}$ implies that
+  $C_n^j\sigma$ and $C_n^{2i+j}\sigma$ are in the same class. Therefore,
+  there are only three different types of classes:
+  $\{e\}$, $\{C_n^k,C_n^{n-k}\}$ and
+  $\{\sigma,C_n\sigma,\cdots, \Zn{n}^{n-1}\sigma\}$. The total number of
+  classes is $(n+3)/2$. In this case, there are 2 one\dmn\
+  irreducible representations (symmetric $A_1$ and anti-symmetric $A_2$ )
+  and $(n-1)/2$ two\dmn\ irreducible representations. In the $j$th
+  two\dmn\ irreducible representation, class $\{e\}$ has form
+  $\bigl(\begin{smallmatrix}
+    1&0\\ 0&1
+  \end{smallmatrix} \bigr)$,
+  class $\{C_n^k,C_n^{n-k}\}$ has form
+  $\bigl(\begin{smallmatrix}
+    \exp(\frac{i2\pi kj}{n}) &0 \\ 0& \exp(-\frac{i2\pi kj}{n})
+  \end{smallmatrix} \bigr)$,
+  and class $\{\sigma,C_n\sigma,\cdots, \Zn{n}^{n-1}\sigma\}$ has form
+  $\bigl(\begin{smallmatrix}
+    0&1\\ 1&0
+  \end{smallmatrix} \bigr)$.
+  We get \reftab{tab:DnOdd}.
+}% end \exampl{Character table of \Dn{n}, $n$ odd
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{table}[h]
+  \caption[Character table of dihedral group $\Dn{n}=C_{nv}$, $n$ odd.]{
+    Character table of dihedral group $\Dn{n}=C_{nv}$, $n$ odd.
+  }
+  \label{tab:DnOdd}
+  \begin{center}
+    \begin{tabular}{c|ccc}
+      $\Dn{n}$ ($n$ odd)  & $A_1$& $A_2$& $E_{j}$ \\
+      \hline
+      $  e  $        &   1  &   1  &  2 \\
+      $C_n^k,C_n^{n-k} $ &   1  &   1  &  $2\cos(\frac{2\pi kj}{n})$ \\
+      $\sigma,\sigma C_n^1,\cdots,\sigma C_n^{n-1}$  &   1  &   -1  &  0  \\
+    \end{tabular}
+  \end{center}
+\end{table}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\exampl{Character table of dihedral group $\Dn{n}=C_{nv}$, $n$ even.}{
+  \label{exam:DnEvenChars}                                     \inCB
+  In this case, there are $(n+6)/2$ classes:
+  $\{e\}$,
+  $\{\trDiscr{}{1/2}\}$,
+  $\{\trDiscr{}{k/n},\trDiscr{}{(n-k)/n}\}$,
+  $\{\sigma,\sigma\trDiscr{}{2/n},\cdots,\sigma\trDiscr{}{(n-2)/n}\}$ and
+  $\{\sigma\trDiscr{}{1/n},\sigma\trDiscr{}{3/n},\cdots,\sigma\trDiscr{}{(n-1)/n}\}$.
+  There are four different one\dmn\ irreducible representations,
+  whose characters are $\pm 1$ under reflection $\sigma$ and shift-reflect
+  operation $\sigma\trDiscr{}{1/n}$. We get \reftab{tab:DnEven}.
+}% end \exampl{Character table of \Dn{n}, $n$ even
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{table}[h]
+  \caption[Character table of dihedral group $\Dn{n}=C_{nv}$, $n$ even.]{
+    Character table of dihedral group $\Dn{n}=C_{nv}$, $n$ even.
+    Here $k,j=1,2,\cdots,n-1$.
+  }
+  \label{tab:DnEven}
+  \begin{center}
+    \begin{tabular}{c|ccccc}
+      $\Dn{n}$ ($n$ even)  & $A_1$& $A_2$& $B_1$& $B_2$& $E_j$ \\
+      \hline
+      $  e  $        &   1  &   1  &  1   &  1   &  2  \\
+      $\trDiscr{}{1/2}$
+                           &   1  &   1  &  $(-1)^{n/2}$   & $(-1)^{n/2}$  & $2(-1)^{j}$ \\
+      $\trDiscr{}{k/n},\trDiscr{}{(n-k)/n}$ ($k$ odd)
+                           &   1  &   1  & -1   & -1
+                                                       & $2\cos(\frac{2\pi kj}{n})$  \\
+      $\trDiscr{}{k/n},\trDiscr{}{(n-k)/n}$ ($k$ even)
+                           &   1  &   1  & 1   & 1
+                                                       &  $2\cos(\frac{2\pi kj}{n})$  \\
+      $\sigma,\sigma\trDiscr{}{2/n},\cdots,\sigma\trDiscr{}{(n-2)/n}$
+                           &   1  &  -1  &  1   & -1   &  0  \\
+      $\sigma\trDiscr{}{1/n},\sigma\trDiscr{}{3/n},\cdots,\sigma\trDiscr{}{(n-1)/n}$
+                           &   1  &  -1  &  -1   & 1   &  0  \\
+    \end{tabular}
+  \end{center}
+\end{table}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%

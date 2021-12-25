@@ -1,0 +1,100 @@
+% siminos/blog/norms.tex
+% $Author: predrag $ $Date: 2016-04-13 20:36:35 -0400 (Wed, 13 Apr 2016) $
+
+\chapter{Norms, distances}
+\label{c-norms}
+% Predrag 2012-05-04
+
+\begin{description}
+
+\item[2012-11-12 Predrag]
+moved to here from \texttt{pipes/blog/norms.tex}.
+
+\end{description}
+
+\section{Norms blog}
+
+\bigskip\bigskip
+\noindent
+{\color{red} The latest blog entry at the end of this chapter}
+\bigskip\bigskip
+
+\begin{description}
+
+
+\label{sec:proxeq}
+
+\item[2011-11-16 Predrag]
+I think for \KS\ it would be the safest to use
+\beq
+  \Norm{\ssp-\ssp'}^2  = \braket{\ssp-\ssp'}{\ssp-\ssp'} =
+\Lint{\pSpace} ({u}-{u}')^2
+\,.
+\label{KSnormFr} \eeq
+The virtue of energy norm is that it is representation independent.
+
+If
+one goes to siminos/ksReduced/ invariant basis, the $2N-1$
+$\SOn{2}$-invariant and functionally independent variables are
+\bseq\label{eq:SO2cheb}
+  \begin{align}
+    \overline{b}_k &=
+		    b_k\, \chebT_k\left(b_1/r_1\right)+
+		    c_k\,\frac{c_1}{r_1} \chebU_{k-1}\left(b_1/r_1\right)\,, \label{eq:SO2cheb1}\\
+    \overline{c}_k &=
+		    b_k\, \frac{c_1}{r_1} \chebU_{k-1}\left(b_1/r_1\right)+
+		    c_k\,\chebT_k\left(b_1/r_1\right)\,,  \label{eq:SO2cheb2}
+  \end{align}
+\eseq
+for $k=1,\ldots N$, where $r_k\equiv\sqrt{b_i^2+c_i^2}$ and
+$\chebT_k,\,\chebU_k$ are Chebyshev polynomials of the first and second
+type, respectively. The Chebyshev polynomials $\chebT_k,\,\chebU_k$ are
+degree $k$, so they tend to significantly distort the state space layout
+of the attractor.
+
+Evangelos, please confirm that you are using distance function
+\refeq{KSnormFr}, not the norm
+\beq
+\Norm{u}  =   {\textstyle\frac{1}{2}} \sum_{k=0}^{\infty}
+   (\overline{b}_k^2+\overline{c}_k^2)
+\,,
+\label{normNotGood} \eeq
+
+\item[2011-12-1 Evangelos] I do not understand norm \refeq{KSnormFr}.
+Take for instance a pure sin equilibrium solution of KSe and compare it
+to itself under \refeq{KSnormFr} - you get zero. Now translate it by
+$l<L$, and compare to the original: you get non-zero distance. Thus this
+norm is not translation invariant.
+
+I use $2\,\Norm{u}$ of \refeq{normNotGood}, since I see reduced KS as a
+dynamical system defined in terms of invariant variables
+$\overline{b}_k,\,\overline{c}_k$.
+
+Please observe that although the Chebyshev polynomials
+$\chebT_k,\,\chebU_k$ are degree $k$, they are functions of $b_1/r_1$ in
+\refeq{eq:SO2cheb}. Therefore $\overline{b}_k, \overline{c}_k $ are not
+really invariant polynomials in $b_k,\,c_k$. In fact, \refeq{eq:SO2cheb}
+is equivalent to reducing to a slice with $c_1=0$. Therefore, even though
+transformations \refeq{eq:SO2cheb} are nonlinear, they preserve
+$r_k\equiv\sqrt{b_i^2+c_i^2}$. To see this, recall that they can be
+written in the polar form
+\bseq\label{eq:SO2polar0}
+  \begin{align}
+    \overline{b}_k &=
+		    r_k\, \cos(\phi_k-k\,\phi_1)\,, \label{eq:SO2polar1}\\
+    \overline{c}_k &=
+		    r_k\, \sin(\phi_k-k\,\phi_1)\,.\label{eq:SO2polar2}
+  \end{align}
+\eseq
+So any deformation of state space is a result of symmetry reduction
+(identification of points along group orbits) and the discontinuity at
+$r_1=0$.
+
+If we were to follow Tuckerman's recipe and multiply \refeq{eq:SO2polar}
+by $r_1^k$ we would indeed have invariant polynomials of order $k+1$ in
+the $b_i,\,c_i$. In siminos/ksReduced, we try to keep state-space
+distortion to a minimum, therefore multiplying by $r_1$ (or $r_1^2$).
+
+
+
+\end{description}

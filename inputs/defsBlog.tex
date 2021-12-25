@@ -1,0 +1,458 @@
+% siminos/inputs/defsBlog.tex
+% $Author: predrag $ $Date: 2020-05-24 02:06:00 -0400 (Sun, 24 May 2020) $
+
+% includes experimental definitions, to be transferred to ChaosBook.org
+% lines prefaced by  %DB: are already included in ChaosBook.org macros
+
+%\newcommand{\NBBpost}[2]{\item[#1 Burak] {#2}}
+%\newcommand{\PCpost}[2]{\item[#1 Predrag] {#2}}
+%\newcommand{\APWpost}[2]{\item[#1 Ashley] {#2}}
+%\newcommand{\KYSpost}[2]{\item[#1 Kimberly] {#2}}
+
+%%%%%%%%%%%%%%% VAGGELIS MACROS %%%%%%%%%%%%%%%%%%%%%%
+\newcommand{\refFigToFig}[2]{Figures~\ref{#1} to~\ref{#2}}
+
+    \ifboyscout
+\providecommand{\toCB}{\marginpar{\footnotesize 2CB}}  % to compare with ChaosBook
+\providecommand{\inCB}{\marginpar{\footnotesize now in CB}} % entered in ChaosBook
+\newcommand{\CBlibrary}[1]
+             {\href{http://ChaosBook.org/library/#1.pdf} { (click here)}}    \else
+\providecommand{\toCB}{}
+\providecommand{\inCB}{}
+\newcommand{\CBlibrary}[1]{}
+    \fi %end of internal draft switch
+
+\ifpaper % prepare for B&W paper printing:
+\renewcommand{\href}[2]{{#2}}  % no hyperref
+\renewcommand{\HREF}[2]{{#2}}
+\renewcommand{\color}[1]{}       % B&W
+\renewcommand{\wwwcb}[1]{{ChaosBook.org#1}}
+\renewcommand{\wwwgt}{{birdtracks.eu}}
+\renewcommand{\wwwQFT}[1]{{ChaosBook.org/\-Field\-Theory#1}}
+\renewcommand{\wwwcnsQFT}[1]{{ChaosBook.org/\-Field\-Theory#1}}
+\renewcommand{\weblink}[1]{{#1}}
+\renewcommand{\arXiv}[1]{{arXiv:#1}}
+\renewcommand{\mpArc}[1]{{mp\_arc~#1}}
+\else % prepare hyperlinked pdf
+\renewcommand{\wwwcb}[1]{       % keep homepage flexible:
+	{\href{http://ChaosBook.org#1}
+		{ChaosBook.org#1}}}
+\renewcommand{\wwwgt}{{\href{http://birdtracks.eu}
+		{birdtracks.eu}}}
+\renewcommand{\wwwQFT}[1]{
+	{\href{http://ChaosBook.org/FieldTheory#1}
+		{ChaosBook.org/\-Field\-Theory#1}}}
+\renewcommand{\wwwcnsQFT}[1]{
+	{\href{http://ChaosBook.org/FieldTheory#1}
+		{ChaosBook.org/\-Field\-Theory#1}}}
+\renewcommand{\weblink}[1]{{\href{http://#1}{#1}}}
+\renewcommand{\HREF}[2]{
+	{\href{#1}{#2}}}
+\renewcommand{\mpArc}[1]{
+	{\href{http://www.ma.utexas.edu/mp_arc-bin/mpa?yn=#1}
+		{mp\_arc~#1}}}
+\renewcommand{\arXiv}[1]{
+	{\href{http://arXiv.org/abs/#1}{arXiv:#1}}}
+\fi
+
+\newcommand{\YTlink}[1]{    %% in text, links to YouTube videos
+    \raisebox{-0.4ex}[0pt][0pt]{\!\!\!
+    \HREF{http://#1}{\includegraphics[height=1em]{start-32}}
+    \!\!\!            }  }
+
+\renewcommand{\EQV}[1]{\ensuremath{\mathrm{E}_{#1}}}
+% E_0: u = 0 - trivial equilibrium
+% E_1,E_2,E_3, for 1,2,3-wave equilibria
+\renewcommand{\REQV}[2]{\ensuremath{\mathrm{TW}_{#1#2}}} % #1 is + or -
+% TW_1^{+,-} for 1-wave traveling waves (positive and negative velocity).
+%\renewcommand{\PO}[1]{\ensuremath{PO_{#1}}}
+\renewcommand{\PO}[1]{\ensuremath{\mathrm{PO}_{#1}}}
+% PO_{period to 2-4 significant digits} - periodic orbits
+%\renewcommand{\PO}[1]{\ensuremath{{\rm po}_{#1}}} % Predrag experimental
+%\renewcommand{\RPO}[1]{\ensuremath{RP_{#1}}}
+\renewcommand{\RPO}[1]{\ensuremath{\mathrm{RP}_{#1}}}
+% RPO_{period to 2-4 significant digits} - relative PO.  We also can use ^{+,-}
+% here if necessary to distinguish between members of a reflection-symmetric
+% pair.
+%\renewcommand{\RPO}[1]{\ensuremath{{\rm rp}_{#1}}} % Predrag experimental
+%\renewcommand{\PPO}[1]{\ensuremath{PP_{#1}}} % Predrag experimental
+\renewcommand{\PPO}[1]{\ensuremath{{\mathrm{PP}}_{#1}}} % Predrag experimental
+%\renewcommand{\PPO}[1]{\ensuremath{{\rm pp}_{#1}}} % Predrag experimental
+
+\newcommand{\bseq}{\begin{subequations}}
+\newcommand{\eseq}{\end{subequations}}
+
+\newcommand{\chebT}{\mathrm{T}}
+\newcommand{\chebU}{\mathrm{U}}
+
+\newcommand{\normVec}{\ensuremath{\mathbf{n}}}    % group orbit curvature normal
+\newcommand{\LieAlg}{\ensuremath{{\cal G}}}         % Predrag Lie algebra
+
+\newcommand{\bCell}{\ensuremath{\Omega}}
+\newcommand{\NS}{Navier-Stokes}
+\newcommand{\NSE}{Navier-Stokes Equations}
+\newcommand{\NSe}{Navier-Stokes equations}
+\newcommand{\cGL}{complex Ginzburg-Landau}
+\newcommand{\CGL}{Complex Ginzburg-Landau}
+\newcommand{\cGLe}{complex Ginzburg-Landau equation}
+\newcommand{\CGLe}{Complex Ginzburg-Landau equation}
+\newcommand{\cqcGL}{cubic quintic complex Ginzburg-Landau}
+\newcommand{\CqcGL}{Cubic quintic complex Ginzburg-Landau}
+\newcommand{\cqcGLe}{cubic quintic complex Ginzburg-Landau equation}
+\newcommand{\CqcGLe}{Cubic quintic complex Ginzburg-Landau equation}
+%\newcommand{\Template}{Template}
+%\newcommand{\ii}{\ensuremath{\mathrm{i}}} % sqrt{-1}
+%\newcommand{\wurst}{wurst}
+%\newcommand{\Wurst}{Wurst}
+% \newcommand{\twoMode}{Porter-Knobloch}
+% \newcommand{\twomode}{Porter-Knobloch}
+\providecommand{\twoMode}{Two-mode}
+\providecommand{\twomode}{two-mode}
+
+%%%%%%%%%%%% MACROS, Xiong Ding specific %%%%%%%%%%
+\providecommand{\xDft}{ Discrete Fourier Transform }
+\providecommand{\cLv} {covariant vector}  % ChaosBook.org
+%\newcommand{\cLv} {covariant Lyapunov vector} % Ginelli et al
+\providecommand{\CLv} {Covariant vector}  % ChaosBook.org
+%\newcommand{\CLv} {Covariant Lyapunov vector} % Ginelli et al
+\providecommand{\cLvs} {covariant vectors}  % ChaosBook.org
+%\newcommand{\cLvs} {covariant Lyapunov vectors} % Ginelli et al
+\providecommand{\CLvs} {Covariant vectors}  % ChaosBook.org
+%\newcommand{\CLvs} {Covariant Lyapunov vectors} % Ginelli et al
+\providecommand{\entangled} {physical}
+\providecommand{\transient} {spurious}
+\providecommand{\psd}{Periodic Schur Decomposition}
+\providecommand{\LMa}{Levenberg-Marquardt algorithm}
+\newtheorem{per_schur}{Theorem}
+\providecommand{\pse}{Periodic Sylvester Equation}
+\providecommand{\psm}{Periodic Sylvester Matrix}
+\newcommand{\sFslice}{second Fourier mode slice}
+\newcommand{\SFslice}{Second Fourier mode slice}
+
+%%%%%%%%%%%%%%% DasBuch MACROS %%%%%%%%%%%%%%%%%%%%%%
+
+%  \SFIG{#1}    % f_name.png (or .pdf)
+%       {#2}    % short caption text
+%       {#3}    % full caption text
+%       {#4}    % f-figure-label
+\newcommand{\SFIG}[4]{\begin{figure}[h]
+              %\hspace*{-0.10\textwidth}
+              \hspace*{0.10\textwidth}
+              \begin{minipage}[b]{0.55\textwidth}
+                      \caption[#2]{#3}
+                      \label{#4}
+              \end{minipage}~~~~~%
+              \begin{minipage}[b]{0.40\textwidth}
+                      \includegraphics[width=1.00\textwidth]{#1}
+              \end{minipage}
+              %\hfill
+              \end{figure} }
+
+% \FIG{#1}    % \includegraphics[width=0.40\textwidth]{Fig/f_name.ps}  ...
+%     {#2}    % short caption text omitted here
+%     {#3}    % full caption text
+%     {#4}    % f-figure-label
+\newcommand{\FIG}[4]{\begin{figure}[h]
+            \begin{minipage}[b]{0.98\textwidth}
+                    #1\end{minipage}
+                      \caption[#2]{#3}
+                      \label{#4}\end{figure}}
+
+  %% Predrag 26aug2007: this supposedly speeds up compilation
+  %% of frequently used object(Lipkin, "Latex" p. 362)
+%%%%  mark section as `cyclist':
+            \newsavebox{\bike}\sbox{\bike}
+            {\raisebox{-5.0ex}[4.5ex][3.5ex]
+             {\includegraphics[width=1.6cm]{w11-1bicycle}}}
+\newcommand{\cyclist}{\marginpar[\hfill\usebox{\bike}]
+        {\usebox{\bike}\hfill}}
+
+%%%% mark section as `pedestrian':
+           \newsavebox{\trot}\sbox{\trot}
+           {\raisebox{-5.0ex}[4.5ex][3.5ex]
+            {\includegraphics[width=1.6cm]{i-4-pedestrian}}}
+\newcommand{\pedestrian}{\marginpar[\hfill\usebox{\trot}]
+        {\usebox{\trot}\hfill}}
+
+
+%%%%%%%%%%%%%%% FORMATING: PAGINATION FOR bin/mkbook %%%%%%%%%%%%%%%%%%%%%%%
+
+\newcommand{\Remarks}{\section*{\textsf{\textbf{Commentary}}}}
+\newcommand{\RemarksEnd}{}
+
+\newtheorem{rmark}{{\small\textsf{\textbf{Remark}}}}[chapter]
+\newcommand{\remark}[2]{
+        % \begin{quotation}
+        \begin{rmark}
+        {\small\em\noindent {\small\sf \underline{ #1} ~} #2 }
+    \end{rmark}
+    	}
+
+\newtheorem{exmple}{\noindent\small\textsf{\textbf{Example}}}[chapter]
+\newcommand{\example}[2]{
+    \vskip -13mm
+        %\begin{offset}
+        \begin{exmple}
+           \noindent\small
+           \textsf{\textbf{#1}} ~
+       \slshape\sffamily{#2}
+       % \textsl would not work...
+    \end{exmple}
+    %\end{offset}
+        \vskip -1mm
+             }
+
+\newcommand{\Resume}{\section*{\textsf{\textbf{R\'esum\'e}}}
+        \addcontentsline{toc}{section}{{~~~~Resum\'e}}
+    %            \addtocontents{toc}{{\small r\'esum\'e \thepage ~}}
+    }
+\newcommand{\ResumeEnd}{}
+
+\newtheorem{exerc}{\textsf{\textbf{Exercise}}}[chapter]
+% \newtheorem{exerc}{}[chapter]
+% \newtheorem{exerc}{{$\bullet$}}[chapter]
+
+\newcommand{\exercise}[2]{
+        %\vskip -13mm
+         \noindent
+         \begin{exerc}{
+\renewcommand{\theenumi}{\alph{enumi}}
+\renewcommand{\labelenumi}{\textbf{(\alph{enumi})\ }}
+    {\noindent\small
+         ~~\textsf{\textbf{#1}} ~
+           \slshape\sffamily{#2}  } % \textsl would not work...
+    }
+         \vskip -1mm
+% removed the line: % \noindent\rule[.1mm]{\linewidth}{.5mm}
+         \end{exerc}
+                          }
+
+\newcommand{\Exercise}[2]{      %environment for obligatory problems
+        %\vskip -13mm
+        \noindent
+        \begin{exerc}{
+\renewcommand{\theenumi}{\alph{enumi}}
+\renewcommand{\labelenumi}
+    {\textsf{\textbf{ (\alph{enumi})\ }}}
+        {\noindent
+         ~~\textsf{\textbf{\underline{#1}}} ~
+           \slshape\sffamily{#2}  } % \textsl would not work...
+        }
+         \vskip -1mm
+        \end{exerc}
+                          }
+
+\newcommand{\solution}[3]{
+        {\noindent\small
+         \textsf{\textbf{Solution \ref{#1}~-~#2}} %LABEL - TITLE
+         \slshape\sffamily{#3}                    %TEXT
+         }
+         \vskip  1ex  %4mm
+% removed the line: % \noindent\rule[.1mm]{\linewidth}{.5mm}
+              }
+
+\newenvironment{exercises}{
+\vspace{24pt plus 5pt minus 3pt}
+\section*{\textsf{\textbf{Exercises}}}\typeout{***ODD***}
+\def\theexer{\thechapter.\@arabic\c@enumi}
+\renewcommand\theenumi{\theexer}
+\addtocontents{toc}{{\small exercises \thepage ~ }}
+\markboth{\MakeUppercase{Exercises}}{\MakeUppercase{Exercises}}
+\small
+                          }
+{\renewcommand\theenumi{\@arabic\c@enumi}}
+
+
+%%%%%%%%%%%%%%% WALLY's FAVORITE MACROS %%%%%%%%%%%%%%%%%%%%%%
+\def\xh{\mathbf{\hat{x}}}  \def\yh{\mathbf{\hat{y}}}  \def\zh{\mathbf{\hat{z}}}
+
+\def\Pv{{\mathcal{P}_v}}  \def\Pe{{\mathcal{P}_\eta}}
+
+\newcommand{\bvec}[1]{\boldsymbol{#1}}
+
+\def\vphi{\bvec{\phi}}
+\def\vpsi{\bvec{\psi}}
+\def\grad{\bvec{\nabla}}
+\def\vv{\bvec{v}}      % \def\vv{{\mbox {\boldmath $v$}}}
+\def\vx{\bvec{x}}      % \def\vx{{\mbox {\boldmath $x$}}}
+\def\vk{\bvec{k}}      % \def\vk{{\mbox {\boldmath $k$}}}
+\def\uh{\hat{u}} \def\vh{\hat{v}} \def\wh{\hat{w}} \def\eh{\hat{\eta}}
+\def\ub{\overline{u}} \def\wb{\overline{w}}
+% \def\eg{{\it e.g.\ }} \def\ie{{\it i.e.\ }}
+% \def\Real{{\mathbb R}}	% this is redundant, ChaosBook defines this instead:
+% \newcommand{\reals}{\mathbb{R}}
+
+
+%%%%%%%%%%%%%%% GIBSON FAVORITE MACROS %%%%%%%%%%%%%%%%%%%%%%
+
+\newcommand{\bu}{\ensuremath{{\bf u}}}
+\newcommand{\bv}{\ensuremath{{\bf v}}}
+\newcommand{\bff}{\ensuremath{{\bf f}}}
+\newcommand{\dbu}{\delta {\bf u}}
+\newcommand{\dbv}{\delta {\bf v}}
+\newcommand{\hbu}{\hat{{\bf u}}}
+\newcommand{\hbv}{\hat{{\bf v}}}
+\newcommand{\hu}{\hat{u}}
+\newcommand{\hv}{\hat{v}}
+\newcommand{\hw}{\hat{w}}
+%\newcommand{\bnabla}{{\boldmath \nabla}} % what's wrong with this?
+\newcommand{\be}{{\bf e}}
+\newcommand{\bx}{{\bf x}}
+\newcommand{\ex}{{\hat{\bf x}}} % unit vectors
+\newcommand{\ey}{{\hat{\bf y}}}
+\newcommand{\ez}{{\hat{\bf z}}}
+\newcommand{\Om}{\Omega}    % JFG mantra
+
+\newcommand{\bPhi}{{\bf \Phi}}
+\newcommand{\bphi}{{\bf \phi}}
+\newcommand{\bhphi}{{\bf \hat{\phi}}}
+\newcommand{\bU}{{\bf U}}
+\newcommand{\bW}{{\bf W}}
+\newcommand{\lapl}{\nabla^2}
+% \newcommand{\tEQ}{\ensuremath{{\text{EQ}}}}
+\newcommand{\tNB}{\ensuremath{{\text{NB}}}}
+\newcommand{\tLB}{\ensuremath{{\text{LB}}}}
+\newcommand{\tUB}{\ensuremath{{\text{UB}}}}
+\newcommand{\tLM}{\ensuremath{{\text{LM}}}}
+\newcommand{\tNS}{\ensuremath{{\text{NS}}}}
+\newcommand{\tCFD}{\ensuremath{{\text{CFD}}}}
+\newcommand{\uEQ}{\ensuremath{\bu_{\text{\tiny EQ}}}}
+\newcommand{\vEQ}{\ensuremath{\bv_{\text{\tiny EQ}}}}
+\newcommand{\uLM}{\ensuremath{\bu_{\text{\tiny LM}}}}
+\newcommand{\uLB}{\ensuremath{\bu_{\text{\tiny LB}}}}
+\newcommand{\uNB}{\ensuremath{\bu_{\text{\tiny NB}}}}
+\newcommand{\uNBtwo}{\ensuremath{\bu_{\text{\tiny NB2}}}}
+\newcommand{\uUB}{\ensuremath{\bu_{\text{\tiny UB}}}}
+\newcommand{\vLM}{\ensuremath{\bv_{\text{\tiny LM}}}}
+\newcommand{\vLB}{\ensuremath{\bv_{\text{\tiny LB}}}}
+\newcommand{\vNB}{\ensuremath{\bv_{\text{\tiny NB}}}}
+\newcommand{\vUB}{\ensuremath{\bv_{\text{\tiny UB}}}}
+\newcommand{\bbR}{\mathbb{R}}
+\newcommand{\pd}[2]{\frac{\partial #1}{\partial #2}}
+\newcommand{\Norm}[1]{\|{#1}\|}
+
+%\newcommand{\Shift}{\ensuremath{\tau}}
+% \newcommand{\Shift}{\ensuremath{\mathbf{S}}}
+\renewcommand{\shift}{\ensuremath{\ell}}
+\newcommand{\nameit}{\ensuremath{w-}}
+
+%%%%%%%%%%%% Abbreviations, Siminos thesis specific %%%%%%
+
+\newcommand{\cont}{\,, \\ }
+% PC Jul 3 2009: removed Siminos redefinions:
+%\renewcommand{\statesp}{phase space}
+%\renewcommand{\Statesp}{Phase space}
+% PC Aug 20 2009: temporarily disabled ChaosBook definions:
+\renewcommand{\reducedsp}{reduced state space}
+\renewcommand{\Reducedsp}{Reduced state  space}
+\newcommand{\Manif}{\ensuremath{\mathcal{M}}}
+\newcommand{\bbUplus}{\Fix{\Dn{1}}}
+% \newcommand{\Lint}[1]{\frac{1}{L}\!\oint d#1\,}
+
+\newcommand{\Gelement}{\ensuremath{g}}         % group element in \Group
+\newcommand{\LGelement}[1]{\ensuremath{g(#1)}} % Lie group element in \Group
+\newcommand{\slicepComp}[2]{{\ensuremath{\overline{#1}'_{#2}}}}   % slice-fixing point component
+\newcommand{\Subgroup}{H}
+
+\newcommand{\BCs}{boundary conditions}
+\newcommand{\eps}{\epsilon}
+\newcommand{\fh}{\hat{f}}
+\newcommand{\Reynolds}{\textit{Re}}  % Reynolds number
+\newcommand{\Rey}{\text{Re}}
+\newcommand{\dt}{\Delta t}
+\newcommand{\Dx}{\xi}
+\newcommand{\ignore}[1]{}
+%\newcommand{\comment}[1]{{\bf [*}\footnote{{\tt [** Comment:} #1 {\tt **]}}{\bf *]}}
+\newcommand{\bnabla}{{\boldmath \nabla}}
+
+\newcommand{\bg}{{\bf g}}
+\newcommand{\bt}{{$\bullet$}}
+
+%%%%%%%%%%%% MACROS, CLe paper specific %%%%%%%%%%
+
+\newcommand{\vf}{v}	%%% keep notation for vector field flexible.
+\newcommand{\REQB}[1]{\ensuremath{\mathrm{Q}_{#1}}} % For ODE's, use REQV from chaosbook for PDE's
+
+%%%%%%%%%%%%%%% TEXT MACROS %%%%%%%%%%%%%%%%%%%%%%
+
+\newcommand{\ew}{eigen\-value}
+\newcommand{\Ew}{eigen\-value}
+\newcommand{\ev}{eigen\-vector}
+\newcommand{\Ev}{eigen\-value}
+\newcommand{\ef}{eigen\-function}
+\newcommand{\Ef}{eigen\-value}
+\newcommand{\steady}{\textdollar~}
+
+\newcommand{\ubranch}{upper branch}
+\newcommand{\Ubranch}{Upper branch}
+\newcommand{\lbranch}{lower branch}
+\newcommand{\Lbranch}{Lower branch}
+\newcommand{\newfp}{NU {\eqb}}
+
+%%%%%%%%%%%%%%% Vlasov %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\newcommand{\lambdaV}{\ensuremath{\lambda}} % Vlasov eigenvalue
+\newcommand{\VlasovLrz}{\ensuremath{\mathcal{A}}} % Linearized Vlasov operator
+\newcommand{\VlasovLrzSD}{\ensuremath{\mathcal{B}(\theta)}}
+\newcommand{\SDop}[1]{U(#1)}
+\newcommand{\SDopI}[1]{U^{-1}(#1)}
+
+%%%%%%%%%% Focus macros %%%%%%%%%%%%%%%%%%%%%%
+%\newcommand{\recFlow}{recurrent flow}
+%\newcommand{\RecFlow}{Recurrent flow}
+
+\ifdasbuch
+\newcommand{\Points}[1]{}
+\else
+\newcommand{\Points}[1]{\marginpar{\fbox{\sf
+                % $\bullet$
+                    #1~point
+                % $\bullet$
+                  } } }
+\fi
+
+%%%%%%%%%%%%%%%% Torus specific %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\newcommand{\conf}{\ensuremath{x}} %Configuration space coordinate
+\newcommand{\Fu}{\tilde{u}}
+\newcommand{\SymmRed}{\ensuremath{S}}
+\newcommand{\sspRefRed}{\ensuremath{\tilde{\ssp}}} % state space vector after reducing reflections
+\newcommand{\matrixRep}{\ensuremath{{D}}}  %  matrix rep of a group element
+\newcommand{\matrixRepRed}{\ensuremath{\hat{\matrixRep}}}  %  matrix rep of a group element
+
+%%%%%%%%%%%%%%% EXPERIMENTAL EXERCISES IN NOTATION %%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%% FLOWS: %%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\renewcommand\velField[1]{{F(#1)}}  % ODE velocity field
+\renewcommand{\vel}{F}      % state space velocity vector
+\renewcommand{\ssp}{a}             % state space point
+
+\renewcommand{\pSRed}{\ensuremath{\hat{\cal M}}} % reduced state space
+\renewcommand{\sspRed}{\ensuremath{\hat{\ssp}}}    % reduced state space point, experiment
+\renewcommand{\velRed}{\ensuremath{\hat{\vel}}}    % ES reduced state space velocity
+\renewcommand{\slicep}{\ensuremath{\hat{\ssp}'}}   % slice-fixing point, experimental
+\newcommand{\vg}{\ensuremath{v}} % group velocity of traveling wave
+
+\newcommand{\mapRed}{\ensuremath{\hat{\map{f}}}}    % PC reduced state space map
+
+
+%%%%%%%%%% LINEARIZED FLOWS: %%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\renewcommand{\deltaX}{{\delta a}}  %trajectory displacement
+\renewcommand{\derF}[1]{{DF |_{#1}}}    % Gibson stability matrix
+\renewcommand{\derf}[2]{{Df^{#1}|_{#2}}}    % Gibson jacobiam  matrix
+
+\newcommand{\LieElrep}{\ensuremath{\mathbf{G}}}
+
+%%%%%%%%%%%%%%% EXPERIMENTAL, ksRecycled.tex %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcommand{\OpSlice}{\ensuremath{\mathbf{S}}}
+\newcommand{\OpRefRed}{\ensuremath{\mathbf{B}}}
+\newcommand{\velRefRed}{\tilde{\vel}} % state space velocity after reducing reflections
+\newcommand{\sspTW}{\ensuremath{\ssp_{\!_{TW}}}}
+\newcommand{\sspRPO}{\ensuremath{\ssp_{\!_{RPO}}}}
+\newcommand{\sspEQ}{\ensuremath{\ssp_{\!_{EQ}}}}
+\newcommand{\sspPPO}{\ensuremath{\ssp_{\!_{PPO}}}}
+
+
+%%%%%%%%%%%% REMOVE THIS EVENTUALLY %%%%%%%%%%%

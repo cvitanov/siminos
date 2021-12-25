@@ -1,0 +1,526 @@
+% siminos/reversal/Lind1d.tex      pdflatex LC21; bibtex LC21
+% temporary:  siminos/spatiotemp/chapter/LC21Lind1d.tex
+% $Author: predrag $ $Date: 2021-12-20 23:24:25 -0500 (Mon, 20 Dec 2021) $
+
+% Predrag 2021-08-08: shared with siminos/reversal/LC21.tex
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Topological $\Dn{\infty}$-zeta function}
+\label{sect:LC21Lind1d}    % derived from blogCats.tex {sect:dihedralZeta}
+
+We use the temporal 1D lattice for
+systems with time-reversal symmetry to explain how such zeta functions
+are constructed.
+
+A {\tzeta} is the generating function of all distinct orbits \refeq{GroupOrbDisc}
+for a given system.
+
+We shall refer to $\Group$-orbit \refeq{GroupOrbDisc} counting generating
+function for a symmetry group $\Group$ as the topological $\Group$-zeta
+function, or the Lind zeta function\rf{Lind96}. The classic example is
+\refeq{topoZeta}, the {\em Artin-Mazur} zeta
+func\-tion\rf{ArtMaz65,CBcount} for the \emph{infinite cyclic group}
+\Cn{\infty} of all integer time translations. Here we focus on the
+\emph{infinite dihedral group} topological $\Dn{\infty}$-zeta function
+(Kim-Lee-Park\rf{KiLePa03} or flip-zeta function).
+
+The \emph{infinite dihedral group} $\Dn{\infty}$ \refeq{D_infty}
+
+
+
+
+the {\em trace formula for maps}:
+\index{trace!formula!maps}
+%  This formula yields the spectrum of $\Lop$ as
+% the poles of $\tr z\Lop /( 1 - z\Lop)$.
+% The relation
+\PC{} {box this relation}
+\index{generating!function}
+\beq
+%\sum_{\alpha=0}^\infty {z e^{\eigenvL_\alpha} \over 1 - z e^{\eigenvL_\alpha} }
+%   =
+    \sum_p \cl{p} \sum_{r=1}^\infty
+    \frac{ z^{\cl{p} r}} %\, e^{r \beta \Obser_p}
+    {\oneMinJ{r}}
+\,.
+\ee{tr-L-s}
+
+the trace formula \refeq{tr-L-s} can be recovered
+from the \Fd\ by taking a derivative
+\beq
+    %\tr {z\Lop \over 1- z\Lop} =
+    -z \frac{d~}{dz}
+          \ln \det(1 - z\Lop)
+    \,.
+\ee{der-det-map}
+
+
+
+
+For every integer temporal period
+$\cl{}$, we first determine $N_\cl{}$, the number of all periodic
+\emph{{\lattstate}} ${\Xx}_{\Mm}$ solutions on a tile of length
+$\cl{}$.
+
+
+Due to
+the time invariance of the defining equations, there are $\cl{p}$
+physically equivalent copies of a given solution in the orbit of
+every $\Xx_p$. So all we really have to do is to enumerate $M_\cl{}$
+{\em orbits} of the time-invariance equivalent \po\ solutions,
+whose generating function is the {\tzeta}.
+
+That {\HillDet} factors as
+\(
+\Det\jMorb  = \Det\jMorb_{-}\,\Det\jMorb_{+}
+\)
+for all symmetric states must propagate into the factorization of the
+{\dzeta}, mirroring the Kim \etal\rf{KiLePa03} topological (counting)
+Lind eta function \refeq{Ryu17eq:2.1}.
+
+multiplicity $m_\Xx$ of orbit $\pS_\Xx$ \refeq{GroupOrbMult}
+
+\bigskip\bigskip
+
+
+Let $\Group$ be a group, $\pS$ a set and $\map: \Group \times \pS \to \pS$
+a $\Group$-action on $\pS$.
+The Lind zeta function\rf{Lind96}
+ is defined by
+\beq
+\zeta_{Lind}(t) =
+\exp \left( \sum_{H} \;
+            \frac{N_{H}}{|\Group/{H}|}t^{|\Group/H|}
+      \right)
+\,,
+\ee{LC21Ryu17eq:1.3}
+where the sum is over all finite-index subgroups $H$ of $\Group$,
+such that $|G/H| < \infty$, and $N_{H}$ is defined by
+(see \refeq{LC21Ryu17eq:3.0A}):
+\beq
+N_{H} = |\{\ssp \in \pS : \mbox{ all } h \in H \quad \map(h,\ssp) = \ssp\}|.
+\ee{LC21Ryu17eq:1.3A}
+
+A flip system $(\pS, \map, \Refl)$ is a dynamical system, where $\pS$ is a topological
+space and $\map: \pS \to \pS$ is a homeomorphism.
+$\Refl: \pS \to \pS$ is flip for $(\pS, \map)$
+that satisfy:
+\beq
+\Refl\circ\map\circ\Refl = \map^{-1}
+\quad \mbox{and} \quad
+\Refl^2 = {\bf 1}
+\,.
+\ee{LC21KiLePa03Flip}
+Kim \etal\rf{KiLePa03} showed that the zeta function $\zeta_{\Refl}$ of a
+flip system $(\pS, \map, \Refl)$ can be defined as
+a Lind zeta function $\zeta_{Lind}$ of the
+$\Dn{\infty}$-action $\map: \Dn{\infty} \times \pS \to \pS$ that is
+given by:
+\beq
+\map(r, x) = \map(x)
+\quad \mbox{and} \quad
+\map(\Refl, x) = \Refl(x)
+\,.
+\ee{LC21KiLePa03eq:1.5}
+
+Every finite index subgroup of the {infinite dihedral group} $\Dn{\infty}$
+is either
+\beq
+H_{\cl{}} = \langle \shift^\cl{} \rangle
+    \qquad \mbox{or} \qquad
+H_{\cl{},k} = \langle \shift^\cl{}, \shift^k \Refl \rangle \, ,
+\ee{LC21KiLePa03H(i,j)}
+with indices
+\beq
+|\Dn{\infty}/H_{\cl{}}| =  2|\cl{}|
+    \qquad \mbox{or} \qquad
+|\Dn{\infty}/H_{\cl{},k}| = |\cl{}|
+\,.
+\ee{LC21KiLePa03Index}
+
+If $\cl{}$ is a positive integer and $k$ is an integer, then $N_{\cl{},k}$
+will denote the number of points in $\pS$ fixed by $\map^\cl{}$ and
+$\map^k\circ\Refl$:
+\beq
+N_{\cl{},k} = |\{\ssp \in \pS :
+            \map^\cl{} (\ssp) = \map^k\circ\Refl(\ssp) = \ssp\}|
+\,.
+\ee{LC21Ryu17eq:3.0A}
+They obtain
+    \PC{2021-07-04, 2021-08-25}{our notation, replaced subscript
+                    ${}_{\map,\Refl}$ by noting.} %superscript ${}^{\Refl}$.}
+\beq
+%\zeta_{\map,\Refl}(t) =
+\zeta_{\Refl}(t) =
+\exp \Big(\sum_{\cl{}=1}^{\infty} \, \frac{N_{\cl{}}}{2\cl{}}t^{2\cl{}}
+          +\sum_{\cl{}=1}^{\infty} \, \sum_{k=0}^{\cl{}-1}\,
+                     \frac{N_{\cl{},k}}{\cl{}}t^{\cl{}} \Big)
+\,.
+\ee{LC21Ryu17eq:3.0B}
+The first sum factors as an {Artin-Mazur} zeta func\-tion
+\refeq{ArtMaz5}:  % was {Ryu17eq:2.1A}
+\beq
+\exp \left(\sum_{\cl{}=1}^\infty
+\frac{t^{2\cl{}}}{2\cl{}} N_\cl{}
+         \right)
+= \sqrt{\zeta_{top}(t^2)}
+\ee{LC21Ryu17eq:2.1B}
+The class count \refeq{H(n,k)class}, \refeq{DnClassRefl} tells us that
+\beq
+N_{\cl{},k} =
+    \begin{cases}
+\, N_{\cl{}, 0} \qquad \mbox{ if } \cl{} \mbox{ is odd}, \\
+\, N_{\cl{}, 0} \qquad \mbox{ if } \cl{} \mbox{ and } k \mbox{ are even}, \\
+\, N_{\cl{}, 1} \qquad \mbox{ if } \cl{} \mbox{ is even and } k \mbox{ is odd}
+\,.
+    \end{cases}
+\ee{LC21Ryu17eq:3.0D}
+Hence
+\beq
+\sum_{k=0}^{\cl{}-1} \, \frac{N_{\cl{},k}}{\cl{}}
+=   \begin{cases}
+\, N_{\cl{},0} \qquad \qquad \qquad \qquad
+                            \mbox{if } \cl{} \mbox{ is odd}
+\,,\\ \\ \,
+\displaystyle{\frac{N_{\cl{},0}+N_{\cl{},1}}{2} \qquad
+                            \mbox{if } \cl{} \mbox{ is even}\,.}
+    \end{cases}
+\ee{LC21Ryu17eq:3.0E}
+so the Lind zeta function of the flip triple system $(\pS,\map,\Refl)$ is
+\beq
+\zeta_{\Refl}(t) = \sqrt{\zeta_{top}(t^2)} \; e^{h(t)},
+\ee{LC21Ryu17eq:2.1}
+where $\zeta_{top}$ is the
+Artin-Mazur zeta function {ArtMaz5},  % was {Ryu17eq:2.1A}%{Isola90-13c},
+and the counts of symmetric orbits
+\beq
+h(t) = \sum_{m=1}^{\infty} \left\{
+       N_{2m-1, 0}\,t^{2m-1}
+       + \left(N_{2m,0}+N_{2m,1}\right)\,\frac{ t^{2m}}{2}
+                               \right\}
+\,.
+\ee{LC21Ryu17eq:2.11}
+
+The $\exp(h(t))$ in \refeq{LC21Ryu17eq:2.1} can be factored into terms that
+presumably correspond --in the particular, \Henon\ case-- to the
+$D_\cl{}N_\cl{}$ factors in \refeq{EGfactorS}, but this is now totally
+general, in the spirit of \reftab{tab:Bmack93Fixed}, for
+any time-reversal discrete time dynamical system. Should be generalizable
+also to systems with continuous time.
+
+The zeta function $\zeta_{\Refl}$ can be written as a product over
+{\orbit}s. Let $O_1$ be the collection of finite orbits with time
+reversal (flip) symmetry, and $O_2$ be the collection of the pairs of
+orbits without time reversal symmetry, each an orbit and the flipped
+orbit. A finite \orbit\ $p$ is a periodic points set
+\[
+p = \{\ssp, \map(\ssp), \dots, \map^{\cl{p}-1}(\ssp)\}
+\]
+if $p \in O_1$, and
+\[
+p = \{\ssp, \map(\ssp), \dots, \map^{k-1}(\ssp)\} \cup
+\{\Refl(\ssp), \map\circ\Refl(\ssp), \dots, \map^{k-1}\circ\Refl(\ssp)\}
+\]
+if $p \in O_2$, where $k=\cl{p}/2$.
+
+If $p \in O_1$,
+\beq
+\zeta_{p}(t) =
+\sqrt{\frac{1}{1-t^{2\cl{p}}}}\exp\left(\frac{t^{\cl{p}}}{1-t^{\cl{p}}}\right)
+\,,
+\ee{LC21KiLePa03ZetaO1}
+and if $p \in O_2$,
+\beq
+\zeta_{p}(t) =
+\frac{1}{1-t^{\cl{p}}}
+\,.
+\ee{LC21KiLePa03ZetaO2}
+The product form of the zeta function is:
+\beq
+1/\zeta_{\Refl}(t) =
+\sqrt{\prod_{p_1\in {O_1}}(1-t^{2\cl{p_1}})}
+      \;\exp\left(-\frac{t^{\cl{p_1}}}{1-t^{\cl{p_1}}}\right)
+\prod_{p_2\in O_2} (1-t^{\cl{p_2}})
+\,.
+\ee{LC21KiLePa03ZetaProd}
+
+\newpage % REMOVE
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Counting \templatt\ {\lattstate}s}
+\label{sect:LC21catCounts}    % derived from blogCats.tex {sect:PeriodicPsCount}
+
+\refeq{AABHM99-46b}, \refeq{catlattMass} introduce ${\mu}$.
+See also \refeq{3diagCircEigs}, \refeq{3diagCircEigs1},
+\refeq{HL:detTemCatCheb}, \refeq{GraRyz1.395.2}, \refeq{HLhalfHalf},
+
+
+For $s>2$ the stability multipliers
+\(
+(\ExpaEig^{+},\ExpaEig^{-})
+\,=\,(\ExpaEig\,,\; \ExpaEig^{-1})
+\)
+are real,
+\beq
+\ExpaEig^{\pm}=\frac{1}{2}(s\pm \surd{D})
+\,,\qquad
+\ExpaEig=e^{\Lyap}
+\,,
+\ee{LC21catEigs}
+where
+\bea
+s&=&\ExpaEig+\ExpaEig^{-1}
+  =  2\cosh(\Lyap)
+    \continue
+s-2 &=&{\mu}^2
+    \continue
+\surd{D}&=&\ExpaEig-\ExpaEig^{-1}
+  =  2\sinh(\Lyap)
+    \continue
+\mbox{discriminant }
+{D}  &=& {s}^{2}-4
+      =  {\mu}^2({\mu}^2+4)
+\label{LC21catEigs1}
+\eea
+
+The sine, sinh, cos, cosh are related by the identities
+\refeq{GraRyzSect1.30sin} and \refeq{GraRyzSect1.30cos}.
+%    \item[2021-03-10 Predrag]
+For \Dn{\cl{}} irreps, I think we should use the \refeq{tildejMorbDisg} form
+of eigenvalues, and Klein-Gordon mass $\mu$
+\bea
+\lambda_m &=& {\mu}^2+ 4 \sin^2\left(\alpha_m/2\right)
+\continue
+   &=& \left({\mu} - i\,2\sin\left(\frac{\alpha_m}{2}\right)\right)
+   \,  \left({\mu} + i\,2\sin\left(\frac{\alpha_m}{2}\right)\right)
+\continue
+%\,,\quad
+\alpha_m &=& 2\pi{m}/{\cl{}}
+\,,
+\label{LC21tildejMorbDisg1}
+\eea
+rather than \refeq{HLEigenvalueD62} and stretching $s$, which is
+appropriate to \Cn{\cl{}} irreps. Identities like \refeq{IvIzHu02:GraRyz},
+\refeq{IvIzHu02:HL},
+\refeq{Zab00} and {Gradshteyn and Ryzhik}\rf{GraRyz} Eq.~1.317.1
+\CBlibrary{GraRyz}
+\beq
+2\sin^2\left(\theta/2\right)= 1-\cos\left(\theta\right)
+\ee{LC21GraRyz1.317.1}
+are also suggestive in this context.
+
+%    \item[2021-08-26 Han]
+How to count the number of {\lattstate}s for \templatt?
+
+\emph{No symmetry} {\lattstate}s \HillDet:
+\[
+N_\cl{} = \prod_{j=0}^{\cl{}-1} \left( s - 2\cos\frac{2\pi j}{\cl{}}\right)
+\,.
+\]
+The products of eigenvalues for the $\Cn{\cl{}}$ discrete Fourier
+case follows from \refeq{TableOfISP13952-2}:
+\beq
+\prod_{j=0}^{\cl{}-1} \left( s - 2\cos\frac{2\pi j}{\cl{}}\right)
+= (\ExpaEig^{\cl{}/2}-\ExpaEig^{-\cl{}/2})^2
+\,,
+\ee{eigsProduct}
+It's a square, because of the  $\Dn{\cl{}}$ symmetry.
+Consider even, odd casses, use $\cos0=1$, $\cos\pi=-1$,
+$\cos(-\theta)=\cos\theta$. The product over non-trivial eigenvalues is:
+\bea
+\cl{}=2m
+     &&
+M_{\cl{},0} =
+ \prod_{j=1}^{m-1}\left({s}-2\cos\frac{\pi{j}}{m}\right)
+      =  \frac{|\ExpaEig^{\cl{}/2}-\ExpaEig^{-\cl{}/2}|}
+              {{\mu}\sqrt{{\mu}^2+4}}
+\,,
+\label{LC21:eigsProdEven}
+\eea
+
+\bea
+\cl{}= 2m-1
+     &&
+M_{\cl{},1} =
+ \prod_{j=1}^{m-1}\left({s}-2\cos\frac{2j\pi}{2m-1}\right)
+     = \frac{|\ExpaEig^{\cl{}/2}-\ExpaEig^{-\cl{}/2}|}
+              {{\mu}}
+\,,
+\label{LC21:eigsProdOdd}
+\eea
+
+Next, look at the \emph{symmetric} {\lattstate}s {\HillDet}s:
+
+For odd $\cl{}=2m-1$,
+\bea
+N_{\cl{},1} = \prod_{j=0}^{m-1} \left(s-2\cos\frac{2\pi j}{\cl{}}\right)
+={\mu}M_{\cl{},1}
+\,.
+\eea
+For $\cl{}=2m$,
+\bea
+N_{\cl{},1} &=& \prod_{j=0}^{m-1} \left(s-2\cos\frac{2\pi j}{\cl{}}\right)
+            \continue
+N_{\cl{},0} &=& % \prod_{j=0}^{m} \left(s-2\cos\frac{2\pi j}{\cl{}}\right) =
+                (s+2)\,N_{\cl{},1}
+\,,
+\eea
+and
+\bea
+\frac{1}{2}\left(N_{\cl{},0}+
+N_{\cl{},1} \right)
+= \frac{\mu^2+5}{2}\prod_{j=0}^{m-1} \left(s-2\cos\frac{2\pi j}{\cl{}}\right)
+= \frac{\mu^2+5}{2\mu}
+\sqrt{\frac{\left(\ExpaEig^{\cl{}} + \ExpaEig^{-\cl{}} - 2\right)}
+           {\mu^2+4}}
+\,.
+\eea
+The number of lattice states can be written as polynomials:
+For $\cl{}=2m-1$:
+\bea
+N_{\cl{},0} &=&
+\mu\left(\ExpaEig^{\cl{}/2}-\ExpaEig^{-\cl{}/2}\right)
+\continue
+&=&
+\mu^2\ExpaEig^{-1/2}\left(\ExpaEig^{m}-\ExpaEig^{-m+1}\right)
+\,.
+\eea
+For $\cl{}=2m$:
+\bea
+\frac{1}{2}\left(N_{\cl{},0}+
+N_{\cl{},1} \right)&=&
+\frac{s+3}{2(\ExpaEig-\ExpaEig^{-1})}
+\left(\ExpaEig^{\cl{}/2}-\ExpaEig^{-\cl{}/2}\right)
+\continue
+&=&
+\frac{{\mu}^2+5}{2{\mu}\sqrt{{\mu}^2+4}}
+\left|\ExpaEig^{m}-\ExpaEig^{-m}\right|
+\,.
+\eea
+Now we can compute the $h(t)$ from \refeq{LC21Ryu17eq:2.11}
+\bea
+h(t) &=& \sum_{m=1}^{\infty} \left[
+       N_{2m-1, 0}\,t^{2m-1}
+       + \left(N_{2m,0}+N_{2m,1}\right)\,\frac{ t^{2m}}{2}
+                               \right]
+\continue
+&=&
+\mu\frac{\ExpaEig^{1/2} t}{1-\ExpaEig t^2}
+-\mu\frac{\ExpaEig^{-1/2}t}{1-\ExpaEig^{-1}t^2}
+\continue
+&&+
+\frac{\mu^2+5}{2(\ExpaEig-\ExpaEig^{-1})}\frac{\ExpaEig t^2}{1- \ExpaEig t^2}
+-\frac{\mu^2+5}{2(\ExpaEig-\ExpaEig^{-1})}\frac{\ExpaEig^{-1} t^2}{1- \ExpaEig^{-1} t^2}
+\,.
+\eea
+Using \refeq{LC21Ryu17eq:2.1} we have the "flip" part of the zeta function. Testing
+this zeta function using \refeq{HLFlipGeneratingFunction}, we have:
+\bea
+- t \frac{\partial}{\partial t}(\ln e^{-h(t)}) &=&
+t + 6 t^2 + 12 t^3 + 36 t^4 + 55 t^5 +144 t^6
+\continue
+&&+ 203 t^7 + 504 t^8 + 684 t^9
++1650 t^{10} + \dots
+\,,
+\eea
+which is in agreement with \refeq{HLFlipGeneratingFunction}
+and \reftab{tab:Bmack93Fixed}.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Counting {\lattstate}s}
+\label{sect:LC21poCounts}    % derived from blogCats.tex {sect:PeriodicPsCount}
+
+
+Given the {\tzeta} \refeq{LC21Ryu17eq:3.0B} we can count the
+number of lattice states from the generating function:
+    \PC{2021-08-25}{
+    We have the counts of the Bravais lattice states $N_\cl{}$,
+    $N_{\cl{},k}$ already, from \refeq{LC21Ryu17eq:3.0D}, so why don't we
+    reverse the logic, start here, and get the zeta function
+    \refeq{LC21Ryu17eq:2.1} by integration? Mention that this is an
+    example of Lind zeta function\rf{Lind96} \refeq{LC21Ryu17eq:1.3}
+    without ever writing it down, so we do not have to explain it? It's a
+    side issue for us, really.
+    }
+\beq
+\frac{-t\frac{d}{dt}(1/\zeta_{\Refl}(t))}{1/\zeta_{\Refl}(t)}
+= \sum_{\cl{}=1}^\infty N_\cl{}t^{2\cl{}}
++ \sum_{\cl{}=1}^\infty\sum_{k=0}^{\cl{}-1}N_{\cl{},k}t^{\cl{}}
+= \sum_{m=1}^\infty a_m t^m \, ,
+\ee{LC21zetatopGenerating}
+where the coefficients are:
+% https://tex.stackexchange.com/questions/401201/difference-between-align-and-alignedt
+\beq
+a_m =
+\left\{
+\begin{array}{ll}
+\sum_{k=0}^{m-1} N_{m,k}^{\Refl}
+= m N_{m,0}^{\Refl}
+\,,\quad & \mbox{$m$ is odd}
+ \, ,\\
+N_{m/2} + \sum_{k=0}^{m-1} N_{m,k}^{\Refl}
+= N_{m/2} + \frac{m}{2} \left(N_{m,0}^{\Refl} + N_{m,1}^{\Refl}\right)
+\,,\quad & \mbox{$m$ is even}
+\,.
+ \end{array}\right.
+\ee{LC21zetatopCoefficients}
+Using the product formula of {\tzeta} \refeq{LC21KiLePa03ZetaProd} and
+the numbers of orbits with length up to 5 from the \reftab{tab:Bmack93Fixed},
+we can write the {\tzeta}:
+\bea
+1/\zeta_{\Refl}(t) &=&
+\sqrt{1-t^2} \exp\left(-\frac{t}{1-t}\right) (1-t^4) \exp\left(-\frac{2t^2}{1-t^2}\right)
+\left(\sqrt{1-t^6}\right)^3 \continue
+&& \exp\left(-\frac{3t^3}{1-t^3}\right)(1-t^6)(1-t^8)^3
+\exp\left(-\frac{6t^4}{1-t^4}\right) \continue
+&& (1-t^8)^2(1-t^{10})^5\exp\left(-\frac{10t^5}{1-t^5}\right)
+(1-t^{10})^6 \dots \, .
+\eea
+The generating function is:
+\bea
+\frac{-t\frac{d}{dt}(1/\zeta_{\Refl})}{1/\zeta_{\Refl}}
+=
+t + 7t^2 + 12t^3 + 41t^4 + 55t^5 + \dots \, ,
+\eea
+which is in agreement with \refeq{LC21zetatopCoefficients}, where the $N_\cl{}$ and $N_{\cl{}}^{\Refl}$
+are the $C_\cl{}$ and $SF_\cl{}$ in the \reftab{tab:Bmack93Fixed}.
+
+We are not able to retrieve the numbers of fixed points by their symmetry groups using this {\tzeta} \refeq{LC21Ryu17eq:3.0B}, unless we rewrite the {\tzeta} with two variables:
+\beq
+\zeta_{\Refl}(t,u) =
+\exp \Big(\sum_{\cl{}=1}^{\infty} \, \frac{N_{\cl{}}}{2\cl{}}t^{2\cl{}}
+          +\sum_{\cl{}=1}^{\infty} \, \sum_{k=0}^{\cl{}-1}\,
+                     \frac{N_{\cl{},k}}{\cl{}}u^{\cl{}} \Big)
+\,.
+\ee{LC21FlipZetaTU}
+Using this {\tzeta} $\zeta_{\Refl}(t,u)$ we can write two generating functions:
+\beq
+\frac{-t\frac{\partial}{\partial t}(1/\zeta_{\Refl}(t,u))}{1/\zeta_{\Refl}(t,u)}
+= \sum_{\cl{}=1}^\infty N_\cl{}t^{2\cl{}}
+\, ,
+\ee{LC21zetatopGeneratingT}
+and
+\beq
+\frac{-u\frac{\partial}{\partial u}(1/\zeta_{\Refl}(t,u))}{1/\zeta_{\Refl}(t,u)}
+= \sum_{\cl{}=1}^\infty\sum_{k=0}^{\cl{}-1}N_{\cl{},k}u^{\cl{}}
+\, .
+\ee{LC21zetatopGeneratingU}
+Using the product formula of this {\tzeta} and the numbers of orbits with length
+up to 5 from the \reftab{tab:Bmack93Fixed}, the {\tzeta} is:
+\bea
+1/\zeta_{\Refl}(t,u) &=&
+\sqrt{1-t^2} \exp\left(-\frac{u}{1-u}\right) (1-t^4) \exp\left(-\frac{2u^2}{1-u^2}\right)
+\left(\sqrt{1-t^6}\right)^3 \continue
+&& \exp\left(-\frac{3u^3}{1-u^3}\right)(1-t^6)(1-t^8)^3
+\exp\left(-\frac{6u^4}{1-u^4}\right) \continue
+&& (1-t^8)^2(1-t^{10})^5\exp\left(-\frac{10u^5}{1-u^5}\right)
+(1-t^{10})^6 \dots \, .
+\eea
+And the generating function from this {\tzeta} is:
+\bea
+\frac{-u\frac{\partial}{\partial u}(1/\zeta_{\Refl}(t,u))}{1/\zeta_{\Refl}(t,u)}
+=
+u + 6u^2 + 12u^3 + 36u^4 + 55u^5 + \dots \, ,
+\label{HLFlipGeneratingFunction}
+\eea
+which is in agreement with \refeq{LC21zetatopGeneratingU}, where the $N_{\cl{}}^{\Refl}$ is the $SF_{\cl{}}$
+in the \reftab{tab:Bmack93Fixed}.

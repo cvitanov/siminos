@@ -1,0 +1,265 @@
+%----------------------------------------------------------------------------------------
+%	PACKAGES AND OTHER DOCUMENT CONFIGURATIONS
+%----------------------------------------------------------------------------------------
+
+\documentclass[landscape,paperwidth=42in, paperheight=36in,margin=20mm, fontscale=0.285]{baposter} % Adjust the font scale/size here
+
+\usepackage{graphicx} % Required for including images
+\graphicspath{{figures/}} % Directory in which figures are stored
+
+\usepackage{amsmath} % For typesetting math
+\usepackage{amssymb} % Adds new symbols to be used in math mode
+
+\usepackage{booktabs} % Top and bottom rules for tables
+\usepackage{enumitem} % Used to reduce itemize/enumerate spacing
+\usepackage{palatino} % Use the Palatino font
+\usepackage[font=small,labelfont=bf]{caption} % Required for specifying captions to tables and figures
+
+\usepackage{multicol} % Required for multiple columns
+\setlength{\columnsep}{1.5em} % Slightly increase the space between columns
+\setlength{\columnseprule}{0mm} % No horizontal rule between columns
+
+\usepackage{tikz} % Required for flow chart
+\usetikzlibrary{shapes,arrows} % Tikz libraries required for the flow chart in the template
+
+\newcommand{\compresslist}{ % Define a command to reduce spacing within itemize/enumerate environments, this is used right after \begin{itemize} or \begin{enumerate}
+\setlength{\itemsep}{1pt}
+\setlength{\parskip}{0pt}
+\setlength{\parsep}{0pt}
+}
+
+\definecolor{lightblue}{rgb}{0.145,0.6666,1} % Defines the color used for content box headers
+%&--------------------------------------------------------------------------------------------------------
+\newcommand{\KS}{Kuramoto-Siva\-shin\-sky}
+\newcommand{\KSe}{Kuramoto-Siva\-shin\-sky equation}
+\newcommand{\psd}{Periodic \-Schur\- Decomp\-osition}
+%&--------------------------------------------------------------------------------------------------------
+
+\begin{document}
+
+\begin{poster}
+{
+headerborder=closed, % Adds a border around the header of content boxes
+colspacing=1em, % Column spacing
+bgColorOne=white, % Background color for the gradient on the left side of the poster
+bgColorTwo=white, % Background color for the gradient on the right side of the poster
+borderColor=lightblue, % Border color
+headerColorOne=black, % Background color for the header in the content boxes (left side)
+headerColorTwo=lightblue, % Background color for the header in the content boxes (right side)
+headerFontColor=white, % Text color for the header text in the content boxes
+boxColorOne=white, % Background color of the content boxes
+textborder=roundedleft, % Format of the border around content boxes, can be: none, bars, coils, triangles, rectangle, rounded, roundedsmall, roundedright or faded
+eyecatcher=true, % Set to false for ignoring the left logo in the title and move the title left
+headerheight=0.12\textheight, % Height of the header
+headershape=roundedright, % Specify the rounded corner in the content box headers, can be: rectangle, small-rounded, roundedright, roundedleft or rounded
+headerfont=\Large\bf\textsc, % Large, bold and sans serif font in the headers of content boxes
+%textfont={\setlength{\parindent}{1.5em}}, % Uncomment for paragraph indentation
+linewidth=2pt % Width of the border lines around content boxes
+}
+%----------------------------------------------------------------------------------------
+%	TITLE SECTION
+%----------------------------------------------------------------------------------------
+%
+{\includegraphics[height=4em]{logo.png}} % First university/lab logo on the left
+{\bf Lyapunov exponents, Floquet exponents and covariant vectors of \KSe \vspace{0.2em}} % Poster title
+{\large{Xiong Ding\textsuperscript{1}, Daniel Crane\textsuperscript{2},
+P. Cvitanovi\'{c}\textsuperscript{1},
+R. L. Davidchack\textsuperscript{2},
+E. Siminos\textsuperscript{3},
+K. A. Takeuchi\textsuperscript{4} }}
+{\includegraphics[height=4em]{logo.png}} % Second university/lab logo on the right
+
+%----------------------------------------------------------------------------------------
+%	Introduction
+%----------------------------------------------------------------------------------------
+
+\headerbox{Introduction}{name=introduction,column=0,row=0,span=2}{
+
+\begin{multicols}{2}
+
+\textbf{\KSe\ }
+	\begin{equation}
+	u_t=-\frac{1}{2}(u^2)_x-u_{xx}-u_{xxxx}
+	\label{eq:kse}
+	\end{equation}
+has been investigated intensively for its
+chaotic behavior, and the periodic orbits on the attractor play an
+important role in characterizing the state space.
+The largest positive \textbf{Lyapunov exponent}
+	\begin{equation}
+		\lambda=\lim_{t\to \infty}\frac{1}{t}\ln \frac{|\delta x(t)|}{|\delta x(0)|}
+	\end{equation}
+has long been used as an indicator of chaotic dynamics, and recently
+sets of \textbf{covariant Lyapunov vectors} have been shown to determine
+the ``physical dimension'' of a strange
+attractor~\cite{GiChLiPo12} of a spatially extended flow, for ex. the \KS\ on a finite periodic domain.
+The evolution of the tangent space of a dynamic system is governed by the \textbf{Jacobian matrix}
+	\begin{equation}
+		\delta x(x_0, t)=J^t(x_0)\,\delta x(x_0, 0)
+	\label{eq:jacobian}
+	\end{equation}
+For a periodic orbit, the eigenvalues of the Jacobian matrix are called the \textbf{Floquet multipliers}, and the associated
+\textbf{Floquet eigenvectors} define the invariant directions of the tangent space.
+
+\end{multicols}
+\vspace{0.01em} % When there are two boxes, some whitespace may need to be added if the one on the right has more content
+}
+
+%----------------------------------------------------------------------------------------
+%	RESULTS
+%----------------------------------------------------------------------------------------
+
+\headerbox{Results }{name=results,column=2,span=2,row=0}{
+
+\begin{multicols}{2}
+
+\begin{center}
+\includegraphics[width=0.8\linewidth]{lyaExp.pdf}
+\captionof{figure}{Lyapunov exponents for for truncation number N=32 (red) and N=64 (green).}
+\label{fig:lyaExp}
+\end{center}
+
+\begin{center}
+\includegraphics[width=0.8\linewidth]{err_hess_trian.pdf}
+\captionof{figure}{Absolute error of the two PSD stages,
+        tested on 3000 random [$30\!\times\!30$] matrices.
+}
+\label{fig:err_hess_trian}
+\end{center}
+
+\begin{center}
+\includegraphics[width=1.0\linewidth]{ppo9vectorfield_mlab.png}
+\captionof{figure}{The orbit PPO(9) and the evolution of the marginal covariant vector. X, Y and Z axis
+	are the first, second and third Fourier coefficients of the state vector.
+}
+\label{fig:ppo9vectorfield123}
+\end{center}
+
+\end{multicols}
+
+\begin{center}
+\small
+\begin{tabular}{| c | c | c| }
+
+\hline
+& \multicolumn{2}{|c|}{\large{$g_{p}J^{T_{p}}$}} \\
+\hline
+	&  \large{$\mu_{i}$ }  &\large{$e^{iT_{p}\omega_{i}}$}   \\
+	1  & 0.0331970261043278   & -0.42330856002164    \\
+	& 			  & + 0.905985575499084i \\
+	2  & 0.0331970261043278   & -0.42330856002164    \\
+	& 			  & - 0.905985575499084i \\
+	3  & 7.86301487720721e-06 & 1                         \\
+	4  & 6.54328077048147e-06 & -1                        \\
+	5  & -0.216338085869672   & 1                         \\
+	6  & -0.265233812289065   & -0.867175421594352   \\
+	& 			  & + 0.49800279937231i   \\
+	7  & -0.265233812289065   & -0.867175421594352   \\
+	& 			  & - 0.49800279937231i   \\
+	\dots & \dots  & \dots                   \\
+	29 & -316.19797864063     & 1                         \\
+	30 & -320.666664811713    & -1                        \\
+\hline
+	\end{tabular}
+	\captionof{table}{Floquet exponents for the relative
+(pre)periodic orbit PPO(1). The first
+column is the real part of the exponent, and the second 	column is
+either
+the Floquet multiplier sign for real exponents, or the complex multiplier
+corresponding to the imaginary part of the Floquet exponent.
+	}
+	\label{tab:floquet_exponents_ppo1}
+
+	\end{center}
+
+}
+
+
+
+%----------------------------------------------------------------------------------------
+%	qr iteration
+%----------------------------------------------------------------------------------------
+
+\headerbox{QR iteration}{name=qr,column=0,below=introduction}{, %bottomaligned=conclusion}{
+
+System \eqref{eq:kse} can have a large range of Lyapunov exponents, and same is true for Floquet
+multipliers of Jacobian matrix \eqref{eq:jacobian}. \textit{QR iteration}~\cite{Trefethen97}
+provides a practical way to evaluate them.
+	\begin{itemize}
+	\item stage 1: forward transient iteration
+	\item stage 2: forward dynamics
+	\item stage 3: backward transient iteration
+	\item stage 4: backward dynamics
+	\end{itemize}
+}
+
+%----------------------------------------------------------------------------------------
+%	power iteration
+%----------------------------------------------------------------------------------------
+
+\headerbox{Power Iteration}{name=power,column=0,span=1, below=qr,above=bottom}{ % This block is as tall as the references block
+	Assume that all the eigenvalues of matrix $R$ are ordered as:
+	$|\Lambda_{1}|<|\Lambda_{2}|<\cdots<|\Lambda_{N}|$. A generic initial vector:
+	$x=\alpha_{1}v_{1}+\alpha_{2}v_{2}+\cdots+\alpha_{i}v_{i}$.
+	\[
+	R^{k}x=\Lambda_{i}^{k}(\alpha_{1}\frac{\Lambda_{1}^{k}}{\Lambda_{i}^{k}}v_{1}
+			+\alpha_{2}\frac{\Lambda_{2}^{k}}{\Lambda_{i}^{k}}v_{2}
+			+\cdots
+			+\alpha_{i}v_{i})
+	\]
+	converges to the
+	$i_{th}$ eigenvector of $R$:
+	\[
+	\lim_{k\to \infty} \frac{R^{k}x}{|R^{k}x|}=v_{i}
+	\]
+	In practice, power iteration and shifted power iteration are combined to
+	accelerate the converging process.	
+}
+%----------------------------------------------------------------------------------------
+%	RESULTS 2
+%----------------------------------------------------------------------------------------
+
+\headerbox{PSD Algorithm }{name=psd,column=1,below=introduction}{ %,bottomaligned=conclusion}{
+
+PSD stands for \textbf{\psd\ } \cite{Bojanczyk92theperiodic}.
+\begin{center}
+\includegraphics[width=0.8\linewidth]{per_schur_algorithm.pdf}
+\captionof{figure}{Demonstration of the process of conducting \psd.}
+\label{fig:per_schur_algorithm}
+\end{center}
+
+	\begin{itemize}
+	\item stage 1: transformation to\\  Hessenberg-triangular from
+	\item stage 2: transformation to\\  quasi-upper triangular form
+	\end{itemize}
+
+}
+%----------------------------------------------------------------------------------------
+%	REFERENCES
+%----------------------------------------------------------------------------------------
+
+\headerbox{References}{name=references,column=1,span=2, below=psd,above=bottom}{
+
+\renewcommand{\section}[2]{\vskip 0.05em} % Get rid of the default "References" section title
+\nocite{*} % Insert publications even if they are not cited in the poster
+\footnotesize{ % Reduce the font size in this block
+\bibliographystyle{unsrt}
+\bibliography{sample} % Use sample.bib as the bibliography file
+}}
+
+
+%----------------------------------------------------------------------------------------
+%	CONTACT INFORMATION
+%----------------------------------------------------------------------------------------
+
+\headerbox{Contact Information}{name=contact,column=3,above=bottom}{ % This block is as tall as the references block
+\textsuperscript{1} School of Physics, Georgia Tech \\
+\textsuperscript{2} Dept. of Mathematics, Univ. of Leicester \\
+\textsuperscript{3} Max-Planck Inst. PKS, Dresden  \\
+\textsuperscript{4} Dept. of Physics, Univ. of Tokyo
+}
+%----------------------------------------------------------------------------------------
+
+\end{poster}
+
+\end{document}

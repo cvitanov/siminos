@@ -1,0 +1,430 @@
+% siminos/spatiotemp/chapter/GuBuCv17blog.tex
+% $Author: predrag $ $Date: 2020-05-22 16:09:57 -0400 (Fri, 22 May 2020) $
+
+\section{Tiles' GuBuCv17 clippings and notes}
+\label{sect:GuBuCv17blog}
+
+Move good text not used in \refref{GuBuCv17} to this file, for possible
+reuse later.
+
+\begin{description}
+\item[2016-11-05 Predrag]
+A theory of turbulence that has done away with \emph{dynamics}?
+We rest our case.
+
+\item[2019-03-19 Predrag] Dropped this:
+\\
+In what follows
+we shall state results of all calculations either in units of the
+`dimensionless system size' $\tildeL$, or the system size $\speriod{} = 2 \pi
+\tildeL$.
+
+Due to the hyperviscous damping $u_{xxxx}$, long time solutions of \KSe\
+are smooth, $a_k$ drop off fast with $k$, and truncations of
+\refeq{SCD07:expan} to $16 \leq N \leq 128$ terms yield accurate
+solutions for system sizes considered here (see
+\refappe{sec:fourierRLD}).
+
+For the case investigated here, the
+\statesp\ representation dimension $d \sim 10^2$ is set by
+requiring that the exact invariant solutions that we compute
+are accurate to $\sim 10^{-5}$.
+
+\end{description}
+
+\subsection{GuBuCv17 to do's}
+\label{sect:GuBuCv17ToDo}
+Internal discussions of \refref{GuBuCv17} edits.
+
+\begin{description}
+
+\item[2019-03-17 Predrag to Matt]
+My main problem in writing this up is that I see nothing in
+the blog that formulates the variational methods that you use,
+in a mathematically clear and presentable form.
+Perhaps there is some text from\\
+\texttt{siminos/gudorf/thesisProposal/proposal.tex}\\
+that you can use to start writing up variational justification for
+your numerical codes, section~\ref{sect:variational} {\em Variational methods}.
+
+\item[2019-03-17 Predrag to Matt]
+Please write up {\em tile extraction} and {\em glueing} in the style of a
+SIADS article.
+
+
+\item[2019-03-17 Predrag to Matt]
+Should any of
+Appendix \ref{sect:FTnormal}~{\em Fourier transform normalization factors}
+be incorporated into {\bf GuBuCv17}\rf{GuBuCv17}?
+
+\item[2019-04-10 Matt writing]
+To begin \texttt{variational.tex} I included two equivalent formulations
+of the variational problem; the first is written in a more concise manner
+while the second is written in a more explicit manner. The longer of the
+two is commented out. The more explicit description uses dummy variables
+(Lagrange multipliers) which replace parameters $(\speriod{},\period{})$
+as independent variables.
+
+I'm including explanations of the numerical algorithms but I don't think
+I should present them in their style for algorithms, because we didn't
+invent them just applied them in a unique way. If desired I think the
+easiest way of including them per SIADS style guide is to use the
+algorithm package they suggest: \texttt{algpseudocode} and
+\texttt{algorithmic} are the package names.
+
+I feel conflicted as to whether to define the gradient matrix using a new
+letter or the ``mathematician way". e.g. $A(x)$ or $DG(x)$. Also, I
+started using $\mathbf{z}$ to represent {\statesp} vectors. I'm not a fan
+of using $z$ but I don't want to confuse people by using $u$,$x$, etc.
+
+I need to get better at writing or stop being OCD over how sentences are written.
+
+\item[2019-04-16 Matt update]
+In an effort to make the chapters and \texttt{GuBuCv17.tex} more modular,
+I've split apart some of the chapters into smaller, more manageable pieces.
+For example, \texttt{variational.tex} was covering too many topics to be
+reflected by the file name and \texttt{numerics.tex} predominately covered discrete
+lagrangian systems and Noether's theorem. The algorithms (matrix free adjoint descent,
+matrix free GMRES and Gauss-Newton) have yet to be discussed in excruciating detail.
+This is my fault, in hindsight I've done a poor job with recording what I do and
+how I do it. I'm going to get better at this.
+
+For the time being, until it is deemed unnecessary or unintelligent, I am going
+to break the chapters into the files \texttt{adjointdescent.tex} and \texttt{iterativemethods.tex}.
+I'm going to change the discourse so that instead of requiring the current order,
+namely, \texttt{variational.tex}->\texttt{adjointdescent.tex}->\texttt{iterativemethods.tex}
+the pieces will be written as to be independent of one another.
+
+In order to get specific, I needed to include the \KSe\ written in the Fourier-Fourier basis; I put this in \texttt{sFb.tex}
+
+\item[2019-04-17 MNG update]
+Realized that in order to get specific with the numerical methods I need to
+include both an exposition on the {\spt} Fourier modes  as well
+as the matrix-free computations. The latter really stresses the improvements
+over the finite-difference approximation of the Jacobian that requires
+time integration ubiquitous in plane-couette and pipe numerics.
+Expanding on \texttt{adjointdescent.tex} and \texttt{iterativemethods.tex}.
+Again, the main stratagem is to make the separate \texttt{.tex} files
+as independent as possible to avoid ``long distance references''.
+
+\item[2019-04-18 MNG]
+Heavy edits to \texttt{tiles.tex}
+Added section on preconditioning \texttt{preconditioning.tex}
+Formatting edits to \texttt{matrixfree.tex} can be ignored.
+\\
+Added details in \texttt{iterativemethods.tex} regarding GMRES
+and SciPy wrapper for LAPACK solver GELSD
+
+\item[2019-04-23 MNG]
+Converting indices to abide by the conventions: physical space
+indices $u(x_m,t_n)$, and \spt\ Fourier space indices
+$\Fu_{kj}$.
+\\{\bf 2018-05-09 PC} can do. Also, remember that
+$u(x_m,\zeit_n)$ implies that everywhere the ordering is
+$(\speriod{},\period{})$, and not $(\period{},\speriod{})$.
+
+Luca Dieci asked (borderline pleaded) to abide by the
+mathematics convention that $n$ is the index for discrete
+time. I'm avoiding $\ell$ and $\tau_t$ due to the unnecessary
+confusion with domain size $\speriod{}$ and period $\period{}$.
+\\{\bf 2018-05-09 PC} Agreed. $\tau_t$ we usually control by macro
+$\setminus zeit$, so currently
+$\zeit_n$.
+
+\item[2019-04-24 MNG]
+Discussion of how I foresee paper(s) playing out in \texttt{blogMNG.tex}
+by considering subject matter, narratives, and paper length.
+Perhaps unsurprisingly I lean towards structuring a paper similar
+to my thesis.
+
+I'm unsure how to approach \spt\ symmetries in a practical manner.
+Projection operators which produces symmetry invariant
+subspaces are nice and complements the selection rules for different
+symmetries nicely. Specifically it provides the reason for why
+the selection rules exist and motivates the use of symmetry
+constrained Fourier transforms. The only issue I have with this
+is that the results of the formal derivation are not really used
+beyong that.
+I think this is likely a case of ``It-is-trivial-now-that-I-know-it' syndrome.
+Perhaps it would be
+sufficient to say that the selection rules constitute these subspaces
+without the formalism?
+
+\item[2019-04-29 MNG]
+Rewrite of \texttt{KSsymm.tex} after double checking the
+derivations.
+Going to rewrite \texttt{sFb.tex}, I'm paying for the expedient
+manner in which is was written; in other words just use a single
+Fourier basis as opposed to a real basis and a complex basis, Matt.
+
+\item[2019-04-30 MNG]
+Rewrites to describe the \spt\ \KSe\ only in terms of \rv\
+\Fcs\ for consistency. The index notation gets a little rough
+but the pseudospectral form of the equation is nice enough.
+
+Tried to find the most concise description of how I handle
+\rpo s using mean velocity frame (time dependent rotation
+transformation).
+
+\item[2019-05-02 MNG]
+Is it necessary to recap all of the results in \refsect{sect:KStimeInt}
+in this paper? Other than the spatial integration calculation the results
+described in \refrefs{DasBuch,SCD07}. I'm unsure how to connect the
+{\spt} calculations to results pertaining to the dynamical system
+formulation, e.g. temporal stability and energy budget.
+
+Moved \texttt{SpatTempSymbDyb.tex} to after \texttt{tiles.tex} such that
+it proceeds from finding tiles to using tiles.
+
+The bulk of each section is complete; perhaps need to add some more
+detail to \texttt{glue.tex} and \texttt{tiles.tex} but mostly need to
+work on picking, producing, and inserting figures.
+
+Going to list suggestions for figures at the top of each section in
+commented text.
+
+\item[2019-05-02 MNG]
+Added tile figures: Extraction and converged results in \texttt{tiles.tex}.
+
+Modifying scripts to produce figures of general numerical convergence
+(initial condition to final converged \twot), produce figures
+demonstrating step-by-step gluing for repeated gluing,
+and produce figures for the ``frankenstein'' plots (combining tiles
+to produce \twots). Basically just producing more figures.
+
+\item[2019-05-11 PC]
+moved Ibragimov to \texttt{gudorf/thesis/thesis.tex} until we find it useful.
+
+\item[2019-05-13 MNG]
+\begin{itemize}
+%\item Reduced Whitespace on figures
+\item Added spatial gluing figures
+\item Added description of gluing procedure
+\end{itemize}
+
+\item[2019-05-13 PC]
+Figures are looking great, and in my talks people seem to ``get'' tile
+extraction and gluing, so they are very important. A few notes, before you
+produce the next versions:
+\begin{itemize}
+%  \item
+%never include labels like (a) in this example
+%into a figure file - that is job for LaTeX and such labels can change
+%from time to time, for the same figure.
+%  \item
+%If at all possible for your scrips: Never create a white border around a
+%figure (see the example above),
+%
+%\fbox{\includegraphics[width=.4\textwidth]{ks_ux_largeL}}
+%
+%that wastes valuable real estate, always
+%clip it tightly up to the first/last non-white pixel of the figure.
+  \item
+I think you should label all $u$ color bars in multiples of 1, or
+or 0.5 if that is really needed, not different units in every plot.
+  \item
+Once you have improved a given figure,
+% like the \texttt{MNG\_hook\_initial.png},
+keep the same name rather than renaming it
+(they are often shared between different articles, presentations and blogs)
+\end{itemize}
+
+\item[2019-07-05 PC] dropped from trawl.tex: ``
+In both formulations there is no guarantee of convergence
+but it is clearly better to take less time regardless of convergence.
+
+In our formulation, convergence can not be guaranteed either, but the
+resources committed to the initial guesses generation are negligible.
+''
+
+\bea \label{e-discretedefsOld}
+\wavek &=& 2\pi\frac{k}{\speriod{}}\,,\qquad k=1,\cdots,M/2-1 \continue
+\freqj &=& 2\pi\frac{j}{\period{}}\,,\qquad j=0,\cdots,N/2-1 \continue
+\xm &=& \frac{m}{M}\speriod{}\,,\qquad m=0,\cdots,M-1 \continue
+\tn &=& \frac{n}{N} \period{}\,,\qquad n=0,\cdots,N-1\,.
+\eea
+
+\item[2019-08-21 MNG]
+Moved discussion of recurrence plots and multiple shooting from trawl.tex
+to variational.tex
+
+It seemed more coherent to first describe the disadvantages
+of the IVP to motivate the variational problem. I'm going
+to refer to what I do as ``solving a variational problem'' as
+opposed to boundary value problem because it insinuates
+(at least to me) that we're solving a Dirichlet BC in 1 + 1 dimensions
+problem.
+
+General narrative of variational.tex
+\begin{itemize}
+\item Exponential instability bad
+\item Variational formulation good
+\item How to solve variational problem (general description of optimization)
+\item Losses from variational formulation (notion of dynamics, stability, bifurcation analysis).
+\item How to recoup from these losses (adjoint sensitivity, Lagrangian, Hill's formula)
+\end{itemize}
+
+It's currently a hot mess.
+
+
+\item[2019-09-20 MNG]
+Input references to topological defects and motifs in complex networks. Renamed
+the ``defect tile'' to the ``merger tile'' but also made the connection
+that similar patterns in crystals are referred to as ``edge dislocations''.
+
+Just clean up and rewriting \texttt{tiles.tex} mainly; it's almost in shape.
+
+\item[2018-05-09 PC] Dropped:
+The following definitions will be devoid of symmetry considerations
+such that the equations represent the general case.
+
+For $\tildeL<1$ the only \eqv\ of the
+system is the globally attracting constant solution
+$u(\conf,\zeit)=0$, denoted $\EQV{0}$ from now on. With increasing
+system size $\speriod{}$ the system undergoes a series of
+bifurcations. The resulting \eqva\ and \reqva\ are described
+in the classical papers of Kevrekidis, Nicolaenko and
+Scovel\rf{KNSks90}, and Greene and Kim\rf{ksgreene88},
+among others. The relevant bifurcations up to the
+system size investigated here are summarized in
+\reffig{fig:SCD07ksBifDiag}: at $\tildeL=22/2\pi = 3.5014\cdots$,
+the {\eqva} are the constant solution \EQV{0},
+the  \eqv\ \EQV{1} called GLMRT by Greene and
+Kim\rf{laquey74,ksgreene88},
+the $2$- and $3$-cell states
+\EQV{2} and \EQV{3}, and the pairs of \reqva\ \REQV{\pm}{1},
+\REQV{\pm}{2}.
+All \eqva\ are in the antisymmetric subspace $\bbU^+$, while
+\EQV{2} is also invariant under $\Dn{2}$ and \EQV{3} under $\Dn{3}$.
+
+Due to the translational invariance of {\KSe},
+they form invariant circles
+in the full \statesp.
+In the $\bbU^+$ subspace considered here,
+they correspond to $2n$ points, each shifted by $\speriod{}/2n$.
+For a sufficiently small $\speriod{}$
+the number of {\eqva} is small and
+concentrated on the low wave-number end of the Fourier spectrum.
+
+    %\PC{2018-05-04} {
+dropped this: \Group, the group of actions $ g \in G $
+    on a \statesp\ (reflections, translations, \etc) is a spatial symmetry of
+    a given system if $g u_\zeit = F(g\,u)$.
+%     u_\zeit + u_{\conf \conf} + u_{\conf \conf \conf \conf} + u u_\conf = 0
+%    \refeq{e-ks}
+
+An instructive example is offered by the dynamics for
+the  $(\speriod{},\period{})=(22,\period{})$  system
+that \refref{SCD07} specializes to.
+The size of this
+small system is $\sim 2.5$ mean wavelengths
+($\tildeL/\sqrt{2}= 2.4758\ldots$),
+and the competition between states with wavenumbers 2 and 3.
+
+The two zero Lyapunov exponents are due to the time and
+space translational symmetries of the \KSe.
+
+For large system size, as the one shown in \reffig{f:ks_largeL}, it is
+hard to imagine a scenario under which attractive periodic states (as
+shown in \refref{FSTks86}, they do exist) would have significantly large
+immediate basins of attraction.
+
+\item[2019-10-17 MNG]: Merged symmetry discussions.
+\texttt{KSsymmMNG1} was deleted because seems to be an old discussion predating
+the \spt\ symmetry group discussion as it still mentions
+equivariance. The focus should only be on invariance under symmetry operations,
+as invariance gives rise to the the practical application
+of the symemtry discussion which is constraints on the \spt\
+\Fcs.
+\texttt{KSsymmMNG} was deleted because it is just an older version
+of \texttt{KSsymm}.
+\texttt{KSsymmPC} uses different notation and says things better than I do
+so I'll have to figure out how to merge it in.
+
+\item[2019-10-25 PC]  dropped from \emph{variational.tex}:
+
+Linear stability analysis has been used in bifurcation
+analysis of describe the existence and bifurcations of solutions
+as well as the geometry of state spaces corresponding to different
+flows \refrefs{GHCW07,lanCvit07,W97}.
+
+Commonly time variational integrators preserve symplectic structure
+
+\item[2019-09-05 MNG] Dropped from \emph{variational.tex}:
+{multishooting optimization of cost functional
+because it doesn't jive with \spt\ methods (based on integration)}
+
+{Adjoint sensitivity and Hill's formula sections
+when I figure them out or they seem useful}:
+
+Section on adjoint sensitivity
+The \spt\ reformulation of a dynamical problem also
+requires a reformulation of its linear stability
+analysis.
+
+Nevertheless, we still have the notions of tangent spaces and derivatives
+so the natural replacement is the notion of sensitivity. In the context
+of finite element (finite difference) representation, instead of computing
+a derivative and transporting it around a periodic orbit, it instead
+computes the derivative of the temporal average of the quantity with
+respect to whichever parameter is desired\rf{Blonigan17,LaShMe18,Wang13}.
+Because there is no transport,
+one need not worry about the exponential instability present.
+Essentially sensitivity is to stability as boundary value problem is
+to initial value problem in this context. Because the \spt\ boundary
+problem is defined on a compact domain on which the scalar field does
+not diverge, dynamical observables are bounded; they do not experience
+numerical overflow (underflow) associated with unstable (stable) manifolds.
+%%%%%%%% Hill's formula.
+\beq
+S = \int_{\mathcal{M}} \mathcal{L}(u,v,u_x,v_x,u_t,v_t,u_xx,v_xx) dx dt
+\eeq
+such that the matrix of second variations, or Hessian, of this action functional
+is defined as
+\beq
+H = \nabla \nabla^{\top} S
+\eeq
+such that the derivatives are taken with respect to the infinite dimensional
+scalar fields $u,v,\dots,$ such that the Hessian matrix is infinite dimensional
+prior to discretization of the scalar fields.
+The resultant discrete Lagrangian system and subsequent Hessian should be
+the Hessian of Hill's formula, I believe. If one is trying to derive
+Hamilton's action principle as a result of discretization (\ie, finite differences)
+as in \refref{KraMaj15} then one must take care to define \spt\ differentiation operators
+in a manner consistent with an action principle. A large amount of
+the derivation of the discrete action principle and discrete Noether's theorem
+of\rf{KraMaj15} relates to using a finite element discretization in physical
+space. I am unsure how these ideas extend to a Fourier basis; I currently
+am assuming that as long as the differentiation operators, and hence the derivatives
+(jet bundle) is properly defined then everything should work out.
+When two total derivatives of the Lagrangian density are taken, one arrives
+at the following matrix representation of the Hessian. Keep in mind that
+we have ordered the variables in terms of the
+order of the corresponding derivatives $(u,v,u_t,v_t,u_x,v_x,u_xx,v_xx)$.
+\beq
+\begin{bmatrix}
+-v_x(t,x)/3 & u_x(t,x)/3 & 0 & -1/2 &v(t,x)/3 & -2u(t,x)/3 & 0 &0 \\
+u_x(t,x)/3& 0 & 1/2 & 0 & u/3 & 0& 0& 0\\
+0    &1/2 &0 &0 &0 &0 &0 &0 \\
+-1/2 &0 &0 &0 &0 &0 &0 &0 \\
+v(t,x)/3  &u(t,x)/3 &0 &0& 0& &-1 &0 &0 \\
+-2u(t,x)/3 &0 &0 &0 &-1 &0 &0 &0 \\
+0    &0  &0 &0 &0 &0 &0 &1 \\
+0    &0  &0 &0 &0 &0 &1 &0 \\
+\end{bmatrix} \,.
+\ee{NotHessiantake2}
+This is an infinite dimensional matrix, but upon discretization each block
+will represent a diagonal matrix whose diagonal contains the scalar
+field values of the corresponding spacetime coordinates. For instance,
+$u_x/3 \equiv \frac{1}{3} u_x(x,t) \to \frac{1}{3} u_x(t_n, x_m)$. Because
+each of the blocks are diagonal, \ie, $1 \equiv \mathcal{I}^{N*M}$, the
+determinant expansion is long but not impossible to decipher. Note
+the presence of the adjoint variables $v,v_x$. There is freedom in
+the choice of what these variables should be, because they are non-physical.
+
+
+\end{description}
+
+
+\bigskip
+Note to Predrag - send this paper to

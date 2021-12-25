@@ -1,0 +1,326 @@
+Instead of the Poincar\'e constraint in addition to close recurrence calculations, which
+are in my mind somewhat redundant because I'm trying to compute approximations I instead
+played around with a number of different procedures that only relied on close recurrence
+calculations, i.e. minimizing the $L_2$ norm of the difference between two {\statesp} points.
+
+Something that I experimented with numerically was a procedure that computed a coarse time-integration
+and then if the $L_2$ norm was within a certain tolerance, it would be recomputed with an increased number
+of time steps. This would produce great initial conditions in a small number of cases, where the local minima in the
+close recurrence diagram actually corresponded to a recurrence, as it would rightly increase the accuracy of both
+the starting point of the orbit, the ending point, and the period. I'm sort of deciding between this
+and just running one close recurrence trawl with fine integration, because in the majority of cases the
+local minima of the $L_2$ norm is just happenstance and not related to a useful recurrence. One of the
+symptoms of this is that in certain instances the finer time-integration would actually increase
+the minimum of the $L_2$ norm. This didn't make sense to me, and could be due to the exact way I had the
+procedure implemented, i.e. taking the minimum from the coarse close recurrence procedure and then
+using it as the starting point for the fine close recurrence procedure might be too hopeful, and it might
+be best to just start at the same point with the same time range.
+
+The way that this was accomplished was by tuning the restart procedure as
+well as tuning time integration in the close recurrence procedure, as
+well as the total time being integrated, number of time steps. I have
+abandoned the Poincar\'e hyperplane in favor of this fine time
+integration. I also abandoned playing around with running a coarse time
+integration and then refining it as this produced strange results. I
+thought that it would merely produce a larger region around the local
+minimum (region of the close recurrence plot) by tuning the amount of
+time integrated of the second time integration as well as increasing the
+number of time steps but sometimes this procedure would either restart in
+the wrong spot or miss the local minimum returning a larger (in terms of
+the residual of the $L_2$ norm of the difference between starting and
+final points.) Therefore, I decided it was wrothwhile due to other
+speed-ups to just perform the finer close recurrence and if nothing is
+found then just restart.
+
+In between testing these new initial conditions I have decided to rewrite
+and add some different ways that the hookstep is calculated. This is due
+to there being a lack of safety nets for when the hookstep code
+previously would fail and the code would have to abort. This seems to be
+due to trying to optimize a hookstep for too large of a trust region.
+While normally you would just check the residual and then if it isn't
+reduced, one would reduce the trust region and continue. But, in my case
+this would lead to numerical overflow and the code would abort.
+Therefore, a safer, more constrained optimization protocol had to be
+adopted. Now, the parameter that computes the size of the corrections is
+always bounded and if it fails to lie in these bounds, a value is chosen
+based on the iteration.
+Instead of the Poincar\'e constraint in addition to close recurrence calculations, which
+are in my mind somewhat redundant because I'm trying to compute approximations I instead
+played around with a number of different procedures that only relied on close recurrence
+calculations, i.e. minimizing the $L_2$ norm of the difference between two {\statesp} points.
+
+Something that I experimented with numerically was a procedure that computed a coarse time-integration
+and then if the $L_2$ norm was within a certain tolerance, it would be recomputed with an increased number
+of time steps. This would produce great initial conditions in a small number of cases, where the local minima in the
+close recurrence diagram actually corresponded to a recurrence, as it would rightly increase the accuracy of both
+the starting point of the orbit, the ending point, and the period. I'm sort of deciding between this
+and just running one close recurrence trawl with fine integration, because in the majority of cases the
+local minima of the $L_2$ norm is just happenstance and not related to a useful recurrence. One of the
+symptoms of this is that in certain instances the finer time-integration would actually increase
+the minimum of the $L_2$ norm. This didn't make sense to me, and could be due to the exact way I had the
+procedure implemented, i.e. taking the minimum from the coarse close recurrence procedure and then
+using it as the starting point for the fine close recurrence procedure might be too hopeful, and it might
+be best to just start at the same point with the same time range.
+
+The way that this was accomplished was by tuning the restart procedure as
+well as tuning time integration in the close recurrence procedure, as
+well as the total time being integrated, number of time steps. I have
+abandoned the Poincar\'e hyperplane in favor of this fine time
+integration. I also abandoned playing around with running a coarse time
+integration and then refining it as this produced strange results. I
+thought that it would merely produce a larger region around the local
+minimum (region of the close recurrence plot) by tuning the amount of
+time integrated of the second time integration as well as increasing the
+number of time steps but sometimes this procedure would either restart in
+the wrong spot or miss the local minimum returning a larger (in terms of
+the residual of the $L_2$ norm of the difference between starting and
+final points.) Therefore, I decided it was worthwhile due to other
+speed-ups to just perform the finer close recurrence and if nothing is
+found then just restart. 
+
+
+\MNGedit{
+In order to find {\po}s, that is, in order to solve \refeq{e-Fks}, we
+need initial guesses. We only search for the most frequently appearing {\fpo}s,
+and so we limit the size of the initial guesses by only selecting periods existing
+in some finite range of values. The discretization depends on
+the value of the period, as the number of modes required to resolve all relevant scales increases
+as the dimensions grow larger. Once the periods and discretization are defined,
+what remains is to initialize the {\spt} {\Fcs}. To do so, we draw random
+values from a normal distribution, and then rescale these values to roughly
+approximate the physical scales of the \KSe.}
+
+As a reminder, our collection of {\po}s need not range ove all sizes;
+we only search for the most frequently appearing {\fpo}s,
+which we believe manifest as {\po}s with small periods. Therefore,
+the search for {\po}s was limited to what we consider as intermediate domain sizes.
+Periods were chosen from the ranges
+$\period{}\in [20, 180]$ and $\speriod{} \in [22, 88]$. The discretization depends on
+the value of the period but were typically chosen to be powers of two; in order
+to leverage fast Fourier transforms. %reference
+Typically, we used a rule of thumb which set the number of points in the
+spatial dimension as $M = 2^{\lfloor\log_2(\speriod{})\rfloor + 1}$
+and the number of points in the temporal dimension as
+$
+N = 2^{\lfloor\log_2(\period{})\rfloor}\,.
+$
+With the periods and discretization defined, what remains is to
+initialize the {\spt} {\Fcs}.
+As previously mentioned, we do not use
+approximate recurrences nor time integration
+to generate initial guesses.
+Instead, initial guesses can be generated by initializing arbitrarily
+sized domains with random noise.
+More specifically, random values are drawn from the standard normal distribution
+and assigned as the values of the corresponding Fourier modes.
+These modes may then rescaled in a manner that befits a
+doubly periodic solution of the {\KSe},
+manipulating the Fourier spectrum to match the relevant scales of the \KSe.
+In our experience, however, the initial guesses which are `worse' with respect
+to the cost function actually converge more often; or, equivalently by our standards,
+they seem to get trapped by local minima less often.
+It is therefore hard to provide a recommendation for a single or `best'
+manner with which to provide initial guesses. The
+numerical methods we employ do not seem to be interested in our desire
+to produce a physically motivated construction method
+drawn from our experience and intuition.
+
+
+With this, the initial guess is complete; these guesses are then passed
+to the numerical optimization methods used to find {\po}s, which we shall now describe.
+%%%
+%under construction
+%%%
+We are now able to produce initial conditions and use them
+to find converged \twots. Now that we will
+describe some of the numerical details of our implementation
+to better illustrate the typical manner with which we find solutions.
+In order to adequately sample
+the space of solutions of the \KSe, the
+initial conditions were formed
+on various \spt\ domain sizes and symmetry types. Specifically
+the vast majority of initial conditions generated had parameters
+that fit within the ranges $L \in [22,66]$,$T \in [20,180]$.
+The computational demands increase as the \spt\ domain size increases
+and so if we do not have a good reason to search for large solutions we
+probably shouldn't. Our hypothesis is that larger solutions
+are comprised of shadowing events of small \spt\ \twots.
+As such, we hope that by sampling the space of solutions
+up to a manageable size we can capture the fundamental (small)
+\spt\ patterns need to describe any \twot.
+Once the \spt\ domain size has been chosen the next step
+is to decide on the size of the discretization. Typically we choose
+integers which are powers of two for the spatial and temporal
+discretization sizes because fast Fourier transforms
+exploit this. For our
+numerical experiments we have found
+$N=\text{max}[2^{\text{int}(\log \lfloor T \rfloor+1)},64]$,
+$M=\text{max}[2^{\text{int}(\log \lfloor L \rfloor)},32]$ to
+work well for these \spt\ domain sizes.
+The numerical methods we employ and these parameter values
+have a sufficient rate of convergence to be useful. We measure
+this efficiency by merely running trials at a distribution
+of parameter values as demonstrated in
+%reffig{fig:convergencerate} when produced
+In our experience, the most important detail seems to be
+the size of the \spt\ discretization; there seems to be
+a computational sweet spot of discretization sizes where all
+important scales are resolved but there are not an excess of
+\Fcs.
+The general symptoms
+of over-resolving and under-resolving are as follows.
+For over-resolving the main effect is
+a substantial drop off in convergence rate. Consider
+the following: in terms of \spt\ \Fcs, over resolving
+a solution manifests as including \spt\ \Fcs\ whose
+amplitude is near zero. This makes our numerical problem
+more ill conditioned and therefore makes it harder to
+solve using direct methods; qualitatively this
+deterioration is a result of linearly dependent columns
+in the Newton system.
+For under-resolving there are two typical behaviors; one
+is that solutions will converge to \eqva\ and \reqva more often.
+%Are qualitative descriptions bad?
+Another
+result of low resolution is that converged solutions are
+produced which look different from the typical
+\KSe\ solutions. What we mean by this is that the solutions
+will look ``bumpy'' due to the absence of higher frequency modes.
+
+%N,M efficiency at different T,L ->
+%T,L efficiency with most efficient N,M
+
+
+%\begin{figure}
+%\begin{minipage}[height=.05\textheight]{.5\textwidth}
+%\centering
+%\small{\texttt{(a)}} \\
+%\includegraphics[width=.8\textwidth,height=.2\textheight]{MNG_underresolvedtwot}
+%\end{minipage}
+%\begin{minipage}[height=.2\textheight]{.5\textwidth}
+%\centering
+%\small{\texttt{(b)}} \\
+%\includegraphics[width=.8\textwidth,height=.3\textheight]{MNG_resolvedtwot}
+%\end{minipage}
+%\begin{minipage}[height=.2\textheight]{.5\textwidth}
+%\caption{ \label{fig:underresolve}
+%(a) A \twot\ of the \KSe\ defined on the \spt\ domain $L=$,$T=$
+%which has been under-resolved numerically. (b) The result of reconverging
+%(a) with a larger \spt\ discretization size, $L=$,$T=$. The discrepancy
+%between the \spt\ domain sizes of (a) and (b) is a result of the
+%parameters $L,T$ being solved for in the optimization process.}
+%\end{figure}
+
+Examples of the types of initial conditions and the resulting converged \twots\
+are displayed in \PCedit{\reffig{fig:KStrawl}}. No special concessions
+are made between the varying initial conditions other than those associated
+with continuous and discrete symmetries.
+%Include the convergence rate information for various initial condition methods?
+%only really use one.
+
+
+%\subsubsection{library}
+As previously mentioned, we must first find a collection of \twots\ which we believe
+adequately samples the space of \twots, up to some maximum size. We automated the search over a range
+of periods and domain sizes. Periods were chosen from the range
+$\period{}\in [20, 180]$. Meanwhile, the spatial range was $\speriod{} \in [22, 88]$. The discretization size
+depended on the \spt\ domain size; more modes are needed to resolve larger solutions. The number
+of lattice points in each dimension were typically chosen to be powers of two in order because of their interaction with discrete Fourier transforms. A strict rule for lattice size
+was never developed so we offer is the approximate guidelines
+\beq
+M = 2^{\text{int}(\log_2(\speriod{})+1)}
+\eeq
+for space and
+\beq
+N = 2^{\text{int}(\log_2(\period{}))}\,.
+\eeq
+for time.
+The tolerance of the cost function for the gradient descent was typically set at $10^{-4}$
+and the step limit was set as a function of the size of the lattice. For the least-squares
+with backtracking the tolerance for termination was originally $10^{-14}$ and the step limit was $500$. The large step limit was because of
+the allowance of back-tracking, which reduces the step length.
+The final tolerance can likely be relaxed as there is minimal change in solutions over many orders
+of magnitude of the cost function; an indication that a different norm should be used.
+%\subsubsection{clip}
+
+\MNGedit{
+In order to find {\po}s, that is, in order to solve \refeq{e-Fks}, we
+need initial guesses. We only search for the most frequently appearing {\fpo}s,
+and so we limit the size of the initial guesses by only selecting periods existing
+in some finite range of values. The discretization depends on
+the value of the period, as the number of modes required to resolve all relevant scales increases
+as the dimensions grow larger. Once the periods and discretization are defined,
+what remains is to initialize the {\spt} {\Fcs}. To do so, we draw random
+values from a normal distribution, and then rescale these values to roughly
+approximate the physical scales of the \KSe.}
+
+
+As a reminder, our collection of {\po}s need not range ove all sizes;
+we only search for the most frequently appearing {\fpo}s,
+which we believe manifest as {\po}s with small periods. Therefore,
+the search for {\po}s was limited to what we consider as intermediate domain sizes.
+Periods were chosen from the ranges
+$\period{}\in [20, 180]$ and $\speriod{} \in [22, 88]$. The discretization depends on
+the value of the period but were typically chosen to be powers of two; in order
+to leverage fast Fourier transforms. %reference
+Typically, we used a rule of thumb which set the number of points in the
+spatial dimension as $M = 2^{\lfloor\log_2(\speriod{})\rfloor + 1}$
+and the number of points in the temporal dimension as
+$
+N = 2^{\lfloor\log_2(\period{})\rfloor}\,.
+$
+With the periods and discretization defined, what remains is to
+initialize the {\spt} {\Fcs}.
+As previously mentioned, we do not use
+approximate recurrences nor time integration
+to generate initial guesses.
+Instead, initial guesses can be generated by initializing arbitrarily
+sized domains with random noise.
+More specifically, random values are drawn from the standard normal distribution
+and assigned as the values of the corresponding Fourier modes.
+These modes may then rescaled in a manner that befits a
+doubly periodic solution of the {\KSe},
+manipulating the Fourier spectrum to match the relevant scales of the \KSe.
+In our experience, however, the initial guesses which are `worse' with respect
+to the cost function actually converge more often; or, equivalently by our standards,
+they seem to get trapped by local minima less often.
+It is therefore hard to provide a recommendation for a single or `best'
+manner with which to provide initial guesses. The
+numerical methods we employ do not seem to be interested in our desire
+to produce a physically motivated construction method
+drawn from our experience and intuition.
+
+
+\MNGedit{
+The search for {\po}s creates initial guesses as in \refsect{sect:guesses}
+and then passes these initial guesses to the numerical optimization methods.
+Specifically, we almost always apply the descent method first \refsect{sect:descent},
+and the least squares Newton second \refsect{sect:leastsquares}. These numerical methods
+continue until the cost function \refeq{e-cost} reaches some termination criteria.
+This search continues until we deemed our collection of {\po}s sufficient; that is,
+until we believe that we had captured the most frequently appearing {\spt} patterns.
+}
+
+
+%\subsubsection{library}
+As previously mentioned, we must first find a collection of \twots\ which we believe
+adequately samples the space of \twots, up to some maximum size. We automated the search over a range
+of periods and domain sizes. Periods were chosen from the range
+$\period{}\in [20, 180]$. Meanwhile, the spatial range was $\speriod{} \in [22, 88]$. The discretization size
+depended on the \spt\ domain size; more modes are needed to resolve larger solutions. The number
+of lattice points in each dimension were typically chosen to be powers of two in order because of their interaction with discrete Fourier transforms. A strict rule for lattice size
+was never developed so we offer is the approximate guidelines
+\beq
+M = 2^{\text{int}(\log_2(\speriod{})+1)}
+\eeq
+for space and
+\beq
+N = 2^{\text{int}(\log_2(\period{}))}\,.
+\eeq
+for time.
+The tolerance of the cost function for the gradient descent was typically set at $10^{-4}$
+and the step limit was set as a function of the size of the lattice. For the least-squares
+with backtracking the tolerance for termination was originally $10^{-14}$ and the step limit was $500$. The large step limit was because of
+the allowance of back-tracking, which reduces the step length.
+The final tolerance can likely be relaxed as there is minimal change in solutions over many orders
+of magnitude of the cost function; an indication that a different norm should be used.

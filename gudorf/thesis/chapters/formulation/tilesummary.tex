@@ -1,0 +1,113 @@
+% siminos/spatiotemp/chapter/tilesummary.tex
+% $Author: predrag $ $Date: 2020-10-24 01:45:26 -0400 (Sat, 24 Oct 2020) $
+
+% called by
+%           siminos/spatiotemp/chapter/spatiotemp.tex
+%           siminos/tiles/GuBuCv17.tex
+
+%\section{Summary}
+%\label{sect:summary}
+% Matt                                           28 February 2020
+We have detailed a {\spt} formulation of turbulence
+which treats all continuous dimensions with translational
+invariance equally and
+explains solutions as collections of {\fpo}s.
+\Preliminary{\subsection{Many benefits}}
+\Preliminary{\subsection{Many new applications}}
+The new techniques we developed allow us
+to extract small {\po}s from larger {\po}s (clipping) and build larger {\po}s
+by combining smaller {\po}s (gluing).
+\Preliminary{\subsection{Numerical robustness}}
+\Preliminary{\subsection{Stress again how hard it was}}
+While we hope to eventually apply these ideas to equations with more continuous
+dimensions there are still many tough questions yet to be answered.
+\Preliminary{\section{Future directions}}
+These methods provides a numerical foundation
+with which to investigate a 2{\dmn}{\spt} symbolic dynamics.
+Specifically, by gluing members of the three continuous families of {\fpo}s
+we can begin to probe the grammar of the proposed {\symbolic} by looking
+for admissible orbits.
+% \Preliminary{\subsection{Better existent numerical methods}} pruned as I do not actually discuss other methods
+\Preliminary{\subsection{Rubber tile families}}
+The most important question is how to incorporate
+continuous families into the proposed  2\dmn\ \spt\ {\symbolic}.
+The existence of continuous families makes the determination of the {\symbolic} grammar
+particularly difficult. One reason is because our method for
+determining the grammar is ultimately an empirical process.
+The admissibility of every {\po} is
+dependent upon the convergence of the optimization problem, which in turn may depend on
+which {\fpo} family members ares used in the construction of the initial guess.
+Therefore, we can be mislead by initial guesses which do not converge to the corresponding
+{\po} it shadows. In addition to being sensitive to initial guesses, the
+failure to converge can also be the fault of insufficient numerical methods.
+The most obvious course of action is to improve the
+optimization and gluing methods, with respect to their frequency of convergence.
+The former of these two improvements is fairly
+straightforward; find and implement better numerical methods. This seems
+to be the low hanging fruit as we have employed some of the simplest available
+algorithms. Improving the gluing method is less straightforward; but there are
+also many potential improvements.
+
+\Preliminary{\subsection{Gluing improvements}}
+\Preliminary{\subsection{1. Add local Galilean velocity to gluing}}
+The first set of gluing improvements we discuss center around the reduction of
+the number of false negatives (not converging to a {\po}). We consider
+the inclusion of local Galilean velocity towards this end. Historically,
+when performing simulations on a single spatially periodic domain,
+Galilean invariance has been invoked to constrain the mean value of
+the velocity field to zero. This does not mean, however, that the \emph{local}
+Galilean velocity be zero. This detail could be included in each gluing such that the
+local Galilean velocity of each {\fpo} would be included as a free parameter. By
+doing so we can theoretically construct better guesses by increasing the
+agreement between {\fpo}s at their boundaries.
+% continuous family inclusions
+\Preliminary{\subsection{2. Leveraging continuous families}}
+The second gluing improvement we offer is the proper usage of the {\fpo} continuous families.
+In other words, instead of using three static representatives of the families
+we would reference the entire family during the gluing. This could be employed to
+minimize differences at the
+boundaries as well as in the periods.
+In a similar vein, we need to incorporate symmetries into the construction process.
+This extends the freedom of choice from picking a member of a family to
+picking a member of each families' group orbit. For instance, during the gluing
+process one is free to choose whether to use a {\fpo} or its reflection.
+In the process of probing the {\symbolic} grammar, numerical convergence is not
+the only factor which is required for success. The {\po} found via optimization
+must also correspond to the original {\brick} it was targeting. If this is not
+upheld, then the result is deemed a false positive; numerical but not symbolic
+convergence.
+
+\Preliminary{\subsection{No {\symbolic} as yet}}
+Our only method of classifying false positives is visual inspection;
+obviously an inefficient method that needs to be improved.
+For example, assume that a {\brick}
+contains $N$ symbols representative of the {\defect} family. If the {\po}
+which the initial guess converges to does not include the signatures of $N$
+defects then we claim that it cannot be a manifestation of the original {\brick}.
+We have tried a number of methods which
+attempt to identify features of {\fpo}s via image detection
+or their topological signatures via persistent homology with
+no real success. A possible brute force method would be to attempt to clip
+and compare subdomains with {\fpo}s. The problem with this
+is the incredible number of subdomains which could be clipped; a crude
+approximation is on the order of $\mathcal{(NM)^2}$. Choose a corner
+of the subdomain ($N$ choices in time, $M$ in space) then identify the
+dimensions of the rectangular subdomain ($N-1$ choices in time, $M-1$ in space).
+Therefore this brute force method does not seem to be a realistic option.
+Each of these improvements introduces a layer of complexity which
+quickly compound with one another making gluing a very complex process.
+
+The guiding principle for all of these improvements
+is that they minimize the cost function residual \refeq{e-cost} by
+mitigating the error at the gluing boundaries and the error due to difference
+in periods. We point out that simply reducing the cost function with no consideration
+towards the method is not useful. For instance,
+setting $\Fu=\mathbf{0}$ reduces the residual to zero but it quite clearly not of any use.
+Better metrics to gauge the merit of these additional techniques would perhaps be
+the frequency of convergence to the correct {\po} symbolically (true positive rate).
+
+\Preliminary{\subsection{No \po\ theory}}
+\Preliminary{\subsection{Physical predictions?}}
+\Preliminary{\subsection{Stability}}
+\Preliminary{\subsection{Extend to \NS}}
+

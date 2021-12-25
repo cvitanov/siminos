@@ -1,0 +1,1223 @@
+% siminos/presentations/DS19/DS19.tex       latexpdf DS19; biber DS19
+% $Author: predrag $ $Date: 2019-05-23 19:22:05 -0400 (Thu, 23 May 2019) $
+
+% enter EDITS also in ../presentations/spatiotemp/spatiotemp.tex
+
+
+%  started with .../Harvard19/Harvard19.tex                 2019-03-31
+%  started with siminos/presentations/GTMAP18/GTMAP18.tex   2018-04-13
+%  started with siminos/presentations/GTmath18/GTmath18.tex 2018-02-24
+%  started with siminos/presentations/KITP17/UCSB17.tex     2017-01-26
+%  started with siminos/presentations/Israel16/Israel16.tex 2016-08-17
+%  started with siminos/presentations/GTmap16/GTmap16.tex   2016-08-17
+%  started with talks/predrag/NBI16/NBI16.tex               2016-04-25
+%  started with talks/predrag/RoySoc16/RoySoc16.tex         2016-04-25
+
+\input ../../inputs/layoutBeamer
+\usepackage[font=scriptsize, labelfont=bf]{caption}
+\usepackage[
+    backend=biber,  %bibtex,
+    sorting=nyt,
+    %refsection=chapter,
+    %citereset=chapter,
+    style=numeric, %alphabetic, % %style=authoryear,
+    natbib=true,
+    style=phys, % aps
+    biblabel= brackets, % superscript, %
+    articletitle=false, % true,  % false, % aps
+    %chaptertitle=true,  % aip;  % false, % aps
+    pageranges = true , % aip: the full range
+             % = false, % aps: only the first page being printed
+    sortlocale=en_US,
+    firstinits=true,
+    url=false, %true,  %
+    doi=false, %true,
+    eprint=false
+]{biblatex}
+\addbibresource{../../bibtex/siminos.bib}
+\setbeamerfont{footnote}{size=\tiny}
+\input{../../inputs/def} % no edits, always from dasbuch/book/inputs
+\input{../../inputs/defsBeamer}
+\renewcommand{\Ssym}[1]{{\ensuremath{m_{#1}}}}    % Boris
+% \newcommand{\Ssym}[1]{{\ensuremath{s_{#1}}}}  % ChaosBook
+
+% temporary fix, will not be needed in later MixTeX version         2018-11-02
+% https://tex.stackexchange.com/questions/426088/texlive-pretest-2018-beamer-and-subfig-collide
+\makeatletter
+\let\@@magyar@captionfix\relax
+\makeatother
+
+\begin{document}
+
+
+\title{
+{a spatiotemporal theory of}
+{\huge turbulence}
+    \\
+{in terms of exact coherent structures}
+}
+\author{P. Cvitanovi\'c}
+\author[Cvitanovi\'c]
+{
+  \textcolor{green!50!black}{
+  {Predrag~Cvitanovi\'c
+  and
+  Matt Gudorf
+  }	%\inst{1}
+  }
+}
+\institute
+{
+%  \inst{1}%
+\HREF{meetings.siam.org/sess/dsp_programsess.cfm?SESSIONCODE=66488}
+{SIAM - DS19 Dynamical Systems}
+ }
+\date{May 21, 2019}
+
+\begin{frame}
+  \titlepage
+\end{frame}
+
+
+\section[what this work is about]
+ {what this work is about}
+
+\begin{frame}{overview}
+\begin{enumerate}
+              \item {\Large
+what this talk is about
+                  }\textcolor{gray}{\small
+              \item
+turbulence in large domains
+              \item
+space is time
+              \item
+bye bye, dynamics
+                    }
+            \end{enumerate}
+\end{frame}
+
+\begin{frame}{how do clouds solve PDEs?}
+
+\vfill
+
+do clouds \textcolor{red}{integrate} Navier-Stokes equations?
+
+\begin{center}
+\centerline{\textcolor{red}{\Huge ?}}
+%\end{center}
+%for weather prediction, we store sets of weather sequences
+%\bigskip\bigskip
+
+%\begin{center}
+\begin{minipage}[t]{\textwidth}
+	\begin{center}
+%\vspace{2ex}
+\centerline{
+\raisebox{-4.0ex}[5.5ex][4.5ex]
+		 {\includegraphics[height=12ex]{Hopf-a}}
+~~~ $\Longrightarrow$ ~~ {other swirls} ~~ $\Longrightarrow$ ~~~
+	\raisebox{-4.0ex}[5.5ex][4.5ex]
+		 {\includegraphics[height=12ex]{Hopf-b}}
+          }
+	\end{center}
+\end{minipage}
+\end{center}
+
+are clouds Navier-Stokes supercomputers in the sky?
+
+\end{frame}
+
+\begin{frame}{part 1}
+\begin{enumerate}
+              \item {\Large
+turbulence in large domains
+                  }\textcolor{gray}{\small
+              \item
+space is time
+              \item
+spacetime
+              \item
+bye bye, dynamics
+                    }
+            \end{enumerate}
+\end{frame}
+
+
+\begin{frame}{goal : enumerate the building blocks of turbulence}
+\begin{block}{Navier-Stokes equations} % (1822)}
+\[
+\dfrac{\partial \bv}{\partial t} + (\bv \cdot \nabla) \bv
+	\,=\,
+\frac{1}{R} \nabla ^2 \bv
+-\nabla p
++ \mathbf{f}
+    \,,\qquad
+\nabla \cdot \bv = 0,
+\]
+\end{block}
+
+\hfill{\small
+velocity field  $\bv \in \mathbb{R}^3$
+;
+pressure field $p$
+;
+driving force $\mathbf{f}$
+        }
+
+\medskip
+
+\begin{block}{describe turbulence}
+starting from the equations (no statistical assumptions)
+\end{block}
+
+\bigskip
+
+% large Reynolds number $R$:
+\hfill {\Large\textcolor{red}{}}
+
+\end{frame}
+
+\begin{frame}{challenge : experiments are amazing}
+\begin{center}
+\includegraphics[width=0.7\textwidth]{mullin_puff2200} %pipe}
+\end{center}
+T. Mullin lab
+\begin{center}
+\bigskip
+\includegraphics[width=0.7\textwidth]{deLHof09fig6} %pipe}
+\end{center}
+B. Hof lab
+\end{frame}
+
+%\begin{frame}{pipe theory and numerics}
+%	\begin{columns}[t]
+%	\column{.55\textwidth}
+%amazing experiments! \\ amazing numerics! \\ beautiful visualizations !
+%
+%\bigskip\bigskip
+%
+%%relative periodic orbits,
+%``Exact Coherent Structures'' :
+%\\ numerical Navier-Stokes
+%
+%\medskip
+%isosurfaces and cross sections \\ of the streamwise velocity
+%
+%\medskip
+%
+%\textcolor{red}{red} (\textcolor{blue}{blue}) streaks
+%\\ are \textcolor{red}{faster} (\textcolor{blue}{slower}) \\ than the base flow
+%
+%\bigskip
+%
+%{{\tiny Ritter et al., Phys. Rev. Fluids (2018)}}
+%
+%	\column{.45\textwidth}
+%\begin{center}
+%  \includegraphics[width=1.0\textwidth,clip=true]
+%                    {RZSEA18Fig3}
+%\end{center}
+%	\end{columns}
+%\end{frame}
+
+\section[dynamics in $\infty$ dimensions]
+{dynamics in $\infty$ dimensions}
+
+\begin{frame}{can simulate {\Huge large} computational domains}
+\begin{center}
+\includegraphics[width=1.0\textwidth]{AviHof13fig4}
+\end{center}
+pipe flow close to onset of turbulence
+\footnote{M.~Avila and B.~Hof, {Phys. Rev. \bf E 87} (2013)}
+
+\bigskip
+
+but we have \textcolor{red}{\Huge hit a wall} :
+
+\hfill exact coherent structures are too unstable to compute
+\end{frame}
+
+\begin{frame}{goal : we can do 3D turbulence, but for this talk}
+\begin{block}{Navier-Stokes equations} % (1822)}
+\[
+\dfrac{\partial \bv}{\partial t} + (\bv \cdot \nabla) \bv
+	\,=\,
+\frac{1}{R} \nabla ^2 \bv + (\cdots)
+% -\nabla p + \mathbf{f}
+%    \,,\qquad
+%\nabla \cdot \bv = 0,
+\]
+\end{block}
+
+\hfill{\small velocity field  $\bv(\bx;t) \in \mathbb{R}^3$}
+
+\medskip
+
+\begin{block}{not helpful for developing intuition}
+we cannot visualize 3D velocity field at every 3D spatial point
+\end{block}
+
+\bigskip
+
+% large Reynolds number $R$:
+\hfill {\Large\textcolor{red}{look instead at 1D `flame fronts'}}
+\end{frame}
+
+\begin{frame}{(1+1) spacetime dimensional ``Navier-Stokes''}
+% conceptually not ready yet to explore \\ %the inertial manifold of
+% $(1+3)$\dmn\ turbulence - start instead with
+
+% \bigskip
+
+\begin{block}{\KS\ $(1+1)$\dmn\ PDE}
+\[
+  u_t + u \triangledown u \,=\,
+    {\color{red}-}\triangledown^2 u {\color{red}-\triangledown^4 u}
+    \,,\qquad   x \in \mathbb{R}
+    \,,
+\]
+\end{block}
+
+\bigskip
+
+describes spatially extended systems such as
+\begin{itemize}
+ \item flame fronts in combustion
+ \item reaction-diffusion systems
+ \item \ldots
+\end{itemize}
+\end{frame}
+
+\begin{frame}{an example : \KS\ on a large domain}
+\begin{center}
+  \includegraphics[width=.6\textwidth]{MNG_uu500b500}
+%  \includegraphics[width=0.6\textwidth] %,height=0.5\textheight,clip=true]
+%  {ks_largeL_cbar_200} %{ksevol-fig} %{ks_largeL_cbar}
+\end{center}
+
+{\footnotesize
+[horizontal] space $\ssp \in [0,L]$
+\qquad
+{[up]} time evolution
+}
+
+\begin{itemize}
+\item turbulent behavior
+\item simpler physical, mathematical and computational setting than Navier-Stokes
+\end{itemize}
+\end{frame}
+
+\begin{frame}{compact space, infinite time cylinder}
+\begin{center}
+\includegraphics[width=0.9\textwidth]{cylinderTime}
+\end{center}
+% \hfill \color{red}{(impossible without xxx)}
+so far : Navier-Stokes on compact spatial domains, all times
+\end{frame}
+
+\begin{frame}{compact space, infinite time} % \KS}
+\begin{block}{\KS\ equation}
+\[
+  u_t \,=\,
+    -({\color{red}+}\triangledown^2 +{\color{red}\triangledown^4}) u
+    - u \triangledown u
+    \,,\qquad   x \in [-L/2,L/2]
+    \,,
+\]
+\end{block}
+
+\bigskip
+
+\begin{block}{in terms of discrete spatial Fourier modes}
+$N$ ordinary differential equations (ODEs) in time
+\[
+\dot{\Fu}_k(\zeit) = ( q_k^2 - q_k^4 )\, \Fu_k(\zeit)
+- i \frac{q_k}{2} \!\sum_{k'=0}^{N-1} \!\!\Fu_{k'}(\zeit) \Fu_{k-k'}(\zeit)
+\,.
+%\label{e-Fks}
+\]
+\end{block}
+\end{frame}
+
+
+\subsection{types of solutions}
+\begin{frame}{part 2}
+\begin{enumerate}
+              \item
+    \textcolor{gray}{\small
+turbulence in large domains
+        }
+              \item
+    {\Large
+space is time
+    }\textcolor{gray}{\small
+              \item
+spacetime
+              \item
+bye bye, dynamics
+                    }
+            \end{enumerate}
+\end{frame}
+
+\begin{frame}{yes, but}
+\begin{center}
+{\huge is space time?}
+\end{center}
+\end{frame}
+
+\begin{frame}{can do : compact time, infinite space cylinder}
+\begin{center}
+\includegraphics[width=0.9\textwidth]{cylinderSpace}
+\end{center}
+% \hfill \color{red}{(impossible without xxx)}
+\end{frame}
+
+\begin{frame}{compact time, infinite space}
+\begin{block}{ \KS\ $u(\conf, \zeit)$ as four fields, \\
+1st order in spatial derivatives}
+\bea
+    u_\zeit &=&  - u u_\conf
+    -u_{\conf \conf}-u_{\conf \conf \conf \conf}\,,
+    % \label{e-ks}
+\continue
+    u_0 &\equiv& u \, , \quad
+    u_1 \equiv u_{\conf} \, , \quad
+    u_2 \equiv u_{\conf \conf} \, , \quad
+    u_3 \equiv u_{\conf \conf \conf}
+                        \nonumber
+\eea
+\end{block}
+
+\begin{block}{evolve four 1st order PDEs $u_j(\zeit, \conf)$ in $\conf$,}
+periodic boundary condition in time
+              $u(\conf, \zeit) = u(\conf, \zeit + \period{})$
+\bea
+    u_{0,\conf} &=& u_1 \,,\quad
+    u_{1,\conf}  =  u_2 \,,\quad
+    u_{2,\conf}  =  u_3 \continue
+    u_{3,\conf} &=& - u_{0,\zeit} - u_2 - u_0 u_1
+                        \nonumber
+\eea
+\end{block}
+
+\bigskip
+
+initial
+$u_0(\conf_0, \zeit)$,
+$u_1( \conf_0, \zeit)$,
+$u_2( \conf_0, \zeit)$,
+$u_3( \conf_0, \zeit)$
+    \\
+specified for  $\zeit \in [0, \period{})$, at a fixed space point $\conf_0$
+\end{frame}
+
+\begin{frame}{a solution integrated in either time or space}
+\begin{center}
+  \begin{minipage}[height=.40\textheight]{.35\textwidth}
+    \centering %\small{\texttt{(left)}}
+    \includegraphics[width=\textwidth,height=.60\textheight]{MNGcomp32xint22}
+  \end{minipage}
+~~~~~~~~~
+  \begin{minipage}[height=.40\textheight]{.35\textwidth}
+    \centering %\small{\texttt{(right)}}
+    \includegraphics[width=\textwidth,height=.60\textheight]{MNGcomp64xint22}
+  \end{minipage}
+\end{center}
+    {\color{red}old} : time evolution~~~~~~~~~~~~~~~~~~~
+    {\color{red}new} : space evolution
+    \\
+    $x=[0,L]$ %22]$,
+       initial condition ~~~~~~~~~ time periodic line $t = [0,T]$
+  %2\,T_{\PPO{10.2}})$
+  %\label{fig:MNGcompxint2}
+
+\vfill\hfill        Gudorf 2016
+\end{frame}
+
+\begin{frame}{but integrations are uncontrollably unstable}
+
+\begin{center}
+{\huge neither} time {\huge nor} space integration {\huge works} \\
+for large domains
+\end{center}
+
+\bigskip \bigskip
+
+we have \textcolor{red}{\Huge hit a wall} :
+
+\hfill exact coherent structures are too unstable to compute
+
+\vfill
+\color{red}{rethink the formulation!}
+\end{frame}
+
+\begin{frame}{part 3}
+\begin{enumerate}
+              \item
+    \textcolor{gray}{\small
+turbulence in large domains
+              \item
+space is time
+    }
+              \item {\Large
+spacetime
+    }\textcolor{gray}{\small
+              \item
+bye bye, dynamics
+                    }
+            \end{enumerate}
+\end{frame}
+
+\begin{frame}
+    \frametitle{\KS\ on a large spacetime domain}
+\begin{block}{the same small tile recurs often in a turbulent pattern}
+\includegraphics[width=.48\textwidth]{MNG_uu500b500co}
+\includegraphics[width=.48\textwidth]{cutouts}
+\end{block}
+goal : define, enumerate nearly recurrent tiles
+\end{frame}
+
+\begin{frame}{use spatiotemporally compact solutions as spacetime `tiles'}
+\begin{center}
+\includegraphics[width=0.9\textwidth]{torusSpTime}
+\end{center}
+this `exact coherent structure'\\
+\textcolor{red}{shadows} a small patch of spacetime solution $u( \conf, \zeit)$
+% \hfill \color{red}{(impossible without xxx)}
+\end{frame}
+
+\begin{frame}{every compact solution is a fixed point on a discrete lattice}
+discretize $u_{nm} = u(\conf_n,\zeit_m)$ over
+$N M$ points of spatiotemporal periodic lattice $\conf_n = n L/N$,
+ $\zeit_m = m \period{}/M$, Fourier transform :
+%\beq
+%    \Fu_{k,m}^{(i)} = \frac{1}{M} \sum_{\ell = 0}^{M-1}
+%    \Fu^{(i)}_{k,\ell} e^{i \omega_\ell \zeit_m}
+%    \, , \quad
+%    \Fu^{(i)}_{k,\ell} = \sum_{m=0}^{M-1}\Fu_{k,m}^{(i)}  e^{-i \omega_\ell \zeit_m}
+%    \, , \quad
+%    \mbox{where }
+%    \omega_\ell = 2 \pi \ell / \period{} \, .
+%\eeq
+%
+\[
+\Fu_{k\ell} \,=\,
+  \frac{1}{NM} \sum^{N-1}_{n=0} \sum^{M-1}_{m=0}
+  u_{nm} \, e^{-i(q_k\conf_n + \omega_\ell \zeit_m)}
+    \,,\quad
+q_k = \frac{2 \pi k}{L}
+    \,,\;
+\omega_\ell = \frac{2 \pi \ell}{\period{}}
+% \label{spattempFT}
+\]
+\KS\ is no more a PDE, \\
+but an algebraic $[N\!\times\!M]$\dmn\ fixed point problem \\
+of determining a solution to
+\[
+\left[- i \omega_\ell - ( q_k^2 - q_k^4 ) \right]\Fu_{k\ell}
++ i \frac{q_k}{2} \!\sum_{k'=0}^{N-1} \sum^{M-1}_{m'=0}\!\!
+\Fu_{k'm'} \Fu_{k-k',m-m'}
+    =
+0
+%\,.
+%\label{e-FksSpattemp}
+\]
+\end{frame}
+
+\begin{frame}{every calculation is a spatiotemporal lattice calculation}
+field is discretized as
+$\Fu_{k\ell}$ values  \\ over
+$N M$ points of a periodic lattice
+
+%\medskip
+
+\begin{center}
+\includegraphics[width=0.9\textwidth]{torusSpTime}
+\end{center}
+% \hfill \color{red}{(impossible without xxx)}
+\end{frame}
+
+
+\begin{frame}{there is no more time evolution}
+solution to \KS\ is now given as
+\begin{block}{condition that}
+at each lattice point $k\ell$ \\
+the tangent field at $\Fu_{k\ell}$
+\end{block}
+satisfies the equations of motion
+\[
+\left[- i \omega_\ell - ( q_k^2 - q_k^4 ) \right]\Fu_{k\ell}
++ i \frac{q_k}{2} \!\sum_{k'=0}^{N-1} \sum^{M-1}_{m'=0}\!\!
+\Fu_{k'm'} \Fu_{k-k',m-m'}
+    =
+0
+%\,.
+%\label{e-FksSpattemp}
+\]
+
+\bigskip
+
+this is a \textcolor{red}{local} tangent field constraint on a \textcolor{red}{global} solution
+
+\bigskip
+
+robust : no exponential instabilities as there are no finite time / space integrations
+
+\end{frame}
+
+\begin{frame}{part 4}
+\begin{enumerate}
+              \item
+    \textcolor{gray}{\small
+turbulence in large domains
+              \item
+space is time
+              \item
+spacetime    }
+              \item {\Large
+spacetime computations
+    }\textcolor{gray}{\small
+              \item
+bye bye, dynamics
+                    }
+            \end{enumerate}
+\end{frame}
+
+\begin{frame}{how do clouds solve PDEs?}
+clouds do not \textcolor{red}{\Huge NOT} {integrate} Navier-Stokes equations
+
+\bigskip\bigskip
+
+\begin{center}
+\begin{minipage}[t]{\textwidth}
+	\begin{center}
+\centerline{
+\raisebox{-4.0ex}[5.5ex][4.5ex]
+		 {\includegraphics[height=12ex]{Hopf-a}}
+~~~ $\Longrightarrow$ ~~ {other swirls} ~~ $\Longrightarrow$ ~~~
+	\raisebox{-4.0ex}[5.5ex][4.5ex]
+		 {\includegraphics[height=12ex]{Hopf-b}}
+          }
+	\end{center}
+\end{minipage}
+\end{center}
+
+do clouds satisfy Navier-Stokes equations?
+
+\bigskip
+
+{\Large yes!}
+
+\centerline{
+\textcolor{blue}{they satisfy them \textcolor{red}{\large locally}, everywhere and at all times}
+}
+\end{frame}
+
+\begin{frame}{the equations imposed as local constraints}
+\begin{block}{\KSe}
+\[
+F(u) = u_t + u_{\conf \conf} + u_{\conf \conf \conf \conf} + u u_{\conf} = 0
+\]
+\end{block}
+\bigskip\bigskip
+for example, minimize over the entire 2-torus
+\begin{block}{cost function}
+\[
+G \equiv \frac{1}{2} |F(u)|^2_{L \times T}
+%\ee{costfunctional}
+\]
+\end{block}
+\vfill\hfill\textcolor{red}{\Huge need your help !}
+\end{frame}
+
+\begin{frame}{Adjoint descent}
+cost function
+\[
+  G = \frac{1}{2} \mathbf{F}^{\top}\mathbf{F}
+  \,.
+\]
+introduce fictitious time ($\tau$) flow by differentiation of cost function.
+\[
+  \partial_{\tau}G = (J^{\top}\mathbf{F})^{\top}(\partial_{\tau}\mathbf{x})
+\]
+  ``adjoint descent'' method defined by chosing\footfullcite{Faraz15}
+\[
+  \partial_{\tau}\mathbf{x} = -(J^{\top}\mathbf{F})
+\]
+
+\end{frame}
+
+\begin{frame}{initial guess generation ?}
+ \textcolor{blue}{the time scale} : the shortest
+`turnover' scale (?)
+
+\bigskip
+
+\textcolor{blue}{the spatial scale} :
+$\bar{L}=2\pi\sqrt{2}$, the  most unstable spatial wavelength of the \KS
+
+\bigskip
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%\label{fig:MNG_spacetime_smoothed} from siminos/spatiotemp/blogMNG.tex
+\begin{minipage}[height=.32\textheight]{.30\textwidth}
+\includegraphics[width=\textwidth,height=.32\textheight]{MNG_T100L44_init}
+\end{minipage}
+
+\medskip
+initial : spatial $\bar{L}$-modulated random guess
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% \vfill\hfill        Gudorf 2018
+\end{frame}
+
+\begin{frame}{KS \twot\ found variationally}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%\label{fig:MNG_spacetime_smoothed} from siminos/spatiotemp/blogMNG.tex
+\begin{minipage}[height=.72\textheight]{.40\textwidth}
+\centering \small{\texttt{(left)}}
+\includegraphics[width=\textwidth,height=.63\textheight]{MNG_T100L44_init}
+\end{minipage}
+\begin{minipage}[height=.72\textheight]{.40\textwidth}
+\centering \small{\texttt{(right)}}
+\includegraphics[width=\textwidth,height=.63\textheight]{MNG_T100L44_final}
+\end{minipage}
+
+\vfill
+(left) initial : $\bar{L}=2\pi\sqrt{2}$ spatially modulated ``noisy'' guess
+
+(right) adjoint descent : converged \twot\
+% \\
+% spatial and time periods
+% $L=24.07$, $T=31.86$
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\vfill\hfill        Gudorf 2018
+\end{frame}
+
+\begin{frame}{initial guesses, embedded in ergodic sea?}
+\begin{block}{Historically, }
+guesses are extracted from close recurrences \\
+observed in long turbulent simulations
+\end{block}
+\bigskip\bigskip
+            \begin{enumerate}
+              \item
+inefficient, find only the shortest, least unstable orbits%
+\footfullcite{pchaot}$^,$\footfullcite{GHCW07}
+              \item
+cannot integrate that far in time
+            \end{enumerate}
+
+\vfill\hfill\textcolor{red}{\huge need spatiotemporal guesses}
+\end{frame}
+
+\begin{frame}{guesses extracted from large spacetime domains}
+\begin{minipage}[height=.45\textwidth]{.45\textwidth}
+\centering %\small{\texttt{(a)}}
+\includegraphics[width=\textwidth,height=.45\textheight]{MNGadjdescent500b500init}
+\end{minipage}
+\begin{minipage}[height=.45\textwidth]{.45\textwidth}
+\centering %\small{\texttt{(b)}}
+\includegraphics[width=\textwidth,height=.45\textheight]{MNGadjdescent500b500fin}
+\end{minipage}
+%\caption{ \label{fig:MNGlarge_adjointdescent}
+
+(left) random initial state on
+%\hfill
+$(L,T)=(500,500)$
+
+(right) adjoint descent $\to$ typical \KS\ state
+
+\vfill\hfill
+finite windows are starting guesses for \twots
+\end{frame}
+
+\begin{frame}{embarrassment of riches}
+\begin{center}
+{\huge what do do?}
+\end{center}
+
+\vfill
+
+{\Large Matt Gudorf}
+
+\medskip
+
+\hfill has 1\,000's of such \twots
+
+\vfill
+
+{\scriptsize see Matt's poster, Session PP2  \hfill Wednesday, May 22}
+\end{frame}
+
+
+\begin{frame}{part 5}
+\begin{enumerate}
+              \item
+    \textcolor{gray}{\small
+turbulence in large domains
+              \item
+space is time
+              \item
+spacetime
+    }
+              \item {\Large
+fundamental tiles
+    }\textcolor{gray}{\small
+              \item
+bye bye, dynamics
+                    }
+            \end{enumerate}
+\end{frame}
+
+
+\begin{frame}{building blocks of turbulence}
+
+how do we \textcolor{red}{recognize} a cloud?
+
+\bigskip
+\begin{center}
+\centerline{\textcolor{red}{\Huge WATCH}}
+%\end{center}
+%for weather prediction, we store sets of weather sequences
+%\bigskip\bigskip
+
+%\begin{center}
+\begin{minipage}[t]{\textwidth}
+	\begin{center}
+%\vspace{2ex}
+\centerline{
+\raisebox{-4.0ex}[5.5ex][4.5ex]
+		 {\includegraphics[height=12ex]{Hopf-a}}
+~~~ $\Longrightarrow$ ~~ {other swirls} ~~ $\Longrightarrow$ ~~~
+	\raisebox{-4.0ex}[5.5ex][4.5ex]
+		 {\includegraphics[height=12ex]{Hopf-b}}
+          }
+	\end{center}
+\end{minipage}
+\end{center}
+
+\bigskip
+
+{\Large by recurrent shapes!}
+
+\vfill
+
+\centerline{
+\textcolor{blue}{so, construct an \textcolor{red}{\Large alphabet} of possible shapes}
+}
+\end{frame}
+
+\begin{frame}{extracting a fundamental tile}
+\begin{minipage}[height=.60\textheight]{.24\textheight}
+\centering % \small{\texttt{(a)n}}
+\includegraphics[width=.3\textheight,height=.55\textheight]{MNG_gapfull}
+\end{minipage}
+    $\quad\Rightarrow\quad$
+\begin{minipage}[height=.60\textheight]{.24\textheight}
+\centering % \small{\texttt{(b)}}
+\includegraphics[width=.3\textheight,height=.25\textheight]{MNG_gapsub1}
+\end{minipage}
+    $\quad\Rightarrow\quad$
+\begin{minipage}[height=.60\textheight]{.18\textheight}
+\centering             % \small{\texttt{(c)}}
+\includegraphics[width=0.20\textheight,height=.21\textheight]{ksstFigs/MNG_gap}
+\end{minipage}
+%    \quad\Rightarrow\quad
+%\begin{minipage}[height=.60\textheight]{.12\textheight}
+%\centering % \small{\texttt{(d)}}
+%\includegraphics[width=0.17\textheight,height=.21\textheight]{MNG_gap_final}
+%\end{minipage}
+%\label{fig:MNG_catseyefigs}
+
+1) \twot\ %full\_L26.7\_T54.
+    \\
+2) \twot\ computed from initial guess cut out from 1)
+    \\
+3) ``gap" \twot, % po\_L17.3\_T15.3  %\reffig{fig:MNG_ppo_subdomains},
+     cut out from 2)
+%     \\
+%4) the ``gap"  \emph{prime}  \twot\ fundamental domain
+\end{frame}
+
+\begin{frame}%[allowframebreaks]
+  \frametitle{a (too) simple set of prime (rubber) tiles}
+  \begin{block} {an alphabet of \KS\ fundamental tiles}
+\begin{minipage}[height=.60\textheight]{.25\textheight}
+\centering             % \small{\texttt{(c)}}
+\includegraphics[width=0.26\textheight,height=.27\textheight]{ksstFigs/MNG_defect}
+\end{minipage} \qquad
+  % \includegraphics[width=.2\textwidth]{MNG_hook}
+  % \includegraphics[width=.2\textwidth]{MNG_half}
+\begin{minipage}[height=.60\textheight]{.25\textheight}
+\centering     %{\footnotesize\texttt{\quad\quad Gap}}
+\includegraphics[width=0.26\textheight,height=.27\textheight]{ksstFigs/MNG_gap}
+\end{minipage} \qquad
+\begin{minipage}[height=.60\textheight]{.25\textheight}
+\centering             % \small{\texttt{(c)}}
+\includegraphics[width=0.25\textheight,height=0.25\textheight]{ksstFigs/MNG_streak}
+\end{minipage}
+  \end{block}
+\vfill
+utilize also discrete symmetries : \\
+spatial reflection, spatiotemporal shift-reflect,
+$\cdots$
+\end{frame}
+
+\begin{frame}{spacetime tiled by a small tile}
+  \includegraphics[width=0.7\textwidth] %,height=0.5\textheight,clip=true]
+  {MNG_tiling_ppo_L55p83_T24}
+  \vfill
+tiling by % shift-reflect
+\twot\ \\ $(L,T)=(55.83,24)$
+\end{frame}
+
+\begin{frame}{any particular tiling looks nothing like \\ turbulent \KS!}
+  \includegraphics[width=0.7\textwidth] %,height=0.5\textheight,clip=true]
+  {MNG_large_ergodic}
+
+{\footnotesize
+[horizontal] space $\ssp \in [-L/2,L/2]$
+\qquad
+{[up]} time evolution
+}
+\end{frame}
+
+\begin{frame}{part 5}
+\begin{enumerate}
+              \item
+    \textcolor{gray}{\small
+turbulence in large domains
+              \item
+space is time
+              \item
+spacetime
+              \item
+fundamental tiles
+    }
+              \item {\Large
+gluing tiles
+    }\textcolor{gray}{\small
+              \item
+bye bye, dynamics
+                    }
+            \end{enumerate}
+\end{frame}
+
+
+\begin{frame}%[allowframebreaks]
+  \frametitle{a qualitative tiling guess}
+  \begin{block} {a guess tiling and the resulting solution}
+  \qquad
+\begin{minipage}[height=.80\textheight]{.25\textheight}
+\centering             % \small{\texttt{(c)}}
+  \qquad\qquad
+\includegraphics[width=0.25\textheight,height=.36\textheight]{MNG_ppo_frankenstein}
+\end{minipage} \quad\quad
+\begin{minipage}[height=.80\textheight]{.25\textheight}
+\centering      {\footnotesize\texttt{\quad\quad 2-torus}}
+\includegraphics[width=0.35\textheight,height=.45\textheight]{MNG_ppo_L30_T44}
+\end{minipage} \qquad\qquad
+  \end{block}
+\end{frame}
+
+\begin{frame}{turbulence.zip : each solution has a unique symbolic name}
+  \begin{block} {symbolic dynamics is 2\dmn!}
+  \begin{center}
+  \includegraphics[width=.25\textwidth,height=.4\textheight]{MNG_ppo_frankenstein}
+~~~\includegraphics[width=.25\textwidth,height=.4\textheight]{MNG_approxsymbdyn}
+~~~\includegraphics[width=.25\textwidth,height=.4\textheight]{MNG_approxsymbdyntrinary}
+%  \includegraphics[width=.3\textwidth,height=.3\textheight]{MNG_ppo_L30_T44}
+  \end{center}
+  \end{block}
+\begin{itemize}
+ \item each symbol indicates a corresponding spatiotemporal tile
+ \item these are ``rubber'' tiles
+\end{itemize}
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}{part 5}
+\begin{enumerate}
+              \item
+    \textcolor{gray}{\small
+turbulence in large domains
+              \item
+space is time
+    }
+              \item
+    {\Large
+bye bye, dynamics
+    }
+            \end{enumerate}
+\end{frame}
+
+\begin{frame}{in future there will be no future}
+\begin{center}
+{\huge goodbye}
+\end{center}
+
+\vfill
+
+to long time and/or space integrators
+
+\medskip
+
+\hfill they never worked and could never work
+\end{frame}
+
+\begin{frame}{life outside of time}
+\textcolor{red}{the trouble}:
+
+forward time-integration codes too unstable
+
+\bigskip
+\bigskip
+
+\textcolor{blue}{multishooting inspiration}:
+ replace a guess that a  \textcolor{blue}{point} is on the periodic
+orbit by a guess of the \textcolor{blue}{entire orbit}.
+
+\bigskip
+
+$\to$
+
+\bigskip
+
+spatio-temporally periodic solutions of classical field theories
+can be found by \textcolor{blue}{variational methods}
+\end{frame}
+
+\begin{frame}{the equations solved as global optimization problems}
+\begin{block}{impose the equations as local constraints}
+\[
+F(u) = u_t + u_{\conf \conf} + u_{\conf \conf \conf \conf} + u u_{\conf} = 0
+\]
+\end{block}
+\bigskip\bigskip
+minimize globally
+\begin{block}{perhaps using cost function}
+\[
+G \equiv \frac{1}{2} |F(u)|^2_{L \times T}
+%\ee{costfunctional}
+\]
+\end{block}
+\end{frame}
+
+\begin{frame}{can computers}
+
+\vfill
+
+{\Huge
+do this ?
+                  }
+
+\vfill
+
+\end{frame}
+
+\begin{frame}{machine learning will be needed}
+``reservoir computing'' example\footfullcite{PHGLO18}
+
+\bigskip
+
+ \begin{columns}
+ \column{0.35\textwidth}
+~~~~~~\includegraphics[width=1\textwidth]{PHGLO18fig2}
+ \column{0.65\textwidth}
+ \begin{itemize}
+ \item[(a)] data: \\ \KS\ simulation
+ \item[(b)] reservoir computing prediction
+ \item[(c)] two subtracted agree to \\
+            $\sim 5$ Lyapunov times
+ \end{itemize}
+ \end{columns}
+\vfill {\Large Q : \textcolor{red}{how would you learn this data?}}
+\end{frame}
+
+\begin{frame}{the answer is}
+
+\vfill
+
+{\Huge
+scalability
+                  }
+
+\vfill
+
+%\hfill in the spirit of this workshop
+\end{frame}
+
+\begin{frame}{compute locally, adjust globally}
+\begin{block}{Navier-Stokes codes}
+\begin{itemize}
+ \item
+T. Schneider : developing a matrix-free variational Navier-Stokes code,
+machine learning initial guesses
+ \item
+D. Lasagna and A. Sharma  : developing variational adjoint solvers to
+find periodic orbits with long periods
+ \item
+Q. Wang : parallelizing {\color{red}spatiotemporal}
+computation is FLOPs intensive, but more robust than
+integration forward in time
+\end{itemize}
+\end{block}
+
+\vfill\hfill
+it's rocket science%
+\footfullcite{WGBGQ13}$^,$%
+\footfullcite{Schneider19}$^,$%
+\footfullcite{LaShMe18}
+%\footnote{{\tiny Q. Wang \etal,}\HREF{https://doi.org/10.1063/1.4819390}
+%{\tiny\em Towards scalable parallel-in-time turbulent flow simulations},
+%{\tiny Physics of Fluids (2013)}}
+\end{frame}
+
+\begin{frame}{
+towards scalable parallel-in-time turbulent flow simulations
+}
+\begin{block}{future :}%
+processor speed $\to$ limit
+
+\medskip
+
+number of cores $\to 10^6 \to \cdots$
+
+\medskip
+\end{block}
+
+\emph{Q. Wang% et al (2013)
+    \,\footfullcite{WGBGQ13}%$^,$\footfullcite{Ihara66}
+    :} % Gomez, Blonigan, Gregory and Qian 2013 :}
+
+next-generation : spacetime parallel
+simulations, \\
+on discretized $4D$ spacetime
+computational domains, \\
+with each computing core handling a spacetime lattice cell
+
+\bigskip
+
+compared to time-evolution solvers:
+significantly higher level of concurrency, reduction the ratio of
+inter-core communication to floating point operations
+
+\bigskip
+
+$\qquad\qquad\Rightarrow$ a path towards exascale DNS of turbulent flows
+\end{frame}
+
+\begin{frame}{construct hierarchically larger and largerspatiotemporal patterns }
+  \begin{block} {2D symbolic encoding $\Rightarrow$ admissible solutions}
+  \begin{center}
+\includegraphics[width=.25\textwidth,height=.38\textheight]{MNG_approxsymbdyntrinary}
+~~~\includegraphics[width=.25\textwidth,height=.38\textheight]{MNG_ppo_frankenstein}
+~~~\includegraphics[width=0.35\textheight,height=.45\textheight]{MNG_ppo_L30_T44}
+  \end{center}
+  \end{block}
+\begin{itemize}
+ \item each symbol indicates a minimal spatiotemporal tile
+ \item glue them in all admissible ways
+\end{itemize}
+\end{frame}
+
+
+\begin{frame}{take home : clouds do not integrate PDEs}
+
+%and do they care what PST hour is it?
+%\\
+%and at what longitude are they?
+%\\
+do clouds integrate Navier-Stokes equations?
+
+\begin{center}
+\centerline{\textcolor{red}{\Huge NO!}}
+%\end{center}
+%for weather prediction, we store sets of weather sequences
+%\bigskip\bigskip
+
+%\begin{center}
+\begin{minipage}[t]{\textwidth}
+	\begin{center}
+%\vspace{2ex}
+\centerline{
+\raisebox{-4.0ex}[5.5ex][4.5ex]
+		 {\includegraphics[height=12ex]{Hopf-a}}
+~~~ $\Longrightarrow$ ~~ {other swirls} ~~ $\Longrightarrow$ ~~~
+	\raisebox{-4.0ex}[5.5ex][4.5ex]
+		 {\includegraphics[height=12ex]{Hopf-b}}
+          }
+	\end{center}
+\end{minipage}
+\end{center}
+
+at any spacetime point Navier-Stokes equations describe the local tangent space
+
+\bigskip
+
+\centerline{
+\textcolor{blue}{they satisfy them \textcolor{red}{\large locally}, everywhere and at all times}
+}
+\end{frame}
+
+
+\begin{frame}{summary}
+\begin{enumerate}
+              \item
+study turbulence in infinite spatiatemporal domains
+              \item
+theory : classify all spatiotemporal tilings
+              \item
+numerics : future is spatiotemporal
+\end{enumerate}
+
+\vfill
+
+there is no more time
+
+\medskip
+
+there is only enumeration of spacetime solutions
+\end{frame}
+
+\begin{frame}{spatiotemporally infinite \catlatt}
+%\begin{center}
+%\hfill\includegraphics[width=0.55\textwidth]{spatiotempCat}
+\hfill\includegraphics[width=0.55\textwidth]{DawnBishopCats}
+%\end{center}
+\end{frame}
+
+\begin{frame}{\po s generalize to $d$-tori}
+
+\begin{block}{1 time, 0 space dimensions}
+a {\statesp} point is {\em periodic} if its orbit returns to it
+after a finite time \period{} ;
+\\
+such orbit tiles the time axis
+by infinitely many repeats
+\end{block}
+
+\bigskip
+
+\begin{block}{1 time, $d$-1 space dimensions}
+ a {\statesp} point is {\em spatiotemporally periodic} if
+it belongs to \\ an invariant $d$-torus ${\R}$ ;
+\\
+such torus tiles the spacetime
+by infinitely many repeats
+%,\\
+%\ie, a \brick\ $\Mm_{\R}$ that
+%tiles the lattice state  $\Mm$, \\
+%with period $\ell_j$ in $j$th lattice direction
+\end{block}
+\end{frame}
+
+
+%\begin{frame}{XXX}
+%\end{frame}
+
+
+\end{document}

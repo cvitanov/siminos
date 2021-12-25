@@ -1,0 +1,79 @@
+% siminos/spatiotemp/Examples/examBernShad.tex
+% $Author: predrag $ $Date: 2021-08-25 18:06:06 -0400 (Wed, 25 Aug 2021) $
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\example{Temporal Bernoulli shadowing.}{\label{exam:BernShad}
+% Was \section{s:bernShadow} in CL18 Bernoulli.tex
+
+As the {temporal Bernoulli} condition \refeq{tempBern} is a linear
+relation, a given \brick\ $\Mm$, or `code' in terms of alphabet
+\refeq{base-sAlph}, corresponds to a unique temporal {\lattstate} $\Xx$
+given by the temporal lattice Green's function
+\beq
+\Xx_\Mm
+= \gd\,\Mm
+\,,\qquad
+\gd = \frac{\shift/{s}}{\id- {\shift}/{s}}
+\,.
+\ee{examTempBernGreen}
+For an infinite lattice $\zeit\in\integers$, this Green's function can be
+expanded as a series in $\ExpaEig^{-k}$,
+\beq
+\gd
+    = \frac{\,{\shift}/{\ExpaEig}}{\id-{\shift/}{\ExpaEig}}
+    = \sum_{k=1}^\infty \frac{\shift^k}{\ExpaEig^{k}}
+\,,
+\ee{BernGreenF}
+where $\ExpaEig={s}$ is the 1-time step stability multiplier for the
+Bernoulli system. From \refeq{examTempBernGreen} it follows that
+the influence of a source $\Ssym{\zeit'}$ back in the
+past, at site $\zeit'$, falls off exponentially with the temporal lattice
+distance $\zeit-\zeit'$,
+\beq
+  \ssp_{\zeit}=\sum_{\zeit'=-\infty}^{\zeit-1} g_{\zeit\zeit'} \Ssym{\zeit'}
+\,, \quad
+g_{\zeit\zeit'}
+   =
+   \frac{1}{\ExpaEig^{\zeit-\zeit'}}
+\,,\quad \zeit>\zeit'\,,\quad  0\mbox{ otherwise}
+\,.
+\ee{BernGreenSites}
+That means that an ergodic {\lattstate} segment of length \cl{}\ (or a
+periodic {{\lattstate}} of a longer period) is shadowed by the periodic
+{{\lattstate}} \refeq{pathBern} with the same \cl{}-sites {symbol
+\brick} $\Mm$,
+    \PC{2020-02-16}{
+Do I need to derive this?
+    }
+\beq
+\ssp_{\zeit}
+=  \frac{1}{1-1/\ExpaEig^{\cl{}}}
+\left(\frac{\Ssym{1}}{\ExpaEig}+\frac{\Ssym{2}}{\ExpaEig^{2}}
+      +\cdots
+      +\frac{\Ssym{\cl{}-1}}{\ExpaEig^{\cl{}-1}}+\frac{\Ssym{\cl{}}}{\ExpaEig^{\cl{}}}
+\right)
+,
+\label{Bern_cyc}
+\eeq
+with exponentially
+decreasing shadowing error of order $O(1/\ExpaEig^{\cl{}+1})$. The error
+is controlled by the \refeq{detDet} prefactor
+\(
+1/|\Det\jMorb| = 1/|\det(\id - \jMat_\Mm)|\,,
+\)
+with the determinant arising from inverting the {\jacobianOrb}
+$\jMorb$ to obtain the Green's function \refeq{tempBern}.
+
+This error estimate is deeper than what it might seem at the first
+glance. In fluid dynamics, pattern recognition, neuroscience and other
+high or $\infty$-dimensional settings distances between `close solutions'
+(let's say pixel images of two faces in a face recognition code) are
+almost always measured using some arbitrary yardstick, let's say a
+Euclidean $L_2$ norm,
+even though the state space that has no Euclidean symmetry.
+Not so in the \po\ theory: here $1/|\Det\jMorb|$ is the \emph{intrinsic,
+coordinatization and norm independent} measure of the distance between
+similar \spt\ states.
+        \jumpBack{exam:BernShad}
+    } %end {exam:BernShad}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%

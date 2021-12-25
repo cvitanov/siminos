@@ -1,0 +1,246 @@
+predrag/siminos/presentations/GTMAP18/inserts.txt
+$Author: predrag $ $Date: 2018-04-26 12:16:43 -0400 (Thu, 26 Apr 2018) $
+-----------------------------------------------------
+
+% \item[2017-01-23 Predrag]
+Wang \etal\rf{WGBGQ13}
+{\em Towards scalable parallel-in-time turbulent flow simulations}
+introduces ``the least squares shadowing (LSS) method'' and
+uses \KS\ to illustrate the power of their method: ``
+The initial condition is relaxed and information is allowed to propagate
+both forward and backward in time. [...]
+
+next-generation simulation paradigm can likely be spacetime parallel
+simulations. These simulations subdivide the four-dimensional spacetime
+computational domain. Each computing core handles a contiguous subdomain
+of the simulation spacetime.
+
+Compared to subdivision only in the
+three-dimensional space, spacetime parallel simulations can achieve
+significantly higher level of concurrency, and reduce the ratio of
+inter-core communication to floating point operations. [...]
+
+Efficient time domain parallelism can only be achieved through
+reformulating turbulent flow simulation into a well-conditioned problem.
+We reformulate turbulent flow simulation into a well-conditioned problem
+by relaxing the initial condition.
+
+ [...]
+Instead of trying to find the flow solution that satisfies both the
+governing equation and the initial condition, we aim to find a flow
+solution satisfying only the governing equation.
+
+Blonigan, Wang \etal\
+papers\rf{WGBGQ13,BloWan13,BloWan15,BloWan16}. Interesting, I find
+\refref{WGBGQ13} similar to variational {\descent}.
+
+not
+sure how the spatial evolution is included, and if you look at their
+converged solutions they are seemingly on the same spatial domain size as
+the initial condition
+
+% \item[2017-01-25 Evangelos]
+Wang \etal\rf{WGBGQ13} is similar
+to your variational method for finding periodic orbits~\rf{CvitLanCrete02,lanVar1}.
+
+In G.~Sanchez-Arriaga \etal\rf{sanchez2015} we have developed
+a boundary value solver discretized with finite differences both in time
+and in space in order to detect periodic orbits.
+
+results in a sparse
+linear algebra system that was parallelizable
+
+There should be a straightforward extension of
+Wang \etal\rf{WGBGQ13} for periodic orbits.
+
+The main two challenges that I see with methods such as the
+above~\refrefs{CvitLanCrete02,lanVar1,sanchez2015,WGBGQ13} is
+1) finding a suitable initial guess
+    and
+2) increased memory requirements.
+might not be as serious
+in next generation HPC platforms.
+
+% \NBBpost{2014-11-15,2017-01-26}{ Fazendeiro, Boghosian, Coveney
+and L{\"a}tt\rf{FBCL10} {\em Unstable periodic orbits in weak
+turbulence} seem to have applied the variational periodic orbit
+finding method to fluid flow by parallelizing the whole thing.
+
+% \PCpost{2017-05-05}{ Boghosian \etal\rf{BFLTC11} {\em New
+variational principles for locating periodic orbits of differential
+equations} is the most detailed discussion (see also
+\refrefs{BBLTFC11,FBCL10}):
+
+They reformulate the space–time algorithm of Lan and
+Cvitanovi\'c\rf{lanVar1} in a clear-headed way, and use using the
+methods of gradient descent or conjugate gradients to solve the
+variational equations.
+
+They apply it to the lattice-Boltzmann method for the solution of
+the Navier–Stokes equations, with a fully parallel implementation
+using the Message Passing Interface. The method has first been
+tested on the Lorenz equations\rf{BBLTFC11}. They apply this to
+weak homogeneous turbulence driven by an Arnold–Beltrami–Childress
+force field in three spatial dimensions. Because the algorithm
+requires storage of the space–time lattice, even the smallest
+orbits require resources on the order of tens of thousands of
+computing cores. Using this approach, two UPOs have been identified
+and some of their properties have been analysed.
+
+
+% \item[2017-02-05 Tobias Schneider]  <tobias.schneider@epfl.ch>
+There were several talks about these topics at
+\HREF{http://www.pasc16.org} {pasc16.org}.
+
+Diego
+Donzis gave an exciting talk about fluid dynamics simulations in the
+future. Donzis and Aditya\rf{DonAdi14}
+{\em Asynchronous finite-difference schemes for partial differential equations}
+   is one of the papers but there is a lot of unpublished stuff.
+
+Check MS14 at \HREF{http://www.pasc16.org/program/program/}
+{pasc16.org/program} for Donzis abstract:
+``
+Turbulence
+the complexity of the governing equations
+leads to wide ranges of temporal and spatial scales
+
+simulations, in particular
+direct numerical simulations (DNS) which resolve the entire range of
+scales from the exact governing equations, have become an indispensable
+tool
+
+While very accurate spectral methods have been
+used extensively up to petascale levels, they typically require
+collective communications and synchronizations, two well-known potential
+bottlenecks at exascale.
+
+novel asynchronous
+numerical schemes that virtually remove computational obstacles at a
+mathematical level and present a path towards exascale DNS of turbulent
+flows.
+
+% \item[2017-02-12 Predrag]
+Transcription of  Wang \etal\rf{WGBGQ13}
+{\em Towards scalable parallel-in-time turbulent flow simulations},
+``least squares shadowing (LSS) method'' to ChaosBookese.
+
+For \KS\ they break the reflection symmetry by introducing a constant
+drift $c$, so the remaining symmetry is $\SOn{2}$. They do not remark
+that symmetry should be reduced, perhaps because they break it by
+considering a 2-boundary points problem? We will have to slice the
+equations.
+
+%%%%%%%%%%%%%%%%%%%%% eventually move to def.tex %%%%%%%%%%%%%%%%%
+\newcommand{\lTime}{\tilde{t}}     % time parametrization of a loop
+\medskip
+\noindent
+{\bf Loop} $L$:
+ a smooth, differentiable closed curve $\lSpace(\lTime)\in \Loop \subset
+\pS$,
+parameterized by $\lTime \in [0,\period{L}]$ with
+$\lSpace(\lTime)=\lSpace(\lTime+\period{L})$, with the
+magnitude of the loop tangent vector fixed by
+the (so far arbitrary) parametrization of the loop,
+\[
+\lVeloc(\lSpace)=\frac{d \lSpace}{d\lTime}\,, \quad \lSpace=\lSpace(\lTime) \in \Loop
+\,.
+\]
+
+Consider a dynamical system
+\beq
+	\dot{\ssp}(t)  =  \vel(\ssp)
+\,.
+\ee{WGBGQ13(1a)} %{odes}
+Rescale the time
+\(
+\frac{\partial\lTime}{\partial t} = 1 + \eta(\lTime)
+\,,
+\)
+so
+\beq
+(1+\eta(\lTime))\frac{\partial\ssp(t(\lTime))}{\partial\lTime}  =  \vel(\ssp)
+\,.
+\ee{WGBGQ13(1b)}
+Assume that the action is given by the integral over a Lagrangian, a
+quadratic cost function together the equations of motion constraint,
+\beq
+S[\Loop] =
+   \int_0^\period{} dt\,\left(
+\frac{1}{2}\braket{\ssp-\lSpace}{\ssp-\lSpace}+\frac{1}{2}\eta^2
++ \braket{w}{\dot{\ssp}-\vel(\ssp)}
+    \right)
+\,,
+\label{WGBGQ13(3)}
+\eeq
+where $w(\lTime)$ is the Lagrange multiplier.
+
+Vary the Lagrange function,
+integrate by parts
+\bea
+\delta S[\Loop]
+    &=&
+   \int_0^\period{} dt\,\left(
+\braket{\delta\ssp}{\ssp-\lSpace}+\delta\eta\,\eta
++ \delta\eta \braket{w}{\frac{\partial\ssp}{\partial\lTime}}
++ \braket{w}{\frac{\partial\delta\ssp}{\partial t}-\Mvar\delta\ssp}
+    \right)
+    \continue
+    &=&
+   \int_0^\period{} dt\,
+\braket{\delta\ssp}{\ssp-\lSpace
+                    -\frac{\partial w}{\partial t}-\transp{\Mvar}}
+    \ceq
+   + \int_0^\period{} dt\,\delta\eta\,\left(
+\eta + \braket{w}{\frac{\partial\delta\ssp}{\partial t}}
+    \right)
+   +\left. \braket{\delta\ssp}{w}\right|_0^\period{}
+\,,
+\label{WGBGQ13(4)}
+\eea
+where $\Mvar$ is the {\em \stabmat} or {\em \velgradmat}, \ie, the
+linearized operator
+\beq
+{\Mvar}_{ij}(\ssp) =\frac{\pde ~}{\pde \ssp_j  } \vel_i(\ssp)
+\ee{WGBGQ13(5)} %{DerMatrix}
+evaluated at $\lSpace$,
+and $\transp{\Mvar}$ is the adjoint of $\Mvar$.
+Setting $\delta S[\Loop]=0$ for arbitrary $\delta\ssp$ and $\delta\eta$
+leads to
+
+TO BE CONTINUED
+
+For discretized form, see the variational equations
+\refeq{e-MultishootCost} and  \refeq{e-MultishootVariational}
+\bea
+    \frac{\delta S}{\delta x(\lTime)} &=&
+                x_{i+1} - y_i - w_{i+1}(0) \,, \quad
+    \frac{\delta S}{\delta y_{i}} =
+                -(x_{i+1} - y_i) + w_{i}(T_i) \,, \quad
+    \continue
+    \frac{\delta S}{\delta T_i} &=&
+                -< \dot{y}_i, x_{i+1}-y_i > \,, \quad
+    \label{WGBGQ13(XX)} %{e-MultishootVariational}
+\eea
+
+this is a time of intellectual turmoil: dynamics is dead. I make
+fun of rocket scientists\rf{WGBGQ13} discovering now, in 2013, that ``the
+initial value problem of a chaotic dynamical system is
+\emph{ill-conditioned},'' but they are right.
+Since high school, I have been thinking incorrectly, like a physicist
+(formulating chaotic dynamics locally in time, as an initial value
+problem, to be integrated forward in time) while all along working
+correctly, as an engineer (solving for chaotic orbits globally, by
+variational methods). So DasBuch has to be rewritten, entirely, from
+chapter 4 on, with the ideas of Chapter 38 {\em Relaxation for cyclists}
+to be moved to the beginning of the exposition. All bits and pieces are
+already available, but the puzzle has to be fully reconfigured.
+
+% A snippet from internet:
+Topological quantum computing (TQC) is a
+newer type of quantum computing that uses ``braids'' of particle
+tracks, rather than actual particles such as ions and electrons, as
+the qubits to implement computations. Using braids has one
+important advantage: it makes TQCs practically immune to the small
+perturbations in the environment that cause decoherence in
+particle-based qubits and often lead to high error rates.

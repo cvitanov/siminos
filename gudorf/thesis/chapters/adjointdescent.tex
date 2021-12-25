@@ -1,0 +1,258 @@
+% siminos/gudorf/thesis/chapter/adjointdescent.tex
+% $Author: predrag $ $Date: 2020-05-25 15:18:45 -0400 (Mon, 25 May 2020) $
+
+A useful class of numerical methods often used in optimization\rf{BoyVan04, Dennis96} are known
+as \textit{descent methods}. In our context, optimization denotes the numerical process
+of finding minimizers of a scalar valued cost function which vector valued inputs, the \spt\
+Fourier modes and \spt\ parameters. Broadly speaking, descent methods are numerical methods
+which iteratively solve unconstrained optimization. These methods accomplish this by one
+way or another providing a direction to step in which monotonically decreases the value of
+the cost functional, hence ``descent'' (assuming a non-negative scalar cost function).
+The method with which to compute the descent direction is the distinguishing property
+between descent methods. In the limit of an infinitesimal step size, the iterative descent
+can be characterized as a fictitious flow with respect to a fictitious time\rf{LCC06}.
+The advantages of descent methods are that they do not require the construction nor
+the inversion of any matrices. The computational and memory requirements
+are relatively cheap in comparison to direct methods but the trade off is the
+rate of convergence. The convergence of a descent method
+is guaranteed but only in the impractical limit of infinite fictitious time.
+There are some tools for improving the rate of convergence such as preconditioning
+operators which will be discussed in a later section.
+
+The specific descent method we use is called the adjoint descent method\rf{Faraz15}.
+With the specific cost function we use, it turns out that this method is mathematically
+equivalent to the steepest descent method; that is, the descent direction is
+the same as the negative gradient of the cost function. This is not
+meant to take away from the derivation of the adjoint descent method.
+The fundamentally different nature between the initial value problem
+and boundary value problem and the cost function employed
+\beq
+G = \frac{1}{2}||F||_{2}^{2}\,.
+\eeq
+cause the simplification. We still refer to the numerical method as
+the adjoint descent method, because the calculation does require the
+multiplicative action of the adjoint stability matrix. For the
+convergence analysis of the method we refer to proofs for the steepest descent method.
+To best illustrate the differences between the IVP and the BVP, we must discuss
+what \textit{the} adjoint refers to in both situations.
+The initial value problem has a more difficult interpretation so we begin there.
+There are a number of ways to derive the adjoint operator; here we provide the
+\textit{formal Lagrangian} approach\rf{Ibragimov07a}.
+ The formal Lagrangian is the moniker given to the equation which includes $v$
+and the original \KSe\ as a Lagrange multiplier; its namesake results from how
+the \KSe\ and its adjoint can be reproduced by taking the appropriate derivatives,
+akin to the Euler-Lagrange equations. The formal Lagrangian in terms of
+the adjoint or co-state field variable $v(x, t)$ and the original field $u(x,t)$ is
+\beq \label{formalLagrangian}
+\mathcal{L}(u, v) = v [u_t + u_{xx} + u_{xxxx} + uu_x] = 0 \,.
+\eeq
+The total derivative with respect to $v$ is a trivial operation (just drop the $v$ factor) and
+yields the \KSe. Application of the total derivative with respect to $u$
+\bea
+\frac{\delta }{\delta u}
+&=& (\frac{d}{du} - \frac{d}{dt}\frac{d}{d[u_t]}
+    \continue
+&-& \frac{d}{dx}\frac{d}{d[u_x]} + \frac{d^2}{dx^2}\frac{d}{d[u_{xx}]} + \dots )
+\eea
+results in the adjoint equation
+\beq \label{adjointeqn}
+F^*(u, v) = -v_t + v_{xx} + v_{xxxx} - u v_x = 0 \,.
+\eeq
+While these equations are the same for both the IVP and BVP, there are implicit differences
+in what $u$ and $v$ represent. For the IVP, $u(x, t)$ and $v(x,t)$ represent
+a single instant in time, while for the BVP they represent an entire \spt\ area.
+
+Therefore, for the IVP the adjoint equation is another dynamical equation which is arguably
+more complicated than the original \KSe\ because it relies on two field variables instead
+of one. In the context of the BVP, however, it represents an additional differential algebraic
+equation defined on the same domain as $u(x,t)$. This intrinsic difference is the reason
+for the drastic difference in what the ``adjoint operator'' entails. Specifically,
+The adjoint operator for the IVP is the stability matrix\rf{Tabor89} of this adjoint
+equation, that is, the matrix that results from applying the
+gradient operator $\nabla_v$.
+It represents the instantaneous rate of change in a linear neighborhood
+of the co-state space point $v$.  Similar to the stability matrix of the
+\KSe, it is a time-dependent quantity that depends only on the current point in
+state space, $u(x,t)$ as it is linear in $v$. This time dependent nature is
+captured by the time dependent Jacobian operator $J^t$ and its adjoint $(J^{\top})^(t)$.
+These operators map the corresponding linear neighborhoods forward in time
+and evolve according to the differential equation
+\beq \label{jacobiandot}
+\dot{J} = A J
+\eeq
+where $A$ is the stability matrix and $J$ is the Jacobian, $J^(0) \equiv \mathbb{I}$.
+To simplify the notation, we have dropped the implicit time dependence as well as the
+dependence on $u(x,t)$. To solve this equation, that is, to solve for a finite time Jacobian
+matrix, one must numerically simultaneously integrate the augmented system of equations comprised
+of the original dynamical equation and \refeq{jacobiandot}. The adjoint stability matrix
+doesn't actually involve the adjoint variable at all
+\beq \label{adjstab}
+(\frac{\partial F}{\partial u})^{\top} = (-\partial_{xx} - \partial_{xxxx} + u \partial_x) \,.
+\eeq
+The adjoint Jacobian is easier to interpret in conjunction with the original Jacobian,
+that is, in terms of the product $J^{\top}J$. This matrix product
+arises in different contexts such as singular value decomposition of non-square
+matrices or the \textit{normal equations} of a least-squares problem\rf{BoyVan04}.
+For hyperbolic systems the singular values are related to the transformation that
+linear neighborhoods undergo during time evolution.
+For the differential algebraic form of the equations there is no finite time (or space)
+Jacobian, only the stability matrices.
+Of course the \spt\ solution can
+be viewed as a collection of time (or space) snapshots with which the Jacobian could
+be calculated to investigate stability. The Jacobian calculation is hard enough in the
+context of time\rf{DingCvit14}; in space, the situation worsens due to the lack of
+``nice'' properties like hyper-diffusion.
+What then is the interpretation of these stability matrices in the \spt\ context?
+Sensitivity might be a more apt descriptor as the matrices
+no longer pertain to dynamical stability but rather the response of the equations
+with respect to perturbations of the \spt\ \Fcs. Comparison of \refeq{adjstab} and
+\refeq{adjointeqn} with the gradient of the cost function
+\beq
+\nabla G = (\frac{\partial F}{\partial u})^{\top} F)
+\eeq
+shows that the gradient is equivalent to the adjoint equation evaluated
+at $v = F(u)$.
+%%%
+An interesting consequence
+of this is that solving the \KSe\ can be reframed as solving the adjoint equation's Newton system.
+In fact, the result of the derivation are the \textit{normal equations} of the least-squares
+problem. This form is derived by linear expansion
+of the adjoint equation with respect to $v + \Delta v$.
+\beq
+F^{*}(u, v+\Delta v) \approx F^*(u, v) + \frac{\partial F^*}{\partial v} \Delta v
+\eeq
+\beq
+(A^{\top}A)\Delta u = - A^{\top} F \,.
+\eeq
+Note that the RHS is equivalent to the negative of the adjoint equation $-F^{\top}$.
+This is reminiscent of the form of the $\ell_1$-regularized least-squares problem statement,
+
+%%
+
+The derivation of the adjoint descent method begins with differentiation of \refeq{e-costfunctional}
+with respect to a fictitious variable $\tau$
+\beq
+\partial_{\tau} G( \mathbf{z} ) = (\frac{\partial F}{\partial u}^{\top}\mathbf{F}(u))^{\top} \partial_{\tau}u
+\label{e-adjointflow}
+\eeq
+The selection
+\beq \label{e-descentdirection}
+\partial_{\tau}\mathbf{u}=-\frac{\partial G}{\partial u})^{\top} G(u)
+\eeq
+defines the adjoint descent method. This choice ensures that
+\beq \label{e-adjointdescent}
+\partial_{\tau} F(u) = -||\frac{\partial G}{\partial u}^{\top}G(u)||^2 < 0
+\eeq
+such that
+\beq \label{e-costfuncationallimit}
+\lim_{\tau \to infty} F(u) = 0\,.
+\eeq
+While this theoretically guarantees convergence it does not guarantee the \textit{rate} of
+convergence. The fictitious time derivative's dependence on $G(u)$ necessarily
+indicates that as magnitude of the cost functional approaches zero so does the gradient.
+Therefore, it is like that the adjoint descent method becomes less effective as it approaches a solution.
+
+The intent is that these details will not serve as a guideline
+for the reader but also demonstrate that the implementation is relatively easy and
+straightforward. To begin our computational discussion, we note that even though
+the descent direction includes the adjoint of the Jacobian, $\frac{\partial F}{\partial u}^{\top}$, this
+matrix is never explicitly formed. This is important because the computational
+cost, in terms of time and resources, becomes prohibitive as the dimensionality of
+the system increases. Instead, we only ever compute the matrix-vector \textit{product}
+that appears in \refeq{e-adjointdescent}. This is done in a matrix-free manner without
+the use of finite-difference approximations found in\rf{KK04,Brown87}.
+
+Computation of \refeq{e-descentdirection} in a matrix-free manner
+is much more efficient than explicitly constructing the adjoint matrix.
+All that is left is to numerically integrate \refeq{e-descentdirection} until
+some error tolerance is met.
+Because the intermediate states represent
+approximate solutions the accuracy of such states has no meaning, we only
+require that the cost functional \refeq{e-costfunctional} is decreasing.
+While the adjoint descent does guarantee this
+the integration scheme we employ, explicit Euler method, does not. The reason
+for using such a simple method is merely due to its speed; one could apply a higher
+order method but once again, the accuracy of intermediate states is not important.
+We have found that decreasing the step size
+is sufficient to ensure that the cost functional always decreases.
+This covers the basic implementation of the adjoint descent method. There
+are other modifications which can be made that improve the rate of convergence.
+The only change that seems to have a drastic effect is known as preconditioning .
+The discussion regarding preconditioning, its
+formulation and effects, is located in \refsect{sect:preconditioning}.
+
+
+New discussion on ``adjoint descent''. The derivation
+is done in very general terms and then the substitution
+is made afterwards. We can construct a Lagrangian using Lagrange
+multiplier of the same dimension as the function evaluation of the \KSe
+such that
+\beq \label{e-lagrangemultiplier}
+\mathcal{L}(u,\lambda) = \frac{1}{2} \lambda^{\top} \mathbf{F}(u).
+\eeq
+This is the ``formal Lagrangian'' described by Ibragimov\rf{Ibragimov07a}
+whose Euler-Lagrange equations are the
+\KSe\ and its adjoint equation \PCedit{refeq{e-adjointeqn}}
+    \PC{2019-12-06}{
+    Reference `e-adjointeqn' undefined
+    }
+ (up to a constant
+which can be dismissed in each equation), which
+can be derived by applying the ``'' or
+setting the first variations equal to zero (limit definition
+of first derivative). In terms of optimization the goal
+is of course to find the critical points of the variation
+of the action which correspond to solutions to the
+Euler-Lagrange equations. There are any number of optimization
+methods but we shall see that the one that we have been using
+and calling the adjoint descent method is actually merely the
+steepest descent method in disguise.
+
+The steepest descent method is an optimization method which
+says to step in the opposite direction as the gradient
+of the function being optimized, for this example that
+implies stepping in the $-\nabla \mathcal{L}$ direction.
+The variable that is being ``stepped'' is of course our
+state variable $u$. Another way of writing this is
+\beq
+\frac{\partial u}{\partial \tau} = -\nabla \mathcal{L}
+\eeq
+or in a more algorithmic and discrete fashion,
+\beq
+u_{n+1} = u_{n} -\nabla \mathcal{L} \delta \tau \,.
+\eeq
+
+Using the definition of $\mathcal{L}$ from \refeq{e-lagrangemultiplier}
+we can calculate the (negative) gradient as
+\beq \label{e-gradlambda}
+-\nabla \mathcal{L}(u,\lambda)= \frac{1}{2}(-(\nabla \lambda)^{\top}F(u) + \lambda^{\top} (\nabla F(u)))
+\eeq
+We have kept the formulas general for the sake of completeness but now to show
+that the adjoint descent is merely the steepest descent direction
+corresponding to the \spt\ $\mathcal{L}$.
+To do so, note
+that the substitution
+\beq \label{e-lambdaF}
+\lambda = (\mathbf{F}(u))^{\top}\,.
+\eeq
+makes our Lagrangian equal to
+\beq
+\mathcal{L}(u) = ||\mathbf{F}(u)||^2\,.
+\eeq
+While not explicitly referred to as a
+cost functional in \refref{Faraz15}, this is
+exactly the quantity whose fictitious time
+derivative is taken in order to ensure the decrease of
+$||F(u(\tau))||_{L_2}$.
+If we make the substitution \refeq{e-lambdaF} into \refeq{e-gradlambda}
+we can see that the expression simplifies to
+\beq \label{e-gradLagrange}
+-\nabla \mathcal{L}(u) = -(\nabla F)^{\top} F
+\eeq
+which is exactly what is given as the discretized adjoint
+descent direction. The reason why I don't think this was
+seen was because the applications of this method in
+\rf{Faraz15} was to dynamical systems still implicitly
+dependent on time. When viewed as a \spt\ problem, the
+dynamics go out the window and so there is only the variational
+perspective with which to view the numerical method.

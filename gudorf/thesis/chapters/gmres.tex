@@ -1,0 +1,240 @@
+% siminos/gudorf/thesis/chapter/gmres.tex
+% $Author: predrag $ $Date: 2020-05-25 15:18:45 -0400 (Mon, 25 May 2020) $
+
+
+Also, I still need to implement the Viswanath\rf{Visw07b} hookstep algorithm.
+
+This ``residual vector" is sent to Arnoldi iteration in order to produce the
+regular Hessenberg and Orthonormal matrices of this iterative procedure. In
+between Arnoldi iterations, we check the new value of the residual, i.e.
+$||b-A\delta\conf^{(k)}||$. If this meets a specific tolerance, it is then
+passed to the least squares problem that defines GMRES\rf{Trefethen97}, find
+y that minimizes $||H_n y - ||b|| e_1||$, this solution to the least squares
+problem $y$ is then converted to Newton correction via multiplication of
+orthonormal matrix $x = Q_n y$. If this Newton correction does not minimize
+the residual sufficiently, GMRES is restarted. Until either a maximum
+iteration number is met, or the relative differences between residuals stalls
+out.
+
+GMRES specific problems to take into consideration,
+breakdown of the arnoldi iteration, if the test vector lies in the Krylov subspace,
+then there will be a subdiagonal element of the
+ Hessenberg matrix equal to zero (due to linear
+  dependence and orthogonalization with
+respect to the Krylov subspace). If this occurs then
+ GMRES is restarted with another random test vector.
+Numerically, this should be a condition on the value of the norm
+of the vector being iterated upon.
+In order to evaluate the matrix vector product $J \delta \conf$, the matrix-vector approximation previously discussed is used, where
+we use $J\delta \conf \approx F(\conf +\delta \conf) - F(\conf) / \epsilon$, where $\epsilon = ||\delta \conf||$.
+
+
+With what I have all reason to believe is a reasonable initial condition, a 64 by 64 discretization
+of the first \ppo\ of \KS\ the initial value of the norm of the value of the mapping
+$||F(u,T,L)||_2 \approx 10^-3$. I take this to be a good initial condition as the other values of norms
+I have seen have had much higher initial values of this norm. The problem arises when I approximate
+$J \delta \conf$. With almost any randomly generated $\delta \conf$, the norm of the vector $||J \delta \conf||_2
+\approx F(u+\delta u, T + \delta T, L + \delta L) - F(u,T,L) / \epsilon $ with $||\delta \conf||_2 = \epsilon$.
+yields a value that is dramatically larger than $||F(u,T,L)||_2$, and as such it does not allow for a convergent
+Newton-Krylov search. The fact that the norm of the mapping of the spatiotemporal field is small, leads me to
+believe that the code involving the mapping is correct, but if this is the case then the matrix-vector approximation
+should be well written as well, as all it involves is this mapping function. It's this circular logic
+with a hole in it that has been frustrating me to no end.
+
+Something I can try is to use a second order approximation as opposed to a first order.
+This would replace the approximate with $||J \delta \conf||_2
+\approx F(u+\delta u, T + \delta T, L + \delta L) - F(u-\delta u,T - \delta T,L - \delta L) / \epsilon $
+
+
+I thought it might be the form of the randomly generated perturbations that was possibly making things
+go awry, as I believe it's logically justified to restrict perturbations such that the perturbed field would
+yield a real field if transformed back into configuration space. I wasn't doing this before, but it seemed to
+help my woes to a small extent, at least in terms of GMRES convergence; but again, in the scheme of things
+it is a negligible benefit as the residual of the matrix-vector approximate far outstrips any change I
+have made.
+
+The second order finite difference approximation didn't really help the values I was getting from approximating
+the \jacobianM\ so instead I tried to look for why the approximation seems so poor; I hadn't looked at the contributions
+from the nonlinear and linear parts separately (I actually thought I did this a while ago but I think I had poor initial conditions
+before). It turns out that the stiff components of the spatiotemporal mapping (i.e. high wavenumber modes due to the fourth power
+of $q_k$) are what are contributing to the (what I consider too large) magnitude of the approximation the most.
+
+I tried playing around with the perturbation magnitudes again, since it is mostly the high wavenumber modes contributing to the
+magnitude of the approximate matrix-vector product I played around with having the perturbations to these modes be smaller in
+magnitude than the rest, (i.e. some subset of the perturbations of the matrix of spatiotemporal Fourier coefficients is smaller in
+magnitude than the lower (wavenumber, frequency number) modes). This didn't have enough of an effect so I instead started trying
+to think of a way to justify a $2/3$ rule dealiasing (i.e. damping by setting equal to zero) of these contributions. This is
+usually done during time-stepping, and is justified via an energy input argument. There is usually a contribution to the energy
+of a solution due to aliasing and as such the higher modes are damped in any calculations in order to maintain energy-balance.
+
+Also, the GMRES procedure is stalling out, so I have been looking towards ways to fix this. It seems that this is a relatively
+well studied problem and the answer is to introduce preconditioning matrices into the GMRES scheme. This is done in a number
+of ways and I have to find the best one for my problem, but I am also trying to find one that fits into my code already.
+I think I will implement FGMRES, where the F stands for ``Flexible"\rf{Saad93}. It is called this because it
+encourages the preconditioner to change at every outer-loop (Newton) step, while remaining the "same" for the inner-loop (arnoldi or GMRES)
+steps. (same in quotes because at every iteration the rule to generate the preconditioner stays the same, but the matrix technically
+changes in size).
+
+I was being dumb with how I was creating the random perturbation vectors for my
+GMRES procedure. After thinking about it a little more I realized I should just
+create a random field of initial conditions in configuration space and then perform
+a spatiotemporal Fourier transform to get the correct form of field. I can't explain
+how much easier this is than what I was doing before. With this the stiff parts of the
+linear portion of the mapping and as such I have returned the previous damping
+of higher modes back to undamped status.
+I've also been reading a bunch of
+papers\rf{ChaJac84,Saad93,EldSim12,MoReHa14,LotYe05,GrGrReSz16,TBAMR92} on
+preconditioning methods; and specifically for GMRES algorithm. It seems to be
+a heuristic science much like taking Poincar\'e sections so I might have to
+try a number of different preconditioners before I get one that works, or use
+a combination of multiple different ones with different properties.
+
+Talked to xiong to get some new ideas; He thinks that what I was trying to do
+with the initial perturbation is somewhat of a misleading idea as it is reasonable
+to take the zero vector to be the initial perturbation and begin arnoldi iteration
+with the vector $-F(u) = b$, such that the Krylov subspace being generated through
+GMRES is $K_n = <b, Ab, A^2b, ...>$.
+
+Also I think I should be only using GMRES on half of the spectrum and such that there
+are fewer variables in memory, and this way the structure of the Fourier coefficients
+remains representative of a real valued velocity field when inverse Fourier transforms
+are applied. I didn't do this until now because I didn't think it would be necessary
+as I didn't see any mention of it in John's code but I think I should have known better
+as this is what I have done in the variational codes at least.
+
+Going to move on to preconditioners next, and I added (I believe up to the standards
+of a decent human being modifying the bib file ) two more papers, \refref{Gijzen95,ReSaWo10} in this effort.
+I am hoping to bridge the gap between these two with a hybrid method that uses the convenience of matrix-vector
+products, the easily formed \jacobianM\ corresponding to the linear portion of the spatiotemporal mapping, and
+preconditioning.
+
+Rewrote functions in Newton-Krylov code to run with right-preconditioning
+$J M (M^{-1} \delta \conf) = -F(x)$ with a Jacobi (approximate inverse of
+\jacobianM\ based on diagonal elements) as a preconditioner, using the
+hybrid finite-difference and explicit linear \jacobianM\ method I am trying and mentioned
+in yesterday's blog post. Still have more
+testing to do and the Jacobi preconditioner is usually not the best preconditioner from what
+I have seen. Another common precondition uses the incomplete LU factorization
+which I think I will try if it doesn't work.
+Still have a couple more things to do before I can test properly but given
+the prior difficulties I don't see things magically working out.
+
+More work on torus code; After implementing my idea of defining
+the nonlinear \jacobianM\ via finite-differences and the linear \jacobianM\
+explicitly didn't work too well, I moved on to trying to see if doing everything
+explicitly with use of SciPy's implementation of GMRES does the trick.
+
+I didn't attempt this before because I was trying to explicit define \jacobianMs\
+due to the memory usage but now considering I couldn't get the finite-difference
+approximation to work (or maybe it's better to say that I don't think it's suited
+for this problem) I decided to try doing everything explicitly, or at least
+without using finite-differences
+
+Xiong recommended using a Jacobi preconditioner (taking the inverse of the diagonal
+elements of the \jacobianM) but I haven't had good results with this yet. I implemented
+an ILU (incomplete LU factorization) preconditioner which approximates the inverse
+of the entire \jacobianM, as opposed to only the diagonal elements. This worked better,
+with Newton steps that actually reduced the residual and didn't send the period or length
+to zero and or negative values. The only problem is that after a few
+steps it would then fail to decrease the residual.
+ I have a feeling this is an indication I am on the right
+track but there are still some bugs to work out.
+
+
+
+If this doesn't work I think I will attempt an even simpler problem, i.e.
+the two modes problem as per Burak's recommendation; much like how I started
+with the R\"ossler system for the variational method.
+A quick computation of the condition number of the explicitly defined \jacobianM\ using
+singular value decomposition reveals that it's in the tens of millions, which I believe
+proves that I am dealing with a highly ill-conditioned system of equations.
+By disabling changes to the period and length of the system this is lowered by an
+order of magnitude, however, I believe this still implies that the system is highly ill-conditioned
+even when trying to find fixed points of the spatiotemporal mapping on a fixed spatiotemporal domain.
+Xiong suggested that perhaps I can use the singular values to produce a preconditioner that might help,
+I'm looking into this as well as some other papers\rf{Meza95}
+
+
+Iterative
+methods inexactly solve linear systems by making progressively
+better approximations to the solution, typically by expanding
+the subspace the solution is constrained to. A good example
+of this type of search are
+Typically this occurs when either the cost
+functional or the magnitude of the gradient falls beneath some
+predetermined value. There are two main classes of algorithms that we use
+which can be modified and tweaked on a case-by-case basis. Both of these
+two classes, Krylov subspace methods
+
+One consequence of our \spt\ formulation is that the
+dimensionality of our BVP problem is inherently
+much higher than the IVP from the time dynamical system
+formulation. When memory requirements become too large, we employ variants of the
+general minimal residual method (GMRES)\rf{Saad1986}. This method
+exchanges \refeq{e-lstsq} with a much smaller least-squares optimization
+problem by constraining it to the Krylov subspace whose dimension
+conventionally much smaller than the dimension of the {\statesp}. The
+intricacies of Krylov subspaces will be avoided here, we refer the reader
+to\rf{Trefethen97} for details. The Krylov matrix whose columns span the
+Krylov subspace associated with the matrix $A$ and vector $b$ is
+$K_n =
+\bigl[ \begin{smallmatrix} b, & Ab, & A^2b, & ...,& A^{n-1}b
+\end{smallmatrix}
+\bigl]$
+GMRES is derived by performing Arnoldi iteration
+on the Krylov matrix. Arnoldi iteration is the process of applying
+Gram-Schmidt orthonormalization to the columns of the Krylov matrix. This
+provides us with two matrices $Q_n$ and $H_n$ which obey
+\bea \label{e-arnoldirelations}
+K_n&=&Q_n R_n\continue
+H_n&=&Q_n^* A Q_n \continue
+A Q_n&=&Q_{n+1}H_n \,.
+\eea
+The most important relation is the last line of \refeq{e-arnoldirelations} as
+substituting this expression into \refeq{e-lstsq} is what leads the GMRES equation.
+Explicitly
+\bea
+\label{eqn:GMRES}
+||Ax-b|| &=& ||A Q_k y-b||
+     =  ||Q_{k+1} H_k y-b||
+     =  ||H_k y-\transp{Q}_{k+1}\,b|| \continue
+    &=& ||H_k y-\beta e_1|| \quad \mbox{where } \beta = ||b||
+\,,
+\eea
+such that we have exchanged the problem of solving the full dimensional
+problem of \refeq{e-lstsq} with the problem with much smaller dimensionality
+\beq \label{e-lstsqGMRES}
+\min_{y}  ||H_k y-\beta e_1||\,.
+\eeq
+This problem can be solved in a number of methods, typically it is solved
+via Givens rotations and back substitution, for our purposes we find
+it adequate to solve it using the same LAPACK routine used to solve the original equation
+directly.
+\MNGedit{Can include arnoldi algorithm pseudocode if desired; I think its common enough to leave out}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%The right preconditioned arnoldi iteration (with modified Graham-Schmidt for orthogonalization)
+%is written as follows in pseudo code.
+
+%for $j = 1, \cdots, m$
+%\bea
+%z_{j+1} &=& P^{-1} \cdot q_j \continue
+%q_{j+1} &=& J \cdot z_{j+1}
+%\eea
+%for $i = 1, \cdots j$
+%\bea
+%H_{i,j} &=& <w,q_i> \continue
+%q_j &=& q_j - H_{i,j}*q_i
+%\eea
+%end for
+%\bea
+%H_{i+1,i} &=& ||q_j||_2 \continue
+%q_j &=& q_j/||q_j||_2
+%\eea
+%end for
+There is a very important point of order that must be addressed for those interested
+in order to practically employ these methods, namely, how we deal with computational
+memory requirements. By choosing to formulate the problem as a \spt\ variational
+problem we increase the computational encumbrance because of the increased dimensionality
+of the system. In order to increase computation speed and decrease computer memory requirements
+we develop matrix-free methods that eliminate and need to explicitly construct any and
+all matrices that arise. More detail of this can be found in \refsect{sect:matrixfree}.

@@ -1,0 +1,34 @@
+#tw.py
+
+import numpy as np
+import numdifftools as nd
+from numpy import linalg as LA
+import oct2py
+
+import os
+
+mfilesdir = os.getcwd()
+oct2py.octave.addpath(mfilesdir)
+
+tw = np.array([4.35443481670327e-01, -9.60917925692523e-05, 3.55770339535978e-01,
+3.68351783798642e-02, 2.65861967149185e-01, 1.22911738663552e-01,
+8.98079721233423e-02, 1.99667320050485e-01, -5.04235837360664e-02,
+9.44971603398620e-02, -3.97181620166927e-02, 1.51244417666588e-02,
+-1.69944433099994e-02, -4.76073038270960e-03, -4.30960997719316e-03,
+-6.14311868748995e-03, 3.85049199802236e-04, -3.00159894840952e-03,
+8.68099563758904e-04, -7.46075308487725e-04, 4.23665422591802e-04,
+-7.95775518263253e-07, 1.19481454489542e-04, 1.01134287848596e-04,
+8.66155357437022e-06, 5.65061843417191e-05, -1.11705754445491e-05,
+1.68679728269568e-05, -6.47057915868176e-06, 9.49599949918244e-07], float)
+
+#tw = tw.reshape(-1,1)
+
+fun = lambda x: oct2py.octave.vksred(x.reshape(-1,1)).reshape(np.size(tw))
+Jfun = nd.Jacobian(fun)
+A = Jfun(tw)
+
+w, v = LA.eig(A)
+
+np.savetxt('data/Atw.txt', A)
+np.savetxt('data/wtw.txt', w)
+np.savetxt('data/vtw.txt', v)

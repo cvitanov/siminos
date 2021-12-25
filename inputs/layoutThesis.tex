@@ -1,0 +1,87 @@
+% siminos/inputs/layoutThesis.tex
+% $Author: predrag $ $Date: 2020-05-25 15:18:45 -0400 (Mon, 25 May 2020) $
+
+% PC: temporary, Feb 27 2008 - eliminate eventually: \FIG \SFIG
+%               Predrag         14aug2008
+% derived from dasbuch/book/inputs/layout.tex
+% copy to here ChaosBook specific environments
+
+% TO FIX: \addtocontents{toc}{....,
+
+\newcommand{\Resume}{\section*{\textsf{\textbf{R\'esum\'e}}}
+    %   \addcontentsline{toc}{section}{{~~~~Resum\'e}}
+                \addtocontents{toc}{{\small r\'esum\'e \thepage ~}} }
+\newcommand{\ResumeEnd}{}
+
+\newcommand{\Remarks}{\section{\textsf{Commentary}} %{\textbf{Commentary}}}
+    %   \addtocontents{toc}{{\small commentary \thepage ~ }}
+                     }
+\newcommand{\RemarksEnd}{}
+
+
+%%%%%%%%%%%%%%% NUMBERED ENVIRONMENTS %%%%%%%%%%%%%%%%%%%
+%%%
+
+\newcommand{\exercise}[2]{
+    \item
+    {\textbf{#1}} ~ {#2}}
+
+\newcommand{\Exercise}[2]{
+    \item
+    {\textbf{\underline{#1}}} ~ {#2}}
+
+\newtheorem{rmark}{{\small\textsf{Remark}}}[chapter] %\textbf{Remark}
+\newcommand{\remark}[2]{
+        % \begin{quotation}
+        \begin{rmark}
+        {\small\em\noindent {\small\sf \underline{ #1} ~} #2 }
+    \end{rmark}
+    % \end{quotation}
+              }
+
+\newenvironment{offset}
+               {\list{}{\listparindent 3em%
+                        \advance\rightmargin -3em}%
+                \item\relax}
+               {\endlist}
+
+\newtheorem{exmple}{\noindent\small\textsf{\textbf{Example}}}[chapter]
+\newcommand{\exampl}[2]{
+  \vskip -13mm
+  \begin{offset}
+    \begin{exmple}
+      \noindent\small
+      \textsf{\textbf{#1}} ~
+      \slshape\sffamily{#2}
+      % \textsl would not work...
+    \end{exmple}
+  \end{offset}
+  \vskip -1mm
+}
+
+%%%%%%%%%%%%%%% FIGURES %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%
+%%% Figure captions should be placed below the figure
+%%% Table captions should be placed above the table
+%%% Tables should be constructed without vertical rules
+
+% PC: temporary, Feb 27 2008 - eliminate eventually
+% \FIG{#1}    % \includegraphics[width=0.40\textwidth]{Fig/f_name.ps}  ...
+%     {#2}    % short caption text omitted here
+%     {#3}    % full caption text
+%     {#4}    % f-figure-label
+\newcommand{\FIG}[4]{\begin{figure}
+                    {#1}\caption[#2]{{\small #3}}
+                    \vspace*{-5pt}\label{#4}
+                    \end{figure}}
+
+% PC: temporary, Feb 27 2008 - eliminate eventually
+%  \SFIG{#1}    % f_name.eps
+%       {#2}    % short caption text
+%       {#3}    % full caption text
+%       {#4}    % f-figure-label
+\newcommand{\SFIG}[4]{\begin{figure}
+                \includegraphics[width=0.40\textwidth]{#1}
+                \caption[#2]{{\small #3}}
+                \vspace*{-5pt}\label{#4}
+                \end{figure} }

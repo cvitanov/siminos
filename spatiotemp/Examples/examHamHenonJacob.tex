@@ -1,0 +1,157 @@
+% examHamHenonJacob.tex
+% $Author: predrag $ $Date: 2021-09-02 23:44:14 -0400 (Thu, 02 Sep 2021) $
+
+% Predrag extracted from                    2021-02-15
+%                   ChaosBook.org
+% based on                                  2021-04-27
+%    \example{{\HenonMap} \jacobianM.}{ \label{exam:HenonJacob}
+%    \example{Stability of cycles for maps.}{ \label{exam:cycStabMap}
+%    siminos/kittens/cat.tex                2021-04-27
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\example{{\Henlatt} stability.}{ \label{exam:HamHenonJacob}
+For the {\HenonMap} \refeq{Henlatt-eq2.1.0} the \emph{temporal evolution
+\jacobianM} for the $n$th iterate of the map is the product of
+consecutive  one time-step \jacobianMs\
+\index{Henon@H\'enon map!stability}    \index{jacobian!H\'enon map}
+\beq
+\jMps^n(\field_0) =
+\prod_{m=n}^{1}
+          \MatrixII{-2\,\field_m}{-1}
+                   {1}  {0}
+\,,\qquad \field_m = \map^{m}_1 (\field_0,p_0)
+\,.
+\ee{Henlatt-e_her}
+The decreasing order in the indices of the products in above formulas is
+a reminder that the successive time steps correspond to multiplication
+from the left,
+$\jMps_p(\field_1)  = \jMps(\field_\cl{p})\cdots \jMps(\field_1)$.
+
+The determinant of the {\Henon} one time-step \jacobianM\ in
+\refeq{Henlatt-e_her} is a constant,
+\beq
+\det\jMps =
+ 1
+\,,
+\ee{Henlatt-HenDet}
+so the map is Hamiltonian (symplectic) in the sense that it
+preserves areas in the $[\field,p]$ plane.
+
+The \FloquetM\ $\jMps_p$ for a {\orbit} $p$ of length
+$\cl{p}$ of the {\HenonMap} \refeq{Henlatt-eq2.1.0} is evaluated by
+picking any periodic point as a starting point, running once around a
+{\orbit}, and multiplying the individual periodic point {\jacobianMs}
+\refeq{Henlatt-e_her},
+% restore     \ according to \refeq{jacoB}.
+\index{Henon@H\'enon map!stability}
+\beq
+\jMps_p(\xInit) = \prod_{k=\cl{p}}^{1}
+          \MatrixII{-2\field_k}{-1}
+                   {1}  {0}
+\,,\qquad \field_k \in \pS_p
+\,,
+\ee{Henlatt-Floq}
+Once we have a {\po} of {\HenonMap}, we also have its \FloquetM.
+Only the expanding eigen\-value $\ExpaEig_1=1/\ExpaEig_2$ needs to be
+determined, as $\det\jMps = \ExpaEig_1 \ExpaEig_2=1$.
+
+The {\em \jacobianOrb} is the $\delta/\delta\field_k$ derivative of the
+{\henlatt} \refeq{Henlatt-2-step} 3-term recurrence relation
+\bea
+\jMorb_p &=&\sigma+2\,{\mathbb{X}}_p+\sigma^{-1}
+\continue
+ &=&
+\begin{bmatrix}
+2\,\field_0 & 1 & 0 & 0 & \dots & 0 & 1\\
+1 & 2\,\field_1 & 1 & 0 & \dots & 0 & 0\\
+0 & 1 & 2\,\field_2 & 1 & \dots & 0 & 0\\
+\vdots & \vdots & \vdots & \vdots & \ddots & \vdots & \vdots\\
+0 & 0 & \dots & \dots & \dots & 2\,\field_{\cl{}-2} & 1\\
+1 & 0 & \dots & \dots & \dots & 1 & 2\,\field_{\cl{}-1}
+\end{bmatrix}
+\,,
+\label{Henlatt-orbitJac}
+\eea
+where ${\mathbb{X}}_p$ is a diagonal matrix with $p$-{\lattstate} $\field_k$ in the
+$k$th row/column, and the `$1$'s in the upper right and lower left corners
+enforce the periodic boundary conditions.
+
+The trace of the {\jacobianOrb} is twice the orbital sum\rf{Gallas20a}
+\beq
+\sigma_p = \sum_{i \in p} \field_{p,i}
+\ee{Henlatt-COMdef}
+% also \refeq{COMdef}
+a \emph{prime} cycle $p$ \emph{invariant} that satisfies a
+polynomial equation
+${\mathbb S}_\cl{}(\sigma)=0$
+of the order $\cl{p}$, the period of the cycle.
+    \PC{2021-05-04}{Perhaps include the example \refeq{Gallas20a:S_5}?}
+
+The two fixed points \refeq{Henlatt-exer:eq2} are hyperbolic for $a>3$,
+with expanding eigenvalues
+ % from \refeq{COM:eq3}.
+\bea
+      \ExpaEig_{0}  &=&  1+\sqrt{1+a}+ (1+a)^{1/4}\sqrt{\sqrt{1+a}+2}
+                        \continue
+      \ExpaEig_{1}  &=&  1-\sqrt{1+a}- (1+a)^{1/4}\sqrt{\sqrt{1+a}-2}
+\,,
+\label{Henlatt-COM:eq3}
+\eea
+\index{Henon@H\'enon map!fixed points}
+
+%%%%% based on siminos/kittens/cat.tex                    2021-04-27 %%%%%
+The action of the \henlatt\ {\jacobianOrb} can be hard to visualize,
+as a period-2 {\lattstate} is a 2-torus,
+period-3 {\lattstate} a 3-torus, \etc. Still, the {\fundPip} for the period-2
+and period-3 {\lattstate}s, should suffice to
+convey the idea. The {\fundPip} basis vectors \refeq{lattJac} are the
+columns of $\jMorb$. The $[2\!\times\!2]$ {\jacobianOrb}
+and its {\HillDet} follow from \refeq{Henlatt-2-cycle}
+\beq
+\jMorb =
+ \left(\begin{array}{cc}
+2\,\field_0 & 2 \\
+          2 & 2\,\field_1
+ \end{array} \right)
+\,,\quad
+\Det\jMorb = 4\,(\field_0\field_1-1)
+           = -4\,(a-3)
+\,.
+\ee{Henlatt-catFundPar2}
+% $( 1+ \sqrt{a-3} )( 1- \sqrt{a-3} )-1 = -a+3$
+The resulting {\fundPip} shown in \reffig{fig:Henlatt-catCycJacob}\,(a).
+Period-3
+{\lattstate}s for $s=3$ are contained in the half-open {\fundPip} of
+\reffig{fig:Henlatt-catCycJacob}\,(b),
+defined by the columns of $[3\!\times\!3]$
+{\jacobianOrb}
+\beq
+\jMorb =
+\left(
+\begin{array}{ccc}
+2\,\field_0 & 1           & 1 \\
+          1 & 2\,\field_1 & 1 \\
+          1 & 1           & 2\,\field_2
+\end{array}
+\right)
+\,,
+\qquad
+\Det \jMorb
+    = 8\,\field_0\field_1\field_2-2\,(\field_0+\field_2+\field_3)+2
+\,,
+\label{Henlatt-catFundPar3}
+\eeq
+and for an period-$\cl{}$ {\lattstate},
+    \PC{2021-05-04}{A guess, {\color{red}absolutely wrong - Fix!}}
+\beq
+\Det \jMorb
+    = 2^\cl{}\field_0\field_1\field_2\cdots\field_{\cl{}-1}
+    \,,\qquad \cl{}>3
+\,.
+\label{Henlatt-DetjMorb-n}
+\eeq
+
+
+% restore     \jumpBack{exam:HamHenonJacob}
+% restore     \PC{explain \Henon\ = normal form in conjug.tex}
+    } % end \example{exam:HamHenonJacob}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%

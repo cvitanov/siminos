@@ -1,0 +1,77 @@
+% siminos/gudorf/thesis/chapter/orbithunter.tex
+% $Author: predrag $ $Date: 2020-10-24 01:45:26 -0400 (Sat, 24 Oct 2020) $
+
+One of the largest hindrances to collaboration that I have experienced is the fact that everyone has their
+own custom numerical codes. The lack of consistency in programming language, conventions, notation,
+documentation, etc., dramatically slow down the scientific process. Not only do these codes
+tend to be esoteric and quite confusing to adopt, I have found they are also very difficult to modify or make additions to.
+My solution to this was to write a programming package, "orbithunter", in the Python programming language.
+Python was chosen primarily because I believe that
+it is the friendliest language. With improvements in the scientific computing packages such as NumPy and SciPy,
+numerical computations are no long prohibitively slow in Python when compared to, for example, C++. Also,
+with the usage of jupyter notebooks, computations become nimble and efficient when provided with an API with
+similar qualities. Orbithunter serves as a high-level API to perform spatiotemporal calculations described in this thesis
+for the Kuramoto-Sivashinsky equation. The beauty and my proudest achievement is that (barring some inevitable bugs that
+come with expanding any programming package) the utilities that enable users to clip, glue, etc. extend to any
+N-dimensional field equation. Not only do all of the methods generalize to other equations, it is also easy to
+write the necessary code to make these additions, if the framework is followed. This framework consists of the
+following: in order to be able to make use of all orbithunter utilities, one must write a module which creates
+a subclass of the orbithunter class Orbit. Namely, this entails writing about thirty or so functions which are
+able to compute the relevant numerical quantities such as the governing equations %refsect
+, the matrix-vector products %refsect
+, etc. The functions which must be written at very clearly documented as methods of the parent Orbit class. The
+bonus is that there is no assumption of the basis being used; all transform methods are custom to the subclass being written.
+Therefore, even if you disagree on, for instance, using a spatiotemporal Fourier mode basis, you can still utilize the package and
+its utilities, although I cannot guarantee that the methods will not lose their meaning if one strays too far from the spatiotemporal path.
+
+The API itself is designed after some of the most popular Python packages in scientific computing: Pandas, NumPy, SciPy. This
+enables the user to apply high level functions and ideas to perform complex calculations as opposed to digging through the
+details of how the entire package is setup.
+
+In addition to the increased user friendliness that orbithunter presents, it is also faster than my previous research code
+and presents the user with a myriad of options for the purpose of numerical optimization.
+
+
+\begin{description}
+\item[Introduction]
+In order to expand the user base and influence of our \spt\ formulation
+I converted my research code into a Python package that can be distributed
+as an open source project on Github. The original code fell into the classic
+pitfall of being only well known to the author. The newer version of the code
+is incredibly user friendly and tries to model itself after very popular
+python packages
+
+The following package is a result of the complete rewrite of my
+research code to maximize user friendliness and computational speed.
+Because this is a complete refactoring of my research code there
+are likely still a few bugs. It also should be noted that this is
+a completely independent endeavor of somebody with a Physics background;
+there might be some details or choices in the code that are suboptimal.
+This is why this code will be available as an open source github repository.
+
+Main benefits of using this package. Plugging in your own Torus class.
+It has all been vectorized and so it's pretty fast. It's incredibly user-friendly.
+It has many different numerical methods available, although there are
+a number that can be used only if constraints are included as they
+require square linear systems (such as SciPy's implementation of GMRES).
+
+The other main goal of this project was to make the code modular; obviously
+the code has been written around the \KSe\ but it can be tailored to
+encompass any equation and any dimensional torus. The main
+requirements to interface with the current package are the
+following:
+
+A function which returns a class instance in terms of real-valued spectral basis; it doesn't
+necessarily have to be Fourier, but the function is required to be called this for compatibility sake.
+This might be changed upon release just to prevent confusion; it's annoying but it would only
+take the renaming of functions. Note that for a system with $D+1$ dimensional space-time, this
+must take a physical field to $D$ dimensional spectral basis, even though it acts on the entire
+$D+1$ dimensional torus. This was done because it is natural for those who simulate fluid turbulence;
+most codes are spectral in nature and so these transforms are already implemented.
+
+A function which returns a class instance in terms of real-valued \spt\ spectral basis. The requirements
+follow the same as the spatial transform.
+
+A function which calculates the equations in the \spt\ \Fcs\
+
+\end{description}

@@ -1,0 +1,84 @@
+
+Iterative
+methods inexactly solve linear systems by making progressively
+better approximations to the solution, typically by expanding
+the subspace the solution is constrained to. A good example
+of this type of search are 
+Typically this occurs when either the cost
+functional or the magnitude of the gradient falls beneath some
+predetermined value. There are two main classes of algorithms that we use
+which can be modified and tweaked on a case-by-case basis. Both of these
+two classes, Krylov subspace methods
+
+One consequence of our \spt\ formulation is that the
+dimensionality of our BVP problem is inherently
+much higher than the IVP from the time dynamical system
+formulation. When memory requirements become too large, we employ variants of the
+general minimal residual method (GMRES)\rf{Saad1986}. This method
+exchanges \refeq{e-lstsq} with a much smaller least-squares optimization
+problem by constraining it to the Krylov subspace whose dimension
+conventionally much smaller than the dimension of the {\statesp}. The
+intricacies of Krylov subspaces will be avoided here, we refer the reader
+to\rf{Trefethen97} for details. The Krylov matrix whose columns span the
+Krylov subspace associated with the matrix $A$ and vector $b$ is
+$K_n =
+\bigl[ \begin{smallmatrix} b, & Ab, & A^2b, & ...,& A^{n-1}b
+\end{smallmatrix}
+\bigl]$
+GMRES is derived by performing Arnoldi iteration
+on the Krylov matrix. Arnoldi iteration is the process of applying
+Gram-Schmidt orthonormalization to the columns of the Krylov matrix. This
+provides us with two matrices $Q_n$ and $H_n$ which obey
+\bea \label{e-arnoldirelations}
+K_n&=&Q_n R_n\continue
+H_n&=&Q_n^* A Q_n \continue
+A Q_n&=&Q_{n+1}H_n \,.
+\eea
+The most important relation is the last line of \refeq{e-arnoldirelations} as
+substituting this expression into \refeq{e-lstsq} is what leads the GMRES equation.
+Explicitly
+\bea
+\label{eqn:GMRES}
+||Ax-b|| &=& ||A Q_k y-b||
+     =  ||Q_{k+1} H_k y-b||
+     =  ||H_k y-\transp{Q}_{k+1}\,b|| \continue
+    &=& ||H_k y-\beta e_1|| \quad \mbox{where } \beta = ||b||
+\,,
+\eea
+such that we have exchanged the problem of solving the full dimensional
+problem of \refeq{e-lstsq} with the problem with much smaller dimensionality
+\beq \label{e-lstsqGMRES}
+\min_{y}  ||H_k y-\beta e_1||\,.
+\eeq
+This problem can be solved in a number of methods, typically it is solved
+via Givens rotations and back substitution, for our purposes we find
+it adequate to solve it using the same LAPACK routine used to solve the original equation
+directly.
+\MNGedit{Can include arnoldi algorithm pseudocode if desired; I think its common enough to leave out}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%The right preconditioned arnoldi iteration (with modified Graham-Schmidt for orthogonalization)
+%is written as follows in pseudo code.
+
+%for $j = 1, \cdots, m$
+%\bea
+%z_{j+1} &=& P^{-1} \cdot q_j \continue
+%q_{j+1} &=& J \cdot z_{j+1}
+%\eea
+%for $i = 1, \cdots j$
+%\bea
+%H_{i,j} &=& <w,q_i> \continue
+%q_j &=& q_j - H_{i,j}*q_i
+%\eea
+%end for
+%\bea
+%H_{i+1,i} &=& ||q_j||_2 \continue
+%q_j &=& q_j/||q_j||_2
+%\eea
+%end for
+There is a very important point of order that must be addressed for those interested
+in order to practically employ these methods, namely, how we deal with computational
+memory requirements. By choosing to formulate the problem as a \spt\ variational
+problem we increase the computational encumbrance because of the increased dimensionality
+of the system. In order to increase computation speed and decrease computer memory requirements
+we develop matrix-free methods that eliminate and need to explicitly construct any and
+all matrices that arise. More detail of this can be found in \refsect{sect:matrixfree}.

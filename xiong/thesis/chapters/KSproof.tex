@@ -1,0 +1,233 @@
+The proof of proposition \ref{PROP:KS1} 
+provided by Collet \etal\rf{CEEksgl93} concerns the calculation in
+the Fourier space. Let 
+\[
+  v(x, t) = i\sum_{n=-\infty}^\infty v_n(t) e^{inqx}\,,\quad
+  \Phi_x(x) = -\sum_{n=-\infty}^\infty \psi_n e^{inqx}
+\]
+with $q=2\pi/L$. Here, we modify the form of Fourier transform by taking 
+into consideration the fact that both $v(x, t)$ and $\Phi(x)$ are 
+antisymmetric. Therefore, $v_n$ and $\psi_n$ are all real numbers and we have 
+relations
+\begin{equation}
+  v_n = -v_{-n} \,,\quad \psi_n = \psi_{-n}
+  \,.
+  \label{eq:ks_prop1_fm}
+\end{equation}
+We also impose $\psi_0 = 0$.
+Note that we define the Fourier mode for $\Phi_x(x)$ not $\Phi(x)$. 
+With this setup, now we try to prove \refeq{eq:ks_prop_1}. 
+We first calculate $\int v^2 \Phi_x(x)$ and 
+$\int v(\partial_x^2 + \partial_x^4)v$.
+\begin{align*}
+  & \int v^2 \Phi_x(x) 
+    = \sum_{k, l, m}\int v_kv_l\psi_m e^{i(k+l+m)qx} \\
+  & = L\sum_{k+l+m=0}v_kv_l\psi_m 
+    = L\sum_{k, l}v_kv_l\psi_{-k-l} 
+    = L\sum_{k, l}v_kv_l\psi_{|k+l|}
+    \,.
+\end{align*}
+\begin{align*}
+  \int v(\partial_x^2 + \partial_x^4)v
+  & = \sum_{k, l}\int v_k(-n^2q^2+n^4q^4)v_l e^{i(k+l)qx} \\
+  & = L \sum_k (-n^2q^2+n^4q^4)v_k^2
+    \,.
+\end{align*}
+In the above derivation, we have used relation \refeq{eq:ks_prop1_fm} 
+and $\psi_0 = 0$. Then
+\begin{align}
+  (v, v)_{\gamma\Phi} 
+  & = \int v(\partial_x^2 + \partial_x^4 + \gamma\Phi_x)v \nonumber \\
+  & = L \sum_k (-n^2q^2+n^4q^4)v_k^2 + \gamma L\sum_{k, l}v_kv_l\psi_{|k+l|} \nonumber \\
+  & = 2L \sum_{k>0} (-n^2q^2+n^4q^4)v_k^2 + \gamma L\sum_{k, l >0}
+    v_kv_l(\psi_{|k+l|} + \psi_{|-k-l|} - \psi_{|k-l|} - \psi_{|-k+l|})  \nonumber \\
+  & = 2L \left( \sum_{k>0} (-n^2q^2+n^4q^4)v_k^2 + \gamma \sum_{k, l >0}
+    v_kv_l(\psi_{|k+l|} - \psi_{|k-l|} ) \right)  \nonumber \\
+  & = 2L \left( \sum_{k>0} (-n^2q^2+n^4q^4 + \gamma\psi_{2k})v_k^2 + 
+    \gamma \sum_{\substack{k, l >0 \\ k\neq m}}
+  v_kv_l(\psi_{|k+l|} - \psi_{|k-l|} ) \right)  \nonumber \\
+  & = 2L \left( \sum_{k>0} (-n^2q^2+n^4q^4 + \gamma\psi_{2k})v_k^2 + 
+    2\gamma \sum_{k>l>0}
+    v_kv_l(\psi_{k+l} - \psi_{|k-l|} ) \right) \label{eq:ks_prop1_left}
+\end{align}
+and
+\begin{align}
+  \frac{1}{4}\int (v_{xx}^2 + v^2) 
+  & = -\frac{1}{4}\sum_{k, l}\int v_k(n^4q^4 + 1)v_l e^{i(k+l)qx} \nonumber \\
+  & = \frac{L}{4}\sum_{k} (n^4q^4+1)v_k^2 \nonumber \\
+  & = \frac{L}{2}\sum_{k>0} (n^4q^4+1)v_k^2 \,. \label{eq:ks_prop1_right}
+\end{align}
+In order to show $(v, v)_{\gamma\Phi} \ge \frac{1}{4}\int (v_{xx}^2 + v^2)$,
+we choose as $\psi_n$ as follows 
+\begin{equation}
+  \label{eq:ks_prop1_phi}
+  \psi_n = 
+  \begin{cases}
+    0, & \text{for } n \text{ odd} \\
+    \begin{cases}
+      4, & \text{when } 1 \le |n| \le 2M \\
+      4f(|n|/2M - 1), & \text{when } 2M \le |n|
+    \end{cases},
+    & \text{for } n \text{ even} 
+  \end{cases}
+  \,.
+\end{equation}
+Here $f(n)$ is a non-increasing function whose first-order derivative is 
+continuous. It satisfies $f(0) = 1$, $f'(0)=0$ and 
+\begin{equation}
+  \label{eq:ks_prop1_f}
+  f \ge 0\,,\quad \sup|f'| < 1\,,\quad \int_0^\infty dk(1+k)^2|f(k)|^2 < \infty
+  \,.
+\end{equation}
+Integer $M$ satisfies
+\begin{equation}
+  \label{eq:ks_prop1_m}
+  M \ge \frac{2}{q}
+\end{equation}
+and its exact value will be determined later. Therefore
+\begin{align*}
+  -n^2q^2+n^4q^4+\gamma\psi_{2k} 
+  & = \frac{1}{2}(n^2q^2-1)^2 + \frac{1}{2}(n^4q^4+1) + \gamma\psi_{2k} - 1 \\
+  & \ge \frac{1}{2}(n^4q^4+1)
+    \,.
+\end{align*}
+Here, we have used the fact that $\psi_{2k}>0$ when $nq > 2$ and 
+$\psi_{2k} > 4$ when $nq \le 2$ together with $\gamma \in [1/4, 1]$.
+With this inequality, we try to give lower bound of \refeq{eq:ks_prop1_left}.
+Before that, for notation convenience, we define
+\begin{equation}
+  \label{eq:ks_prop1_tau}
+  \tau_n = \sqrt{\frac{q^4n^4+1}{2}} \,,\quad 
+  \omega_n = \tau_nv_n
+  \,.
+\end{equation}
+Then from \refeq{eq:ks_prop1_left} we have 
+\[
+  (v, v)_{\gamma\Phi} \ge 2L \left(\sum_{k>0}\omega_k^2 + 2\gamma \sum_{k>l>0}
+    \omega_k\frac{\psi_{k+l} - \psi_{|k-l|}}{\tau_k\tau_l}\omega_l
+  \right)
+  \,.
+\]
+and \refeq{eq:ks_prop1_right} becomes
+\[
+  \frac{1}{4}\int (v_{xx}^2 + v^2) = L \sum_{k>0}\omega_k^2
+  \,.
+\]
+In order to
+make $(v, v)_{\gamma\Phi} \ge \frac{1}{4}\int (v_{xx}^2 + v^2)$, we need to prove 
+\[
+  \sum_{k>0}\omega_k^2 + 4\gamma \sum_{k>l>0}
+  \omega_k\frac{\psi_{k+l} - \psi_{|k-l|}}{\tau_k\tau_l}\omega_l > 0
+\]
+for $\gamma \in [1/4, 1]$.
+One sufficient but not necessary condition is
+\[
+  \sum_{k>l>0} \left|\frac{\psi_{k+l} - \psi_{|k-l|}}{\tau_k\tau_l} \right|^2 < \frac{1}{16}
+  \,.
+\]
+Now, we show that the above relation is valid given the choice of $\psi_k$
+in \refeq{eq:ks_prop1_phi}.
+
+\begin{align*}
+  &\sum_{k>l>0}\left|\frac{\psi_{k+l} - \psi_{|k-l|}}{\tau_k\tau_l}\right|^2\\
+  & = \sum_{m=1}^\infty \tau_m^{-2} \sum_{k=m+1}^\infty (\psi_{k+m} - \psi_{k-m})^2 
+    \tau_k^{-2} \\
+  & \le \frac{16}{M^2} \sum_{m=1}^M m^2\tau_m^{-2} \sum_{k=2M-m+1}^\infty 
+    \tau_k^{-2} + 
+    \frac{16}{M^2} \sum_{m=M+1}^\infty m^2\tau_m^{-2} \sum_{k=m+1}^\infty 
+    \tau_k^{-2}     \\
+  & \le \frac{16}{M^2} \sum_{m=1}^M m^2\tau_m^{-2} \int_{2M-m}^\infty 
+    \tau_k^{-2} dk + 
+    \frac{16}{M^2} \sum_{m=M+1}^\infty m^2\tau_m^{-2} \int_{m}^\infty 
+    \tau_k^{-2} dk    \\
+  & = \frac{32}{M^2} \sum_{m=1}^M m^2\tau_m^{-2} \int_{2M-m}^\infty 
+    \frac{1}{q^4k^4+1} dk + 
+    \frac{32}{M^2} \sum_{m=M+1}^\infty m^2\tau_m^{-2} \int_{m}^\infty 
+    \frac{1}{q^4k^4+1} dk    \\
+  & \le \frac{32}{M^2} \sum_{m=1}^M m^2\tau_m^{-2} \int_{2M-m}^\infty 
+    \frac{1}{q^4k^4} dk + 
+    \frac{32}{M^2} \sum_{m=M+1}^\infty m^2\tau_m^{-2} \int_{m}^\infty 
+    \frac{1}{q^4k^4} dk    \\
+  & = \frac{32}{3M^2q^4} \sum_{m=1}^M m^2\tau_m^{-2} \frac{1}{(2M-m)^3}+ 
+    \frac{32}{3M^2q^4} \sum_{m=M+1}^\infty m^2\tau_m^{-2}
+    \frac{1}{m^3}    \\
+  & \le \frac{32}{3M^5q^4} \sum_{m=1}^M m^2\tau_m^{-2}  + 
+    \frac{32}{3M^2q^4} \sum_{m=M+1}^\infty m^{-1}\tau_m^{-2}   \\
+  & \le  \frac{64}{3M^5q^4} \int_{0}^\infty \frac{m^2}{q^4m^4+1} dm  + 
+    \frac{64}{3M^2q^4} \int_{M}^\infty \frac{1}{m(q^4m^4+1)} dm  \\
+  & \le  \frac{64}{3M^5q^4} \int_{0}^\infty 
+    \frac{m^2}{(q^4m^4+1)^{1/2}(q^4m^4)^{1/2}} dm  + 
+    \frac{64}{3M^2q^4} \int_{M}^\infty \frac{1}{m(q^4m^4)} dm  \\
+  & \le  \frac{64}{3M^5q^6} \int_{0}^\infty 
+    \frac{1}{(q^4m^4+1)^{1/2}} dm  + 
+    \frac{16}{3M^6q^8} \\
+  & = \frac{64}{3M^5q^6} \frac{4\Gamma(\frac{5}{4})^2}{\sqrt{\pi}q} +
+    \frac{16}{3M^6q^8} \\
+  & < \frac{128}{3M^5q^7}  + \frac{16}{3M^6q^8}
+    \,.
+\end{align*}
+We choose $M$ to be the smallest integer larger than $4q^{-7/5} = 4(L/2\pi)^{7/5}$,
+then
+\[
+  \frac{128}{3M^5q^7}  + \frac{16}{3M^6q^8} 
+  < \frac{128}{3\cdot 4^5} + \frac{16}{3\cdot 4^6 q^{-2/5}}
+  < \frac{11}{256} < \frac{1}{16}
+  \,.
+\]
+In the above derivation, we have used the fact that $q = 2\pi/L < 1$.
+Also, note that the choice of $M$ here satisfies the requirement 
+\refeq{eq:ks_prop1_m}.
+Therefore, \refeq{eq:ks_prop_1} in proposition \ref{PROP:KS1}
+is validated. Now we turn to the proof of 
+\refeq{eq:ks_prop_2}.
+
+\begin{align*}
+  (\Phi, \Phi)_{\gamma \Phi} 
+  & = \int_{0}^L \Phi(\partial^2_{x} + \partial^4_x) \Phi dx\\ 
+  & = -\int_0^L \Phi_x(\partial_x + \partial^3_x) \Phi dx \\
+  & = - \int_0^L \sum_{m, n} \psi_m (1 - n^2q^2) \psi_n e^{i(m+n)qx} dx \\
+  & = 2L \sum_{n=1}^\infty(n^2q^2-1)\psi_n^2 \\
+  & = 2L \left(\sum_{n=1}^{2M}(n^2q^2-1)16 +
+    \sum_{n=2M+1}^\infty(n^2q^2-1)16f^2(\frac{n}{2M}-1)
+    \right) \\
+  & \le 32L \left( 2M (2M)^2 q^2 + 
+    \int_{2M+1}^\infty dn (n^2q^2-1)f^2(\frac{n}{2M}-1)
+    \right ) \\
+  & \le 32L \left( 8M^3q^2 + 
+    \int_{0}^\infty dn 2M((n+1)^24M^2q^2-1)f^2(n)
+    \right) \\
+  & \le 256LM^3q^2 \left(1 + 
+    \int_{0}^\infty dn (n+1)^2f^2(n)
+    \right) \\
+  & =  256L\left(4(\frac{2\pi}{L})^{-7/5}\right)^3 \left(\frac{2\pi}{L}\right)^2
+    \left(1 + 
+    \int_{0}^\infty dn (n+1)^2f^2(n)
+    \right) \\
+  & =  KL^{16/5}\left(1 + 
+    \int_{0}^\infty dn (n+1)^2f^2(n)
+    \right) \,.
+\end{align*}
+From \refeq{eq:ks_prop1_f}, we know that \refeq{eq:ks_prop_2} is verified.
+Thus, we finish the proof of proposition \ref{PROP:KS1}.
+
+% \[
+%   \Phi = \sum_{n \neq 0} \frac{\psi_n}{inq} e^{inq}
+% \]
+% \begin{align*}
+%   \int \Phi^2 
+%   & = \int \sum_{n\neq 0}\sum_{ m \neq 0} 
+%     \frac{\psi_m\psi_n}{-nmq^2} e^{i(m+n)qx} \\
+%   & = L \sum_{n\neq 0} \frac{\psi_n^2}{n^2q^2} =
+%     2L \sum_{n=1}^\infty \frac{\psi_n^2}{n^2q^2} 
+%     = \frac{L}{2q^2} \sum_{n=1}^\infty \frac{\psi_{2n}^2}{n^2} \\
+%   & = \frac{8L}{q^2} \left(
+%     \sum_{n=1}^M \frac{1}{n^2} + \sum_{n=M+1}^\infty f^2(\frac{n}{M} - 1)
+%     \right) \\
+%   & \le \frac{8L}{q^2} \left(
+%     \frac{\pi^2}{6} + \int_{M+1}^\infty f^2(\frac{n}{M} - 1)
+%     \right) \\
+%   & \le \frac{8L}{q^2} \left(
+%    \frac{\pi^2}{6} + M\int_0^\infty f^2(n)
+%    \right)
+% \end{align*}
+

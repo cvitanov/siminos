@@ -1,0 +1,181 @@
+\section{Symmetries}
+\label{sect:kssym}
+
+The one\dmn\ \KSe\ has three different
+symmetries. Suppose $u(x, t)$ is an orbit in this system, then we have
+\begin{itemize}
+\item \emph{Galilean invariance}: $u(x-ct,t)+c$ is also a
+  valid orbit, where c is a constant
+  number. These two orbits have different mean velocity
+  $\int dx\, u$.
+\item \emph{Reflection invariance}:   $-u(-x,t)$ is also a valid orbit.
+  In the Fourier mode space, reflection takes form $a_k \to -a_k^{*}$.
+\item \emph{Translation invariance}: $u(x+\ell,t)$ is another valid orbit.
+  In the Fourier mode space, translation takes form $a_k \to e^{iq_k\gSpace} a_k$
+  with $\gSpace = 2\pi \ell/L$.
+\end{itemize}
+The zeroth Fourier mode $a_{0}$ represents the
+mean velocity of $u(x, t)$. by setting $a_{0}=0$ in the integrator,
+we eliminate the Galilean symmetry.
+Therefore, we only need to account for the \On{2} symmetry of this system.
+Reflection in \statesp\ \eqref{eq:fourierspace} takes the form
+\[
+  R=\diag(-1,\, 1, \, -1, \, 1,\cdots)
+  \,.
+\]
+The translation symmetry corresponds to an one-parameter \SOn{2}
+group in the \statesp,
+\[
+  \LieEl(\gSpace)=\diag(r_{1},r_{2},\cdots,r_{N/2-1})
+\]
+with
+\[
+  r_{k}=
+  \begin{pmatrix}
+    \cos k\gSpace & \sin k\gSpace \\
+    -\sin k\gSpace & \cos k\gSpace
+  \end{pmatrix}
+  %,\quad k=1,2,\cdots,N/2-1
+  \,.
+\]
+The corresponding Lie group generator is
+\[
+  \Lg= \diag(t_{1},t_{2},\cdots,t_{N/2-1}),\quad
+  t_{k}=
+  \begin{pmatrix}
+    0 & k \\
+    -k & 0
+  \end{pmatrix}
+  \,.
+\]
+Based on the consideration of these symmetries,
+there are three types of invariant orbits in \KS\ system: \po s in the
+$b_k=0$ invariant antisymmetric subspace, pre\po s which are self-dual
+under reflection,
+and \rpo s with a shift along group orbit after one
+period. As claimed in \refref{SCD07}, the first type is absent for a domain
+as small as $L=22$, and thus we focus on the last two types of orbits.
+\begin{itemize}
+\item
+  For pre\po s $\cssp(0)=R\cssp(\period{p})$ , we only need to evolve
+  the system for a prime period $\period{p}$ which is half of the whole
+  period. The Floquet matrix is
+  $\jMps_{p}(\cssp)=R\jMps^{\period{p}}(\cssp)$.
+\item
+  A \rpo,
+  $\cssp(0)=\LieEl_p\cssp(\period{p})$, returns after one period
+  $\period{p}$ to the initial state upon the group transform
+  $\LieEl_p=\LieEl(\gSpace_p)$, so the corresponding Floquet matrix is
+  $\jMps_p(\cssp)=\LieEl_p\jMps^{\period{p}}(\cssp)$.
+\end{itemize}
+In later sections, we calculate the stability of both pre\po s
+and \rpo s. We anticipate that there are two marginal directions
+for both types of orbits. One marginal direction corresponds to the
+velocity field and the other one is the group tangent, which is
+proved in \refexam{exam:KSmarginal}.
+%%%%% example start %%%%%
+\exampl{
+  $\vel(\cssp)$ and $\groupTan(\cssp)$ are the two marginal directions
+  of both pre\po s and \rpo s}{
+  \label{exam:KSmarginal}
+  The \JacobianM\ transports both velocity field and group tangent along the
+  flow $\jMps^{\period{p}}\vel(\cssp(0)) = \vel(\cssp(\period{p}))$,
+  $\jMps^{\period{p}}\groupTan(\cssp(0)) = \groupTan(\cssp(\period{p}))$.
+  Therefore, for pre\po s, we have
+  $\jMps_p\vel(\cssp(0)) = R\vel(\cssp(\period{p}))
+  =R\vel(R\cssp(0))$.
+  Here, we have used the definition of a pre\po\ and the form of
+  its Floquet matrix. By use of the equivariance relation of
+  the velocity field
+  under reflection $\vel(R\cssp(0)) = R\vel(\cssp(0))$, we get
+  \[
+    \jMps_p\vel(\cssp(0)) = R \cdot R\vel(\cssp(0)) = \vel(\cssp(0))
+    \,.
+  \]
+  So, we see that the velocity field is one marginal direction of pre\po s
+  with Floquet multiplier $1$. Similarly, for the group tangent we have
+  $\jMps_p\groupTan(\cssp(0)) = R\groupTan(R \cssp(0)) =
+  R \cdot \Lg \cdot R \cssp(0) $ following definition \refeq{eq:gTan}.
+  Since reflection anti-commutes with rotation $R\Lg + \Lg R = 0$, then
+  we have
+  \[
+    \jMps_p\groupTan(\cssp(0)) = -\Lg \cdot R \cdot R \cssp(0) =
+    -\groupTan(\cssp(0))
+    \,.
+  \]
+  Therefore, the group tangent is also a marginal direction of pre\po s
+  but with Floquet multiplier $-1$.  A group tangent reverses direction
+  after one period for pre\po s.
+
+
+  For \rpo s, by a similar process we have
+  \[
+    \jMps_p\vel(\cssp(0)) = \LieEl_p \vel( \LieEl_p^{-1} \cssp(0)) = \vel(\cssp(0))
+  \]
+  and
+  \[
+    \jMps_p\groupTan(\cssp(0)) = \LieEl_p \groupTan( \LieEl_p^{-1} \cssp(0))
+    = \groupTan(\cssp(0))
+    \,.
+  \]
+  So, the velocity field $\vel(\cssp)$ and the group tangent  $\groupTan(\cssp)$
+  are two degenerate \Fv s for \rpo s, but not degenerate for
+  pre\po s.
+}
+%%%%% example end %%%%%
+In order to reduce \On{2} symmetry, we can choose to
+reduce reflection symmetry first and then translation
+symmetry, or vice versa.
+Note that reflection does not commute with translation
+$R\LieEl(\gSpace) = \LieEl(-\gSpace)R$,
+so the result of symmetry reduction depends on the order
+we choose.
+In this section, we elect to quotient out the \SOn{2} symmetry
+by the technique described in \refsect{sec:symReduce},
+more precisely, by the 1st mode slice\rf{BudCvi14}
+defined by
+\begin{equation}
+  \label{eq:ksslice}
+  c_1 = 0 ,\, b_1 >0
+  \,.
+\end{equation}
+This corresponds to choosing
+$\slicep = (1, 0,\cdots, 0)$ as the template point
+in \refeq{eq:slice}.
+The reduced \statesp\ is denoted as
+\begin{equation}
+  \label{eq:KSspred}
+  \sspRed=(\hat{b}_{1}, \hat{b}_{2}, \hat{c}_{2},\cdots, \hat{b}_{N/2-1}, \hat{c}_{N/2-1})^\top
+  \,.
+\end{equation}
+Here, $\hat{c}_{1} = 0$ is omitted explicitly.
+We can rotate orbits in the full \statesp\ to
+the \SOn{2}-reduced \statesp\ by transformation
+$a_k \to e^{-ik\gSpace_1}a_k$ where $\gSpace_1$ is the phase of the first Fourier mode.
+Alternatively, we can choose to integrate the system directly in the slice.
+For a reduced \statesp\ point \refeq{eq:KSspred}, which is
+a $(N-3)$-element vector, the corresponding group tangent in the full
+\statesp\ is
+$\groupTan(\sspRed) = (0, -\hat{b}_{1}, 2\hat{c}_{2}, -2\hat{b}_{2}, \cdots,
+(N/2-1)\hat{c}_{N/2-1}, -(N/2-1)\hat{b}_{N/2-1})^\top$.
+The template point is $\slicep=(1,0,\cdots,0)$;
+then the corresponding group tangent is $\sliceTan{} = (0, -1, 0, \cdots, 0)$.
+From \refeq{MFdtheta}
+we get the dynamics in the slice
+\[
+  \velRed(\sspRed) = \vel(\sspRed)
+  \,-\, \dot{\gSpace}(\sspRed) \groupTan(\sspRed)
+  \,,\quad
+  \dot{\gSpace}(\sspRed) = \frac{-\Im[\vel_1(\sspRed)] }{ \hat{b}_{1} }
+  \,.
+\]
+When an in-slice orbit gets close to the slice border $\hat{b}_1 = 0$,
+the trajectory can attain arbitrarily high speed.
+To alleviate this numerical difficulty,
+we rescale the time step by $dt=\hat{b}_1 d\tau$.
+Thus the time-rescaled dynamics in the slice is
+\begin{equation}
+  \label{eq:ksRescale}
+  \frac{d \sspRed}{d\tau} = \hat{b}_1 v(\sspRed) + \mathtt{Im}[v_1(\sspRed)] t(\sspRed)
+  \,.
+\end{equation}

@@ -1,0 +1,724 @@
+% siminos/blog/lit.tex
+% $Author: predrag $ $Date: 2017-08-09 21:37:57 -0400 (Wed, 09 Aug 2017) $
+
+\chapter{Literature}
+\label{c:lit}
+
+\begin{description}
+
+\item[2012-01-10 Predrag] Collecting papers to read, and our notes on them in
+this chapter.
+
+\end{description}
+
+\section{Heteroclinic connections literature}
+
+Do literature review of algorithms to
+compute \hec s.
+
+\begin{description}
+
+\item[2008-04-22 ES]
+{\bf Locating \hec s}
+
+I recently tried to locate \hec s in Lorenz equations. One
+can easily see that the 2-dimensional unstable manifold of $\EQV{1}$ intersects the
+$2-$dimensional stable manifold of $\EQV{0}$ and thus there should be such connections.
+As I couldn't find Predrag's secret method documented somewhere I followed a simple
+shooting approach.
+
+Although a heteroclinic orbit is an infinite-time orbit it is sufficient to
+pin down a finite time segment of the orbit originating at the linear unstable subspace $E_u^{(1)}$
+of $\EQV{1}$ and ending at the linear stable subspace $E_s^{(0)}$ of $\EQV{0}$. Those
+requirements can be expressed as the boundary value problem:
+\bea
+   x(0) & = & \EQV{1}+ \epsilon \Re(\mathbf{e}_1^{(1)}) \, \label{eq:shootHetIC} \\
+   P_1^{(0)} (x(T)-\EQV{0}) & = &  0 \,. \label{eq:shootHetBC}
+%% P_2^{(0)} (x(T)-\EQV{0}) & = &  d_2 \,. \label{eq:shootHetFixT} %% Not needed for Lorenz
+\eea
+
+Eq. \refeq{eq:shootHetIC} imposes the requirement that we start on the unstable subspace of $\EQV{1}$.
+Alternatively we could have used as a search space a circle of radius $\epsilon$ on the plane defined
+by orthonormalizing $\left(\Re(\mathbf{e}_1^{(1)}),\Im(\mathbf{e}_1^{(1)})\right)$, parametrized by some
+angle $\theta$. Eq. \refeq{eq:shootHetBC} imposes the condition that the final point on the trajectory is
+on the stable manifold of $\EQV{0}$. Here
+\beq
+   P_j^{(0)}= \prod_{i\neq j}^d \frac{\mathbf{A}(\EQV{0})-\lambda_i^{(0)} \mathbf{1}}{\lambda_j^{(0)}-\lambda_i^{(0)}}\,,
+\eeq
+is projection operator on the $j$'th eigendirection of the linear stability matrix $\mathbf{A}$ at $\EQV{0}$.
+%Condition \refeq{eq:shootHetFixT} needs to be imposed due to the time-translational invariance of the
+%equations. It corresponds to restricting the final point on a \PoincSec\ $\PoincS$ transverse to
+%the least contracting eigendirection of $\mathbf{A}(\EQV{0})$. For Lorenz this would be a plane normal
+%to the $z$-axis at distance $d_2$ from $\EQV{0}$.
+\ES{According to Predrag's notation the left hand side
+of equation \refeq{eq:shootHetBC} %%and \refeq{eq:shootHetFixT}
+is a scalar.}
+
+To solve the boundary value problem I have used Newton's method to refine a guess for $\epsilon_n$. %and $T_n$
+%based on the linearization:
+%\beq
+%  f^{T_{n+1}}(x_{n+1}) \simeq f^{T_n}(x_n) + \mathbf{J}^{T_n}(x_n) \Re(\mathbf{e}_1^{(1)})\delta\epsilon\,, %+ v(f^{T_n}(x_n)) \delta T
+%\eeq
+%and imposing condition \refeq{eq:shootHetBC} % and \refeq{eq:shootHetFixT}
+%on $f^{T_{n+1}}(x_{n+1})$.
+Predrag suggests using the linear approximation of the flow to analytically continue the heteroclinic
+orbits after period $T$ and impose the condition that this analytic solution ends up on the equilibrium.
+I cannot see why this is necessary here. The condition \refeq{eq:shootHetBC} guarantees that the solution
+is on the linear approximation of the stable manifold of $\EQV{0}$ and thus will end up on $\EQV{0}$.
+Essentially this is the analytic part of the problem and no more needs to be done. The accuracy of the
+method is limited by the approximation of the local stable manifold of $\EQV{0}$ and the local unstable
+manifold of $\EQV{1}$ by the corresponding linear unstable subspaces, \ie, by planes in the case of Lorenz
+equations. One can estimate the distance of minimum approach to $\EQV{0}$ by using the expressions for
+the linearized flow. Disregarding the strongly contracting eigendirection $e_3^{(0)}$ I find:
+\beq
+   r_{min}^2= d_2^2\left(1-\frac{\lambda_2}{\lambda_1}\right)\left(\-\frac{d_1^2 \lambda_1}{d_2^2\lambda_2}\right)^{-\frac{\lambda_2}{\lambda_1-\lambda_2}}
+\eeq
+where $d_1=P_1^{(0)} (x(T)-\EQV{0})$ and $d_2=P_2^{(0)} (x(T)-\EQV{0})$ \ES{Predrag might want to compare
+this against his secret notes.}. I use this to compare with the actual minimum distance from $\EQV{0}$ and
+evaluate the validity of the linear approximation of the stable manifold.
+
+In \refref{FriedmanDoedelConnections91} the authors present a
+method for computation and continuation of \hec s
+similar in spirit but in a more general setting.
+They suggest that a condition breaking the time-translational
+invariance should be used along with \refeq{eq:shootHetBC}.
+Here, \refeq{eq:shootHetIC} is formulated in a way that
+excludes variation in the initial conditions in the direction
+of the flow and we need not impose an extra condition.
+
+It works well for Lorenz equations but fails to converge for ZM.
+
+
+\item[2015-02-16 Predrag]
+Are
+``\HREF{http://meetings.siam.org/sess/dsp\_programsess.cfm?SESSIONCODE=6204}
+{Robust Heteroclinic Cycles}" relevant to our \hec s?
+
+\item[2014-05-21 ]
+A recent review of `freezing': {\em Stability and
+    Computation of Dynamic Patterns in PDEs}, by Beyn, Otten and
+    Rottmann-Matthes\rf{BeOtRo14}
+    (\HREF{http://ChaosBook.org/library/BeOtRo14.pdf} {click here}).
+
+\item[2016-07-27 Predrag] If interested in computation of stable/unstable
+manifolds: H\"uls\rf{Huls16,BeyHuls14} {\em On the approximation of stable and
+unstable fiber bundles of (non)autonomous ODEs -- A contour algorithm}
+has some nice plots.
+
+
+\item[2017-03-03 Predrag]
+Pascal Chossat, Alexander Lohse and Olga Podvigina
+{\em Pseudo-simple heteroclinic cycles in $R^4$},
+\arXiv{1702.08731},
+looks worth a look. They write: ``
+  We study pseudo-simple heteroclinic cycles for a $\Gamma$-equivariant system
+in $R^4$ with finite $\Gamma\subset O(4)$, and their nearby dynamics. In
+particular, in a first step towards a full classification - analogous to that
+which exists already for the class of simple cycles - we identify all finite
+subgroups of $O(4)$ admitting pseudo-simple cycles. To this end we introduce a
+constructive method to build equivariant dynamical systems possessing a robust
+heteroclinic cycle. Extending a previous study we also investigate the
+existence of periodic orbits close to a pseudo-simple cycle, which depends on
+the symmetry groups of equilibria in the cycle. Moreover, we identify subgroups
+$\Gamma\subset O(4)$, $\Gamma\not\subset SO(4)$, admitting fragmentarily
+asymptotically stable pseudo-simple heteroclinic cycles. (Recall, that for
+$\Gamma\subset SO(4)$ pseudo-simple cycles generically are completely
+unstable.) Finally, we study a generalized heteroclinic cycle, which involves a
+pseudo-simple cycle as a subset.
+    '
+\item[2017-08-09 Predrag]
+Downloaded
+Haro, Canadell, Luque, Mondelo, and Figueras\rf{HCFLM16}
+{\em The Parameterization Method for Invariant Manifolds},
+might come in handy.
+
+
+\end{description}
+
+
+
+
+\section{Symmetry literature}
+\label{sec:symmLit}
+
+\begin{description}
+
+\item[2015-02-16 Predrag]
+% Predrag 2013-04-20 moved to here from DOGS/saldana/blog.tex
+% \section{Freezing solutions of equivariant evolution equations}
+% \label{s:BeTh04}
+Worth a read: Beyn and Th\"ummler\rf{BeTh04}. Their papers are
+available under `Preprints' link on
+\HREF{http://www.math.uni-bielefeld.de/~beyn/AG_Numerik/html/en/preprints/index.html}
+{Beyn website}. Read also my notes in \refchap{c-excite}, and the
+Chaosook   refrem {rem:SSLieGr} ``A brief history of relativity.''
+
+\item[2010-06-05 Predrag]
+I have read Beyn and Th\"ummler\rf{BeTh04} and believe ``freezing'' =
+``slicing''. Siminos and I have Hermann and Gottwald\rf{HerGot10} on our
+reading list, but have not studied it yet. Beyn and Th\"ummler impose a
+slice by adding a new dimension (the phase parameter) and a condition (a
+Lagrange multiplier), while we go one dimension down by restricting the
+dynamics into the slice. Both approaches are standard in imposing
+\PoincSec s; Rytis Paskauskas has written that up for Chapter 3 -
+Discrete time dynamics (not yet on the public version), and Chapter 13 -
+Fixed points, and how to get them, Section 13.4 Flows. My feeling is that
+Beyn and Th\"ummler is better, but we have not implemented it.
+
+\item[2009-12-23 Predrag]
+    \PC{this entry is repeated around \refeq{parabolicPDE}, keep only one}
+Went to Bielefeld, talked to
+\HREF{http://www.math.uni-bielefeld.de/~beyn/AG_Numerik/html/en/people/}
+{Wolf-J\"urgen Beyn}. Beyn
+and his former PhD student Vera Th\"ummler\rf{BeTh04,Thum05} `freeze'
+traveling waves. Their papers are mathematical, proving existence of spectra etc.,
+but also applied to numerical examples. Scalar Nagumo equation is a good
+testing ground, as one of the traveling wave solutions is known
+analytically.
+
+Beyn did his `freezing' at the same time as Rowley and
+Marsden\rf{rowley_reduction_2003}, but they published first (a
+year earlier?), so \refref{BeTh04} cites their `reconstruction
+equation.' Beyn does not understand the `method of
+connections,' either.
+
+To understand why they call it `freezing' the figures are useful,
+and especially the animations, like
+\HREF{http://www.mathematik.uni-bielefeld.de/fgweb/Preprints/movies/fg03022_02.mpg}
+{this one}. Of course, a turbulent state will not be 'frozen,'
+but much of the hysterical fast drifting will be gone.
+
+Beyn group\rf{BeTh04}  research focuses on the numerical
+computation and stability of traveling wave solutions (and more
+generally relative equilibria) of reaction-diffusion systems on
+unbounded domains, \ie, of parabolic partial differential
+equations (PDEs). On the real line they are of the form
+\beq
+u_t = A \, u_{xx} + f(u,u_x)
+    \,,\quad
+u: \reals \times [0,\infty) \to \reals
+    \,,
+A \in \reals^{d,d}
+\,.
+\ee{parabolicPDE1}
+A traveling wave is a special type of
+a relative equilibrium of equivariant evolution equations,
+where the action is given by translation,
+   % \PC{copied this to ChaosBook}
+\beq
+\LieEl(\velRel) \, u(x)
+  = \hat{u}(x - \velRel t)\,,\quad  \velRel \in \reals^d
+\,,
+\ee{BeThTW1}
+$\hat{u}(x)$ is the waveform and $\velRel$ the velocity. In the
+comoving frame equations \refeq{parabolicPDE1} take form
+\beq
+\hat{u}_t
+ = A\, \hat{u}_{xx} + \velRel \, \hat{u}_x + f(\hat{u},\hat{u}_x)
+    \,,\quad
+\hat{u}_x \in \reals
+    \,,\;
+t \ge 0
+\,,
+\ee{comovingPDE1}
+with $\hat{u}(x)$ a stationary solution (the `freezing of the wave')
+\beq
+0= A \, \hat{u}{''} + \velRel \, \hat{u}{'} + f(\hat{u},\hat{u}{'})
+\ee{BeThREQV1}
+The pair $(\hat{u},\velRel$) is an equilibrium solution of the
+partial differential algebraic equation (PDAE)
+\refeq{BeThREQV1} which is constructed by inserting the co-moving
+frame ansatz into PDE and adding an {\em additional phase
+condition}. They say: ``By transforming the PDE into a
+corresponding PDAE (partial differential algebraic equation)
+via a freezing ansatz\rf{BeTh04} the relative equilibrium can
+be analyzed as a stationary solution of the PDAE.''
+
+Beyn finds Sandstede \etal\
+articles\rf{FiSaScWu96,SaScWu97,SaScWu99a,FiTu98}
+`remarkable.'
+Sandstede \etal\rf{SaScWu97} use center manifold reduction
+theory to study stability of \reqva. The main idea is to
+transform the flow into a `skew product' form. One part is
+orthogonal to the group orbit of the initial field $u(0)$, and
+the other part acts within the group orbit and depends upon the
+position in the orthogonal direction.
+
+{\bf ES 2009-12-23} This decomposition is important in Krupa\rf{Krupa90} study
+of bifurcations of relative equilibria, using a local slice. I think
+he also introduces the tubular neighborhood. The book by Chossat
+and Lauterbach\rf{ChossLaut00} gives a readable presentation
+and I need it to compare their stability analysis for \reqva\ with
+our Appendix, but I can't find it here.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\SFIG{BeThEquiTraj}
+{}{
+Two trajectories
+$\ssp(t)$, $\sspRed(t)$ are equivalent up to a group rotation
+$\LieEl(t)$ as long as they belong to the same group orbit
+$\pS_{\ssp(t)}$.
+}
+{fig:BeThEquiTraj}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+Beyn~\etal\rf{BeTh04} find it more convenient to make
+use of the equivariance by extending the system rather than
+reducing it as in bifurcation analysis, by adding an additional
+parameter and a phase condition. They too write the solution as
+${u}(t) = \LieEl(t)\,\hat{u}(t)$, see
+\reffig{fig:BeThEquiTraj}, a composition of the action of a
+time dependent group element $\LieEl(t)$ with a `frozen
+solution' $\hat{u}(t)$ in a given Banach space, with
+$\LieEl(t)$, $\hat{u}(t)$ to be determined. They keep the
+`frozen solution' as constant as
+possible%
+\PC{`As constant as
+possible' makes sense only for \reqva, not \rpo s which they do
+not discuss.} by introducing a set of algebraic constraints
+(phase conditions), $\psi(\hat{u}, \gSpace) = 0$, which fix the
+extra degrees of freedom. Their number is given by the
+dimension of the Lie group.
+
+
+The freezing approach\rf{BeTh04} applies to traveling
+waves and, more generally, to \reqva\rf{ChossLaut00,SaScWu99},
+solutions which are
+equilibria in an appropriately co-moving frame. They occur
+in systems with underlying symmetry, such as
+rotating waves on the real line and spiral waves in two space
+dimensions. An example of a system with `rotating waves on the
+real line' is the complex Ginzburg Landau equation, while
+spirals are typical of the reaction-diffusion systems.
+
+Consider an evolution equation in a Banach space $\pS$  of the form
+\beq
+u_t = \vel(u)
+\ee{BeThEvEq1}
+with an equivariant right hand side $\vel$, i.e.
+$\LieEl\,\vel(u) = \vel(\LieEl\,u)$ where $\LieEl : \Group \to
+GL(\pS), \gSpace \to \LieEl(\gSpace)$ denotes the action of a
+Lie group $\Group$ on  $\pS$. Here --in the parlance of applied
+mathematicians-- $\vel$ is defined on a dense subspace of some
+Banach space (generally infinite dimensional) and is
+equivariant with respect to the action of a finite dimensional
+(not necessarily compact) Lie group. In other words, the
+$\infty$-dimensional functional PDE \statesp\ is spanned by
+nicely shaped waveforms $u(x)$, nothing too kinky.
+
+The equation \refeq{BeThEvEq1}
+can be transformed via the ansatz
+$u(t) = \LieEl(t)\hat{u}(t)$ into the equivalent system
+\beq
+\hat{u}_t = \vel(\hat{u})
+  - \LieEl(\gSpace)^{-1} \LieEl_\gSpace(\gSpace) \, \hat{u} \lambda
+    \,,\qquad
+\lambda = \gSpace_t
+\,,
+\ee{BeThReconstr1}
+where subscripted quantities imply partial derivatives with
+respect to the subscript. Beyn~\etal\rf{BeTh04} then `freeze'
+the traveling wave by fixing a \slice, and using a dot product
+w.r.t. the group tangent at the slice point. The evolution of
+$\gSpace(t)$ describes the motion on the group manifold. They
+denote by $T_\gSpace \Group$ the tangent space of $\Group$ at
+$\gSpace$. Introducing Lagrange parameters $\lambda(t) =
+\LieEl_t(t) \in T_\gSpace \Group$ they impose `freezing ansatz'
+on the extended system of equations \refeq{BeThReconstr1}
+\beq
+\hat{u}_t = \vel(\hat{u})
+  - \LieEl(\gSpace)^{-1} \LieEl_\gSpace(\gSpace) \, \hat{u} \lambda
+    \,,\qquad
+0 = \pi(\hat{u},\lambda)
+\,,
+\ee{BeThSlice1}
+with a ``phase condition
+$\pi : \pSRed \times T_\gSpace \Group \to \reals^N$,
+$N= \mbox{dim }\Group$,
+which has to satisfy some regularity conditions.''
+They differentiate
+$
+h \circ \LieEl \, \hat{u}
+$
+with respect to $\LieEl$, define group tangent at unity
+$\groupTan \in \times T_1 \Group$, $\lambda = d\gSpace_l(1)
+\groupTan$ ($l$ for left multiplication), and with some algebra
+I'm too bored to type arrive at the extra equation(s)
+\[
+ 0= \psi(\hat{u},\groupTan) = \pi(\hat{u},d\gSpace_l(1) \groupTan)
+\,,
+\]
+which - if I've decoded it right - is the ChaosBook slice condition.
+
+Their `freezing ansatz'\rf{BeTh04} appears to be identical
+to the Rowley and Marsden\rf{rowley_reduction_2003} and our
+slicing, except that `freezing' is formulated as an
+additional constraint, just as when we compute periodic
+orbits of ODEs we add \PoincSec\ as an additional
+constraint, \ie, increase the dimensionality of the problem
+by 1 for every continuous symmetry. They prefer it this
+way, as they are taking derivatives. They know that the
+slice is local and things can diverge.
+                                    \toCB
+
+They illustrate `freezing' by numerical computations for the
+quintic complex Ginzburg Landau equation (QCGL), which is
+equivariant w.r.t. the action of the group $(\LieEl_r,\LieEl_t)
+\in \Group = S^1 \times \reals$ on $u(x) \in \reals^2$. The
+action is given by translation in the domain and rotation in
+the image, i.e.
+    \PC{copy to continuous.tex - an example?}
+\bea
+\LieEl \, u(x) &=& R_{\LieEl_r^{-1}} u(x - \LieEl_t)
+    \,,\qquad
+R_{\LieEl_r^{-1}} =
+   \left(\barr{cc}
+   \cos\theta  &  \sin\theta   \\
+  -\sin\theta  &  \cos\theta
+   \earr\right)
+ \,,
+ \label{QCGLrotation}
+\eea
+where subscripts are now just subscripts,
+$r$ implying rotation and $t$ implying translation.
+
+They refer to Chap.~8 of Govaerts\rf{Govaerts00} for a review
+of numerical methods that employ equivariance with respect to
+compact, and mostly discrete groups.
+    \PC{copy to discrete.tex}                          \toCB
+% Predrag 2013-04-20: end of text moved to here from DOGS/saldana/blog.tex
+
+\item[2013-12-02 Predrag] notes on Shapere \& Wilczek\rf{ShWi06},
+microswimmers, \etc,
+are in \refchap{c:gauge}.
+
+
+\item[2012-02-25 Predrag]
+\HREF{http://www.massey.ac.nz/~rmclachl/}
+{McLachlan} \etal\rf{McLPerlQui03} write in
+{\em Lie group foliations: dynamical systems and integrators}
+(I added it to Zotero): ``
+Foliate systems are those which preserve some (possibly
+singular) foliation of phase space, such as systems with integrals,
+systems with continuous symmetries, and skew product systems. We study
+numerical integrators which also preserve the foliation.
+\toCB
+
+\begin{quote}
+The case in
+which the foliation is given by the orbits of an action of a Lie group
+has a particularly nice structure, which we study in detail, giving
+conditions under which all foliate vector fields can be written as the
+sum of a vector field tangent to the orbits and a vector field invariant
+under the group action.
+\end{quote}
+
+This allows the application of many techniques of
+geometric integration, including splitting methods and Lie group
+integrators.
+''
+
+\item[2012-03-26 Predrag]
+In \emph{Heteroclinic orbits in a spherically invariant system}
+Armbruster and Chossat\rf{ArCho91} look at some bifurcations with
+\On{3}-symmetry, might be a model to try slicing on in a non-abelian
+setting.
+
+\item[2012-06-13 Predrag]
+François Gay-Balmaz and Darryl D. Holm
+{\em Parameterizing interaction of disparate scales: Selective decay by
+Casimir dissipation in fluids}, \arXiv{1206.2607} say: ``
+The problem of parameterizing the interactions of disparate scales in
+fluid flows is addressed by considering a property of two-dimensional
+incompressible turbulence. The property we consider is selective decay,
+in which a Casimir of the ideal formulation (enstrophy in 2D flows)
+decays in time, while the energy stays essentially constant. This paper
+introduces a mechanism that produces selective decay by enforcing Casimir
+dissipation in fluid dynamics. [...] a general theory of selective decay
+is developed that uses the Lie-Poisson structure of the ideal theory.
+[...] may be useful in turbulent geophysical flows where it is
+computationally prohibitive to rely on the slower, indirect effects of a
+realistic viscosity, such as in large-scale, coherent, oceanic flows
+interacting with much smaller eddies.
+
+[...] From the viewpoint of Noether's theorem, energy is conserved in
+ideal fluid dynamics because of the time-translation symmetry of the
+Lagrangian in Hamilton's principle for ideal fluid motion. A second type
+of fluid conservation law arises via Noether's theorem because of
+relabelling symmetry of the Lagrangian. Relabelling symmetries smoothly
+transform the labels of the fluid parcels without changing the Eulerian
+quantities on which Hamilton's principle for ideal fluids depends. The
+conservation laws associated with relabelling symmetries are called
+Casimirs, because in the Hamiltonian formulation of ideal fluid dynamics
+in the Eulerian representation their Lie-Poisson brackets with any other
+functionals vanish identically. Thus, the Casimirs arise from a geometric
+symmetry of the Eulerian representation of ideal fluid dynamics. This
+relabelling symmetry is also responsible for Kelvin's circulation theorem
+in ideal fluid dynamics, which immediately leads to the conservation of
+the Casimirs for 2D ideal incompressible flow.
+
+The Kelvin circulation theorem and the associated Casimir conservation
+laws are kinematic, because they hold for any choice of Hamiltonian in
+the Eulerian representation. Energy conservation is dynamic.
+
+[...] The two types of ideal fluid constants of motion, energy and
+Casimirs, typically have quite different dependencies on spatial
+gradients of the solutions. Consequently, the interplay between them can
+be interpreted as an interaction between larger and smaller scales (or
+coherence lengths, or spectral wavenumbers).
+''
+
+It is all 2D Eulerian, and mathematics is heavy.
+
+\item[2013-11-23  Predrag] Moved all matters Gribov  to here to
+\\
+\texttt{gitHub.com} \texttt{reducesymm/QFT/Gribov.tex};
+if you have something to
+repost, blog it there, please.
+
+\item[2013-06-17 Predrag] Possibly of interest -
+{\em Relative equilibria and relative periodic solutions in systems with
+  time-delay and $S^{1}$ symmetry}, by Serhiy Yanchuk and Jan Sieber,
+  \arXiv{1306.3327}:
+``
+ We study properties of basic solutions in systems with dime delays and
+$S^1$-symmetry. Such basic solutions are relative equilibria (CW solutions) and
+relative periodic solutions (MW solutions). It follows from the previous theory
+that the number of CW solutions grows generically linearly with time delay
+$\tau$. Here we show, in particular, that the number of relative periodic
+solutions grows generically as $\tau^2$ when delay increases. Thus, in such
+systems, the relative periodic solutions are more abundant than relative
+equilibria. The results are directly applicable to, e.g., Lang-Kobayashi model
+for the lasers with delayed feedback. We also study stability properties of the
+solutions for large delays.
+''
+                                            \toCB
+\Reqva\ they call \emph{continuous waves} (CW), and \rpo s they call
+\emph{Modulated waves} (MW).
+
+\item[2013-06-17 Predrag] A bit of surrealistic reading. Our new
+graduate student, Kimberly Short, likes going to libraries, so I
+showed the Georgia Tech library.
+Big mistake - checked out a pile of book, including
+the {1995} {\em Nonlinear Mechanics, Groups and Symmetry}, by
+Mitropolsky and Lopatin\rf{MitLop95} from Ukraine. Sounds like what
+we do, right? They have a huge reference list mostly (post) Soviet -
+only author I recognize is Marsden, mentioned at the very end of the book:
+``In conclusion of this survey (375 pp. is ``short?''), ...''
+
+
+I think it is all about symmetry in perturbation problems, for which
+the unperturbed problem is linear. In Sect.~1.4.1 they define
+                                \toCB
+`invariant system'
+\beq
+\dot{\ssp'} = \vel{\ssp'}
+\ee{MitLop95-1.80}
+to be a system invariant under 1-parameter subgroup of transformation
+of group $\Group$, of form
+$\ssp = g(\ssp')= \exp(s\Lg)\ssp'$. The vector field associated with
+time evolution \refeq{MitLop95-1.80}, group transformation are
+respectively
+\[
+\mathbf{X} = \sum_i\vel_i\frac{\pde~}{\pde x_i}
+\,\qquad
+\mathbf{U} = \sum_i\Lg_i\frac{\pde~}{\pde x_i}
+\,.
+\]
+Their Theorem 1.9 states that system is invariant if the two vector
+fields commute,
+\(
+[\mathbf{X},\mathbf{U}]
+\,.
+\)
+The do not use 'Lie derivative' or other such western terms, though
+they do refer to Campbell-Hausdorff formula as `Campbell-Hausdorff'. The
+theory relies heavily on Campbell-Hausdorff expansions, whose
+use seems to be due to
+\HREF{https://en.wikipedia.org/wiki/Nikolay_Bogolyubov} {N. N.
+Bogoliubov}\rf{KryBog47,BogMit61}, the same one we know from quantum
+field theory. Krylov subspaces, however, refer to another
+\HREF{http://en.wikipedia.org/wiki/Alexei_Krylov} {Krylov}.
+
+\item[2013-09-17 Predrag]
+check out
+J\k{e}drzej \'Sniatycki\rf{Sniatycki13},
+ \emph{Differential Geometry of Singular Spaces and Reduction of Symmetry}.
+ The blurb says:
+``illustrates the power of the theory of
+subcartesian differential spaces for investigating spaces with
+singularities. Part I gives a detailed and comprehensive presentation of
+the theory of differential spaces, including integration of distributions
+on subcartesian spaces and the structure of stratified spaces. Part II
+presents an effective approach to the reduction of symmetries. Concrete
+applications covered in the text include reduction of symmetries of
+Hamiltonian systems, non-holonomically constrained systems, Dirac
+structures, and the commutation of quantization with reduction for a
+proper action of the symmetry group.''
+
+\item[2014-01-11 Predrag]
+I always wonder whether we should be reducing symmetries
+by averaging over group orbits (method of characters, used in
+my derivation of the {\Fd} in presence of continuous symmetries).
+Churchill, Kummer and Rod\rf{ChKuRo83} write in
+{\em On averaging, reduction, and symmetry in {Hamiltonian} systems}:
+The existence of periodic orbits for Hamiltonian systems at
+low positive energies can be deduced from the existence of nondegenerate
+critical points of an averaged Hamiltonian on an associated ``reduced
+space.'' The paper exploits discrete symmetries, including reversing
+diffeomorphisms, that occur in a given system. The symmetries are used to
+locate the periodic orbits in the averaged Hamiltonian, and thence in the
+original Hamiltonian when the periodic orbits are continued under
+perturbations admitting the same symmetries."
+
+\item[2014-04-18 Predrag]
+Dresselhaus \etal\ textbook\rf{Dresselhaus07}
+(\HREF{http://chaosbook.org/library/Dresselhaus07.pdf}{click here})
+is good on discrete
+and space (but not continuous) groups.
+The MIT~course~6.734
+\HREF{http://stuff.mit.edu/afs/athena/course/6/6.734j/www/group-full02.pdf}
+{online version} contains much of the same material.
+
+Chapter {\em 9. Space Groups in Real Space} is quite clear on matrix
+representation of space groups. The translation group $T$ is a normal
+subgroup of \Group\ and defines the Bravais lattice. The cosets by
+translation $T$ (set all all group elements obtained by all translations)
+form a factor group $\Group/T$, isomorphic to the point group $g$
+(rotations). All irreducible representations of \Group\ can be compounded
+from irreducible representations of $g$ and $T$.
+
+Section {\em 9.3 Two-Dimensional Space Groups}: In the international
+crystallographic notation, our hexagonal lattice \#17 is called $p6mm$,
+with point group $6mm$.
+\[
+g = \{
+E, C_6^+, C_6^-, C_3^+, C_3^-, C_2,
+\sigma_{d1}, \sigma_{d2}, \sigma_{d3},
+\sigma_{v1},\sigma_{v2}, \sigma_{v3}
+\}
+\]
+Prefix $p$ indicates that the unit cell is primitive (not centered). This
+is a simple or {\em symmorphic} group, which makes calculations easier.
+The Bravais lattice is two equilateral triangles, not sure how to relate
+it to our hexagonal `elementary cell'? A Brilloun zone? Bravais `unit cell'
+is illustrated in Fig.~E.2. ChaosBook `Fundamental
+domain' makes an appearance in Fig.~10.2.
+
+The main trick in quantum-mechanical calculations is to go to the
+\emph{reciprocal} space (see Fig.~E.2), in our case with the full
+$\Gamma$ point, $k=0$, wave vector symmetry (see Table~10.1), and `Large
+Representations'. This is something we have not tried in deriving the
+trace formula for deterministic diffusion.
+
+Sect. {\em 10.5 Characters for the Equivalence Representation} look
+like those for the point group, sort of. We should probably work
+out problems 10.1 and 10.2.
+
+\item[2014-04-20 Predrag]
+Mansfield\rf{Mansfield10}
+{\em A practical guide to the invariant calculus},
+(\HREF{http://ChaosBook.org/library/Mansfield10.pdf} {click here})
+looks like a friendly introduction to moving frames. She discusses
+special Euclidean group $SE(2)$ in some detail.
+
+\item[2014-10-03 Francesco Fedele]
+\HREF{http://www.math.umn.edu/~olver/} {Peter J. Olver} has a 2012 version of
+\HREF{http://www.math.umn.edu/~olver/sm_/mflc.pdf} {{\em Lectures on
+Moving Frames}}. And a boat called ``Aftermath''.
+
+These are a part of his {\em Symmetry and Moving Frames}
+\HREF{http://www.math.umn.edu/~olver/sm.html} {{\em Lecture Notes}}.
+The {\em Moving Frames in Applications}
+\HREF{http://www.math.umn.edu/~olver/sm_/mfslides.pdf} {slides} seem
+accessible and a particularly useful reading. Our problem has been the
+usual - it looks beautiful, but when it comes to our problems, we have
+not been able to figure out how to use what he describes in his books.
+
+Another interesting tidbit is Olver's
+\HREF{http://www.math.umn.edu/~olver/plag.html} {plagiarism case}. In
+a sense plagiarism of ChaosBook.org by the Serbian couple in Australia
+is worse, as the publisher is Springer.
+
+\item[2015-03-17 Predrag] Check out
+Yu Jiang, Hexi Baoyin, Xianyu Wang and Hengnian Li,
+\emph{Periodic Orbits, Chaos and
+    Manifolds near the Equilibrium Points in the Rotating
+    Plane-Symmetric Potential Field},
+\arXiv{1403.1967}
+
+\item[2015-09-15 Predrag] Kevrekidis article for Burak and Xiong to read:
+V. Achilleos, A. R. Bishop, S. Diamantidis, D. J. Frantzeskakis, T. P.
+  Horikis, N. I. Karachalios and P. G. Kevrekidis,
+\emph{The dynamical playground of a higher-order nonlinear Schr\"odinger
+  equation: from orbital connections and limit cycles to invariant tori and the
+  onset of chaos}, \arXiv{1509.03828}. They write: ``
+  The dynamical behavior of a higher-order nonlinear Schr\"odinger equation is
+found to include a very wide range of scenarios due to the interplay of
+higher-order physically relevant terms. The dynamics extends from
+Poincar\'e-Bendixson--type scenarios, in the sense that bounded solutions may
+converge either to distinct equilibria via orbital connections, or space-time
+periodic solutions, to the emergence of almost periodic and chaotic behavior.
+Suitable low-dimensional phase space diagnostics are developed and are used to
+illustrate the different possibilities and to identify their respective
+parametric intervals.''
+
+\item[2015-09-29 Predrag]
+Dhooge, and Govaerts and Kuznetsov\rf{DhGoKu03} {\em {MATCONT: A MATLAB}
+package for numerical bifurcation analysis of {ODEs}} looks like a nice
+piece of software for tracking bifurcations. I did not see from the
+article how high can one realistically go in the \statesp\ dimension.
+Available \HREF{http://sourceforge.net/projects/matcont/} {here}.
+See also \refrefs{DWRGK13,Govaerts00,Kuzn04,homcont,auto,KuKuSa05}
+Abstract:
+``MATCONT is a graphical MATLAB software package for the interactive
+numerical study of dynamical systems. It allows one to compute curves of
+equilibria, limit points, Hopf points, limit cycles, period doubling
+bifurcation points of limit cycles, and fold bifurcation points of limit
+cycles. All curves are computed by the same function that implements a
+prediction-correction continuation algorithm based on the Moore-Penrose
+matrix pseudo-inverse. The continuation of bifurcation points of
+equilibria and limit cycles is based on bordering methods and minimally
+extended systems. Hence no additional unknowns such as singular vectors
+and eigenvectors are used and no artificial sparsity in the systems is
+created. The sparsity of the discretized systems for the computation of
+limit cycles and their bifurcation points is exploited by using the
+standard Matlab sparse matrix methods. The MATLAB environment makes the
+standard MATLAB Ordinary Differential Equations (ODE) Suite interactively
+available and provides computational and visualization tools; it also
+eliminates the compilation stage and so makes installation
+straightforward. Compared to other packages such as AUTO and CONTENT,
+adding a new type of curves is easy in the MATLAB environment.''
+
+\item[2015-09-29 Burak]
+I used MATCONT initially for tracking bifurcations in \KS\ (see
+\texttt{ksRecycled/tex/}), it has a graphical interface, which is user
+friendly, but there were a lot of bugs and crashes, so I ended up coding
+everything in python. I could have probably used command line interface of
+MATCONT but I find working with ipython notebooks much more convenient.
+In terms of dimensions, MATCONT does not have an upper limit and providing an
+explicit stability matrix or higher order derivatives is optional. However, I
+don't think it can handle dimensions, at which one would need Newton-Krylov
+methods.
+
+\item[2013-02-16 Predrag]
+\HREF{https://www.math.uni-bielefeld.de/~beyn/AG_Numerik/html/en/preprints/sfb_13_020.html}
+{This} might be of interest\rf{BeOtRo14}: ``Stability and
+Computation of Dynamic Patterns in PDEs'', by Wolf-J\"urgen Beyn and
+Denny Otten and Jens Rottmann-Matthes.
+
+\item[2014-05-21 Predrag]
+A recent review of `freezing': {\em Stability and
+    Computation of Dynamic Patterns in PDEs}, by Beyn, Otten and
+    Rottmann-Matthes\rf{BeOtRo14}
+    (\HREF{http://ChaosBook.org/library/BeOtRo14.pdf} {click here}).
+
+\item[2016-07-27 Roman]
+I had a couple of useful discussions with Beyn during the conference in
+Berlin. He has an alternative approach to local symmetry reduction (based
+on partition of unity). There are some advantages and some
+disadvantages to it, which might be worth pointing out. Either way, it
+would be useful to do some comparison of his approach with tiling in
+Marcotte thesis.
+
+\end{description}

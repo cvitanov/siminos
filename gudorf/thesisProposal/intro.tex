@@ -1,0 +1,79 @@
+% siminos/gudorf/thesisProposal/intro.tex
+% $Author: predrag $ $Date: 2019-01-14 17:05:18 -0500 (Mon, 14 Jan 2019) $
+\newpage
+\section{Introduction}
+\label{section:Introduction}
+
+\subsection{Literature review}
+\label{subsection:lit_review}
+Nonlinear dynamics, chaotic partial differential equations,
+and other related disciplines greatly benefit from accessability to computing power.
+Solutions almost always need to be determined numerically, as the equations usually
+lack analytic solutions.
+
+Some great advances were made by combining custom numerical codes
+with the ideas from periodic orbit theory and dynamical systems theory.
+Two commonly used codes for incompressible shear flows, \texttt{openpipeflow}\rf{openpipeflow} and
+\texttt{Channelflow}\rf{channelflow}. These libraries are used by many to study incompressible
+shear flows with either cylindrical pipe or plane-Couette geometry.
+
+With these codes, periodic orbits and
+equilibria of the respective equations can be found numerically\rf{W01,WK04}.
+The number and impact of the studies that utilize these computational codes
+is impressive to say the least; however, their returns are diminishing
+over time and the next step forward is not obvious. This difficulty and ambiguity
+is the motivating force behind this body of work.
+
+This study will be dedicated to the \KSe{}, a partial differential equation (PDE)
+that describes reaction-diffusion phenomena.
+A common interpretation is that it models the velocity field
+of a circular laminar flame front, e.g. the flames of a bunsen burner.
+Previous studies of the \KSe{} have covered a wide range of topics, including
+but not limited to: the geometry of the \KSe\,'s
+state-space\rf{SCD07}, its unstable recurrent patterns\rf{lanCvit07},
+the dimension of an inertial manifold\rf{DCTSCD14},
+the existence and bifurcations of steady solutions\rf{Mks86,DoLa14},
+families of solutions and bifurcation analysis\rf{KNSks90}, and
+continuous symmetry reduction\rf{BudCvi14}.
+
+Spatiotemporal methods are not a new idea, they have been used in studies of
+the complex Ginzburg-Landau equation\rf{lop05rel,Lopez2015},
+binary fluid convection\rf{KnoMoor90}, and plane-Poiseuille flow\rf{SoiMei91}.
+A \spt\ approach has also been stated as a possible approach by Brown and
+Kevrekidis\rf{BrKevr96}.
+In addition to these examples, Wang \etal\rf{WGBGQ13} not only use a spatiotemporal formulation
+to solve equations using Lagrange multipliers, but also claim that their
+method outperforms other conventional methods in terms of scalability.
+
+The main purpose of this work is to develop a spatiotemporal theory which can discover
+quantitative information of the \KSe\ on an infinite spatiotemporal domain. The aforementioned
+studies\rf{lop05rel,Lopez2015,KnoMoor90,SoiMei91,BrKevr96} use spatiotemporal methods to find
+solutions, but revert back to conventional methods of analysis after solutions
+are found. The goal of this work is to develop a purely spatiotemporal theory with new and unique
+numerical methods and tools of analysis.
+
+\newpage
+\subsection{Problem statement}
+\label{subsection:summary}
+The nondimensionalized form of the spatiotemporal \KSe\ is defined by
+\beq
+u_t(x,t) + u_{\conf \conf}(x,t) + u_{\conf \conf \conf \conf}(x,t)
+         + \frac{1}{2}(u(x,t)^2)_{\conf} = 0
+\,,
+\ee{KS}
+where $u(x,t)$ is a scalar field defined on a two dimensional spatiotemporal domain. The general
+behavior of this PDE can be crudely described by the following process: long-wavelength instabilities
+pump energy into the system, which is transferred to short-wavelength scales via nonlinear
+coupling. The energy is then dissipated by the ``hyper''-diffusion (fourth derivative) term.
+
+
+This body of work will begin with a proper definition of the ``spatiotemporal formulation''.
+The next step is to develop methods for finding \spt\ solutions and then generate a collection of
+said solutions.
+Once the solution space is believed to be adequately sampled, the search for
+a set of small \spt\ solutions (``tiles'') begins. These tiles will serve as the
+building blocks for a two-dimensional \spt\ symbolic dynamics.
+After a sufficient set of tiles is found, the set of rules that determine the admissibility
+of solutions must be generated. The success of the \spt\ formulation can and should be
+measured on both computational and theoretical grounds, but the metrics for success have
+yet to be determined.

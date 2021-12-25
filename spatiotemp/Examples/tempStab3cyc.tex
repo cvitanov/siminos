@@ -1,0 +1,188 @@
+% siminos/spatiotemp/Examples/tempStab3cyc.tex
+% $Author: predrag $ $Date: 2020-01-05 01:25:08 -0500 (Sun, 05 Jan 2020) $
+
+% Predrag 2019-10-10 called by siminos/spatiotemp/stability.tex
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+    \ifblog
+\example{Temporal lattice stability of a 3-cycle.}{ \label{exam:tempStab3cyc}
+    \else % called by kittens/CL18.tex
+\subsubsection{Temporal lattice stability of a 3-cycle.}
+\label{exam:tempStab3cyc}
+    \fi
+% based on examCycles.tex, but now much better       ver. of 2019-10-10
+For for a 1\dmn\ map $\map$, orbit \jacobianM\ is an [$\cl{p} \times
+\cl{p}$] matrix:
+\beq
+\begin{array}{cc}
+ \\ \\ \jMorb(\ssp) & = \\ \\
+\end{array}
+\left(
+\begin{array}{ccccc}
+1 & & & & -f'_\cl{p} \\
+-f'_1 & 1 & \\
+& ~~\cdots~~ & 1 \\
+ & & ~~\cdots~~ & 1 \\
+ & & &-f'_{\cl{p}-1} & 1
+\end{array}
+\right)
+\,.
+\ee{fcnewt}
+
+Let us invert a 3-cycle orbit \jacobianM\  ${\cal J}(\ssp)$ for such
+1\dmn\ map by hand, step by step. According to \refeq{stab:hOdes}, the
+initial small $\deltaX$ deviations from the \po\ \refeq{nXdCycleErr} are
+mapped into deviations $\deltaX'$ a time step later by
+\[
+\left(
+\begin{array}{c}
+\deltaX_1' \\
+\deltaX_2' \\
+\deltaX_3'
+\end{array}
+\right)
+\,=\,
+\left(
+\begin{array}{ccc}
+1 & 0 & -f'_3 \\
+-f'_1  & 1 & 0 \\
+0 & -f'_2  & 1
+\end{array}
+\right)
+\left(
+\begin{array}{c}
+\deltaX_1 \\
+\deltaX_2 \\
+\deltaX_3
+\end{array}
+\right)
+\,,
+\]
+where the $d$\dmn\ vectyor $\Delta\ssp_i=\hat{\ssp}_i-\ssp_i$ is the
+error at $i$th periodic point.
+In terms of the shift matrix $\sigma$,
+the one-time step cycle \jacobianM\  \refeq{fcnewt} can be written as
+\beq
+{\cal J} \,=\,
+\unit
+- \sigma f'
+\,,\quad
+\sigma =
+\left(
+\begin{array}{ccc}
+0 & 0 & 1  \\
+1 & 0 & 0  \\
+0 & 1 & 0
+\end{array}
+\right)
+\,,\quad
+f' =
+\left(
+\begin{array}{ccc}
+f'_1 & 0 & 0 \\
+0 & f'_2 & 0  \\
+0 & 0 & f'_3
+\end{array}
+\right)
+\,.
+\ee{tempStab3cyc:shift}
+Suppose all $|f'_k|>1$, so forward in time the errors are growing. We can
+make errors contract by going backwards in time, \ie, evaluating the
+inverse matrix ${\cal J}$, and noting that every 3rd power $(\sigma
+f')^3=\jMps_p\unit$ is diagonal,
+\bea
+\frac{1}{\unit-\sigma f'}
+  &=& \sum_{j=0}^\infty (\sigma f')^j
+   =  \sum_{k=0}^\infty \jMps_p^k \;\sum_{\ell=0}^2(\sigma f')^\ell
+   =  \frac{1}{1-\jMps_p}\left[\unit+\sigma f'+(\sigma f')^2\right]
+\label{tempStab3cyc:inv}\\
+  &=& \frac{1}{1-\jMps}\,
+    \left[
+\unit
++ \sigma
+\left(
+\begin{array}{ccc}
+f'_1 & 0 & 0 \\
+0 & f'_2 & 0  \\
+0 & 0 & f'_3
+\end{array}
+\right)
++ \sigma^2
+\left(
+\begin{array}{ccc}
+f'_2f'_1 & 0 & 0 \\
+0 & f'_3 f'_2 & 0  \\
+0 & 0 & f'_1f'_3
+\end{array}
+\right)
+\right]
+\,,
+\nnu
+\eea
+where $\jMps_p=f'_3 f'_2 f'_1$ is the forward-in-time stability of the
+cycle $p$,
+so
+\[
+\left(
+\begin{array}{c}
+\Delta\ssp_1 \\
+\Delta\ssp_2 \\
+\Delta\ssp_3
+\end{array}
+\right)
+\,=\,
+\frac{1}{1-\jMps_p}\,
+\left(
+\begin{array}{c}
+\deltaX_1'+f'_3 \deltaX_3'+f'_3 f'_2 \deltaX_2'\\
+\deltaX_2'+f'_1 \deltaX_1'+f'_1 f'_3 \deltaX_3'\\
+\deltaX_3'+f'_2 \deltaX_2'+f'_2 f'_1 \deltaX_1'
+\end{array}
+\right)
+\,.
+\]
+For an unstable
+cycle, the error gets contracted by overall factor $1/(1-\jMps)$, with the
+earlier errors amplified by the orbit instability; for example,
+$\Delta\ssp_3$ receives a contribution from two time steps in the past
+of form $f'_2 f'_1 \deltaX_1'$.
+
+
+By explicit
+evaluation, for 1\dmn\ maps
+    \PC{2019-10-10}{
+Still have to derive this formula, probably by $\ln \det = \tr \ln$ relation
+    }
+\(
+{\cal J}(x)^3 = (1-\jMps_p) \Idg + (...)
+\) and
+\beq
+\Det {\cal J}_p = \det(1-\jMps_p)
+\ee{3-cycleHcube}
+for the $d$\dmn\ case. ${\cal J}(x)$ is a cycle rotation by one time step; for a
+3-cycle we are back, times a constant, uniform factor multiplying
+all errors by the rotation invariant scalar quantity $\det(1-\jMps_p)$,
+whose inverse happens to be the cycle-expansions' size of the neighborhood
+of cycle $p$.
+
+% I rest my case.
+
+    \PC{2019-09-28}{
+I have inverted this Newton Jacobian matrix often, see for example
+eq.~(16) and onward in Cvitanovi{\'c}, Dettmann, Mainieri and
+Vattay\rf{noisy_Fred},
+\HREF{http://chaosbook.org/~predrag/papers/noise.pdf} {click here}. I
+have also introduced the notation for finite-time (shorter than the
+period) Jacobian matrices, see for example eq.~(69) in Cvitanovi{\'c} and
+Lippolis\rf{CviLip12},
+\HREF{http://chaosbook.org/~predrag/papers/CviLip12.pdf} {click here}.
+But I have never done it the way I should have, by a discrete Fourier
+transform, into sum of irreps of \Cn{n} (AKA Fourier modes) and
+using characters for discrete Fourier transforms.
+     }
+
+    \ifblog
+% restore \jumpBack{exam:tempStab3cyc}
+    } % end \example{Temporal lattice stability of a 3-cycle.}{
+    \fi
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%

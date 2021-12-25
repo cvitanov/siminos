@@ -1,0 +1,552 @@
+% siminos/gudorf/thesis/chapter/Lagrangian.tex
+% $Author: predrag $ $Date: 2020-05-25 15:18:45 -0400 (Mon, 25 May 2020) $
+
+\section{Generating functions; \templatt}
+\label{s:GenFctn}
+% PC 2019-09-05 moved from siminos/kittens/Lagrangian.tex to here
+% \PC{2019-08-03} draft 1.1
+% \HL{2019-07-30} draft 1.0
+
+                                                      \toCB
+Lagrangian systems are conservative dynamical systems which have a
+variational formulation.
+To understand
+the relation between the discrete time Hamiltonian and Lagrangian
+formulations, one needs to understand the discrete mapping generating
+function, such as \refeq{GutOsi15-3.1:model}.
+
+        \PC{2019-08-05}{
+In preparing this summary we have found expositions of Lagrangian
+dynamics for discrete time systems by MacKay, Meiss and
+Percival\rf{MKMP84,meiss92}, and Li and Tomsovic\rf{LiTom17b} particulary
+helpful.
+    }
+% Percival and Vivaldi state the Lagrangian variational
+% principle in
+% Sect.~6. {\em Codes, variational principle and the static model}:
+
+    \PC{2018-02-16}{
+We need a simple explanation for why the 2\dmn\ $1-A^n$ and the
+linearization of the \po\ $2n$\dmn\ Hessian matrix give the same
+multipliers.
+    }
+
+%\PCedit{2019-07-30 TEMPORARY:
+Consider a cat map\rf{ArnAve} of form % \refeq{eq:HamEqMot}.
+ \beq
+ \left(\begin{array}{c}
+   \coord_{\zeit+1}  \\
+   p_{\zeit+1}
+  \end{array} \right )=
+  A \left(\begin{array}{c}
+   \coord_{\zeit}  \\
+   p_\zeit
+  \end{array} \right )\quad \mod 1
+\,,\qquad
+A = \left (
+\begin{array}{cc}
+s-1 & 1 \\
+s-2 & 1 \\
+\end{array}
+    \right )
+\,,
+\ee{eq:CatMapIntr}
+with both $\coord_{\zeit}$ and $p_\zeit$ in the unit interval,
+$A$ a linear, \statesp\ (area) preserving map of a 2-torus onto itself,
+and
+$s=\tr{A} > 2$ an integer.
+%Rewrite  back to \refeq{eq:CatMapIntr}'s form,
+Implement explicitly, as in \refeq{eq:StateSpCatMap}, the $\mod 1$
+operation by introducing $m^\coord$ and $m^p$ winding numbers,
+ \beq
+ \left(\begin{array}{c}
+   \coord_{\zeit+1}  \\
+   p_{\zeit+1}
+  \end{array} \right )=
+A
+   \left(\begin{array}{c}
+   \coord_\zeit  \\
+   p_\zeit
+  \end{array} \right )
+  -
+   \left(\begin{array}{c}
+   m^\coord_{\zeit+1}  \\
+   m^p_{\zeit+1}
+  \end{array} \right )
+\,.
+\ee{eq:HamEqMot}
+
+This is a non-autonomous, time-forced Hamiltonian equation of
+motion of form
+(\ref{PerViv2.1b},\ref{PerViv2.1a}):
+\bea
+\coord_{\zeit+1}
+  &=& \coord_{\zeit} + p_{\zeit+1} + (\Ssym{\zeit+1}^p - \Ssym{\zeit+1}^\coord)
+\label{HL1dCatMap2a}\\
+p_{\zeit+1}
+  &=&  p_\zeit + (s-2) \coord_\zeit - \Ssym{\zeit+1}^p \,,
+\label{HL1dCatMap2b}
+\eea
+with the force and the corresponding potential energy given by
+\bea
+P(\coord_{\zeit}) = -\frac{dV(\coord_{\zeit})}{d\coord_{\zeit}} = (s-2) \coord_\zeit - \Ssym{\zeit+1}^p \, ,
+\label{HL1dCatMapForce}
+\\
+V(\coord_{\zeit})
+= \frac{1}{2} (2-s)\,\coord_\zeit^2 + \Ssym{\zeit+1}^p \coord_\zeit
+\,.
+\label{HL1dCatMapPotential}
+\eea
+As always, the  Lagrangian, or, in the parlance of discrete
+time dynamics, the \emph{generating function}
+$\genF(\coord_{i},\coord_{i+1})$,
+is given by the difference of the kinetic and potential energies,
+where in the literature\rf{MacMei83,MKMP84,meiss92,BolTre10}
+ there are different choices of the instant in
+time at which $V(\coord)$ is be evaluated. We define the generating function as
+\[
+\genF(\coord_{\zeit},\coord_{\zeit+1})
+= \frac{1}{2} p_{\zeit+1}^2 - V(\coord_{\zeit})
+\,.
+\]
+Next one eliminates momenta in favor of velocities, using \refeq{HL1dCatMap2a}
+\bea
+\genF(\coord_{\zeit},\coord_{\zeit+1})
+&=& \frac{1}{2} (\coord_{\zeit+1} - \coord_{\zeit} - \Ssym{\zeit+1}^p + \Ssym{\zeit+1}^\coord)^2 + \frac{s-2}{2} \coord_\zeit^2 - \Ssym{\zeit+1}^p \coord_\zeit
+\continue
+&=& \frac{1}{2}\coord_{\zeit+1}^2 + \frac{s-1}{2} \coord_{\zeit}^2 - \coord_{\zeit}\coord_{\zeit+1}
+\continue
+&& - \coord_{\zeit+1} \Ssym{\zeit+1}^p + \coord_{\zeit+1} \Ssym{\zeit+1}^\coord - \coord_{\zeit} \Ssym{\zeit+1}^\coord + \mathrm{constant}
+\,.
+\label{HLOneStepAction}
+\eea
+And this generating function satisfies \refeq{MKMP843.2}.
+
+\bigskip
+
+Consider a symplectic (``area preserving'') map acting on phase space
+\[
+\ssp_{\zeit+1}= M(\ssp_\zeit)\,,\qquad \ssp_\zeit=(\coord_\zeit,p_\zeit)
+\]
+that maps $\ssp_\zeit$ to $\ssp_{\zeit+1}$ while preserving the symplectic area.
+
+A {\em path} is any set of successive  \emph{configuration space} points
+\beq
+\{\coord_i\} = \{\coord_\zeit,\coord_{\zeit+1},\cdots,\coord_{\zeit+k}\}
+\,.
+\ee{pathPC}
+In a Lagrangian system each path of finite
+length in the configuration space is assigned an
+ \emph{action}.
+    \PC{2019-08-04}{
+repeat of text in catLagrang.tex
+        }
+
+To get the action of an orbit from time $\zeit_0$ to $\zeit_n$, we only
+need to sum \refeq{HLOneStepAction} over intermediate time steps:
+\bea
+\action(\coord_{\zeit_0}, \coord_{\zeit_0+1}, \dots, \coord_{\zeit_n-1}, \coord_{\zeit_n}) =
+\sum_{\zeit = \zeit_0}^{\zeit_n-1} \genF(\coord_{\zeit},\coord_{\zeit+1})
+\,.
+\label{1DCatAction}
+\eea
+
+ For example, in a
+discrete-time one-degree-of-freedom Lagrangian system with the configuration
+coordinate $\coord_i$ at the discrete time $i$, and \emph{generating function}
+(``Lagrangian density'') $\genF(\coord_{i},\coord_{i+1})$, the action of path
+$\{\coord_i\}$ is
+\beq
+\action_{\zeit,\zeit+k} \equiv \sum_{i=\zeit}^{\zeit+k-1}\genF(\coord_{i},\coord_{i+1})
+\,,
+\ee{MKMP84(3.5)}
+
+For 1-dof systems,
+the geometrical interpretation of the action
+$\action_{\zeit,\zeit+k}$ is that $\genF(\coord_{\zeit},\coord_{\zeit+1})$ is, up to an overall
+constant, the phase-space area below the $p_\zeit$ to $p_{\zeit+k}$
+graph for the $(\coord_\zeit,\coord_{\coord+k})$ path in the
+$(\coord,p)$ phase plane.
+%                                \toExam{exam:MKMP84(3.4)}
+
+%\hfill    \fastTrackExam{exam:MKMP84(3.4)}
+
+
+    \PC{2016-11-11, 2018-09-26}{
+What follows is (initially)
+copied from Li and Tomsovic\rf{LiTom17b}, \emph{Exact relations between
+homoclinic and \po\ actions in chaotic systems} arXiv source
+file, then merged with the MacKay-Meiss-Percival action
+principle \refrefs{MKMP84,meiss92}.
+    }
+
+Denoting the derivatives of the generating function $\genF(\coord,\coord')$ as
+\bea
+\genF_{1}(\coord,\coord') &=& \frac{\partial~}{\partial \coord} \genF(\coord,\coord')
+\,,\quad
+\genF_{2}(\coord,\coord')= \frac{\partial~}{\partial \coord'} \genF(\coord,\coord')
+    \continue
+\genF_{12}(\coord,\coord') &=& \genF_{21}(\coord,\coord')
+               =\frac{\partial^2}{\partial \coord\partial \coord'} \genF(\coord,\coord')
+\,,
+\label{MKMP84(3.1a)}
+\eea
+the \emph{momenta} are given by\rf{MKMP84,meiss92}
+\beq
+p_{n}=-\genF_{1}(\coord_{n},\coord_{n+1})
+\,,\quad
+p_{n+1}=\genF_{2}(\coord_{n},\coord_{n+1})
+\,.
+\label{MKMP84(3.2)}
+\eeq
+%\begin{equation}\label{eq:Definition generating function}
+%\begin{split}
+%&p_{n}=-\partial \genF/\partial \coord_{n}\\
+%&p_{n+1}=\partial \genF/\partial \coord_{n+1}.
+%\end{split}
+%\end{equation}
+The twist condition
+\beq
+\partial p_{n+1}/\partial \coord_n \neq 0 \mbox{  for all } p_{n+1}, \coord_n
+\,,
+\ee{MKMP84(3.1)}
+ensures that
+\beq
+\genF_{12}(\coord_{n},\coord_{n+1}) \neq 0
+    \,.
+\ee{MKMP84(3.3)}
+We distinguish a {\em path} \refeq{pathPC}, which is any set of
+successive points $\{\coord_n\}$ in the configuration space, from the
+{\em orbit segment} $M^{k}(\ssp_n)$ from $\ssp_n$ to $\ssp_{n+k}$, a set
+of successive  \emph{phase space} points
+\beq
+\{\ssp_i\} = \{\ssp_n,\ssp_{n+1},\cdots,\ssp_{n+k}\}
+\,.
+\ee{trajectoryPC}
+that extremizes the {\em action} \refeq{MKMP84(3.5)},
+with momenta given by \refeq{MKMP84(3.2)}. In other words, not only
+$\coord_n$, but also $p_n$ have to align from phase space point to phase
+space point\rf{PerViv},
+\beq
+\frac{\partial}{\partial \coord_{n}}
+    \left( \genF(\coord_{n-1},\coord_{n}) + \genF(\coord_{n},\coord_{n+1}) \right)=0
+    \,.
+\ee{MKMP84(3.7)}
+Any finite path for which the action is stationary with respect to variations
+of the segment keeping the endpoints fixed, is called an orbit segment or
+\emph{trajectory}\rf{DasBuch}.
+%The orbit segment is a path that satisfies a variational principle, \ie, the
+%stationarity of the action \refeq{MKMP84(3.5)} at each orbit point $\coord_{i}$
+%between the end points $\coord_{n}$ and $\coord_{n+k}$.
+Infinite paths for which each finite segment is an orbit segment are called
+\emph{orbits}.
+
+
+Given by Keating\rf{Keating91}, for the 1\dmn\ cat map
+\refeq{eq:StateSpCatMap}, the action of a one-step orbit (which is the
+generating function) from $(\ssp_\zeit, p_\zeit)$ to $(\ssp_{\zeit+1},
+p_{\zeit+1})$ can be written as \refeq{eq:OneStepAction}. And the map
+\refeq{eq:HamEqMot} can be generated using\rf{MKMP84,meiss92}:
+\beq
+p_\zeit = - \partial \genF(\ssp_{\zeit},\ssp_{\zeit-1}) / \partial \ssp_\zeit \, , \quad p_{\zeit+1} = \partial \genF(\ssp_{\zeit},\ssp_{\zeit-1}) / \partial \ssp_{\zeit+1}
+\label{MKMP843.2}
+\eeq
+\HL{2019-08-01}
+{\refeq{eq:OneStepAction} is given by Keating\rf{Keating91} but I cannot
+find the derivation of this generating function in that paper and the
+papers referred\rf{PerViv87b,Keating91a}. The following derivation of
+generating function is from our blog.
+}
+
+
+Setting the first variation of the action $\delta \action$ to 0 we get:
+\bea
+\frac{\partial \action}{\partial \ssp_\zeit} =
+\frac{\partial \genF(\ssp_{\zeit},\ssp_{\zeit+1})}{\partial \ssp_\zeit} + \frac{\partial \genF(\ssp_{\zeit-1},\ssp_{\zeit})}{\partial \ssp_\zeit} &=& 0 \\
+\Rightarrow  - \ssp_{\zeit-1} + s \ssp_\zeit - \ssp_{\zeit+1}
+&=& \Ssym{\zeit+1}^x - \Ssym{\zeit}^x + \Ssym{\zeit}^p
+\,.
+\label{ActVariantion}
+\eea
+This is the \PV\ 2-step difference equation of the cat map with $\Ssym{\zeit} = \Ssym{\zeit+1}^x - \Ssym{\zeit}^x + \Ssym{\zeit}^p$.
+
+Using \refeqs{HLOneStepAction}{1DCatAction} we can compute the action of
+any finite trajectory. For a trajectory $\dots \ssp_{\zeit-1}
+\ssp_{\zeit} \ssp_{\zeit+1} \ssp_{\zeit+2} \dots$, the action can be
+written as:
+\beq
+\action(\bi{x}) = \frac{1}{2} \transp{\bi{\ssp}} H \bi{\ssp} - \transp{\bi{\Ssym{}}} \bi{\ssp}
+\,,
+\ee{1DCatOrbitAction}
+where $\bi{\ssp}$ and $\bi{\Ssym{}}$ are column vectors,
+\bea
+\bi{\ssp}
+=
+\left[
+\begin{array}{c}
+\vdots \\ \ssp_{\zeit-1} \\ \ssp_{\zeit} \\ \ssp_{\zeit+1} \\ \ssp_{\zeit+2} \\ \vdots
+\end{array}
+\right]
+\,,
+\quad
+\bi{\Ssym{}}
+=
+\left[
+\begin{array}{c}
+\vdots \\ \Ssym{\zeit-1} \\ \Ssym{\zeit} \\ \Ssym{\zeit+1} \\ \Ssym{\zeit+2} \\ \vdots
+\end{array}
+\right]
+\,,
+\label{eq:VectorFieldSourceNonPeriodic}
+\eea
+and the Hessian $H$ is a Toeplitz matrix
+\bea
+H
+=
+\left[\begin{array}{ccccccccc}
+\ddots & \ddots & \ddots & \ddots & \ddots & \ddots & \ddots & \ddots & \ddots \\
+\ddots &  s & -1 & 0 & 0 &\dots & 0 & 0 & \ddots \\
+\ddots & -1 &  s & -1 & 0 &\dots &0&0 & \ddots\\
+\ddots & 0 & -1 &  s & -1 &\dots &0 & 0 & \ddots\\
+\ddots & \vdots & \vdots &\ddots & \ddots & \ddots &\vdots &\vdots & \ddots\\
+\ddots & 0 & 0 & \dots &\dots &\dots  & s & -1 & \ddots \\
+\ddots & 0 & 0 & \dots &  \dots &\dots&-1 &  s & \ddots \\
+\ddots & \ddots & \ddots & \ddots &  \ddots &\ddots & \ddots &  \ddots & \ddots
+        \end{array} \right]
+ \, .
+\label{eq:HessianMatrixNonPeriodic}
+\eea
+For an orbit with finite length, we need to know the {\bcs}
+to find the action at boundaries. Note that the action computed in this
+way will not have the constant terms in \refeq{HLOneStepAction}. The
+matrix $H$ has same effect as $(s-\Box -2)$ where the $\Box$ is the
+discrete one\dmn\ Laplacian defined in \refeq{PerViv2.2}.
+
+\bigskip
+============ the rest: TEMPORARY TEXT ===========
+% Predrag 2019-07-30
+% a block of text extracted from siminos/spatiotemp/chapter/Hill.tex
+% remove \HLpost{2018-09-26}{ ... }  from there when done here
+
+\subsection{Temporary: Cat map in the Lagrangian formulation}
+
+Rewrite \refeq{eq:StateSpCatMap} back to \refeq{eq:CatMapIntr}'s form,
+and let $m^\coord$ and $m^p$ be the winding numbers, we can get
+    \PC{2019-08-04}{
+\PV\rf{PerViv} (3.1) uses only $m^p$, no need for this confusing
+additional $m^\coord$, for their
+Hamiltonian (2.1), with no specialization to the \PV\ cat map.
+                    }
+ \beq
+ \left(\begin{array}{c}
+   \coord_{\zeit+1}  \\
+   p_{\zeit+1}
+  \end{array} \right )=
+   \left (
+\begin{array}{cc}
+s-1 & 1 \\
+s-2 & 1 \\
+\end{array}
+    \right )
+   \left(\begin{array}{c}
+   \coord_\zeit  \\
+   p_\zeit
+  \end{array} \right )
+  -
+   \left(\begin{array}{c}
+   m^\coord_{\zeit+1}  \\
+   m^p_{\zeit+1}
+  \end{array} \right )
+\,.
+\ee{eq:HamEqMotion}
+The action of the system in this one-step motion is\rf{Keating91}
+%(see \refappe{s:GenFctn})
+    \PC{2019-08-04}{
+By MacKay, Meiss and Percival\rf{MKMP84,meiss92} convention (3.2),
+and Li and Tomsovic\rf{LiTom17b} convention (9) we
+should always have $\genF(\coord_{\zeit},\coord_{\zeit+1})$  .
+Unfortunately Keating\rf{Keating91} definition (3) corresponds to
+$\genF(\coord_{\zeit},\coord_{\zeit-1})$, but we do not take that one.
+                    }
+\beq
+\genF(\coord_{\zeit},\coord_{\zeit-1})
+= \frac{1}{2}[ (s-1) \coord_{\zeit-1}^2
+               - 2 \coord_{\zeit-1} (\coord_{\zeit} + m_{\zeit}^\coord)
+         + (\coord_{\zeit} + m_{\zeit}^\coord)^2 - 2 m_{\zeit}^p \coord_{\zeit}]
+\,.
+\ee{eq:OneStepAction}
+The action of a longer orbit is the sum of the one-step actions at each
+time step. The Lagrangian equations of motion are obtained by
+demanding that the first variation of the action
+vanishes:
+\bea
+\frac{\partial \genF(\coord_{\zeit+1},\coord_\zeit)}{\partial \coord_\zeit} + \frac{\partial \genF(\coord_{\zeit},\coord_{\zeit-1})}{\partial \coord_\zeit} &=& 0 \\
+ - \coord_{\zeit-1} + s \coord_\zeit - \coord_{\zeit+1}
+&=& m_{\zeit+1}^\coord - m_{\zeit}^\coord + m_{\zeit}^p
+= m_t
+\,,
+\label{eq:ActVar}
+\eea
+which gives us the {\sPe} \refeq{eq:CatMapNewt} with
+$m_t=m_{\zeit+1}^\coord - m_{\zeit}^\coord + m_{\zeit}^p$.
+If the orbit has periodic {\bcs} with period $\cl{}$,
+$\coord_{\zeit} = \coord_{\zeit+n}$, the action of the periodic orbit can be
+written as \refeq{pAction},
+% \beq
+%\action(\bi{x}) = \frac{1}{2} \bi{x}^T H_n \bi{x} - \bi{m}^T \bi{x}
+%\,,
+%\ee{eq:PeriodicOrbitAction}
+where the $n\!\times\!n$ matrix $H_n$ is given by
+\refeq{Hessian},
+and
+\bea
+\bi{x}
+=
+\left[
+\begin{array}{c}
+\ssp_1 \\ \ssp_2 \\ \ssp_3 \\ \vdots \\ \ssp_\cl{}
+\end{array}
+\right]
+\, ,
+\quad
+\bi{m}
+=
+\left[
+\begin{array}{c}
+m_1 \\ m_2 \\ m_3 \\ \vdots \\ m_\cl{}
+\end{array}
+\right]
+\, .
+\label{eq:VectorFieldSource}
+\eea
+$H_{\cl{}}$ is called the Hessian matrix of period $\cl{}$.
+The element of matrix $H_{\cl{}}$ is
+$(H_{\cl{}})_{ij} = \partial^2 \genF(\bi{x}) / \partial \ssp_i \partial \ssp_j$.
+Letting the first derivative of action \refeq{pAction} be 0,
+we can see that a periodic point of cat map with period $\cl{}$ satisfies:
+\bea
+\left[\begin{array}{cccccc}
+s & -1 & 0 & \dots & -1\\
+-1 & s & -1 & \dots & 0 \\
+0 & -1 & s & \dots & 0 \\
+\vdots & \vdots & \vdots & \ddots & \vdots \\
+-1 & 0 & 0 & \dots & s
+        \end{array} \right]
+\left[
+\begin{array}{c}
+\ssp_1 \\ \ssp_2 \\ \ssp_3 \\ \vdots \\ \ssp_\cl{}
+\end{array}
+\right]
+=
+\left[
+\begin{array}{c}
+m_1 \\ m_2 \\ m_3 \\ \vdots \\ m_\cl{}
+\end{array}
+\right] \, ,
+\left[
+\begin{array}{c}
+m_1 \\ m_2 \\ m_3 \\ \vdots \\ m_\cl{}
+\end{array}
+\right]
+ \in \integers^\cl{} \, ,
+\label{eq:LargrangianPerOrbits}
+\eea
+
+    \PC{2019-05-27}{We have more detailed discussion in the blog, for example
+    \refeq{HL1dCatMap3} in {\em spatiotemp/chapter/Hill.tex} temporarily included
+    in this paper draft. See also {\em spatiotemp/chapter/examCatMap.tex} text:
+    \emph{generating function} \refeq{MKMP84(3.6)HL1}
+    \index{generating function}
+    This generating function is the discrete time Lagrangian for a  particle moving
+    in potential $V(x)$.
+    }
+\beq
+\genF(\ssp_{\zeit+1},\ssp_\zeit)
+= \frac{1}{2}[ (s-1) \ssp_\zeit^2 - 2 \ssp_\zeit (\ssp_{\zeit+1} + m_{\zeit+1}^x)
+         + (\ssp_{\zeit+1} + m_{\zeit+1}^x)^2 - 2 m_{\zeit+1}^p \ssp_{\zeit+1}]
+\,.
+\ee{eq:LagrangianOneStepAction1}
+	\HL{2019-06-10}{
+	\refeq{eq:OneStepAction} is already given by Keating
+\rf{Keating91}. Do we want to add our procedure here? I got the
+Lagrangian \refeq{HL1dCatMap4} which is different from
+\refeq{eq:LagrangianOneStepAction1} only by a constant.
+	}
+	\HL{2019-06-12}{
+	The generating function of a 2\dmn\ \catlatt\
+    \refeq{GutOsi15-3.1:model} in given by Gutkin and Osipov\rf{GutOsi15}.
+	}
+
+% \HLpost{2018-09-26}{
+Consider cat map of form \refeq{eq:CatMapIntr}.
+\beq
+L(q_{\zeit},q_{\zeit+1}) =
+\frac{1}{2}(q_{\zeit+1} - q_{\zeit})^2 - V(q_{\zeit})
+    \,,\qquad
+P(q) = - \frac{dV(q)}{dq}
+\,,
+\ee{MKMP84(3.6)HL1}
+
+The problem with formulation \refeq{HL1dCatMapPotential} is that
+the potential energy contribution is
+defined asymmetrically in \refeq{MKMP84(3.6)HL1}.
+We should really follow Bolotin and Treschev\rf{BolTre10} eq.~(2.5),
+and define a symmetric generating function
+\beq
+L(q_{\zeit},q_{\zeit+1}) =
+\frac{1}{2}  (q_{\zeit+1} - q_{\zeit})^2
+    - \frac{1}{2} [V(q_{\zeit}) +V(q_{\zeit+1})]
+\,,
+\ee{MKMP84(3.6)}
+The first
+variation \refeq{MacMei83(7)} of the action vanishes,
+\bea
+0 &=& L_2(q_{\zeit+1}, q_\zeit) + L_1(q_{\zeit}, q_{\zeit-1})
+                            \label{1dCatMap5}\\
+&=& q_\zeit -q_{\zeit+1} + (s-2)q_\zeit - \Ssym{\zeit+1}^p + q_\zeit - q_{\zeit-1} \continue
+&=& - q_{\zeit+1} + s q_\zeit -q_{\zeit-1} - \Ssym{\zeit+1}^p
+\,,
+\nnu
+\eea
+hence
+\beq
+q_{\zeit+1} - s q_\zeit + q_{\zeit-1} = - \Ssym{\zeit+1}^p
+\,.
+\label{1dCatMap5a}
+\eeq
+Defining $\Ssym{\zeit} = - \Ssym{\zeit+1}^p$,
+we recover the {\sPe} \refeq{eq:CatMapNewt}.
+
+Alternatively,
+Han's generating function (1-step Lagrangian density) is:
+\bea
+L(q_{n+1}, q_n)
+&=& \frac{1}{2} \left[ p_{n+1}(q_{n+1}, q_n) \right]^2 - V(q_n)
+\label{HL1dCatMap4a}\\
+&=& \frac{1}{2} (q_{n+1} - q_n +m_{n+1}^q - m_{n+1}^p)^2 + \frac{s-2}{2} q_n^2 -m^p_{n+1} q_n \, . \continue
+\nnu
+\eea
+The action is the sum over the Lagrangian density over the orbit. The first
+variation \refeq{MacMei83(7)} of the action vanishes,
+\bea
+0 &=& L_2(q_{n+1}, q_n) + L_1(q_{n}, q_{n-1})
+    \continue
+&=& q_n -q_{n+1} + m_{n+1}^p - m_{n+1}^q
+\label{1dCatMap5b}\\
+&& + (s-2)q_n -m^p_{n+1} + q_n - q_{n-1} + m_n^q - m_n^p \continue
+&=& - q_{n+1} + s q_n -q_{n-1} - (m_{n+1}^q - m_n^q + m_n^p)
+\,,
+\nnu
+\eea
+hence
+\beq
+- q_{n+1} + s q_n -q_{n-1} = m_{n+1}^q - m_n^q + m_n^p
+\,.
+\label{1dCatMap5c}
+\eeq
+Letting $m_n = m_{n+1}^q - m_n^q + m_n^p$, we recover the Lagrangian
+formulation \refeq{eq:CatMapNewt},
+    \PCedit{
+except for the wrong sign for $m_n$.
+    }
+Now we see why $m_n$'s are called `sources'.

@@ -1,0 +1,226 @@
+\documentclass[pre,twocolumn,twoside,showpacs,superscriptaddress]{revtex4-1}
+%\input{epsf,graphics}
+\usepackage{graphicx,amssymb,amsmath,epsf,bm,here}
+\epsfclipon
+\bibliographystyle{apsrev4-1}
+
+%define new commands
+\renewcommand{\eqref}[1]{Eq.~(\ref{#1})}
+\newcommand{\eqsref}[1]{Eqs.~(\ref{#1})}
+\newcommand{\pref}[1]{(\ref{#1})}
+\newcommand{\figref}[1]{Fig.~\ref{#1}}
+\newcommand{\refcite}[1]{Ref.~\cite{#1}}
+\newcommand{\ve}{\bm{e}}
+\newcommand{\op}{\mathrm{\mathbf{x}}}
+\newcommand{\opa}{\mathrm{\mathbf{a}}}
+\DeclareMathOperator{\im}{Im}
+\DeclareMathOperator{\re}{Re}
+\newcommand{\bra}[1]{\left\langle{#1}\right|}
+\newcommand{\ket}[1]{\left|{#1}\right\rangle}
+\newcommand{\bracket}[2]{\langle{#1}|{#2}\rangle}
+
+\renewcommand{\thefigure}{S\arabic{figure}}
+\renewcommand{\theequation}{S\arabic{equation}}
+
+\begin{document}
+
+\title{Supplementary Material for\\ ``Estimating dimension of inertial manifold from unstable periodic orbits''}
+
+\author{X. Ding}
+\affiliation{
+                Center for Nonlinear Science, School of Physics,
+                Georgia Institute of Technology,
+                Atlanta, GA 30332-0430, USA
+               }
+\author{H. Chat\'e}
+\affiliation{
+Service de Physique de l'Etat Condens\'e, CEA, CNRS,
+Universit\'e Paris-Saclay, CEA-Saclay, 91191 Gif-sur-Yvette, France}%
+\affiliation{
+Beijing Computational Science Research Center, Beijing 100094, China
+}%
+\author{P. Cvitanovi\'c}
+\affiliation{
+                Center for Nonlinear Science, School of Physics,
+                Georgia Institute of Technology,
+                Atlanta, GA 30332-0430, USA
+               }
+\author{E. Siminos}
+\affiliation{Max-Planck Institute for the Physics of Complex Systems,
+	  N\"{o}thnitzer Str. 38, D-01187 Dresden, Germany}%
+\affiliation{Department of Physics, Chalmers University of Technology,
+             Gothenburg, Sweden}
+\author{K. A. Takeuchi}
+\email{kat@kaztake.org}
+\affiliation{Department of Physics, Tokyo Institute of Technology, 2-12-1 Ookayama, Meguro-ku, Tokyo 152-8551, Japan}%
+
+\date{\today}
+
+\maketitle
+
+\section{In-slice Floquet Vectors}
+
+This section describes
+ how the in-slice Floquet vectors $\ket{\hat\ve_j(\hat\op)}$
+ are defined and obtained from the original Floquet vectors $\ket{\ve_j(\op)}$
+ (bra-ket notation is used).
+As in the Letter,
+ we consider an autonomous flow $\ket{\op(t)}=f^t\ket{\op(0)}$
+ in $d$-dimensional phase space.
+%\begin{equation}
+% \ket{\op(t)}=f^t\ket{\op(0)}.  \label{eq:Flow}
+%\end{equation}
+The Kuramoto-Sivashinsky equation formally corresponds to $d = \infty$,
+ but in practice numerical integration is performed
+ in a finite-dimensional phase space, whose dimensionality $d$ is set
+ by the cutoff wavenumber chosen in the pseudospectral method.
+In any case, $\ket{\op(t)}$ represents the field $u(x,t)$,
+ which is also described by its Fourier components
+\begin{equation}
+ a_k(t) \equiv \frac{1}{L}\int_0^L u(x,t) e^{-iq_k x},
+% \quad u(x,t) = \sum_k a_k e^{iq_k x},
+  \label{eq:Fourier}
+\end{equation}
+ with $q_k=2\pi{}k/L$ and $a_0(t)=0$.
+Within this formalism, a periodic orbit $\ket{\op(0)}$
+ is a fixed point of the map $f^{T_p}$, with $T_p$ the period of the orbit.
+Its Floquet multipliers $\Lambda_j$ and Floquet vectors $\ket{\ve_j(\op)}$
+ are the eigenvalues and eigenvectors, respectively,
+ of the corresponding Jacobian $J^{T_p}$.
+Pre-periodic orbits and relative periodic orbits
+ can also be dealt with straightforwardly,
+ by replacing $f^{T_p}$ with $Rf^{T_p}$ and $g(\theta_p)f^{T_p}$,
+ respectively, with reflection $\sigma$ and spatial translation $g(\theta_p)$
+ as defined in the Letter.
+Therefore, in the following, we describe the case of periodic orbits
+ for the sake of simplicity.
+
+Here we focus on the invariance
+ under spatial translation $u(x,t)\to{}u(x+\ell,t)$,
+ which amounts to a rotation $a_k(t)\to{}e^{iq_k\ell}a_k(t)$ in Fourier space, 
+ described by the operator $g(2\pi\ell/L)$.
+To reduce the marginal dimension due to this symmetry,
+ we send all trajectories and orbits to the $(d-1)$-dimensional hyperplane
+\begin{equation}
+ \im(a_1(t))=0, \quad \re(a_1(t))>0,  \label{eq:Slice}
+\end{equation}
+ which is called the first Fourier-mode slice \cite{Budanur.etal-PRL2015}.
+This is realized by transformation
+\begin{equation}
+  \ket{\hat\op(t)} \equiv g(-\theta(\op(t)))\ket{\op(t)}  \label{eq:SliceTrans}
+\end{equation}
+ with $\theta(\op(t))=\arg{}a_1(t)$.
+
+First we consider infinitesimal perturbations to $\ket{\op(t)}$,
+ denoted here by $\ket{\delta\op(t)}$.
+Using \eqref{eq:SliceTrans}, one can show that
+ $\ket{\delta\op(t)}$ is transformed to
+\begin{equation}
+ \ket{\delta\hat\op(t)}' \equiv
+ h(\op(t))g(-\theta(\op(t)))\ket{\delta\op(t)},  \label{eq:SliceTransVec1}
+\end{equation}
+ with
+\begin{equation}
+ h(\op) \equiv 1-\frac{\ket{T\op}\bra{T\op_0}}{\bracket{T\op_0}{T\op}}.  \label{eq:MatH}
+\end{equation}
+Here, $T$ is the generator defined by $g(\theta)\equiv{}e^{T\theta}$,
+ the inner product is
+\begin{equation}
+ \bracket{\op}{\op'} \equiv \frac{1}{L}\int_0^L u^*(x)u'(x) dx = \sum_k a_k^*a'_k,  \label{eq:InnerProd}
+\end{equation}
+ and $\op_0$ is a reference point on the slice \cite{Budanur.etal-PRL2015},
+ which therefore satisfies $\bracket{\delta\hat\op(t)}{T\op_0}=0$.
+Since we use the first Fourier-mode slice \pref{eq:Slice},
+ we can take $\op_0 = (1,0,\cdots,0)$ in the Fourier representation.
+Note that, since the dimensionality of the slice is one less than
+ that of the phase space,
+ so is the dimensionality of the in-slice perturbations.
+This is reflected by the fact that $\bra{T\op_0}h(\op)=0$,
+ or $\sum_it'_ih_i(\op)=0$,
+ where $h_i(\op)$ is the $i$th row vector of $h(\op)$
+ and $t'_i$ the $i$th component of $\bra{T\op_0}$.
+Therefore, by rank factorization, one obtains
+\newpage
+\begin{widetext}
+\begin{equation}
+ h(\op)
+ = \begin{bmatrix} h_1 \\ \vdots \\ h_{i_0-1} \\ h_{i_0} \\ h_{i_0+1} \\ \vdots \\ h_d \end{bmatrix}
+ = \begin{bmatrix}
+ 1 & & & & & \\ & \ddots & & & O & \\ & & 1 & & & \\
+ -\frac{t'_1}{t'_{i_0}} & \cdots & -\frac{t'_{i_0-1}}{t'_{i_0}}
+ & -\frac{t'_{i_0+1}}{t'_{i_0}} & \cdots & -\frac{t'_d}{t'_{i_0}} \\
+ & & & 1 & & \\ & O & & & \ddots & \\ & & & & & 1
+ \end{bmatrix} \begin{bmatrix}
+  h_1 \\ \vdots \\ h_{i_0-1} \\ h_{i_0+1} \\ \vdots \\ h_d
+ \end{bmatrix}
+ \equiv P \hat{h}(\op),  \label{eq:SliceTransH}
+\end{equation}
+\end{widetext}
+ with $d \times (d-1)$ matrix $P$, $(d-1) \times d$ matrix $\hat{h}(\op)$,
+ and $i_0$ chosen such that $t'_{i_0} \neq 0$.
+For the first Fourier-mode slice adopted here,
+ all the components of $\bra{T\op_0}$ except $t'_2$ are zero
+ \cite{Budanur.etal-PRL2015}, so that $i_0=2$.
+
+Now let us define the $(d-1)$-dimensional
+ in-slice perturbation $\ket{\delta\hat\op(t)}$
+% that corresponds to $\ket{\delta\op(t)}$
+ by
+\begin{equation}
+ \ket{\delta\hat\op(t)} \equiv \hat{h}(\op(t))g(-\theta(\op(t)))\ket{\delta\op(t)}.  \label{eq:SliceTransVec2}
+\end{equation}
+By construction, there is one-to-one correspondence between
+ $\ket{\delta\hat\op(t)}'$ and $\ket{\delta\hat\op(t)}$
+ through the operator $P$
+ [see \eqsref{eq:SliceTransVec1}, \pref{eq:SliceTransH},
+ \pref{eq:SliceTransVec2}],
+ unless $\ket{\delta\hat\op(t)}'$ is tangent to the spatial translation,
+ $\ket{\delta\hat\op(t)}' \propto \ket{T\op}$,
+ which results in $\ket{\delta\hat\op(t)}=0$ [see \eqref{eq:MatH}].
+Therefore, $\ket{\delta\hat\op(t)}$ indeed describes
+ the perturbation within the slice.
+Moreover, if we define the evolution operator $\hat{J}^t(\op)$ by
+\begin{equation}
+ \ket{\delta\hat\op(t)} = \hat{J}^t(\op(0)) \ket{\delta\hat\op(0)},  \label{eq:InsliceJacobian}
+\end{equation}
+ similarly to 
+\begin{equation}
+ \ket{\delta\op(t)} = J^t(\op(0)) \ket{\delta\op(0)},  \label{eq:Jacobian}
+\end{equation}
+ with $J^t(\op)$ being the Jacobian of $f^t(\op)$, we obtain
+\begin{align}
+ \ket{\delta\hat\op(t)}
+ &= \hat{h}(\op(t))g(-\theta(\op(t)))J^t(\op(0)) \ket{\delta\op(0)} \notag \\
+ &= \hat{J}^t(\op(0)) \hat{h}(\op(0))g(-\theta(\op(0)))\ket{\delta\op(0)}.  \label{eq:InsliceJacobian2}
+\end{align}
+For a periodic orbit of period $T_p$ (hence $\op(T_p) = \op(0)$),
+ we have $J^{T_p}(0)\ket{\ve_j(\op(0))} = \Lambda_j \ket{\ve_j(\op(0))}$
+ with its Floquet multipliers $\Lambda_j$ and vectors $\ket{\ve_j(\op)}$.
+Therefore, defining
+\begin{equation}
+ \ket{\hat\ve_j(\op)} \equiv \hat{h}(\op)g(-\theta(\op))\ket{\ve_j(\op)},  \label{eq:InsliceFloquet}
+\end{equation}
+ we find that they are indeed eigenvectors of $\hat{J}^t(\op)$,
+ associated with the eigenvalues $\Lambda_j$ unchanged by the transformation.
+This justifies calling $\ket{\hat\ve_j(\op)}$ the in-slice Floquet vectors,
+ associated with the Floquet multipliers $\Lambda_j$ or exponents $\lambda_j$
+ of the orbit.
+Similarly to $\ket{\delta\hat\op(t)}$,
+ all information of the $j$th Floquet mode
+ is retained in the corresponding in-slice Floquet mode,
+ except that the marginal mode due to the spatial translation
+ is excluded in the in-slice descriptions.
+Therefore, the number of the marginal modes,
+ as well as the number of the entangled Floquet modes, are one less
+ than those in the full-space descriptions.
+
+\begin{thebibliography}{99}
+\bibitem[S1]{Budanur.etal-PRL2015}%
+  N.~B. Budanur, P. Cvitanovi\'c, R. L. Davidchack, and E. Siminos, Phys. Rev. Lett. \textbf{114}, 084102 (2015).
+\end{thebibliography}
+%\bibliography{WEBinKPZ}
+
+
+
+\end{document}
+

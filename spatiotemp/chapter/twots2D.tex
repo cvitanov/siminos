@@ -1,0 +1,147 @@
+% siminos/spatiotemp/catMapLatt.tex
+% $Author: predrag $ $Date: 2020-12-14 00:22:48 -0500 (Mon, 14 Dec 2020) $
+
+\section{Counting {\twots}}
+\label{s:2DcatCounting}
+% until 2019-08-13 was siminos/kittens/twots2D.tex      pdflatex CL18
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+	\HL{2019-06-25}{
+    This section is a version of kittens refsect~{s:dDcatMap}
+    that starts from 2D cat map
+    without giving the formula of general $d$\dmn\ \catlatt. I feel
+    this is less clear than start with the $d$\dmn\ \catlatt, but
+    it directly follows the section of {\spt} cat map.
+    Eventually this text was not used not used in kittens\rf{CL18}.
+    }
+An {\twot} on a 2\dmn\ {\spt}ly infinite $\integers^2$ lattice has
+more complicated pattern than a cat map \po. An
+{\twot} can tile the infinitely large 2\dmn\ space not only by
+repeating in the time or space direction, but also by moving in both of
+the {\spt} directions. The repeating pattern can generally be described
+by a Bravais lattice:
+\beq
+\lattice = \{n_1 {\bf a}_1 + n_2 {\bf a}_2 | n_i \in \mathbb{Z}\}.
+\ee{2DBravLatt}
+And the {\twots} tile the infinitely large 2\dmn\ space by:
+\beq
+\ssp_{{\bf z}} = \ssp_{{\bf z}+{\bf R}} \, , \quad {\bf R} \in \lattice \, .
+\ee{2DPeriodicField}
+The ${\bf z}$ here is a two\dmn\ vector which labels the position and time of the field.
+The {\sPe} \refeq{2dCoupledCats} can be written as:
+\beq
+(-2s + \sigma_1 + \transp{\sigma}_{1} + \sigma_2 + \transp{\sigma}_{2}) \ssp_{\bf z} = -m_{\bf z} \, ,
+\ee{2DCat}
+where the $\sigma_i$ is a translation operator which can translate the
+field in the positive $i$th direction by length one and
+$\transp{\sigma}_{i}$ is the inverse of the operator $\sigma_i$ which
+translates the field in the negative $i$th direction. Here we can assume
+that $\sigma_1$ is a translation in the time and $\sigma_2$ is a
+translation in space. But since the system is invariant under the
+exchange of space and time, we don't need to distinguish these two
+directions.
+
+Note that in \refeq{2DCat} the operators, field and source are defined on
+infinitely large 2\dmn\ space (lattice). For an {\twot}, which is
+a periodic tile, the {\sPe} \refeq{2DCat} is also satisfied
+on this finite tile. But in this case, the translation operators need to
+satisfy the periodic {\bcs} specified by this {\twot}. And
+the
+$-2s +\sigma_1 +\transp{\sigma}_{1} +\sigma_2 +\transp{\sigma}_{2}$
+on the finite region is the {\jacobianOrb} matrix of this specific periodic
+pattern.
+
+Following the same procedure as counting the periodic points of a cat
+map, we know that the number of periodic points is given by the
+determinant of the {\jacobianOrb}. To find the determinant and the
+inverse of the {\jacobianOrb}, we need to first find the eigenvectors
+and eigenvalues.
+
+The eigenvectors here are fields defined in this finite tile. The
+elements of these eigenvectors are generally complex numbers. If we tile
+the whole 2\dmn\ space with one of these finite fields using the periodic
+condition, we will get an eigenvector of the operator in \refeq{2DCat}
+defined in the infinite 2\dmn\ space. And the eigenvalue remains
+unchanged. So we can find the eigenvectors and eigenvalues in the
+infinite 2\dmn\ space then reduce the field into the finite tiles.
+
+	\HL{2019-06-17}{
+	I will need to rewrite this paragraph to make it clearer.
+	}
+
+For a 2\dmn\ {\spt} cat map, we want to find eigenvectors with
+periodicity given by the Bravais lattice \refeq{2DBravLatt}, where ${\bf
+a}_1$ and ${\bf a}_2$ are two 2\dmn\ basis vectors. The general form of
+these basis vectors are ${\bf a}_1 = \{l_1, l_2\}$ and ${\bf a}_2 =
+\{l_3, l_4\}$. For a given Bravais lattice, the choice of basis vectors
+is not unique. It is shown by Lind\rf{Lind96}, \CBlibrary{Lind96} that we can choose basis
+vectors with form ${\bf a}_1 = \{l_1, 0\}$ and ${\bf a}_2 = \{l_3, l_4\}$
+without loss of generality.
+    \PC{2020-02-15}{
+    This is called `Hermite normal form', see
+    \refeq{Holmin12-Hermite}.
+    }
+Then the reciprocal lattice is:
+\beq
+\overline{\lattice} = \{n_1 {\bf b}_1 + n_2 {\bf b}_2 | n_i \in \mathbb{Z}\}
+\,,
+\ee{2DReciprLatt}
+where the vectors ${\bf b}_1$ and ${\bf b}_2$ satisfy:
+\beq
+{\bf b}_i \cdot {\bf a}_j = 2 \pi \delta_{ij}
+\,.
+\ee{2DReciprocalVectors}
+The eigenvectors of the translation operator which satisfy the
+periodicity of the Bravais lattice \refeq{2DBravLatt} are
+plane waves of form:
+\beq
+f_{\bf k}({\bf z}) = e^{i {\bf k} \cdot {\bf z}}
+  \,, \quad
+{\bf k} \in \overline{\lattice}
+\,,
+\ee{2DEigenvect}
+where the wave vector ${\bf k}$ is on the reciprocal lattice
+$\overline{\lattice}$. For the basis vectors ${\bf a}_1 = \{l_1, 0\}$
+and ${\bf a}_2 = \{l_3, l_4\}$, the basis vectors of the corresponding
+reciprocal lattice are ${\bf b}_1 = 2 \pi / l_1 l_4 \, \{l_4, -l_3\}$ and
+${\bf b}_2 = 2 \pi / l_1 l_4 \, \{0, l_1\}$. The expression of
+eigenvector with wave vector ${\bf k} = n_1 {\bf b}_1 + n_2 {\bf b}_2$
+is:
+\beq
+f_{\bf k}({\bf z}) = e^{i {\bf k} \cdot {\bf z}} = \exp[i\frac{2 \pi}{l_1 l_4}(n_1 l_4 z_1 - n_1 l_3 z_2 + n_2 l_1 z_2)] \, ,
+\ee{2DEigenvect1}
+where the ${\bf z}=(z_1,z_2)$. The eigenvalue of the operator $s -
+\sigma_1 - \transp{\sigma}_{1} - \sigma_2 - \transp{\sigma}_{2}$
+corresponding to this eigenvector is:
+\beq
+\lambda_{\bf k} = s - 2 \cos(\frac{2 \pi n_1}{l_1}) - 2 \cos(-\frac{2 \pi n_1 l_3}{l_1 l_4} + \frac{2 \pi n_2}{l_4})
+\, .
+\ee{2DEigenval}
+It is sufficient to use the wave vectors ${\bf k}$ with $n_1$ from 0 to
+$l_1-1$ and $n_2$ from 0 to $l_4-1$ to get all of the eigenvectors. Any
+wave vector on the reciprocal lattice outside of this range will give an
+eigenvector which is equivalent to an eigenvector with the wave vector in
+the range. So the number of eigenmodes we can get is $l_1 l_4$, which is
+the number of lattice sites in a smallest repeating tile.
+
+Using the counting formula \refeq{perOrbits:Fourier}, we can find the
+number of the periodic points by computing the determinant of the
+{\jacobianOrb}, which is the operator $-2s +\sigma_1 +\transp{\sigma}_{1}
++\sigma_2+\transp{\sigma}_{2}$ defined on the finite tile with periodic
+{\bcs}:
+\beq
+N
+= \prod_{\bf k} \lambda_{\bf k}
+= \prod_{n_1=0}^{l_1-1} \prod_{n_2=0}^{l_4-1}
+\left[
+2s - 2 \cos(\frac{2 \pi n_1}{l_1}) - 2 \cos(-\frac{2 \pi n_1 l_3}{l_1 l_4} + \frac{2 \pi n_2}{l_4})
+\right]
+ \,.
+\ee{2DCount}
+This is the number of periodic points with the periodicity given by
+Bravais lattice \refeq{2DBravLatt} with the basis vectors ${\bf a}_1 =
+\{l_1, 0\}$ and ${\bf a}_2 = \{l_3, l_4\}$.
+
+Using the eigenvectors we can do a Fourier transform to the
+{\jacobianOrb} and get the inverse which is the Green's function.
+%But first we need to set the range of the repeating tile. We know that given a Bravais lattice the choice of the lattice cell is not unique. The area of the lattice cell is given by the wedge product of the two basis vectors.

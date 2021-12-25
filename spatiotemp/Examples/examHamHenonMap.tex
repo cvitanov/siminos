@@ -1,0 +1,107 @@
+% examHamHenonMap.tex called by examNewton.tex
+% $Author: predrag $ $Date: 2021-05-04 15:35:29 -0400 (Tue, 04 May 2021) $
+
+% Predrag                              2021-04-03
+% called by \Chapter{newton}{17dec2020}{Hamiltonian dynamics}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\example{{\Henlatt}.}{ \label{exam:HamHenonMap}
+    \index{Henon@H\'enon map!Hamiltonian}                   \toCB
+    \index{map!H\'enon!Hamiltonian}
+    \index{map!Hamiltonian!H\'enon}
+    \index{Hamiltonian!H\'enon map}
+    \index{symplectic!H\'enon map}
+    \index{area preserving!H\'enon map}
+For $b=-1$ parameter value the {\HenonMap} \refeq{eq2.1a}  is the
+simplest example of a nonlinear Hamiltonian map, a $2$\dmn\ {\opres},
+area preserving map, often studied to better understand topology and
+symmetries of \PoincSec s of 2-{\dofs} Hamiltonian flows.
+
+We find it convenient\rf{EG05} to multiply \refeq{2-step} by
+$a$ and absorb the $a$ factor into the definition the lattice field
+$\field=a\,\ssp$.
+This brings the Hamiltonian {\HenonMap} to the form
+% analogous to the Fatou\rf{fatou} parabola parametrization:
+\index{Henon@H\'enon map}
+\bea
+    \field_{n+1}&=&a-\field^2_n - p_n
+                \continue
+    p_{n+1}&=& \field_n
+\,,
+\label{Henlatt-eq2.1.0}
+\eea
+or, equivalently, the {\henlatt}
+\refeq{EG05:ar_pres} 3-term recurrence relation of form
+\beq
+\field_{i+1} +\field_{i}^2 +\field_{i-1}=a  \, ,
+\quad i=1,...,n_p
+\,.
+\label{Henlatt-2-step}
+\eeq
+We can write this as a
+lattice field equation with lattice Laplacian \refeq{Box(2.1.1)}
+\beq
+  % \field_{n-1}-2\,\field_{n}+\field_{n+1}
+\Box\,\field_{n}+(\field_{n}+2)\,\field_{n}\,=\, a
+\,.
+\ee{Henlatt-Lapl}
+The field equation is nonlinear, with the
+cubic potential \refeq{BWcubic}.
+
+For definitiveness, in numerical calculations in examples
+to follow we shall fix (arbitrarily)
+the stretching parameter value to $a=6$, a value large enough to guarantee
+that all roots of  $0=f^n(\ssp)-\ssp$ (periodic points) are real.
+\exerbox{ex_birkhoff}
+%\PC{link to next exer}
+                                        \jumpBack{exam:HamHenonMap}
+    } %end \example{HamHenonmap}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\example{{\Henlatt} fixed points.}{\label{exam:Henlatt-fixed}
+% derived from ChaosBook {e-Henon-fixed}     Sept 6 2001
+\index{Henon@H\'enon map!fixed points}
+Since we are looking for fixed points $p_\stagn$ of
+\refeq{Henlatt-eq2.1.0}, each successive step is the same as the
+previous,
+\[  \left( \begin{array}{c}
+        \field_\stagn \\
+        p_\stagn \\
+        \end{array}\right)
+         = \left(\begin{array}{c}
+            a - \field_\stagn^2 -p_\stagn   \\
+            \field_\stagn                 \\
+            \end{array} \right)
+\,.
+\]
+Thus there two fixed points, given by the roots of
+the quadratic equation
+$
+\field^2 - 2\,\field - a = 0
+\,,
+$
+\PC{2021-04-28}{agrees with Endler and Gallas\rf{EG05} $a=6$ values}
+\bea
+      \field_0 &=& -1 -\sqrt{1+a}
+                        \continue
+      \field_1 &=& -1 +\sqrt{1+a}
+\,.
+\label{Henlatt-2-cycle}
+\eea
+
+\PC{2021-04-28}{make into na exercise: Show that \refeq{Henlatt-2-cycle}...}
+\cycle{01} periodic points are \refeq{COM:2-cycle}
+\beq
+      \field_{10}  =  { 1+ \sqrt{a-3} }
+                        \,,\qquad
+      \field_{01}  =  { 1- \sqrt{a-3} }
+\,.
+\label{Henlatt-exer:eq2}
+\eeq
+
+
+%\PC{link to next exam}
+                                        \jumpBack{exam:Henlatt-fixed}
+} %end \example{exam:Henlatt-fixed}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%

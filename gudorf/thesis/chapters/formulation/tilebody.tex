@@ -1,0 +1,375 @@
+% siminos/spatiotemp/chapter/tilebody.tex
+% $Author: predrag $ $Date: 2020-10-24 01:45:26 -0400 (Sat, 24 Oct 2020) $
+
+% called by
+%           siminos/spatiotemp/chapter/spatiotemp.tex
+%           siminos/tiles/GuBuCv17.tex
+
+%\section{Results}
+%\label{sect:body}
+% Matt                                           28 February 2020
+
+
+
+\Preliminary{Know how, does it work\subsection{Collection}}
+So far we have motivated a {\spt} theory of turbulence
+which replaces unstable dynamics with \spt\ patterns.
+We formulate these ideas using the \KSe, creating a number of
+new numerical techniques in the process.
+The following section describes the results of our numerical investigation.
+
+\Preliminary{\subsubsection{Different symmetries}}
+    \PCedit{ % 2020-05-07
+In previous work, the \statesp\ geometry and the natural measure for
+this system have been
+studied\rf{Christiansen97,LanThesis,lanCvit07} in terms of unstable
+periodic solutions restricted to the antisymmetric subspace of the
+\KS\ dynamics.
+
+The focus of \refref{SCD07} was on the role continuous symmetries
+play in {\spt} dynamics. The notion of exact
+periodicity in time is replaced by the notion of relative
+{\spt} periodicity, and \reqva\ and \rpo s here play
+the role the \eqva\ and \po s played in the earlier studies.
+
+In presence of a continuous symmetry any solution belongs to a group
+manifold of equivalent solutions. The problem: If one is to
+generalize the periodic orbit theory to this setting, one needs to
+understand what is meant by solutions being nearby (shadowing) when
+each solution belongs to a manifold of equivalent solutions.
+        }
+\PC{2020-05-07}{In \refref{BudCvi15} we resolve this puzzle by implementing
+symmetry reduction.}
+
+\Preliminary{\subsubsection{Noise $\to$ final}}
+Before we began searching for {\po}s in earnest, we first
+tested the efficacy of the {\spt} numerical methods %\MNG{reference section here}
+using known {\po}s \rf{SCD07}.
+The first test was to find solutions of \refeq{e-Fks} using coarse {\spt} discretizations.
+This is important because the main limiting factor
+for {\spt} methods is the number of {\cdofs}; the entire orbit must be
+kept in the computational memory. It is imperative that we be able to
+find {\po}s with coarse resolutions, otherwise the problem is not computationally
+feasible unless we consider more advanced computing resources. 
+Each test performed simply rediscretized a known solution to create an coarse
+initial guess, which was then pass to our numerical methods.
+In all of the tests we performed, the guess converged to the 
+``same'' {\po} that it originated from.
+Technically, they are not returning
+to exactly the same {\po}, but rather, the same family of {\po}s. This
+topic arises organically later on when we detail the existence
+of continuous families of {\fpo}s, and so we leave the discussion until then.
+These tests showed that we could now solve \refeq{e-Fks} with coarse
+discretizations, however, using known solutions to perform these tests however
+is not very convincing; therefore we then applied
+to initial guesses created by adding a substantial amount of noise
+to these known {\po}s.
+
+The idea behind this test was simply to see whether or not
+the noisy initial guess would converge. 
+At each field site in the discretization, we drew a value from a
+normal distribution with mean zero and whose standard deviation was the 
+$L_{\infty}$ norm of the {\po}'s field. We only performed a single test
+but the results were still  Not only did the 
+sum of the original field and the noise converge, it converged to the original {\po}
+up to translations and small differences in periods.
+This exceeded our expectations as the noise was much larger in magnitude
+than the original {\po} itself.
+Note that we did not include perturbations to the periods but
+they remained unconstrained. This test case used a {\po}
+with small periods, however, the extent of the noise made us
+optimistic that initial guesses of poor quality could be used to find {\po}s.
+After these two tests we began the search and collection of {\po}s.
+This search applied the methods of \refsect{sect:intro} and
+spanned all symmetry types and a range of domain sizes; specifically,
+the periods were drawn from the intervals
+$L \times T \in [22, 88] \times [20, 200]$.
+As a reminder our hypothesis does not require the collection of exceptionally large {\po}s;
+they must only be large enough to capture all unique fundamental patterns. If we believed
+that this range of periods was insufficient we would have expanded our
+search.
+
+\Preliminary{\subsubsection{Initial $\to$ final}}
+Disregarding a few outliers (to be discussed later) the vast majority of {\po}s in this collection
+look more or less the same. More precisely, if one were to zoom in on a {\po} and examine
+the local features and patterns in a small {\spt} window, neither
+the global {\spt} symmetry nor the {\extent} would be ascertainable. This reinforced our belief that {\fpo}s are indeed universal and
+can be used to explain all solutions.
+The figure %\reffig{fig:waldo}
+displays {\po}s of the four different
+{\spt} symmetry classes that we considered in our investigation. We believe they are essentially
+indistinguishable when only the fundamental domains are plotted (obviously if the symmetry
+is visible they can be distinguished from one another).%\MNG{reference figure here}
+%\begin{figure}
+%\begin{minipage}[height=.05\textheight]{.3\textwidth}
+%\centering \small{\texttt{(a)}}\\
+%\includegraphics[width=.3\textwidth,height=.1\textheight]{MNG_waldo1}
+%\end{minipage}
+%\begin{minipage}[height=.05\textheight]{.3\textwidth}
+%\centering \small{\texttt{(b)}}\\
+%\includegraphics[width=.4\textwidth,height=.1\textheight]{MNG_waldo2}
+%\end{minipage}
+%\begin{minipage}[height=.05\textheight]{.3\textwidth}
+%\centering \small{\texttt{(c)}}\\
+%\includegraphics[width=.4\textwidth,height=.1\textheight]{MNG_waldo3}
+%\end{minipage}
+%\begin{minipage}[height=.05\textheight]{.3\textwidth}
+%\centering \small{\texttt{(d)}}\\
+%\includegraphics[width=.8\textwidth,height=.1\textheight]{MNG_waldo4}
+%\end{minipage}
+%\caption{ \label{fig:waldo}
+%Four {\po}s which demonstrate the ubiquity of patterns irrespective of
+%the global symmetry of the housing {\po}.
+%}
+%\end{figure}
+\Preliminary{\subsubsection{Outliers}}
+Another means of developing our intuition regarding {\spt} patterns is
+to look at the \textit{atypical} patterns of the \KSe.
+This classification consists of three main categories: {\po}s which
+are `too symmetric', contain `uncommon' patterns, or
+which follow an \eqv\ for an extended time.
+In dynamical systems context `outliers' is our blanket term for very isolated (unstable) solutions which would hardly ever realized.
+Our searches find these outliers
+because stability has no affect on the optimization problem.
+This implies that our variational method also captures
+`rare events', a notably hard problem that has utility in other situations. \MNG{mentioning this worthwhile (or accurate)?}
+
+The usage of `outliers' as opposed to 'isolated' is because solutions exist continuous families
+and hence are not `isolated'. Support for our claim that
+they are not frequented often is that they are typically found
+to exist in the antisymmetric subspace which is very unstable and hence not
+visited for long periods of time.  % sources? Lorenz z axis analogy?
+Originally we found {\po}s classified as outliers everywhere; but
+it may be that they all exist in the antisymmetric subspace. This seems
+contradictory if not for a particular computational detail.
+It is possible to find antisymmetric solutions
+without specifically constraining an initial guess to the antisymmetric subspace.
+This is because an antisymmetric {\po}s have the same topology as other {\po}s;
+it manifests only as a constraint on the {\Fcs}.
+What does this mean? It depends
+on the symmetries being compared but here are two examples. In figure %\MNG{figure reference here}
+demonstrates a {\po} found with no imposed symmetry.
+Another possibility occurs with shift-reflection invariant {\po}s. Due to
+the nature of the constraints on the {\Fcs}, imposing shift-reflection symmetry
+can also find even multiples of prime periods of antisymmetric {\po}s;
+i.e. two, four, etc. repeats of antisymmetric solutions in time.
+These aren't just assumptions either; these solutions can actually be converged to the
+antisymmetric subspace if their reflection axes are restored, as seen in {}.
+This demonstrates that {\po}s with discrete symmetries are simply special representatives
+of their group orbit produced via translations.
+This would have never been realized in the dynamical
+systems context due to the instability of the antisymmetric subspace.%\MNG{is this actually a new revelation?}
+%The solution %\reffig{rposlant}
+%demonstrates a behavior that is not particularly common on smaller domain sizes.
+%\subsubsection{Analysis of the library}
+%examples of initial conditions and their converged results.
+%examples depicting similar structures regardless of symmetry
+%examples demonstrating repeats of the structures after a prescribed length
+%examples of similar yet deformed structures / the structure's scales.
+%\subsubsection{Outliers}
+%Under resolved solutions
+%Large equilibria solutions?
+
+We have displayed {\po}s that we consider to be both typical and atypical.
+Our intuition evolved to the point where we could identify {\fpo} candidates.
+The notable property of these candidates is that they not only occur frequently throughout the
+{\po} collection; they also occur frequently within individual {\po}s.
+To further motivate the existence of
+{\fpo}s as well as some initial guesses, we direct the reader to %\MNG{figure reference here}
+where a very large time integrated trajectory (aperiodic in time)
+is displayed. Notable in this figure is the {\spt}
+frequency with which a single pattern occurs.
+\Preliminary{\subsection{Clipping}}
+\Preliminary{\subsubsection{Tiles, cutouts, final} Lion's share}
+The first guess was the {\wiggle} which appears in% \MNG{figure reference here}
+It very distinctly repeats twice with respect to time in
+and is relatively small in spatial scale, containing only two notable wavelengths.
+%\MNG{figure reference here}
+\Preliminary{\subsubsection{Iterative}}
+This was the inaugural search for a {\fpo} and so extra
+care was taken in the clipping process \refsect{sect:intro}.
+In this instance the clipping was done iteratively, finding
+a sequence of progressively smaller {\po}s each of which contained the {\fpo}.
+We now know that it is was possible to clip and converge {\fpo}s in a single clipping,
+but this example is kept in its entirety to demonstrate additional utility.
+
+The results of the {\wiggle} search are as displayed in %\MNG{figure reference here}
+The final result was an antisymmetric {\fpo} whose velocity field on
+the fundamental domain consisted of a wavelength or streak ``wiggling'', hence the name.
+To check our work, comparison of this pattern with our {\po} collection was made.
+While the {\wiggle} was converged in the antisymmetric subspace, the
+pattern most often as a pair of wiggles.
+As previously mentioned in the discussed of ``outlier'' {\po}s, the antisymmetric {\wiggle}
+should be viewed as a special case of the continuous family of {\wiggle} solutions as
+this case will never appear in actuality.
+\Preliminary{\subsubsection{Direct}}
+The collection of the {\wiggle} not only provided us with our first {\fpo} but also
+provided us with an obvious guess for the second {\fpo}. If we look back
+at the iterative clipping procedure that we just performed, %\MNG{figure reference here}
+we see that the {\wiggle} is spatially adjacent to an additional,
+single wavelength {\eqv}. %\MNG{figure reference here}
+By appealing to the notion of {\spt} {\symbolic} we postulated that
+this {\eqv} would be our second {\fpo}. Indeed, by clipping this
+single wavelength {\eqv} from the original {\po} another {\fpo} was found,
+which we now refer to as the {\streak}.
+
+At this point we knew that our library was yet incomplete as we had not
+captured the pattern emphasized in %large cutouts.
+This pattern, now named the {\defect}, captures two very important physical processes (they
+could be interpreted as two sides of the same coin, really). First, two spatially adjacent
+wavelengths merge into a single wavelength. In the gap in space-time left behind by this
+merger, a new wavelength emerges. The result is a new pair of wavelengths which
+exhibit an approximate phase difference of a
+half wavelength with the original pair (approximately a quarter of
+the spatial period).
+This {\defect} epitomizes two very important mechanisms of the \KSe:
+fluctuations in global wavelength count and local spatial drift velocity.
+Neither the {\streak} nor the {\wiggle} can account for
+these behaviors, highlighting the importance of the {\defect}.
+The actual search for the {\defect} was quite challenging relative to the other
+{\fpo}s. Due to the spatial
+shift it should be no surprise that the {\fpo} was assumed to be a {\rpo}.
+Locating the {\defect} proved to be much more difficult than both the {\wiggle}
+and {\streak}, in part due to the extra {\cdof} from the spatial shift.
+\Preliminary{\subsubsection{Families of tiles} A collecting of members}
+
+\MNGedit{After our first search concluded, we believed that there were four unique {\fpo}s.
+Upon further review two of these four {\fpo}s looked quite similar visually, leading us
+to believe that they were related. This was verified by pseudo-arclength continuation using
+the spatial period as the parameter. Continuation was performed until the spatial periods
+of this {\fpo} pair were the same. By fixing the phases of the
+{\Fcs} it is quite clear that these {\fpo}s are equivalent.
+This brought about a revelation regarding
+{\fpo}s that had been previously glossed over;
+{\fpo}s exist in continuous families. In hindsight it could not have been
+any other way. Shadowing by {\fpo}s is not an exact process;
+clippings from larger trajectories always look similar but not identical. This
+property is precisely captured by continuous families: which are
+infinite sets of solutions related by continuous deformations.}
+
+From a dynamical systems perspective
+this is not shocking nor new as previous bifurcation analyses
+track different branches of {\po}s.
+The main effect of these families is that our {\symbolic}
+now consists of a ``rubbery'' continuous alphabet, as opposed to a static discrete one.
+For each symbol in any {\spt} {\brick}, the symbol now represents a continuous
+family of {\fpo}s. To best illustrate the effect of this,
+we delve into the continuous family of the {\defect}.
+We display the numerical continuation of the defect as a
+function of the spatial period noting
+that there are other manners with which {\po}s can be continued. A collection of representatives
+are displayed in {}. The main result of the investigation is
+that the family is perhaps more properly parameterized
+by the spatial shift parameter.
+% more on defect family.
+
+It might be accurate to say that all {\po}s
+exist in continuous families \emph{because} {\fpo}s exist in
+continuous families. This initially betrayed our intuition; in hyperbolic systems, {\po}s are
+isolated solutions by virtue of their unstable manifolds. In any case each continuous
+family seems to exist on a finite interval of spatial periods, punctuated by what are
+presumed to be bifurcations. It could be that this assumption is incorrect and that we
+are failing to track the correct branch of the solutions.
+Exploration of the {\fpo} continuous families reduced the alphabet
+to three. To reiterate; there may only be three {\fpo}s
+needed to describe all solutions of the {\KSe}.
+
+It is absolutely essential to understand the notion of continuous families of {\fpo}s
+and so we summarize it here before moving on to the description of gluing results. We postulated
+and then found a collection of {\fpo}s whose existence can ostensibly describe all solutions.
+We believe that this collection consists of three unique {\fpo} continuous families.
+We currently do not have a clear manner with which to develop a {\spt} {\symbolic}.
+To begin the investigation, however, we can test our ideas by creating
+{\spt} combinations of {\fpo}s. This is the aforementioned gluing method,
+whose results shall now be described.
+
+\Preliminary{\subsection{Gluing}}
+\Preliminary{\subsubsection{Reproduce solutions} proof of concept}
+
+First as a proof of concept we reproduce a known solution by combining many small,
+custom tailored components. Next, we demonstrate how to glue known {\po}s along a single spacetime dimension: either time or space.
+Lastly, we glue {\spt} combinations of {\fpo}s to find {\po}s.
+The first question we aimed to answer was ``Can a known solution be reproduced by combining many different clippings from
+other solutions?''.  This is demonstrated in %reffig{}.
+where a handmade {\spt} combination was used to create an initial guess for a specific {\po} which
+is known to exist.
+
+The resultant {\po} is essentially a reproduction of the target up to continuous family considerations. This prototype of the gluing method was developed concurrently with the search
+for {\fpo}s. In this case the constituent pieces are not converged {\fpo}s but merely clippings from {\po}s not including the target. The success of this trial gave credence to the argument for {\po}s
+existing as collections of {\fpo}s.
+While this result was very encouraging it was also somewhat contrived.
+The initial guess was hand tailored to be a rough approximation to the
+targeted {\po}. Therefore we did not know whether this result would generalize.
+The next step was to implement unsupervised gluing along a single continuous dimension.
+In this context ``unsupervised'' implieds that the only decision
+that is made is which {\po}s to glue together.
+We focus on only gluing one pair of {\po}s at a time but also demonstrate
+that this process can be applied iteratively.
+\Preliminary{\subsubsection{Time}}
+
+We begin by temporally gluing {\po}s with small spatial periods,
+a familiar notion to those cognizant of periodic orbit theory. Our computation
+is completely different however as the spatial periods are allowed to differ
+as well as freely vary.
+Upon success we were able to find {\po}s with large temporal periods.
+For instance, in %reffig
+the final converged {\po} is a shift-reflection invariant orbit whose fundamental domain
+has period $386.088... / 2$. Similarly in %reffig
+is an examples of a converged {\rpo} with time period $231.419...$. These periods
+are what we would expect if the gluing was properly functioning, as they are
+approximately the sum of the periods of the original {\po}s.
+These {\po}s are much longer than anything we have seen
+in the literature which again exemplifies how robust
+our {\spt} methods are.
+\Preliminary{\subsubsection{Space}}
+
+In line with our identical treatment of space and time we also glue {\po}s spatially.
+The figures %reffig reffig
+show exactly this where the original {\po}s, their gluing, and the resultant {\po} are shown.
+In %reffig{MNGppo12spaceglue}
+two {\po}s with shift-reflection symmetry were chosen to be glued in space.
+\Preliminary{\subsubsection{Repeated space} $1+2\to12$ then $12+3\to 123$}
+
+Much like the clipping process we can also iteratively glue to create a sequence of
+progressively larger {\po}s. To demonstrate this, we glue the result
+from the previous example to yet another {\po} with shift-reflection symmetry. Originally
+the choice was made to only glue in a symmetry preserving manner; shift-reflection symmetric
+orbits were only glued to other shift-reflection symmetric orbits, and the result was
+also constrained to have shift-reflection symmetry. It was realized that there
+was no real motivation behind this choice and so this requirement was removed, such that
+it is not applied in the next section when discussing gluing {\fpo}s together.
+
+\Preliminary{\subsubsection{Space-time}New solutions}
+
+Showing that we can both glue in space and time we proceed to
+the ultimate method: gluing {\spt} combinations of {\fpo}s.
+To review our motivation, let us again explain the process in terms of {\symbolic}.
+The initial guesses can be thought of as symbolic blocks, where each symbol
+is representative of a {\fpo}'s continuous family. Quite literally, the symbols are replaced
+by these {\fpo}s to construct an initial guess; an approximation to a possible {\po}.
+We elect to use a static set of
+representative {\fpo}s for each of these substitutions with no motivation other
+than simplicity. Specifically: the {\defect},
+{\wiggle}, and {\streak} displayed in %reffig final tiles.
+
+\Preliminary{\subsubsection{Cannot tell if final solution $=$ target symbol block}}
+To deem each gluing as a success, they must satisfy a {\symbolic} requirement
+in addition to numerical convergence. Namely, the initial guesses must converge
+to a {\po} which has the ``correct'' symbolic representation.
+That is, it must be contain the {\fpo}s which befits its construction.
+Yet again, however, we are forced to rely upon visual inspection to validate our results.
+First, we provide examples which we claim are successful under our new requirement.
+Next, are examples of numerical success but ``symbolic failure''.
+The existence of this class of outcomes, in combination with our lack of verification of results,
+contributes to the challenge of making the {\symbolic}. Specifically,
+this prevents us from determining the correct grammar of
+the {\symbolic}; the rules which dictate whether each {\brick} is admissible {\po} or not.
+
+In summary we have shown that it is possible to use our techniques to find {\po}s by construction,
+clipping and gluing. In essence
+clipping and gluing are inverses of one another, however, gluing is
+typically more difficult than clipping due to the inherent differences in complexity. In practice,
+we usual clip in a single step but glue iteratively.
+Currently we have a very surface level method and there are currently many unknowns in regards to best practices. Essentially we have made the simplest choices which result in the gluing method to be
+numerically well defined. While these results are very informative they leave us with more open
+questions than we started with \refsect{sect:future}. The future is bright, however, as the number of potential improvements seems to be limited only by our creativity.

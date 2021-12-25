@@ -1,0 +1,70 @@
+A linear ordinary differential equation with periodic
+coefficients is an old topic. Solutions of such type of
+equations can be decomposed into the product of 
+a time-exponential part
+and a bounded periodic part. The rigorous statement is given by
+\begin{theorem}\cite{Floquet1883}
+  \label{them:ft}
+  If $\Phi(t)$ is a fundamental matrix solution of linear system
+  $\dot{x} = A(t)x$ with periodic coefficients $A(t+T)=A(t)$,
+  $T$ being the period, then $\Phi(t)$ can be decomposed as
+  \[
+    \Phi(t) = P(t)e^{tB} \quad \text{with} \quad P(t) = P(t+T)
+    \,.
+  \]
+  Here $P(t)$ is called monodromy matrix, and $B$ is a constant
+  matrix. Eigenvalues of $B$ are called Floquet exponents. The
+  eigenvectors are called \Fv s.
+\end{theorem}
+The proof of this theorem is very simple. First, it is easy to
+see that if $\Phi(t)$ is solution matrix, so is $\Phi(t+T)$.
+Their relation is given by $\Phi(t+T)=\Phi(t)C(t, T)$, where
+$C(t, T) = \Phi^{-1}(t)\Phi(t+T)$. Second, $C(t, T)$ is independent
+of time which can be shown by taking time derivative
+at both sides of $\Phi(t)C(t, T) = \Phi(t+T)$, 
+\begin{align*}
+  & \dot{\Phi}(t)C(t, T) + \Phi(t)\dot{C}(t, T) = \dot{\Phi}(t+T) \\
+  \implies 
+  &  A(t) \Phi(t) C(t, T) + \Phi(t)\dot{C}(t, T) = A(t + T)\Phi(t+T) \\
+  \implies
+  & \dot{C}(t, T) = 0 \,.
+\end{align*}
+So matrix $C(T)$
+is only parametrized by the period. Furthermore,
+\[
+  C(nT) = \prod_{k=0}^{n-1}\left( \Phi^{-1}(t+kT) \, \Phi(t+(k+1)T) \right) = C(T)^n
+  \,;
+\]
+thus $C(T)$ has form $e^{TB}$, where $B$ is a constant matrix.
+So $\Phi(t+T)=\Phi(t)e^{TB}$. Last,
+If we define a new matrix $P(t) = \Phi(t)e^{-tB}$, then
+\[
+  P(t+T) = \Phi(t+T)e^{-TB-tB} = \Phi(t)e^{-tB} = P(t) 
+  \,.
+\] 
+In this way,
+we decompose the fundamental matrix solution into a periodic part
+$P(t)$
+and a time exponential part $e^{tB}$,
+even though we do not know the explicit
+form of $P(t)$.
+
+Floquet theorem in condensed matter physics is under another 
+name: \textbf{Bloch theorem}, which states that wave function in a periodic
+potential can be written as
+$\psi(\vec{r}) = e^{i\vec{k}\cdot\vec{r}}u(\vec{r})$.
+Here $u(\vec{r})$ is a periodic function with the same potential period.
+Eigenstates are classified into different bands by different profiles of
+$u(\vec{r})$.
+
+For our interest, dynamics in the tangent space
+in a nonlinear dynamical system is governed by $\dot{J} = A J$.
+Especially, for \po s, $A$ is periodic, and if we start
+with $J(t_0) = I$, then Jacobian corresponding to one period $J_p$ is
+just the exponential part $e^{TB}$ in theorem \ref{them:ft}.
+This is the theoretical basis of periodic eigendecomposition algorithm,
+which tries to calculate the eigenvalues and eigenvectors of $J_p$.
+On the other hand, the periodic part $P(t)$ in theorem \ref{them:ft}
+evolves \Fv s along the \po, and returns to
+the initial value after one period. This information is revealed
+in the reordering stage of periodic eigendecomposition algorithm.

@@ -1,0 +1,137 @@
+% siminos/spatiotemp/Examples/examHill1stOrd.tex
+% $Author: predrag $ $Date: 2021-12-24 01:25:20 -0500 (Fri, 24 Dec 2021) $
+% Predrag 2020-12-14 called by siminos/spatiotemp/stability.tex
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+    \ifblog
+\subsection{Hill's formula for a first-order system}
+\label{exam:Hill1stOrd}
+    \else % called by kittens/CL18.tex
+\subsubsection{Hill's formula for a first-order system.}
+\label{exam:Hill1stOrd}
+    \fi
+% based on siminos/spatiotemp/Examples/examStab3cyc.tex 2020-12-14
+\PC{2020-12-15}{
+Transfer to CL18.tex. Once incorporated, remove from here
+- too much duplication, as is;)
+    }
+
+
+
+Consider an period-$\cl{}$ {\lattstate} $\Xx_p$, with $d$ fields
+$\{\ssp_{\zeit,1},\ssp_{\zeit,2},\dots,\ssp_{\zeit,d}\}$ on each temporal
+lattice site $\zeit$ satisfying the condition
+\beq
+\ssp_{\zeit} - \flow{}{\ssp_{\zeit-1}} = 0
+    \,,\quad
+\zeit=1,2,\cdots,\cl{}
+\,,
+\ee{1stepNonlimTmp}
+where $\flow{}{\ssp}$ is a $d$\dmn\ function.
+A deviation $\Delta\Xx$ from $\Xx_p$ then satisfies the linearized condition
+\beq
+\Delta\ssp_{\zeit} - \jMat_{\zeit-1}\,\Delta\ssp_{\zeit-1} = 0
+\,,\qquad
+(\jMat_{\zeit})_{ij}
+=
+\left.\frac{\partial \flow{}{\ssp}_i}
+           {\partial \ssp_{j}}\right|_{\ssp_{j}=\ssp_{\zeit,j}}
+\,,
+\ee{d-1stepJac2}
+where $\jMat_{\zeit}$ is the 1-time step $[d\!\times\!{d}]$
+\jacobianM.
+
+It suffices to work out a temporal period $\cl{}=3$ example to
+understand the calculation for any period.
+In terms of the $[3d\!\times\!3d]$ matrix shift matrix $\shift$,
+the \jacobianOrb\ % \refeq{fcnewt}
+can be written as
+\beq
+\jMorb_p \,=\,
+\id - \shift^{-1} \jMat
+\,,\quad
+\shift^{-1} =
+\left[
+\begin{array}{ccc}
+0     & 0     & \id_d  \\
+\id_d & 0     & 0  \\
+0     & \id_d & 0
+\end{array}
+\right]
+\,,\quad
+\jMat =
+\left[
+\begin{array}{ccc}
+\jMat_1 & 0 & 0 \\
+0 & \jMat_2 & 0  \\
+0 & 0 & \jMat_3
+\end{array}
+\right]
+\,,
+\ee{3shift}
+where $\id_d$ is the $d$\dmn\ identity matrix.
+Next, note that
+\bea
+(\shift^{-1}\jMat)^2 &=&
+\shift^{-2}
+\left[
+\begin{array}{ccc}
+\jMat_2\jMat_1 & 0 & 0 \\
+0 & \jMat_3 \jMat_2 & 0  \\
+0 & 0 & \jMat_1\jMat_3
+\end{array}
+\right]
+,\;\;
+(\shift^{-1}\jMat)^3  =
+\left[
+\begin{array}{ccc}
+\jMat_2\jMat_1\jMat_3 & 0 & 0 \\
+0 & \jMat_3\jMat_2\jMat_1 & 0  \\
+0 & 0 & \jMat_1\jMat_3\jMat_2
+\end{array}
+\right],
+\nnu %\label{stabSquare}
+\eea
+as $\shift^{-3}=\id$.
+Likewise, as $\shift^\cl{}=\id$ for any period $\cl{}$, the trace of
+$[\cl{}d\!\times\!\cl{}d]$ matrix
+\[
+\Tr(\shift^{-1}\jMat)^k=\delta_{k,r\cl{}}\,\cl{}\,\tr\jMat_p^r
+\,,\quad
+\jMat_p = \jMat_\cl{}\jMat_{\cl{}-1}\cdots\jMat_2\jMat_1
+\]
+is non-vanishing only if $k$ is a multiple of $\cl{}$, with $\jMat_p$ the
+forward-in-time $[d\!\times\!{d}]$ \jacobianM\ of the \po\ $p$.
+
+Now we can evaluate the {\HillDet} % \refeq{detBern0}
+by expanding
+\bea
+\ln\Det(\jMorb_p) &=&
+\Tr\ln(\id-{\shift}^{-1}\jMat)
+                \,=\,
+-\sum_{k=1}^\infty\frac{1}{k}\,\Tr({\shift}^{-1}\jMat)^k
+    \continue
+                 &=&
+-\tr\sum_{r=1}^\infty\frac{1}{r} \jMat_p^{r}
+  =
+\ln\det(\id_d-\jMat_p)
+\,.
+\label{LnDet=TrLn2}
+\eea
+The \HillDet\ for a 2-term difference equation \refeq{1stepNonlimTemp} on a
+temporal lattice
+\[
+\Det(\jMorb_p) = \det(\id_d-\jMat_p)
+\] %merge with CL18 equation
+thus relates the global orbit stability to the Floquet, temporal
+evolution stability.
+In the {temporal Bernoulli} case, the field $\ssp_\zeit$ is a scalar, and
+the 1-time step $[1\!\times\!1]$ time-evolution \jacobianM\
+\refeq{d-1stepJac2} at every lattice point $\zeit$ is simply
+$\jMat_{\zeit}={s}$, so
+\beq
+N_\cl{} = |\Det\jMorb| = {s}^{\cl{}} - 1
+\,,
+\ee{detBern2n2}
+in agreement with the time-evolution count. % \refeq{noPerPtsBm}.
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%

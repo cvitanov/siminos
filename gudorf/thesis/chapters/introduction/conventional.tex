@@ -1,0 +1,143 @@
+The next benefit is not due to the inclusion of new methods but
+rather the exclusion of old methods. Time integration and
+recurrence functions based on pairwise distance have long been used in combination
+to find initial conditions. % schatz/grigoriev, kerswell, viswanath.
+In the high dimensional limit, both
+of these components are time consuming. This is yet another
+component of the dynamical systems formulation that gets worse
+as spatial sizes increase. There are two detrimental factors
+that contribute towards this. The number of dimensions must increase
+in order to accurately resolve the domain. The other factor is that
+the growth of complexity of solutions can reduce the number of recurrences
+drastically. There isn't really a manner to deal with the increasing
+number of computational variables other than to wait for improvements
+in computing power and memory availability. As for the recurrences, the
+typical solution for increasingly rare events is to compute in parallel when
+possible. The exponential growth in complexity makes even this proposition
+a daunting one.
+
+% The italicized text captures my sentiment of this next paragraph.
+The \spt\ completely avoids this by constructing larger \twots\
+from the combination of smaller \twots. That is,
+we locate the fundamental tiles, which are easy to find due to their small
+domain size, and then build them up to create larger \twots. The only
+search required is the search for the fundamental tiles. To stress
+this even further \textit{one of the challenges of turbulence
+computations has been eliminated}. The reason
+why the search for the fundamental tiles is classified as ``easy'' is because
+in the small domain size limit there just aren't that many \twots; the dynamics
+is relatively simple.
+
+% I'm trying to say that the arbitrary choice of norm is not as impactful in our case....
+Recurrence functions also require the introduction of a norm,
+typically chosen without taking the geometry of the state space into account.
+Points that are close in this norm can be far apart in a dynamical sense (\ie, on opposite sides
+of an unstable manifold). An arbitrary norm is also chosen in the \spt\
+context but there are some subtle differences. For starters, the
+norm introduced in the \spt\ formulation is not beholden to dynamics, as
+there are no longer any dynamics to speak of.
+Additionally, the norm in the \spt\ case measures the distance between \twots,
+not just single state space points. This is not a statement of proof but rather
+a suggestion that the underlying topology improves the reliability of
+the chosen norm. Restated in a different manner, the \spt\ norm
+takes both the magnitude and phase into account.
+
+Conventional methods treat spatial dimensions
+as finite and fixed; meanwhile, time is treated as infinite.
+One interpretation is that this is natural due to the
+human familiarity with finite space, especially in regards
+to experimental setups.
+This assumption is actually a very unnatural one
+in the context of state space. The fundamental reason
+for this is that it disregards
+the translational invariance of the equations and while there
+are implicit physical scales, choosing a specific domain size
+to study is completely arbitrary. This notion
+must be reconsidered going forward as it is a very strict constraint
+on the space of solutions and on the study of turbulence in general.
+Finite spatial dimensions of course have practical import, but
+these specific constraints should only be imposed after the
+study of infinite space-time, as they represent special
+cases of the general equations. The \spt\ formulation handles
+this properly by treating all continuous dimensions as equal
+by respecting all translational symmetries.
+What are the differences and advantages of this?
+The first key difference is that the governing equation
+dictates the \spt\ domain size in an unsupervised
+fashion; the decision of what specific domain size
+to study is no longer present in the discussion.
+This is another manner in which
+time and space are being treated as equals; the parameters $(L,T)$
+that determine the size of the \spt\ domain are both allowed to vary.
+The values of these parameters
+are determined by the requirement that the equations
+must be satisfied locally at every lattice site.
+This small detail, allowing the domain size $L$ to vary,
+is not as trivial as it seems. At present it has not been seen in
+the dynamical systems literature. The variation of the period $T$ is
+common, however. The likely culprit behind this different treatment
+is likely a result of the equations themselves. This difficulty
+is especially evident in the \KSe, whose spatial derivative terms
+are of higher order than the first order time derivative, but also
+there is a spatial derivative present in the nonlinear component.
+
+
+    The conventional method to generate initial conditions
+involves time integration and recurrence functions, the latter simply
+calculates the pairwise distance between all points in a time integrated
+series.%schatz/grigoriev, kerswell, viswanath.
+In the high dimensional limit, both
+of these components are time consuming. This is yet another
+component of the dynamical systems formulation that gets worse
+as spatial sizes increase. There are two detrimental factors
+that contribute towards this. The number of dimensions must increase
+in order to accurately resolve the domain. The other factor is that
+the growth of complexity of solutions can reduce the number of recurrences
+drastically. There isn't really a manner to deal with the increasing
+number of computational variables other than to wait for improvements
+in computing power and memory availability. As for the recurrences, the
+typical solution for increasingly rare events is to compute in parallel when
+possible. The exponential growth in complexity makes even this proposition
+a daunting one.
+
+The \spt\ completely avoids this by constructing larger \twots\
+from the combination of smaller \twots. That is,
+we locate the fundamental tiles, which are easy to find due to their small
+domain size, and then build them up to create larger \twots. The only
+search required is the search for the fundamental tiles. To stress
+this even further \textit{one of the challenges of turbulence
+computations has been eliminated}. The reason
+why the search for the fundamental tiles is classified as ``easy'' is because
+in the small domain size limit there just aren't that many \twots; the dynamics
+is relatively simple.
+
+Recurrence functions also require the introduction of a norm,
+typically chosen without taking the geometry of the state space into account.
+Points that are close in this norm can be far apart in a dynamical sense (\ie, on opposite sides
+of an unstable manifold). An arbitrary norm is also chosen in the \spt\
+context but there are some subtle differences. For starters, the
+norm introduced in the \spt\ formulation is not beholden to dynamics, as
+there are no longer any dynamics to speak of.
+Additionally, the norm in the \spt\ case measures the distance between \twots,
+not just single state space points. This is not a statement of proof but rather
+a suggestion that the underlying topology improves the reliability of
+the chosen norm. Restated in a different manner, the \spt\ norm
+takes both the magnitude and phase into account.
+Another numerical advantage is that the \spt\ formulation is able to find solutions
+of the \KSe\ starting from modulated random noise. The specifics
+of ``modulated random noise'' are described in the numerical methods section
+but it can essentially be thought of as randomly assigning values to \spt\
+Fourier modes. The ability to find solutions from this starting point
+is a radical improvement over the conventional capabilities. This is of course
+in conjunction with allowing the \spt\ domain to change. The reaction to these
+changes individually has induced skepticism and disbelief; together they comprise
+a completely unheard of force.
+
+The \spt\ formulation also includes the improvement of a commonly
+practiced numerical method known as pseudo-arclength continuation.
+The general idea is to track a solution as a parameter is varied. In the
+Navier-Stokes equations this is typically the Reynolds number.
+The improvement is due to our common refrain: the lack of dynamical
+instability and the topological constraint of \twots. There can
+be more confidence that if the continuation fails it is due to the solution
+not existing rather than not being able to converge due to dynamical instability.

@@ -1,0 +1,233 @@
+\svnkwsave{$RepoFile: siminos/spatiotemp/chapter/Kolmogorov.tex $}
+\svnidlong {$HeadURL: svn://zero.physics.gatech.edu/siminos/spatiotemp/chapter/Kolmogorov.tex $}
+{$LastChangedDate: 2019-05-09 18:30:52 -0400 (Thu, 09 May 2019) $}
+{$LastChangedRevision: 6822 $} {$LastChangedBy: predrag $}
+\svnid{$Id: Kolmogorov.tex 6822 2019-03-29 16:04:23Z predrag $}
+
+\chapter{Kolmogorov flow}
+\label{chap:Kolmogorov}
+% Predrag                                            7 Dec 2018
+
+\begin{description}
+
+\PCpost{2018-12-07}{
+% Predrag moved  to here      7 Dec 2018
+
+Moved \emph{elton/blog/KFsymm.tex}  Mohammad and Predrag 2D Kolmogorov flow
+discussions to here, current \refsect{sect:KFsymm}.
+}
+
+\MNGpost{2018-12-07}{
+Mhm
+}
+
+\end{description}
+
+%      extracted from blogMNG.tex
+
+\input{chapter/KFsymm}
+
+\section{Kolmogorov flow blog}
+\label{sect:KolmBlog}
+% Predrag                                            7 Dec 2018
+%      extracted from blogMNG.tex
+
+\begin{description}
+
+\MFpost{2015-04-21}{The Kolmogorov flow
+\begin{equation}
+\partial_t \mathbf u = -\mathbf u\cdot\nabla\mathbf u -\nabla p
++\frac{1}{\mbox{Re}}\Delta \mathbf u + \sin (4y) \mathbf e_1,\quad \nabla\cdot \mathbf
+u=0,
+\label{eq:kolmogorov}
+\end{equation}
+is solved with periodic boundary conditions in $x$ and $y$ on the domain $(x,y)\in
+[0,2\pi]\times [0,2\pi]$.
+\begin{figure}
+	\centering
+	(a)\includegraphics[width=.40\textwidth]{Kol_CK13_E1}
+	(b)\includegraphics[width=.47\textwidth]{Kol_R40_n128_vort_adj+newton}
+	\caption{(a) Equilibrium E1 found by Chandler \& Kerswell, JFM 722 (2013) (b) The
+	same equilibrium found by adjoint equation integrated for $4\times 10^4$ time units
+	(takes approximately $3$ minutes) plus 7 iterations of Newton-GMRES to decrease the
+	$L^2$ error to $5\times 10^{-13}$. Here, $\mbox{Re}=40$. Note that panels (a) and (b)
+	appear to be related
+	by a shift-and-reflect symmetry.}
+	\label{fig:Kol_R40_E1}
+\end{figure}
+}
+	
+\PCpost{2015-06-20}{
+The Kolmogorov flow domain $(x,y)\in [0,2\pi]\times [0,2\pi]$ in
+\refeq{eq:kolmogorov} really bugs me. The Rayleigh number controls the
+viscosity legth scale, as compared to the strip width. Experimentally one
+fixes the number $n$ of spanwise strips, and can chose any streamwise
+length, so the domain should be a rectangle, such that for given $n$ and
+$Re$ if one doubles the streamwise length, on doubles the number of
+vortices, while keeping their shape intact. Forcing them  into a square
+domain would squash the vortices. 3rd floor people must have thought all
+this through...
+}
+
+\MFpost{2015-06-19}{Define the projection operator
+\beq
+\mathcal P\mathbf u = \frac{1}{4n}\sum_{m=0}^{2n-1}\mathcal
+S^m\left[\mathbf u +\mathcal R\mathbf u\right],
+\ee{MMFaxis1}
+as the average over all discrete symmetries of the Kolmogorov flow
+in the \slice. Let
+$I[\mathbf u]$ denote the energy input for the state $\mathbf u$. For
+Kolmogorov flow, the energy input $I[\mathbf u]$ is linear in $\mathbf
+u$. Due to its linearity and since the energy input is conserved under
+any symmetry action, we have $I[\mathcal P\mathbf u]=I[\mathbf u]$.
+Therefore, $$I[\mathbf u-\mathcal P\mathbf u]=0,$$ that is all the
+contribution to the energy input comes solely from the projection
+$\mathcal P\mathbf u$!
+}
+
+\PCpost{2018-12-07}{
+Blah blah.
+}
+
+\subsection{Kolmogorov Flow doubly periodic formulation}
+
+The equations governing two dimensional Kolmogorov flow can be written in terms
+of velocity field $\mathbf{u}$(eliminated later) and vorticity $\omega$ in the
+following manner. For now I will just write the homogeneous equations, with
+forcing easily added afterwards
+
+\beq
+\omega_t - \hat{z}\cdot(\nabla \times (\mathbf{u}\times \omega \hat{z})) - \frac{1}{Re}\nabla^2 \omega = 0
+\eeq
+
+The only difficult part of rewriting this equation in terms of $(2+1)$ spatiotemporal Fourier coefficients
+(assuming periodic boundary conditions) is the nonlinear term, not only due to the cross products
+but the necessity to express the velocity field in terms of the streamfunction, and consequently the
+vorticity field as $\mathbf{u} = \nabla \times (\nabla^{-2} \omega)$
+which is possible due to the two dimensional approximation. The operator $\nabla^{-2}$ is the inverse
+of the Laplacian, which is technically singular; I asked around and the standard practice is to essentially
+define it in fourier space as $\frac{1}{|\mathbf{k}|^2}$, where $|\mathbf{k}|^2 = k_x^2 + k_y^2$. For
+numerical purposes its apparently common practice to say that the inverse of the $k_x = k_y = 0 $
+term equals $1$. In other words, $1/0 = 1$. It's just a means of approximating the operator in
+spectral space.
+
+Although \rf{ChaKer12} give nice formula that is almost entirely of Fourier coefficients, I find it
+more useful to completely eliminate the velocity field components $\mathbf{u} = (u,v)$ from the equation.
+
+Therefore, the pseudospectral (homogeneous) spatiotemporal equation takes the form,
+
+\bea \label{eqn:2DK_spectral}
+\ii \omega \Omega &+& \ii k_x \mathcal{F}[\mathcal{F}^{-1}(\frac{\ii k_y}{|\mathbf{k}|^2} \Omega)* \mathcal{F}^{-1}(\Omega)] \continue
+                  &-& \ii k_y \mathcal{F}[\mathcal{F}^{-1}(\frac{\ii k_x}{|\mathbf{k}|^2} \Omega)*\mathcal{F}^{-1}(\Omega)] \continue
+                  &-& \frac{|\mathbf{k}|^2}{Re} \Omega = G(\Omega,T,L_x,L_y) = 0
+\eea
+
+Likewise, if allowed to write differentiation operators via $D_t,D_x,D_y$, etc, then the jacobian
+takes on the form in pseudospectral representation,
+
+\bea \label{eqn:2DK_spectral_jac}
+J   &=& D_t + D_x \mathcal{F}[diag(D_y \nabla^{-2} \omega)\mathcal{F}^{-1} + diag(\omega)D_y \nabla^{-2}\mathcal{F}^{-1}]\continue
+    &-& D_y \mathcal{F}[diag(D_x \nabla^{-2} \omega)\mathcal{F}^{-1} + diag(\omega)D_x \nabla^{-2}\mathcal{F}^{-1}] \continue
+    &-& \frac{\nabla^2}{Re}
+\eea
+
+By taking the complex conjugate and multiplying by the Feynman equation \refeq{eqn:2DK_spectral},
+the expression for the adjoint descent direction, $-J^{\dagger}G$.
+
+\bea \label{eqn:2DK_adjointdescent}
+-J^{\dagger}G  &=& [D_t + \mathcal{F}diag(D_y \nabla^{-2} \omega)\mathcal{F}^{-1} D_x \continue
+               &-& \mathcal{F} \nabla^{-2} D_y diag(\omega)\mathcal{F}^{-1}D_x \continue
+               &-& \mathcal{F}diag(D_x \nabla^{-2}\omega)\mathcal{F}^{-1} D_y\continue
+               &+& \mathcal{F} \nabla^{-2} D_x diag(\omega)\mathcal{F}^{-1}D_y \continue
+               &-& \frac{\nabla^2}{Re}] \cdot G
+\eea
+
+\subsection{Kolmogorov Flow non periodic boundary conditions}
+
+Mike Schatz and I had a conversation today via Hangouts because he wanted
+to follow up on our presentation and discuss how this could possibly be relevant
+to his group. The main goal we discussed was to pursue a spatiotemporal numerical
+formulation for a experimentally comparable setting, namely Kolmogorov flow without
+doubly periodic boundary conditions and incorporating Rayleigh
+friction. I explained that the key difference would
+be to change to a Chebyshev polynomial basis due to the boundary conditions but work
+with the vorticity field as is common practice.
+
+For starters, I'll describe the basic formulation for \eqva\, in a Chebyshev-Chebyshev basis. The key details is that to have accurate or
+viable numerics the spatial grid would have to be defined not on an equidistant,
+rectangular grid but rather defined at (this is a specific choice, but a common one)
+what are known as the Chebyshev-Gauss Lobatto quadrature nodes. In other words, any
+initial condition would either have to be either initialized in spectral space (very very preferable), or initialized on the discretized grid defined by the set of points in physical space,
+
+\beq \label{eqn:CGLnodes}
+(x_m,y_n) = (\cos (\frac{\pi m }{M}),\cos (\frac{\pi n }{N}) \,.
+\eeq
+
+It is this discretization that allows us to use a (Chebyshev) polynomial basis
+in a collocation method, as an equally spaced grid would induce error from
+the Runge phenomenon (like the Gibbs phenomenon for Fourier modes but for polynomial bases). One benefit (I believe?) is that the discretization has a higher
+resolution near the walls. Another benefit of this specific choice of quadrature nodes
+is that by definition they are the points at which the derivative of the Chebyshev
+polynomials are zero, \ie $T'(x_m) = 0$. Other choices, such as the Chebyshev-Gauss nodes would instead provide the condition $T(x_m) = 0$.
+
+With a two-dimensional spatial grid defined on the Chebyshev-Gauss-Lobatto nodes,
+we can use a discrete cosine transform to determine the spectral coefficients of the
+Chebyshev polynomial basis \rf{CHQZ06}.
+
+For a scalar vorticity field, $\omega(x_m,y_n)$, the corresponding Chebyshev modes
+are calculated with the following formula
+
+\beq
+\Omega_{jk} = \frac{2}{M*N}\frac{1}{\bar{c}_j \bar{c}_k} \sum_{n,m} \frac{\omega_{nm}}{\bar{c}_n\bar{c}_m} \cos (\frac{\pi m j}{M})\cos (\frac{\pi n k}{N})
+\eeq
+
+and the corresponding inverse transformation given by
+
+\beq
+\omega_{nm}\Omega_{jk} = \sum_{j,k} \Omega_{jk} \cos (\frac{\pi m j}{M})\cos(\frac{\pi n k}{N}) \,.
+\eeq
+
+In this context there are no continuous translation symmetries, nor does the shit-reflect exist. The only remaining symmetry is in fact the rotational symmetry,
+defined by action on the vorticity field $ R \cdot \omega (x,y) \rightarrow \omega (-x,-y)$.
+
+Via the invariance condition,
+\beq
+\omega - R \cdot \omega = 0 \,,
+\eeq
+one can derive selection rules for the Chebyshev modes with spatial rotation symmetry. The rotation action is equivalent to the coordinate
+transformation $x\rightarrow -x, y\rightarrow y$. Via the Chebyshev-Gauss-Lobatto relation,
+
+\bea
+x_m &=& \cos(\pi m / M) \continue
+-x_m &=& -\cos(\pi m / M) \continue
+-x_m &=& \cos(\pi)\cos(\pi m / M) \continue
+-x_m &=& \cos(\pi m / M + \pi) \continue
+\cos^{-1}(x_m) &=& \pi m / M  + \pi \continue
+\eea
+
+which after substitution into the invariance condition (in terms of Chebyshev modes),
+
+\beq
+\sum_{j,k}\Omega_{jk}\cos (\frac{\pi m j}{M})\cos(\frac{\pi n k}{N})
+=\sum_{j,k}\Omega_{jk}\cos (\frac{\pi m j}{M}+j\pi)\cos(\frac{\pi n k}{N} + k\pi) \,,
+\eeq
+
+in turn implies the following,
+
+\beq
+\Omega_{jk} = (-1)^{j+k}\Omega_{jk} \mbox{for all} j,k.
+\eeq
+
+Therefore the subset of modes $(\Omega_{jk} : j+k = \mbox{odd})$ are forced
+to be zero by discrete symmetry.
+
+These selection rules hold only for solutions in the rotationally invariant subspace, naturally.
+
+
+
+
+
+\end{description}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\printbibliography[heading=subbibintoc,title={References}]

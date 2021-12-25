@@ -1,0 +1,58 @@
+% soluHamHenonCyc.tex
+% $Author: predrag $ $Date: 2021-10-14 11:00:27 -0400 (Thu, 14 Oct 2021) $
+
+\Solution{Henon}{soluFixed}{26oct2014}{{\HenonMap}}
+% Predrag                                       26oct2014
+%       from ChaosBook soluFixed
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\solution{exer:HamHenonCyc}
+         {Inverse iteration method for a Hamiltonian repeller.}{
+\index{inverse!iteration, Hamiltonian repeller}
+\index{iteration!inverse!Hamiltonian repeller}
+\index{periodic!orbit!Hamiltonian repeller}
+\index{Hamiltonian!repeller, periodic orbits}
+For the complete repeller case (all binary sequences are realized),
+the cycles can be evaluated variationally, as follows.
+According to \refeq{eq2.1a},
+% (\ref{times}),
+the coordinates of a periodic orbit of
+length $n_p$ satisfy the  equation
+                                \toCB
+\beq
+\ssp_{p,i+1}+\ssp_{p,i-1}=1 -  a \ssp_{p,i}^2 \, ,
+\quad i=1,...,n_p
+\,,
+\label{e:pere}
+\eeq
+with the periodic boundary condition
+%$\ssp_{p,n_p +1}=\ssp_{p,1}$ and
+$\ssp_{p,0}=\ssp_{p,n_p}$.
+
+In the complete repeller case, the {\HenonMap} is a realization
+of the Smale horseshoe, and the symbolic dynamics has a very simple
+description in terms of the
+binary alphabet  $\epsilon \in \{ 0,1 \}$,
+$\epsilon_{p,i}=(1+S_{p,i})/2$, where $S_{p,i}$ are the
+signs of the corresponding periodic point coordinates,
+$S_{p,i}=\ssp_{p,i}/|\ssp_{p,i}|$.
+We start with a preassigned sign sequence
+$S_{p,1},S_{p,2}, \dots, S_{p,n_p}$, and a
+good  initial guess for the coordinates $\ssp_{p,i}'$.
+Using the inverse of the equation (\ref{pere})
+\[
+\ssp_{p,i}''=S_{p,i}\sqrt{\frac{1-\ssp_{p,i+1}'-\ssp_{p,i-1}'}{a}}
+\,\quad i=1,...,n_p
+\]
+we converge iteratively, at exponential rate, to the desired
+periodic points $\ssp_{p,i}$. Given the periodic points, the cycle
+stabilities and periods are easily computed using
+\refeq{Henlatt-e_her}. The itineraries and the stabilities of the short
+periodic orbits for the {\Henon} repeller \refeq{e:pere} for
+$a=6$ are listed in \reftab{gv:cycles}; in actual
+calculations all {\orbit}s up to topological length $n=20$
+have been computed.
+%
+\hfill G.~Vattay
+} % end \solution{A Hamiltonian repeller}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%

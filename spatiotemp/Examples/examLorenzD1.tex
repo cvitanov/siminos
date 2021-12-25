@@ -1,0 +1,89 @@
+% siminos/spatiotemp/Examples/examLorenzD1.tex
+% $Author: predrag $ $Date: 2021-07-25 19:52:46 -0400 (Sun, 25 Jul 2021) $
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\example{Desymmetrization of Lorenz flow.}{ \label{exam:LorenzD1}
+% from % examDiscrete.tex called by \Chapter{discrete}{}{World in a mirror}
+% RETURN!
+% Predrag                           04apr2008
+% Predrag                           19jan2008
+% moved to here from halcrow/blog/TEX/lorenz.tex
+\index{Lorenz flow}                                 \toCB
+%\PC{2017-07-24}{ChaosBook: start the discrete.tex example here, link to the intro example in
+%    the flow.tex chapter}
+(Continuation of \refexam{exam:3dinvDscr})~~
+Lorenz equation \refeq{finiteGr:Lorenz} is equivariant under \refeq{LorEquiv}, the
+action of order-2 group $\Cn{2} = \{e,\shift\}$, where $\shift$ is
+$[x,y]$-plane, half-cycle rotation by $\pi$ about the $z$-axis:
+\beq
+(x,y,z) \to \shift(x,y,z) = (-x,-y,z) \,.
+\ee{LorenzR}
+$\shift^2=1$ condition decomposes the \statesp\ into two linearly
+irreducible subspaces $\pS = \pS^+ \oplus \pS^-$, the $z$-axis $\pS^+$
+and the $[x,y]$ plane $\pS^-$, with projection operators onto the two
+subspaces given by
+      \PublicPrivate{
+      }{% switch \PublicPrivate{
+(see \refsect{appeStabEigs})
+      } % end \PublicPrivate{
+ \beq
+ \PP^+ = \frac{1}{2}(1 + \shift)
+ =   \left(\barr{ccc}
+    0  &  0 & 0  \\
+    0  &  0 & 0 \\
+    0  &  0 & 1
+    \earr\right)
+     ,\quad
+ \PP^- = \frac{1}{2}(1 - \shift)
+  =   \left(\barr{ccc}
+    1  &  0 & 0  \\
+    0  &  1 & 0 \\
+    0  &  0 & 0
+    \earr\right)
+\,.
+ \label{projOp:sig}
+ \eeq
+As the flow is $\Cn{2}$-invariant, so is its linearization $\dot{\ssp} =
+\Mvar \ssp$. Evaluated at $\EQV{0}$, $\Mvar$ commutes with  $\shift$,
+and, as we have already seen in  \refexam{exam:LorenzStab}, the $\EQV{0}$
+{\stabmat} decomposes into $[x,y]$ and $z$ blocks.
+    \PC{20171-07-24}{create example in \refsect{s:StabRpo} from the last sentence}
+
+The 1\dmn\ $\pS^+$ subspace is the fixed-point subspace, with the
+$z$-axis \emph{point-wise invariant} under the group action
+\beq
+\pS^+ = \Fix{\Cn{2}} =
+   \{ \ssp \in \pS \mid \LieEl  \, \ssp = \ssp \mbox{ for } g \in \{e,\shift\} \}
+%\,.
+\ee{dscr:LorFPsubsp}
+(here $\ssp = (x,y,z)$ is a 3\dmn\ vector, not the coordinate $x$). A
+\Cn{2}-fixed point $\ssp(\zeit)$ in $\Fix{\Cn{2}}$ moves with time, but
+according to \refeq{flowInv} remains within $\ssp(\zeit) \in \Fix{\Cn{2}}$ for
+all times; the  subspace $\pS^+ = \Fix{\Cn{2}}$ is {\em flow invariant}.
+In case at hand this jargon is a bit of an overkill: clearly for
+$(x,y,z)=(0,0,z)$ the full \statesp\ Lorenz equation \refeq{finiteGr:Lorenz} is
+reduced to the exponential contraction to the $\EQV{0}$ \eqv,
+\PC{2017-07-24}{pointer to turbulence chapter here}
+\beq
+\dot{z} = -b \, z
+\,.
+\ee{LorenzZaxis}
+% which is the reason why you never see this decomposition discussed
+% in literature. Even though
+However, for higher-dim\-ens\-ion\-al flows the flow-invariant subspaces
+can be high-dim\-ens\-ion\-al, with interesting dynamics of their own.
+Even in this simple case this subspace plays an important role as a
+topological obstruction: the orbits can neither enter it nor exit it, so
+the number of windings of a trajectory around it provides a natural,
+topological symbolic dynamics.
+
+The $\pS^-$ subspace is, however, {\em not} flow-invariant, as the nonlinear
+terms $\dot{z}=xy - bz$ in the Lorenz equation \refeq{finiteGr:Lorenz}
+send all initial conditions within
+$\pS^-=(x(0),y(0),0)$ into the full, $z(\zeit) \neq 0$ \statesp\  $\pS/\pS^+$.
+~~(continued in \refexam{exam:LorenzPolarRep})
+                                        \jumpBack{exam:LorenzD1}
+
+\hfill   (E. Siminos and J. Halcrow)
+    } %end {exam:LorenzD1}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%

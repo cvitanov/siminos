@@ -1,0 +1,828 @@
+% siminos/ksTorus/SIADS-v1/response.tex
+% $Author: predrag $ $Date: 2021-07-21 12:59:43 -0400 (Wed, 21 Jul 2021) $
+% Predrag                                       nov 10 2015
+
+                        %% logical setup, no need to edit %%%%%%%%%%
+                        \newif\ifpaper \newif\ifPDF               %%
+                        \newif\ifOUP \newif\ifboyscout            %%
+                        \newif\ifdasbuch \newif\iftoCB            %%
+                        \newif\ifsolutions \newif\ifblog          %%
+                        \blogtrue                                 %%
+                        \boyscouttrue       %% commented, WWW/drafts %%
+                        \dasbuchtrue %% DasBuch, not QFT lectures %%
+                        \solutionstrue %% include solutions       %%
+                        \paperfalse\PDFtrue %% hyperlinked        %%
+                        \OUPfalse \toCBtrue      %% ChaosBook %%%%%%
+%%%% Toggle between draft and non-draft versions
+%    \boyscoutfalse        % public, for hyperlinked ChaosBook/projects
+
+
+\documentclass[12pt]{article}
+\usepackage[pdftex]{color}
+%\newenvironment{thebibliography}[1]{}
+%\usepackage[numbers]{natbib} % Predrag 2010-06-08: to avoid
+% Package natbib Error: Bibliography not compatible with author-year citations
+\usepackage{amsmath,amsfonts,amssymb,amsbsy,amscd,amsgen}
+\usepackage{url}
+\usepackage[latin1]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{times}
+\usepackage[pdftex]{graphicx}
+\usepackage[pdftex,colorlinks]{hyperref} %% hyperlinks, LAST package called
+\input{../../inputs/biblatex}
+    \addbibresource{../../bibtex/siminos}
+\input{../../inputs/def}
+\graphicspath{{../../Fig/}{../../figs/}}
+
+\newtheorem{rmark}{{\small\textsf{\textbf{Remark}}}}[section]
+\newcommand{\remark}[2]{
+        % \begin{quotation}
+        \begin{rmark}
+%        {\small\em\noindent {\small\sf \underline{ #1} ~} #2 }
+        {\small\em\noindent {\small\sf #1 ~} #2 } % 2010-12-12 experiment
+    \end{rmark}
+    % \end{quotation}
+              }
+   \newcommand{\TWRUN}[2]{\ensuremath{\textrm{TW}_{#1}}}
+   \newcommand{\RPORUN}[2]{\ensuremath{\textrm{RPO}_{#1}}}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\pagestyle{plain}
+\renewcommand{\baselinestretch}{1.0}
+
+
+\begin{document}
+\bigskip
+                    \hfill December 09, 2015
+
+\noindent
+Bj\"orn Sandstede, Editor-in-Chief\\
+SIAM Journal on Applied Dynamical Systems
+
+\bigskip
+\bigskip
+
+\noindent
+Dear Professor Sandstede
+
+\bigskip
+
+We apologise for a delayed response to the editor's rejection of our SIADS
+submission \#M104240 -
+\emph{Torus breakdown in the symmetry-reduced state space of the
+Kuramoto-Sivashinsky system}.
+In the intervening period, we went again through the method we propose,
+and we reread or read some of the relevant literature, to ensure to best
+of our ability that the method is not already in the literature. We still
+feel that the work merits a critical in-depth reading by a referee. We
+would be grateful if you could direct our questions and comments to the
+editor who rejected the paper. First, a bit of background.
+
+\section{The context}
+The reason why this manuscript went to SIADS is that 2nd author's
+preceding paper (Cvitanovi{\'c}, Davidchack \&\ Siminos {\em On
+the state space geometry of the {Kuramoto-Sivashinsky} flow in a periodic
+domain}\rf{SCD07}) ended in a slightly awkward way --over 60,000 \rpo s
+and no place to go-- with a promise to the editor D. Barkley
+that in the sequel\rf{SCD09b} we shall organize this embarrassing richness of
+orbits.
+To quote from \refref{SCD07}:
+
+\begin{quote}
+``Relative periodic orbits require a reformulation of the periodic orbit
+theory\rf{Cvi07}, as well as a rethinking of the dynamical systems
+approaches to constructing symbolic dynamics, outstanding problems that
+we hope to address in the near future\rf{SCD09b}.'' And:
+``In presence of a continuous symmetry, any solution belongs to a group
+orbit of equivalent solutions. The problem: If one is to generalize the
+periodic orbit theory to this setting, one needs to understand what is
+meant by solutions being nearby (shadowing) when each solution belongs to
+a manifold of equivalent solutions. In a forthcoming
+publication\rf{SCD09b} we resolve this puzzle by implementing symmetry
+reduction.''
+\end{quote}
+
+We have since tested numerically\rf{BuBoCvSi14} the reformulation of the
+periodic orbit theory first derived in \refref{Cvi07}. The symmetry
+reduction, however, turned out to be a subtler story.
+
+\emph{Invariant polynomial bases}\rf{gatermannHab,ChossLaut00}, referred to by
+the handling editor as ``standard tool in orbit space reduction,'' are
+natural, mathematically sound\rf{Hilbert93,Noether15} and
+aesthetically appealing to us, and we have put much effort in applying
+the method to our problems. They work very well in low
+dimensions\rf{SiCvi10,BuBoCvSi14} but quickly become unmanageable. As a
+typical example, consider Dhont and Zhilinski\'i\rf{DhoZhi13,DhoPatZhi15}
+construction of classic  Weyl\rf{Weyl39} \SOn{2} and \On{2} integrity
+basis from $(x_1,y_1,x_2,y_2,\cdots,x_n,y_n)$ components of $n$ planar
+vectors. For two planar vectors there is one syzygy, for three vectors
+there are 9, and in the 4-vector case there are already 38 linearly
+dependent syzygies of degree 4 in variables $(x_i, y_i)$. In our
+applications the corresponding $n$ (Fourier series truncation)
+is easily of order 10-100. After many different attempts
+our conclusion is that, unfortunately (as argued by Siminos in his
+thesis\rf{SiminosThesis}), the existing literature constructions of
+integrity bases are neither feasible for higher\dmn\ \statesp s (we need
+to reduce symmetry for $10^5-$ $10^6$\dmn\ problems\rf{GHCW07,ACHKW11}),
+nor helpful for reduced \statesp\ visualizations ($m$-th Fourier
+coefficient is usually replaced by a polynomial of order $m$).
+
+For us, the way forward was offered by Cartan's\rf{CartanMF} notion of a
+{\em \movframe} implemented as
+\mslices\rf{rowley_reconstruction_2000,BeTh04,SiCvi10,FrCv11}. Even that
+is not so easy. A general \slice\ requires a set of linear
+`charts'\rf{atlas12}, and \refref{ACHKW11} required 7 \reqv-based charts
+to map out a single \rpo\ of interest to us. Further research led to
+introduction of the \fFslice\ method for the reduction of \SOn{2}
+symmetry\rf{BudCvi14} with a single, well-chosen \slice, which made it
+possible to embark on a systematic exploration of the `ergodic sea'
+underpinning turbulence in transitional fluid flows\rf{WiShCv15}.
+However, this still is not sufficient to reduce the \On{2} symmetry of
+the $1D$ \KS, the $\SOn{2}\times \On{2}$ symmetry of the $3D$ pipe flow,
+or the $\On{2}\times \On{2}$ symmetry of the $3D$ \pCf.
+
+The \emph{current submission} explains our best attempt to reduce
+$\On{2}$ symmetry without introducing discontinuities into the
+symmetry-reduced flow, and as it applies to any problem with $\On{2}$
+symmetry, we want to publish it as a stand-alone article, rather than as
+one of the many technical hoops our forthcoming fluid-dynamics papers
+that use the method have to otherwise jump through. This paper is
+\emph{not} about bifurcation theory and \reffig{f-Connections} is
+\emph{not} the standard 2\dmn\ map normal-form mode-locking bifurcation
+from a Hopf limit cycle to an Arnold 1:3 tongue. It is a clever
+visualization of a 30-dimensional dynamics on a Poincar\'e section,
+impossible to comprehend without $\On{2}$ symmetry reduction. To cite
+Budanur thesis\rf{BudanurThesis}:
+
+\begin{figure}[h]
+    \centering
+    (a) \includegraphics[height=0.45\textwidth]{UnstMan21p36png}
+    (b) \includegraphics[height=0.45\textwidth]{UnstManPPO4L21p48png}
+    \caption[Heteroclinic connections between \rpo s]{
+        \label{f-Connections}
+        (a) Unstable manifold (gray) of $p_{0}$ on the Poincar\'e
+        section at $L=21.36$. Colored dots
+        correspond to different individual trajectories within
+        the unstable manifold with qualitatively different
+        properties. Diamond shaped markers correspond to the
+        period-3 orbits $p_{1}$ (magenta) and $p_{2}$ (cyan).
+        (b) Unstable manifold of $p_{0}$ (gray) and two orbits
+        (black and green) within at $L=21.48$. Red points lie on
+        the one-dimensional unstable manifold of $p_{1}$.
+    }
+\end{figure}
+
+\begin{quote}
+    ``Strikingly similar structures of ergodic trajectories and periodic
+orbits on the Poincar\'e section \reffig{f-Poincare} motivated us
+to study unstable manifolds of the periodic orbits. However, we have not
+succeeded in identifying one important \rpo\ (out of $479$!) whose
+invariant manifolds form the shape of this attractor.
+For this reason, we decided to first investigate the system by varying
+its size and study its bifurcations, in order to see whether one of
+these orbits plays the key role in shaping the strange attractor.''
+\end{quote}
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=0.65\textwidth]{ksPoincarethesis}
+    \caption[A global Poincar\'e section for \KS\ system.]{
+        Intersections of the long ergodic trajectory (green) and $479$
+        \po s
+        (blue) with the Poincar\'e section which contains the origin
+        of the pca coordinates
+        (empirical mean) and is parallel to
+        $(P_1, P_2)$ plane.
+    }
+    \label{f-Poincare}
+\end{figure}
+
+Making sense of \reffig{f-Poincare}, the amazingly thin and structured
+strange attractor embedded in the 30\dmn\ symmetry-reduced \statesp\
+is ongoing research (promise to D. Barkley will be honored!), and for us the
+method of \On{2}-symmetry reduction presented in the current submission
+is the essential step.
+
+We note in passing that for us the $\SOn{2}\times \On{2}$ symmetry
+reduction remains an outstanding problem, and we are grateful for any
+pointers on how to fully reduce it. The problem is illustrated here by
+\reffig{fig:PCAplot} from \refref{WiShCv15}: with only \SOn{2} reduction,
+`exact coherent structures' appear either in pairs, or are self-dual
+under the remaining discrete $Z_{2}$  symmetry. This might not appear as
+much to the handling editor, but it is a big deal when one is
+constructing symbolic dynamics\rf{lanCvit07}. For example, if
+$\On{2}$-invariant symbolic
+dynamics requires 4 letters, the unreduced
+\SOn{2}-invariant one will require $4^2=16$
+letters, with much more unwieldy Poincar\'e return maps that are 15-modal
+rather than 3-modal.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\setlength{\unitlength}{.48\textwidth}
+% former ../figs/figPCAplot
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=\unitlength]{PREpca}
+    \caption{ \label{fig:PCAplot}
+            Projection of the symmetry-reduced infinite-dimensional {\statesp},
+            together with the natural measure (the gray `cloud').
+            32 \rpo s, together with \reqva\
+            (A) $\TWRUN{N4U/3.28}{6482}$,
+            (B) $\TWRUN{2.04}{8014}$,
+            (C) $\TWRUN{2.03}{6494}$,
+            (D) $\TWRUN{1.97}{6472}$,
+            (E) $\TWRUN{1.98}{6491}$,
+            (F) $\TWRUN{1.85}{6416}$.
+            Due to a `rotate-and-reflect' symmetry,
+            each solution appears twice, with the exception of (A)
+            $\TWRUN{N4U/3.28}{6482}$ which
+            belongs to the `rotate-and-reflect' invariant subspace. Our \rpo s capture
+            the regions of high natural measure very well.
+            The symmetry-invariant subspace has a
+            strong repulsive influence, separating the natural measure into two
+            weakly communicating regions.
+    }
+\end{figure}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+We have gone into some detail here, as some of this motivational background
+clearly needs to be included in the next revision of our manuscript.
+Now to the paper at hand. In terms of editor input, there is not much to go on,
+but we'll do our best.
+
+\section{Responses to the editor}
+
+\paragraph{(1) The handling editor helpfully notes:}
+
+\begin{quote}
+    ``The
+authors do not cite standard references of equivariant bifurcation
+theory and seem to be unaware of them. The methods of invariant
+polynomials, which they use and call new, is a standard tool in
+orbit space reduction, see e.g., the textbook \emph{Methods in
+Equivariant Bifurcations and Dynamical Systems} by Pascal Chossat
+and Reiner Lauterbach\rf{ChossLaut00}.''
+\end{quote}
+
+Were only the editor right, and we were ignorant of the literature,
+%just a pair of lazy bums,
+the life would have been so much easier. But we are diligent students of
+Chossat and Lauterbach, and much more.  Every mathematician and
+theoretical physicist has encountered symmetries in their research and is
+fully confident that she knows how to use group theory when
+needed\rf{PCgr}. Probably a  quarter of the GaTech Center for Nonlinear
+Science library are books that deal with symmetries. Our main blog on the
+subject is currently over 500 book pages, we have at least looked at and
+at times studied in depth some 400 papers on symmetry reduction,
+and in perhaps half of our weekly group meetings (3 different focus groups)
+we discuss how to best deal with symmetries. As an
+illustration of the literature we have studied, we append in
+\refsect{sect:coment} a few excerpts of our commentary\rf{DasBuch} on the
+subject -- we would be grateful for any expert comments on that.
+
+So what is the problem?
+
+The dynamical systems literature tends to
+focus on \emph{local} problems: bifurcations of a single time-invariant
+solution (\eqv, \reqv, \po\ or \rpo) in low-dimensional settings (3-5
+coupled ODEs, 1\dmn\ PDE). The problem that we face is \emph{global}:
+organizing and relating \emph{simultaneously} infinities of unstable \rpo
+s in $\infty$\dmn\ \statesp s, orbits that are presumed to form the skeleton of
+turbulence (see \refref{GibsonMovies} for a gentle introduction) and are
+typically not solutions that possess the symmetries of the problem.
+In this quest we found the standard equivariant bifurcation theory
+literature not very helpful, as its general focus is on
+bifurcations of solutions, which admit all or some of the symmetries
+of the problem at hand.
+
+We would be grateful if the handling editor could direct us to a
+reference where $\On{2}$ invariant polynomials were computed using
+``standard methods" for a state space dimension greater than --let's say-- 15.
+
+We are certainly not aware of such a reference.  For high dimensions, standard
+algorithms yields higher and higher order polynomials with increasing
+number of syzygys. To the best of our knowledge, after 12+ dimensions,
+computer algebra methods become completely impractical\rf{gatermannHab}.
+In fact, the difficulty of computing invariant polynomials is clearly
+stated in the reference suggested by the editor. Here is an excerpt
+from Chossat and Lauterbach\rf{ChossLaut00}, Chapter 6, page 188:
+
+\begin{quote}
+``It should be emphasized here that these two reduction methods are
+not equivalent, except in the simple example of bifurcation for the Hopf
+normal form, and moreover they do not always work (the orbit space, in
+particular, can be extremely difficult to compute).''
+\end{quote}
+
+As in war and love, everything is allowed in symmetry reduction, as long
+as it serves the purposes of a particular application. The choice is
+always a compromise between geometry (nonlinear coordinate redefintions,
+nonlinear slice or `base' manifolds, motivated by the low-dimensional,
+normal form intuition) and what is numerically feasible ( in
+high-dimensional \statesp s, typically hyperplane slices). In our paper
+this difficulty is overcome by implementing reflection-invariant
+polynomials \emph{after} reducing \SOn{2} symmetry by \mslices.
+In our invariant polynomials construction the polynomials are very
+simple, the number of the polynomials is the same as the dimension of the
+symmetry-reduced \statesp, no multinomial is of order higher than 2 so
+the distortion of the \statesp\ in invariant coordinates is rather mild,
+and there are \emph{no syzygies}, for any finite-\dmn\ truncation of the
+Fourier basis.
+Can the editor direct us to a reference that explains this ``standard
+tool in orbit space reduction'' and thus show that there is nothing new
+in our work? Or perhaps suggest a better method for the \On{2}
+symmetry reduction, a method that scales well to 100\,000 dimensions?
+We have studied
+\refrefs{AGHO288,Choss93,Coma06,Dang86,Rodriguez1990,AshBoMe96,SmMoehHo05}
+and much else, and have not found a better (or even feasible) method there.
+
+Our introduction of polynomial invariants for an infinite sequence of
+coordinates that change signs under reflection was inspired by
+the invariant polynomials of ``the proto-Lorenz system'' of
+\refrefs{GL-Mir93,GL-Gil07b}, which we cite in the paper. While we
+did an extensive literature search (see our commentary,
+\refsect{sect:coment}) for invariants like ours, we have
+not found a similar construction for an infinite sequence of
+coordinates. If the handling editor points us to a reference where a
+similar approach is taken, or a method that would yield the
+same result, we would be more than happy to cite it in the next revision.
+
+Our paper introduces a new $\On{2}$-invariant symmetry-reduced
+representation of any
+$\On{2}$-equivariant PDE, without
+any restriction on the truncation of the Fourier series. This
+perhaps is of no interest if one only cares about bifurcations
+in the small neighborhoods of invariant solutions, normal forms, etc.
+However, as we explain in various places in the paper, our goal
+is to understand the global organization of all numerically
+exact time-invariant solutions (the infinity of \rpo s). That
+requires tracking the global, curved unstable manifolds of
+our numerically exact \rpo s. To this end, the bifurcation
+sequence presented in the paper is simply an example of the
+applicability of the our method in a high\dmn\ setting.
+The heteroclinic connections of
+relative periodic orbits as visualized in Poincar\'e maps of
+\reffig{f-Connections} (figure~5 in the paper)
+demonstrate our progress towards understanding what shapes the `turbulent' attractor
+of \reffig{f-Poincare}. Again, we would be
+happy to cite in our revised paper any
+literature in which such objects were located for
+PDEs in presence of both continuous and discrete symmetries.
+
+\paragraph{(2) The handling editor concludes:}
+
+\begin{quote}
+``The paper might be interesting for other audiences who do not know
+about equivariant bifurcation theory, but I do not think that the paper
+is suitable for SIADS.''
+\end{quote}
+
+This is presumably either a statement about the style of presentation, or a
+statement about the mission of SIADS.
+
+
+Our submission is \emph{not}
+a paper on equivariant bifurcations, it is a paper on global symmetry
+reduction, and our intended audience are not the equivariant bifurcation
+theory experts (though we believe they could profit from learning how
+symmetry reduction works for global dynamics), but the broad group of
+dynamical systems and numerical PDEs experts who need to apply symmetry
+reduction to their specific modeling, fluid dynamics, \etc\ problems.
+They represent a significant fraction of the SIAM members who contribute
+to the biannual \emph{SIAM Conference on Dynamical Systems} PDEs, fluids
+and dynamical systems sessions, a group traditionally allergic to
+``gruppen-pest.'' Here is how our highly respected colleague Fabian
+Waleffe feels about the matter:
+
+\begin{quote}
+How many Tylenols should I take with this?...
+(never took group theory, still need to be convinced
+that there is any use to this beyond mind-numbing formalizations.)
+\end{quote}
+
+It is this group of applied mathematicians that we have to reach, and we
+try to make our presentation as simple and technical-jargon free as
+possible (for example, the name ``Lie'' appears nowhere in our
+fluid-dynamics papers on reduction of continuous symmetries, such as
+\refref{ACHKW11}). The article is not written in the style of the classic
+equivariant bifurcation theory papers, such as \refrefs{Field80,Krupa90},
+because our intended readership would not read it if it were. And if we
+were to cite every paper we found not helpful, the paper would be twice
+as long and half as easy to navigate. Whether SIADS is to serve this
+community is a decision for SIAM to make. Our current submission might
+fall short of what we have hoped to communicate, but we would be grateful
+for expert referees' technical suggestions as to how to bring it to that
+level.
+
+\bigskip
+\bigskip
+\bigskip
+
+\noindent
+Sincerely,
+            \begin{quote}
+            Nazmi Burak Budanur
+            and
+            Predrag Cvitanovi\'c \\
+School of Physics\\
+Georgia Institute of Technology\\
+Atlanta, GA 30345-0430\\
+\end{quote}
+
+
+
+
+\newpage
+
+\section{Commentary}
+\label{sect:coment}
+
+\remark{Literature.}{
+We found Tinkham\rf{Tinkham} the most enjoyable as a
+no-nonsense, the user friendliest introduction to the basic
+concepts.
+Slightly longer, but perhaps student-friendlier is
+{\em Part I Basic Mathematics} of Dresselhaus~\etal\rf{Dresselhaus07}.
+Byron and Fuller\rf{ByFu92}, the last chapter of volume two,
+offers an introduction even more compact than Tinkham's.
+For a summary of the theory of discrete groups see,
+for example, \refref{stevenj}. Chapter 3 of Rebecca
+Hoyle\rf{hoyll06} is a very student-friendly overview of
+the group theory a nonlinear dynamicist might need, with
+exception of the quotienting, reduction of dynamics to
+a fundamental domain, which is not discussed at all.
+We found
+\HREF{en.wikipedia.org/wiki/Quotient_group}
+{en.wikipedia.org/wiki/Quotient\_group} helpful.
+Curiously,
+we have not read any of the group theory books that Hoyle
+recommends as background reading, which just confirms that
+there are way too many group theory books out there. For
+example, one that you will not find useful at all is
+\refref{PCgr}. The reason is presumably that in the 20th
+century physics (which motivated much of the work on the
+modern group theory)
+the focus is on the linear representations used in quantum
+mechanics, crystallography and quantum field theory. We shall
+need these techniques when we reduce the
+linear action of evolution operators to irreducible
+subspaces. However, here we are looking at nonlinear
+dynamics, and the emphasis is on the symmetries of orbits,
+their \reducedsp\ sisters, and the isotypic
+decomposition of their linear stability matrices.
+
+In ChaosBook we focus on chaotic dynamics, and skirt the theory of
+bifurcations, the landscape between the boredom of regular
+motions and the thrills of chaos.
+Chapter 4 of Rebecca Hoyle\rf{hoyll06} is a
+student-friendly introduction
+to the treatment of bifurcations in presence of symmetries,
+worked out in full detail and generality in monographs by
+Golubitsky, Stewart and Schaeffer\rf{golubII},
+Golubitsky and Stewart\rf{golubitsky2002sp} and
+Chossat and Lauterbach\rf{ChossLaut00}.
+Term `stabilizer' is used, for example,
+ by Broer \etal\rf{BHLV03} to refer to a {\po}
+with $Z_2$ symmetry; they say that the relative or pre-periodic
+segment is in this case called a `short \po.' In
+Efstathiou\rf{Efst05} a subgroup of
+`short \po' symmetries is referred to as a
+`nontrivial isotropy group or stabilizer.'
+Chap.~8 of Govaerts\rf{Govaerts00} offers a review
+of numerical methods that employ equivariance with respect to
+compact, and mostly discrete groups.
+    } %end\remark{Literature}{
+
+\remark{Ideal is not real.}{\label{rem:IdealNotReal}
+The literature on symmetries in dynamical systems is immense, most of it
+deliriously unintelligible. Would it kill
+them\rf{hoyll06,MarRat99,golubitsky2002sp,GL-Gil07b} to say `symmetry of
+orbit $p$' instead of carrying on about `isotropies, quotients, factors,
+normalizers, centralizers and stabilizers?'
+Group action being `free, faithful, proper, regular?' Symmetry-reduced
+\statesp\ being `orbitfold?'
+For the dynamical systems applications at
+hand we need only the basic Lie group facts, on the level of any standard
+group theory textbook\rf{hamer}. We found Roger Penrose\rf{Penr04}
+introduction to the subject both enjoyable and understandable.
+Chapter 2. of
+\refref{BlumanSDE89} offers a pedagogical introduction to Lie
+groups of transformations, and Nakahara\rf{Naka90} to Lie
+derivatives and brackets. The presentation given here is in
+part based on Siminos thesis\rf{SiminosThesis} and
+\refref{SiCvi10}. The reader is referred to the monographs of
+Golubitsky and Stewart\rf{golubitsky2002sp},
+Hoyle\rf{hoyll06}, Olver\rf{OlverInv}, Bredon\rf{Bredon72},
+and Krupa\rf{Krupa90} for more depth and rigor than would be
+wise to wade into here.
+    } % \remark{Ideal is not real
+
+\remark{A brief history of relativity,}{\label{rem:SSLieGr}
+or,
+`Desymmetrization and its discontents'
+(after \HREF{http://en.wikipedia.org/wiki/Civilization_and_Its_Discontents}
+{Civilization and its discontents};
+continued from \refrem{rem:IdealNotReal}).
+
+Relative equilibria and relative periodic solutions are related by
+symmetry reduction to equilibria and periodic solutions of the reduced
+dynamics. They appear in many physical applications, such as celestial
+mechanics, molecular dynamics, motion of rigid bodies, nonlinear waves,
+spiralling patterns, and fluid mechanics. A \reqv\ is a solution which
+travels along an orbit of the symmetry group at constant speed; an
+introduction to them is given, for example, in
+Marsden\rf{Marsd92}. % in Chapter 4
+According to Cushman, Bates\rf{CushBat97} and Yoder\rf{Yode88}, C.
+Huygens\rf{Huyg1673} understood the \reqva\ of a spherical pendulum many
+years before publishing them in 1673. A reduction of the translation
+symmetry was obtained by Jacobi (for a modern, symplectic implementation,
+see Laskar \etal\rf{MaRoLa02}).
+In 1892 German sociologist
+\HREF{http://alo.uibk.ac.at/webinterface/library/ALO-BOOK_V01?objid=12421&zoom=6}
+{Vierkandt}\rf{Vierkandt1892} showed that on a symmetry-reduced space
+(the constrained velocity phase space modulo the action of the group of
+Euclidean motions of the plane) all orbits of the rolling disk system are
+periodic\rf{BlMaZe05}.
+   % \HREF{http://www.ams.org/notices/200503/fea-bloch.pdf}{Bloch \etal}
+According to Chenciner\rf{Chenc05}, the
+first attempt to find (relative) periodic solutions of the
+$N$-body problem was the 1896 short note by
+\Poincare\rf{Poinc1896}, in the context of the 3-body
+problem. \Poincare\ named such solutions `relative'.
+\Reqva\ of the $N$-body problem (known in this
+context as the Lagrange points, stationary in the co-rotating
+frame) are circular motions in the inertial frame, and {\rpo
+s} correspond to quasiperiodic motions in the inertial frame.
+For \rpo s in celestial mechanics see also
+\refref{Broucke75}. A striking application of \rpo s has been
+the discovery of ``choreographies" in the $N$-body problems%
+\rf{CheMon00,CGMS02,McCordMontaldi}.
+
+The modern story on equivariance and dynamical systems starts perhaps
+with S. Smale\rf{Smale70I} and M. Field\rf{Field70}, and on bifurcations
+in presence of symmetries with Ruelle\rf{ruell73}. Ruelle proves that the
+\stabmat/\jacobianM\ evaluated at an \eqv/fixed point $\ssp \in \pS_G$
+decomposes into linear \irrep s of \Group, and that
+stable/unstable manifold continuations of its eigenvectors inherit their
+symmetry properties, and shows that an \eqv\ can bifurcate to a
+rotationally invariant periodic orbit (\ie, \reqv).
+
+Gilmore and Lettelier monograph\rf{GL-Gil07b} offers a very clear,
+detailed and user friendly discussion of symmetry reduction by means of
+Hilbert polynomial bases (do not look for `Hilbert' in the index,
+though).
+Vladimirov, Toronov and Derbov\rf{VlToDe98} use an invariant polynomial
+basis to study bounding manifolds of the symmetry reduced \cLf\ and its
+homoclinic bifurcations.
+There is no general strategy how to construct a Hilbert basis;
+clever low-dimensional examples have been constructed case-by-case.
+Our textbook example, with one obvious
+syzygy, is also misleading - syzygies proliferate
+rapidly with increase in dimensionality.
+The
+determination of a Hilbert basis appears computationally
+prohibitive for \statesp\ dimensions larger than
+ten\rf{gatermannHab,ChossLaut00}, and rewriting the equations
+of motions in invariant polynomial bases appears impractical
+for high-dimensional flows.
+Thus, by 1920's the problem of rewriting equivariant
+flows as invariant ones was solved by Hilbert and Weyl, but
+at the cost of introducing largely arbitrary extra dimensions,
+with the reduced flows on manifolds of lower
+dimensions, constrained by sets of syzygies. Cartan
+found this unsatisfactory, and in 1935 he introduced\rf{CartanMF}
+the notion of a {\em \movframe}, a map from a manifold
+to a Lie group, which seeks no invariant polynomial basis,
+but instead rewrites the reduced $\pS/\Group$ flow
+in terms of $d-N$ {\em fundamental invariants} defined by
+a generalization of the \Poincare\ section, a slice that
+cuts across all group orbits in some open neighborhood. Fels
+and Olver view the method as an alternative to the Gr\"obner
+bases methods for computing Hilbert polynomials, to compute
+functionally independent fundamental invariant bases for
+general group actions (with no explicit connection to
+dynamics, differential equations or symmetry reduction).
+`Fundamental' here means that they can be used to generate
+all other invariants. Olver's monograph\rf{OlverInv} is
+pedagogical, but does not describe the original Cartan's
+method. Fels and Olver papers\rf{FelsOlver98,FelsOlver99} are
+lengthy and technical. They refer to Cartan's method as
+method of `\movframe s' and view it as a special and less
+rigorous case of their `moving coframe' method. The name
+`moving coframes' arises through the use of Maurer-Cartan
+form which is a coframe on the Lie group $\Group$, \ie, they
+form a pointwise basis for the cotangent space. In
+\refrefs{SiminosThesis,SiCvi10} the invariant bases generated
+by the \movframe\ method are used as a basis to project a
+full \statesp\ trajectory to the slice (\ie, the
+$\pS/\Group$ \reducedsp).
+
+The basic idea of the `\mslices' is intuitive and
+frequently reinvented, often under a different name; for example,
+it is stated without attribution as the problem 1. of Sect.
+6.2 of Arnol'd {\em Ordinary Differential
+Equations}\rf{arnold92}. The factorization
+is stated on p.~31 of Anosov and
+Arnol'd\rf{AnAr88}, who note, without further elaboration,
+that in the vicinity of a point which is not fixed by the
+group one can reduce the order of a system of differential
+equations by the dimension of the group.
+\refRef{ArKoNe88} refers to symmetry reduction as `lowering the order'.
+For the definition of `slice' see, for example,  Chossat
+and Lauterbach\rf{ChossLaut00}. Briefly, a submanifold $\pS_{\slicep}$
+containing $\slicep$ is called a {\em slice} through
+$\slicep$ if it is invariant under isotropy
+$\Group_{\slicep(\pS_{\slicep})}=\pS_{\slicep}$. If $\slicep$ is a
+fixed point of $\Group$, than slice is invariant under the
+whole group. The slice theorem is explained, for example, in
+\HREF{http://eom.springer.de/S/s120150.htm} {Encyclopaedia of
+Mathematics}.
+Slices tend to be discussed in contexts much more difficult
+than our application - symplectic groups, sections in absence
+of global charts, non-compact Lie groups. We follow
+\refref{rowley_reconstruction_2000} in referring to a local
+group-orbit section as a `slice'. \refRefs{Bredon72,GuiSte90}
+and others refer to global group-orbit sections as
+`cross-sections', a term that we would rather avoid, as it
+already has a different and well established meaning in
+physics. Duistermaat and Kolk\rf{DuiKol00} refer to `slices',
+% on p. 103,
+but the usage goes back at least to Guillemin and
+Sternberg\rf{GuiSte90} in 1984, Palais\rf{Pal61} in 1961 and
+Mastow\rf{Mostow57} in 1957. Bredon\rf{Bredon72} discusses
+both cross-sections and slices. Guillemin and
+Sternberg\rf{GuiSte90} define the `cross-section', but
+emphasize that finding it is very rare: ``existence of a
+global section is a very stringent condition on a group
+action. The notion of `slice' is weaker but has a much
+broader range of existence.''
+
+Several important fluid dynamics flows exhibit continuous symmetries
+which are either $\SOn{2}$ or products of $\SOn{2}$ groups, each of which
+act on different coordinates of the {\statesp}. The \KS\
+equations\rf{KurTsu76,Siv},
+{\pCf}\rf{Visw07b,GHCW07,HGC08,HalcrowThesis}, and
+pipe flow\rf{Wk04,Kerswell05} all have continuous symmetries of this
+form.
+In the 1982 paper Rand\rf{Rand82} explains how
+presence of continuous symmetries gives rise to rotating and
+modulated rotating (quasiperiodic) waves in fluid dynamics.
+Haller and Mezi\'c\rf{HaMe98} reduce symmetries of
+three\dmn\ volume-preserving flows and reinvent
+\mframes, under the name `orbit projection map'. There is
+extensive literature on reduction of symplectic manifolds
+with symmetry; Marsden and Weinstein 1974 article\rf{MaWe74}
+is an important early reference. Then there are studies of
+the reduced phase spaces for vortices moving on a sphere such
+as \refref{Kirwan88}, and many, many others.
+
+Reaction-diffusion systems are often equivariant with respect
+to the action of a finite dimensional (not necessarily
+compact) Lie group. Spiral wave formation in such nonlinear
+excitable media was first observed in 1970 by Zaikin and
+Zhabotinsky\rf{ZaZha70}. Winfree\rf{Winfree73,Winfree1980}
+noted that spiral tips execute meandering motions. Barkley
+and collaborators\rf{BaKnTu90,Barkley94} showed that the
+noncompact Euclidean symmetry of this class of systems
+precludes nonlinear entrainment of translational and
+rotational drifts and that the interaction of the Hopf and
+the Euclidean eigenmodes leads to observed quasiperiodic and
+meandering behaviors. Fiedler, in the influential 1995 talk
+at the Newton Institute, and Fiedler, Sandstede, Wulff,
+Turaev and  Scheel\rf{FiSaScWu96,SaScWu97,SaScWu99a,FiTu98}
+treat Euclidean symmetry bifurcations in the context of
+spiral wave formation. The central idea is to utilize the
+semidirect product structure of the Euclidean group $E(2)$ to
+transform the flow into a `skew product' form, with a part
+orthogonal to the group orbit, and the other part within it.
+They refer to a linear slice
+\pSRed\ near \reqv\ as a {\em Palais slice}, with Palais
+coordinates.
+As the choice of the slice is arbitrary, these
+coordinates are not unique. According to these authors, the
+skew product flow was first written down by
+Mielke\rf{Mielke91}, in the context of buckling in the
+elasticity theory. However, this decomposition is no doubt
+much older. For example, it was  used by
+Krupa\rf{Krupa90,ChossLaut00} in his local slice study of
+bifurcations of \reqva. Biktashev, Holden, and
+Nikolaev\rf{BiHoNi96} cite Anosov and Arnol'd\rf{AnAr88}  for
+the `well-known' factorization and write
+down the slice flow equations.
+
+Neither Fiedler \etal\rf{FiSaScWu96} nor Biktashev
+\etal\rf{BiHoNi96} implemented their methods numerically.
+That was done by Rowley and Marsden for the
+Kuramoto-Sivashinsky\rf{rowley_reconstruction_2000} and the
+Burgers\rf{rowley_reduction_2003} equations, and Beyn and
+Th\"ummler\rf{BeTh04,Thum05} for a number of
+reaction-diffusion systems, described by parabolic partial
+differential equations on unbounded domains. We recommend the
+Barkley paper\rf{Barkley94} for a clear explanation of how
+the Euclidean symmetry leads to spirals, and the Beyn and
+Th\"ummler paper\rf{BeTh04} for inspirational concrete
+examples of how `freezing'/\-`slicing' simplifies the
+dynamics of rotational, traveling and spiraling \reqva.
+Beyn and Th\"ummler write the solution as a composition of
+the action of a time dependent group element $\LieEl(t)$ with
+a `frozen', in-\slice\ solution $\hat{u}(t)$.
+In their nomenclature, making a \reqv\
+stationary by going to a \comovframe\ is `freezing' the
+traveling wave, and the imposition of the phase condition
+(\ie, \slice\ condition  is the `freezing
+ansatz'.  They find it more convenient to make use of the
+equi\-vari\-ance by extending the \statesp\ rather than reducing
+it, by adding an additional parameter and a phase condition.
+The `freezing ansatz'\rf{BeTh04} is identical to the Rowley
+and Marsden\rf{rowley_reduction_2003} and our slicing, except
+that `freezing' is formulated as an additional constraint,
+just as when we compute periodic orbits of ODEs we add
+Poincar\'e section as an additional constraint, \ie, increase
+the dimensionality of the problem by 1 for every continuous
+symmetry.
+
+%    \ES{Is this {\csection} related to a cross-section in a
+%    $\Group$-bundle? In other words, can we interpret the
+%    latter as a submanifold in total space \pS\ of a
+%    $\Group$-bundle $(\pS,\pi,\pS/\Group)$? }
+
+
+ Several symmetry
+reduction schemes are reviewed in \refref{SiCvi10}. Here we
+describe the
+\mslices\rf{rowley_reconstruction_2000,BeTh04,FrCv11}, the
+only method that we find practical for a symmetry reduction of
+chaotic solutions of highly nonlinear and possibly also high\dmn\ flows.
+Our derivation follows most closely
+Rowley and Marsden\rf{rowley_reduction_2003} who, in the
+pattern recognition setting refer to the \slice\ point as a
+`template', and refer to the `reconstruction
+equation'\rf{Marsd92,MarsdRat94}. They also describe the `method
+of connections' (called `orthogonality of time and group
+orbit at successive times' in \refref{BeTh04}), for which the
+reconstruction equation denominator is
+$\braket{\groupTan(\sspRed)} {\groupTan(\sspRed)}$ and thus
+non-vanishing as long as the action of the group is regular.
+This avoids the spurious \slice\ singularities, but it is not
+clear what the `method of connections' buys us otherwise. It
+does not reduce the dimensionality of the \statesp, and it
+accrues `geometric phases' which prevent \rpo s from closing
+into \po s.
+Geometric phase in laser equations, including \cLe,
+has been studied in
+\refref{ToDe94,ToDe94a,NiHa91,NiHa92,NiHa92a}.
+Another theorist's temptation is to hope that a continuous
+symmetry would lead us to a conserved quantity. However,
+Noether theorem requires that equations of motion be cast in
+Lagrangian form and that the Lagrangian exhibits variational
+symmetries\rf{Bluman07,BlumanAnco02}. Such variational
+symmetries are hard to find for dissipative systems.
+
+In general relativity `symmetry reduction' is a method of finding exact
+solutions by imposing symmetry conditions to obtain a reduced system of
+equations, \ie, restricting the set of solutions considered to an
+invariant subspace. This is not what we mean by `symmetry reduction'
+in this monograph.
+
+References to `cyclists'
+are bit of a joke in more ways than one.
+First, `cyclist',
+`pedestrian' throughout ChaosBook.org refer jokingly both to
+the title of Lipkin's {\em Lie groups for
+pedestrians}\rf{Lipkin66} and to our preoccupations with
+\HREF{http://www.cns.gatech.edu/~predrag/friends/Predrag/MidnightRider75/mrider.html}
+     {actual cycling}. Lipkin's `pedestrian' is fluent in
+Quantum Field Theory, but wobbly on Dynkin diagrams. More to the point,
+it is impossible to dispose of Lie groups in a page of text.
+As a antidote to the brevity of exposition here,
+consider reading
+Gilmore's monograph\rf{gilmore08} which offers a quirky, personal and
+enjoyable distillation of a lifetime of pondering Lie groups. As seems to
+be the case with any textbook on Lie groups, it will not help you with
+the problem at hand, but it is the only place you can learn both what
+Galois actually did when he invented the theory of finite groups in 1830,
+and what, inspired by Galois, Lie actually did in his 1874 study of
+symmetries of ODEs. Gilmore also explains many things that we pass over
+in silence here, such as matrix groups, group manifolds, and compact
+groups.
+
+One would think that with all this literature the case is
+shut and closed, but not so. Applied mathematicians are
+inordinately fond of bifurcations, and almost all of the
+previous work focuses on \eqva, \reqva, and their
+bifurcations, and for these problems a single \slice\ works
+well. Only when one tries to describe the totality of chaotic
+orbits does the non-global nature of slices become a serious
+nuisance.
+
+%\authorESPC
+    } % \remark{A brief history of relativity
+
+
+
+\newpage
+\printbibliography[title={References}
+                  ] %, type=online]  % if not using default "Bibliography"
+
+\end{document}

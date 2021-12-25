@@ -1,0 +1,157 @@
+% siminos/cats/nonlin-v1/reviews/response.tex
+% $Author: predrag $ $Date: 2020-10-09 12:02:16 -0400 (Fri, 09 Oct 2020) $
+
+% Predrag                                       2020-10-09
+% Boris                                         2020-09-25
+
+                        %% logical setup, no need to edit %%%%%%%%%%
+                        \newif\ifpaper \newif\ifPDF               %%
+                        \newif\ifOUP                              %%
+                        \newif\ifboyscout\boyscouttrue      %% commented %%
+                        \newif\ifdasbuch \newif\iftoCB            %%
+                        \newif\ifsolutions \newif\ifblog          %%
+                        \newif\ifsubmission\submissionfalse %% internal  %%
+                        \blogtrue                                 %%
+                        \dasbuchtrue %% DasBuch, not QFT lectures %%
+                        \solutionstrue %% include solutions       %%
+                        \paperfalse\PDFtrue %% hyperlinked        %%
+                        \OUPfalse \toCBtrue      %% ChaosBook %%%%%%
+% Toggle between draft and public versions:
+% \boyscoutfalse                        % public, hyperlinked
+% \boyscoutfalse\submissiontrue         % for Nonlinearity
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+
+\documentclass[12pt]{iopart} %{article}
+\usepackage{iopams}
+\pdfminorversion=4
+
+\usepackage[pdftex]{color}
+%\newenvironment{thebibliography}[1]{}
+%\usepackage[numbers]{natbib} % Predrag 2010-06-08: to avoid
+% Package natbib Error: Bibliography not compatible with author-year citations
+\usepackage{amsmath,amsfonts,amssymb,amsbsy,amscd,amsgen}
+\usepackage{url}
+\usepackage[latin1]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{times}
+\usepackage[pdftex]{graphicx}
+\usepackage[pdftex,colorlinks]{hyperref} %% hyperlinks, LAST package called
+\input{../../inputs/biblatex}
+    \addbibresource{../../bibtex/siminos}
+%\input{../../inputs/def}
+\input{../defsCats}      %% all article-specific edits: \renewcommand, etc
+\graphicspath{{../../Fig/}{../../figs/}}
+
+\newtheorem{rmark}{{\small\textsf{\textbf{Remark}}}}[section]
+\newcommand{\remark}[2]{
+        % \begin{quotation}
+        \begin{rmark}
+%        {\small\em\noindent {\small\sf \underline{ #1} ~} #2 }
+        {\small\em\noindent {\small\sf #1 ~} #2 } % 2010-12-12 experiment
+    \end{rmark}
+    % \end{quotation}
+              }
+   \newcommand{\TWRUN}[2]{\ensuremath{\textrm{TW}_{#1}}}
+   \newcommand{\RPORUN}[2]{\ensuremath{\textrm{RPO}_{#1}}}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\pagestyle{plain}
+\renewcommand{\baselinestretch}{1.0}
+
+
+\begin{document}
+\bigskip
+                    \hfill October 09, 2020
+
+\noindent
+XXX, Editor-in-Chief\\
+Nonlinearity
+
+\bigskip
+\bigskip
+
+\noindent
+Dear Professor XXX
+
+\bigskip
+
+\BG{2020-09-25}
+{First referee is easy case to solve, so I do not comment on this.}
+
+\BG{2020-09-25}
+{The second one is a real nut case.
+The  detailed list of corrections is not a problem, but he also wants:
+
+1. The meaning of some key constructs is obscured by poor notation and
+terminology.
+    \\
+2. Some key results should be formalized as theorems; some numerical
+results should be distilled into conjectures.
+
+These two issues seem to me disconnected. The first one he describes in
+details, so it might be adjusted to his satisfaction (whether it makes
+sense or not).
+
+The second issue is really annoying, as he does not describes precisely
+what he wants.  The guy partitions the world into lemmas and theorems,
+otherwise  nothing is comprehensible.
+}
+
+
+
+The bottom line. There are two things which make our results non
+rigorous:
+
+  1)
+In  the introductory part we state  that frequencies of block appearances
+are given by the measures of the corresponding cylinder sets.  The
+argument is based on the ergodic theorem,  but we do not prove  that  our
+natural (Lebesgue) measure is uniquely ergodic. We only show that the
+system is fully hyperbolic. For physicist it would be enough, but not for
+a mathematician since there are (typically crazy) examples of hyperbolic
+systems  which are not uniquely ergodic. Our claim on p.4 '' The d = 2
+spatiotemporal cat is fully hyperbolic and ergodic for s > 4'' is
+actually conjecture (regarding ergodicity). This is in principle
+incurable (would require a separate work), however we do have numerical
+confirmation of this. The main  value of our numerics is exactly about
+this -  we confirm that the time averages (frequencies) converge to the
+measures of the sets  which we calculate analytically. Another conjecture
+which we can put forward is extension of the results to d>2.
+
+2)
+In the body of the paper, where we calculate measures  $\mu(M_\R)$
+everything is in principle rigorous. But we do not present it  in a
+mathematical clean way for d=2 case. For this we need to define  more
+clearly what is our measure $\mu$ and what is  $\mu(M_\R)$. In principle we
+can convert then eq. 44 into a  ``theorem/proposition`` and   3
+subsections after (interior symbols, rationality, normalization) into
+corollary. The same goes (more easily) for single cat.   Another possible
+''theorem/proposition '' is eq. line between eq.(40) and eq. (41), resp.
+eq. 26 for single cat.
+
+    \BG{2020-09-25}
+    {Do you agree with the above synopsis?}
+    \PC{2020-10-09}
+    {In principle, yes. But I have not read the reports yet}
+    \PC{2020-10-09}
+    {
+ I would like to redefine the stretching factor s from\\
+    current:    $(\Box + s - 2d) x_z = m_z$     in this paper, cats/GHJSC16.tex\\
+    proposed:   $(\Box + d(s - 2)) x_z = m_z$   used in kittens/CL18.tex\\
+    why? Because it is the right thing to do. Because $s=2$ is the
+    marginal dimension in all of the literature (Gaussian models, etc.).
+    Briefly, the Laplacian, which corresponds to $s=2$, has only a single
+    marginal eigenvalue in all dimensions, hence all d-torus periodic
+    states counting has a single prefactor od $(s-2)$ in all dimensions.
+    }
+
+
+% \newpage
+\printbibliography[
+heading=bibintoc,
+title={References}
+				  ] %, type=online]  % if not using default "Bibliography"
+
+\end{document}

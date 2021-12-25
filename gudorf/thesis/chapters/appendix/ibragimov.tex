@@ -1,0 +1,110 @@
+
+I messed around with a calculation but just came to the same conclusion I had previously reached, namely if the adjoint variable $v$
+is chosen to be the \KSe\ then the variational derivative of the formal Lagrangian in the Ibragimov sense corresponds to the adjoint
+descent direction. This is perhaps why it works so well for me. \ie the variational derivative obeys the equation
+
+\bea
+\frac{\delta L(u,v)}{\delta u} &=& -v_t + v_{xx} + v_{xxxx} - uv_x \continue
+\frac{\delta L(u,-F(u))}{\delta u} &=& F_t -F_{xx} -F_{xxxx} + u F_x \equiv -J^{\dagger} F
+\eea
+
+Following sect.~2 {\em Quasi-self-adjoint equations} of
+Ibragimov\rf{Ibragimov07b} (which \PCedit{does not} reference
+\refrefs{Ibragimov06,Ibragimov07a}),
+%I believe
+we can write
+the \emph{formal Lagrangian} of the \KSe\ to derive the {\spt}
+adjoint equations in terms of the original {\spt} field
+$u(x,t)$, and then one is free to use whatever representation
+suits the user in discretization; the cavaet is that numerically it seems
+better to use a real valued representation Fourier representation for the
+adjoint descent.
+    \PC{2018-05-08} {Ibragimov\rf{Ibragimov07b} is included in
+    \HREF{http://gammett.ugatu.su/images/archives_of_alga/archives\%204_1.pdf}
+    {Archives of ALGA {\bf 4}}. }
+
+Ibragimov notation, for the \KS\ case: the independent variable is
+denoted by $x$. The dependent variable is $u$,
+used together with its first-order partial derivative
+   $u_{(1)}:$
+  $$
+  u_{(1)} = \{u^\alpha_i\}, \quad u^\alpha_i = D_i (u^\alpha),
+  $$
+and higher-order derivatives $u_{(2)}, \ldots, u_{(4)}\,,$ where
+ $$
+  u_{(2)} = \{u^\alpha_{ij}\}, \quad u^\alpha_{ij} = D_i D_j
+  (u^\alpha),\ldots,
+  $$
+% up to $s$th-order  derivatives $u_{(s)}:$
+  $$
+  u_{(s)} = \{u^\alpha_{i_1\cdots i_s}\}, \quad u^\alpha_{i_1\cdots i_s}
+  = D_{i_1} \cdots D_{i_s}(u^\alpha).
+  $$
+  Here $D_i$ is the total differentiation with respect to $x^i:$
+ \begin{equation}
+ \label{sa:cl.diff1}
+  D_i = \frac{\partial}{\partial x^i} +
+u^\alpha_{i}\frac{\partial}{\partial u^\alpha} +
+u^\alpha_{ij}\frac{\partial}{\partial u^\alpha_j} +
+ \cdots\,.
+ \end{equation}
+
+
+Using the definition for the \emph{formal Lagrangian} $\mathcal{L}$,
+\beq
+\mathcal{L} \equiv v \left[u_{t} + u_{x x} + u_{x x x x}
+                        + uu_{x} \right],
+\ee{FormalLagrangian}
+and then taking the functional derivative,
+% (I tend to think of this as a total
+%  derivative but that might be confusing notation),
+\beq
+\frac{\delta \mathcal{L}}{\delta u} = 0 \,.
+\ee{variationalequality}
+The surviving terms from this functional derivative are
+\bea \label{LagrangianDeriv}
+\frac{\partial \mathcal{L}}{\partial u}              &=& vu_{x} \continue
+-\partial_{t} \frac{\partial \mathcal{L}}{\partial u_{t}} &=& -v_t \continue
+-\partial_{x} \frac{\partial \mathcal{L}}{\partial u_{x}} &=& -vu_{x}-uv_{x} \continue
+\partial_{x}^2 \frac{\partial \mathcal{L}}{\partial u_{x x}} &=& v_{x x} \continue
+\partial_{x}^4 \frac{\partial \mathcal{L}}{\partial u_{x x x x}} &=& v_{x x x x},
+\eea
+where the sum of these terms equals \refeq{variationalequality} and hence
+must be zero. The resultant adjoint equation is ($\pm
+vu_{x}$ terms cancel),
+\beq
+-v_t + v_{x x} + v_{x x x x} - uv_{x} = 0
+\,.
+\ee{adjoint_equation}
+
+If we take the adjoint variable to be the \KSe,
+\beq
+F \equiv v = - \left[u_{t} + u_{x x} + u_{x x x x}
+                        + uu_{x} \right]
+\,,
+\ee{adjointchoice}
+we arrive at the equation which \emph{I claim} provides adjoint descent
+direction without explicit construction of the gradients matrix $J$,
+\beq
+-J^{\dagger}F = (\partial_{t} + \partial_{x}^2 + \partial_{x}^4)F
+                    + u \partial_{x} F
+\ee{adjointdescent}
+(I believe the negative sign in \refeq{adjointchoice} is motivated so
+that the functional derivative is strictly decreasing or zero).
+
+Numerical evidence is suggestive as the real valued adjoint descent is
+working better than before when I was trying to reverse engineer
+$J^{\dagger}F$ in a matrix-free way.
+
+
+
+
+
+I messed around with a calculation but just came to the same conclusion I had previously reached, namely if the adjoint variable $v$
+is chosen to be the \KSe\ then the variational derivative of the formal Lagrangian in the Ibragimov sense corresponds to the adjoint
+descent direction. This is perhaps why it works so well for me. \ie the variational derivative obeys the equation
+
+\bea
+\frac{\delta L(u,v)}{\delta u} &=& -v_t + v_{xx} + v_{xxxx} - uv_x \continue
+\frac{\delta L(u,-F(u))}{\delta u} &=& F_t -F_{xx} -F_{xxxx} + u F_x \equiv -J^{\dagger} F
+\eea

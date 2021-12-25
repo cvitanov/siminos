@@ -1,0 +1,139 @@
+% siminos/spatiotemp/chapter/FTnormal.tex
+% $Author: predrag $ $Date: 2019-05-09 16:51:31 -0400 (Thu, 09 May 2019) $
+
+% called by
+%           siminos/spatiotemp/chapter/spatiotemp.tex
+%           siminos/tiles/GuBuCv17.tex
+
+%\section{Appendix: Fourier transforms and normalization factors}
+%\label{sect:FTnormal}
+% Predrag                                           26 May 2016
+
+
+\MNG{2016-06-17}{Burak Budanur wrote this.}
+%
+We have time-periodic solutions, namely two repeats of \ppo s,
+however, in my intuition (which might be wrong) we don't
+necessarily need to start simulations from those. Since the dynamics is
+chaotic, after a finite time, say 20 Lyapunov times
+($e^{-20} \sim O(10^{-9})$), correlations between initial condition and
+final point will be so low that imposing periodicity in time will not
+effect the outcome.
+
+With this in mind, let's say that you solved the \KSe\ in spatially
+periodic domain, with an initial condition on the strange attractor
+(no transients), and obtained $u(\conf, \zeit)$, for $\conf \in [0, \speriod{})$
+and $\zeit \in [0, T)$. You can find the spatial derivatives by
+inverse Fourier transformations:
+\bea
+    u_{\conf}( \conf, \zeit) &=&
+                \mathcal{F}^{-1} \left\{i q_k u_k \right\} \,, \quad
+    u_{\conf \conf}( \conf, \zeit) =
+                \mathcal{F}^{-1} \left\{(i q_k)^2 u_k \right\} \,, \quad
+    \continue
+    u_{\conf \conf \conf}( \conf, \zeit) &=&
+                 \mathcal{F}^{-1} \left\{(i q_k)^3 u_k \right\} \,, \quad
+    u_{\conf \conf \conf \conf}( \conf, \zeit) =
+                 \mathcal{F}^{-1} \left\{(i q_k)^4 u_k \right\} \, .
+    \label{e-Spectralderiv}
+\eea
+In fact, you must compute spatial derivatives as above (not by
+approximating with finite-differences) because otherwise they will not
+be as accurate numerically. Side note: depending on the implementation
+you're using, Fourier transforms would need you to add a normalization
+factor, usually a division by $N$ (number of modes).
+
+Now that you have $u_{\conf}( \conf, \zeit)$ and its space derivatives,
+you should take their value at $\conf = 0$ for $\zeit \in [0, T)$ as
+your initial condition and input it to the space-integrator. Then you
+can compare the outcome with the one you already have from
+time-integration.
+%}
+
+
+\MNG{2016-07-13}{Burak Budanur wrote this section.}
+In this section we go through the derivation of \refeq{e-FksX}
+and state the correct normalizations for Fourier transforms.
+
+Let us start from the following definition of the Fourier expansion of the
+time-periodic function $u(t) = u(t + \period{})$:
+\beq
+    u(\zeit) = \sum_{k = -\infty}^{\infty}
+    \Fu_k e^{i \omega_k \zeit} \, , \quad \mbox{where }
+    \omega_k = 2 \pi k / \period{}
+\,.
+\label{e-Fseries}
+\eeq
+
+In order to find Fourier coefficients $\Fu_k$, we multiply the above equation
+from the left by
+$\frac{1}{\period{}} \int_0^{\period{}} d\zeit\ e^{-i \omega_m t}$,
+on the RHS we get:
+\beq
+    \sum_{k = -\infty}^{\infty} \Fu_k \frac{1}{\period{}}
+    \int_0^{\period{}} d\zeit\ e^{i (\omega_k - \omega_m) \zeit}
+    =
+    \sum_{k = -\infty}^{\infty} \Fu_k \frac{1}{\period{}}
+    \int_0^{\period{}} d\zeit\ e^{i 2 \pi (k - m) \zeit / \period{}}
+     \, .
+\eeq
+If $k \neq m$, then the integral above is integral of a periodic function
+over one full period, hence $0$. If $k = m$, then it is the integral of $1$
+from $0$ to $\period{}$, and we can replace the integral by $\period{} \delta_{km}$, which
+picks out $\Fu_m$ from the sum. Hence we obtain the forward Fourier transform
+of $u(\zeit)$ as
+\beq
+    \Fu_k = \frac{1}{T} \int_0^{\period{}} d\zeit\ u(\zeit)
+            e^{- i \omega_k \zeit}
+\eeq
+We can approximate the above transformation by replacing the integral by a
+Riemann sum $\int_0^T dt \rightarrow \sum_{n=0}^{N-1}\Delta t$, $\Delta t ={T}/{N} $,
+hence we
+obtain the discrete Fourier transform as
+\bea
+    \Fu_k &=& \frac{1}{N} \sum_{n=0}^{N-1} u(t_n) e^{-i \omega_k t_n} \,,
+    \mbox{where } t_n = n T / N \continue
+          &=& \frac{1}{N} \sum_{n=0}^{N-1} u(t_n) e^{-i 2 \pi n k / N}
+          \, , \continue
+          &=& \frac{1}{N} \mathcal{F} \{ u (t_n) \} \, ,
+\label{e-FdscrApprx}
+\eea
+where $\mathcal{F} \{ . \}$ denotes the Fourier transformation in Matlab's
+normalization convention. Consequently, if we take $2N+1$ terms from the
+series \refeq{e-Fseries}, we obtain the inverse discrete Fourier transform as
+\bea
+    u(\zeit_n) &=& \sum_{k = - N/2}^{N/2} \Fu_k e^{i \omega_k \zeit_n}
+                   \,, \quad
+               \,=\, \sum_{k = - N/2}^{N/2} \Fu_k e^{i 2 \pi k n / N}
+                   \,, \continue
+               &=& N \mathcal{F}^{-1} \{\Fu_k \} \, ,
+\eea
+where $\mathcal{F}^{-1} \{ . \}$  is the inverse Fourier transform in the
+Matlab's convention.
+
+In Matlab it is probably is computationally preferable to carry out the
+convolution in the fourth equation of \refeq{e-FksX} in time-domain as
+\beq
+    \sum_{m = -\infty}^{\infty} \Fu^{(0)}_{\ell - m} \Fu^{(1)}_m
+        = \mathcal{F} \left\{ \mathcal{F}^{-1} \left\{\Fu^{(0)} \right\}
+                              \mathcal{F}^{-1} \left\{\Fu^{(1)} \right\}
+                      \right\} \, ,
+\eeq
+where  $\mathcal{F}$ and $\mathcal{F}^{-1}$ denote the Fourier transform
+and its inverse, respectively. One should experiment with time-domain
+sizes and truncation of the Fourier expansion.
+
+One can insert the definition \refeq{e-Fseries} into \refeq{e-ksX} and then
+multiply from left by the integral
+$\frac{1}{\period{}} \int_0^{\period{}} d\zeit\ e^{-i \omega_m t}$
+in order to confirm that the equation \refeq{e-FksX} is correct. But in order
+to compute the nonlinear term pseudospectrally, we take the
+Fourier transform of $u^{(0)} u^{(1)}$, that is
+\bea
+    \frac{1}{\period{}} \int_0^{\period{}} d\zeit\ e^{-i \omega_m t}
+    u^{(0)} (t) u^{(1)} (t)
+    &\approx& \frac{1}{N} \sum_{n = 0}^{N-1} u^{(0)}(t_n) u^{(1)}(t_n)
+                                             e^{-i \omega_m t_n}
+    \, , \continue
+    &=& \frac{1}{N} \mathcal{F} \{ u^{(0)} u^{(1)} \} \, .
+\eea

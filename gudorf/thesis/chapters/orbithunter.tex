@@ -1,0 +1,52 @@
+% siminos/gudorf/thesis/chapter/orbithunter.tex
+% $Author: predrag $ $Date: 2020-05-25 15:18:45 -0400 (Mon, 25 May 2020) $
+
+
+\chapter{Tori hunter}
+\label{chap:torihunter}
+
+% Docstring and description of python package.
+%\MNGpost{2020-2-2}{
+\begin{description}
+\item[Introduction]
+In order to expand the user base and influence of our \spt\ formulation
+I converted my research code into a Python package that can be distributed
+as an open source project on Github. The original code fell into the classic
+pitfall of being only well known to the author. The newer version of the code
+is incredibly user friendly and tries to model itself after very popular
+python packages
+
+The following package is a result of the complete rewrite of my
+research code to maximize user friendliness and computational speed.
+Because this is a complete refactoring of my research code there
+are likely still a few bugs. It also should be noted that this is
+a completely independent endeavor of somebody with a Physics background;
+there might be some details or choices in the code that are suboptimal.
+This is why this code will be available as an open source github repository.
+
+Main benefits of using this package. Plugging in your own Torus class.
+It has all been vectorized and so it's pretty fast. It's incredibly user-friendly.
+It has many different numerical methods available, although there are
+a number that can be used only if constraints are included as they
+require square linear systems (such as SciPy's implementation of GMRES).
+
+The other main goal of this project was to make the code modular; obviously
+the code has been written around the \KSe\ but it can be tailored to
+encompass any equation and any dimensional torus. The main
+requirements to interface with the current package are the
+following:
+
+A function which returns a class instance in terms of real-valued spectral basis; it doesn't
+necessarily have to be Fourier, but the function is required to be called this for compatibility sake.
+This might be changed upon release just to prevent confusion; it's annoying but it would only
+take the renaming of functions. Note that for a system with $D+1$ dimensional space-time, this
+must take a physical field to $D$ dimensional spectral basis, even though it acts on the entire
+$D+1$ dimensional torus. This was done because it is natural for those who simulate fluid turbulence;
+most codes are spectral in nature and so these transforms are already implemented.
+
+A function which returns a class instance in terms of real-valued \spt\ spectral basis. The requirements
+follow the same as the spatial transform.
+
+A function which calculates the equations in the \spt\ \Fcs\
+
+\end{description}

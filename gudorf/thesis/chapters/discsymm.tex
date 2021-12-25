@@ -1,0 +1,178 @@
+% siminos/gudorf/thesis/chapter/discsymm.tex
+% $Author: predrag $ $Date: 2020-05-25 14:22:35 -0400 (Mon, 25 May 2020) $
+
+\chapter{Symmetries of space-time \KSe}
+\label{chap:disc_symm}
+
+In this chapter we look at the discrete subgroups of $\On{2} \times
+\SOn{2}$ that arise when calculating \twot\ spatiotemporal solutions, and
+write up the projection operators algebra needed to restrict the
+computations to invariant subspaces. The discussion will be restricted to
+solutions that lie in the flow invariant antisymmetric subspace $\bbU^+$,
+whose spatiotemporal subgroup is $\Zn{2}\times (e)$, and \ppo s whose
+discrete symmetry subgroup is $\Zn{2} \times \Cn{2}$.
+    \PC{2018-04-24}{Summarize here the \KS\ analogue of relevant parts of the
+    \pCf\ \eqva\ and \reqva\ classification of Gibson, Halcrow and
+    Cvitanovi{\'c}\rf{GHCW07}.}
+
+    % PC commented out, was in Siminos thesis               2020-05-22
+%\section{Symmetries of \KSe}
+%\label{sect:KSsymm}
+%\input{chapters/KSsymm}
+
+\section{Fourier transform normalization factors}
+\label{sect:FTnormal}
+\input{chapters/FTnormal}
+
+\section{Selection rules for Fourier coefficients}
+\label{sect:selection}
+
+\subsection{Selection rules for \KS}
+\label{sect:selectionKS}
+\input{chapters/selectionKS}
+
+\subsection{Selection rules for Fourier coefficients of Navier-Stokes \ppo s}
+\MNGedit{
+This section makes the assumption that one is not in the flow invariant
+subspace defined by Golubitsky and Stewart\rf{golubitsky2002sp} and
+Gibson, Halcrow and Cvitanovi{\'c}\rf{GHCW07}, and also assumes that
+outside of this flow invariant subspace that there are \ppo s. Then one
+can calculate the number of active variables much like
+%\refsect
+{sect:selection\_KS} (?) if one took real valued transforms.
+    }
+
+The main results which I'll describe is for $s_1$ and $s_3$ "\ppo
+solutions" if they exist, which I couldn't confirm. Think of this as an
+algebra check on the previous work if its worthless or not interesting.
+
+For $s_1$ we have $[u,v,w](x,y,z,t) = [u,v,-w](x+\frac{L_x}{2},y,-z,t+\frac{T}{2})$.
+The functions $u,v,w$ have generic expansions (i.e. there is a sum over index $m$ that denotes unit directions $\hat{x}_m$ that
+I'm not including) given by the following.
+\bea
+\mathbf{u}(\mathbf{x},t) &=& \sum_{jkn\ell} T_{\ell}(y)[\cos(q_j x)\cos(q_k z)(a_{jkn\ell}\cos(w_n t)+b_{jkn\ell}\sin(w_n t))\continue
+                        &+& \cos(q_j x)\sin(q_k z)(c_{jkn\ell}\cos(w_n t)+d_{jkn\ell}\sin(w_n t))\continue
+                        &+& \sin(q_j x)\cos(q_k z)(e_{jkn\ell}\cos(w_n t)+f_{jkn\ell}\sin(w_n t))\continue
+                        &+& \sin(q_j x)\sin(q_k z)(g_{jkn\ell}\cos(w_nc t)+h_{jkn\ell}\sin(w_n t))]
+\eea
+applying symmetry operation $\tau s_1$ results in (with trigonometric identities and parity of functions)
+\bea
+u(\mathbf{x},t) &=& \sum_{jkn\ell} T_{\ell}(y)[(-1)^{j+n}\cos(q_j x)\cos(q_k z)(a_{jkn\ell}\cos(w_n t)+b_{jkn\ell}\sin(w_n t))\continue
+                        &+& (-1)^{j+n+1}\cos(q_j x)\sin(q_k z)(c_{jkn\ell}\cos(w_n t)+d_{jkn\ell}\sin(w_n t))\continue
+                        &+& (-1)^{j+n}\sin(q_j x)\cos(q_k z)(e_{jkn\ell}\cos(w_n t)+f_{jkn\ell}\sin(w_n t))\continue
+                        &+& (-1)^{j+n+1}\sin(q_j x)\sin(q_k z)(g_{jkn\ell}\cos(w_n t)+h_{jkn\ell}\sin(w_n t))]
+\eea
+which results in the selection rules that $j+n$ must be even for the terms $a_{jkn\ell},b_{jkn\ell},e_{jkn\ell},f_{jkn\ell}$ and
+$j+n$ must be odd for $c_{jkn\ell},d_{jkn\ell},g_{jkn\ell},h_{jkn\ell}$ for terms in the sums to be non-zero. These selection rules
+also apply to the $v$ component of the velocity field, but they switch for the $w$ component due to the extra $-1$ that results from
+$s_1$ symmetry operation.
+
+For $j+n$ to be even, they either both half to be even, or both have to be odd, which reduces the number of terms in the summation
+by a factor of $4$. Likewise, $j+n$ to be odd, the indices $j,n$ need to either be odd,even or even,odd pairs; again reducing the number
+of terms in the summation by a factor of four. Therefore by imposing this type of symmetry and having an spatiotemporal discretization
+only increases the dimensionality of the problem by a factor of $N_t / 4$, making it more manageable memory wise.
+
+For solutions with invariant under $\tau s_3$ we have
+\[
+[u,v,w](x,y,z,t) = [-u,-v,-w](-x,-y,-z+\frac{L_z}{2},t+\frac{T}{2})
+\,,
+\]
+using the parity of Chebyshev polynomials (because this transformation includes
+changes to y), trigonometric identities, and parity of sine and cosine functions, we get
+\bea
+u(\mathbf{x},t) &=& \sum_{jkn\ell} T_{\ell}(y)[(-1)^{l+k+n+1}\cos(q_j x)\cos(q_k z)(a_{jkn\ell}\cos(w_n t)+b_{jkn\ell}\sin(w_n t))\continue
+                        &+& (-1)^{l+k+n}\cos(q_j x)\sin(q_k z)(c_{jkn\ell}\cos(w_n t)+d_{jkn\ell}\sin(w_n t))\continue
+                        &+& (-1)^{l+k+n}\sin(q_j x)\cos(q_k z)(e_{jkn\ell}\cos(w_n t)+f_{jkn\ell}\sin(w_n t))\continue
+                        &+& (-1)^{l+k+n+1}\sin(q_j x)\sin(q_k z)(g_{jkn\ell}\cos(w_n t)+h_{jkn\ell}\sin(w_n t))]
+\,,
+\eea
+where the selection rules are identical for each component of the velocity field because the symmetry transformation changes the sign
+on all of the components. Because the result has the same requirement but over three indices I believe that this just reduces the number
+of variables by a factor of $8$, so including a time dimension only increases the dimensionality by a factor of $8$.
+
+\subsection{Selection Rules for \Cn{n} shift-reflection symmetries in Kolmogorov flow}
+I've been working towards two dimensional Kolmogorov flow code and I realized that it
+was imperative to figure out the symmetry invariant subspace related for shift reflection where
+the shift is not a half domain but rather a cyclic shift of order $n$ as determined by the forcing
+profile in the doubly periodic domain of numerical simulations.
+
+Because the algebra get's exceedingly long I'll present the final result for the selection rules
+as the equivalent problem of finding the kernel of a matrix operator. The idea is to work
+completely with the vorticity field $\omega(x,y,t)$, which has symmetries of n-cell shift and
+spatial reflection, as well as rotation by $\pi$. Specifically shift reflection on a spatial domain
+$x \in [0,2\pi]$ and $y \in [0,2\pi]$, with forcing profile of $n$ cells is given by,
+
+\beq
+\omega (x,y,t) \rightarrow -\omega (-x,y+\frac{\pi}{n},t)
+\eeq
+
+and the rotation is given by,
+
+\beq
+\omega (x,y,t) \rightarrow \omega (-x,-y,t) \,.
+\eeq
+
+By using applying the invariance condition only for shift-reflection invariant (three) tori solutions, we start
+with the expansion for the scalar field in terms of the real-valued Fourier basis functions.
+
+\bea
+\omega(x,y,t) &=& \sum_{jkn} [\cos(q_j x)\cos(q_k y)(a_{jkn}\cos(w_n t)+b_{jkn}\sin(w_n t))\continue
+                        &+& \cos(q_j x)\sin(q_k y)(d_{jkn}\cos(w_n t)+f_{jkn}\sin(w_n t))\continue
+                        &+& \sin(q_j x)\cos(q_k y)(g_{jkn}\cos(w_n t)+h_{jkn}\sin(w_n t))\continue
+                        &+& \sin(q_j x)\sin(q_k y)(m_{jkn}\cos(w_n t)+p_{jkn}\sin(w_n t))]
+\eea
+If we assume there are preperiodic solutions under ($\ell$)-cell shift
+reflection after a prime period $\period{p}$, the general selection rules can be
+written as constraint conditions
+\bea
+a_{jkn} &=&  (-1)^{n+1}[a_{jkn}\cos(\frac{q_k \pi}{\ell})-b_{jkn}\sin(\frac{q_k \pi}{\ell})] \continue
+b_{jkn} &=&  (-1)^{n}[a_{jkn}\cos(\frac{q_k \pi}{\ell})-b_{jkn}\sin(\frac{q_k \pi}{\ell})] \continue
+d_{jkn} &=&  (-1)^{n}[d_{jkn}\cos(\frac{q_k \pi}{\ell})+f_{jkn}\sin(\frac{q_k \pi}{\ell})] \continue
+f_{jkn} &=&  (-1)^{n}[-d_{jkn}\cos(\frac{q_k \pi}{\ell})+f_{jkn}\sin(\frac{q_k \pi}{\ell})] \continue
+g_{jkn} &=&  (-1)^{n+1}[g_{jkn}\cos(\frac{q_k \pi}{\ell})+h_{jkn}\sin(\frac{q_k \pi}{\ell})] \continue
+h_{jkn} &=&  (-1)^{n}[g_{jkn}\cos(\frac{q_k \pi}{\ell})-h_{jkn}\sin(\frac{q_k \pi}{\ell})] \continue
+m_{jkn} &=&  (-1)^{n}[m_{jkn}\cos(\frac{q_k \pi}{\ell})+p_{jkn}\sin(\frac{q_k \pi}{\ell})] \continue
+p_{jkn} &=&  (-1)^{n}[-m_{jkn}\cos(\frac{q_k \pi}{\ell})+p_{jkn}\sin(\frac{q_k \pi}{\ell})]
+\eea
+
+By doing some algebra one realizes that the coefficients are zero unless
+$k_y$ the wavenumber associated with the direction that the forcing
+profile varies over is only nonzero for integer multiples of the forcing
+wavelength. In other words, if the forcing repeats four times, the only
+nonzero $k_y$ are $k_y = 4,8,12, \cdots$. The way that the preperiodic
+(time) condition comes into play is just like how it comes into play in
+the \KSe\ equation, half of the modes are zero depending on whether the
+time index $n$ is even or odd. Specifically, the modes that are zero are,
+
+For $k_y$ being an odd number of multiples of the forcing profile index
+$\ell$, we have the following constraints
+\bea
+d_{jkn},f_{jkn},m_{jkn},p_{jkn} &=& 0 \, \mbox{for}\, n \, \mbox{odd} \continue
+a_{jkn},b_{jkn},g_{jkn},h_{jkn} &=& 0 \, \mbox{for}\, n \, \mbox{even}
+\eea
+
+For $k_y$ being an even number of multiples of the forcing profile index
+$\ell$, we have the following constraints
+\bea
+d_{jkn},f_{jkn},m_{jkn},p_{jkn} &=& 0 \, \mbox{for}\, n \, \mbox{even} \continue
+a_{jkn},b_{jkn},g_{jkn},h_{jkn} &=& 0 \, \mbox{for}\, n \, \mbox{odd}
+\eea
+
+Of course for \eqva\ this simplifies due to not having a third continuous
+dimension, and we only have four distinct sets of coefficients
+(combinations of $\sin$ and $\cos$ in $x,y$). In fact, it simplifies even
+more due to not having the extra factor $-1^n$, such that the only
+non-zero coefficients
+\bea
+a_{jk},b_{jk} &=& 0 \, \mbox{for}\, k_y \, \mbox{even multiple of forcing index} \continue
+d_{jk},f_{jk} &=& 0 \, \mbox{for}\, k_y \, \mbox{odd multiple of forcing index} \continue
+\eea
+
+In summary, for \eqva\ with discrete shift reflection symmetry, the number of non-zero
+modes equals $N_x*\frac{N_y}{2*\ell}$ and for preperiodic orbits it totals $N_x*\frac{N_y}{\ell}*\frac{N_t}{2}$.
+
+Note, this is also useful for the \KSe\ if one desires the selection
+rules for $\ell$ cyclic shift reflection, as there is no difference
+between shift reflection in two continuous spatial dimensions versus one
+space and one time; the analogy is perfect with $y$ playing the role of
+$t$ in the \KSe.

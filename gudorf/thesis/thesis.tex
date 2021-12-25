@@ -1,0 +1,164 @@
+% siminos/gudorf/thesis/thesis.tex
+% $Author: mgudorf3 $ $Date: 2020-10-22 10:19:52 -0400 (Thu, 22 Oct 2020) $
+
+% TO MATT: search for '% PC comment' lines, fix             2020-05-22
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+\input{type}                        %% type: public/editing version
+\input{../../inputs/setupThesis}    %% logical chores (nothing to edit)
+\input{../../inputs/layoutThesis}   %% copy to here from dasbuch/book/layout.tex environments
+\input{../../inputs/editsDasbuch}
+\input{../../inputs/def}
+\input{defsThesis}                  %% all Matt edits: \renewcommand, etc
+\input{version}     %% version      keep updating this!
+% ==============================
+% additional setup except for those in setupThesis
+% customized for gudorf
+\usepackage{ifthen}
+\usepackage{tikz}
+\usetikzlibrary{calc}
+\usetikzlibrary{decorations.pathreplacing}
+\usepackage{bm}
+\usepackage{array}
+
+\graphicspath{{../../figs/}{../../figs/tilebodyfigs/}}
+
+%\renewcommand{\edit}[1]{{\color{blue} #1}}
+
+\title{Spatiotemporal tiling of the Kuramoto-Sivashinsky
+equation}
+\author{Matthew N. Gudorf}
+
+\principaladviser{Professor Predrag Cvitanovi\'c}
+% \committeechair{}
+\firstreader{Professor Kurt Wiesenfeld}
+\secondreader{Professor Luca Dieci}[School of Mathematics]
+\thirdreader{Professor Flavio Fenton}
+\fourthreader{Professor Michael Schatz}
+
+\department{School of Physics}
+\degree{Doctor of Philosophy}
+\copyrightyear{2020}
+
+\ifgatech
+ \submitdate{November 6th, 2020}
+ \approveddate{November 6th, 2020}
+% \figurespagefalse
+\else
+ \submitdate{\version}
+ \signaturepagefalse
+ \approveddate{[not yet]}
+ \figurespagefalse
+ \tablespagefalse
+ \fi
+
+\copyrighttrue
+\figurespagetrue
+\tablespagetrue
+
+
+    \ifgatech               %% GT SUBMISSION
+\bibfiles{../../bibtex/siminos}
+    \else                   %% Predrag
+\input{biblatex}
+	\addbibresource{../../bibtex/siminos.bib}
+    \fi
+
+\bibpagetrue
+
+
+\begin{document}
+    \ifgatech               %% GT SUBMISSION
+\bibliographystyle{gatech-thesis}
+    \fi
+
+%% Preliminary Stuff
+    \ifgatech               %% GT SUBMISSION
+\begin{preliminary}
+
+   \begin{acknowledgements}
+     \input{acknowledgements}
+   \end{acknowledgements}
+
+  % print table of contents, figures and tables here.
+   \contents
+
+  % if you need a "List of Symbols or Abbreviations" look into
+  % gatech-thesis-gloss.sty.
+  %\begin{summary}
+    %\input{chapters/summaryNref}
+  %\end{summary}
+
+\end{preliminary}
+    \fi
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% BEGIN MAIN BODY OF THESIS
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\ifboyscout \pagestyle{headings} \fi  %% Predrag: while editing
+
+%%%%%%%%%%%%%%%%
+% Chapter 1
+%%%%%%%%%%%%%%%%
+\chapter{Introduction}
+\label{c-intro}
+%\input{introduction.tex}
+
+%%%%%%%%%%%%%%%%
+% Chapter 2
+%%%%%%%%%%%%%%%%
+\chapter{Spatiotemporal Formulation}
+\label{c-formulation}
+\input{formulation.tex}
+
+%%%%%%%%%%%%%%%%
+% Chapter 3
+%%%%%%%%%%%%%%%%
+\chapter{Numerical optimization}
+\label{c-optimization}
+\input{optimization.tex}
+
+%%%%%%%%%%%%%%%%
+% Chapter 4
+%%%%%%%%%%%%%%%%
+\chapter{Spatiotemporal Techniques}
+\label{c-techniques}
+%\input{techniques.tex}
+
+%%%%%%%%%%%%%%%%
+% Chapter 5
+%%%%%%%%%%%%%%%%
+\chapter{Results}
+\label{c-results}
+%\input{results.tex}
+
+
+\chapter{Conclusions and Future Work}
+\label{c-conclusion}
+%\input{future.tex}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%% CLOSING STUFF                                     %%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\appendix
+\input{appendix.tex}
+
+
+\begin{postliminary}
+  \ifgatech               %% GT SUBMISSION
+\references
+  \else
+\printbibliography[heading=bibintoc,title={References}]
+  \fi
+  % \gtindex
+  \ifgatech               %% GT SUBMISSION
+  \begin{vita}
+    \input{vita}
+  \end{vita}
+  \fi
+\end{postliminary}
+
+\end{document}

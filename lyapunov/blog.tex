@@ -1,0 +1,132 @@
+% siminos/lyapunov/blog.tex                           pdflatex blog
+                        %% logical setup, no need to edit %%%%%%%%%%
+                        \newif\ifpaper \newif\ifPDF               %%
+                        \newif\ifOUP \newif\ifboyscout            %%
+                        \newif\ifdasbuch \newif\ifarticle         %%
+                        \newif\ifsolutions                        %%
+                        \newif\ifsvnmulti			              %%
+%                         \svnmultitrue %% turn on svn-multi	      %%
+                        \dasbuchtrue %% DasBuch, not QFT lectures %%
+                        \boyscouttrue %% commented, WWW/boyscouts %%
+                        \solutionstrue %% include solutions       %%
+                        \paperfalse\PDFtrue %% hyperlinked        %%
+                        \OUPfalse \articlefalse  %% ChaosBook %%%%%%
+\svnmultitrue
+% \svnmultifalse %% turn off svn-multi	  %%
+    % Toggle between draft and non-draft versions
+%\boyscoutfalse                 % public, for hyperlinked ChaosBook/projects
+    % Toggle between draft and non-draft for SAIC Student Paper Competition
+%\articletrue                   %editing the article
+%\articletrue\boyscoutfalse     % article for submission
+ \dasbuchfalse   % we are not in the ChaosBook
+
+%\input{inclOnly} % speed up compilation by compiling only a part
+
+%    \ifarticle
+%\documentclass[letter,10pt,openany]{article}
+%    \else
+\documentclass[letter,10pt,openany]{book}
+%    \fi %end of article switch
+\usepackage{amsmath,amsfonts,amssymb,amsthm}
+\usepackage{color}
+\usepackage[table]{xcolor}
+\usepackage{url}
+\usepackage{fancyhdr}
+\usepackage{alltt}
+\usepackage{ifthen}
+\usepackage{float}
+\ifsvnmulti
+ \usepackage{svn-multi}
+\fi
+\usepackage[english]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage{times}
+\usepackage[T1]{fontenc}
+\usepackage[pdftex]{graphicx}
+\usepackage{caption}
+\usepackage{subcaption}
+\usepackage{epstopdf}
+\usepackage{array}
+\usepackage[pdftex,colorlinks]{hyperref}
+\usepackage{verbatim}
+\input{../inputs/layout}         %% page layout, ChaosBook environments
+\input{../inputs/biblatex}
+	\addbibresource{../bibtex/siminos}
+\input{../inputs/editsDasbuch}   %% editing comments, DasBuch style
+\input{../inputs/def}            %% do not edit; update from dasbuch/book/inputs/def.tex
+\input{../inputs/defsLyapunov}     %% all Stefan edits: \renewcommand, etc
+\graphicspath{{../figs/}{../Fig/}{../xiong/figures/}}  %% directories with color graphics files
+\hypersetup{
+   pdfauthor=Lyapunov Collective,
+   pdfkeywords=covariant Lyapunov vectors,
+   pdftitle=determining the attractor dimension}
+
+\ifsvnmulti
+	\svnidlong          %experimenting with svn-multi
+	{$HeadURL: svn://zero.physics.gatech.edu/siminos/lyapunov/blog.tex $}
+	{$LastChangedDate: 2016-05-01 16:44:46 -0400 (Sun, 01 May 2016) $}
+	{$LastChangedRevision: 4790 $}
+	{$LastChangedBy: xiong $}
+	\svnid{$Id: blog.tex 4790 2016-05-01 20:44:46Z xiong $}
+	\svnkwsave{$RepoFile: siminos/lyapunov $}
+	\svnRegisterAuthor{kaz}{Kazumasa}
+	\svnRegisterAuthor{predrag}{Predrag Cvitanovi{\'c}}
+	\svnRegisterAuthor{siminos}{Evangelos Siminos}
+\fi
+
+    \ifboyscout
+\pagestyle{fancy}
+\fancyhead{}
+\fancyhead[er,ol]{\slshape \leftmark }
+        % subversion label pages
+        \ifsvnmulti
+\fancyfoot[er,ol]{\svnrev\ (\svnfileauthor--\svnfilerev )}
+%\fancyfoot[or]{\svnyear -\svnmonth -\svnday \
+%\svnhour :\svnminute }
+\fancyfoot[el,or]{\svnfilemonth/\svnfileday/\svnfileyear\ \svnkw{RepoFile}}
+%}
+%URL \svnmainurl \svnkw{URL}
+%Filename \svnmainfilename
+        \fi
+    \else
+    \fi %end of article switch
+%    \ifarticle
+%% 2010-10-13 this to meet GaTech submission double-spaced requirement
+%% \linespread{1.6}
+%% 2010-10-13 commented out by Predrag, for the webpage version
+%	   \addtolength{\oddsidemargin}{-.375in}
+%	   \addtolength{\evensidemargin}{-.375in}
+%       	\addtolength{\textwidth}{.75in}XiongDing
+%    \else
+%    \fi
+
+\begin{document}
+
+\input{blogTitle}
+\maketitle
+\thispagestyle{empty}
+\tableofcontents
+
+\include{strategy}
+\include{intro} % A draft of a putative `physical dimension' paper
+\include{Lyapunov}
+\include{KS}
+\include{Henon}
+\include{sensitive}
+  % \include{ChaosBook}  % reinstate if transferring thing to ChaosBook
+  % \include{LyapunovCB} % ChaosBook chapter, to revise eventually
+\include{XiongDing}
+  % \input{../xiong/blog/symm} PC 2015-04-10 moved to THE thesis
+  % \input{QiGe} % gave up on this project, for record only
+\include{flotsam}
+  %\appendix
+\include{append} % unresolved morsels, to tempt you to think
+  \newpage
+\printbibliography[
+heading=bibintoc,
+title={References}
+				  ] %, type=online]  % if not using default "Bibliography"
+
+\include{dailyBlog}
+
+\end{document}

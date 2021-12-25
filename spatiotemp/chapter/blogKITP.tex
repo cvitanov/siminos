@@ -1,0 +1,2481 @@
+\svnkwsave{$RepoFile: siminos/spatiotemp/chapter/blogKITP.tex $}
+\svnidlong {$HeadURL: svn://zero.physics.gatech.edu/siminos/spatiotemp/chapter/blogKITP.tex $}
+{$LastChangedDate: 2021-03-20 11:53:00 -0400 (Sat, 20 Mar 2021) $}
+{$LastChangedRevision: 6807 $} {$LastChangedBy: predrag $}
+\svnid{$Id: blogKITP.tex 6807 2019-03-19 22:53:09Z predrag $}
+
+\chapter{Matt's KITP blog}
+\label{chap:blogKITP}
+% Predrag                                           1 May 2018
+
+\begin{description}
+\MNGpost{2017-01-03}{Happy New Year!
+\begin{description}
+\item[KITP chats]
+Chatted with Ismail Hameduddin about his project in laymen's terms about
+defining non-zero mean velocity near the walls in pipe flow and how he
+and his adviser's model predicts this. Chatted with Burak about puffs in
+pipe flow, I believe he's going to run his presentation by me as practice
+for himself and education for me.
+
+Burak is also convinced beyond a reasonable doubt that the key to spatial
+integration is symplectic integration, even though we have discussed at
+length with Predrag that the formulation of the \KSe\ is \emph{not} of
+the symplectic form (\ie, does not have the coordinate/momentum type
+structure). That being said he wants me to look into this more.
+
+\item[KITP poster]
+Made arrangements for the poster to be printed on campus after some minor
+edits.
+
+\item[Numerical Linear Algebra]
+Read through more of Trefethen and Bau\rf{Trefethen97} in preparation of
+meeting with PC and JG. Arnoldi iteration, GMRES, Krylov subspaces were
+main topics covered. Trying to work through some of the problems to gain
+a better intuition rather than just reading.
+
+\item[{\descent} antisymmetric subspace $\bbU^+$]
+In response to PC's comments of December 24th. All of the figures
+\emph{prior} to \reffig{fig:MNGVND6} were either ill-conditioned initial
+conditions that did not converge to periodic orbits
+(\reffig{fig:MNGVND4}) or completely numerically wrong code-wise
+(\reffig{fig:MNGVND1}, \reffig{fig:MNGVND2}, \reffig{fig:MNGVND3}). I was
+trying to show any progress I was making in terms of quantitative pieces
+as opposed to me merely claiming ``I'm making progress". I suppose I
+should have gone back for the record and stated ``avoid looking at this"
+or ``this is complete nonsense" to prevent confusion, as there is no way
+anyone could know otherwise. Equations such as \refeq{whyThisDeformation}
+should be avoided like the plague.
+\\
+{\bf Predrag 2017-01-03} No need to revisit any of that, it's just the
+log of your work as it progresses. It's my fault for having fallen so far
+behind in reading your blog. Sorry...
+
+\refFig{fig:MNGVND6}\,(b) and (d) is the periodic orbit $\cycle{01}$ as
+defined in \refref{lanCvit07} (the {\descent} applied in
+\reffig{fig:MNGVND6} is with $L = 38.5$).
+
+\item[Spatial {\descent}]
+Made small contributions to the code, but needs a quite a bit more work.
+Still working through how to properly handle real and imaginary parts
+separately in an efficient manner.
+\end{description}
+}
+
+
+\MNGpost{2017-01-04}{:
+
+\begin{description}
+\item[Waleffe] is trying to answer the question of ``which solutions are
+fundamental in shear flows". In investigation he looked at optimum
+transport solutions on a reduced length scale (relative to solutions of
+Boussinesq equation) and looked at the scaling of solutions in regards to
+Nusselt and Rayleigh numbers.
+
+Main take-away: claims that 2-D sheet scaling being close to 3-D data
+scaling implies that the dynamics can be described by sheets alone(?)
+
+\item[Wesfreid]
+gave an experimenter's look into B\'enard -- von K\'arm\'an instabilities and use of vortex generators as actuators for flow control as well as
+Couette-Poiseuille puffs/spots.
+
+Main take-aways: Vortex generators can be used to reduce total drag in
+expense of local regions of higher drag. In Couette-Poiseuille spots the
+Couette flow was generally antiparallel to the Poiseuille flow.
+
+\item[John Gibson] introduced me to Channelflow and we discussed some of
+the methods that it uses, specifically Arnoldi iteration.
+Discussed the general layout of Channelflow in terms of library and
+scripts but ran out of time to do anything specific. I'm trying to get it
+up and running (see Misc.) so that I can give the c++ a whirl.
+
+\item[Reading]
+Reviewed some material from Trefethen \& Bau\rf{Trefethen97}, began
+picking out some Navier-Stokes papers to read\rf{CviGib10,GHCW07}. Gibson  \etal\ refer
+to Aubry \etal\rf{Aubry88}.
+
+\item[Spatial {\descent}]
+In between all of the informal meetings and cookie breaks I maybe some more small edits to this code, but minimal progress from yesterday.
+
+\item[Misc]
+Installing a virtual machine image of Linux mint in hopes that I would be
+able to get Channelflow up and running so I can toy around with it...
+I'm convinced that I should just reinstall Linux mint to be the
+main operating system of my computer immediately, I know I would have to
+do this eventually anyway as performance is otherwise split between the
+machine image and the Windows operating system. I'm going to try and do
+this early tomorrow in hopes that I can look at channel flow before
+talking to John again.
+\end{description}
+}
+
+\MNGpost{2017-1-5}{:
+\begin{description}
+\item[Ati Sharma] tries to answer the question of why Koopman modes look
+like resolvent modes... a question I ask myself daily (just
+kidding... I'm hoping the tutorial to be quite extensive). Previewed
+Koopman operators and their use in rewriting nonlinearities into a
+different form such that one can expand about the mean flow solution. Use
+of Singular Value Decomposition (SVD) acts as a filter iff there is
+separation of the singular values $\sigma_i$. The main connection that
+popped into my head was how Arnoldi iteration picks out dominant
+eigenvalues... I looked into DMD and wikipedia mentioned both Arnoldi
+iteration and SVD methods so maybe the similarity is not entirely in my
+head.
+
+\item[Dennice Gayme] investigates ``restricted nonlinear methods'' (RNL). The
+main question posed was "does momentum redistribution lead to
+structure?". I.e. does a streamwise description of \pCf\
+with unstructured noise, lead to similar structure present in
+\pCf. Dennice claims it does, although this was undertaken with
+relatively low Reynolds number. I believe it was Prof. Caulfield who
+suggested (and Prof. Gayme agreed completely) that the next step is to
+undertake some sort of linear stability analysis in order to see if this
+is somehow related to the transition of streaks/rolls to self-sustained
+turbulence.
+
+\item[Reading]
+Tried to familiarize myself with dynamic mode decomposition methods in
+preparation for the Koopman mode tutorial tomorrow. Borrowed
+Pope\rf{popebook} from Ismail Hameduddin in order to prepare for the second
+talk tomorrow per recommendation of Burak.
+
+\item[Channelflow]
+Going through a C++ tutorial recommended by Ismail to help with the transition towards Channelflow. Still trying to set it up properly such that I can run some example files before starting any of my own endeavors.
+
+\item[Misc.]
+\begin{itemize}
+\item Discussed the Lagrangian formulation of \KSe\ with Burak and Predrag.
+\item Briefly discussed machine learning to find inertial manifolds with Genta Kawahara.
+\end{itemize}
+\end{description}
+}
+\MNGpost{2017-1-7}{:
+\begin{description}
+\item[Koopman \`a la Mezi\'c]
+\HREF{http://online.kitp.ucsb.edu/online/transturb17/mezic}{(video)}.
+\item[Koopman \`a la Clarence Rowley]
+\HREF{http://online.kitp.ucsb.edu/online/transturb17/rowley}{(video)}.
+\item[Mean flow tutorial \`a la Laurette Tuckerman]
+\HREF{http://online.kitp.ucsb.edu/online/transturb17/tuckerman}{(video)}.
+\item[readings]
+More Pope\rf{popebook} and Channelflow documentation
+\item[spatial {\descent}]
+Did a little bit more work towards completion of code; specifically deriving
+matrix elements for stability matrices; I want to rederive everything a second
+time before I upload it here as small mistakes held me back in antisymmetric
+$\bbU^+$ of \KS.
+I believe I will be reducing the number of modes in numerical implementation as
+I have to keep track of 8 times the number of coefficients (factor of two from
+real and imaginary parts of Fourier coefficients, factor of four from
+system of four equations for each mode number).
+The only tasks I have left are making sure the velocity function,
+stability matrix elements, and differentiation matrix used to approximate
+the loop tangent are defined correctly. I guess there is one additional factor
+which is producing the initial conditions for searches
+
+\item[Weekend Plans]
+\begin{itemize}
+\item Review literature posted to transturb wiki \HREF{http://transturb17.wikispaces.com/}{wikispace}
+\item Familiarize myself with Channelflow by going through tutorial, finish c++ review \HREF{www.cplusplus.com}{c++ resource}
+\item Finish spatial Newton code hopefully
+\end{itemize}
+\end{description}
+}
+
+
+\MNGpost{2017-01-09}{:
+\begin{description}
+\item[Channelflow]
+Still learning how to manipulate things in c++ and linux. I'm still getting errors when trying to compile the simple example files, and it's obvious from the output that the libraries paths aren't defined correctly but I've tried a number of different ways to change this and they don't work. I'll be asking my office mates in hopes that they will be kind enough to elucidate the matter. Trying to keep the chin held high.
+\item[reading]
+Read some of the literature from transturb, I am trying to focus on the video feeds however as I find that these are better avenues for review.
+\item[spatial {\descent}]
+I suppose I was quite hopeful in trying to get this done over the weekend.
+\end{description}
+}
+
+\MNGpost{2017-1-09}{:
+%Regretfully did not type these up from the start. Need to transcribe and/or rewatch to get main points on the record.
+\begin{description}
+\item[R. Kerswell Talk]
+\HREF{http://online.kitp.ucsb.edu/online/transturb-c17/kerswell/}{(video)}.
+\item[G. Kawahara Talk]
+\HREF{http://online.kitp.ucsb.edu/online/transturb-c17/kawahara/}{(video)}.
+\item[R. Grigoriev Talk]
+\HREF{http://online.kitp.ucsb.edu/online/transturb-c17/grigoriev/}{(video)}.
+\item[C. Cossu Talk]
+\HREF{http://online.kitp.ucsb.edu/online/transturb-c17/cossu/}{(video)}.
+Near wall streak structures known since the sixties. Self-sustaining process is main source of turbulent kinetic energy at low to moderate $Re$. Increasing $Re$ contributes to an emerging energy peak in terms
+of streamwise wavelength and wall distance. This emerging peak has to
+do with structures scaling with outer units, and is believed by some
+to be dominant at very large $Re$.
+
+Looking at linearized equation with turbulent mean flow and include eddy-viscosity associated with turbulent mean flow and look at the most
+amplified perturbation as a function of the spanwise scale. There are two peaks, one that does not change with $Re$ and the second peak which
+does scale with $Re$.
+
+Showed that linear instability can be a source of energy, but asks if
+large scale structures can self sustain in the absence of small scales.
+
+The opposite case, showing small-scale structures can self-sustain, was
+done by using minimal flow units to remove any large active scales.
+
+To do this with large scales there were two ideas, use a very coarse discretization, or filter the small scales and take into account dissipation such that there is no unphysical energy production peak at
+the scale of the grid.
+
+Using a local spatial filter, (spatial average around each point). This
+yields and additional term which is the divergence of the Reynolds stress. Reynolds stress modeled with eddy viscosity and Smagorinsky.
+
+To damp more small scales, increase the Smagorinsky constant. Although
+this produces unphysical solutions, want to see if large-scale structures survive, which they do.
+
+For intermediate sized structures, take a smaller sized box than that which was used for large scaled structures, and then kill out the small
+scale structures using the method that was used for large scale structures.
+
+The takeaway is that structures of all scales can self-sustain, contradicting the hypothesis of multiple hairpin vortices being advected
+by the mean flow contribute to large scale structures. These larger structures extract energy from the mean flow via lift-up.
+
+Using Newton's Method to find invariant solutions, then do continuation
+in the Smagorinsky constant, to find upper branch solutions. The filtered steady solutions are connected to the branch of Navier-stokes
+solutions found by many others.
+
+\item[M. Avila Talk]
+\HREF{http://online.kitp.ucsb.edu/online/transturb-c17/avila/}{(video)}.
+\item[A. Duran Talk]
+\HREF{http://online.kitp.ucsb.edu/online/transturb-c17/duran/}{(video)}.
+\item[S. Tobias Talk]
+\HREF{http://online.kitp.ucsb.edu/online/transturb-c17/tobias/}{(video)}.
+\textit{The generalised quasilinear approximation: Application to jets,
+HMRI, and rotating Couette flows}.
+Quasilinear really means to keep only certain interaction terms. Divide the quantity of desired investigation and split it into a mean term, and fluctuation term about that mean.
+
+The quasilinear approximation is to discard interaction terms which are contribute to fluctuations and are based on only fluctuation terms. I.e. mean and fluctuation interaction that effects the mean is kept, fluctuation interactions that affect the mean are kept, but fluctuation-fluctuation interactions that affect the fluctuations are discarded.
+
+Effectiveness of this approximation in fluids is ofter measured by Kubo number, but you need to do the full calculation in order to find this number; it is not something one can know a priori.
+
+In the Generalised quasilinear approximation (GQL) the terms are separated into short-scale and large-scale interactions.
+
+GQL consists of keeping interactions of large scale mean-mean interactions (large scale determined by low wavenumber, for example), large scale mean and small scale fluctuation interactions, and small scale fluctuation-fluctuation interactions.
+
+GQL with a wavenumber cutoff
+keeping only three spatial Fourier modes outperforms the regular QL approach, as QL overemphasizes the role of waves. (Rossby wave can only reinforce Rossby wave). GQL allows for scattering into different wave numbers.
+\end{description}
+}
+
+\MNGpost{2017-1-10}{:
+\begin{description}
+\item[Channelflow]
+Practicing using Channelflow. Trying to learn all of the command line switches and codes through practice, went through
+the tutorial.
+
+\item[T. Mullin Talk]
+\textit{The sensitivity of transition in a pipe}
+\HREF{http://online.kitp.ucsb.edu/online/transturb-c17/mullin/}{(video)}. \\
+Poiseuille flow, add perturbations. Measured the probability
+of transition to turbulence versus the normalized amplitude of perturbation.
+A way to introduce these perturbations is to introduce a jet with a small hole. At
+$Re \approx 3,000$ the transition probability is still sharp (sigmoid like curve), but with $Re \approx
+2000$, you get a small hump that proceeds the main transition.
+Two different amplitudes of disturbance leads to
+two different behaviors even though the centerline velocities behave in the same manner
+showing similar patterns to Marc Avila's slug profiles.
+
+Velocity defect and variance seem to settle in same place for puffs.
+For the amplitudes between these two large transition
+probability areas (the region where you have small probability to transition)
+the correlation does not not follow this behavior.
+
+\item[S. Rubenstein Talk]
+\textit{Colliding vortex rings; Rapid breakup of coherent structures}
+\HREF{http://online.kitp.ucsb.edu/online/transturb-c17/rubinstein/}{(video)}.
+How do coherent structures break up, how large scales give energy to small scales. Basing
+off of Lim and Nickels (1992). Small Reynolds number vortex ring collision produced a tiara of
+(which looked self-similar) rings. Inviscid process of vortex reconnection
+described by vortex filaments and sheets to explain energy cascade.
+
+Rodolfo introduced the numerical side of the vortex ring collisions.
+Navier-Stokes fluids look like Biot-Savart equations vortex collision. Fatter cores
+in the numerics is able to reproduce the vortex reconnection.
+
+\item[R. Poole Talk]
+\textit{Low-drag turbulent states in Newtonian and non-Newtonian fluids}
+\HREF{http://online.kitp.ucsb.edu/online/transturb-c17/poole/}{(video)}. \\
+Drag reduction is something that you can measure in non-Newtonian fluids in any geometry
+In non-Newtonian fluids you have to talk about different viscosities, extensional, biaxial, etc.
+Separation of dynamics into active and hibernating turbulence,
+where hibernating is defined by Virk limit (away from Blasius) characterized
+with low Reynolds shear stresses. Stereoscopic PIV (2D3C) results show hibernating turbulence is not
+laminar flow, and mainly consists of a spanwise motion of counter rotating
+vortices.
+
+\item[E. Wesfreid Talk]
+\textit{New experiments on the subcritical transition to turbulence in Couette-Poiseuille flow}
+\HREF{http://online.kitp.ucsb.edu/online/transturb-c17/wesfreid/}{(video)}
+Two types of Couette-Poiseuille flow, depending on direction of pressure gradient.
+Can measure the velocity profile to verify it is behaving correctly.
+Centrifugal instability in plane-Couette flow is the Taylor instability while in plane Couette-Poiseuille flow
+is the Taylor-Dean instability.
+
+Introduce pertubation with hole in stationary wall in Couette-Poiseuille flow. Streamwise
+perturbations of spot due to transient forcing of temporal extent "1". Can produce large scale
+structures with inhomogeneous friction. Self-sustatining iff the amplitude of the perturbation
+is sufficiently large.
+
+\item[M. Schatz]
+\textit{Forecasting turbulence using the geometry of invariant solutions: Experiments, theory, and numerics}
+\HREF{http://online.kitp.ucsb.edu/online/transturb-c17/schatz/}{(video)}.
+Talking about shadowing invariant solutions in {\statesp}.
+Are there specific experiments that can elucidate the unstable/stable manifolds
+of these invariant solutions?
+Kolmogorov flow. Spatially sinusoidal forcing.
+Can't really do 2-d flows experimentally so do quasi 2-d flows instead.
+Separation of variables to introduce vertical velocity profile, results in modified Navier-Stokes
+equation with a parameter $\beta$ on the advection term, and a linear friction (Rayleigh friction) term.
+Inertial term (prefactor) introduced to delve into bifurcations of solutions in more
+detail. Doubly periodic, singly-periodic + no slip, NPS boundary conditions.
+
+Modulated flow; rotation symmetry. Imperfect bif. from laminar.
+Non-periodic simulation (NPS). recurrence diagram.
+
+Using norm of flow fields to find times of slow "{\statesp} speed" to initiate
+Newton-Krylov searches for periodic orbits.
+
+\item[C. Beaume]
+\textit{Transitional shear flows: Computing exact coherent states in two dimensions}
+\HREF{http://online.kitp.ucsb.edu/online/transturb-c17/beaume/}{(video)}.
+Using asymptotic reductions as reduced order modeling of nonlinear flows.
+Introduction to \pCf.
+Introduction to Waleffe flow. Free-slip boundary conditions, sinusoidal forcing.
+coexistance of laminar (attractive) and turbulent solutions. Constrain to the
+separatrix between laminar basin of attraction and these unstable manifolds of
+invariant solutions. Typically the fixed points that organize the dynamics are
+upper branch solutions.
+
+Lower branch solution Wang, Gibson, Waleffe (2007). Fourier decomposition for
+steady-state ECS, shows the coefficients of decomposition scale with Re
+number.
+
+Wants to solve for fluctuations (fast time scale) while keeping averaged quantities
+(slow-time scale)
+fixed. This yields an eigenvalue equation for the fluctuations.
+
+Using his specific algorithm, he wants to bring the "leading" eigenvalue (discarding
+eigenvalues with larger real parts but also imaginary parts) to zero, as the marginality
+is an indicator of a steady state.
+
+Uses L. Tuckerman algorithm for preconditioning, semi-implicit Euler scheme to solve for linear term
+explicitly and nonlinear term implicitly. Results in resolvent $(I - \omega L)^{-1}$.
+
+Do not need same preconditioner for mean, fluctuation equations.
+mean equation preconditioner $P = I-L$
+fluctuation equation preconditioner $P = (I - Re^{-1} L)$
+
+Messy Bifurcation curves for modulated solutions, strange behaviors. They make Rich Kerswell nervous. Increasing
+resolution smoothes them, has to do with low-dimensional representation.
+
+\item[B. Budanur]
+\textit{Unstable manifolds of recurrent flows in pipe flow}
+\HREF{http://online.kitp.ucsb.edu/online/transturb-c17/budanur/}{(video)}.
+Unstable manifolds shape the separatrix of the chaotic attractor.
+Unstable manifolds for Poiseuille flow/pressure driven flow
+Continuous symmetries lead to relative invariant solutions.
+Reducing the symmetry by removing the parameterization of translation, leads to
+something much nicer topologically.
+Introducing time evolution as mapping f. Listing symmetries. In group notation,
+flow mapping f commutes with group element operation (group action).
+Each solution has infinitely many symmetry copies on its group orbit.
+Symmetry reduction is a coordinate transformation such that group
+orbit is mapped to one orbit.
+
+Intro to \SOn{2} reduction via {\fFslice}. Not geometry dependent, can define
+coordinates as you see fit. Can use these projections to project neighbors onto slice.
+Therefore one can project the tangent space onto the slice. which allows
+for numerical integration that is completely contained in the symmetry
+reduced space if you are careful.
+
+Example, unstable manifolds of traveling waves. Create a small ball (circle for 2d unstable
+manifold) and integrate to map out unstable manifold. Use a PIM triple/bisection to increase resolution
+and capture more of the unstable manifold.
+
+Using a recurrence based norm, can use small values of the norm to begin Newton searches for
+invariant solutions. Then one can play the game of mapping this invariant solution's unstable manifold
+
+Going over using higher energy solution as energy control that drives system towards laminarisation.
+"too much turbulence kills turbulence".
+
+Talking about localized relative periodic orbits, M. Avila's paper.
+
+Can reduce dynamics/Floquet vectors of map of {\fFslice} with Poincar\'e section.
+
+Calculating unstable manifolds of traveling waves and relative periodic orbits and generalizing
+so long as symmetries are of the \SOn{2} class.
+
+Puff formation in this subspace seems to be forming along heteroclinic connection between LB and UB
+solutions.
+
+\textbf{E. Knobloch Comments}
+Bifurcations from a group orbit. Derived 25 years ago. Projections lose structure about the global structure of the
+manifolds. Lose information of the vector field that is orthogonal to the group orbit.
+
+\item[P. Cvitanovi\'c]
+\textit{Turbulence: How fat is it?} %My favorite title so far.
+\HREF{http://online.kitp.ucsb.edu/online/transturb-c17/cvitanovic/}{(video)}.
+Strange attractor stuffed into a finite-dimensional body bag.
+Computation of covariant Lyapunov vectors, covariant vectors are non-normal.
+Algorithmic approach to compute these.
+Physical dynamics is hyperbolically separated from the infinity of transient modes.
+
+\KSe\ spectrum of eigenvalues (Lyapunov spectrum). The values of the Lyapunov exponents.
+Sharp shoulder where you fall off the cliff.
+
+Doubling the spatial length doubles the number of "physical" dimension. Increasing
+modes in same length just increases the number of "transient" modes.
+
+Transient and "entangled" = "physical" perturbations. Entanglements is between stable and unstable
+manifolds, where stable can win for a short time until unstable takes back over. Inertial manifold
+locally spanned by entangled covariant vectors.
+
+Dimension of the inertial manifold.
+Distribution of angles between eigenvectors. Need to take stable eigenvectors into
+account due to nonlinearities. Kaplan-Yorke wrong by factor of two.
+Transient eigenvectors cannot have angle of zero and in fact are likely to be orthogonal
+to one another.
+
+With these linearizations we are still embedded in higher dimensions so where the blip are we.
+
+Cartography. Cover the inertial manifold with a set of flat charts/tiles. The tiles determine
+when you need to switch your maps.
+
+Computing Floquet vectors of periodic orbits to machine
+precision.
+
+From periodic Schur decomposition, 8 modes are entangled, the rest are transient.
+
+Believed that this is only necessary to do for one periodic orbit, as this
+computation done for 500 periodic orbits all provided the same number of entangled
+modes.
+
+The more honest answer to Laurette. Take the first n eigenvectors, defines linear space,
+find complement to that space, find the angle between those two spaces.
+
+When you do not have enough eigenvectors to span the neighborhood of periodic orbit
+then the angles of ergodic trajectories will not be small as you will be "poking" out.
+
+inertial manifold spanned locally by entangled covariant vectors, tangent to unstable/stable
+manifolds. The rest is transient.
+\end{description}
+}
+
+\MNGpost{2017-1-11}{:
+\begin{description}
+\item[coding]
+Small amount of work put into spatial {\descent} code but most of the evening was used chatting
+with people over dinner at KITP residence.
+\item[K. Julien Talk]
+\textit{Quasigeostrophic investigations of non-hydrostatic, stably-stratified and rapidly rotating flows}
+\HREF{http://online.kitp.ucsb.edu/online/transturb-c17/julien/}{(video)}.
+Motivations are strong system rotation and stable density stratification characterize many geophysical flows.
+Rossby and Froude numbers much less than unity.
+Large spatial size leads to normal mode analysis, eddy dynamics on different
+scale than gravity waves and coriolis terms(Related to Froude and Rossby number respectively).
+Classical QG equations.
+Scale of the forcing leads to either inverse energy cascade or direct enstrophy cascade.
+
+With Froude order unity get columnal waves. Try to get reduced equations as these things are hard
+to resolve due to aspect ratio.
+
+This leads to non-dimensional Boussinesq Equations, which in turn with assumptions about
+scale lead to non-hydrostatic quasi-geostrophic equations.
+Results simulation results in large scale barotropic modes. To explain the layering
+of the solutions to some of the simulations.
+
+\item[N. Constantinou Talk]
+\textit{Understanding self-organization in turbulent flows by studying the statistical state dynamics}
+\HREF{http://online.kitp.ucsb.edu/online/transturb-c17/constantinou/}{(video)}.
+Long streaky structures in boundary layer turbulence of the Earth.
+Claims.
+"Underlying dynamics of structure formation lies in the interaction of turbulent eddies with
+mean flows"
+"Often structure formation only has analytic expressions in statistical state dynamics"
+"Because of the first claim, a second-order closure of SSD is often adequate"
+
+Introduction to SSD.
+\begin{enumerate}
+\item Split into mean + eddy terms
+\item Form hierarchy of same-time statistical moments/cumulants
+\item Find how each of the moments/cumulants evolve
+\item Throw away everything above second order (S3T)
+\end{enumerate}
+
+"By studying the dynamics of the statistics, new phenomena arise that are not present or
+obscured in single flow realizations."
+
+How does a state with no mean flow become unstable? Perturbations produce Reynolds
+stresses that reinforces the perturbation. Applies to 2d as well as 3d.
+
+Find eigenvalues and eigenfunctions and then plug into dynamics.
+
+\item[K. Deguchi]
+\textit{The high-Reynolds number limit of self-sustained magnetohydrodynamic dynamos}
+\HREF{http://online.kitp.ucsb.edu/online/transturb-c17/deguchi/}{(video)}.
+MHD dynamo introduction, exchange kinetic and magnetic energy.
+Applying nonlinear analysis of subcritical shear flows to MHD dynamos. Zero
+net flux implies purely driven by shear.
+Asymptotic expansion in inverse Reynolds number. Stretching coordinate and matching.
+
+Self-consistent asymptotic analysis
+Many different ways to handle the order the leading powers of asymptotic expansion.
+
+Vortex-wave interaction, self-sustaining process theories for the driving mechanism
+of streamwise vortices. Explanation of these processes.
+
+Using MHD equations with Hall term.
+Derive a wave equation, produce Alfven wave.
+
+Stress jump in roll component, Resonant Absorption Theory.
+
+Lots of really long equations, with the effect of system rotation and linear instability following as analysis.
+\item[J. Klewicki Talk]
+\textit{Invariant representation of mean inertia provides a theoretical basis for the log law in turbulent boundary layers}
+\HREF{http://online.kitp.ucsb.edu/online/transturb-c17/klewicki/}{(video)}.
+High Reynolds number boundary layers. Logarithmic mean velocity profile. Von K\`arm\`an constant.
+
+Open question for logarithmic dependence in boundary layers not
+well understood.
+
+Rationalizing the log law. Prandtl
+derivation (distance from the wall scaling hypothesis).
+
+Looking for invariant formulation (coordinate independent) version of equation that we can solve to get log law.
+
+Rescaling equations when viscous, pressure gradient, turbulent inertial forces are all of same order leads to invariant representation in this layer.
+
+Taken equations of motion, used similarity for closure, rescaled them in a way such that you get a nonlinear equation that you can integrate to get a log-law.
+
+Apply similar transformation for boundary layers after finding that one of the terms is constant.
+\end{description}
+}
+
+\MNGpost{2017-1-12}{:
+\begin{description}
+\item[spatial {\descent}]
+Worked on code a slight bit more in between talks.
+\item[B. Mckeon Talk]
+\textit{Self-similarity in the resolvent model: Linear response and nonlinear interactions}
+\HREF{http://online.kitp.ucsb.edu/online/transturb-c17/mckeon/}{(video)}.
+Summary of resolvent analysis, expansions around mean such that nonlinearity all
+contained in one term.
+Resolvent operator transports, singular values.
+Randomized scheme because resolvent operator is very low rank in regime of turbulence,
+i.e. only few singular values from decomposition are required. Low rank
+related to critical layers.
+
+Discussion about the shapes of these resolvent modes, regions of different behaviors
+based on wave speed. Wave speed localizes reponse of resolvent operator. Low wave
+speed implies that all resolvent modes are "attached" to the wall, then an
+intermediate region, then a region of wave speed values such that all modes
+are "detached".
+
+Dynamics dictated by when wave speed is equal to local turbulent mean, that is to say these
+are the values that result in physical behaviors.
+
+In the inner regions the singular values "do all of the hard work".
+
+Required that U-c should be scalable in y for geometric self-similarity, shows after scaling
+that.
+Self similarity related to attached eddy ideas of Townsend et al.
+Shows similar results for broadband forcing.
+
+Nonlinear interacting hierarchies, interaction of triatically consistent modes allows
+for excitation of another set?
+
+Everything seems predicated on knowing the mean, or giving a good guess for the mean based
+on experiment rather than a priori knowledge.
+\item[M. Jovanovi\'c]
+\textit{Color of Turbulence}
+\HREF{http://online.kitp.ucsb.edu/online/transturb-c17/jovanovic/}{(video)}.
+Spatiotemporal spectrum of stochastic forcing. Using linear navier-stokes equations with
+stochastic input, linearized around the turbulent mean.
+
+"Can I choose stochastic input based on spectrum such that linear dynamics produce correct
+statistical information"
+
+Proposed approach: view second-order statistics as data for an inverse problem. His contribution
+is a principled way of turbulence model as an inverse problem.
+
+A good way of getting insight is to look at how quantities are scaled into observable
+quantities that we care about.
+
+Stochastic forcing that is white in time and $y$, harmonic in $x,z$.
+
+Linear equations can capture coherent structures.
+
+Using Lyapunov equation propagates white correlation of sources into colored statistics
+of coordinates, using spatial covariance matrix. $AX+ XA* = -BWB$.
+If W positive definite, then X positive semi-definite, but converse not true.
+Colored in time $AX +XA* = -(BH +HB*)$
+
+Convex optimization problem.
+
+White-noise too restrictive, cannot reproduce dns with whit in time forcing.
+Suprising: quality of completion of incomplete data, retrieving matrix structure.
+Without keeping physics in the mix, you would get complete garbage.
+
+\item[A. Sharma Talk]
+\textit{Resolvent Modes and invariant solutions}
+\HREF{http://online.kitp.ucsb.edu/online/transturb-c17/sharma/}({video)}
+Using resolvent modes to find new invariant solutions of Navier-Stokes.
+Linearization about the mean (w=0) mode. leads to equation relating
+second order terms to u.
+Nonlinear terms are exciting the mean,invert (explanation of resolvent operator equation)
+$(wI -L)^-1$. Resolvent is well approximated via projection, use SVD to give a basis.
+
+To fix the coefficients properly is a quadratic optimisation problem of an algebraic
+equation.
+Hopefully resolvent mode analysis is representative of the effect of invariant
+solutions on {\statesp} and the low dimensionality of said solutions.
+
+Showing actual solutions to pipe flow and their projections onto small number
+of modes and comparison.
+
+using mean flow of solutions, "at that point in {\statesp}"....this isn't right is it?
+
+Projection of upper branch solution looks like lower branch counterpart. If you put
+upper branch projection and search for solution, looks like equilibria.
+
+Using a project-and-search algorithm (project onto resolvent modes, then use Newton-Krylov).
+Dissipation continuations graphs.
+
+\item[Clancy Rowley]
+\HREF{http://online.kitp.ucsb.edu/online/transturb17/rowley}{(video)}.
+\textit{Data-driven methods for identifying nonlinear models of fluid flows}
+Dynamic Mode Decomposition, Koopman Operator, data approximating Koopman.
+
+Eigenfunctions of the Koopman operator determine coordinates in which a system
+evolves linearly.
+
+If U has enough eigenfunctions so that we can reconstruct
+the state x from the values of the eigenfunctions then
+there is a coordinate change in which the dynamics is linear.
+
+Data-driven inner product.
+Subspace S spanned by a set of observables
+Projection Theorem
+Approximate Koopman operator by projection onto the subspace S.
+
+Numerical method that is obtained is the same as DMD, but will
+be able to say more about correspondence about Koopman operator and DMD.
+
+The data driven inner product converges to normal L2 norm in limit of large
+numbers.
+Create subspace spanned by n observables, define projection operator.
+
+Theorem(Data-Driven Projetion)
+Let A = X+X then for any $v \in \mathcal{C}^n$ then
+PU F(v)= F(Av), that is A is the matrix representation of the projection of Koopman.
+
+Turns out this matrix, A, is identical to matrix computed in EDMD. (Extended
+Dynamic Mode Decomposition).
+
+What if there is an eigenfunction that is in subspace S, then this method
+is able to find it.
+
+If subspace is invariant under U. If v is eigenfunction of A, then $\phi$ is
+an eigenfunction of u, with $\phi = F(v)$.
+
+Hard to actually check if S is invariant under U.
+
+Choice of observables to determine the basis is nontrivial.
+
+Using this model with POD modes and comparison to Galerkin truncation
+of Fourier modes. Works much better than Galerkin when white noise
+introduced.
+
+\item[M. Green Talk]
+\textit{Tracking coherent structures in massive-separated and turbulent flows}
+\HREF{http://online.kitp.ucsb.edu/online/transturb-c17/green/}{(video)}.
+pFTLE and nFTLE: finite time Lyapunov exponents. (positive and negative time).
+This is a field that is used to differentiate between dynamically distinct
+regions. Negative time FTLE is where fluid is attracted in forward time.
+
+What can we do with this information about these ridges? Non-parallel
+intersections interesting. Saddle-like behavior of these intersections.
+
+Intersection starts on cylinder and seems to track vortices.
+Extracting physics from the distances of vortex core and cylinder, etc.
+
+Can tie vortex shedding to the dynamics of the saddle point.
+
+Can you track similar coherent structures in 3D turbulence?
+Subsequent vortex generation can be tracked by additional saddle
+generation.
+
+Tracking material transport that will be involved in secondary hairpin
+generation, drawn up from the wall.
+
+nFTLE, pFTLE surfaces calculated in channel flow. Projected onto 2-d plane,
+used PIV program to calculate average velocity of saddle points correlations
+Comparison to velocity profiles, slower than mean in bulk, faster than mean
+near walls. Similar to perturbation profile of ...
+
+Can we use these saddle tracking methods to follow coherent structures in 3d?
+not so simple because they actually live on 2d surfaces.
+Large amounts of velocity data needed but it's really hard to mess up the general
+direction of unstable/stable manifolds of these structures.
+
+\item[Y. Hwang Talk]
+\textit{Self-sustaining attached eddies in wall-bounded turbulence}
+\HREF{http://online.kitp.ucsb.edu/online/transturb-c17/hwang/}{(video)}.
+Attached Eddy Hypothesis, Townsend. Viscous layer, buffer layer, Log region (scales with wall),
+wake region.
+Linear spanwise length scale growth is intimately related to the log region scaling.
+Isolating motions at given spanwise length scale growth, filter out larger scaling,
+damping out smaller structures. Smagorinsky scale damping.
+
+Showing self-sustaining process of attached eddies with correlation functions.
+
+"real" part of the talk. Pressure fluctuation generated by nonlinear feeding processes
+of vortices.
+Showing length scale of streamwise vortices is the same as the length scale of pressure
+off of the wall.
+
+Both rapid and slow pressure is generated in streamwise wavy structures. Rapid
+pressure is mediating the lift-up effects which controls the generation of
+streaks from streamwise vortices.
+
+Slow pressure generation is dominated by streamwise vortical structure.
+
+Skin-friction generation. Not generated by singular structure at a given
+length scale. Everyone is important at high Reynolds number.
+
+Three methods for skin-friction, identifying size of structures responsible.
+Using Fukugata-Iwamoto-Kasagi identity. Only include structures up to given length scale,
+artificial damping of large structures.
+
+FIK say that large scale structures contribute the most to skin-friction. Getting
+rid of largest structures doesn't reduce drag that much, it's actually disposing
+of log-region scale structures that will reduce drag the most.
+
+Supressing the lift-up reduces drag.
+
+Upper branch is more related to large scale structures.
+
+\item[E. Knobloch]
+\textit{A nonlinear model of noise-sustained structure in subcritical systems}
+\HREF{http://online.kitp.ucsb.edu/online/transturb-c17/knobloch/}{(video)}.
+Lots of interesting things happen when you diverge from periodic boundary conditions.
+Changes convective instability to absolute instability. Convective instability
+is things that grow and are then advected with the flow, other stability
+is things that grow in place and fill the domain.
+
+Complex-Ginzburg Landau. For range of bif. parameter things are convectively
+unstable, and outside this region structures are absolutely unstable.
+
+Study the model problem that has the same dichotomy.
+Bifurcation diagram with different amplitudes of disturbances.
+
+%Look at this slide in more depth
+Scale the equations in limit of large advection, use Li\'enard transformation
+to change the problem to a BVP.
+Spatial van der Pol oscillator.
+
+The coincidence of the two manifolds results in an "orbit flip bifurcation".
+
+Talking about the front location, originally "found" using phase diagrams,
+then looking at inlet perturbations eta and seeing how the location of the
+front changes.
+
+"the observed sensitivity finds a natural explanation in the
+presence of canard segments on solutions of the spatial BVP
+for the steady states of the model. These results are obtained by
+recasting the mode as a slow-fast system in space and focusing on its steady states subject to
+
+Even very small changes to inlet boundary conditions have a huge effect.
+
+\item{S. Zammert}
+\textit{Coherent structures in boundary layers in the quasilinear approximation}
+\HREF{http://online.kitp.ucsb.edu/online/transturb-c17/zammert/}{(video)}.
+Exact solutions with smaller scales or multiple scales.
+Rescale coherent structure with factor $\lambda$ and plug back into Navier stokes and find
+that this is related to scale factor $\lambda$ at $Reynolds / \lambda^2$.
+With this scaling, coherent structures of multiple scales can coexist, creating a hierarchy of scaled
+solutions.
+
+Lower branch solutions only. Wall normal localization gets lost.
+Method also works for localized solutions.
+Apply rescaling procedure to axes of wall-normal localization leads to results that are
+completely self-similar.
+
+Linear stability analysis, stablity eigenvalues, have same
+self-similar spectrum, therefore
+can use larger structures at lower reynolds numbers to do
+analysis at higher reynolds numbers.
+
+Quasilinear approximation, split into spanwise and no-spanwise variation.
+Define projection operators s.t. you get either of these.
+Nonlinear term split into parts, some discarded
+others kept. $(u2 \cdot \nabla )u1 + p1 (u2 \cdot \nabla) u2$
+discard part that effects mean flow.
+
+Much simpler dynamics in quasilinear approximation, attracting state in this approx is
+always steady.
+Qualitatively the profiles of the nonlinear, quasilinear cases are similar.
+Profiles scale in the same way that solutions did.
+
+How turbulent mean profiles are related to exact coherent solutions.
+Bifurcations of quasilinear states, what's going on?
+
+The amplitudes of modes vs. reynolds number, decrease quite rapidly at low re, but
+dip then plateau at higher Re.
+Whenever a new mode becomes active, bifurcations of quasilinear.
+
+Look at how new modes contribute to profile. Modes do not interact, turn off
+certain modes as way of initializing initial condition for ECS search.
+Low mode numbers lead to linear profiles in the bulk and high contribute to
+boundary layer.
+
+Continuation to nonlinear system. Homotopy introduced such that the parameter
+equal to one are ECS in quasilinear, 0 equal to ECS in nonlinear.
+
+In order to synthesize turbulence, you need constant energy scaling.
+\end{description}
+}
+
+\MNGpost{2017-1-13}{:
+\begin{description}
+\item[L. Tuckerman Talk]
+\textit{Transition to turbulence in Waleffe and Kolmogorovian flows}
+\HREF{http://online.kitp.ucsb.edu/online/transturb-c17/tuckerman/}{(video)}.
+Taking quasi-turbulent (no kolmogorov scaling) and quasi-laminar flow to larger scale domain.
+
+Using coupled map lattice to analyze
+structures on this large domain.
+
+Are results from coupled map lattice
+continuous? Turbulence fraction
+graphs have same slope on log-log
+plot as directed percolation.
+
+Shows how large domains are necessary
+to pick up on structures.
+
+\textbf{Waleffe Flow}
+Reproduces interior of Plane-Couette
+well by having sinusoidal body force
+and free-slip boundary conditions.
+
+Truncated Waleffe flow results in
+system of seven PDEs.
+
+Simulations find that transition is continuous, shares same critical
+exponent.
+
+Directed Percolation is the basis
+of these exponents, although
+never truly realized in physical
+systems.
+
+Can be classified by three independent
+exponents, turbulent fraction, laminar
+gaps in time, laminar gaps in space.
+
+(turbulent and laminar taking the role
+which is normally discussed as excited
+and unexcited in directed percolation).
+
+Streamwise spatial gaps do not agree.
+
+\item[B. Hof Talk]
+\textit{Transition to turbulence in channel flow}
+\HREF{http://online.kitp.ucsb.edu/online/transturb-c17/hof/}{(video)}.
+Stripes present in channel flow.
+
+Edge-tracking of tilted domain (tilted so that stripes are
+perpendicular to domain boundaries). Using Newton method
+to converge the solution.
+
+Lower branch bifurcates into RPO solution which becomes the
+new edge state, followed to upper branch.
+Following shows more bifuracations and then a boundary crisis, this scenario
+gives rise to transient striped patterns.
+
+Might be able to find in experiment as it is a stable RPO,
+but would need a localized version without periodic boundary conditions.
+
+There is an angular dependence of the
+bifurcation diagram (angle of tilted domain). 45 degrees seems optimal.
+
+Transient stripes and puffs to sustained. Time scales are very long
+and very important because turbulent
+fraction continues to climb as system
+is evolved.
+
+Memoryless process of pipe flow puffs
+lead to measuring characteristic life
+time. Growing more than decay is being
+used as a indirect method of characterizing the critical Reynolds
+number at which sustained turbulence occurs ($Re_c \approx 2040$).
+
+$Re = 2020$ the turbulent fraction goes
+the zero after a large number of advective time units,
+while at $Re = 2060$ there appears to be a statistical
+steady state w.r.t. turbulent fraction.
+
+Using a directed percolation analogy,
+discrete model based on lifetime and splitting statistics, but cannot get
+critical exponents because interactions
+are not taken into consideration in model. When interactions are taken
+into account, the percolation exponent comes out.
+
+\item[B. Eckhardt Talk]
+\textit{Dynamical systems analysis of transition in boundary layer flows}
+\HREF{http://online.kitp.ucsb.edu/online/transturb-c17/eckhardt/}{(video)}.
+Looking at spatiotemporal development of flow downstream from a thin plate.
+
+Five main spatial behaviors of flow, arranged in a streamwise fashion:
+\begin{itemize}
+\item free-stream turbulence
+\item streak growth
+\item breakdown into turbulent spots or nucleation.
+\item spatio-temporal intermittency (spots spreading and merging)
+\item turbulent boundary layer
+\end{itemize}
+
+Localized edge-state that produces secondary structures. It's difficult to
+access asymptotic dynamics because there is spatial development.
+
+This is complicated, so instead apply
+suction such that the developing boundary layer is translationally
+invariant. Then can look at asymptotic
+suction boundary layer. It is linearly
+stable up to $Re_c = 54370$, but goes
+turbulent with bypass transition at
+much smaller $Re = 270$.
+
+In short-wide domains, edge states evolved in time go through a
+process that results in spatial translation; can
+relate to self-sustaining mechanism.
+
+Can development multiple edge states the move left, right, oscillate,
+and move erratically when tuning parameters.
+
+Can compare edge states and nucleation events. When starting with an initial
+random perturbation field, there is a transient period where perturbations decay,
+leading to streak growth. Before
+the streaks transition into turbulence via nucleation events,
+look at the streak structure. These spatiotemporal
+structures are similar in width, strength, and sinuous instability
+ wavelength to the edge states found previously.
+
+Looking at random initial conditions
+in a {\statesp} view. The energies of velocity components of
+initial conditions come close to those of
+edge states and then are either ejected
+towards turbulent behavior, or cross the edge states and decay.
+
+Measuring "intermittency factor" which
+seems identical to Tuckerman's "turbulent fraction" from directed
+percolation.
+
+The nucleation model in conjunction
+wth the probabilistic cellular
+automaton gives a good description
+of bypass transition.
+\end{description}
+}
+
+\MNGpost{2016-1-14}{:
+Looking at Lan's directory, I was able to find what I believe is the period
+of $\overline{01}$ orbit to six decimal digits, $T_{\overline{01}} = (25.6356)82$
+which conflicts with my value of $T_p = 25.635484$
+
+Spent some time learning c++.
+}H
+
+\MNGpost{2017-1-16}{:
+\begin{description}
+\item[G. Falkovich Talk]
+\textit{Interaction between mean flow and turbulence}
+\HREF{http://online.kitp.ucsb.edu/online/transturb17/falkovich/}{(video)}.
+Isotropic homogeneous turbulence is basically nonsense because
+it discards interactions.
+
+Has a localized edge, so it leaves a wake, edge has asymptotic behavior.
+Drag coefficient goes to constant as Re goes to infinity.
+Friction factor for pipe flows scales like 1/Log(Re) as Re goes to infinity.
+
+Cannot describe turbulence generated by a flow, so instead try to describe a
+flow generated by turbulence. How to predict a glow generated by an inverse
+cascade in two dimensions.
+
+How? Set the small scale forcing, change the geometry to change the flow.
+
+Guiding principle to guess is to guess that it occupies the lowest available
+wavenumber.
+
+In a box with symmetry, expect dipole or large central vortex with four small
+counter rotating vortices at the corners. If discarding symmetry expect
+flow along long direction.
+
+Two-dimensional turbulence, including forcing and friction. Condition
+for a strong mean flow estimated by kolmogorov factor.
+$\epsilon^{-1/3}L^{2/3} \alpha << 1$. Epsilon is total net force.
+
+This friction is not viscous friction, for example its set by the layer
+of lubricant \`a la Schatz.
+
+Two-dimensional vortex sustained by small-scale forcing.
+J Laurie et al PRL 2014.
+Radial forcing generalization Frishman and Falkovich, unpublished.
+Next step is describing correlation functions of turbulence,
+long calculation, resulting in expression for pressure
+as a function of radius.
+
+Prediction that first harmonic is independent of radius.
+Graphs of mean flow and momentum flux quantities vs. r showing
+valid region of theory.
+
+Numerical modeling in a box with no-slip boundary
+Clear symmetry breaking, vortices have direction. Takes many turnover
+times to see behavior.
+
+Inverse cascade on a sphere, non-rotating.
+Same procedure as before, argument for neglecting large velocity, pressure
+correlation terms, leading to a new closed equation on the momentum flux.
+
+Can we have a plane flow out of a two-dimensional turbulence with
+forcing and friction? Aspect not equal to one, argument of lowest
+wavenumber makes jets, not vortices.
+
+Inverse cascade on a torus. Starting with aspect ratio one, have vortices,
+changing the aspect ratio produces jets, but vortices remain.
+
+Long time means restore translational invariance that is broken on small
+time scales.
+
+Lowering friction increases the number of vortices.
+Radius of curvature going to zero is very interesting limiting case.
+
+Inverse cascade and vortices in compressible 2d turbulence.
+Compression creates shock waves which dissipate energy on small scales.
+Use of shallow water equations for the density fluctuations, density
+equated to height.
+Viscosity is an irrelevant perturbation in regards to large vortices
+and or inverse cascade.
+
+\item[D. Lecoanet: Introduction to Dedalus]
+\HREF{http://online.kitp.ucsb.edu/online/transturb17/lecoanet/}{(video)}.
+Pseudo-spectral, open-source, python code. Enter equations as strings.
+Hard to install, otherwise easy to use.
+
+Great for equations that do not have specific optimized
+implementations (e.g. asymptotic equations) and data analysis.
+
+Can solve reduced model equations to verify their accuracy.
+
+Example problems: Burgers equation, Kelvin-Helmholtz instability.
+
+Initial value problem, need equations, domain, timestepping scheme.
+
+Goes into Solver variable, which gives a state and integrator, and fields.
+
+Implicit, explicit time stepped. Implicit on LHS of equality, explicit
+on RHS of equality. i.e. linear terms on LHS and nonlinear on RHS.
+
+Restricted to Fourier and Chebyshev bases, only allowed one Chebyshev basis
+at the moment.
+
+Can have non-constant coefficients for Chebyshev but not Fourier bases.
+
+\item[Channelflow]
+Got the basics of c++ down, going through Channelflow scripts and documentation to understand
+what each of them do in detail.
+\item[reading]
+Reading and rereading \refref{DingCvit14} to understand the process employed for \KSe. Filling
+in gaps with \refref{Trefethen97} as I see fit.
+\item[misc]
+Rewatched S. Tobias' talk as review and transcribed notes for it.
+
+\end{description}
+}
+
+\MNGpost{2017-1-17}{:
+\begin{description}
+\item[B. Marston Talk]
+\textit{El ni\~no as a topological insulator: A surprised connection between geophysical fluid dynamics and
+quantum physics}
+\HREF{http://online.kitp.ucsb.edu/online/transturb17/marston/}{(video)}.
+Kelvin waves play key role.
+Intro to integer quantum hall effect and topological insulators.
+
+Immunity to macroscopic messiness is due to topological robustness.
+Leftward, Rightward bulk movement prevents back scattering due to
+inhomogeneities. This leads to quantum spin hall effect and topological insulators.
+Special curves of dispersion relations are the states that propagates
+along the edges of the physical object (surface states). Spin-orbit
+interactions stratifies the spin states are produce the quantum spin
+Hall effect.
+
+Dispersion relation of shallow water waves on a spherical surface,
+coriolis force switches direction at equator. Wave that propagates along
+equator is trapped. Gravity waves, Yanai waves, Kelvin waves, Rossby waves.
+
+Two layer model, behaves very differently with and without rotation. Need
+enough rotation for time-scale separation.
+
+Numerical spectrum from shallow-water simulations. shallow means wavelength
+of waves in relation to depth.
+
+Topologically protected systems, i.e coupled gyros, acoustic modes.
+Key factors of topologically insulation is gaps in dispersion relation
+other than these edge modes. Can interpret equatorial divide as the edge
+modes. Need to break time-reversal symmetry in part of the system.
+
+Shallow water equations on Lieb lattice. Leads to dispersion
+diagram that has bulk states, and edge states (linearly dispersing modes),
+which equal Kelvin, Yanai waves.
+
+Linearized equations of motion, leads to Chern number and Bulk-Edge correspondence.
+Parameterize eigenstates of frequency space equations (linearized), kx, ky, f
+parameterized by trigonometric functions. Multiply by phase factor to repair the
+ill-defined azimuthal coordinate at the north-pole and south-pole.
+
+Chern number comes from quantum analog, magnetic field being applied to a sphere.
+
+Plots verifying protection from obstacles, (analogous to inhomogeneities in quantum systems).
+
+Claims that Kelvin waves at ocean basin boundaries, Magneto-Rossby waves, Fluids
+with mean flows are all topologically protected. This is related to the lack
+of back scattering, but maybe this is
+related to E. knobloch's talk? only persists in convective instability regime? Or
+is this back-scattering completely unrelated to upstream growth.
+
+Protection from interactions/nonlinearities, Fractional Quantum Hall effect arises
+from strong interactions.
+
+\item[Marie Farge and Kal Schneider Talk]
+\textit{Energy dissipation caused by boundary layer instability at vanishing viscosity}
+d'Alembert's paradox, dissipative properties of vortices in wall bounded 2d flow,
+differences in navier-stokes, euler, prandtl solutions.
+
+Finite-time singularities are a candidate for explaining the dissapation rate
+at high reynolds number.
+
+Kato's theorem, navier-stokes solutions converge toward Euler solution iff
+the viscosity vanishes.
+
+Volume-penalization (pseudo-spectral). Brickman term added to Navier-Stokes
+equation that produces vorticity at the wall, and boundary layers are
+detached from the wall. What happens at the wall that makes boundary
+layers detach?
+
+Vortex dipole produces many small scall vortices from lifting the boundary
+layer off of the wall. Looking locally at the combined vortex structure,
+the dissipation of the attached vorticity layer goes to zero, but the
+detached vortex has constant dissipation. Detached vortex scales like
+$1/Re$ term, while attached vorticity layer scales like $1/Re^{1/2}$.
+
+Wall assumed solid, but there is a porosity ($1/\eta \mbox{where,} \quad \eta = permeability$) that induces
+the volume penalization term.
+
+\textit{Comparison between Navier-Stokes and Euler, Prandtl solutions.}
+Replacing no-slip with this volume-penalization term. Replacing
+spectral method (due to its order) with compact finite differences.
+The big plus is that it is applicable at higher Re numbers because
+you can take larger permeability values.
+
+Reformulate Prandtl equations to be in terms of vorticity. Only have
+viscous term in y-direction, but not in wall-normal direction. Coupling
+between Prandtl and Euler is the pressure gradient. Scaling argument
+saying that you can discard wall-normal terms, but keep wall-normal
+derivatives. Non-uniform grid that depends on time, before and
+after the boundary layer detachment.
+
+Prandtl solution finite time singularity well known, expected due
+to Kato's theorem that navier stokes converges to euler.
+
+Production of dissipative structures is the key feature of boundary layer
+detachment.
+
+In DNS the Prandtl boundary layer is used to justify the coarseness
+of numerical grids, trying to show that one needs to be careful and this
+thickness may not be the correct guiding factor. Results suggest
+that new aymptotic description of flow beyond the breakdown of the
+Prandtl regime is possible.
+
+Prandtl is great for when the boundary layer remains attached "keep it alive".
+
+$1/Re$ number scaling is wall-number scaling.
+
+Reynolds number original definition is ratio of norm of nonlinear term,
+to the norm of the linear term.
+\end{description}
+}
+\MNGpost{2017-1-19}{:
+\begin{description}
+\item[T. Schneider]
+\textit{Computing Clouds: Why turbulent coherent structures are crucial for
+predicting climate change}
+\HREF{http://online.kitp.ucsb.edu/online/transturb17/schneider/}{(video)}.
+
+Shows that equilibrium climate sensitivity is a great tool for predicting
+various quantities related to climate change. (carbon dioxide concentration, amount of total
+reflectance).
+
+Equilibrium climate sensitivity (ECS) vs. Low-cloud reflectance variations
+(normalized w.r.t. seasonal fluctuations in temperature).
+
+Most atmospheric water is vapor not in clouds.
+Clouds form where small residual of water condenses in coherent turbulent updrafts.
+
+Difficulty in these limited area simulations is that they have typically have not
+respected the energy flux balances previously, such that you get an exponential
+growth in atmospheric water vapor.
+
+PyCLES code.
+Anelastic Navier-Stokes, discontinuity capturing (WENO) advection schemes.
+
+Every climate model has three subscale schemes. Deep convection, shallow convection,
+boundary layer turbulence. Parametric and structual discontinuities for processes with
+common limits.
+
+Reduce number of free parameters by using adiabatically conserved variables.
+Let Coherent structures interact with the isotropic part (mean flow)? But do
+not allow coherent structures to interact with each other.
+
+New EDMF scheme, have draft equations and grid-mean equations.
+
+\item[Koopman Coalition]
+There is a connection between Koopman and using periodic orbits to
+compute manifolds. How can we go beyond doing simulations and
+looking at good modes?
+
+Hyperbolic objects as opposed to attracting sets? Can we use
+this for transient.
+
+How to tame the continuous spectrum, in order to not just
+do point spectrum, need Colm's input and need
+functional space to be "correct" somehow.
+
+\textit{Transition to turbulence: highway through the edge of chaos is charted
+by Koopman modes}
+Plane-couette flow: potential to be turbulent, what is the minimal energy state
+and its structure that allows you to transition to turbulence.
+Shortest distance to the edge manifold (energy norm). Follow edge state's stable
+manifold and then get ejected to turbulence by unstable manifold.
+
+Can do Koopman analysis around plateau of energy of perturbations, specifically
+around the GMRES residual minimum. The point is to do the Koopman analysis
+around the edge state.
+
+The structure at this instant can almost completely be described by three modes.
+
+Least-squares fitting of the amplitudes of modes that best reproduce the structure
+of original structure.
+
+The three modes that best describe the state are labeled "growth, neutral and decaying".
+The neutral mode mataches the GMRES solution of the edge state, the growing mode
+matches relatively well the evolution in time of DNS. The decaying mode matches simulation
+backwards in time.
+
+Minimal seeding accomplished by adjoint looping, look to Rich Kerswell papers for info.
+Can accomplish the same with edge tracking.
+
+Pick up a lot of continuous spectrum in different time segments because you're in the
+basin of attraction of something else.
+
+Can use pullbacks to linearize anywhere on basin of attraction. How do you expand
+about the edge state as it isn't an attractor.
+
+For saddles, define Koopman eigenfunctions about the saddle, can continue it as a strip
+about the manifold via the dynamics. This foliation produces a distribution.
+Can define bouncing between invariant solutions via the Koopman analysis.
+
+Exponentials give rigorous expansion when dealing with autonomous system. Koopman
+is non-normal in dissipative flows.
+
+\item[M. Farge Talk]
+Introduction by L. Tuckerman:
+L' \'economie 101, inelasticity of journal prices.
+
+Journals aren't evil, well, some are.
+\HREF{http://dissem.in}{dessim.in}
+
+\item[misc]
+Almost done reviewing the more advanced concepts in c++
+that I'm not so familiar with.
+
+\end{description}
+}
+
+\MNGpost{2017-1-20}{:
+\begin{description}
+\item[I. Marusi\'c Talk]
+\textit{Modeling high Reynolds number wall turbulence using the attached eddy hypothesis}
+\HREF{http://online.kitp.ucsb.edu/online/transturb17/marusic/}{(video)}.
+Using data and recent discoveries to test Townsend's attached eddy hypothesis.
+
+Description of different regions of wall bounded flow, viscous region close to wall and
+log-region and beyond where attached eddy models are defined (viscous not leading order).
+
+Demonstrating that log region dominates at high $Re$.
+Quotes from Townsend 1976. Perry and Chong (1982) claim that hierarchy or structures
+lead to equations and log dependence of mean flow.
+
+Inviscid structures can be predicted by inviscid equations, of course expect them to be invariant.
+Continuous hierarchy of scales.
+Geometric progression of scales. Telephone poles and dead cats attached to horizon.
+Flip, shear, and squint and it looks like boundary layer.
+
+"Are attached eddies real or just a statistical construct?"
+Interpretation of eddies is energy contributing structures, organized
+motion that contributes to kinetic energy. Contributions
+to vorticity from attached eddies only give the mean, which is a very small
+contribution.
+
+Thinks that instead of looking at energy and enstrophy should look at instantaneous
+changes in velocity fields. Thinks of logarithmic layer as stair case that jitters around
+a line. Organized velocity fields that have vorticity associated with them but do not
+contribute to the enstrophy.
+
+Count the number of realizations of momentum zones, average over Reynolds number. The number
+of momentum zones follows logarithmic growth.
+
+Take hierarchical approach, keep dividing by scale factor and rescale velocities of demarcated
+structure, randomly scatter them about and look at mean velocity field. Get logarithmic
+scaling of the number of momentum zones that agree with DNS, claim that the requirement
+is that the objects are self-similar.
+
+Looking at spatial statistics, central limit theorem, poisson statistics, definitions of
+moments and cumulants.
+
+Any statistic with a wall-normal part, no logarithm. No wall-normal part means logarithm.
+Correlation statistics asymptotically approach Gaussian distribution in limit of high $Re$,
+much like Poisson statistics.
+
+Problems arise from treating everything as point processes that have no spatial exclusion
+with hierarchical structures of different scales.
+
+\item[J. Jimenez]
+\textit{Can we see coherent structures in wall-bounded turbulence?}
+\HREF{http://online.kitp.ucsb.edu/online/transturb17/jimenez/}{(video)}.
+Can we relate turbulence structures to coherent structures that people have found?
+Structures to javier are autonomous identities that determine their futures.
+
+Even if most of the flow may be structureless, it's important to identify key structures
+because they are useful. (Seeing a storm cloud, even an isolated one, means you should bring an umbrella).
+
+Javier's requirements:
+\begin{itemize}
+\item Strength (Stronger than background)
+\item Observable
+\item Relevant
+\item Either: Energy production or sink, or energy repository.
+\end{itemize}
+
+Using joint pdf (pdf in two variables) can find important structures by quadrant analysis.
+How does one look for these things? Need to look at where things are of comparable scale.
+You do not want to mix energy and vorticity. How do you separate energy and dissipation or vorticity.
+
+Energy produced by eddies has to be coupled by the shear. Corrsin parameter.
+There is a characteristic time, nonlinear eddy turnover time, and shear deformation time.
+Corrsin parameter is the ratio of turnover time to shear deformation time. Shear dominated,
+means "linear" energy input. Corrsin parameter of order unity is "the playground" and of
+very small means shear independence, nonlinear, no energy input.
+
+Near wall, reynolds stresses small so has to be carried by shear.
+By looking at phase velocity of velocity field, minimizing a wave equation relation
+you can get phase velocity of individual Fourier components which corresponds to different
+distances from the wall.
+
+Stratification of spectra of different components of phase velocity
+are similar when subsets of scales are viewed.
+Can plot the scaled derivatives with respect to distance to the wall to decompose into
+structural regions, from regions of large and small scale structures to transient areas.
+
+Small scale structures have to do intimately with the near-wall viscous region, large scales
+are linked to the bulk phase velocity, log layer is the transient regions.
+
+Looking down (spanwise streamwise representation) can get the energy contained in a small
+subsection that represents the energy contained in the viscous spectral subregion, and then plotting
+vs. the wall normal coordinate leads to a maximum velocity intensity of 11.
+
+Doing the same with the large-scale region, agrees quite well with highest POD mode of the velocity.
+i.e. the phase velocity.
+
+Linear transient growth analysis of the flow yields the same result.
+Doing the same with logarithmic layer gives good agreement with the mean profile and the advection
+velocity, as well as the phase velocity profile as a function of wall normal coordinate.
+
+Things are similiar in the log layer but outside of this the large structures are not self-similar
+when you get to the scale of the channel.
+
+Structures bursting. Measured by quick changes in energy production and dissipation, has nothing to
+to with the wall.
+
+A theory for tilting things, Linearised Orr-Sommerfeld equation (inviscid Orr).
+As the tilting angle changes continuously, get build up of the wall-normal component of the velocity.
+
+Video demonstrating the connection between tilting and growth of wall
+normal velocity component.
+\end{description}
+}
+
+\MNGpost{2017-01-23}{:
+\begin{description}
+\item[G. Chini Talk]
+\textit{An asymptotic theory for coupled uniform momentum zones
+and vortical fissures in turbulent wall flows}
+\HREF{http://online.kitp.ucsb.edu/online/transturb17/chini2/}{(video)}.
+What is the role of invariant solutions in the limit of very large $Re_{\tau}$
+Lower branch states seem to be important for transitional turbulence.
+Might be able to explain near-wall coherence by these invariant solutions
+because they only see a moderate effective $Re_{\tau}$.
+
+Far from the wall, quasi-coherent motions with streamwise length scales approximately
+5-15h are observed at high $Re_{\tau}$. Are these associated with ECS?
+
+Hwang and Cossu say yes, with their Smagorinsky constant continuation, others who
+claim that large scales come by via small scale hairpin vortex trains advected by
+the flow.
+
+Reference to instantaneous velocity profiles of Marusi\'c, decomposition into
+uniform momentum zones and vortical fissures.
+
+Can invariant solutions explain these instantaneous velocity profiles near the
+wall?
+
+Implications of mean momentum balance analysis. Long-time averaged x-momentum equation
+has mean viscous term, turbulent inertia term (gradient of Reynolds
+stress), and pressure gradient term.
+
+The claim is that the momentum zone jumps correspond to regions of vorticity, or
+vortical fissures.
+
+Want to construct invariant solutions that somehow explain these momentum zones and
+velocity profiles.
+
+Tracking the lower branch solution to high Reynolds number, and it also converges
+to solution of Vortex-Wave Interaction equations. Looking at Fourier analysis
+and scalings of different Fourier modes.
+
+When looking at the streamwise averaged streamwise momentum equation using VWI
+scalings you get an effective Reynolds number felt by mean flow is order unity.
+
+Asymptotic analyses of do not show sharp gradients of the rolls and streaks.
+
+Reynolds number continuation of upper branch states leads to converges to lower
+branch scaling.
+
+Wants an invariant solution whose mean flow looks like instantaneous profiles.
+They get more and more unstable directions but also get more isolated.
+Reference to Clancy Rowley's previous work into scaling with symmetries involved,
+but cannot do this with mean values.
+
+Do local analysis of vortical fissures, with periodic boundary conditions.
+Does Navier-Stokes admit a solution like this? Decompose into mean and fluctuation
+term. Two different time scales. Why not two spatial scales? There could be but
+for here there is not.
+
+Mean-flows are isolated points in {\statesp} that mean nothing in terms of the dynamics.
+Streamwise fluctuations are not of order $u_{\tau}$, thinks that this implies that there
+should be discontinuities in the mean flow.
+
+Dennice: There's a physical reason why it's ok to do this, looking at streamwise vortices,
+so it seems that it might be ok to average in the streamwise direction to produce a mean
+because these vortices are only z and y dependent??
+
+Assume that the scaling of the average is s.t. the mean scales with inverse Reynolds, but
+not as strongly as $1/Re$. Employ two-timing, Parse Navier-Stokes into mean and fluctuation equations.
+
+Reduced PDE equations for the mean, fluctuations. Fluctuation equation is quasilinear.
+This implies they admit separable and single mode (traveling wave) solutions in x. No direct
+coupling between fundamental mode and higher harmonics.
+Gradients of mean valued things are small, because of the assumption that they are smooth.
+
+Linear stability analysis of Orr-Sommerfeld to help deduce scaling arguments for fluctuation
+terms. Can do this because this is a steady state solution? It's a local, steady state solution?
+
+Reynolds stress not driving the mean-flow seen via the streamwise Fourier transformed quantities,
+of rescaled velocity components.
+
+Can restore three dimensional incompressibility because of how the critical layer scales velocities.
+Insist spanwise fluctuations drive mean flow?
+
+Get critical layer variants of mean equations and fluctuation equations.
+\item[Turbulence \`a la D. Barkley]
+A nice recap of the key concepts and ideas; didn't type down much because eating took
+priority. Key concepts: Turbulence and scaling laws, dynamical systems approach, manifolds of invariant solutions, self-sustaining
+processes, transitional turbulence, edge states, puffs, splitting of puffs and growth and decay rates, directed percolation picture.
+
+\item[Reading]
+Started through Blonigan, Wang \etal\
+papers\rf{WGBGQ13,BloWan13,BloWan15,BloWan16}. Interesting, I find
+\refref{WGBGQ13} similar to variational {\descent}. I'm not really
+sure how the spatial evolution is included, and if you look at their
+converged solutions they are seemingly on the same spatial domain size as
+the initial condition; I might just be missing something that I need to
+reread. The ability to parallelize is of course a large distinction, and
+the continuation through their advection velocity parameter is distinct
+as well.
+
+\end{description}
+}
+
+\MNGpost{2017-1-24}{:
+\begin{description}
+\item[T. Schneider]
+\textit{From turbulence transition to shell buckling}
+\HREF{http://online.kitp.ucsb.edu/online/transturb17/schneider2/}{(video)}.
+Look at when prebuckled state loses linear stability, to see when buckling occurs.
+Extreme sensitivity to inhomogeneity, imperfections.
+
+See this via thin shell structures. Studied in reality via axially
+loaded cylinders and sphere under uniform pressure.
+
+Classical approach of understanding, bifurcation diagram of shortening
+versus load parameter. Linear instability of the imperfect system,
+given imperfections can predict buckling load. Of course,
+typically imperfections are not known a priori.
+
+Instead of looking at linear instability of the imperfect system,
+look at the nonlinear finite amplitude instability of the perfect system.
+
+Characterize basin of attraction as a function of load, get unstable equilibria
+edge states in some norm, etc.
+
+Geometric nonlinearity in elastic systems.
+Displacement fields in terms of Lagrangian(fixed in material) coordinates.
+get change in distance between material points, Green-Lagrange strain tensor,
+typically nonlinear function of displacement field, usually linearized.
+
+Relation for cauchy stress tensor for isotropic Hookean material,
+relation to original coordinates?
+
+Donnell-Mushtari-Vlassov theory, for deformations of thin elastic shell.
+Find in-plane stress of mid-plane to get the nonlinear term that matters,
+which is the one who only depends on normal direction of midplane.
+
+Leads to DMV equations. Nonlinear and nonlocal equations like Navier-Stokes.
+Want to construct nonlinear equilibria on the basin boundary of the unbuckled state.
+
+Use edge-tracking. the edge state equilibrium is localized dimple on the surface.
+Do continuation in axial load parameter. Leads to shrink of depth of dimple,
+at zero the eigenmodes are not localized. Dimple pattern grows and wraps around shell.
+
+Azimuthal symmetry, impose reflection invariance, could have also imposed translational
+invariance.
+
+Very high number of modes that become unstable at the same parameter value. Increasing
+axial length induces snaking along axial direction.
+
+Finite amplitude perturbations of a shell in fluids. Taking a perfect solution and
+use perturbations that are known, much like in elastic materials.
+
+Finding edge state with claim that the force should increase, and then return to zero
+as you reach the edge-state equilibrium.
+
+\item[S. Bagheri Talk]
+\textit{Flow of non-smooth surfaces}
+\HREF{http://online.kitp.ucsb.edu/online/transturb17/bagheri/}{(video)}.
+Outline:
+\begin{itemize}
+\item Find favorable fluid-structure interaction mechanisms
+\item Effective boundary conditions induces by non-smooth surfaces
+\item Fabrication of surfaces and experiments
+\end{itemize}
+
+Fiber in cylinder wake breaks symmetry, induces lift and reduces drag.
+Filament in oscillating flow, symmetry breaking in intermediate pulsation range.
+
+Look at collection of filaments. Need to do coarse grained effective representation,
+such that the average interactions are the same.
+
+Take effective boundary conditions generated by poroelastic surface or reduce to
+porous surface. Leads to two second order tensor relations for boundary
+conditions on the velocity components taking the place of no-slip.
+
+Streamwise velocity profiles shifted up or down based on the roughness in
+the form of slip-lengths.
+
+Wall tangential velocity condition
+If structures are small, only contributions to flow are linear shear in the
+viscous layer. If the structures extended into the buffer layer, this would
+not be the case.
+
+Related to drag reduction via a skin friction coefficient equation, looks like
+dispersion relation?
+
+Wall normal velocity condition
+Permeability of interior related to boundary conditions on the interface, not
+completely intuitive.
+
+In this porous version of the equations, need to solve continuity equation
+inside the coating to account for permeability.
+
+How does one generate the two different tensors, $\mathbf{M}$ and $\mathbf{K}$.
+
+DNS of two dimensional model, with porous media. Look at streamwise velocity
+close to the interface to identify the slip. FreeFEM plus to do DNS.
+
+Use coarse grained representation to derive the same quantities.
+Take unit cell, with multiscale expansion of microscale equations.
+Solving leading order equations in unit cell, slip-length comes out. Get
+similar slip-length as DNS.
+
+Coupling porous wall boundary conditions to turbulent channel flow, seeing
+how it affects near-wall structures.
+
+Experimentally, use UV lithography on polymers to induce roughness.
+
+Inclined water table experiments. PIV measurements and comparison
+to smooth wall setup leads to a smaller velocity near the wall and
+higher velocity away from the wall (log-layer).
+
+There is a decision that needs to be made of where to decide where the "wall"
+is. Currently being taken to be the top of the filaments.
+
+Would like to use filaments as actuators and sensors once studied.
+
+\item[Channelflow]
+Began writing some code and chipping away at the checklist I wrote for myself.
+Currently trying to figure out how I'm going to numerically obtain small-time
+\jacobianMs\ in a reasonable amount of time. I've been looking through the
+Channelflow documentation as to use the resources at hand to the fullest extent.
+The main problem is that the top-level machinery is all relatively easy but
+getting into the guts is somewhat daunting considering the sheer number of
+amounts of parts. One step at a time is the name of the game. Thinking of fine-grained
+additions I can make to the checklist previously written, again, hopefully the
+organization will help in this effort.
+
+\end{description}
+}
+\MNGpost{2017-1-25}{:
+\begin{description}
+\item[M. Kiewat Brown Bag talk]
+Looking to some how get more yield out of currently unused data created
+by their simulations. Using Large eddy simulation and some other methods for
+DNS.
+
+Pressure induced drag accounts for most of the drag, but still look at vortex
+induced drag.
+
+DMD used but due to intense memory requirements. Discussion from much
+of Clancy's talk, streaming DMD missed out.
+
+\item[A. Willis Brown bag talk]
+Have \reqva\ , have dynamics so therefore have trajectory. Compose
+group orbit with shifts. Interested in association of group orbit
+members?
+
+Begin with template point on the group orbit via symmetry reduced point.
+Looking at minimal distance between subsequent time snapsnots of template?
+Slice condition $< \bar{a} - a'|t'> = 0$, locally $|| g(\theta)\bar{a} || = constant$ s.t.
+$<\bar{a}|t'>=0$. this leads to slice condition $<\bar{a}|t'> = 0$. Temporal evolution
+equivalent to shifting in space for traveling wave, so can relate.
+
+dynamics within slice using defintions of $\bar{a}$ and symmetry invariant velocity,
+$\dot{\bar{a}} = v(\bar{a}) - \dot{\theta} \bar{t}$, slice condition $<\bar{a}|\bar{t}'> =0$
+get condition for $\dot{\theta} = <v(\bar{a})|\bar{t}'>/<\bar{t}|\bar{t}'>$
+
+Complicated group orbit, get lifting out of the slice which makes the denominator
+equal to zero, which is a problem.
+
+Method of connections (not slicing)
+put $\bar{t}' = \bar{t} = t$
+Projecting out motion along the group orbit. Dynamics from $a_0$ to $a_1$, project.
+dynamics back to $a_0$, means different tangent vector so projection leads to a phase
+change such that you aren't brought back to original point, phase change is
+known as geometric phase.
+
+Principle component analysis. Reducing shift and reflect symmetry. Two clouds
+which are related to shift and reflect. Zooming in on one of the clouds and
+using Poincar\'e sections. Get ergodic clouds on Poincar\'e section, zooming
+in around dense areas get connection between period doubling by looking at manifold.
+
+\item[Excitable Media Discussion]
+\HREF{http://online.kitp.ucsb.edu/online/transturb17/excitability/}{(video)}.
+R. Grigoriev beginning. Spiral wave chaos: tiling, local symmetries, and
+asymptotic freedom. Phase singularity at spiral core.
+
+Model of cardiac dynamics, reaction-diffusion system. Karma model.
+Forget about diffusion initially by ignoring spatial properties connections between
+cells.
+
+Looking at nullclines and equilibria. Apply dynamical systems views to the problem,
+have varieties of solutions, look for periodic/relative equilibria on chaotic attractor.
+Use recurrence plot to initiate search for invariant solutions (exact coherence structures).
+Double periodicity includes symmetry operations (translation, finite rotation). Use
+minima as initial guesses for Newton-Krylov solver. Notes on symmetry and symmetry breaking,
+two dimensional planar model is better model of atria as opposed to ventricles.
+
+Some intial conditions converge to small residuals but not non-zero residuals. Why? THere
+is structure that does not disappear after certain time.
+
+\CGLe\ discussion. Split into amplitude and phase (its complex so easily done). The amplitude
+has very long time dynamics that slows down over time. Real part is fast dynamics. In amplitude
+diagram there are boundaries where the interiors each support one spiral.
+
+Use enclosed area of trajectories instead of amplitude, Can find the elapsed time from crossing a
+Poincare section instead of phase.
+
+\CGLe\ is general form for any system that goes through oscillatory instability, i.e. hopf bifurcation
+with zero wavenumber.
+
+Can describe tile boundaries analytically. Can describe dynamics by imposing Neumann boundary conditions
+at the edges of tiles. Boundaries meander after time evolution.
+
+Meandering of spiral cores is possible but not necessary. Meandering, stable, alternans type cores depending on
+parameter. in \CGLe\ the cores all have the same frequency and you would have periodic orbit.
+
+Break-up, drift, and collapse.
+Looking at the Floquet multipliers of spiral wave. Multipliers are mostly inside the unit circle in the
+complex plane but there are a few multipliers that corresponds to absolute instability. Pair of multipliers
+near the boundary of the unit circle correspond to convective instability.
+
+Anternans instability, action potential with multiple length scales. Refractory (relaxation period where it
+can not be excited). Breaking up of a plane wave into spiral waves.
+
+Looking at Stroboscopic map (time measured in periods). Get core drifting, tile deformation. In order
+to understand this, can show that periods are exponentially decaying functions of linear scale. Matching
+phase at tile boundaries, moving boundaries depending on spiral frequencies. Small tiles become larger,
+large tile become smaller. Unless tiles are all the same size, cannot have periodic solutions.
+
+Imposing boundaries break global symmetry, right eigenfunctions (goldstone modes), adjoint eigenfunctions
+are exponentially localized. Symmetry is perfect on the interior but gets fuzzy near the boundary.
+
+Midway conclusion: do not expect to find periodic solutions. On a small enough domain there is an amount
+of spatiotemporal coherence. You will never find solutions on large domains because of the lack of coherent.
+
+Dwight's work of applying oscillating field with near resonant frequency that makes them synchronize.
+
+
+\item[Channelflow]
+Looking through the programs to see what I can incorporate from what John has already written. I'm going to
+see if he has time tomorrow to talk through things.
+\end{description}
+}
+
+\MNGpost{2017-01-26}{:
+\begin{description}
+\item[M. Graham Talk]
+\HREF{http://online.kitp.ucsb.edu/online/transturb17/graham/}{(video)}.
+Model turbulent drag reduction in polymer solutions. Polymers reduce drag.
+Maxiumum drag reduction asymptote. Asymptotic curve between poiseuille limit and Prandtl-von Karman limit.
+Log-law for polymers, Virk law.
+
+Long linear polymers work best, when dissolved in water they turn into a long brownian motion like path.
+Relaxation time, time it takes to approximately diffuse its own length.
+Weissenberg number, which describes:
+Polymer chains tumble in shear flows such that they have little effect on viscosity. In extensional flows,
+polymer chains stretch, "Lagrangian chaotic velocity fields are extensional". Hyperbolic flows = extensional?
+
+Intermittent dynamics for Newtonian and moderate Weissenberg number, active and hibernating turbulence.
+Area averaged velocity profile switches between quiescent periods near Virk limit and von Karman limit.
+
+Polymer stretching generates torque which works to undo streamwise vortices.
+Estimate on polymer stress using Lyapunov exponents. Believes that active turbulence is amount of
+time that the polymer stress remains below a critical threshold.
+
+There is a family of solutions that have the property that within a certain parameter range, the
+upper branch solution is near von Karman and the lower branch is near Virk.
+
+Could do Newton searches for viscoelastic solutions but hasn't been done
+yet, edge-tracking viscoelastic has been done.
+
+At this $Re$ the hypothesis is that polymer effect is to increase the Weissenberg number, which brings
+the states closer to the edge state in some sense.
+
+Looking at spatial variation of drag, Detector functions vs. clustering methods, k-means clustering or
+Otsu's method. Once you have the regions you can do conditional averaging to get mean profiles. Mean
+profiles of these low drag regions, low-speed streaks are similar to lower branch coherent states.
+
+\item[Y. Duguet]
+\textit{Turbulent bifurcations in intermittent shear flows: From puffs to stripes}
+\HREF{http://online.kitp.ucsb.edu/online/transturb17/duguet/}{(video)}.
+Shear flows with linearly stable laminar base flows implies a possibility of sustained
+laminar turbulent coexistence. Exposition of D. Barkley's work on expanding slugs.
+
+Exposition of laminar, intermittent and turbulent regions of $Re$ scales for a variety
+of geometries.
+
+In 2D plane Couette solutions, look at 2D spectrum, there appears to be a gap in the spectrum
+so they used two Gaussian filters to look at large length scale and small length scales separately.
+
+Investigation of overhang regions (preference towards one of two channel flows at edges of puffs).
+By mass conservation, there is a constraint includes streamwise velocity deviation and spanwise velocity
+deviation w.r.t spanwise. Therefore because there is streamwise velocity variation, there must be
+spanwise velocity variation. Interfaces must have oblique growth.
+
+Why do spots organize into stripes, they also conserve mass.
+
+Homotopy with a new parameter which is the aspect ratio of spanwise to wall normal length scale,
+in this case things die out near the walls so it doensn't really help show puffs to stripes.
+
+New homotopy, based on annular pipe flow. New homotopy parameter which is the radius ratio
+in pipeflow. Relevant length unit is the cylinder gap, the difference between radii. The
+dynamical parameter is frictional Reynolds number. Even though the asymptotic limit
+is not Hagen-Poiseuille flow, want to show that the same phenomenology exists.
+
+Showing results of simulations at various values of new homotopy parameter. Changing
+from helical (oblique on unwrapped cylinder) structures to spatially localized
+puffs.
+
+Same mass budgeting as before but now in cylindrical coordinates.
+Looking at spectra of each direction. Graphs of length scales as
+functions of the homotopy parameter. Get regions of different behaviors
+of confinement. The regions are strong confinement at both walls,
+confinement only at inner wall, and no confinement.
+
+Statistics, generate PDFs after filtering. PDFs of azimuthal velocities
+and angles. Bifurcation diagrams of statistical modes (maximum of PDF).
+
+Goldenfeld hypothesized that it is crucial to think about zonal flows
+in a pipe, but Yohann thinks that they are of no statistical importance
+due to the lack of peaks in his PDFs.
+
+\item[P. Cvitanovi\'c Math Colloquium]
+
+\item[periodic eigendecomposition]
+Plan to meet to with J. Gibson tomorrow, undisclosed time based on his schedule.
+\item[Misc.]
+Listened to C. Rowley, S. Bagheri, P. Cvitanovi\'c talk about Koopman,
+singular eigenfunctions of Koopman operator.
+\end{description}
+}
+
+\MNGpost{2017-1-29}{
+\begin{description}
+\textit{Physics of puffs and slugs}
+\item[D. Barkley]
+\HREF{http://online.kitp.ucsb.edu/online/transturb17/barkley/}{(video)}.
+Main mechanism that extracts energy from mean flow is nonlinear
+interactions with velocity profile. $-\overline{uv}<u>$. Production
+exceeds dissipation at interfacial upstream edge, slightly downstream
+dissipation exceeds production, and later there is a region in equilibrium.
+
+In comoving frame, the interfacial edge moves upstream (source of confusion). Turning down Reynolds number serves to eliminate the
+region of energy equilibrium. Describing the puffs as flame fronts,
+making the analogy that the "flame" is moving upstream, but because
+it is also being advected by the flow it leads to confusion. Fluid
+parcels are constantly flowing through the interfacial upstream edge,
+and are being "entrained" by the structure of the puff. Likewise
+for the downstream front, fluid is constantly leaving the downstream
+interface and relaminarizing. Can get entrainment at both edges.
+
+\item[M. Avila]
+Movies of various slugs, much discussion on the upstream and downstream edges and why you should treat them the same. Dwight
+claims that this is because of the entrainment that occurs at both
+ends. Roman Grigoriev bringing up the transport of momentum at the
+interfaces.
+
+Investigations using Lagrangian frame moving with a patch of isoenstropy surface.
+
+\item[J. Gibson]
+Discussed periodic eigendecomposition with John, first question that was
+brought up was whether periodic Schur decomposition is required, as opposed
+to performing Arnoldi iteration of periodic orbits to get Floquet vectors.
+
+Most of the discussion was both of us trying to reconcile our opinions and
+how we both are thinking of the problem in the context of \refref{DCTSCD14}.
+\end{description}
+}
+
+\MNGpost{2017-1-31}{
+\begin{description}
+\item[P. Hall]
+\textit{Canonical exact coherent structures: The emergence of distributed states
+and the Law of the Wall}
+\HREF{http://online.kitp.ucsb.edu/online/transturb17/hall/}{(video)}.
+
+Looking at structures as $Re$ goes to infinity gives insight on finite $Re$
+solutions.
+
+Looking at two non-localized states for arbitrary shear flows, they are the
+foundation for producing families of solutions.
+Type 1: (Self sustained processes) Vortex-wave interactions.
+Type 2: Freestream coherent structures. Relevant to transition induced
+by free-stream turbulence.
+
+VWI reduction applied to asymptotics. $3D$ time dependent navier stokes
+transformed to 2d steady navier stokes, convection diffusion, eigenvalue
+problem.
+
+Logarithmic jump in pressure when you cross the critical layer, unless
+the critical layer is flat.
+
+Three time scales for VWI.
+1. slow roll-streak diffusion timescale t
+2. fast inviscid wave timescale $Re*t$
+3. birth death timescale for vwi states $Re^{1/2}*t$
+
+Drag vs. alpha bifurcation diagram.
+Looking at VWI solutions and their Reynolds stresses, which for lower
+branch solutions concentrate in critical region. For upper branch
+solutions they begin in the critical layer but after continuation
+they begin to become exotic, but this can be explained by asymptotics.
+
+Looking at bifurcations of upper and lower branch solutions show
+why upperbranch is so much more unstable than lower branch.
+Instabilities on three different time scales.
+
+Rescaling by taking streamwise and spanwise wavenumbers
+
+Generate new solution by introducing spatial periodicity, by stacking
+solutions on top of each other.
+where interactions depend on the spatial period.
+
+Get a time periodic solution from this stacking procedure due to
+single mode waves?
+
+Defining the infinite array computational problem.
+
+Starting with spatially periodic solution in Couette flow,
+generalizes to arbitrary shear flow, but only in flows that
+have a logarithmic profile.
+
+Locally looks like Couette flow locally, but phase speeds slowly
+changes similar to WKB, eikonal equation.
+
+\item[R. Monaco]
+\textit{Convection: from small plumes to large coherent structures}
+\HREF{http://online.kitp.ucsb.edu/online/transturb17/monaco/}{(video)}.
+Taylor-Couette and Rayleigh-Benard.
+Transition turbulence of Taylor-Couette flow.
+Conflicting evidence of Taylor-Couette flows, showing large
+scale structures can persist conflicting with previous
+experiments.
+
+Azimuthal and time averaging. Aspect ratios are different
+but can explain apparently.
+
+Streamwise velocity behavior in large variety of flows follows
+Virk log-law.
+
+Adding riblets doesn't really change structure in bulk.
+
+Turning off rotation, rolls persist for relatively large times.
+Changing behavior of rotation, corotating, outer rotating, etc.
+
+Rayleigh benard flow, boundary conditions changing the nature
+of solutions dramatically.
+
+mixed temperature boundary conditions seemingly have no effect, by
+means of different geometries of adiabatic and conducting regions at
+boundaries.
+
+\item[Spatial KS]
+Had the idea to involve Galilean invariance in spatial integration, i.e.
+somehow formulate  $0 = \int u(\conf, \zeit) d\conf$ into a local constraint
+that can be used to constrain the integration to the repeller. Burak thinks
+is is definitely something worth pursuing.
+
+\item[Shadowing Lemma]
+Read some papers, had short discussion with PC, I agree it isn't too
+informative and takes too much time to get anything worthwhile out.
+
+\item[Variational methods]
+Discussion about the general practice,
+Why didn't we use Fourier instead of finite differences, using
+fourier would be diagonal, instead of having cyclic border terms.
+How to deal with continuous families of tori still needs to be
+explained. Roman gave me contact of another GT student working
+on such methods.
+
+\item[Num Lin Alg]
+Review of QR, arnoldi iteration, GMRES. Will begin using arnoldi
+iteration on periodic orbits from J. Gibson's repository and then
+comparing angles tomorrow.
+
+\end{description}
+}
+
+\MNGpost{2017-02-01}{
+\begin{description}
+\item[Inertial Manifold]
+Used Channelflow's arnoldi iteration on two periodic orbits of plane couette, I am
+a little confused as to how the eigenfunctions are represented as output so I wasn't
+able to produce any pairwise angles or norms yet. I spent too much time digging through
+the code with little benefit; although I hate bugging John with these types of questions it's
+probably best to just ask.
+
+\item[Lagrangian Formulation of KS]
+Poked through literature on Lagrangian formulations of partial differential
+equations tt seems that it is relatively common to formulate these things for KdV equation
+but not really any other equations.
+
+\item[KS spatial integration]
+Looked around for a way to follow up on the idea of using Galilean invariance as a
+constraint condition for spatial integration, haven't found or come up with any local
+condition that could be applied as of yet.
+
+\item[Avila meeting]
+Shared current projects and work with Marc Avila whom was curious since he saw
+my poster. Discussed spatial integration, variational methods, invariant spatiotemporal
+tori and the benefits of variational methods versus shooting methods.
+
+He was interested in using spatial integration to reconstruct boundary layer information
+from PIV data. He also suggested using a test case of applying the spatiotemporal
+variational method that we are trying to deploy to a case where a stable torus exists and
+then see if one could track tori and the breakdown of tori.
+
+\item[Li Xi]
+viscoelastic flow, Weissenberg number better than Deborah number because it's more physical.
+Comparison of relaxation time vs. deformation time (shear rate).
+
+If time scale of polymer contraction is slow relative to flow, then can introduce new
+nonlinearity that consists of how the polymer reacts to the "new" dynamically evolved flow.
+
+In general $Re$ and weissenberg number $Wi$ are changed via changing the flow rate, which
+simultaneously changes both.
+
+In channel flow, there tends to be a proportionality of $Wi$ and the transition to turbulence.
+"above" this transition, only get drag reduction above a critical $Wi$ number.
+
+Velocity of FENE p models is the same as experimental data, but otherwise results are qualitative.
+depiction of parameter space.
+
+Description of "phase transition" between LDR and HDR regime. In LDR the velocity profile
+in the buffer layer increases in magnitude, until the HDR regime where the slope of the
+velocity profile in the log layer increases, so there are obviously two different
+processes occuring. He thinks that vortices burst/break up less such that the flow is more
+coherent.
+
+Wants to identify the time-scale that identifies the transition.
+
+\item[Ismail Hameduddin]
+Continuation of viscoelastic talks. Mathematics of viscoelastic modeling.
+Get a linear equation for the elements of the conformation tensor under
+some assumptions.
+
+\end{description}
+}
+
+\MNGpost{2017-02-02}{:
+\begin{description}
+\item[J. Gibson]
+\textit{Julia: the future of scientific computing}
+\HREF{http://online.kitp.ucsb.edu/online/transturb17/gibson/}{(video)}.
+Combines best properties of Python, Matlab, LISP, and C.
+Demonstration of Julia through notebooks via jupyter.
+c
+\item[N. Goldenfeld]
+\textit{Statistical mechanics of the phase transition to turbulence: zonal flows,
+ecological collapse and extreme value statistics}
+\HREF{http://online.kitp.ucsb.edu/online/transturb17/gibson/}{(video)}.
+Statistical approach to turbulence. Going from finite number of particles
+in a box, use statistical mechanics to explain equilibrium behavior. Claim
+is that the same is true for an infinite number of particles in a box (fluid)
+
+Comparison of puff splitting decay mean time plot to predator-prey model
+as a function of prey birth rate. Does extinction equal turbulence?
+
+There is a possibility that turbulence is a long lived transient, changed
+after Hof's experiment that measured the survival probability of puffs.
+
+Believes that superexponential scaling is the correct interpretation.
+Relating metastable puffs to directed percolation. Four fundamental
+processes.
+
+Phase transition characterized by universal exponents, as functions of
+parameter p, the probability of continuing.
+
+Directed percolation done spatiotemporally, using correlation length
+as a means of generating scales in the problem. Do statistics on these
+simulations.
+
+Reasoning behind super exponential scaling and extreme statistics.
+Mean follows central limit theorem, maximum follows three types of
+distributions. Probability the largest fluctuation exceeds $Re$
+threshold then decay superexponentially. Looking at statistics
+
+The reason you expect super exponential decay, is the means by which
+decay is measured.
+
+Once correlation length gets to the order of the spatial extent, the
+statistics switch from superexponential to power law.
+
+Logic of modeling phase transitions
+\begin{itemize}
+\item Magnets
+\item Electronic structure
+\item Ising Model
+\item Landau Theory
+\item Renormalization group universality class
+
+\item Turbulence
+\item Kinetic Theory
+\item Navier Stokes equation
+\item ?
+\item ?
+\end{itemize}
+
+Identification of collective modes at the laminar-turbulent transition,
+similar to Landau theory only look at important structures near the
+transition.
+
+Zonal Flows. Computing instantaneous reynolds stress is anisotropic,
+which flows into the walls, which drives the zonal flow. Zonal flow
+inhibits reynolds stress (makes it more isotropic). Zonal flow isn't
+driven by the mean flow because there is orthogonal to mean flow.
+
+Comparison of zonal mode-turbulence and predator-prey models. Predator
+prey models driven stochastically. Lotka-Volterra. Oscillatory effects
+from satiation model. Fluctuations and oscillations produced by
+demographic stochasticity.
+
+Predator-prey path integrals and quantum field theory. Try to write
+down a Landau theory for this.
+
+Allowed field theoretical processes look like the same four fundamental
+processes of directed percolation.
+
+Demonstrated turbulence to directed percolation via predator prey and field
+theory.
+
+Superexponential vs. critical scaling.
+
+Crutchfield and Kaneko
+
+\item[B. Eckhardt Secret]
+\textit{The transition to turbulence in shear flows: a dynamical systems perspective}
+
+No video because it was held in South hall.
+Sort of recap of previous presentation.
+How fat is turbulence? Apparently as fat as an elephant.
+Nikuradse in 1930s shows the frictional factor dependence on $Re$.
+
+Intermittent case is defined by linear stability of laminar profile.
+Expect smooth transition when you have subcritical bifurcation.
+Coherent structures and {\statesp}. Create a new basin of attraction
+via homoclinic bifurcation. Transition from attracting closed state
+to fractal open set.
+
+Crises for attracting set of one coherent structure isn't really enough
+to explain statespace. Conglomerate of crises is sufficiently stable such that it is possible to never return to laminar.
+
+\item[Arnoldi]
+Producing eigenfunctions and Floquet exponents and multipliers for a range
+of periodic orbits from John's repository, pinned down John for a quick talk on whether I'm getting reasonable values for exponents, etc. I was also confused on how the eigenfunctions were being represent, he somewhat
+cleared it up and directed me towards matlab scripts to use to reproduce
+fields as to begin taking norms and computing angles. Looking through matlab scripts.
+
+\item[Readings]
+The first part of Farrell et al. on generalized stability theory.
+Horseshoes and blenders via
+
+\item[KAM]
+Even though I'm not employed by Rafael de la Llave I found myself sidetracked by
+KAM theory to gain some insight into what is generally done with tori.
+\end{description}
+}
+
+\MNGpost{2017-02-03}{
+\begin{description}
+\item[Jörg Schumacher]
+\textit{Boundary layer dynamics and large-scale structure in turbulent
+convection}
+Announcement of Euromech colloquium.
+
+Intro to thermal convection.
+What are dynamics at bottom and sidewall boundary layer.
+Going from laminar boundary layers to turbulent boundary layers,
+can see that bulk is turbulent via Kolmogorov spectrum.
+
+Always work with Boussinesq approximation, boundary layers for low and
+high $Pr$, changes thickness of thermal boundary layer.
+
+Numerical simulations for liquid mercury required to be parallelizable.
+
+Skin friction field at bottom is complex even in the laminar boundary layer regime. Seems like avoiding calling it turbulent. Looks turbulent to
+me.
+
+One can remove the precession of "impact" and "ejection" zones (convection cells component on bottom plate) by proposed coordinate transformation.
+
+Pure fluid turbulent cascade is extended with Prandtl number.
+Trying to understand velocity profile in boundary layers, no answers for now?
+
+Large-scale order in convection. Large aspect ratios.
+
+Time averaging at a higher Reynolds number makes results look like lower
+$Re$.
+
+Koopman analysis projected back into {\statesp}, grouped around these modes.
+
+Don't lose structure from lower Prandtl numbers under continuation.
+
+\item[P. Arratia Talk]
+Flow of polymeric solutions. High shear serves to unwrap polymers.
+Reduced navier stokes equations, introduce new nonlinearity with terms that describe the polymers interaction with the fluid. FENE-p models.
+
+Flows that stretch polymers really well, high velocity gradients.
+Role of curvature, curved streamlines lead to "hoop stresses". Taylor
+Couette flow is linearly unstable even at zero $Re$.
+
+Schematic for transition in viscoelastic similar to Newtonian fluids.
+
+Is there a nonlinear instability to laminar viscoelastic flow at low $Re$?
+Discussion of global instability, once you have finite perturbations, no longer talking about linear stability.
+
+Experimental setup, cylinders, subcritical instability demonstrated by
+graphs of velocity fluctuations vs $Wi$ for different numbers of cylinders. Saturation implies subcritical instability, hysteresis
+in $Wi$ continuation seems to confirm this.
+
+Little bit of discussion of velocity profile in the middle of the channel, as there was confusion on how one of the graphs was being produced.
+\end{description}
+}
+
+\MNGpost{2017-02-06}{
+\begin{description}
+\item[Channelflow]
+Learning how to write bash shell scripts to automate the process of using
+Channelflow commands to compute generate time discretization
+of periodic orbits, arnoldi iterations for eigenfunctions, and pairwise angles
+of eigenfunctions.
+\item[Spatial integration]
+Spent more time trying to figure out if I can
+use galilean invariance as an integration constraint.
+\item[Spatiotemporal parallelization debriefing]
+Debriefing of \refref{WGBGQ13} with Ashley Willis taking the lead. Discussion over coffee
+he said that he would work through some calculations and then let me compare it to
+variational {\descent}.
+\item[What would Koopman do]
+Listened to Igor Mezi\'c discuss Koopmanism and answer questions from Mohammad Farazmand,
+R. Grigoriev, M. Schatz.
+
+\end{description}
+}
+
+\MNGpost{2016-2-7}{
+\begin{description}
+\item[C. Caulfield]
+\textit{Telling the time, using the clockwork of turbulence to answer open questions
+in fluid dynamics}
+What is shortest distance between edge manifold in energy norm, therefore could find
+the smallest perturbation to transition to turbulence.
+
+Linear optimal perturbation is not sufficient as it is streamwise invariant? Therefore
+use a localized nonlinear perturbation.
+
+Using variational methods that maximizes energy, makes sure that navier-stokes is
+imposed for all space and time, imcompressibility, initial energy $c$ of perturbation.
+
+Finding adjoint equations via integration by parts, can use Newton solver to solve
+adjoint equation. It's like a backwards in time Newton-solver which doesn't blow
+up due to using the adjoint variable.
+
+Identify transition by the energy gain and optimal time.
+
+Localization of initial condition has nothing to do with edge state it's only
+to exploit the Orr mechanism. Edge state is a streamwise structure due to the box
+size?
+
+Use DNS results as initial condition for GMRES algorithm.
+Use Koopman/DMD modes applied to snapshots. Looking at spectrum, relatively well
+peaked. Three Koopman modes is enough to capture the DNS results near the energy plateau
+region of time, otherwise known as the edge-state.
+
+Discussion about whether this is linear or nonlinear.
+
+Using adjoint somehow requires converge on arbitrarily long time, so adjoint methods.
+
+Stratified flows. Get spontaneous layers that aren't taylor vortices, i.e. structures
+that don't scale with the gap width.
+
+Most linearly unstable mode connection to nonlinear interactions.
+Recurrent structures in stratified flows.
+
+\item[Rama Govindarajan Talk]
+\textit{Droplet Dynamics in model vortices}
+Heavy particles converge to regions of high strain and leave regions of high
+vorticity, bubbles would do the opposite.
+
+Behavior dependent on spatial position of particles relative to the vortex.
+Polar coordinate equations that arise are parameter free, they would normally
+take into account time dependence of length scale which is associated with both
+the particles and the vortex core. The particles do not interact, do not affect
+the flow.
+
+Dynamical simulations show that vortices appear to behave as solid objects that
+experience the Magnus effect. Can create vorticity through baroclinic torque.
+
+Buoyancy definitely affects the size of structures that appear in 2-D DNS
+simulations.
+
+Looking towards clouds, general description of a self-sustaining process,
+equations that now involve the vapor pressures and saturation and Stokes
+number.
+
+\item[Solving Turbulence Debrief]
+Relation between fictitious time and time, seems to become blended
+Discussions of variational {\descent} and how it's really crude.
+Discussions about parallelization, no longer doing time integrations,
+Parameterizing the space of curves in "fictitious time" isn't obvious
+in this method.
+
+How second order equation is sufficient for parallelization.
+Looking at secord order equation that Ashley has written down,
+the RHS looks like the current formulation of the variational {\descent}.
+
+John seems to be implying that instead of the normal variational {\descent} matrix equation that arises from the fictitious time PDE, one
+can use Krylov methods, PC doesn't see how to incorporate small steps
+into this.
+
+Is cost function always the $L2$ norm? The issue has to do with the area
+where localization is valid, higher norms reduces this size.
+Mathematicians like to use a $1+ \epsilon$ norm, which bypasses the
+kinky structure of the one norm.
+
+\item[Cost functional version of multishooting]
+Ashley wants me to attempt to implement the minimization of the cost
+functional \refeq{e-MultishootCost} which leads to the variational
+equations (under the assumption that there is no symmetry operation
+$g(\phi)$, which is the simplest case to take),
+\refeq{e-MultishootVariational}.
+
+The general procedure indicated by Ashley is that you shoot the reference points
+i.e. the set of $x_i  i = 0 ... M-1$ to retrieve $y_i = f^{t}(x_i)$ and then
+set the second of these variation equations equal to zero to get $w_{i}(T_i)$.
+You use an adjoint equation for $w$ to pull back $w_{i}(T_i)$ to $w_{i}(0)$,
+and then use the variations in $T_i$ and $x_i$ to update your reference state in
+order to proceed until the cost functional described by \refeq{e-MultishootCost} is
+minimized to desired cut off.
+
+I'm going to apply this to antisymmetric subspace $\bbU^+$ of \KSe\ and
+then work with Ashley to hopefully parallelize it.
+
+I wrote a crude version by repurposing function definitions from
+variational {\descent}, as well as the numerical time-stepping algorithm
+from \refref{ks05com}.
+
+The main part that is left is to derive the adjoint equation and decide on how
+to evaluate it, and then include that in the crude version I have currently.
+\end{description}
+}
+
+\MNGpost{2017-02-08}{
+
+\begin{description}
+\item[M. Gudorf Brown Bag]
+Talked about spatial integration and variational methods.
+B. Eckhardt brought up similarities to Burgers equation and
+was concerned with how \KSe\ deals with shocks.
+
+J. Jimenez was concerned about how well-posed the spatial integration
+problem is and what we hope to get out of it
+Shortly after the talk in the cafe next door,
+B. Eckhardt brought up ideas very similar described $T=0$
+steady state equation from \refref{DoLa14} about how the solutions
+to the steady state equation (equilibria in time) form a very coarse
+way to partition the time dynamics. He also mentioned that the talk was
+good, he cited Divakar Viswanath and his approach of thinking
+about the problem and adapting methods, and how this was crucially
+important for results in Plane-Couette
+
+J. Gibson thinks that the variational {\descent} is bad method
+due to its number of steps and formulation as essentially a gradient
+descent method. He thinks an alternative description with
+
+He also brought up that although there are continuous symmetries in the
+Plane-Couette problem, Newton-Krylov methods are well suited to picking out
+solutions without ``sliding" around due to the continuous symmetries.
+
+Other suggestions were to use Krylov methods in combination with
+variational {\descent}.
+
+\item[R. Grigoriev]
+Excitability talk, review of spirals using Karma model.
+Square boundary (no periodic boundary conditions)
+, three marginal eigenvalues on square domain.
+Discussion of relative equilibria on square domain. As long
+as spiral is in center of domain it doesn't drift but when
+offset it begins to drift.
+
+Rotation and translation of square domains, don't overlap, so take
+smaller circular domain in the interior of the intersection of rotated
+square domains has some property? Sort of confused here, Roman said people
+taking circular domains were lazy, but ends up having to do that in some
+respect.
+Once spirals are far from the walls, or far from each other,
+exponential decay of response
+functions tell you that they spiral-wall or spiral-spiral
+pairs do not really interact anymore. The converse statement is
+that small domain sizes will strongly impact the spiral core.
+
+Spiral chaos and excitable systems can be decomposed into slow
+dynamics of tiles and fast dynamics of spirals.
+
+Implications for fluid turbulence, need to look at adjoint
+and the role of pressure on localized solutions. The adjoint in
+detail means the adjoint eigenfunctions about the linearization
+of localized solutions.
+
+Dwight Barkley explains that perturbations along the adjoint
+of a certain eigenvector is what leads to perturbations along
+the eigenvector desired. This is due to the fact that the adjoint
+is orthogonal to the complement of the desired eigenvector.
+
+\item[Variational multishooting]
+I rederived the equations \refeq{e-MultishootCost} and \refeq{e-MultishootVariational}
+in order to solidify the thought process. Ashley was kind enough to produce
+the equation for the adjoint \refeq{e-msadjoint} which I also went through.
+
+\item[A. Willis Coffee discussion]
+Discussed variational methods with Ashley, and in detail discussed how I
+implemented the variational {\descent}. I personally feel there is much
+room for optimization, and that automation of generating initial conditions
+would be a much sought after device for many people interested in exact
+coherent solutions. One of his methods that differed from mine was using the
+angle between successive descent directions as a means to control the step size.
+
+\end{description}
+}
+
+\MNGpost{2017-02-09}{
+\begin{description}
+\item[M. Farazmand Talk]
+\textit{Extreme events in turbulent flows: A variational approach}
+Trying to explain intermittent bursts in energy dissipation by
+explaining it away by saying there is an ECS that is visited albeit
+rarely. The solution wasn't find by Newton-Krylov methods, so needed
+another method. Chose to work with Adjoint method.
+
+Lots of discussion on gradient methods, John really would like
+to see comparisions with these variational methods with modified
+Newton.
+
+Looking at nonlinear energy transfers through by using a graph with Fourier modes
+as the vertices.
+
+Needs a new variational method,
+\begin{itemize}
+\item Classical case of these types of bursts is a symmetry breaking bifurcation. (Near-equilibrium systems)
+\item Multi-scale methods, requires separation of slow and fast degrees of freedom
+\item Theory of large deviations (multi-equilibrium driven by stochastic force)
+\item Optimally time-dependent modes (Using Lyapunov exponents, predictive, not physics)
+\end{itemize}
+
+Looking for initial states that trigger extreme growth of observable. The idea
+is that the solutions are in some submanifold of {\statesp}, and try to find states
+that shoot you away from the submanifold. Look for states that maximize a time
+delayed supremum of observable.
+
+%A little bit more goes here I spent the remainder of talk focusing rather than writing. Will
+%review video and update
+
+\item[Modified Newton's Method]
+Talked with John and Ashley about the method that John always likes to bring up when
+the topic of the variational {\descent} is brought up. The only way to know
+which is the best is to do testing it seems.
+
+\item[Tower room]
+Discussions about the program and where do we go from here. Javier Jimenez thinks
+it is time to formulate interactions between different scales, i.e. multiscale theory.
+Shell models, examples, and the history of turbulence were discussed.
+\end{description}
+}
+
+\end{description}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\printbibliography[heading=subbibintoc,title={References}]

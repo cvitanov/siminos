@@ -1,0 +1,249 @@
+% siminos/spatiotemp/chapter/action.tex
+% $Author: predrag $ $Date: 2021-12-24 01:25:20 -0500 (Fri, 24 Dec 2021) $
+
+% \ifblog  Predrag 2021-06-12 gave up on this,
+%          do not remember who calls it other than blogCats.tex
+    \chapter{Hill's formula}
+    \label{c-Hill}  % temporary, while being edited in spatiotemp/
+%\renewcommand{\cl}[1]{{\ensuremath{n_{#1}}}}   % discrete length of a cycle, Predrag
+\renewcommand{\shift}{\ensuremath{\ell}}
+
+\section{An overview over ``Hill's formulas''}
+\label{sect:Hill}
+%\renewcommand{\cl}[1]{{\ensuremath{|#1|}}}  % the length of a periodic orbit, Ronnie
+\renewcommand{\shift}{\ensuremath{d}}
+
+\begin{quote}
+A succinct  explanation of the Hill's formula:\\
+If you evaluate stability of the 3-term recurrence \refeq{JiKoKr20(2)} on
+a periodic lattice you get the {\jacobianOrb} $\jMorb$;
+if you evaluate it by multiplying the `two-configuration representation'
+matrix $\jMps$, you get the `time evolution' side of the Hill's formula.
+\end{quote}
+
+We should emphasize that, while discovered first in Lagrangian setting,
+Hill's formulas are much more general, they
+apply also to dissipative dynamical systems as well, see
+
+CL18 \HREF{http://chaosbook.org/~predrag/papers/CL18.pdf\#subsection.1.5}
+{sect.~1.5} {\em  Stability of an orbit vs.  its time-evolution stability}
+
+CL18 \HREF{http://chaosbook.org/~predrag/papers/CL18.pdf\#appendix.C}
+{appendix~C} {\em Spatiotemporal stability}
+
+
+\refsect{LiTom17b:GenFctn} {\em Generating functions; action}
+%\else  Predrag 2021-06-12 gave up on this,
+%          do not remember who calls it other than blogCats.tex
+%\subsection{Generating functions; action}
+%\fi
+
+
+\refsect{sect:HillLagr} {\em Hill's formula, Lagrangian setting}
+
+
+\refsect{sect:catlattHill} {\em \catLatt\ Hill's formula}
+
+
+\refsect{sect:catlattHillrel} {\em Hill's formula for \rpo s}
+
+
+\refsect{sect:templattHillHan} {\em Han's \templatt\ Hill's formula}
+
+
+\refsect{sect:catlattHillHan} {\em Han's  \catlatt\ Hill's formula}
+
+
+\refsect{sect:catlattHillRelativeHan} {\em Han's relative-periodic Hill's formula}
+
+
+\refsect{sect:HenonHillHan} {\em Han's  \HenonMap\ Hill's formula}
+
+
+
+
+
+
+
+
+
+
+
+\section{Generating functions; action}
+%\else  Predrag 2021-06-12 gave up on this,
+%          do not remember who calls it other than blogCats.tex
+%\subsection{Generating functions; action}
+%\fi
+\label{LiTom17b:GenFctn}
+
+    \PC{2016-11-11, 2018-09-26}{
+What follows is (initially)
+copied from Li and Tomsovic\rf{LiTom17b}, \emph{Exact relations between
+homoclinic and \po\ actions in chaotic systems} arXiv source
+file, then merged with the MacKay-Meiss-Percival action
+principle \refrefs{MKMP84,meiss92}.
+    }
+For discrete-time one-degree-of-freedom Lagrangian systems satisfying a
+periodicity condition (\ie, cat map):
+\beq
+\genF(\coord+1, \coord'+1)=\genF(\coord, \coord')+C
+\,,
+\ee{MacMei83-2}
+one can consider relative periodic paths (or pre-periodic paths, also called
+periodic paths of type $(\shift,\cl{})$ by Mackay and Meiss\rf{MacMei83}), with
+    \PC{2018-09-29} {presumably they are \rpo s, or pre-\po s, with a rational
+    winding number $p/\coord$.}
+\beq
+\coord_{i+\cl{}}=\coord_{i}+\shift
+\,.
+\ee{MacMei83-3}
+Every $\coord_{i}$ returns to its value after time period $\cl{}$, but shifted by
+$\shift$.
+Orbits satisfying \refeq{MacMei83-3} are given by stationary points of the action
+\beq
+\action = \sum_{i=0}^{q-1} \genF(\coord_i, \coord_{i+1})
+\ee{MacMei83-4}
+in the space of periodic paths of type $(\shift,\cl{})$.
+For periodic paths, it suffices to consider one period, because an orbit is periodic if
+and only if it is a stationary point of the action of one period in the space
+of periodic paths.
+
+If the constant $C$ (the
+\HREF{https://floerhomology.wordpress.com/2015/09/14/mean-action-and-the-calabi-invariant/}
+{Calabi invariant}\rf{Calabi70}) in the periodicity condition
+\refeq{MacMei83-2} is zero, and the Lagrangian satisfies a convexity
+condition
+\beq
+\genF_{12}(\coord, \coord') < 0
+\,,
+\ee{MacMei83-5}
+where subscript $k$ refers to the derivative with respect to the $k$th
+argument, then the action of periodic paths of type  $(\shift,\cl{})$ is bounded below,
+so there is a minimising path. Since its action is stationary, it gives a \po\
+of type  $(\shift,\cl{})$.
+
+    \PC{2018-01-21}{Is this true?
+To go from the Hamiltonian $(\ssp_{\zeit},p_{\zeit})$ phase space formulation to the
+Newtonian (or Lagrangian) $(\ssp_{\zeit-1},\ssp_{\zeit})$ {\em state space}
+formulation, replace $p_\zeit$  by
+\(
+p_\zeit = (\ssp_{\zeit} - \ssp_{\zeit-1})/\Delta\zeit \,,
+\)
+where $\Delta\zeit =1$.
+    }
+    %
+For {\orbit} ${p}$  of period $\cl{p}$, the {action} of the \orbit\ is:
+\beq
+\label{eq:DefGenFprimePOs}
+\action_{p}  \equiv \sum_{n=0}^{\cl{p}-1}\genF(\coord_{n},\coord_{n+1})\ .
+\eeq
+$\action_{p}$ is the generating function that maps a point along the orbit for one
+(prime) period.  For the case of a fixed point $p$ of period $\cl{p}=1$,
+the action is
+\beq\label{eq:Definition generating function fixed points}
+\action_{p}  = \genF(\coord_p,\coord_p)
+\,,
+\eeq
+where the generating function $\genF(\coord_p,\coord_p)$ maps $\ssp_p$ into itself in one
+iteration.
+
+\section{Homoclinic and \po\ actions in chaotic systems}
+
+    \PC{2018-09-29}{
+What follows is copied from Li and Tomsovic\rf{LiTom17b}.
+    }
+For an aperiodic orbit $\lbrace\ssp_0\rbrace$ going through the point $\ssp_0$,
+the action, evaluated as the sum over an infinity of successive mappings,
+\begin{equation}
+\label{eq:full orbit action in general}
+\action_{\lbrace \ssp_0 \rbrace}
+\equiv \lim_{N \to \infty}
+\sum_{n=-N}^{N-1} \genF(\coord_{n},\coord_{n+1})
+=\lim_{N \to \infty} \action_{-N,N}
+\,,
+\end{equation}
+is not necessarily convergent. However, the MacKay-Meiss-Percival action
+principle\rf{MKMP84,meiss92} can be applied to obtain well defined
+action differences between pairs of orbits.  For example,
+the {\em relative} {\em action}
+$\Delta \action_{\lbrace h_0 \rbrace  \lbrace x \rbrace}$ between a fixed point $\ssp_p$
+and its homoclinic orbit $\lbrace h_{0} \rbrace$, where $h_{\pm
+\infty}\to \ssp_p$:
+\begin{eqnarray}
+\label{eq:relative action homoclinic}
+\Delta \action_{\lbrace h_0 \rbrace  \lbrace \ssp_p \rbrace}
+ &\equiv & \lim_{N \to \infty} \sum_{i=-N}^{N-1}\left[\genF(h_i,h_{i+1})-\genF(\ssp_p,\ssp_p)\right]
+\nonumber \\
+&=& \int\limits_{U[\ssp_p,h_{0}]}p\mathrm{d}\coord+\int\limits_{S[h_{0},\ssp_p]}p\mathrm{d}\coord
+= \oint_{US[\ssp_p,h_{0}]} p\mathrm{d}\coord \nonumber \\
+&=& {\cal A}^\circ_{US[\ssp_p,h_{0}]}
+\end{eqnarray}
+where $U[\ssp_p,h_{0}]$ is the segment of the unstable manifold from $\ssp_p$ to
+$h_{0}$, and $S[h_{0},\ssp_p]$ the segment of the stable manifold from $h_0$
+to $\ssp_p$.  The $\circ$ superscript on the last line indicates that the area
+is interior to a path that forms a closed loop, and the subscript
+indicates the path: $US[\ssp_p,h_{0}]=U[\ssp_p,h_{0}]+S[h_{0},\ssp_p]$.  The
+clockwise enclosure of an area is positive, counterclockwise negative.
+$\Delta \action_{\lbrace h_0 \rbrace \lbrace \ssp_p \rbrace} $ gives the
+action difference between the homoclinic orbit segment $[
+h_{-N},\cdots,h_{N} ]$ and the length-$(2N+1)$ fixed point orbit segment
+$[ \ssp_p, \cdots, \ssp_p ]$ in the limit $N \to \infty$. In later sections, upon
+specifying the symbolic code of the homoclinic orbit $\lbrace h_0 \rbrace
+\Rightarrow \overline{0} \gamma \overline{0}$, we also denote $\Delta
+\action_{\lbrace h_0 \rbrace  \lbrace \ssp_p \rbrace}$ alternatively as
+\begin{equation}\label{eq:relative action homoclinic symbolic notation}
+\Delta \action_{\lbrace h_0 \rbrace  \lbrace \ssp_p \rbrace}
+= \Delta \action_{\overline{0} \gamma \overline{0},  \overline{0}}
+\end{equation}
+by replacing the orbits in the subscript with their symbolic codes.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{figure}
+   \includegraphics[width=0.5\textwidth]{LiTom17bHorseshoe2}
+\caption{\label{fig:Horseshoe2}
+A sketch of a partial homoclinic tangle
+which forms a complete horseshoe structure. The unstable (stable)
+manifold of $x$ is the solid (dashed) curve. There are two primary
+homoclinic orbits $\lbrace h_0\rbrace$ and $\lbrace g_0\rbrace$.
+$\cal{R}$ is the closed region bounded by loop
+$\mathcal{L}_{USUS[x,g_{-1},h_0,g_0]}$.
+~(From \refref{LiTom17b})
+        }
+\end{figure}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+Likewise, a second important case is for the relative action between a
+pair of homoclinic orbits $\lbrace h^{\prime}_0\rbrace \Rightarrow
+\overline{0} \gamma^{\prime} \overline{0} $ and $\lbrace h_0\rbrace
+\Rightarrow \overline{0} \gamma \overline{0}$, which results in
+\begin{eqnarray}
+\label{eq:homoclinic action difference}
+\Delta \action_{{\lbrace h^{\prime}_0\rbrace}{\lbrace h_0\rbrace}} &\equiv & \lim_{N \to \infty} \sum_{i=-N}^{N-1}\left[ \genF(h^{\prime}_{i},h^{\prime}_{i+1}) - \genF(h_{i},h_{i+1})\right] \nonumber \\
+& = & \lim_{N \to \infty} \left[ \genF(h^{\prime}_{-N},h^{\prime}_{N}) - \genF(h_{-N},h_{N}) \right] \nonumber \\
+& = & \int\limits_{U[h_{0},h^\prime_{0}]}p\mathrm{d}\coord+\int\limits_{S[h^\prime_{0},h_{0}]}p\mathrm{d}\coord =  {\cal A}^\circ_{US[h_0,h^\prime_{0}]} \nonumber \\
+& = & \Delta \action_{ \overline{0} \gamma^{\prime} \overline{0},  \overline{0} \gamma \overline{0} }
+\end{eqnarray}
+where $U[h_{0},h^\prime_{0}]$ is the segment of the unstable manifold
+from $h_{0}$ to $h^\prime_{0}$, and $S[h^\prime_{0},h_{0}]$ the segment
+of the stable manifold from $h^\prime_{0}$ to $h_{0}$.  Due to the fact
+that the endpoints approach $\ssp_p$ forward and backward in time, one can
+also write
+\begin{eqnarray}
+\label{eq:homoclinic action difference2}
+\Delta \action_{{\lbrace h^{\prime}_0\rbrace}{\lbrace h_0\rbrace}}
+& = & \lim_{N \to \infty}
+\left[ \genF(h^{\prime}_{-(N+n)},h^{\prime}_{N+m}) - \genF(h_{-N},h_{N})
+      \right] \nonumber \\
+& & - (n+m) {\cal F}_0
+\,.
+\end{eqnarray}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+    \ifblog
+\newpage
+\input{chapter/Hill}
+
+\printbibliography[heading=subbibintoc,title={References}]
+
+\ChapterEnd
+    \fi

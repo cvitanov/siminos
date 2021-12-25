@@ -1,0 +1,382 @@
+
+
+
+The \spt\ theory developed here focuses solely on the \KSe, however, the first definition
+provided will be a general one. For any governing equation, the application of this theory is
+predicated upon the existence of periodic orbits (`orbit' will be
+used for brevity, as everything is assumed to at least approximate a periodic orbit in this formulation).
+Therefore, the first step is to define what an `orbit' is exactly. Let $\mathbf{f}$ represent a partial differential
+equation (vector or scalar, going with boldface to indicate vector) with all terms
+grouped on one side such that $\mathbf{f}(\statev)=0$; this will
+be referred to as the \textit{governing equation}. The variable \statev represents the `state-vector',
+which contains all relevant independent variables; it will be defined shortly. Most of the components of \statev\ correspond
+to the field $u$, typically a velocity field (scalar or vector), is defined on a $d+1$-dimensional space-time configuration manifold $\mathcal{M}$.
+Assuming translational invariance, $\mathcal{M}$ can be defined by the Cartesian product of intervals of real numbers
+\bea
+\mathcal{M} &=& [0, T] \times \prod_{i}^{d} [0, L_i] \continue
+            &=& \{(t, \mathbf{x})=(t, x_1,...,x_d)\:|\: x_i \in [0, L_i],\: \forall i=\{1, ..., d\}\}\,.
+\eea
+Periodic orbits are then defined as differentiable fields $\mathbf{u}(t, \mathbf{x})$ which satisfy
+periodic boundary conditions in time $\mathbf{u}(t, \mathbf{x}) = \mathbf{u}(t+T, \mathbf{x})$.
+Spatial boundary conditions are not necessarily periodic, however, they are assumed to be compact after
+quotienting the translational symmetries.
+Therefore, a periodic orbit, or simply \textit{orbit} is
+defined as the tuple of three objects $(\mathcal{M}, u(t, \mathbf{x}), f)$. In order, these are: the configuration manifold $|mathcal{M}$,
+the velocity field $\mathbf{u}(t, \mathbf{x})$ defined on $\mathcal{M}$, and the governing equation $f$ for which
+$\mathbf{f}(\mathbf{u})=0$ and $\mathbf{u}(t, \mathbf{x}) = \mathbf{u}(t+T, \mathbf{x})$ are satisfied.
+
+For the numerical implementation all variables (\utensor, \tile\ and any extra parameters) need to
+be stored in a single vector which shall be denoted the \textit{state vector}. Providing a state
+vector and specifying any symmetries is sufficient to define an orbit. Relative periodic orbits represent
+the most general case (most \cdof) and so the state vector will be defined for this case. Parameters which
+are constrained or non-applicable can simply be removed from the state vector \refeq{e-statevector}
+The vector representation of the orbits \refeq{e-sptorbit} in the Fourier basis is
+\beq \label{e-statevector}
+\statev \equiv [\utensor, \period{}, \speriod{}, \xshift]^{\top} \,.
+\eeq
+
+
+With this in mind, the following terminology is introduced. The first, the configuration manifold $\mathcal{M}$ shall be referred
+to as the \spt\ tile or simply \textit{tile} of an orbit. The dimensions of a tile, or \textit{tile dimensions} are simply the
+values $(T, L_1, L_2, ...)$. The field of an orbit refers to $\mathbf{u}(t, \mathbf{x})$. The set of all periodic orbits
+of an equation $f$ is defined as
+\beq \label{e-sptorbit}
+\mathbb{O}(\mathcal{M}, f, u) \equiv \{u(t, \mathbf{x})\: | \: \mathbf{f}(\statev)=0\quad\mbox{and}\quad u(t, \mathbf{x})=u(t+T, \mathbf{x})\quad \forall (t, \mathbf{x})\in \mathcal{M}\}
+\eeq
+The set of orbits \refeq{e-sptorbit} is defined in this manner because it is befitting of the object-oriented programming used
+for this project, \texttt{orbithunter} on Github. In other words, the properties of the abstract set \refeq{e-sptorbit} are captured
+by the `Orbit' computational class.
+
+As this study only focuses on the \KSe\ and its orbits, \refeq{e-sptorbit} will simply be referenced by $\mathbb{O}$.
+
+Motivated by the translational invariance, periodic boundary conditions, and smoothness,
+a Fourier-Fourier basis was a natural choice for the numerical representation of \ufield.
+In the words of \rf{boyd01}:
+\begin{quote}
+\textit{`The general rule is: Geometry chooses the basis set. The engineer never has to make a choice.' -- John P. Boyd}
+\end{quote}
+
+The first step towards such a description is to discretize \refeq{e-sptorbit}. Specifically,
+the \twot\ defined by the tile $\mathcal{M}$ is discretized via the two-dimensional lattice (alternatively, grid or mesh)
+of space-time points $\mathcal{M}_{nm} = (\tn, \xm)$ where
+\bea \label{e-dtile}
+\tn &=& \frac{n \period{}}{N}, \quad n \in 0, 1, \dots, N-1 \continue
+\xm &=& \frac{m \speriod{}}{M}, \quad m \in 0, 1, \dots, M-1 \,,
+\eea
+which has discrete periods $N$ in time and $M$ in space. For brevity, discretized tiles will also
+be referred to simply as tiles; it should be fairly obvious whether the context is continuous or discrete.
+In the discrete setting, a `solution' is now a discretized field \dufield\ such that at every point on
+the tile $(\tn, \xm)$, \dufield\ solves \refeq{e-ks} locally; or at least this would be the case if we remained in the physical
+field basis. The Fourier basis, however, is an inherently
+global description of space-time and \refeq{e-ks} as the field is expanded in terms global, periodic basis functions.
+The tile now represents the set of \textit{interpolation points} or \textit{collocation points} where the residual function must
+vanish; this is getting ahead of the current discussion, however, and so it is left to \refsect{sect:spatiotemporal_mapping}.
+
+
+
+These points are commonly referred to as collocation points, and this type of formulation
+can be classified as a \textit{collocation method} or \textit{pseudospectral method}.
+The benefits of pseudospectral methods are numerous; most importantly they increase the accuracy of
+our calculations while also minimizing the amount of computational memory required \rf{boyd01}.
+
+The inherently infinitely dimensional equations are approximated
+by a Galerkin truncation of these \spt\ Fourier modes.
+
+Instead of using an overly verbose and repetitive verbiage for the coefficients of the Fourier basis function, i.e.
+\textit{spatiotemporal Fourier modes} or \textit{spatiotemporal Fourier coefficients};they will simply be referred to as \textit{modes},
+unless specifically mentioned otherwise. This avoids
+excessive usage of `\textit{spatiotemporal}' and `\textit{Fourier}'; nearly everything from here on out is spatiotemporal. Likewise,
+\textit{discrete \spt\ \rv\ Fourier transform} (it can get even worse) will be cut short to either \textit{Fourier transform} or a
+reference to a computational function such as \texttt{rfft} from the SciPy numerical package.
+
+After the definition of tiles in place one would think that the definition of the Fourier
+transforms would come very naturally, which is true until some numerical details are considered.
+These details result in less than perfect expressions for the Fourier transforms, but
+they are written such that evaluating the expressions on paper will yield the exact same result as that described in \refsect{sect:orbithunter}.
+ The first detail is that a real-valued (\SOn{2}) representation of the modes is required
+(or at very least, greatly beneficial) for this formulation.
+The first reason behind the choice of is numerical in nature; if all \cdof\ are complex numbers, then constraints
+are needed to ensure the dimensions \tile\ are maintained as real numbers.
+The second reason is that expanding in sines and cosines turns out to be very helpful
+for orbits with discrete \spt\ symmetries, due to the parity of said functions.
+For real valued input the negative frequency and positive frequency modes of the Fourier transform are related by conjugation relations.
+Due to this conjugation relation and the previously described discretization,
+the Fourier transform takes the form of a truncated Fourier series, whose summation
+ranges over the frequencies
+$\wavek, \omegaj$, respectively, defined as
+\bea
+\wavek &=& \frac{2\pi k}{\speriod{}} \quad \mbox{where, }\: k \,\in 1, \dots \frac{M}{2}-1 \,.\continue
+\omegaj &=&  \frac{2\pi j}{\speriod{}} \quad \mbox{where, }\: j \,\in 0, \dots \frac{N}{2}-1 \,.
+\eea
+The derivation of the ranges of $k, j$ will accompany the derivation of the Fourier series
+representations.
+
+It is helpful to derive the spatiotemporal transform via the
+composition of one-dimensional spatial and temporal transforms. Again, it should be stressed that
+in the derivations that follow \textit{everything is written to agree with output of the computational codes}.
+This can lead to some expressions that look unsimplified, but the idea is that calculating the modes by hand would
+be exactly equivalent. The spatial transform (and its inverse) for real valued input take the following form
+\bea \label{e-spacerfft}
+e_{k}(\tn)+i f_{k}(\tn) &=&  \frac{1}{\sqrt{M}}\sum_{m = 0}^{M - 1} \dufield  e^{-i\wavek\xm} \continue
+\dufield &=& \frac{2}{\sqrt{M}} \re\Big[\sum_{k = 1}^{\frac{M}{2} - 1} (e_{k}(\tn)+if_{k}(\tn)) e^{i\wavek\xm}\Big]\,.
+\eea
+The appearance of two negative signs is less than ideal but they exist so that \refeq{e-spacerfft} agrees with computations;
+that is, the output of the computational functions used by SciPy return
+They are kept within the sine functions because otherwise it introduces ambiguity when representing the modes in a vector
+or tensor. Another way of stating this is in order to have the correct computations, the modes need to be
+the coefficients of $-\sin(\wavek\xm)$; this can lead to very confusing expressions such as $-(-f_{k}(\tn))\sin(\wavek\xm)$.
+The $k\in \{0,\frac{M}{2}\}$ spatial modes are constrained to 0; hence why they are not included in \refeq{e-spatialrfft}.
+The factor of two in the inverse transform expression is a result of keeping only the positive half of the spectrum.
+The constraint on the zeroth mode is justified by invariance to Galilean transformations,
+discussed in \refsect{sect:symmetry}.
+The constraint on the Nyquist mode is a numerical choice; numerically, this mode is returned as the sum
+of the corresponding negative and positive modes.
+This, in combination with the conjugation relation, means that only the real component (or twice thereof, technically) is returned.
+Because of this behavior, and the fact that the magnitude is typically small for sufficiently large discretizations,
+this mode is excluded from calculations (i.e. discarded after both space and time transforms).
+
+The spatiotemporal transform follows by taking the temporal transform of the time dependent spatial modes $e_k(\tn), f_k(\tn)$ of \refeq{e-spatialrfft}.
+Due to the numerical implementation, time is technically parameterized as $\period{}-\tn$, as the first row corresponds to $t = T$ and
+the last row, $t=0$. The expression \refeq{e-spatialrfft} is still correct,
+but now that the time ordering matters, the time transform and its inverse take the form
+\bea \label{e-timerfftdown}
+a_{k}(\tn)+i b_{k}(\tn) &=&  \frac{1}{\sqrt{N}}\sum_{n=0}^{N-1}  e_{k}(T-\tn)  e^{-i\omegaj\tn} \continue
+c_{k}(\tn)+i d_{k}(\tn) &=&  \frac{1}{\sqrt{N}}\sum_{n=0}^{N-1}  f_{k}(T-\tn)  e^{-i\omegaj\tn} \continue
+e_k(\period{}-\tn) &=& \frac{2}{\sqrt{N}}\re\Big(\frac{\azk}{2} + \sum_{j=1}^{\frac{N}{2}-1} \ajk + \bjk\sin(\omegaj \tn)\Big) \continue
+f_k(\period{}-\tn) &=& \frac{2}{\sqrt{N}}\re\Big(\frac{\czk}{2} +\sum_{j=1}^{\frac{N}{2}-1} \cjk\cos(\omegaj \tn) - \djk\sin(\omegaj \tn)\Big) \;.
+\eea
+
+\begin{alignat}{2}
+\label{e-rfft}
+\ajk=\frac{1}{\sqrt{NM}}&\sum_{n=0}^{N-1} &\sum_{m = 0}^{M - 1}& u(\period{}-\tn, \xm)  \cos(\wavek \xm) \cos(\omegaj \tn) \continue
+\bjk=\frac{1}{\sqrt{NM}}&\sum_{n=0}^{N-1} &\sum_{m = 0}^{M - 1}& u(\period{}-\tn, \xm)  \cos(\wavek \xm) \sin(-\omegaj \tn) \continue
+\cjk=\frac{1}{\sqrt{NM}}&\sum_{n=0}^{N-1} &\sum_{m = 0}^{M - 1}&u(\period{}-\tn, \xm) \sin(-\wavek \xm) \cos(\omegaj \tn) \continue
+\djk=\frac{1}{\sqrt{NM}}&\sum_{n=0}^{N-1} &\sum_{m = 0}^{M - 1}&u(\period{}-\tn, \xm) \sin(-\wavek \xm) \sin(-\omegaj \tn) \continue
+u(T-\tn, \xm)=\frac{4}{\sqrt{NM}}&\sum_{k = 1}^{\frac{M}{2} - 1}&\Bigg[&\bigg(\frac{\azk}{2} + \sum_{j=1}^{\frac{N}{2}-1}\ajk\cos(\omegaj \tn)+\bjk\sin(-\omegaj\tn)\bigg)\cos(\wavek \xm) \continue
+&&+&\bigg(\frac{\czk}{2} + \sum_{j=1}^{\frac{N}{2}-1}\cjk\cos(\omegaj \tn)+\djk\sin(-\omegaj\tn)\bigg)\sin(-\wavek \xm)\Bigg] \,.
+\end{alignat}
+This is a technical detail but it is relevant when taking time derivatives; if
+overlooked then the time derivative would be off by a negative sign. Another technical detail occurs due to the fact that
+$j=0$ only needs to be included for $\ajk,\cjk$; this is not shown explicitly unless necessary simply to keep the notation consistent.
+Due to periodicity in time \refeq{e-timerfftdown} can be rewritten to yield the expressions for the increasing-time parameterization as
+\bea \label{e-timerfft}
+e_k(\tn) &=& \frac{2}{\sqrt{N}} \Big(\frac{\azk}{2} + \sum_{j=1}^{\frac{N}{2}-1}\ajk\cos(\omegaj \tn) + \bjk\sin(\omegaj \tn)\Big) \continue
+f_k(\tn) &=& \frac{2}{\sqrt{N}} \Big(\frac{\czk}{2} + \sum_{j=1}^{\frac{N}{2}-1}\cjk\cos(\omegaj \tn) + \djk\sin(\omegaj \tn)\Big) \;.
+\eea
+Note that the modes in \refeq{e-timerfft} are those computed using \refeq{e-timerfftdown}; \refeq{e-timerfftdown} is the actual output from
+the numerical codes. Again the entire point of this is that \refeq{e-timerfftdown} more accurately represents the actual numerical calculations being
+performed, but \refeq{e-timerfft} it is much more convenient to write the equation for \dufield, so it will be expressed in terms of the modes of $u(\period{}-\tn, \xm)$.
+Both \refeq{e-timerfftdown} and \refeq{e-timerfft} abide by the numerical conventions.
+Finally, upon substitution of \refeq{e-timerfft} into \refeq{e-spacerfft} \spt\ transform and its inverse are derived.
+\begin{alignat}{2}
+\label{e-rfft}
+\ajk=\frac{1}{\sqrt{NM}}&\sum_{n=0}^{N-1} &\sum_{m = 0}^{M - 1}& u(\period{}-\tn, \xm)  \cos(\wavek \xm) \cos(\omegaj \tn) \continue
+\bjk=\frac{-1}{\sqrt{NM}}&\sum_{n=0}^{N-1} &\sum_{m = 0}^{M - 1}& u(\period{}-\tn, \xm)  \cos(\wavek \xm) \sin(\omegaj \tn) \continue
+\cjk=\frac{1}{\sqrt{NM}}&\sum_{n=0}^{N-1} &\sum_{m = 0}^{M - 1}&u(\period{}-\tn, \xm) \sin(\wavek \xm) \cos(\omegaj \tn) \continue
+\djk=\frac{-1}{\sqrt{NM}}&\sum_{n=0}^{N-1} &\sum_{m = 0}^{M - 1}&u(\period{}-\tn, \xm) \sin(\wavek \xm) \sin(\omegaj \tn) \continue
+\dufield=\frac{4}{\sqrt{NM}}&\sum_{k = 1}^{\frac{M}{2} - 1}&\Bigg[&\bigg(\frac{\azk}{2} + \sum_{j=1}^{\frac{N}{2}-1}\ajk\cos(\omegaj \tn)+\bjk\sin(\omegaj\tn)\bigg)\cos(\wavek \xm) \continue
+&&-&\bigg(\frac{\czk}{2} + \sum_{j=1}^{\frac{N}{2}-1}\cjk\cos(\omegaj \tn)+\djk\sin(\omegaj\tn)\bigg)\sin(\wavek \xm)\Bigg] \,.
+\end{alignat}
+The spatiotemporal \rfft \refeq{e-rfft} stands as the equation for orbits of all symmetry types;
+however, as shown in \refsect{sect:symmetry}, discrete symmetries impose constraints which determine the set of non-vanishing modes.
+These constraints will be referred to as selection rules; their derivation is left to the discussion of
+\spt\ symmetries \refsect{sect:symmetry}.
+The explicit formulae \refeq{e-timerfft}, \refeq{e-spacerfft}, \refeq{e-rfft} explicitly and exactly state how
+the discrete Fourier transforms are defined. The numerical implementation is a \textit{pseudospectral} implementation. The defining
+quality of this implementation is that the computation of the nonlinear term of the \KSe\
+is performed as an elementwise (alternatively, Schur or Hadamard) product of fields as opposed to a convolution of modes.
+Computationally this provides benefits to accuracy and computation time
+(especially if the discretization sizes are powers of two, which FFT algorithms can exploit).
+Due to this, an explicit expression in terms of the modes is not required,
+hence \refeq{e-rfft} will only really ever be used implicitly; as a convention
+will be used to represent the forward and backward transforms as \FFT, \IFFT.
+If a transform for a single dimension needs to be referenced, it shall be
+done via a subscript, i.e. $\FFT_x$ refers to \refeq{e-spacerfft}.
+
+Finally, we have arrived at a formula which defines \dufield in terms of \spt\ Fourier modes.
+The expression \refeq{e-rfft} is very cumbersome, however, and so two other representations
+are explained for usage in future derivations and computations.
+The first of the two representations defined is a tensor representation. The tensor arranges
+the four sets of modes of \refeq{e-rfft} into blocks based on frequencies
+\beq \label{e-modetensorawk}
+\utensor \equiv
+\begin{bmatrix}
+\azk & \czk \\
+\ajk & \cjk\\
+\bjk & \djk
+\end{bmatrix}\,.
+\eeq
+The zeroth $j=0$ time modes are indicated separately because there are no analogous terms in $\bjk, \djk$; they
+were discarded because the zeroth modes must be real valued. This is an important factor
+to note for time differentiation however for simplicity
+the awkwardness of the zeroth mode will be implicit in the mode tensor expression such that
+\beq \label{e-modetensor}
+\utensor \equiv
+\begin{bmatrix}
+\ajk & \cjk\\
+\bjk & \djk
+\end{bmatrix}\,.
+\eeq
+In the context of the tensor notation the sets of modes $\{\ajk, \bjk, \cjk, \djk\}$ will be referred to as \textit{mode blocks}.
+The shape of the mode tensors
+is fundamentally different when symmetries are considered; therefore, a notation which specifies the
+shape of the mode tensor based on the $j,k$ indices is developed.
+Defining
+\bea \label{e-jkindices}
+k &\in& \{1, ... M/2-1\} \continue
+j &\in& \{1, ... N/2-1\}
+\eea
+While the indices of \refeq{e-modetensor} are never referenced directly, due to the lack
+of uniqueness, the blocks' indices \refeq{e-blockindices} are by the following notation, which
+generates the ordered pairs of indices for each block; the first term in the product will be
+called the \textit{time indices} and the latter, \textit{space indices}
+the ordered pairs specifying the elements of \refeq{e-modetensor} will be defined via set notation
+\beq \label{e-modeindices}
+\{(j, k)\}\:\widehat{=}\:\{\{\{0\}, \{j_{ac}\}, \{j_{bd}\}\} \times \{\{k_{ab}\},\{k_{cd}\}\}\} \,.
+\eeq
+where $\{j_{ac}\}=\{j_{bd}\}=\{j\}$ and $\{k_{ab}\},\{k_{cd}\}=\{k\}$ from \refeq{e-jkindices}.
+This is simply an attempt at formalizing the fact that to uniquely specify an element in \refeq{e-modetensor}
+the block in addition to the indices $j,k$ must be provided. Additionally, another important usage
+of \refeq{e-modeindices} is that the dimensions of the
+mode tensor can be easily deduced given the definitions
+of the sets \refeq{e-jkindices}. For example, the dimensions of the mode tensor \refeq{e-modetensor} are
+\bea
+|\utensor| &=& |\{\{\{0\}, \{j_{ac}\}, \{j_{bd}\}\}| \times | \{\{k_{ab}\},\{k_{cd}\}\}\}|\continue
+&=& (|\{0\}|+|\{j\}|+|\{j\}| )\times (|\{k\}|+|\{k\}|) \continue
+&=& (1 + (N/2-1) + (N/2-1)) \times (M/2-1 + M/2-1)\continue
+&=& (N-1) \times (M-2)
+\eea
+It is very important to get this ordering correct in order to correctly take derivatives.
+
+
+For practical purposes the non-existent $\bjknum{0}{k}$ modes can be assumed to equal zero in expressions such as $\ajk+\bjk$.
+The reason why this is being discussed at all is so that all equations reflect the numerical computations as accurately as possible,
+without being overly verbose.
+
+In anticipation of future derivations one final convention concerning the dimensionality of \refeq{e-modeindices} is introduced.
+Specifically, for the derivation of linear operators there will be Kronecker products with identity matrices of various sizes
+defined by the number of modes; something which varies depending on symmetry. The following
+definitions allow for a general description without having to constantly specify symmetries
+\bea \label{e-identitysize}
+\mathbb{I}_{\frac{N}{2}-1} &\equiv& \mathbb{I}_j \continue
+\mathbb{I}_{\frac{M}{2}-1} &\equiv& \mathbb{I}_k \continue
+\mathbb{I}_x &\equiv& \mathbb{I}_{|\{(j, k)\}|_t}\continue
+\mathbb{I}_t &\equiv& \mathbb{I}_{|\{(j, k)\}|_x}\,.
+\eea
+The last two identity matrices have dimension equal to the cardinality of the set of space indices and time
+indices, respectively.
+
+The second representation of the modes will be a vector representation.
+This requires two decisions to be made; how to order
+real and imaginary components with respect to one another and
+how to order space and time indices relative to each other.
+The conventions employed here are to separate the real and imaginary components such that they
+have the general form (using dummy variables) $\uvec = [\re(z_i),\im(z_i)]$. The alternative
+is to alternate between real and imaginary components
+$\uvec = [\re(z_0),\im(z_0), \dots, \re(z_k),\im(z_k)]$.
+Next is how to order the vector elements with respect to space and time, i.e. the indices $j, k$.
+The convention here is to have the spatial index $k$ as the `inner' index.
+That is, cycling through the vectors' elements will cycle through all values of the inner index $k$
+for each increment of the outer index $j$. For those familiar with programming parlance,
+this would be equivalent to nested `for-loops'.
+To represent this visually this can informally be written as
+\beq \label{e-modevector}
+\uvec \equiv
+\overbrace{\Big[\underbrace{\ajknum{0}{k}}_{\re(x)}\;\underbrace{\cjknum{0}{k}}_{\im(x)}\;\dots}^{\re(t)}\quad \overbrace{\underbrace{\bjknum{1}{k}}_{\re(x)}\;\underbrace{\djknum{1}{k}}_{\im(x)}\;\dots\,\Big]}^{\im(t)} \;.
+\eeq
+The labels $\re(x), \im(x), \re(t), \im(t)$ are simply a means of demonstrating the pattern with which indices are cycled through; no formal Mathematical statement is being made in \refeq{e-modevector} other than the mode ordering.
+
+
+This vector representation is used almost exclusively in the implementation of Newton's method \refsect{sect:numerical}, which requires explicit
+construction of the Jacobian. Naturally, in order to explicitly construct the Jacobian matrix, a matrix representation is required for each relevant linear operator.
+Therefore as the final task of this section, the matrix representations of the \rfft\ and \irfft\ operators \FFT, \IFFT are derived. In practice
+this is constructed by first constructing the matrix for a single instant in time or space, and then using a Kronecker product to extend it
+to space-time. In either case, the matrix is constructed by taking the \rfft\ (\irfft) of each column of appropriately sized identity matrix; this
+yields a Vandemonde matrix wherein the elements are powers
+of the roots of unity. The matrix representation of the linear
+operator $\FFT_x$ is
+\beq \label{e-RFFTxmat0}
+\begin{bmatrix}
+1 & 1 & 1 & 1 &\dots & 1 \\
+1 & r  & r^2 & r^3 & \cdots & r^{(M-1)} \\
+1 & r^2 & r^4 & r^6 & \cdots & r^{2(M-1)} \\
+\vdots & \vdots & \vdots &\vdots & \ddots & \vdots \\
+ 1 & r^{(\frac{M}{2})} & r^{2(\frac{M}{2})} & r^{3(\frac{M}{2})} & \cdots & r^{(\frac{M}{2})(M-1)}
+\end{bmatrix}
+\eeq
+with $r = \cos(\frac{2\pi}{M}) + i\sin(\frac{2\pi}{M})$. The remaining steps are: to account for the constraints on $k \in \{0, \frac{M}{2}\}$, to make bring \refeq{e-RFFTxmat} to a real-valued form and to extend the definition to create an
+operator which acts on the entirety of space-time.
+
+The first of these steps, accounting for the constraints, is handled by discarding the first and last rows; these correspond to the constrained modes.
+\beq \label{e-RFFTxvander}
+\begin{bmatrix}
+1 & r  & r^2 & r^3 & \cdots & r^{(M-1)} \\
+1 & r^2 & r^4 & r^6 & \cdots & r^{2(M-1)} \\
+\vdots & \vdots & \vdots &\vdots & \ddots & \vdots \\
+ 1 & r^{(\frac{M}{2}-1)} & r^{2(\frac{M}{2}-1)} & r^{3(\frac{M}{2}-1)} & \cdots & r^{(\frac{M}{2}-1)(M-1)}
+\end{bmatrix}
+\eeq
+Substituting the identity $r^p = (\cos(\frac{2\pi}{M}) + i\sin(\frac{2\pi}{M}))^p = (\cos(\frac{2\pi p}{M})+i\sin(\frac{2\pi p}{M}))$ into
+this previous expression allows us to easily separate the real and imaginary components; the spatial transform operator
+is created by concatenating (alternatively: conjoining, appending) the imaginary components of this matrix to the bottom of the real component and multiplying
+by a normalization factor
+\begingroup
+\renewcommand*{\arraystretch}{1.5}
+\begin{flalign}
+\label{e-RFFTxmat}
+[\FFT_x] &\equiv \frac{1}{\sqrt{M}}
+\begin{bmatrix}
+1 & \cos(\frac{2\pi}{M})   & \cos(\frac{4\pi}{M}) & \cdots & \cos(\frac{\sml{2(M-1)}\pi}{M})  \\
+1 & \cos(\frac{4\pi}{M}) & \cos(\frac{8\pi}{M})& \cdots & \cos(\frac{\sml{4(M-1)}\pi}{M}) \\
+\vdots & \vdots & \vdots & \ddots & \vdots \\
+ 1 & \cos(\frac{\sml{2(\frac{M}{2}-1)}\pi}{M})& \cos(\frac{\sml{4(\frac{M}{2}-1)}\pi}{M})& \cdots & \cos(\frac{2\sml{(\frac{M}{2}-1)}\sml{(M-1)}\pi}{M}) \\
+1 & \sin(\frac{2\pi}{M})   & \sin(\frac{4\pi}{M}) & \cdots & \sin(\frac{\sml{2(M-1)}\pi}{M})  \\
+1 & \sin(\frac{4\pi}{M}) & \sin(\frac{8\pi}{M})& \cdots & \sin(\frac{\sml{4(M-1)}\pi}{M}) \\
+\vdots & \vdots & \vdots & \ddots & \vdots \\
+ 1 & \sin(\frac{\sml{2(\frac{M}{2}-1)}\pi}{M})& \sin(\frac{\sml{4(\frac{M}{2}-1)}\pi}{M})& \cdots & \sin(\frac{2\sml{(\frac{M}{2}-1)}\sml{(M-1)}\pi}{M}) \\
+\end{bmatrix}
+\end{flalign}
+\endgroup
+The \xdFt\ in the real-valued basis is an orthogonal transformation and so the inverse of \refeq{e-RFFTxmat} can be derived by taking
+the matrix transpose of \refeq{e-RFFTxmat} and accounting for the normalization factor in definition of the inverse transform \refeq{e-spacerfft}.
+\beq
+[\IFFT_x] = 2 [\FFT_x]^{\top}
+\eeq
+Recall that \refeq{e-RFFTxmat} was constructed such that it returns the spatial modes defined at a single instant in time $u(t', x_m)$.
+The generalization to space time is therefore simply derived by taking
+the Kronecker outer product of \refeq{e-RFFTxmat} with the identity matrix whose diagonal is the same dimension as the time discretization.
+\beq
+\mathbf{M[\FFT_x]} = \mathbb{I}_N \otimes [\FFT_x]
+\eeq
+and likewise for the matrix inverse.
+
+The matrix representation for the temporal transforms follows from the previous exposition  \refeq{e-RFFTxmat}, the only
+difference being the inclusion of the zeroth mode. The temporal transform matrix is then
+\begingroup
+\renewcommand*{\arraystretch}{1.5}
+\begin{flalign}
+\label{e-RFFTtmat}
+[\FFT_t] &\equiv \frac{1}{\sqrt{N}}
+\begin{bmatrix}
+1 & 1 & 1 & \dots & 1 \\
+1 & \cos(\frac{2\pi}{N})   & \cos(\frac{4\pi}{N}) & \cdots & \cos(\frac{\sml{2(N-1)}\pi}{N})  \\
+1 & \cos(\frac{4\pi}{N}) & \cos(\frac{8\pi}{N})& \cdots & \cos(\frac{\sml{4(N-1)}\pi}{N}) \\
+\vdots & \vdots & \vdots & \ddots & \vdots \\
+ 1 & \cos(\frac{\sml{2(\frac{N}{2}-1)}\pi}{N})& \cos(\frac{\sml{4(\frac{N}{2}-1)}\pi}{N})& \cdots & \cos(\frac{2\sml{(\frac{N}{2}-1)}\sml{(N-1)}\pi}{N}) \\
+1 & \sin(\frac{2\pi}{N})   & \sin(\frac{4\pi}{N}) & \cdots & \sin(\frac{\sml{2(N-1)}\pi}{N})  \\
+1 & \sin(\frac{4\pi}{N}) & \sin(\frac{8\pi}{N})& \cdots & \sin(\frac{\sml{4(N-1)}\pi}{N}) \\
+\vdots & \vdots & \vdots & \ddots & \vdots \\
+ 1 & \sin(\frac{\sml{2(\frac{N}{2}-1)}\pi}{N})& \sin(\frac{\sml{4(\frac{N}{2}-1)}\pi}{N})& \cdots & \sin(\frac{2\sml{(\frac{N}{2}-1)}\sml{(N-1)}\pi}{N}) \\
+\end{bmatrix}
+\end{flalign}
+\endgroup
+and the inverse
+\beq
+[\IFFT_t] = 2 [\FFT_t]^{\top} \,.
+\eeq
+The Kronecker product appears except in reversed order; also, the identity matrix reflects the spatial dimension
+\beq
+\mathbf{M[\FFT_t]} = [\FFT_t] \otimes \mathbb{I}_{M-2}
+\eeq
+This concludes the definition of the spatial and temporal Fourier transform matrices. In order to get the
+\spt\ version, simply take the product $M[\FFT_t]M[\FFT_x]$. 

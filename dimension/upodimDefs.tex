@@ -1,0 +1,427 @@
+% siminos/dimension/upodimDefs.tex
+% $Author: predrag $ $Date: 2016-06-05 19:53:29 -0400 (Sun, 05 Jun 2016) $
+
+% Predrag                       Nov 15 2009
+% from siminos/slice/sliceDefs.tex
+% Note: {apsrev} has been replaced by {apsrev4-1} by APS
+%       revert to {revtex4} if you have an old configuration
+% Predrag                       Dec 30 2008
+% Predrag                       Oct  2 2006
+    \usepackage{graphicx,amsmath,amssymb,amsbsy,bm}
+    \usepackage{amsfonts,latexsym}
+    \usepackage{ifthen}
+    \usepackage[percent]{overpic}
+% \usepackage[mathcal]{euscript}
+
+\ifpreparepdf
+    \usepackage{color}
+    \usepackage[colorlinks]{hyperref} %% hyperlinks
+\else % prepare B&W file
+    \usepackage{hyperref}
+\fi
+
+    \bibliographystyle{apsrev4-1}
+    %\graphicspath{{../xiong/figures/}} %{../figs/}{../Fig/}}  %% directories with graphics files
+
+%%%%%%%%%%%%%%%%%%%%%%% set up draft, hyperlinked %%%%%%%%%%%
+
+\ifpreparepdf % hyperlinked pdf, keep homepage flexible:
+    \newcommand{\wwwcb}[1]{
+                  {\tt \href{http://ChaosBook.org#1}
+              {ChaosBook.org#1}}}
+    \newcommand{\weblink}[1]{{\tt \href{http://#1}{#1}}}
+    \newcommand{\HREF}[2]{{\href{#1}{#2}}}
+    \newcommand{\arXiv}[1]{
+              {\tt \href{http://arXiv.org/abs/#1}{arXiv:#1}}}
+\else  %% prepare for postscript printing:
+    \newcommand{\wwwcb}[1]{{\tt ChaosBook.org#1}}
+    \newcommand{\weblink}[1]{{\tt #1}}
+    \newcommand{\HREF}[2]{{#2}}
+    \newcommand{\arXiv}[1]{ {\tt arXiv:#1}}
+\fi
+
+%%%%%%%%%%%%%%%%%%%%%% EDITS %%%%%%%%%%%%%%%%%%%%%%
+
+\ifhighlightedits
+    \newcommand{\edit}[1]{{\color{red}#1}}
+\else
+    \newcommand{\edit}[1]{#1}
+\fi
+
+%%%%%%%%%%%%%%%%%%%%%% COMMENTS %%%%%%%%%%%%%%%%%%%
+        \ifboyscout % if draft, display comments in text
+   \newcommand{\PCedit}[1]{{\color{blue}#1}}
+   \newcommand{\PC}[2]{\begin{quote}\PCedit{[#1 Predrag] #2}\end{quote}}
+   \newcommand{\RLDedit}[1]{{\color{red}#1}}
+   \newcommand{\RLD}[2]{\begin{quote}\RLDedit{[#1 Ruslan] #2}\end{quote}}
+   \newcommand{\Xiongedit}[1]{{\color{green}#1}}
+   \newcommand{\Xiong}[2]{\begin{quote}\Xiongedit{[#1 Xiong] #2}\end{quote}}
+   \newcommand{\ESedit}[1]{{\color{magenta}#1}}
+   \newcommand{\ES}[2]{\begin{quote}\ESedit{[#1 Evangelos] #2}\end{quote}}
+   \newcommand{\Private}[1]{{\color{blue}#1}}
+   \newcommand{\KTedit}[1]{{\color{cyan}#1}}
+   \newcommand{\KT}[2]{\begin{quote}\KTedit{[#1 Kazz] #2}\end{quote}}
+   \newcommand{\HCedit}[1]{{\color{red}#1}}
+   \newcommand{\HC}[2]{\begin{quote}\HCedit{[#1 Hugues] #2}\end{quote}}
+        \else  % drop comments
+   \newcommand{\PC}[2]{}{}
+   \newcommand{\PCedit}[1]{#1}
+   \newcommand{\RLD}[2]{}{}
+   \newcommand{\RLDedit}[1]{#1}
+   \newcommand{\Xiong}[2]{}{}
+   \newcommand{\Xiongedit}[1]{#1}
+   \newcommand{\ES}[2]{}{}
+   \newcommand{\ESedit}[1]{#1}
+   \newcommand{\HC}[2]{}{}
+   \newcommand{\HCedit}[1]{#1}
+   \newcommand{\Private}[1]{}
+   \newcommand{\KT}[2]{}{}
+   \newcommand{\KTedit}[1]{#1}
+        \fi
+
+%%%%%%%%%%%%%%% REFERENCING EQUATIONS ETC. %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcommand{\rf}     [1] {~\cite{#1}}
+\newcommand{\refref} [1] {ref.~\cite{#1}}
+\newcommand{\refRef} [1] {Ref.~\cite{#1}}
+\newcommand{\refrefs}[1] {refs.~\cite{#1}}
+\newcommand{\refRefs}[1] {Refs.~\cite{#1}}
+\newcommand{\refeq}  [1] {(\ref{#1})}
+\newcommand{\reffig} [1] {fig.~\ref{#1}}
+\newcommand{\refFig} [1] {Fig.~\ref{#1}}
+\newcommand{\reftab} [1] {table~\ref{#1}}
+\newcommand{\refTab} [1] {Table~\ref{#1}}
+\newcommand{\reftabs}[2] {tables~\ref{#1} and~\ref{#2}}
+
+%%%%%%%%%%%%%%% KAZ MACROS %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\renewcommand{\eqref}[1]{Eq.~(\ref{#1})}
+\newcommand{\eqsref} [1]{Eqs.~(\ref{#1})}
+\newcommand{\pref}   [1]{(\ref{#1})}
+\newcommand{\figref} [1]{Fig.~\ref{#1}}
+\newcommand{\refcite}[1]{Ref.~\cite{#1}}
+\newcommand{\ve}{\bm{e}}
+\newcommand{\op}{\mathrm{\mathbf{x}}}
+\newcommand{\opa}{\mathrm{\mathbf{a}}}
+\DeclareMathOperator{\im}{Im}
+\DeclareMathOperator{\re}{Re}
+
+\newcommand{\jacobianM}{Jacobian matrix}  % back to Predrag's name 20oct2009
+\newcommand{\jacobianMs}{Jacobian matrices}   % matrices
+\newcommand{\JacobianM}{Jacobian matrix} %
+\newcommand{\JacobianMs}{Jacobian matrices}  %
+\newcommand{\FloquetM}{Floquet matrix} % specialized to periodic orb
+\newcommand{\FloquetMs}{Floquet matrices}  %
+\newcommand{\stabmat}{stability matrix}     % stability matrix, velocity gradients
+\newcommand{\Stabmat}{Stability matrix}     % Stability matrix
+\newcommand{\stabmats}{stability matrices}
+\newcommand{\monodromyM}{monodromy matrix} % monodromy matrix, Poincare cut
+\newcommand{\MonodromyM}{Monodromy matrix} % monodromy matrix, Poincare cut
+%%%%%%%%%%%% MACROS, Xiong Ding specific %%%%%%%%%%
+%\newcommand{\cLv} {covariant vector}  % ChaosBook.org
+\newcommand{\cLv} {covariant Lyapunov vector} % Ginelli et al
+%\newcommand{\CLv} {Covariant vector}  % ChaosBook.org
+\newcommand{\CLv} {Covariant Lyapunov vector} % Ginelli et al
+%\newcommand{\cLvs} {covariant vectors}  % ChaosBook.org
+\newcommand{\cLvs} {covariant Lyapunov vectors} % Ginelli et al
+%\newcommand{\CLvs} {Covariant vectors}  % ChaosBook.org
+\newcommand{\CLvs} {Covariant Lyapunov vectors} % Ginelli et al
+\newcommand{\transient}{transient} % ChaosBook.org
+% \newcommand{\transient} {spurious} % Kaz uses {spurious}
+\newcommand{\entangled}{entangled}  % ChaosBook.org
+% \newcommand{\entangled} {physical} % Kaz uses {physical}
+\newcommand{\ppo}{pre-periodic orbit}
+\newcommand{\Ppo}{Pre-periodic orbit}
+\newcommand{\psd}{Periodic Schur Decomposition}
+\newcommand{\LMa}{Levenberg-Marquardt algorithm}
+\newcommand{\pse}{Periodic Sylvester Equation}
+\newcommand{\psm}{Periodic Sylvester Matrix}
+\newcommand{\xDft}{Discrete Fourier Transform}
+\newtheorem{per_schur}{Theorem}
+
+%%%%%%%%%%%%%%% OLDER MACROS %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\newcommand{\Lg}{\ensuremath{T}}   % 2014-04-04 prettier Lie algebra generator
+% \newcommand{\Lg}{\ensuremath{\mathbf{T}}}   % Predrag Lie algebra generator
+%\newcommand{\Lg}{\mathfrak{a}}             % Siminos Lie algebra generator
+% \newcommand{\Lg}{\ensuremath{\mathbf{T}}}   % Predrag Lie algebra generator
+\newcommand{\matrixRep}{\ensuremath{{D}}}  %  matrix rep of a group element
+\newcommand{\LieEl}{\ensuremath{g}}  %  a group element (often replaced by \matrixRep)
+%\newcommand{\LieEl}{\ensuremath{\mathbb{G}}}  % Wiczek project Lie group element
+
+%%%%%%%%%%%%%%% EQUATIONS %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcommand{\beq}{\begin{equation}}
+\newcommand{\continue}{\nonumber \\ }
+\newcommand{\nnu}{\nonumber}
+\newcommand{\eeq}{\end{equation}}
+\newcommand{\ee}[1] {\label{#1} \end{equation}}
+\newcommand{\bea}{\begin{eqnarray}}
+\newcommand{\ceq}{\nonumber \\ & & }
+\newcommand{\eea}{\end{eqnarray}}
+
+%%%%%%%%%%%%%%  Abbreviations %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcommand{\etc}{{\em etc.}}       % etcetera in italics
+\newcommand{\ie}{{i.e.}}            % APS
+\newcommand{\eg}{{e.g.}}
+\newcommand{\etal}{{\em et al.}}    % etal in italics, APS too
+
+\newcommand{\statesp}{state space}
+\newcommand{\Statesp}{State space}
+\newcommand{\dmn}{-dimensional}  %  n-dimensional
+%\newcommand{\dmn}{\ensuremath{\,d}}  %  n-dimensional
+\newcommand{\Fd}{spec\-tral det\-er\-min\-ant}
+\newcommand{\fd}{spec\-tral det\-er\-min\-ant}
+
+\newcommand{\optPart}{optimal partition}
+\newcommand{\OptPart}{Optimal partition}
+\newcommand{\Fokker}{Fokker-Planck}
+
+\newcommand{\Mvar}{\ensuremath{A}}  % stability matrix
+\newcommand{\jMps}{\ensuremath{J}}   % jacobian matrix, phase space/state space
+\newcommand{\ExpaEig}{\Lambda}
+\newcommand{\cl}[1]{{n_{#1}}}   % discrete length of a cycle, Predrag
+\newcommand{\msr}{{\rho}}               % measure
+\newcommand{\pS}{{\cal M}}          % symbol for phase space
+\newcommand{\Lnoise}[1]{{\cal L}^{#1}}    % noisy evolution operator
+\newcommand{\Lmat}[1]{{{\bf L}_{#1}}}      % evolution matrix
+\newcommand{\orbitDist}{{z}}     % Langevin distance from orbit point
+\newcommand{\Df}[1]{{f'_{#1}}}
+\newcommand{\tr}{\mbox{\rm tr}\,}
+\newcommand{\cycle}[1]{\ensuremath{\overline{#1}}}
+\newcommand{\zeit}{\ensuremath{t}}  %time variable
+%\newcommand{\zeit}{\ensuremath{\tau}}  %time variable
+\newcommand\period[1]{{\ensuremath{T_{#1}}}}         %continuous cycle period
+%\newcommand\period[1]{{\ensuremath{\zeit_{#1}}}}         %continuous cycle period
+
+\newcommand{\reals}{\mathbb{R}}
+\newcommand{\complex}{\mathbb{C}}
+\newcommand{\integers}{\mathbb{Z}}
+\newcommand{\rationals}{\mathbb{Q}}
+\newcommand{\naturals}{\mathbb{N}}
+\newcommand{\norm}[1]{\left\Arrowvert \, #1 \, \right\Arrowvert}
+\renewcommand\Im{\ensuremath{{\rm Im}\,}}
+\renewcommand\Re{\ensuremath{{\rm Re}\,}}
+
+%%%%%%%%%%%%%%% relative periodic orbits: %%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcommand{\po}{periodic orbit}
+\newcommand{\Po}{Periodic orbit}
+\newcommand{\rpo}{rela\-ti\-ve periodic orbit}
+%   \newcommand{\rpo}{equi\-vari\-ant periodic orbit}
+\newcommand{\Rpo}{Rela\-ti\-ve periodic orbit}
+%   \newcommand{\Rpo}{Equi\-vari\-ant periodic orbit}
+\newcommand{\eqv}{equi\-lib\-rium}
+\newcommand{\Eqv}{Equi\-lib\-rium}
+\newcommand{\eqva}{equi\-lib\-ria}
+\newcommand{\Eqva}{Equi\-lib\-ria}
+\newcommand{\reqv}{rela\-ti\-ve equi\-lib\-rium}
+%   \newcommand{\reqv}{equi\-vari\-ant equilibrium}
+%   \newcommand{\reqv}{travelling wave}
+\newcommand{\Reqv}{Rela\-ti\-ve equi\-lib\-rium}
+%   \newcommand{\Reqv}{Equi\-variant equi\-librium}
+%   \newcommand{\Reqv}{travelling wave}
+\newcommand{\reqva}{rela\-ti\-ve equi\-lib\-ria}
+%   \newcommand{\reqva}{equivariant equilibria}
+\newcommand{\Reqva}{Rela\-ti\-ve equi\-lib\-ria}
+%   \newcommand{\Reqva}{Equivariant equilibria}
+\newcommand{\equilibrium}{equi\-lib\-rium}
+\newcommand{\equilibria}{equi\-lib\-ria}
+\newcommand{\Equilibria}{Equi\-lib\-ria}
+% \newcommand{\equilibrium}{steady state}
+% \newcommand{\equilibria}{steady states}
+% \newcommand{\Equilibria}{Steady states}
+\newcommand{\Hec}{Hetero\-clinic connect\-ion}
+\newcommand{\hec}{hetero\-clinic connect\-ion}
+\newcommand{\HeC}{Hetero\-clinic Connect\-ion}
+
+%%%%%%%%%%%%%%% VAGGELIS MACROS %%%%%%%%%%%%%%%%%%%%%%
+%%%Copied from ../inputs/defsBlog.tex
+\newcommand{\refFigToFig}[2]{Figures~\ref{#1} to~\ref{#2}}
+
+\newcommand{\bseq}{\begin{subequations}}
+\newcommand{\eseq}{\end{subequations}}
+
+\newcommand{\chebT}{\mathrm{T}}
+\newcommand{\chebU}{\mathrm{U}}
+
+\newcommand{\normVec}{\ensuremath{\mathbf{n}}}    % group orbit curvature normal
+\newcommand{\LieAlg}{\ensuremath{{\cal G}}}         % Predrag Lie algebra
+
+\newcommand{\bCell}{\ensuremath{\Omega}}
+\newcommand{\NS}{Navier-Stokes}
+\newcommand{\NSE}{Navier-Stokes Equations}
+\newcommand{\NSe}{Navier-Stokes equations}
+\newcommand{\stateDsp}{state-space}
+\newcommand{\StateDsp}{State-space}
+\newcommand{\Template}{Template}
+\newcommand{\ii}{\ensuremath{\mathrm{i}}} % sqrt{-1}
+\newcommand{\wurst}{wurst}
+\newcommand{\Wurst}{Wurst}
+\newcommand{\twoMode}{Two-mode}
+\newcommand{\twomode}{two-mode}
+\newcommand{\templates}{templates} % {slice-fixing point} % {reference state}
+\newcommand{\slicePlane}{slice hyperplane}
+\newcommand{\SlicePlane}{Slice hyperplane}
+\newcommand{\comovframe}{comoving frame}
+\newcommand{\comovFrame}{Comoving frame}
+% \newcommand{\mconn}{method of connections}
+% \newcommand{\Mconn}{Method of connections}
+\newcommand{\mconn}{method of \comovframe s}
+\newcommand{\Mconn}{Method of \comovframe s}
+
+%%%%%%%%%%%%%%% SECTIONS, SLICES %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%Copied from ../inputs/def.tex
+\newcommand{\Poincare}{Poincar\'e }
+\newcommand{\PoincSec}{Poincar\'e section}
+% \newcommand{\reducedsp}{orbit space}
+% \newcommand{\Reducedsp}{Orbit space}
+\newcommand{\reducedsp}{reduced state space}
+\newcommand{\Reducedsp}{Reduced state space}
+\newcommand{\fixedsp}{fixed-point subspace}
+\newcommand{\Fixedsp}{Fixed-point subspace}
+\newcommand{\csection}{cross-section} % eventually eliminate
+\newcommand{\Csection}{Cross-section} % eventually eliminate
+\newcommand{\slice}{slice}
+\newcommand{\Slice}{Slice}
+\newcommand{\mslices}{method of slices}
+\newcommand{\Mslices}{Method of slices}
+\newcommand{\mframes}{method of moving frames}
+\newcommand{\Mframes}{Method of moving frames}
+\newcommand{\chartBord}{chart border}
+\newcommand{\ChartBord}{Chart border}
+\newcommand{\poincBord}{section border}
+\newcommand{\PoincBord}{Section border}
+% \newcommand{\poincBord}{\PoincSec\ border}
+% \newcommand{\PoincBord}{\PoincSec\ border}
+% \newcommand{\poincBord}{border of transversality}
+\newcommand{\template}{template} % {slice-fixing point} % {reference state}
+\newcommand{\sliceBord}{slice border}
+\newcommand{\SliceBord}{Slice border}
+\newcommand{\Sset}{Inflection hyperplane}
+\newcommand{\sset}{inflection hyperplane} 	% {singularity hyperplane}
+											% {singular set}
+\newcommand{\pSRed}{\ensuremath{\hat{\cal M}}} % reduced state space Jan 2012
+%\newcommand{\pSRed}{\ensuremath{\bar{\cal M}}} % reduced state space
+\newcommand{\sspRed}{\ensuremath{\hat{\ssp}}}    % reduced state space point Jan 2012
+% \newcommand{\sspRed}{\ensuremath{y}}    % reduced state space point, experiment
+% \newcommand{\sspRed}{\ensuremath{\bar{x}}}    % reduced state space point
+\newcommand{\velRed}{\ensuremath{\hat{\vel}}}    % ES reduced state space velocity Jan 2012
+% \newcommand{\velRed}{\ensuremath{\bar{v}}}    % PC reduced state space velocity
+% \newcommand{\velRed}{\ensuremath{u}}    % ES reduced state space velocity
+
+\newcommand{\slicep}{{\ensuremath{\sspRed'}}}   % slice-fixing point Jan 2012
+% \newcommand{\slicep}{{\ensuremath{y'}}}   % slice-fixing point, experimental
+% \newcommand{\slicep}{\ensuremath{\ssp'}}   % slice-fixing point
+%\newcommand{\sliceTan}[1]{\ensuremath{t_{#1}(y')}}    % tangent at slice-fixing, experimental
+\newcommand{\sliceTan}[1]{\ensuremath{t'_{#1}}}    % group orbit tangent at slice-fixing
+\newcommand{\groupTan}{\ensuremath{t}}    % group orbit tangent
+%\newcommand{\Group}{\ensuremath{\Gamma}}    % Siminos Lie group
+\newcommand{\Group}{\ensuremath{G}}         % Predrag Lie or discrete group
+
+\newcommand{\sspSing}{\ensuremath{\ssp^\ast}} 	% inflection point
+\newcommand{\sspRSing}{\ensuremath{\sspRed^\ast}} 	% inflection point, reduced space
+
+\newcommand{\gSpace}{\ensuremath{{\bf \phi}}}   % MA group rotation parameters
+% \newcommand{\gSpace}{\ensuremath{{\bf \theta}}}   % PC group rotation parameters
+\newcommand{\velRel}{\ensuremath{c}}    % relative state or phase velocity
+\newcommand{\angVel}{angular velocity}      % Froehlich
+\newcommand{\angVels}{angular velocities}   % Froehlich
+\newcommand{\phaseVel}{phase velocity}      % pipe slicing
+\newcommand{\phaseVels}{phase velocities}   % pipe slicing
+\newcommand{\PhaseVel}{Phase velocity}      % pipe slicing
+\newcommand{\PhaseVels}{Phase velocities}   % pipe slicing
+
+\newcommand{\Un}[1]{\ensuremath{\textrm{U}(#1)}}         % in DasBuch
+\newcommand{\SUn}[1]{\ensuremath{\textrm{SU}(#1)}}         % in DasBuch
+%\newcommand{\On}[1]{\ensuremath{\mathbf{O}(#1)}}
+\newcommand{\On}[1]{\ensuremath{\textrm{O}(#1)}}
+%\newcommand{\SOn}[1]{\ensuremath{\mathbf{SO}(#1)}} % in Siminos thesis
+\newcommand{\SOn}[1]{\ensuremath{\textrm{SO}(#1)}}         % in DasBuch
+
+\newcommand{\vg}{\ensuremath{v}} % group velocity of traveling wave
+
+%%%%%%%%%%%%%% ks.tex specific %%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%Copied from ../inputs/def.tex
+\newcommand{\KS}{Kuramoto-Siva\-shin\-sky}
+\newcommand{\KSe}{Kuramoto-Siva\-shin\-sky equation}
+\newcommand{\pCf}{plane Couette flow}
+\newcommand{\PCf}{Plane Couette flow}
+\newcommand{\expctE}{\ensuremath{E}}    % E space averaged
+\newcommand{\tildeL}{\ensuremath{\tilde{L}}}
+\newcommand{\EQV}[1]{\ensuremath{EQ_{#1}}} %experimental
+% \newcommand{\EQV}[1]{\ensuremath{q_{#1}}} %ChaosBook
+% \newcommand{\EQV}[1]{\ensuremath{E_{#1}}} %Ruslan
+% E_0: u = 0 - trivial equilibrium
+% E_1,E_2,E_3, for 1,2,3-wave equilibria
+\newcommand{\REQV}[2]{\ensuremath{TW_{#1#2}}} % #1 is + or -
+% TW_1^{+,-} for 1-wave traveling waves (positive and negative velocity).
+\newcommand{\PO}[1]{\ensuremath{PO_{#1}}}
+% PO_{period to 2-4 significant digits} - periodic orbits
+\newcommand{\RPO}[1]{\ensuremath{RPO_{#1}}}
+% RPO_{period to 2-4 significant digits} - relative PO.  We use ^{+,-}
+% to distinguish between members of a reflection-symmetric pair.
+% Gibson likes:
+\newcommand{\tEQ}{\ensuremath{{EQ}}}
+
+\newcommand{\eigExp}[1][]{
+     \ifthenelse{\equal{#1}{}}{\ensuremath{\lambda}}{\ensuremath{\lambda{}_{#1}}}}
+%     \ifthenelse{\equal{#1}{}}{\ensuremath{\lambda}}{\ensuremath{\lambda^{(#1)}}}}
+\newcommand{\eigRe}[1][]{
+     \ifthenelse{\equal{#1}{}}{\ensuremath{\lambda}}{\ensuremath{\lambda{}_{#1}}}}
+%     \ifthenelse{\equal{#1}{}}{\ensuremath{\mu}}{\ensuremath{\mu^{(#1)}}}}
+\newcommand{\eigIm}[1][]{
+     \ifthenelse{\equal{#1}{}}{\ensuremath{\omega}}{\ensuremath{\omega{}_{#1}}}}
+%     \ifthenelse{\equal{#1}{}}{\ensuremath{\omega}}{\ensuremath{\omega^{(#1)}}}}
+
+%%%%%%%%%% flows: %%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%Copied from ../inputs/def.tex
+\newcommand\map{f}                  % other people like \phi's etc
+\newcommand\flow[2]{{f^{#1}(#2)}}
+\newcommand{\vel}{\ensuremath{v}}   % state space velocity
+\newcommand\velField[1]{{v(#1)}}    % ODE velocity field
+\newcommand\invFlow{F}
+\newcommand\hflow[2]{{\hat{f}^{#1}(#2)}}
+\newcommand\timeflow{{f^t}}
+\newcommand\tflow[2]{{\tilde{f}^{#1}(#2)}}
+%\newcommand\tflow{\tilde{f}^\tau}        %RECHECK USE OF THIS!
+\newcommand\xInit{{x_0}}        %initial x
+%\newcommand\xInit{\xi}     %initial x, Spiegel notation
+\newcommand{\para}{\parallel}
+\newcommand\multiX{x}       %multi point n-dim vector
+\newcommand\multiF{f}       %multi point n-dim vector mapping
+
+
+\newcommand{\ssp}{\ensuremath{a}}                % state space point
+\newcommand{\cssp}{\ensuremath{\tilde{u}}}                % Complex state space point
+\newcommand{\csspRed}{\ensuremath{\hat{u}}}      % Symmetry reduced complex state space point
+\newcommand{\fFslice}{first Fourier mode slice}
+\newcommand{\FFslice}{First Fourier mode slice}
+
+
+\newcommand{\csspR}{\ensuremath{b}}                % Real part of complex state space point
+\newcommand{\csspI}{\ensuremath{c}}                % Imaginary part of complex state space point
+% ES: removing tilde fro \cssp seems to cause no confusion
+%\newcommand{\cssp}{\ensuremath{u}}                % Complex state space point
+% BB: brought \cssp definition back because I think we should distinguish
+% between dual representations even though in this case subscript indicates
+% the Fourier transform. I haven't seen in any other place a function and its
+% Fourier transform being represented by the same letter
+\newcommand{\shift}{\ell}
+%%%%%%%%%%%%%%% VECTORS, MATRICES, NORMS %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%Copied from ../inputs/def.tex
+	% without large brackets:
+\newcommand{\braket}[2]
+		   {\langle{#1}\vphantom{#2}|\vphantom{#1}{#2}\rangle}
+\newcommand{\bracket}[2]{\langle{#1}|{#2}\rangle}       % Kaz
+%\newcommand{\bra}[1]{\left\langle{#1}\right|}
+\newcommand{\bra}[1]{\langle{#1}\vphantom{ }|}
+%\newcommand{\ket}[1]{\left|{#1}\right\rangle}
+\newcommand{\ket}[1]{|\vphantom{}{#1}\rangle}
+	% with large brackets:
+%\newcommand{\bra}[1]{\left\langle{#1}\vphantom{ }\right|}
+%\newcommand{\ket}[1]{\left|\vphantom{}{#1}\right\rangle}
+%\newcommand{\braket}[2]{\left\langle{#1}
+%                        \vphantom{#2}\right|\left.\vphantom{#1}
+%                        {#2}\right\rangle}
+
+\newcommand{\dual}[1]{{#1}^\ast}
+% \newcommand{\transp}[1]{\bar{#1}}
+% \newcommand{\transp}[1]{{#1}{}^T}
+\newcommand{\transp}[1]{{#1}{}^\top}

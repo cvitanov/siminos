@@ -1,0 +1,204 @@
+% siminos/spatiotemp/blogCats.tex  pdflatex blogCats; biber blogCats
+% $Author: predrag $ $Date: 2021-12-07 18:54:06 -0500 (Tue, 07 Dec 2021) $
+
+\input{inputs/inclOnlyCats}        % process only the file you are editing
+
+%%%%%%%%%%%%%%%%%%%%%%% logical setup, no need to edit %%%%%%%%%%%%%
+                        \newif\ifpaper \newif\ifPDF               %%
+                        \newif\ifOUP \newif\ifboyscout            %%
+                        \newif\ifdasbuch \newif\ifarticle	      %%
+                        \newif\ifblog \newif\ifsolutions          %%
+                        \newif\ifsvnmulti			              %%
+                        \dasbuchtrue %% DasBuch, not QFT lectures %%
+                        \blogtrue %% section shared with blogCats %%
+                        \boyscouttrue %% commented, WWW/boyscouts %%
+                        \solutionstrue %% include solutions       %%
+                        \paperfalse\PDFtrue %% hyperlinked        %%
+                        \OUPfalse \articlefalse  %% ChaosBook %%%%%%
+                        \svnmultitrue %% turn on svn-multi	  %%
+                        % \svnmultifalse %% turn off svn-multi	  %%
+    % Toggle between draft and non-draft versions
+%\boyscoutfalse                 % public, for hyperlinked ChaosBook/projects
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%% How to hyperlink posts: %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%    %% insert at the point in the text you want to hyperlink, then
+% \phantomsection\label{2017-03-14post}
+%    %% then refer to it by elsewhere as
+% .... the post of {\bf 2017-03-14},
+% on page~\pageref{2017-03-14post}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%    \ifarticle
+%\documentclass[letter,10pt,openany]{article}
+%    \else
+\documentclass[letter,10pt,openany]{../inputs/DasBuch} %{book}
+\newcommand{\inputfile}{XXX} % a cludge 2021-05-04
+%    \fi %end of article switch
+\usepackage{amsmath,amsfonts,amssymb,amsthm}
+\usepackage{color}
+\usepackage[table]{xcolor}
+\usepackage{url}
+\usepackage{fancyhdr}
+\usepackage{alltt}
+\usepackage{ifthen}
+\usepackage{float}
+\ifsvnmulti
+ \usepackage{svn-multi}
+\fi
+\usepackage[english]{babel}
+\usepackage[utf8]{inputenc}     % was [latin1]{inputenc}
+\usepackage{times}
+\usepackage[T1]{fontenc}
+\usepackage{palatino,lettrine}  %first letter of chapters, Gossens ed 2, p.99
+\usepackage{dsfont}
+%\usepackage{csquotes}
+\usepackage[pdftex]{graphicx}
+\usepackage[nooneline]{caption} % 2011-07-23 consider switching to floatraw
+%\usepackage{caption}
+\usepackage{subcaption}
+%\usepackage{epstopdf}
+\usepackage{array}
+\usepackage{verbatim}
+\usepackage[pdftex,colorlinks]{hyperref}
+\graphicspath{{../figs/}{../Fig/}{../xiong/figures/}}  %% directories with graphics files
+\input{inputs/layout}         %% page layout, ChaosBook environments
+\input{inputs/biblatex}
+	\addbibresource{../bibtex/siminos.bib}
+\input{../inputs/editsDasbuch}   %% editing comments, DasBuch style
+\input{../inputs/def}            %% do not edit; update from dasbuch/book/inputs/def.tex
+\input{../inputs/defsSpatiotemp}     %% all Adrien edits: \renewcommand, etc
+\hypersetup{
+   pdfauthor=Space is the Place Collective,
+   pdfkeywords=spatiotemporal,
+   pdftitle=determining the D-dimensional symbolic dynamics}
+
+\ifsvnmulti
+	\svnidlong          %experimenting with svn-multi
+	{$HeadURL: svn://zero.physics.gatech.edu/siminos/spatiotemp/blogCats.tex $}
+	{$LastChangedDate: 2021-12-07 18:54:06 -0500 (Tue, 07 Dec 2021) $}
+	{$LastChangedRevision: 8006 $}
+	{$LastChangedBy: predrag $}
+	\svnid{$Id: blogCats.tex 8006 2021-12-07 23:54:06Z predrag $}
+	\svnkwsave{$RepoFile: siminos/spatiotemp $}
+	\svnRegisterAuthor{rjafari7}{Rana Jafari}
+	\svnRegisterAuthor{predrag}{Predrag Cvitanovi{\'c}}
+	\svnRegisterAuthor{asremi3}{Adrien Saremi}
+\fi
+
+    \ifboyscout
+\pagestyle{fancy}
+\fancyhead{}
+\fancyhead[er,ol]{\slshape \leftmark }
+        % subversion label pages
+        \ifsvnmulti
+\fancyfoot[er,ol]{\svnrev\ (\svnfileauthor--\svnfilerev )}
+%\fancyfoot[or]{\svnyear -\svnmonth -\svnday \
+%\svnhour :\svnminute }
+\fancyfoot[el,or]{\svnfilemonth/\svnfileday/\svnfileyear\ \svnkw{RepoFile}}
+%}
+%URL \svnmainurl \svnkw{URL}
+%Filename \svnmainfilename
+        \fi
+    \else
+    \fi %end of article switch
+%    \ifarticle
+%% 2010-10-13 this to meet GaTech submission double-spaced requirement
+%% \linespread{1.6}
+%% 2010-10-13 commented out by Predrag, for the webpage version
+%	   \addtolength{\oddsidemargin}{-.375in}
+%	   \addtolength{\evensidemargin}{-.375in}
+%       	\addtolength{\textwidth}{.75in}XiongDing
+%    \else
+%    \fi
+
+\begin{document}
+
+\input{inputs/catsTitle}
+\maketitle
+\thispagestyle{empty}
+\tableofcontents
+
+\newpage
+\begin{bartlett}{
+This cat has been skinned in more ways than any other cat in the history of cats.
+        }
+\bauthor{
+Professore Gatto Nero
+    }
+\end{bartlett}
+\bigskip
+
+This is a project of many movable parts, so here is a guide
+where to blog specific topics (or where to find them)
+
+\begin{itemize}
+  \item
+\refsect{sect:blog1dGreen} $1$-dimensional / cat map lattice Green's functions
+  \item
+\refsect{sect:CatMapBlog}  cat map blog % $1$-dimensional
+  \item
+\refsect{exam:catMap} Examples: Cat map %$1$-dimensional
+  \item
+\refchap{c-catMapLatt}  $d$-dimensional {\catlatt}
+  \item
+\refsect{sect:Green2d} $d$-dimensional / {\catlatt} Green's function
+  \item
+\refsect{sect:RhombCornerFT} {Reduction to the reciprocal lattice}
+  \item
+\refchap{c-Hill} Hill's formula
+  \item
+\refsect{LiTom17b:GenFctn} $1$-dimensional action
+  \item
+\refsect{sect:GHJSC16blog} {Herding five cats}\rf{GHJSC16} edits
+  \item
+\refchap{s-SymbDynGloss} Symbolic dynamics: a glossary
+  \item
+\refchap{chap:Ising2D} 2D Ising model; Ihara and multi-dimensional zetas
+  \item
+\refchap{c-checkers} Checkerboard
+  \item
+\refchap{chap:blogSVW}  {Sidney's blog}
+  \item
+\refchap{chap:blogHL}   {Han's blog} - the most important blog
+  \item
+\refchap{chap:blogRJ}   {Rana's blog}
+  \item
+\refchap{chap:blogAKS}  {Adrien's blog}
+  \item
+\refchap{chap:dailyCats} {\catLatt} blog
+\end{itemize}
+Blog fearlessly: this is your own lab-book, a chronology of
+your learning and research that you might find invaluable years hence.
+
+
+\include{chapter/catMap}      % for ChaosBook
+\include{chapter/Henon}
+\include{chapter/LC21}   % PC 2021-08-11: remove once LC21.tex is finalized
+\include{chapter/groups}
+\include{chapter/catMapLatt}
+\include{chapter/zeta2D}
+\include{chapter/stability}
+\include{chapter/action} % PC 2019-09-26 this calls \input{chapter/Hill}
+\include{chapter/chronotope}
+\include{chapter/editing}
+\include{chapter/symbolic} % to be moved back to kittens/CL18.tex
+                     %symbolicInc PC 2019-05-27:            FIX THIS!
+\include{chapter/prime}
+
+\include{chapter/appendStatM} % from ChaosBook: cat map chapter
+\include{chapter/Ising}
+\include{chapter/checkers}
+% \input{ChaosBook}   % for ChaosBook
+\include{chapter/blogSVW}
+\include{chapter/blogIA}
+\include{chapter/blogXW}
+\include{chapter/blogHL}
+\include{chapter/reportRJ}
+\include{chapter/reportAKS}
+\include{chapter/blogRJ}
+\include{chapter/blogAKS}
+\include{chapter/dailyCats}
+\include{chapter/powwows}
+
+\end{document}

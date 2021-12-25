@@ -1,0 +1,93 @@
+% siminos/spatiotemp/chapter/preconditioning.tex
+% $Author: predrag $ $Date: 2019-09-21 14:09:52 -0400 (Sat, 21 Sep 2019) $
+
+%Possible figures
+%Geometric representation of effect of preconditioner
+%Effect of preconditioning on the spectrum of matrix
+%showing benefit of preconditioning in residual vs. comp time.
+
+One aspect that must be taken into consideration whenever
+a linear system is being solved numerically is whether or
+not the results are accurate. One quantitative measure
+of this is the condition number of the corresponding matrix.
+The condition number is calculated by taking the ratio
+of the largest and smallest singular values computed
+by singular value decomposition. Broadly speaking,
+the condition number indicates how sensitive
+the system is to error or perturbation. If the condition number
+large the system is said to be ``ill-conditioned'' which in
+turn greatly affects the accuracy of solutions. For chaotic
+initial value problems the magnitude of the condition
+number depends on the maximal Lyapunov exponent\rf{WaHuBl14}.
+For our \spt\ problem, we do not have a quantitative measure
+of this but the numerical problem is almost always ill-conditioned.
+Therefore, accounting for this is very important if we want
+to trust our computations. This can be accomplished by applying
+what is known as \emph{preconditioning}. Deciding on a specific
+\emph{preconditioner} to use is a dark art, but some general
+guidelines are that the preconditioner should not be expensive
+to compute and it should approximately equal the inverse of the
+ill-conditioned linear operator.
+
+This motivates preconditioning in the context of iterative methods
+and solving linear systems, but how does it apply to descent methods?
+The dimensionality of our problem is large, but that does not imply
+that all dimensions are equally important. To gain insight on this
+we will apply what we known about the \KSe\ as a dynamical system
+and then extend these ideas to our \spt\ formulation. The linear
+spatial derivative terms in the \KSe\ have direct effect on the spectrum
+of Fourier coefficients. Namely, the dissipation due to the fourth
+order term prevents shocks (discontinuities)
+and small wavelength oscillations. This ensures that the solutions
+are relatively smooth, the implication being that the spectra
+of \Fcs\ converges as the wavenumbers increase. In other words,
+the magnitudes of the \spt\ Fourier modes vary greatly.
+
+We demonstrate this with the following comparison. Let us consider
+two \spt\ Fourier modes, whose {\spt} wavenumbers $k_1,k_2$ and $j_1,j_2$
+differ greatly, $k_1 << k_2 $ and $j_1 << j_2$.
+Due to the higher order spatial derivatives the
+linear term of \refeq{e-kssFb} is dominant when the wavenumbers become large.
+As a result, the \spt\ \Fcs\ with large wavenumbers are approximately
+magnified by a factor of $|q_m^2-q_m^4| ~ m^4$.
+This magnification is large enough (technically its even larger due to
+the matrix-vector product) such that the components
+of the descent direction \refeq{e-descentdirection} are all of the same
+order of magnitude. This completely betrays the convergent behavior
+of the spectrum. Therefore in order to match the adjoint descent direction
+to our expectations we apply preconditioning. In this context, the
+preconditioning can be viewed geometrically; it rescales the
+components of the adjoint descent direction to better reflect
+the spectra of \Fcs.
+As mentioned before, preconditioners should be cheap and approximate the
+inverse of whatever transformation is being applied.
+As previously argued the ill-conditioned nature of the \spt\ \KSe\
+is the linear term. By applying a transformation which approximately
+equals the inverse of the linear term we can correctly scale the
+related components of both the adjoint descent direction and the
+solutions that result by iterative methods. Specifically let
+$P$ denote the linear transformation defined by
+\beq \label{e-preconditioner}
+P = \text{diag}\Big( \frac{1}{|\omegaj|+\wavek^2+\wavek^4}\Big)\,.
+\eeq
+In addition we have found from experience that rescaling the magnitude of
+the changes in torus parameters $(\speriod{},\period{})$ is helpful.
+Depending on the circumstances the following preconditioning may or may
+not be applied
+\bea \label{e-preconditionerTL}
+P\cdot \delta \period{} &=& \frac{\delta \period{}}{\period{}} \continue
+P\cdot \delta \speriod{} &=& \frac{\delta \speriod{}}{\speriod{}^4}\,.
+\eea
+The preconditioning given by \refeq{e-preconditionerTL} is mainly an
+attempt to imitate the effect of \refeq{e-preconditioner} for the
+parameters $(\speriod{},\period{})$. The main motivation behind this
+rescaling is experiential in nature. A common behavior for initial
+conditions which are very much non-solutions (cost functional has very
+large magnitude) and initial conditions on small \spt\ domains the
+partial derivatives with respect to $(\speriod{},\period{})$ tend to be
+large in magnitude. Without rescaling this often leads to dramatic
+changes in spatial domain size or convergence to equilibrium solutions.
+One way of interpreting this is that the trivial manner that can reduce
+the magnitude of the cost functional is to increase the values of
+$(\speriod{},\period{})$ when the linear term and nonlinear term are out
+of proportion.

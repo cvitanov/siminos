@@ -1,0 +1,774 @@
+\begin{description}
+\item[KSe N-S comparison]
+As previously stated, the testing grounds for these ideas will be the \spt\ \KSe
+% Are we relabeling all equations?
+\beq \label{e-ks}
+u_t + u_{xx} + u_{xxxx} + u u_x = 0 \quad \mbox{where} \quad x \in [0,L], t\in [0,T]
+\eeq
+where $u = u(x, t)$ represents a \spt\ velocity field. This
+equation has been used to model many different processes such as
+the laminar flame front velocity of Bunsen burners.
+This was chosen as the testing ground for our ideas because it has
+a two dimensional space-time and has many similarities to the Navier-Stokes
+equations. It is useful to relate the terms between the two equations via
+the physical processes that they represent even though these processes aren't
+The numerical challenge is to find
+discretized velocity fields $u(x, t) \approx u(x_m, t_n)$
+which satisfy the \KSe\ locally at every lattice site.
+
+\item[2-tori, translational invariance, Fourier]
+% Reformulate using Fourier modes
+The translational invariance and periodicity make
+\spt\ Fourier modes the natural representation of our equations.
+The inherently infinitely dimensional equations are approximated
+by a Galerkin truncation of the \spt\ Fourier modes.
+The velocity field $u(x_m, t_n)$ with $x_m = \frac{mL}{M}$ and $t_n = \frac{nT}{N}$
+can be described by a set of \spt\ \Fcs, represented as a vector $\Fu$. The indices
+which indicate the \spt\ frequencies each mode represents are withheld as computational
+details that would only bog us down at this stage of the discussion.
+The \KSe\ \refeq{e-ks} in terms of the \Fcs\ $\Fu$ is a
+system of differential algebraic equations
+$\Fu$
+\bea \label{e-kssFb}
+%KSe in Fourier basis, pseudo-spectral form.
+F(\Fu, L, T) &\equiv& (\omegaj - \wavek^2 + \wavek^4) \Fu + \frac{\wavek}{2} \FFT(\IFFT(\Fu)^2)\,.
+\eea
+The nonlinear term is computed in a \emph{pseudospectral} fashion: a method which computes the
+nonlinear term as a product in physical space as opposed to a convolution in spectral space.
+The definitions of each term is as follows; $\FFT$ and $\IFFT$ represent the forward and backwards
+\spt\ Fourier transform operators. Spatial and temporal derivatives are calculated (most efficiently)
+by element-wise multiplication with the appropriate power of the appropriate frequency vector.
+Differentiation can be alternatively viewed as the ``lattice-wise'' multiplication of
+the Fourier modes and a lattice of frequencies (this is sometimes referred to as the Hadamard product
+or Schur product).
+
+\item[Optimization problem]
+
+\item[find library]
+\item[large to small]
+\item[small to large]
+\end{description}
+% Intro to the new possibilities/capabilities.
+This attempt to overthrow the status quo includes multiple techniques
+and methods that have not yet been witnessed in the literature.
+The novelty of these methods result in newfound capabilities, which in turn allow for
+new analyses. The utility and important properties of these methods
+will be detailed later but we provide a preview here.
+
+In this formulation we describe turbulence not as a series of temporal
+snapshots but rather as a collection of {\spt} patterns. This formulation
+is unconventional but appeals to our intuition; an example of {\spt} patterns
+would be weather phenomena from the benign clouds to deadly hurricanes. Although
+they technically represent movies, we treat space and time as equally as possible
+by referring to these objects as {\spt} \emph{patterns}.
+The claim is that when the laws of motion
+have several commuting continuous symmetries (time-translation
+invariance; space-translation invariance), all continuous symmetries
+directions should be treated democratically, as $(1+D)$ different
+`times'. The proposal is inspired by the Gutkin and Osipov \rf{GutOsi15}
+modelling of chain of $N$ coupled particle by temporal evolution of a
+lattice of $N$ coupled cat maps.
+Specifically, we propose to study the evolution of \KS\ on the $2$\dmn\ infinite
+{\spt}domain and develop a $2$\dmn\ symbolic dynamics for it: the
+columns coding admissible time itineraries, and rows coding the
+admissible spatial profiles.
+We already have the two edges of this symbol plane - the $\speriod{}=22$ minimal
+cell\rf{SCD07,lanCvit07} is sufficiently small that we can think of it as
+a low-dimensional (``few-body'' in Gutkin and Klaus
+Richter\rf{EPUR14,EDASRU14,EnUrRi15,EDUR15} condensed matter parlance)
+dynamical system, the left-most column in the Gutkin and
+Osipov\rf{GutOsi15} $2D$ symbolic dynamics {\spt} table (not a
+1\dmn\ symbol sequence block), a column whose temporal symbolic dynamics
+we will know, sooner or later. Michelson\rf{Mks86} has described the
+bottom row. The remainder of the theory will be developed from the
+bottom up, starting with small {\spt} blocks.
+
+
+% Collection of twots
+The first step required to construct our \spt\ theory
+is to collect a library of \twots.
+There are infinitely many such solutions but our search does not
+need to be exhaustive, it only has to provide an adequate sampling
+of the solution space. The notion of ``adequate'' is an inexact one,
+broadly speaking, it consists of collecting \twots\ of various size and symmetry
+types until all unique patterns have been accounted for.
+Using this library the fundamental patterns will be determined by their
+frequency in the library. It is possible to miss a specific pattern but this
+is an indication that it is not fundamental and in all likelihood does not
+account for any substantial porti An example of this
+would be an isolated \twot in state space. It may have unique properties but
+it doesn't get shadowed frequently enough to influence the infinite space-time
+behavior.  The search ranges over all types of symmetries; the shadowing events within
+the symmetric solutions are not symmetric themselves hence they may represent
+fundamental tiles. This is important especially for {\rpo}s as they may contain tiles
+whose local spatial drift is non-zero.
+
+
+% Collection of tiles
+By definition shadowing is not the exact realization of a \twot; it is a ``fuzzy window'' which
+represents a local region of space-time that is in the proximity of
+the \twot\ in question (in some norm). As the size of the shadowed \twot\
+increases, so does the accuracy of the shadowing region. that is, away from
+the boundary, the shadowing becomes exponentially more accurate.
+
+Once a satisfactory library has been created, the search for tiles can begin. Visual
+inspection of the library of \twots\ (enabled by the ease of visualization) helps
+develop an intuition as to which patterns represent fundamental tiles.
+ The tiles by our definition are subdomains which shadow large
+\twots. It should be intuitive, therefore, to search for these tiles by numerically
+``clipping'' them out of the larger \twots. This amounts to extracting sub-lattices from
+the larger \twot\. This process is straightforward and intuitive; at least in the context
+of a numerical method that can converge initial conditions that are periodic
+in neither space nor time. These clippings are clearly
+not \twots\ so they need to be run through the same numerical methods that were used
+to converge the original \twot\ from which they originated. A successful outcome is not
+guaranteed; this is likely a numerical property and not indicative of the importance of
+the tile. The number of attempts to converge a tile should be proportional to
+its frequency in our library. If a suspected tile repeatedly fails to converge then
+either it is not a tile or it is not a minimal tile but a component of one; this latter
+hypothesis would be evidenced by common occurrence of the suspected tile with another pattern.
+
+
+
+% Gluing of fundamental solutions, tiles.
+The next portion of the overarching \spt\ method assumes that not only a
+large number of \twots\ have been found but also a handful of tiles.
+The idea is to use these solutions as \spt\ building blocks in order to find new
+solutions. Going even further, the eventual goal is to create a \spt\ symbolic dynamics
+wherein the tiles are the alphabet. If this can be done then all solutions
+are theoretically enumerable by \spt\ symbol blocks. This symbolic dynamics
+has not been constructed as of yet but it is worth mentioning as it
+serves as the overarching motivation.
+This method of ``gluing'' solutions by combining them in space-time
+presents not only a very attractive method for describing
+\twots\ through fundamental physical behaviors but also for constructing
+initial conditions to find arbitrary \twots.
+This method in theory constitutes an improvement over both the dynamical systems formulation
+as well as our own search using ``random'' initial conditions. This improvement
+results from the ability to produce better initial conditions for our \spt\ searches.
+The proof of concept for this method was the reproduction of a known
+solution by gluing together tiles.
+
+% What the tiles are going to be used for.
+After the detailing and application of these methods we will have a
+collection of fundamental tile solutions. With these tiles we layout out
+case that infinite space-time can be described by these tiles. In addition,
+we set the stage for how the investigation can process in a systematic manner.
+
+The formulation of the \spt\ theory is dependent upon three main numerical processes;
+finding \twots\ of arbitrary domain size, cutting out tiles from these \twots,
+and gluing the tiles together. The first of these procedures requires the solving
+of the optimization problem
+
+There are many ways to solve this type of problem but before
+we can begin solving the equation we need a method of generating
+initial conditions.
+As previously discussed, this work does not use
+approximate recurrences; or time integration at all,
+to generate initial conditions. Instead we simply
+initialize a lattice of Fourier modes by first deciding
+on the dimensions of the lattice and then assigning random %should I say reciprocal lattice? or not use lattice at all?
+values to the modes. Random values in this case are
+drawn from a normal distribution. The Fourier spectrum
+is then rescaled to better represent the physical scales of the \KSe
+and typical field magnitude of \twots. This modulation of
+the spectrum is determined by two factors: the smoothness of
+\spt\ solutions and the linear stability profile of
+the \KSe. The smoothness or differentiability combined
+with the bounded magnitude of the field implies that
+the Fourier coefficients should decrease exponentially in
+the in the infinite mode limit. Our heuristic
+approach is not identical for space and time, so
+we describe the process in detail. The rescaling
+with respect to the spatial index linear stability profile of
+the original dynamical equation is used as a rough
+guide for the magnitude of the Fourier coefficients; the
+easiest implementation is to just truncate the \spt\
+modes at the boundary between linearly unstable
+and linearly stable modes with respect to the
+spatial index. For time, the strategy is the truncation of
+nearly all of the modes. There is a time scale associated with
+the problem, the Lyapunov time, but this simple strategy avoids the
+calculation of this time. The intuition behind this choice is
+that the general solution is comprised of many meandering "streaks";
+shadowing of a one wavelength (in terms of physical scale) \eqv.
+The truncation attempts to account for this approximately time independent
+behavior in the locality of these streaks.
+
+There are many different ways to approach this problem; we focus
+on two different methods whose combination comprises
+a robust numerical method.
+The first
+method substitutes an equivalent optimization problem
+instead of directly solving $F=0$. The optimization
+problem is formed by the construction
+of a scalar cost function. Because we are concerned with
+finding exact solutions to \refeq{e-kssFb} we elect
+to simply use the $L_2$ norm of \refeq{e-kssFb} (with
+a constant factor for convenience)
+\beq
+\mathcal{I}(\Fu, T, L) = \frac{1}{2}||F(\Fu, T, L)||_2^2 \,.
+\eeq
+There is no motivation for the specific choice of norm
+or cost function other than they are simple choices which
+satisfy our needs. The gradient of this cost function with
+respect to a fictitious time, $\tau$, results in the fictitious
+flow
+\bea \label{e-descent}
+\frac{\partial \mathcal{I}}{\partial \tau} &=& \nabla
+\Big(\frac{1}{2}||F(\Fu, T, L)||_2^2\Big) \partial_{\tau}[\Fu, T, L] \continue
+&=&
+\Bigg(\Big[\frac{\partial F}{\partial \Fu}, \frac{\partial F}{\partial T},
+\frac{\partial F}{\partial L} \Big]^{\top} F(\Fu, T, L)\Bigg) \cdot \partial_{\tau}[\Fu, T, L] \continue
+&\equiv& \Big(J^{\top}F\Big) \cdot \partial_{\tau}[\Fu, T, L] \quad .
+\eea
+This equation \refeq{e-descent} by itself does not provide us with a descent direction
+because the partial derivative of the independent variables with respect to $\tau$, $\partial_{\tau}[\Fu, T, L]$
+remains undefined. Luckily, we are free to choose what it is. The only requirement
+is a monotonically decreasing cost function. In other words, $\partial_{\tau}[\Fu, T, L]$
+needs to be chosen such that $\frac{\partial \mathcal{I}}{\partial \tau}$ is
+never positive. The most obvious choice is the
+negative gradient of the cost function; this choice
+corresponds to the gradient descent algorithm.
+This is the most basic descent method, but it works very well when preconditioning is also included.
+The details regarding the preconditioning are left out for brevity; it's a rough approximation to the
+inverse of the linear portion of the equation. Regarding this choice of numerical method: originally,
+we believed that our implementation represented a more sophisticated numerical method called the
+\textit{adjoint descent algorithm} \rf{Faraz15}. Technically, the algorithm \emph{is} the adjoint
+descent method, its just that with a lack of dynamics
+the adjoint descent method collapses onto the gradient descent method. This fact wasn't realized
+until much later but it worked so no harm no foul. If anything, this shows how much room there is
+for numerical improvements. In any case, the choice that was made for the descent direction was
+\beq
+\partial_{\tau}[\Fu, T, L] = - \Big(J^{\top}F\Big) \,,
+\eeq
+such that
+\beq
+\frac{\partial \mathcal{I}}{\partial \tau} = -\Big|\Big| \Big(J^{\top}F\Big)\Big|\Big|_2^2 \leq 0 \,.
+\eeq
+It is clearly never positive but it can be equal to zero; this occurs at roots of $F$ but also local
+extrema of $F$. The former is of course the desired state; the latter presents the problem of getting
+stuck at local minima. Getting stuck at local minima is a very common problem in the field of optimization.
+Instead of trying to eliminate this possibility we elect to merely account for this by termination of
+the computation after a threshold is met. The actual
+optimization process takes the form of numerical integration of the fictitious flow.
+Numerical integration is of course affected by the integration scheme used. Luckily, we do
+not care about the accuracy of the intermediate states as they are still approximations
+and not exact solutions. The only true requirement is that the cost function must
+monotonically decrease. Therefore we elected to use the simplest integration scheme: Euler's method.
+Because this is first order and explicit, the accuracy depends on the step size. The step size
+was determined by finding the first value of $\Delta x = 2^{-n}, n = 0, 1, \dots$ which reduced
+the cost function. To again save time, this calculation was only performed once. Finding the optimal
+distance to step using a line-search algorithm, for instance, drastically slows the
+calculation. Another possibility would be to adapt the step size not at every step, but
+at a finite number of checkpoints during the descent. These attempts always returned the
+original step size such that these efforts are no longer attempted. If, at any point,
+the numerical integration no longer decreases the cost function, then the step size
+would be further reduced. The descent process was terminated whenever the step
+size was reduced beyond a minimum value of $10^{-13}$. It could be argued that this threshold
+should be changed to a larger value. Experientially it doesn't seem to affect the
+calculation; further reduction of the step size almost always resulted in termination
+of the descent. To increase the efficacy of our descent method, we also employed the
+notion of preconditioning. The reason why we felt that preconditioning was warranted
+was due to the stiff spatial derivative terms. The descent direction is dominated by
+the components with high spatial frequencies but the magnitude of the corresponding
+\Fcs\ are typically small. This can be counteracted by scaling the descent direction
+such that the lower frequency modes are favored. The exact choice of preconditioner
+is the inverse of the linear spatial derivative operators. This comes very cheap
+as these operators are diagonal and is very effective for its price. Technically,
+an absolute value is individually applied as to avoid division by zero. It is
+also very beneficial to rescale the partial derivatives with respect to the
+\spt\ domain parameters. The specific reason results from how poorly the
+initial conditions approximate \twots. If nothing is done to control the
+magnitude of these gradients, a very common occurence is that the solutions
+are stretched out to incredibly large domains and either do not converge
+or converge only to \eqva. These large \eqva, while perhaps desirable in
+some circumstances, are not desired for our purposes as they are far
+too unstable to be witnessed in infinite space-time.
+The decision of when to cut off the gradient descent can
+be determined in a variety of ways, the most common involve either the
+absolute tolerance (magnitude of the cost function) or the relative tolerance
+(change in cost function magnitude between steps).
+We elect to use a combination of step limit and absolute tolerance. If the
+cost function doesn't cross the threshold by the step limit then the descent is terminated.
+Again these are some of the simplest conditions that ensure that the descent
+will end in a reasonable amount of time.
+The reason why this is acceptable is because the majority
+of the heavy lifting is done by the back-end algorithm, the least-squares solver with backtracking.
+In this context, the descent algorithm can be viewed as bringing approximate solutions
+close enough to \twots\ such that the least-squares algorithm can converge them, akin
+to \rf{Faraz15}
+
+
+
+The second portion of our hybrid numerical method is
+to apply a least-squares solver to the root finding problem $F=0$. The first step is everyone's
+favorite derivation, the derivation of Newton's equations from the linearization about a root of $F$
+\beq
+F(\Fu+\delta\Fu, T+\delta T, L+\delta L)\approx
+F(\Fu, T, L) + J \cdot [\delta\Fu, \delta T, \delta L] + \dots \,.
+\eeq
+substitution of zero for the LHS (the root) yields
+\beq \label{newton}
+J \cdot [\delta\Fu, \delta T, \delta L] = -F(\Fu, T, L) \,.
+\eeq
+where
+\beq
+J \equiv \Big[\frac{\partial F}{\partial \Fu}, \frac{\partial F}{\partial T}, \frac{\partial F}{\partial L} \Big] \,.
+\eeq
+This equation is of the general form for a linear system $Ax = b$; it is convenient to refer the system of
+equations in this form. Technically, this equation is solved a number of times, each time producing its own
+least-squares solution which guides the field to \twot. We avoid this here just to keep the notation clean.
+It is implicit in the definition of $J$ that this is a rectangular linear system; there are more columns in
+$J$ than rows. The equations are augmented to include variations in $T,L$ and there are no components of the
+\KSe\ associated with this. Two choices for how the handle this are: create and include additional constraints
+on either the \Fcs\ or the \spt\ parameters, or solve the equations in a least-squares sense.
+We chose to solve the equations in a least-squares manner. We are not focused on finding specific
+solutions so we can get away with this. Another reason is that a common choice for the constraints
+is to fix the translational degrees of freedom, that is, ensure that the solutions to the linear system
+\refeq{newton} are orthogonal to the partial derivatives $\frac{\partial \Fu}{\partial x}$ and
+$\frac{\partial \Fu}{\partial t}$. These constraints are suboptimal for two reasons: they specify a particular
+member of a group orbit beforehand reducing the likelihood to converge and the orthogonality to the direction of
+spatial translations is not well defined for \twots\ with discrete symmetry. As briefly mentioned, we also
+include the notion of backtracking; that is, the least-squares step is repeatedly divided by a factor of
+two until either the cost function decreases or the step size becomes too small. This saves time in comparison to
+line searching methods which find the optimal step size which produces the largest reduction in the cost function.
+ Now that the numerical methods have been detailed, we can move onto how we want to use them.
+
+
+As mentioned multiple times the first step is to produce a library of \twots using the numerical methods developed above.
+It was not known if we would even be able to find \twots\ given our formulation. It was
+possible that the particular numerical methods chosen wouldn't work; of course, if the methods
+described previously didn't work then we would not be reporting on them. To apply the numerical methods
+an initial condition needs to be created which requires selection of the discretization size, the initial mode values,
+the period and the domain size. In our searches the process was automated by searching over a range
+of periods and domain sizes over the following ranges. For the period the range was wider, due to the
+experience from the study of the equation at system size $L=22$. Periods were chosen from the range
+$T\in [20, 180]$. Meanwhile, the spatial range was $L \in [22, 88]$. The discretization size
+depended on the \spt\ domain size; more modes are needed to resolve larger solutions. The number
+of lattice points in each dimension were typically chosen to be powers of two in order to exploit
+the speed of fast Fourier transforms. A strict (well motivated) rule for the size of the lattice
+was never developed so all that can be offered are approximate guidelines: The number of typical
+spatial lattice points followed the formula
+\beq
+M = 2^{\text{int}(log_2(L)-1)}
+\eeq
+and for time
+\beq
+N = 2^{\text{int}(log_2(T))}\,.
+\eeq
+Once the initial condition is defined, it is passed to the gradient descent algorithm.
+The tolerance of the cost function for the gradient descent was typically set at $10^{-4}$
+and the step limit was set as a function of the size of the lattice, the maximum number of
+steps being $16NM$. Once either the tolerance or step limit was reached, the approximate
+solution would be passed to the least-squares algorithm, where the tolerance for termination
+was $10^{-14}$ and the step limit was $500$. The relatively large step limit was because of
+the allowance of back tracking, where the maximum amount of damping was
+varied between $2^{-5}$, $2^{-8}$ by powers of two. A choice that we did
+not elect to use but very well could have is to use each matrix inversion more than once.
+This could be done by computing the inverse, and then iteratively using it to update
+until the cost function no longer decreases. We believe that any numerical operation
+that maintains the monotonic decrease of the cost function is fair game.
+
+
+% siminos/spatiotemp/chapter/intro.tex
+% $Author: predrag $ $Date: 2020-10-24 01:45:26 -0400 (Sat, 24 Oct 2020) $
+
+% called by
+%           siminos/spatiotemp/chapter/spatiotemp.tex
+%           siminos/tiles/GuBuCv17.tex
+
+%\section{Introduction}
+%\label{sect:intro}
+% Predrag                                           28 February 2020
+
+%%%%%% examples for Matt - illustrates use of \MNGedit{...}
+%\MNGedit{
+%a new \spt\ formulation
+%to provide a new perspective.
+%    }
+%\MNG{2019-03-15}{
+%    An example of me commenting; \MNGedit{magenta text} marks my edit.
+%    }
+%\PC{2019-05-13}{
+%    In \refref{SCD07} equation numbers are on the right; here they are on
+%    the left. Check a recent issue of SIADS, fix this or not, and move this
+%    question, answered, to \refsect{sect:GuBuCv17blog}.
+%    }
+%%%%%% give an example to Matt: how to use \edit for REFEREE resubmissions
+
+    %PCedit 2019-04-19 to 2020-05-19
+Dynamical \statesp\ representations of PDEs are $\infty$-dimensional, but
+attractors of dissipative, strongly contracting flows such as \KS\ are
+contained within finite-dimensional inertial manifolds%
+\rf{constantin_integral_1989, infdymnon, temam90, Foias1988a,
+Robinson1995} in non-trivial, nonlinear ways\rf{YaTaGiChRa08, TaGiCh11,
+ginelli-2007-99, WoSa07, GiChLiPo12, DCTSCD14}. While the same has been
+not been proven for \NS\ flows, by now many
+experimental and theoretical explorations of fluid-dynamical attractors
+also lend support to a dynamical vision of turbulence: within any finite spatial
+and temporal window a turbulent flow shadows a member of a finite set
+of \spt\ patterns.
+
+Here we address the question: How are these
+patterns characterized and classified?
+
+
+\subsubsection{Work so far}
+
+
+
+In the past few decades, turbulent flows witnessed computational successes
+by utilizing small computational domains also known as minimal cells.
+These minimal cells were chosen to be large
+enough to support turbulent behavior but also small enough to
+remain tractable.
+The question is how to characterize and classify these patterns.
+In the past few decades computational successes were made
+by studying turbulent flows on small computational domains, also known as minimal cells.
+These minimal cells
+were chosen to be large
+enough to support turbulence but also small enough to
+remain computationally tractable.
+The main achievement of these cells
+were the calculation of unstable periodic solutions of the
+Navier-Stokes equations \rf{GHCW07, HGC08, N97}. %I understand this is redundant
+of admissible patterns\rf{focusPOT}.
+The challenge is to characterize and classify these patterns.
+So far, they were
+by studying turbulent flows on small computational domains, also known as minimal cells.
+These minimal cells
+were chosen to be large
+enough to support turbulence but also small enough to
+remain computationally tractable.
+The main achievement
+was the accurate calculation of unstable periodic solutions for
+equations such as the Navier-Stokes equations. %I understand this is redundant
+These periodic solutions also known as ``exact coherent structures'' (ECS) are
+identifiable by shapes and patterns
+which persist across time \rf{W01, WK04}.
+
+ECS are important because they frequently recur because their
+unstable and stable manifolds dictate the state-space dynamics \rf{WFSBC15}.
+
+These successes have never been extended to large domains; we claim
+that this is actually impossible due exponential growth in complexity and instability.
+
+
+Therefore we offer a new {\spt} formulation of chaos which
+treats all dimensions with continuous symmetries democratically as $(D+1)$ different `times'.
+This equal treatment of space and time removes the requirement for
+spatial dimensions to be finite or fixed. In other words,
+the role of spatial periods is now identical to that of time periods
+in the sense that they are
+variables determined by the governing equations.
+
+
+Within this framework there
+are no longer any dynamics; instead, solutions are {\spt} combinations of
+$(D+1)$ invariant tori (to which we shall henceforth refer to simply as \emph{{\po}s}).
+
+While there are an infinite number of {\po}s our theory only utilizes a small
+number of very important ones. We denote these special orbits as {\fpo}s and claim
+that they are the long sought after ``building blocks''
+of turbulence; that is, every solution can be described as a collection of {\fpo}s.
+
+The goal is to collect, enumerate and utilize all {\fpo}s.
+The collection of {\fpo}s proceeds in the following manner:
+identify the most frequently recurring patterns in a collection of {\po}s,
+extract and use said patterns as initial guesses for {\fpo}s. Taking the
+unique results from this search establishes a finite collection or library
+of {\fpo}s.
+All {\po}s can then be constructed from a complete collection of {\fpo}s; we
+aim at least collecting the most important {\fpo}s for now.
+
+
+The {\spt} formulation is a variational formulation.
+This confers many numerical benefits and advantages over conventional methods.
+To these ends a number of new techniques are developed which allow for:
+the creation of initial guesses without time integration or recurrence functions,
+the creation of  initial guesses by `clipping' subdomains from {\po}s,
+and lastly the creation of initial guesses by
+`gluing' {\spt} combinations of {\po}s and {\fpo}s together.
+
+
+Motivated, now what to do? (recap)\subsection{``What?''}
+We will use the {\KSe} on a doubly periodic {\spt} domain to pursue these ideas.
+The {\KSe}, with its relatively small number of continuous dimensions, is a common testing ground for new ideas
+pertaining to {\spt} chaos.
+The form of the equation that we use is
+% Are we relabeling all equations?
+\beq \label{e-ks}
+u_t + u_{xx} + u_{xxxx} + \frac{1}{2}(u^2)_x = 0 \quad \mbox{where} \quad x\in[0,\speriod{}], t\in[0,\period{}]
+\eeq
+where $u = u(x, t)$ represents a \spt\ velocity field, and subscripts
+represent the respective partial derivatives.
+
+The nonlinear term is unsimplified
+purposefully because of computational considerations.
+The {\KSe} has been used to model many physical processes such as
+the laminar flame front velocity of Bunsen burners.
+The main benefit other than reduced computational complexity
+is the ease with which 2{\dmn} {\spt}
+solutions can be visualized, namely, as a 2{\dmn} color coded scalar
+field. This visualization makes our arguments more understandable as well as compelling.
+in addition to making {\fpo}s easier to identify.
+\PCedit{ % 2020-05-07
+For a subset of physicists and mathematicians who study idealized `fully
+developed,' `homogenous' turbulence the generally accepted usage is that
+the `turbulent' fluid is characterized by a range of scales and an energy
+cascade describable by statistic assumptions\rf{frisch}. What
+experimentalists, engineers, geophysicists, astrophysicists actually
+observe looks nothing like a `fully developed turbulence' \rf{JT63, Kim87, Mckeon04}\MNG{simply adding all
+references with `fully developed' in their titles.}\,. In the
+physically driven wall-bounded shear flows, the turbulence is dominated
+by unstable \emph{coherent structures}, that is, localized recurrent
+vortices, rolls, streaks and like. The statistical assumptions fail, and
+a dynamical systems description from first principles is called
+for\rf{Holmes96}.
+
+If we ban the words `turbulence' and `{\spt} chaos' from our study of
+small extent systems, the relevance of what we do to larger systems is
+obscured. The exact unstable coherent structures we determine pertain not
+only to the spatially small `chaotic' systems, but also the spatially
+large `{\spt}ly chaotic' and the spatially very large `turbulent'
+systems. So, for the lack of more precise nomenclature, we take the
+liberty of using the terms `chaos,' `{\spt} chaos,' and `turbulence'
+interchangeably.
+
+Translational invariance of \refeq{e-ks} makes the use of doubly periodic boundary conditions
+and \spt\ Fourier modes a natural choice.
+The inherently infinite-dimensional equations are approximated
+by a Galerkin truncation of these \spt\ Fourier modes.
+This results in a system of differential algebraic equations
+which describes the \KSe\ \refeq{e-ks} in terms of a
+collection (can be interpreted as a vector or lattice) of {\spt} {\Fcs}, denoted $\Fu$
+%\bea \label{e-Fks}
+%\mathbf{F}(\Fu, \speriod{}, \period{}) &\equiv& (\mathbf{\omega} - \mathbf{k}^2 + \mathbf{k}^4)
+%\,\Fu + \frac{\mathbf{k}{2} \FFT(\IFFT(\Fu)^2)\,.
+%\eea
+
+
+Given equation \refeq{e-Fks}, in addition to periodic boundary
+conditions, how do we solve for {\po}s? The distance between a state and
+a {\po} shall be quantified via the $L_2$} norm of \refeq{e-Fks} (for
+brevity let $\mathbf{F}\equiv\mathbf{F}(\Fu,\speriod{},\period{})$.)
+\beq \label{e-cost}
+\phi(\Fu,\speriod{},\period{}) = \frac{1}{2}\mathbf{F}^{\top}\mathbf{F} \,.
+\eeq
+The function
+$J(\Fu,\speriod{},\period{})$ \rf{BorSch11,BoyVan04}
+in
+\refeq{e-cost} has a variety of names which we use
+interchangeably, such as \textit{cost}, \textit{residual}, or
+\textit{error} functions. %references from optimization
+To find
+{\po}s we must solve for the roots of \refeq{e-Fks}; this is equivalent
+to finding the roots of \refeq{e-cost}, as $\mathbf{F}=\mathbf{0}$
+implies $\phi=0$. Finding roots of \refeq{e-cost} is equivalent to finding
+{\po}s, of which we need a collection.
+
+
+Specifically, we need a collection {\po}s
+defined over a range of spatial and temporal periods. This is achieved by creating
+initial guesses whose periods exist on some finite range of values.
+Once a library of {\po}s has been created, we identify the most frequently
+occurring patterns which, by our claim,
+are regions of spacetime shadowed by {\fpo}s. Once a handful of {\fpo}
+candidates are decided upon, the next step in the {\spt} pipeline is to convert
+them into initial guesses; we do so with a technique we call `clipping'.
+
+The idea behind clipping is very intuitive. Given any {\po}, a clipping is a window
+of space-time which is used as an initial guess.
+Clipping may be applied iteratively until ultimately a {\fpo} is reached.
+The reverse process, combining {\fpo}s together
+to create initial guesses for find larger orbits is also possible; in fact,
+this technique is the crux of our theory. We denote this combination process as
+gluing, a name which again appeals to our intuition.
+
+Gluing proceeds as follows: select an array of {\fpo}s to glue
+together (imagine creating a puzzle, wherein the pieces are {\fpo}s). Next, numerically
+join this array of {\fpo}s together at their boundaries. This creates an initial guess whose
+state is a patchwork of {\fpo} states and whose periods
+are combinations of {\fpo} periods. As a last step, the discontinuities
+of in the field are smoothed via truncation of the high frequency {\spt} {\Fcs}.
+Know what, how do we do it? (recap)
+
+In order to find {\po}s, that is, in order to solve \refeq{e-Fks}, we
+need initial guesses. We only search for the most frequently appearing {\fpo}s,
+and so we limit the size of the initial guesses by only selecting periods existing
+in some finite range of values. The discretization depends on
+the value of the period, as the number of modes required to resolve all relevant scales increases
+as the dimensions grow larger. Once the periods and discretization are defined,
+what remains is to initialize the {\spt} {\Fcs}. To do so, we draw random
+values from a normal distribution, and then rescale these values to roughly
+approximate the physical scales of the \KSe.
+
+As a reminder, our collection of {\po}s need not range ove all sizes;
+we only search for the most frequently appearing {\fpo}s,
+which we believe manifest as {\po}s with small periods. Therefore,
+the search for {\po}s was limited to what we consider as intermediate domain sizes.
+Periods were chosen from the ranges
+$\period{}\in [20, 180]$ and $\speriod{} \in [22, 88]$. The discretization depends on
+the value of the period but were typically chosen to be powers of two; in order
+to leverage fast Fourier transforms. %reference
+Typically, we used a rule of thumb which set the number of points in the
+spatial dimension as $M = 2^{\lfloor\log_2(\speriod{})\rfloor + 1}$
+and the number of points in the temporal dimension as
+$
+N = 2^{\lfloor\log_2(\period{})\rfloor}\,.
+$
+With the periods and discretization defined, what remains is to
+initialize the {\spt} {\Fcs}.
+As previously mentioned, we do not use
+approximate recurrences nor time integration
+to generate initial guesses.
+Instead, initial guesses can be generated by initializing arbitrarily
+sized domains with random noise.
+More specifically, random values are drawn from the standard normal distribution
+and assigned as the values of the corresponding Fourier modes.
+These modes may then rescaled in a manner that befits a
+doubly periodic solution of the {\KSe},
+manipulating the Fourier spectrum to match the relevant scales of the \KSe.
+In our experience, however, the initial guesses which are `worse' with respect
+to the cost function actually converge more often; or, equivalently by our standards,
+they seem to get trapped by local minima less often.
+It is therefore hard to provide a recommendation for a single or `best'
+manner with which to provide initial guesses. The
+numerical methods we employ do not seem to be interested in our desire
+to produce a physically motivated construction method
+drawn from our experience and intuition.
+
+
+With this, the initial guess is complete; these guesses are then passed
+to the numerical optimization methods used to find {\po}s, which we shall now describe.
+
+\label{sect:descent}
+The derivation of our first numerical method begins
+taking a derivative of \refeq{e-cost} with respect to $\tau$, a fictitious time parameter
+\bea \label{e-descent}
+\frac{\partial \phi}{\partial \tau}
+&=& \frac{\partial }{\partial \tau}
+\left(\frac{1}{2}\mathbf{F}^{\top}\mathbf{F} \right)
+\continue
+&=&
+\left((\nabla\mathbf{F)}^{\top}\mathbf{F}\right)^{\top} \cdot \partial_{\tau}[\Fu,\speriod{},\period{}]
+\continue
+&\equiv&
+\left(\left[\frac{\partial \mathbf{F}}{\partial \Fu},
+           \frac{\partial \mathbf{F}}{\partial \speriod{}},
+           \frac{\partial \mathbf{F}}{\partial \period{}}
+       \right]^{\top} \cdot\: \mathbf{F}(\Fu,\speriod{},\period{})
+\right)^{\top} \cdot \partial_{\tau}[\Fu,\speriod{},\period{}]
+\;.
+\eea
+The specification of $\partial_{\tau}[\Fu,\speriod{},\period{}]$
+in equation \refeq{e-descent} is what defines the algorithm, namely,
+we make the simplest choice for this vector, which is to define it as the
+negative gradient of the cost function.
+This specification equates our algorithm to the gradient descent algorithm
+\beq \label{e-descentdiraction}
+\partial_{\tau}[\Fu,\speriod{},\period{}] = - \left((\nabla\mathbf{F)}^{\top}\mathbf{F}\right) \,,
+\eeq
+such that
+\beq
+\frac{\partial \phi}{\partial \tau}
+= -\left((\nabla\mathbf{F)}^{\top}\mathbf{F}\right)^{\top} \cdot
+\left((\nabla\mathbf{F)}^{\top}\mathbf{F}\right) \leq 0 \,.
+\eeq
+Integration of \refeq{e-descentdirection} with Euler's method results in `descent':
+the monotonic decrease of the cost function \refeq{e-cost} with respect to fictitious time.
+Note: this integration with respect to fictitious time
+yields infinitesimal changes to the variational cost functional;
+it is not the same as dynamically unstable time integration.
+\MNGedit{The descent algorithm is used primarily only as a front-end algorithm
+which brings guesses close enough to {\po}s such that our second numerical method,
+least-squares Newton can converge.}
+
+The linear least-squares
+Newton's method is derived from the linearization
+\beq \label{e-newtonlinearization}
+\mathbf{F}(\Fu+\delta\Fu, \speriod{}+\delta\speriod{},\period{}+\delta \period{})\approx
+\mathbf{F}(\Fu,\speriod{},\period{}) + \nabla\mathbf{F} \cdot [\delta\Fu, \delta \speriod{}, \delta \period{}] + \dots \,.
+\eeq
+Substitution of zero into the LHS (the root) of \refeq{e-newtonlinearization} yields
+\beq \label{e-newton}
+\nabla\mathbf{F} \cdot [\delta\Fu, \delta \speriod{}, \delta \period{}] = -F(\Fu,\speriod{},\period{}) \,.
+\eeq
+where
+\beq \nonumber
+\nabla\mathbf{F}\equiv \left[\frac{\partial\mathbf{F}}{\partial \Fu},
+              \frac{\partial \mathbf{F}}{\partial \speriod{}},
+              \frac{\partial \mathbf{F}}{\partial \period{}} \right] \,.
+\eeq
+
+
+While not explicitly mentioned
+until now, the linear system \refeq{e-newton} is an overdetermined system of equations; we shall
+solve this system in a least-squares manner.
+Solving \refeq{e-newton} produces a ``Newton step'', $[\delta\Fu, \delta \speriod{}, \delta \period{}]$.
+This Newton step is a vector of corrections to the computational variables, which,
+if the method was successful, decreases the value of the cost function once added to the
+current variables. Normally, failing this criterion would terminate the numerical routine;
+however, we employ an additional technique which we believe improves the frequency of convergence.
+Specifically we use the technique known as backtracking: %reference
+that is, the length of the Newton step is reduced until either a minimum step
+length is reached (failure) or the cost function decreases (success).
+
+Before moving on, we note that solving \refeq{e-newton} directly via
+least-squares is memory limited. That is, we can only apply it to some
+maximum of {\cdofs} as it requires
+the explicit construction of a large, dense matrix. We have
+been able to get away with it so far but it will not be available
+for problems with many {\cdofs}.
+
+The search for {\po}s combines the initial guess creation of \refsect{sect:guesses}
+with the numerical optimization methods \refsect{sect:descent}, \refsect{sect:leastsquares}.
+For the numerical methods, a handful of parameters are required such as the step limit
+and tolerance. Our typical choices, noting that they are likely suboptimal, are as follows:
+the tolerance of the cost function for the gradient descent was $J = 10^{-4}$
+and the step limit was set to a multiple of the dimension, either $16NM$ or $32NM$.
+This means that if either \refeq{e-cost} $J < 10^{-4}$ or the step limit
+is reached, then the descent method terminates, and the guess is passed to the
+least-squares implementation.
+The ``heavy lifting'' was delegated to the least-squares method
+with backtracking. The threshold for termination was originally set to double
+floating point precision but over time this was relaxed to incorporate the {\cdof}, i.e.
+the current tolerance is on the order of $(NM)*10^{-15}$; and the step limit, $500$.
+For those familiar with Newton methods, this number of steps appears like overkill at first, but the
+allowance of backtracking negatively impacts the rate of convergence.
+
+The search for {\po}s creates initial guesses as in \refsect{sect:guesses}
+and then passes these initial guesses to the numerical optimization methods.
+Specifically, we almost always apply the descent method first \refsect{sect:descent},
+and the least squares Newton second \refsect{sect:leastsquares}. These numerical methods
+continue until the cost function \refeq{e-cost} reaches some termination criteria.
+This search continues until we deemed our collection of {\po}s sufficient; that is,
+until we believe that we had captured the most frequently appearing {\spt} patterns.
+
+
+Once identified, the most frequently recurring patterns are used
+as initial guesses in the search for {\fpo}s. Specifically, a {\spt} window is
+fit to the pattern such that the state within the window is as close to being
+doubly periodic as possible. Once the best window is found, the region of space-time
+is clipped from the {\po} and used as an initial condition.
+Hitherto, clipping has always been performed manually. As a consequence there
+is substantial variability in clipping quality;
+multiple clippings may be necessary to find a single {\fpo}.
+
+
+Once we are confident that we have captured the most important {\fpo}s, we can being
+combining them in space-time via gluing.
+Given an arbitrary array of {\fpo}s, gluing combines their fields and periods to
+construct an initial guess, which is used to search for the {\po} that the array is
+believed to shadow.
+On the surface this technique is simple and intuitive; especially in the context
+of the two-dimensional space-time of the \KSe. However as we shall see the methodology is not
+as straightforward as one might presume. % figure demonstrating gluing
+
+To review so far, our main claim is that turbulence can be described by
+shadowing by {\fpo}s. To validate this claim we implemented
+numerical methods to find, clip, and glue {\po}s.
+The ability to construct and find solutions in either manner, clipping or gluing,
+has not been witnessed in the literature and as such it
+constitutes a completely new method.

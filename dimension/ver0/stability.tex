@@ -1,0 +1,241 @@
+% siminos/dimension/stability.tex
+% $Author: xiong $ $Date: 2015-09-29 21:24:00 -0400 (Tue, 29 Sep 2015) $
+
+\section{Linear stability and symmetry reduction}
+\label{sec:stability}
+
+Vectors in the tangent space of an autonomous flow $\dot{x} =v(x)$ are 
+transformed by its first order expansion:
+$\dot{\delta x} = A(x) \delta x$ with $A(x)=\partial v / \partial x$.
+The solution of $\dot{J}(x,t) = AJ(x,t)$ with $J(x_0,0) = I$ is called
+the Jacobian and it transform vectors in tangent space
+along the trajectory : $\delta x(t) = J(x_0,0) \delta x_0$.
+For a periodic orbit, the eigenvalues and eigenvectors 
+of $J_p(x) = J(x, T)$ are called \Fm s and \Fv s. 
+Here $T$ is the period 
+of this orbit.
+
+A flow transports the
+displacement $\deltaX (\zeit)$ along the trajectory
+$\ssp(\xInit,\zeit) = \flow{\zeit}{\xInit}$
+\beq
+{d \over dt} \deltaX(\xInit,t) =
+{\Mvar}(\ssp) \,  \deltaX(\xInit,t)
+	\,,\qquad \ssp=\ssp(\xInit,t)
+\,,
+\label{lin_odes}
+\eeq
+where
+\beq
+{\Mvar}_{ij}(\ssp) ={\pde \vel_i(\ssp)\over \pde \ssp_j  }
+\ee{DerMatrix}
+is the \stabmat\ or
+velocity gradients matrix.
+
+The finite time $\zeit$
+deformation of an infinitesimal neighborhood, with initial frame at $\xInit$,
+into the co-moving, non-orthogonal frame at $\ssp(\zeit)$
+is described by the eigen\-vectors and eigen\-values
+\beq
+\jMps^\zeit\, \jEigvec[k] = \ExpaEig_{k} \,\jEigvec[k]
+\,,\qquad
+j = 1,2, \cdots,d
+\,.
+\ee{cplxExpaEig1}
+of the {\jacobianM} $\jMps^\zeit$
+of the linearized flow
+\beq
+    \deltaX(t) = \jMps^\zeit(\xInit) \, \deltaX_0
+    \,, \qquad
+\jMps^\zeit_{ij}(\xInit)
+  =  \frac{\pde \ssp(\zeit)_i}{\pde \ssp(0)_j}
+    \,, \quad
+\jMps^0(\xInit) = \matId
+\, .
+\label{hOdes}
+\eeq
+%
+%\beq
+% \jMps^t(\ssp_\stagn) = e^{{\Mvar}_\stagn t}
+%    \,,\qquad
+% {\Mvar}_\stagn={\Mvar}(\ssp_\stagn)
+%\,.
+%\ee{eqPointStab}
+The symbol $\ExpaEig_k$ denotes the $k$th {\em eigen\-value}
+({\em stability multiplier}) of the finite time {\jacobianM} $\jMps^\zeit$.
+Symbol $\eigExp[k]$ will be reserved for the $k$th \emph{stability exponent},
+with real part $\eigRe[k]$ and phase $\eigIm[k]$:
+\beq
+\ExpaEig_k = e^{\zeit \eigExp[k]}
+    \,\qquad
+\eigExp[k] = \eigRe[k] +i \eigIm[k]
+\,.
+\ee{stabExpon}
+Stability multipliers are either real or
+come in complex pairs,
+\[
+\{\ExpaEig_{k},\ExpaEig_{k+1}\}
+= \{e^{\cl{}(\eigRe[k] + i\eigIm[k])}, e^{\cl{}(\eigRe[k] - i\eigIm[k])}\}
+\,,
+\]
+with magnitude $|\ExpaEig_k|$ and phase $\eigIm[k]$.
+    \PC{2015-05-12}{wrong, fix!}
+The phase describes the
+rotation velocity in the plane defined by the corresponding pair of
+real orthogonal eigen\-vectors, $\{\Re\jEigvec[k],\Im\jEigvec[k]\}$,
+with one period of rotation given by
+\( %beq
+    \period{} = 2\pi/\eigIm[k]
+\,.
+\) %ee{RotPeriod}
+$\derf{t}{\xInit}$ depends on the initial point $\xInit$ and the
+elapsed time $t$. For notational brevity we omitted this dependence,
+but in general both the stability
+multiplier and the eigenvectors,
+\(
+\ExpaEig_j = \ExpaEig_j(\xInit,t)
+    \,,\; \cdots \,,\;
+\jEigvec[j] = \jEigvec[j](\xInit,t)
+\,,
+\)
+also depend on the trajectory traversed and the choice of
+coordinates. We shall refer to the eigenvectors $\jEigvec[j]$ as
+\emph{{\cLvs}}.
+
+an important property of \jacobianMs\ is that they
+are multiplicative along the flow,
+\beq
+\jMps^{\zeit+\zeit'}\!(\ssp)
+    = \jMps^{\zeit'}\!(\ssp')\, \jMps^\zeit(\ssp), \qquad \mbox{where} \,\;
+\ssp'=\flow{\zeit}{\xInit}
+\,.
+\ee{Jmultiplic}
+
+
+Nearby trajectories separate along the {\em unstable directions},
+approach each other along the {\em stable directions}, and change
+their distance along the {\em marginal directions} at a rate slower
+than exponential, corresponding to the eigen\-values of  the
+{\jacobianM} with magnitude larger than, smaller than, or equal to 1.
+One of the preferred directions is the
+direction of the flow itself: $\jMps^{\zeit} (\xInit)$ transports
+the velocity vector at $\xInit$ to the velocity vector at
+$\ssp(\zeit)$:
+\beq
+\velField{\ssp(\zeit)} = \jMps^{\zeit} (\xInit) \,\velField{\xInit} \, .
+\ee{JacobVeloc}
+
+% 2013-10-18 Predrag from \Chapter{invariants}{17mar2013}{Cycle stability}
+The eigenvectors are also the eigenvectors of the \jacobianM,
+\( %beq
+\jMps^\zeit_\stagn \, \jEigvec[j]
+   = \exp({\zeit\eigExp[j]_\stagn })\,\jEigvec[j]
+\,.
+\) %ee{equilJacob}
+
+$\jMps_{p}(\ssp) = \jMps^\period{}(\ssp)$ is the \jacobianM\
+for a single traversal of the prime cycle $p$, $\ssp \in \pS_p$ is
+any point on the cycle, and $f^{r\period{}}(\ssp)=\ssp$ as
+$f^{t}(\ssp)$ returns to $\ssp$ every multiple of the period
+$\period{}$.
+
+The \jacobianM\ $\jMps_p(\ssp)$ depends upon $\ssp$ (the
+`starting' point of the periodic orbit),
+but its eigenvalues do not, so we
+write the eigenvalue equation as
+\beq
+\jMps_{p}(\ssp)\, \jEigvec[j](\ssp)
+   = \ExpaEig_{j} \,\jEigvec[j] (\ssp)
+\,,
+\ee{cplxExpaEig}
+where $\ExpaEig_{j}$ are independent of $\ssp$, and we refer to
+eigen\-vectors $\jEigvec[j]$ as `{\cLvs}', or, for \po s,
+as `Floquet vectors'.
+
+The time-dependent $\period{}$-periodic vector fields, such as the
+flow linearized around a \po, are described by Floquet theory. Hence
+we refer to a \jacobianM\ evaluated on a periodic
+orbit $p$ either as a [$d\!\times\!d$] {\em \FloquetM} $\jMps_p$ or a
+ [$(d\!-\!1)\times(d\!-\!1)$] {\em \monodromyM} $\monodromy_p$, to its
+eigenvalues $\ExpaEig_{j}$ as \emph{Floquet multipliers}
+\refeq{cplxExpaEig}, and to $\eigExp[j]_p = \eigRe[j]_p+i\eigIm[j]_p$
+as \emph{Floquet exponents}.
+The stretching/contraction rates per unit time
+are given by the real parts of {Floquet exponents}
+\beq
+\eigRe[j]_p = {1 \over \period{p}} \ln \left|\ExpaEig_{p,j}\right|
+\,.
+\ee{stabExps}
+A Floquet exponent is \emph{not} a Lyapunov
+exponent evaluated on one period the prime cycle $p$.
+When $\ExpaEig_{j}$ is real, we do care about
+\(\sign{}^{(j)}
+     =   \ExpaEig_{j}/|\ExpaEig_{j}|
+     \in \{+1,-1\}
+\,,
+\)
+the sign of the $j$th Floquet multiplier.
+If $\sign{}^{(j)}  = -1$ and $|\ExpaEig_{j}| \neq 1$, the corresponding
+eigen-direction is said to be {\em inverse hyperbolic}.
+
+The expanding directions, $|\ExpaEig_e| > 1$, have to be
+taken care of first, while the contracting directions $|\ExpaEig_c| <
+1$ tend to take care of themselves, hence one orders multipliers
+$\ExpaEig_k$ in order of decreasing magnitude
+\( %beq
+| \ExpaEig_1 | \geq | \ExpaEig_2 |
+    \geq \ldots \geq | \ExpaEig_d |
+\,.
+\) %ee{LambdaOrd}
+Since $| \ExpaEig_j | = e^{t \eigRe[j]}$, this is the same as
+ordering by
+\( %beq
+\eigRe[1] \geq \eigRe[2]
+    \geq \ldots \geq \eigRe[d]
+\,.
+\) %ee{lambdaOrd}
+We sort the {Floquet multipliers} $\{\ExpaEig_{p,1}$,
+$\ExpaEig_{p,2}$, $\dots$, $\ExpaEig_{p,d}\}$ of the
+\FloquetM\  evaluated on the $p$-cycle into three sets
+$\{e,m,c\}$
+\bea
+\mbox{expanding:}
+        &\quad \{ \ExpaEig \}_e &
+        =\, \{ \ExpaEig_{p,j}: \left|\ExpaEig_{p,j}\right| > 1 \}
+                \continue
+        &\quad \{ \eigExp \}_e &
+        =\, \{ \eigExp[j]_p:~\eigRe[j]_p > 0 \}
+                \continue
+\mbox{marginal:}
+        &\quad \{ \ExpaEig \}_m &
+        =\, \{ \ExpaEig_{p,j}: \left|\ExpaEig_{p,j}\right| = 1 \}
+                \label{EigSorted}\\
+        &\quad \{ \eigExp \}_m &
+        =\, \{ \eigExp[j]_p:~\eigRe[j]_p = 0 \}
+                \continue
+\mbox{contracting:}
+        &\quad \{ \ExpaEig \}_c &
+        =\, \{ \ExpaEig_{p,j}: \left|\ExpaEig_{p,j}\right| < 1 \}
+                \continue
+        &\quad \{ \eigExp \}_c &
+        =\, \{ \eigExp[j]_p:~\eigRe[j]_p < 0 \}
+\,.
+\nnu
+\eea
+The volume of expanding manifold plays an
+important role. We denote by $\ExpaEig_{p}$ (no $j$th eigenvalue
+index) the product of {\em expanding} Floquet multipliers
+\beq
+\ExpaEig_p=\prod_e \ExpaEig_{p,e}
+\,.
+\ee{expVol}
+
+If {\em all} Floquet exponents (other than the vanishing longitudinal
+exponent) of {\em all} periodic orbits of a flow are strictly bounded
+away from zero, the flow is said to be {\em hyperbolic}. Otherwise the
+flow is said to be {\em nonhyperbolic}. A confined smooth flow or map is
+generically nonhyperbolic, with partial {ellipticity}  or {marginality}
+expected only in presence of continuous symmetries, or for bifurcation
+parameter values. In presence
+of continuous symmetries \eqva\ and \po s are not likely solutions, and
+their role is played by higher-dimensional, toroidal, \reqva\ and \rpo s.

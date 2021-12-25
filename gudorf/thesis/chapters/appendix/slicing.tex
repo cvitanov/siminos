@@ -1,0 +1,510 @@
+
+Firstly, we must generate symmetry reduced spatiotemporal initial conditions, this, plainly, is done by
+using a symmetry reduced time integrator such as Burak's \texttt{ksETDRK4red.m} to generate a spatiotemporal
+discretization that will be used for the hunt.
+
+Next, I rewrite the direct-matrix equations in a symmetry reduced form. I find it easiest to first
+look at the symmetry reduced velocity equations for \KSe\ and then figure out what is necessary to take
+the leap into turning them into a spatiotemporal mapping such as \refeq{e-FksSpattemp}.
+
+Taking equations (8),(9) from \refref{BudCvi14}, the symmetry reduced flow takes the form
+\bea
+    \hat{v}(\hat{a}) &=&
+                v(\hat{a}) - \dot{\theta}(\hat{a})t(\hat{a}) \,, \quad
+    \dot{\theta}(\hat{a}) =
+                \frac{\langle v(\hat{a}) | t'(\hat{a}) \rangle}{\langle t(\hat{a}) | t'(\hat{a}) \rangle} t(\hat{a})    \,, \quad
+    \label{e-symred}
+\eea
+
+Now, in order to put this symmetry reduced flow
+into a spatiotemporal setting, where the entire orbit is then treated as a vector in the domain the spatiotemporal mapping,
+we must make note that for the $N-by-M$ discretizations that we are going to use in the fixed point finder
+we need to expand these formulae to account for the fact that we need $M$ copies of the template vector $t(\hat{a})$ for every
+point in time; likewise in order to evaluate the group tangent of at for the $2NM$
+dimensional vector (2 because of Fourier)
+we need to take a Kronecker product between the identity and the \SOn{2} generator in order to have a
+$[2NM\!\times\!by-2NM]$ matrix that
+will produce the correct group tangent after multiplication with the spatiotemporal vector.
+
+Now once we have all of these things in place we can produce an equation similar to \refeq{e-FksSpattempMat} for the
+symmetry reduced flow. Substituting $v$ from \refeq{e-MNGkstimeDM},
+(the transparency) the symmetry reduced flow can be written as
+\beq
+\hat{v}(\hat{a})= \frac{\partial a}{\partial \tau} = f(a),
+\eeq
+where $\tau$ is the in-slice time.
+
+Then applying an operator $F_t$ that takes the temporal Fourier transform around the orbit, and rewriting the time-derivative
+by exploiting the Fourier transform we are left with
+\beq
+W_{\tau}*\hat{u} - F_{\tau} \cdot f(\hat{a}) = 0
+\eeq
+Now, for the record, I write the equation in its complete
+direct-matrix, symmetry reduced form.
+\bea
+0 &=&
+W_{\tau}*\hat{u}
+- F_t ( Q_1 \cdot \Fu - Q_2 \cdot F \cdot ((F^{-1}\Fu) \star (F^{-1}\Fu))
+    \ceq
+- \frac{\langle Q_1 \cdot \Fu - Q_2 \cdot F \cdot ((F^{-1}\Fu) \star (F^{-1}\Fu)) | t'(\hat{a}) \rangle}
+       {\langle t(\hat{a}) | t'(\hat{a}) \rangle} t(\hat{a}))
+\eea
+where $\Fu$ is now the vector quantity that completely describes the spatiotemporal symmetry reduced orbit in question.
+
+Note: the definitions of the operators before taking Kronecker products are from \refeq{e-MNGwoperator}, \refeq{e-MNGq1operator}, \refeq{e-MNGq2operator}.
+
+Finding some better numerical results with the alternate definitions for
+\refeq{e-symred} which are, ($x_i$ implying real part of $i$th Fourier mode,
+$y_i$ is the imaginary part, where $i = 1, ..., N/2-1$
+
+\bea
+    \frac{\partial \hat{a}}{\partial \tau} &=&
+                \hat{x}_1 v(\hat{a}) - \dot{y}_1(\hat{a}) t(\hat{a}) \,, \quad
+    \frac{\partial \theta(\hat{a})}{\partial \tau} = \dot{y}_1(\hat{a})
+                   \,, \quad
+    \label{e-symred2}
+\eea
+
+I believe that the stability matrix with take the following form,
+\beq
+\hat{A} = diag(x_1)\cdot A - diag(\dot{y}_1(\hat{a}))\cdot T
+\eeq
+
+
+Finished implementing the newer version of symmetry reduction variational method
+\refeq{e-symred2}.
+Still having issues as initial condition for the value of the cost-functional, which
+is the best indication I have that I am still somehow messing up the symmetry reduced equations;
+the only other contributor could be the approximate loop tangent, which I realized today
+should also be symmetry reduced, i.e. it doesn't make sense to compare the in-slice velocity
+to an \MNGedit{approximations of element in the full {\statesp} tangent bundle}.
+
+After being frustrated for a while I finally realized the dumb mistake I have been making
+when it comes to symmetry reduction. I have been trying to compute the symmetry reduced
+velocity at every point of the discretized symmetry reduced {\rpo}s all at once. This was
+the wrong choice because the equations rely on inner products of vectors specific to each point
+along the discretization (namely the full \statesp\ velocity and the group tangents at
+the slice template point and each time discretization point).
+
+I don't know why I didn't realize this before (I guess I'm learning?) but something clicked
+when I noticed that the wrong elements were being set to zero in my previous formulation, in other
+words the in-slice symmetry reduced velocity wasn't tangent to the slice.
+I tested out the formulae I have been using for a single point along the discretization in time and everything resolved.
+
+In more detail, previously I was using a template point that was the same dimension as the entire discretized
+orbit, i.e. for an $N-by-M$ space-by-time discretization of an \rpo\ I was using $M$ copies
+of the same template vector expecting it to work but this is fundamentally flawed because
+when I use the equations \refeq{e-symred} all this does is mix all of the information of
+the orbit together in a jumbled fashion that makes absolutely no sense.
+
+If I can't figure out a way then there is the back-up
+plan of performing operations one at a time (as opposed to using
+linear operators that act on the entire discretized orbit at once)
+by computing the symmetry reduced velocity of each \statesp\ point and each symmetry reduced
+stability matrix one by one and then compiling them respectively into the vector, matrix that I need:
+A vector containing the in-slice velocities at every point along the orbit and a block
+diagonal matrix whose blocks are comprised of in-slice stability matrices evaluated as the
+respective point along the orbit.
+
+After I posted yesterday I almost immediately figured out the issue with the current formulation and why it won't work. It's a matter
+of the ordering of the variables; the way I have the code currently written the variables are ordered in a spatiotemporal vector
+that cycles through the time first and then space. I.e. if $k$ and $\ell$ were indices that take values from $0, \cdots, N-1$
+and $0, \cdots, M-1$ respectively representing the the space and time discretization, for every unit change to $k$, the index
+$\ell$ would have cycled through $M$ values.
+
+Now, this isn't important it's just a clerical part of coding but the problem I am now facing is that this specific ordering
+is going to make it much harder to finish the symmetry reduction variational code. I've tried to work things out
+in a number of ways but they are require some very unintuitive measures that I feel would be best to avoid. So, for now,
+I am going to rewrite everything such that the ordering of the \statesp\ vector cycles through spatial indices first, in other
+words switching to a different standard.
+
+With this in mind, I believe I have a way to rewrite \refeq{e-symred} such that it will serve my purposes of symmetry reduction.
+Like I've said before the problem I had from a lack of practice was that I was trying to symmetry reduce the entire orbit at
+once not taking into consideration that the group tangent direction (amongst other things) is a time-dependent quantity.
+
+Here is how I believe I can fix things once I change the ordering of the spatiotemporal vector i.e. the orbit in vector form.
+It basically relies on computing $M$ copies of \refeq{e-symred} while keeping all of the information at different times separate.
+Starting with,
+\bea \nonumber
+    \hat{v}(\hat{a}) &=&
+                v(\hat{a}) - \dot{\theta}(\hat{a})t(\hat{a}) \,, \quad
+    \dot{\theta}(\hat{a}) =
+                \frac{\langle v(\hat{a}) | t'(\hat{a}) \rangle}{\langle t(\hat{a}) | t'(\hat{a}) \rangle} t(\hat{a})    \,, \quad
+\eea
+
+Let $v$ now be matrix whose rows (instead of columns as to reshape the matrix into a vector properly)
+are the full \statesp\ velocity evaluated along the time discretization of a symmetry reduced
+\rpo. Likewise, define $\hat{a}$ as a matrix whose rows are the current (in fictitious time) representation of the symmetry
+reduced \statesp\ points that comprise the \rpo. Then, we can change the inner product notation to a matrix-vector product notation
+by virtue of the group tangent template vector being constant. For example, the velocity will now be concatenated in a matrix
+in the following manner.
+
+\beq
+v(\hat{a}) \rightarrow \mathbf{V} \equiv [v(\hat{a}(\tau_0)) | v(\hat{a}(\tau_1)) | \cdots | v(\hat{a}(\tau_{M-1})) ]
+\eeq
+
+following this notation the equation for evaluating the symmetry reduced velocity at every point along our discretization
+will be
+
+\bea \nonumber
+    \hat{\mathbf{V}}^T(\hat{a}) &=&
+                \mathbf{V}^T(\hat{a}) - \dot{\theta}(\hat{a}) \mathbf{t}^T(\hat{a}) \,, \quad
+    \dot{\mathbf{\theta}}(\hat{a}) =
+                (\mathbf{V}^T(\hat{a}) \cdot t'(\hat{a})*/ \mathbf{t}^T(\hat{a}) \cdot t'(\hat{a})) \mathbf{t}^T(\hat{a})  \,, \quad
+\eea
+
+Now the onto the stability matrix; as opposed to the symmetry reduced velocity where
+I can just concatenate vectors into matrix and perform element-wise operations and matrix-vector products, with the stability
+matrices I needed to rewrite definitions of all of the matrices involved in the direct-matrix derivation which I am
+still in the process of. Some of them are easy, where the effect of the reordering merely results in the opposite order
+kronecker product.
+
+Wrote code to produce more general initial conditions for symmetry reduced variational methods.
+Alright. I have mostly figured out the issues. I guess I was confused on how to use the in-slice time symmetry reduced
+velocity in conjunction with the direct-matrix formulation before. I was attempting to use equations \refeq{e-symred}
+in place
+of something similar to \refeq{e-symred2} and this was a tragic mistake that took me a week to figure out.
+
+The following are what I believe to be the correct implementation of symmetry reduction for the variational
+method when applied to a {\rpo} that has been generated with a symmetry reduced integrator. In other words,
+when the initial condition is a spatiotemporal discretization embedded in the slice
+
+The new equation I am using for calculation of the symmetry reduced velocities (w.r.t. in-slice time) in the
+direct-matrix formulation is,
+\beq \label{e-KSsymDMvel}
+\hat{v} = (diag(x_1(t)) \otimes I_{N-2})\cdot v - (diag(\dot{y}_1(t)) \otimes I_{N-2}) \cdot (I_M \otimes T) \cdot \Fu
+\eeq
+
+This is relatively simple to explain when using \refeq{e-symred2} as a reference. $diag(a_1(t))$ is a diagonal
+matrix that when multiplied with the full \statesp\ velocity vector produces a vector whose entries
+are equal to $x_1(t_i)*v(t_i)$ where $x_1$ is the real component of the first Fourier mode. likewise for $diag(\dot{y}_1(t))$
+except $\dot{y}_1$ is the velocity of the imaginary component of the first Fourier mode. the $\otimes$ symbol here
+denotes a Kronecker product (outer product) whose purpose is to copy the values $x_1$ and $y_1$ as to create a diagonal
+matrix whose dimension equals the dimension of the velocity vector $v$. i.e. I need an outer product with a $N-2$ identity
+matrix to ensure that I have $N-2$ copies of $x_1$ and $y_1$ so that each of the $N-2$ Fourier modes gets multiplied by
+the correct factor.
+
+To simplify the notation and make it more apparent how to derive the stability matrix in direct-matrix notation, I rewrite
+$X_1 = diag(x_1(t)) \otimes I_{N-2}$ and $Y_1 = diag(\dot{y}_1(t)) \otimes I_{N-2}$.
+
+The equation for the stability matrix for the entire orbit is therefore.
+
+\beq \label{e-KSsymDMstb}
+\frac{\partial \hat{v}}{\partial \Fu} = \hat{A} = X_1 \cdot A - Y_1 \cdot T
+\eeq
+
+I believe it might be that I have treated $X_1$ and $Y_1$ as constant matrices as opposed to functions of $\Fu$. This
+is the only place that I find room for errors so far.
+
+Small progress on symmetry reduced variational methods front. With some small changes to how I implemented
+\label{e-KSsymDM0}. and playing around
+with different discretizations of \RPO{16.3} I was able to get a final result whose value
+of the cost functional is $F^2 \approx 10^{-12}$. This is four orders of magnitude of improvement
+from the initial value of $F^2 \approx 10^{-8}$ but it's still not good enough.
+
+The new formulations of \refeq{e-KSsymDMvel} and \refeq{e-KSsymDMstb} are written in the following ways, to more
+explicitly represent the dependence of the matrices $X$ and $Y$ on the underlying quantities, namely the
+orbit vector (vector representing the time discretizations of the spatial Fourier series)
+and the full {\statesp} velocity vector.
+
+\beq \label{e-KSsymDMvelnew}
+\hat{v} = (X \cdot \Fu) \ast v - (\dot{Y} \cdot v) \ast (I_M \otimes T) \cdot \Fu
+\eeq
+
+with this (more) correct direct-matrix velocity equation we can then derive the corresponding stability matrix,
+using the rules of calculus described in \refref{Chu09}
+
+\beq \label{e-KSsymDMstbnew}
+\frac{\partial \hat{v}}{\partial \Fu} = \hat{A} = diag(v)\cdot X + diag(X \cdot \Fu )\cdot A - diag(T \cdot \Fu)\cdot (Y \cdot A) - diag(Y \cdot v)\cdot T
+\eeq
+
+The new formulation helped me find an error in how I was deriving the stability matrix as there was dependence on
+both the orbit vector $\Fu$ and velocity vector $v$ in the matrices $X_1$ and $Y_1$ in \refeq{e-KSsymDMstb} that
+I was not accounting for.
+
+
+Made some changes that make the problem seem more natural, namely, I included some terms such that everything
+is in terms of linear operators acting on vectors of spatiotemporal Fourier coefficients as opposed
+to a weird mixture I had before. The upside is that everything is defined spatiotemporally, but it might
+look a little odd at first glance because there are certain terms which only have one type of Fourier transform operator being applied.
+
+I also elected to change the temporal Fourier transform to a RFFT based description as opposed to a FFT
+based description (FFT produces both sides of the spectrum, negative and positive Fourier modes based on index
+where RFFT just produces half of the spectrum). I avoided this earlier because it was easier at first but
+now that I have some experience this RFFT based description is definitely desired as it minimizes the number
+of variables in the system. (It is possible, of course to take a FFT and then keep half of the terms but
+this would be hard to implement given my direct-matrix implementation). The problem isn't completely
+symmetric in terms of space and time however, as the Galilean invariance eliminates the need to keep
+track of the terms corresponding to zeroth and Nyquist $(N/2)$ modes of the spatial spectrum; The easiest
+way to describe this is that the discretization in spatiotemporal Fourier space is $N-2 by M$ where $N$
+is the spatial discretization and $M$ is the temporal discretization.
+
+
+The mapping now takes the form,
+\beq \label{e-symredmapping}
+W\cdot \Fu -F_t\cdot((X \cdot F_t^{-1} \Fu) \ast v - (\dot{Y} \cdot v) \ast (I_M \otimes T) \cdot F_t^{-1} \cdot \Fu) = 0
+\eeq
+where, $\Fu$ denotes a vector of spatiotemporal Fourier coefficients.
+
+The symmetry reduced stability matrix needed for Newton's method then takes the form
+\bea
+M &=& W - F_t [diag(X \cdot F_t^{-1} \cdot \Fu)\cdot A - diag(v)\cdot(X\cdot F_t^{-1})
+    \ceq
++ diag(Y\cdot v) \cdot (T \cdot F_t^{-1})
++ diag(T\cdot F_t^{-1} \cdot \Fu) \cdot (Y\cdot A)]
+\eea
+This is in addition to the partial derivatives with respect to in-slice time
+and domain size that have yet to be elucidated.
+
+I have been thinking for a while when this works how I will begin to apply it to glue different orbits together,
+but finding {\rpo}s in a symmetry reduced space and {\ppo}s in full {\statesp} can't really be stuck together
+in my mind so I think the correct way would be to find the {\rpo}s in reduced {\statesp}, reproduce
+them in full {\statesp} through numerical integration and then try to glue them together. This wouldn't
+warrant a further attempt to find another spatiotemporal fixed point however because the \rpo\ in full
+{\statesp} through one prime period would not be periodic in time, but it would be periodic in space.
+There a couple of thoughts I have had about this, one being that perhaps maybe when looking at the
+problem spatiotemporally this means that rpo's must be maintained within the interior of a spatiotemporal
+domain in order to ensure the tiling is a fixed point, this might point towards pruning rules of the underlying
+spatiotemporal dynamics but it is kind of a cheap trick and isn't really what I had imagined, which was just
+to treat {\ppo}s and {\rpo}s on the same footing in a symmetry reduced space; even though it isn't meaningful
+(or possible?) to bring a \ppo\ to a slice, but I was hoping to be able to get a point where the different types
+of periodic orbits would be building blocks treated as equal in a spatiotemporal setting.
+
+In the spatial system, with periodic boundary conditions in time, i.e. a
+slightly different problem than Dong and Lan\rf{DoLa14}, I am curious as
+to whether it would be easier to develop symbolic dynamics there, as I
+believe all spatial ``periodic orbits" are either temporal equilibria,
+{\ppo}s in time or {\rpo}s in time, due to the spatial boundary
+conditions imposed when looking at the time system. My main idea is that
+because the existence of these different types of ``orbits" in the
+spatial system depend on the spatial size of the system, which is
+ostensibly the parameter controlling the onset of turbulence, perhaps it
+would be easier to designate symbolic dynamics because there is somewhat
+clear hierarchy as to when the corresponding objects appear; equilibria
+appear first, then {\ppo}s and {\rpo}s.
+
+I was having some weird issues when using two real-valued fft's (half-spectrum), so I have also
+reverted to using a half-spectrum fft in space, and a full-spetrum fft in time. I tried rewriting
+this portion of the code in probably five different ways but I reverted it due to the weird issues,
+which were the spatiotemporal Fourier coefficients had the property that for $\Fu_kl$,
+$Re[\Fu_kl] = 0$ for $l= even$, $Im[\Fu_kl] = 0$ for $l=odd$. I don't know why this is but I've reverted
+back to the previous definitions, modified for different ordering.
+
+The residual by using a least-squares solver on a 32 by 32 space-by-time parameterization of \RPO{16.3}
+can currently be reduced to $10^{-9}$. Most of this reduction is obtained with the first few Newton steps,
+where after the fourth step or so the residual is reduced to $10^{-8}$. Even after the application of a total
+of 50 Newton steps the residual only reduces minimally (to the level previous stated). The slice condition
+of the phase of the first Fourier mode to be zero is not being maintained, and I believe this is why the
+residual does not fall to within machine precision. In my experience for variables that are constrained to
+zero (i.e. the first Fourier mode phase) it is best to leave them out of the calculation of the least-squares
+solver, like what is done for the zeroth spatial mode terms (which equal zero due to Galilean invariance), such
+that no erroneous changes can be made, i.e. if they aren't a part of the calculation due to their values equaling
+zero, they really should not be carried along by the numerical method, it should be implied that they are always zero,
+and not kept track of.
+
+The first attempt to improve the algorithm was simply to include constraints that make sure the Newton steps
+are orthogonal to the directions of time and spatial equivariance by requiring the corresponding
+inner products to be zero. This was done by including two additional rows to the previously over-determined
+system that correspond to $\frac{\partial \Fu}{\partial \conf}$ and $\frac{\partial \Fu}{\partial \zeit}$
+such that the following relations hold $<\frac{\partial \Fu}{\partial \conf},\delta \Fu >=0$, $<\frac{\partial \Fu}{\partial \zeit},\delta \Fu >=0$
+I believe this is what was meant by Burak and PC in last week's meeting when they mentioned the hyperplane formed
+by time and spatial equivariance. This offered no improvement over the least-squares solver solving the under-determined
+system (i.e. the system without constraints).
+
+The second constraint that I tried was to hold certain spatiotemporal Fourier coefficients fixed, by fixing their
+real and imaginary components separately to yield two constraints. This also offered no improvements to the convergence,
+but I need to see if whether this is due to the particular choice of Fourier coefficient still.
+
+Another tactic that I tried to employ was to remove the symmetry reduced variables (the spatiotemporal spectrum
+corresponding to the symmetry reduced first spatial modes) from the computation of Newton step corrections
+using the least squares solver. Because the slice condition is to hold these components to be equal to zero,
+I removed the corresponding rows and columns from the spatiotemporal \jacobianM\ to see whether the least-squares
+solver was using them as extra degrees of freedom used to minimize the residual of the mapping, $F^{2}$.
+
+What I noticed is that by removing them from the system, the residual \emph{increases}, in other words the convergence
+to a spatiotemporal fixed point is worse. While it is hard for me to currently quantify, the extra degrees of freedom
+seem to give extra leeway to the least-squares solver, which includes "corrections" to the symmetry reduced variables
+of order $10^{-7}$ even though the computation of the mapping has zero magnitude as it should. In other words,
+through computation of the spatiotemporal fixed point using Newton's method in conjunction with a least-squares solver,
+a non-zero phase is picked up that, although relatively small, breaks the slice constraint.
+
+With these changes, the in-slice spatiotemporal representation of \RPO{16.3} in
+conjunction with the constraints to be orthogonal to the directions of time and space
+equivariance brought the Newton residual to within machine precision in two steps,
+when using an 32-by-32 space-by-time discretization (spatiotemporal Fourier modes)
+of the \rpo.
+
+The first would be to not have the spatiotemporal system be Fourier-Fourier
+in spacetime but keep the time direction in physical space. This would enable
+me to modify the spatiotemporal fixed point equation for {\ppo}s to be reduced
+to solving for the corresponding spatiotemporal fixed point using only
+prime periods if I used the finite difference scheme in conjunction with the
+reflection symmetry operator to evaluate the time derivative.
+
+The modified equation would be,
+\beq
+D \cdot u + Q_1 \cdot u + Q_2 \cdot FFT_x \cdot (IFFT_x \cdot u)^2 = 0,
+\eeq
+Where the only difference is that the spatiotemporal vector would now
+represent $u_k(t_m)$ instead of $\Fu_{k,l}$.
+
+The second option would be to remove the extraneous (zero valued) variables
+from the system of equations, which would require a bit of effort as
+I would have to modify all of the operators I am using in direct-matrix
+notation.
+
+The easier of the two by-far is the finite difference method in time so that
+is what I am going to run through today.
+The finite difference scheme with the reflection symmetry operation isn't
+working too well for me so I am going to move on to the second method
+which uses spatiotemporal Fourier coefficients and then discards the variables
+that are zero.
+
+I guess it makes sense that half of the spatiotemporal variables are discarded
+because only half of them are truly unique due to the prime period being
+the irreducible representation of the full orbit, and the prime period is
+exactly half of the full orbit. A curious manifestation of the reflection
+symmetry that I didn't realize.
+
+
+Uploaded the beginnings of the python translations of the initial condition generation codes in order
+to enable andy and myself to work completely in Python. The idea is to have a script that depending
+on the user's choice will integrate in time, either in a symmetry reduced
+subspace or not, with a random or user provided initial condition, integrate out the transient parts,
+set up a Poincar\'e section and find a close recurrence mainly by itself, prepare the initial condition
+by removing higher frequency Fourier mode components and saving the file so that it may be used
+to test the spatiotemporal code. It's taking a while because what plan for is an amalgamation of
+approximately five different codes in one. The main goal is to put ease-of-use at the forefront
+to the user by changing function arguments rather than changing the code manually.
+
+The definitions that I am using for the following equations are as such,
+$Y$ denotes a matrix that picks out the first imaginary spatial mode component,
+such that a matrix-vector product $Y \cdot v$ is equivalent to the inner product
+$< v | t_p >$ where $t_p$ is the group tangent template vector, and $v$ is the
+velocity. Note that the construction of $Y$ is completely dependent on the fact
+that the inner product only has one non-zero term (namely, the imaginary component
+of the first mode) due to the specific nature of the group tangent template $t_p$.
+
+Likewise, $X$ is a matrix that will pick out the first real component, such that
+the expression $X \cdot F^{-1}_t \cdot \Fu$ is equivalent to the inner product
+$<t | t_p>$. Again, this is predicated on the group tangent template having such
+a specific form. The general idea is that the group tangent row vectors $<t|$
+are coordinate dependent, so in order to calculate them, we need to be in a
+Fourier-Time representation, and not Fourier-Fourier.
+
+With these definitions in mind, the dynamical time representation of the symmetry reduced
+equations takes the form
+
+\beq \label{MNGsymred_dyn_t}
+\hat{v} = v - \frac{Y \cdot v}{X \cdot F^{-1}_t \Fu} .* (T \cdot F_t^{-1} \cdot \Fu)
+\eeq
+
+One can see that substitution of the spatiotemporal
+terms with their "equivalent" inner product notations makes this equation equal to
+\HREF{Chaosbook.org} equations $(13.7)$ and $(13.8)$. I put "equivalent" in quotes
+because the inner products in the equations just listed are coordinate dependent
+quantities, while this notation calculates everything at once.
+
+The spatiotemporal mapping (applying Fourier transform of time of the symmetry reduced flow field)
+the takes the form,
+
+\beq
+W \cdot \Fu - F_t \cdot( v - \frac{Y \cdot v}{X \cdot F^{-1}_t \Fu} .* (T \cdot F_t^{-1} \cdot \Fu)) = 0
+\eeq
+
+The symmetry reduced stability matrix then takes the form,
+
+\beq
+\hat{A} = A - diag(\frac{Y \cdot v}{X \cdot F_t^{-1}\cdot \Fu})\cdot T\cdot F_t^{-1}
+- diag(T \cdot F_t^{-1}\cdot \Fu) \cdot \frac{diag(X \cdot F_t^{-1}\cdot \Fu)\cdot(Y\cdot A) -diag(Y \cdot v)\cdot X \cdot F_t^{-1}}{(X \cdot F_t^{-1}\cdot \Fu)^2}
+\eeq
+
+Again with the substitutions $X \cdot F^{-1}_t \cdot \Fu \equiv <t | t_p>$ and $Y \cdot v \equiv < v | t_p >$ the
+equation is reminiscent of the corresponding equation in  \HREF{Chaosbook.org} equation $(13.24)$.
+
+The full spatiotemporal stability matrix then takes the form,
+
+\beq
+\frac{\partial G}{\partial \Fu} = W + F_t \cdot \hat{A}
+\eeq 
+
+where, $s$ is the parameterization variable, here defined with a subscript $n$
+to indicate that the parameterization need not be uniform around the initial guess
+loop (although this is what I work worth as it makes things much easier to program).
+$t$ in this instance stands for the real dynamical time of the orbit.
+
+If we substitute the definition for the in-slice time, this equation takes the form
+
+\beq
+\lambda_n = \frac{\Delta \hat(t)_n (x_1)_n }{\Delta s_n}
+\eeq
+
+Going through the almost identical derivation for the system of equations there
+is one place where I believe they differ. Normally, there is the substitution
+
+\beq
+\delta \tn = \frac{\partial \lambda_n}{\partial \tau} \Delta s_n \delta \tau
+\eeq
+
+Normally this is easily generalized in order to produce a uniform rescaling of the period
+around the orbit,
+but if the coordinate $x_1$ is involved I believe that this should take the form
+
+\beq \label{e-inslicevarmeth}
+\delta \tn = (\frac{\partial \lambda_n}{\partial \tau}(x_1)_n + \frac{\partial (x_1)_n}{\partial \tau} \lambda_n)\Delta s_n \delta \tau
+\eeq
+
+As the in-slice time rescaling is coordinate dependent, this formula seems to beg for a description
+of the general equation that has a coordinate dependent rescaling. This is kind of what I have been stuck on
+as this is quite different from what I am used to.
+
+For a orbit that is described by $M$ points in time we would need ${\lambda_i}$ where $i = 0, ... , M-1$.
+I'm currently working on implementing this into my current code but it's gotten the best of me so far.
+
+The way I am attempting to solve the problem I am having with in-slice time is as such,
+for $M$ discretized points representing an in-slice time description of a {\rpo} I am introducing
+$M$ different time rescaling quantities $\lambda_m$. In this way the original variational
+method equation changes from
+\beq
+\begin{bmatrix} D - \lambda diag(A_0, ... , A_{M-1}), & -v \end{bmatrix}
+       \left[ \begin{array}{c} \delta \tilde{x} \\ \delta \lambda \end{array} \right] =
+    \delta \tau \left[ \begin{array}{c} \lambda v - \tilde{v} \end{array} \right],
+\eeq
+to
+\bea
+&&\begin{bmatrix} D - diag(\lambda_0 * A_0, ... , \lambda_{M-1} * A_{M-1}), & -diag(v_0, ..., v_{M-1}) \end{bmatrix}  \left[ \begin{array}{c} \delta \tilde{x} \\ \delta \lambda_{m}
+            \end{array} \right]
+\continue
+&&=
+    \delta \tau \left[ \begin{array}{c} diag(\lambda_m) v - \tilde{v} \end{array} \right],
+\eea
+In this way the correction mentioned in \refeq{e-inslicevarmeth} is not being resolved but I want to try
+to see if more flexibility in the rescaling of in-slice time with respect to fictitious time evolution
+is sufficient before getting into an equation I derived; it's also a simpler step whose changes could be
+carried over to the full in-slice time description I probably will need.
+
+Wrote some new code for symmetry reduced spatiotemporal fixed point finding; currently
+it seems a little strange to me because I only know how to quotient the spatial translation
+symmetry in spatial Fourier space as opposed to spatiotemporal (double) Fourier space.
+
+The way that this I am attempting this, are with the equations, in direct-matrix notation:
+
+Using the definition of the reduced velocity in ti
+me, \refeq{e-KSsymDMvelnew}, restated here
+for reference,
+\beq
+\hat{v} = (X \cdot \utensor) \ast v - (\dot{Y} \cdot v) \ast (I_M \otimes T) \cdot \utensor,
+\eeq
+We then find the equivalent spatiotemporal system by Fourier transforming in time by means
+of application of $F_t$ linear operator denoting the transform and moving everything to one
+side. Here, the $\utensor$ stands for a description of the initial solution that is only Fourier in space.
+\beq
+W\cdot F_t \cdot \utensor -F_t\cdot((X \cdot \utensor) \ast v - (\dot{Y} \cdot v) \ast (I_M \otimes T) \cdot \utensor) = 0
+\eeq
+The stability matrix resulting from this symmetry reduced mapping is therefore,
+
+where $\hat{A}$ is in reference to the equation previously defined \refeq{e-KSsymDMstbnew}.
+
+\beq
+J = W\cdot F_t - F_t\cdot \hat{A}
+\eeq

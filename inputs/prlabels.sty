@@ -1,0 +1,45 @@
+% prlabels.sty
+% Predrag              Jun 26 2008  - created siminos/inputs/prlabels.sty
+%                                     from dasbuch/book/inputs/prlabels.sty
+% Predrag              Jun 18 2003  - removed / from the \basedirectory
+% Predrag              May  2 2003  - version in the footer
+% Predrag              Dec  2 1995  - filename in the footer
+%
+% PC: reinstate \let\@oddfoot\@empty\let\@evenfoot\@empty
+%     in the final version
+%
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%PC insert that labels the footer with file name:
+   \let\@inputfile\@empty
+   \if@twoside
+       \def\ps@headings{%
+	%%PC replaced
+	%%      \let\@oddfoot\@empty\let\@evenfoot\@empty
+	%%   with
+   \def\@oddfoot{\tiny{ \version \hfil {\basedirectory\inputfile}}}
+   \def\@evenfoot{\tiny{\basedirectory\inputfile\hfil \version}}
+         \def\@evenhead{\thepage\hfil\leftmark}%
+         \def\@oddhead{{\rightmark}\hfil\thepage}%
+         \let\@mkboth\markboth
+         \def\chaptermark##1{%
+           \markboth {\uppercase{\ifnum \c@secnumdepth >\m@ne
+               \@chapapp\ \thechapter. \ \fi
+               ##1}}{}}%
+         \def\sectionmark##1{%
+           \markright {\uppercase{\ifnum \c@secnumdepth >\z@
+               \thesection. \ \fi
+               ##1}}}}
+   \else %%PC - it seems to not be twoside, it uses the oddfoot below:
+       \def\ps@headings{%
+   \def\@oddfoot{\hfil\footnotesize{\basedirectory\inputfile.tex}}
+   \def\@evenfoot{\footnotesize{\basedirectory\inputfile.tex}\hfil}
+         \def\@evenhead{\thepage\hfil\leftmark}%
+         \def\@oddhead{{\rightmark}\hfil\thepage}%
+%         \def\@oddhead{{\slshape\rightmark}\hfil\thepage}%
+         \let\@mkboth\markboth
+         \def\chaptermark##1{%
+           \markright {\uppercase{\ifnum \c@secnumdepth >\m@ne
+               \@chapapp\ \thechapter. \ \fi
+               ##1}}}}
+   \fi %%PC insert finished

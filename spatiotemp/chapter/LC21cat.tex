@@ -1,0 +1,347 @@
+% siminos/reversal/cat.tex      pdflatex LC21; bibtex LC21
+% temporary: siminos/spatiotemp/chapter/LC21cat.tex
+% $Author: predrag $ $Date: 2021-12-24 01:25:20 -0500 (Fri, 24 Dec 2021) $
+
+\section{A kicked rotor}
+\label{s:kickRot}
+
+Temporal Bernoulli is perhaps the simplest chaotic lattice field
+theory, but our goal here is to formulate a deterministic {\spt}ly chaotic
+field theory, Hamiltonian and energy conserving, because (a) that is
+physics, and (b) one cannot do quantum theory without it. We need a
+system as simple as the Bernoulli map, but mechanical. So, we move on
+from running in circles, to a mechanical rotor to kick.
+
+The 1-degree of freedom maps that describe kicked rotors
+subject to discrete time sequences of angle-dependent impulses
+$V'(\coord_{\zeit})$, $\zeit\in\integers$,
+\bea
+\coord_{\zeit+1} - \coord_{\zeit} &=& p_{\zeit+1} \qquad  (\mbox{mod}\;1),
+    \label{LC21PerViv2.1b}\\
+p_{\zeit+1} - p_{\zeit} &=& V'(\coord_{\zeit})
+\,,
+    \label{LC21PerViv2.1a}
+\eea
+with $2\pi \coord$ the  angle of the rotor, $p$ the momentum conjugate to
+the angular coordinate $\coord$, and the angular pulse
+$V'(\coord)=V'(\coord+1)$ periodic with period $1$, play a key role in the
+theory of deterministic and quantum chaos in  atomic physics, from the
+Taylor, Chirikov and Greene  standard map\rf{Lichtenberg92,Chirikov79},
+to the cat maps that we turn to now. The equations are of the
+Hamiltonian form: eq.~\refeq{LC21PerViv2.1b} is $\dot{\coord}=p/m$ in terms of
+discrete time derivative \refeq{lattTimeDer}, \ie, the configuration
+trajectory starting at $\coord_{\zeit}$ reaches
+$\coord_{\zeit+1}=\coord_{\zeit}+p_{\zeit+1}\Delta{\zeit}/m$
+in one time step $\Delta{\zeit}$. Eq.~\refeq{LC21PerViv2.1a} is the
+time-discretized $\dot{p}=-\partial V(\coord)/\partial \coord$: at each
+kick the angular momentum $p_{\zeit}$ is accelerated to $p_{\zeit+1}$ by
+the force pulse $V'(\coord_{\zeit})\Delta{\zeit}$, with the time step and
+the rotor mass set to $\Delta{\zeit}=1$,  $m=1$.
+
+In atomic physics applications, the values of the angle $\coord$
+differing by integers are identified, but the momentum $p$ is unbounded.
+In dynamical systems theory one compactifies the momentum as well, by
+adding $(\mbox{mod}\;1)$ to \refeq{LC21PerViv2.1a}, as for the Bernoulli map
+\refeq{n-tuplingMap}. This reduces the phase space to a square
+$[0,1)\times [0,1)$ of unit area, with the opposite edges identified,
+\ie, 2-torus.
+
+%\section{Life of a single Hamiltonian cat}
+\subsection{Cat map}
+%    \fi
+\label{s:catPV}
+
+The simplest kicked rotor is subject to a force is proportional to
+displacement, that is, Hooke's law force $P(\coord)=K\coord$ linear in
+the angular displacement $\coord$.
+
+When the force is proportional to displacement, that is, when Hooke's law
+is obeyed, the spring is said to be linear, the potential is quadratic.
+
+The $(\mbox{mod}\;1)$ added to
+\refeq{LC21PerViv2.1a} makes the map a discontinuous `sawtooth,' unless $K$
+is an integer. In the integer $K$ case, the map
+(\ref{LC21PerViv2.1b},\ref{LC21PerViv2.1a}) is of form
+ \beq
+ \left(\begin{array}{c}
+ \coord_{\zeit+1}  \\
+   p_{\zeit+1}
+  \end{array} \right )=
+  \jMat \left(\begin{array}{c}
+ \coord_{\zeit}  \\
+   p_{\zeit}
+  \end{array} \right )\quad (\mbox{mod}\;1)
+    \,,  \qquad
+ {\jMat} =\left(\begin{array}{cc}
+ a & c \\
+ d & b
+  \end{array} \right)
+\,,
+\ee{catMap}
+where $a,b,c,d$ are integers whose precise values do not matter, as long
+as $\det \jMat=1$, \ie, the map is area-preserving. The map is then a
+Continuous Automorphism of the Torus known as the Thom-Anosov
+diffeomorphism, or Thom-Anosov-Arnol'd-Sinai {\em `cat
+map'}\rf{ArnAve,deva87,StOtWt06}, extensively
+studied as the simplest example of a chaotic Hamiltonian system.
+
+{Cat map} is
+a linear
+area-preserving map on the unit 2-torus \statesp, with the field at the
+temporal lattice site \zeit,
+\(
+\ssp_{\zeit} =(\coord_{\zeit},p_{\zeit}) \in  (0,1]\times(0,1]
+\)
+interpreted as the angular position and its conjugate momentum at time
+instant $\zeit$.  For $|s|>2$ the one-time-step {\jacobianM} $\jMat$
+{characteristic equation}
+\beq
+\ExpaEig^{2} - {s}\ExpaEig + 1 = 0
+\,,
+\ee{LC21:StabMtlpr}
+has real roots
+$(\ExpaEig\,,\;\ExpaEig^{-1})$  and a positive Lyapunov exponent
+$\Lyap >0$,
+\beq
+\ExpaEig=e^{\Lyap} = \frac{1}{2}(s+\sqrt{(s-2)(s+2)})
+\,,\qquad
+s=\tr{\jMat}=\ExpaEig+\ExpaEig^{-1}
+\,.
+\ee{StabMtlpr}
+A matrix $\jMat$ with no eigenvalue on the unit circle is called
+hyperbolic.
+The eigenvalues are functions of the stretching parameter $s$, and
+for $|s| > 2$ the cat map \refeq{catMap} is a fully chaotic
+Hamiltonian dynamical system. Cat maps with the same $s$ are equivalent
+up to a similarity transformation, so it suffices to work out a single
+convenient realization, as we shall do here for the
+\PV\rf{PerViv} `two-configuration representation'
+\refeq{eq:StateSpCatMap}.
+
+\subsection{\tempLatt}
+\label{s:catLagrange}
+    % earlier names:
+    % \section{Life of a single Lagrangian cat}
+    % \section{Cat map in Lagrangian formulation}
+\renewcommand{\period}[1]{{\ensuremath{n_{#1}}}}
+    % discrete length of a cycle, Predrag
+
+To motivate our formulation of a \spt\ chaotic field theory to be
+developed in \refref{CL18}, we again recast the local initial
+value, time-evolution cat \emph{map} \refeq{catMap} as a global
+\emph{temporal lattice} condition that we shall refer to as the
+{\em \templatt}.
+
+Ignoring (mod~1) for a moment, we can use
+\refeq{LC21PerViv2.1b} to eliminate
+$p_{\zeit}$ from \refeq{LC21PerViv2.1a}
+and rewrite the kicked rotor equation as the 3-term recurrence
+\beq
+  - \coord_{\zeit+1} + 2\,\coord_{\zeit} - \coord_{\zeit-1} + V'(\coord_{\zeit})
+  = 0
+  \,.
+\ee{cattyMappo}
+
+the discrete
+Euler–Lagrange equations \refeq{LC21eqMotion} take form of 3-term,
+second-order difference equations
+% \refeq{LC21:1dTempFT}
+\[
+- \ssp_{\zeit+1} + V'(\ssp_{\zeit}) - \ssp_{\zeit-1}
+    =
+\Ssym{\zeit}
+\,.  %\qquad  \ssp_{\zeit} \in [0,1)
+\]
+\refeq{LC21:1dTempFT}
+
+The discrete time Hamilton's equations
+(\ref{LC21PerViv2.1b},\ref{LC21PerViv2.1a}) induce forward-in-time evolution on a
+2-torus  $(\coord_{\zeit},p_\zeit)$ {\em phase space}. For the problem at
+hand, it pays to go from the Hamiltonian (configuration, momentum) phase
+space formulation to the discrete Lagrangian
+$(\ssp_{\zeit-1},\ssp_{\zeit})$ formulation. If the momentum is replaced
+by the discrete time velocity,
+\beq
+(\coord_\zeit,p_\zeit) \to
+\left(
+    \ssp_{\zeit},\frac{\ssp_{\zeit} - \ssp_{\zeit-1}}{\Delta\zeit}
+\right)
+%\,,\qquad \Delta\zeit= 1
+\,,
+\ee{Ham2Lagr}
+and the time step set to $\Delta\zeit=1$, a cat map can be brought to the
+\PV\ `two-configuration representation'\rf{PerViv}
+\beq
+ \left(\begin{array}{c}
+ \ssp_{\zeit}  \\
+ \ssp_{\zeit+1}
+ \end{array} \right )=
+ \jMat_{PV} \left(\begin{array}{c}
+ \ssp_{\zeit-1}  \\
+ \ssp_{\zeit}
+ \end{array} \right ) %\mbox{ mod } 1
+ - \left(\begin{array}{c}
+ 0  \\
+ \Ssym{\zeit}
+ \end{array} \right )
+ \,,  \qquad
+ {\jMat_{PV}} =\left(\begin{array}{cc}
+ 0 & 1 \\
+ -1 & s
+ \end{array} \right ),
+%\,.
+\ee{eq:StateSpCatMap}
+with matrix $\jMat_{PV}$ acting on the 2\dmn\ space of successive
+configuration points $\transp{(\ssp_{\zeit-1},\ssp_{\zeit})}$. As was
+case for the Bernoulli map \refeq{1stepDiffEq}, the cat map
+$(\mbox{mod}\;1)$ condition \refeq{catMap} is enforced by integers
+$\Ssym{\zeit}\in  \A$, where for a given integer stretching parameter $s$
+the alphabet \A\ ranges over $|\A|={s}\!+\!1$ possible values for
+$\Ssym{\zeit}$,
+\beq
+\A=\{\underline{1},0,\dots s\!-\!1\}
+\,,
+\ee{catAlphabet}
+necessary  to keep $\ssp_{\zeit}$ for all times $t$ within the unit
+interval $[0,1)$. We find it convenient to have symbol
+$\underline{\Ssym{}}{}_{\zeit}$ denote $\Ssym{\zeit}$ with the negative
+sign, \ie, `$\underline{1}$' stands for symbol `$-1$'.
+
+As was the case for {temporal Bernoulli} \refeq{tempBern}, the condition
+\refeq{eq:StateSpCatMap} is a linear relation: a given `code'
+$\{\Ssym{\zeit}\}$ in terms of alphabet \refeq{catAlphabet} corresponds
+to a unique temporal sequence $\{\ssp_\zeit\}$. That is why Percival and
+Vivaldi\rf{PerViv} refer to such symbol \brick\ $\Mm$ as a {\em linear
+code}. As for the Bernoulli system, $\Ssym{\zeit}$ can also be
+interpreted as `winding numbers'\rf{Keating91}, or, as they shepherd
+stray points back into the unit torus, as `stabilising
+impulses'\rf{PerViv}. Here we shall use the field-theoretical parlance,
+and refer to them  as `sources'.
+
+Written out as a second-order difference equation, the \PV\ map
+\refeq{eq:StateSpCatMap} takes a particularly elegant, {\em \templatt}
+form \refeq{LC21:1dTemplatt}
+\beq
+-\ssp_{\zeit+1}  +  s \, \ssp_{\zeit} - \ssp_{\zeit-1}
+    =
+\Ssym{\zeit}
+\,,
+\ee{catMapNewt}
+or,
+in terms of a {{\lattstate}} $\Xx$, the corresponding {symbol \brick}
+$\Mm$ \refeq{pathBern}, and the $[\cl{}\!\times\!\cl{}]$ {\shiftOp}
+$\shift$ \refeq{hopMatrix},
+\beq
+(-\shift + s\id - \shift^{-1})\,\Xx =  \Mm
+\,,
+\ee{catTempLatt}
+very much like the {temporal Bernoulli} condition \refeq{tempBern}.
+`Temporal' again refers to the global {\lattstate} (field) $\Xx$, and
+the winding numbers (sources) $\Mm$ taking their values on the lattice
+sites of a 1\dmn\ \emph{temporal} lattice $\zeit\in\integers$.
+%    \PC{2021-10-13}{Dropped:
+%Nonlinearity of the \catlatt\ arises from restricting the admissible
+%values of fields $\ssp_z$ to the unit interval.
+%    }
+
+                               \toCB
+
+\subsection{\tempLatt\ as a continuous time dynamical system}
+\label{s:tempCatODE}
+
+Recall how the Bernoulli first-order difference equation could be viewed as
+a time-discretization of the first-order linear ODE \refeq{1stepVecEq}. The
+second-order difference equation \refeq{catMapNewt} can be interpreted as the
+second order discrete time derivative ${d^2}/{dt^2}$, or the temporal
+lattice Laplacian \refeq{LC21LaplTime},
+\beq
+\Box\,\ssp_\zeit \equiv
+\ssp_{\zeit+1} - 2\ssp_{\zeit} + \ssp_{\zeit-1}
+= (s-2)\ssp_{\zeit} -\Ssym{\zeit}
+\,,
+\ee{LC21PerViv2.2}
+ with the time step set to $\Delta\zeit=1$.
+But that is nothing but Newton's Second Law: ``acceleration equals
+force,'' so Percival and Vivaldi\rf{PerViv} refer to this formulation as
+`Newtonian', while we follow Allroth\rf{Allroth83}, Mackay, Meiss,
+Percival, Kook \& Dullin\rf{MacMei83,meiss92,MKMP84,DulMei98,kooknewt},
+and Li and Tomsovic\rf{LiTom17b} in referring  to it as the `Lagrangian'
+formulation.
+
+In other words, for a cat map the force pulse $P(\coord)=(s-2)\,\coord$
+in \refeq{LC21PerViv2.1a} is linear in the angular displacement $\coord$, so
+the temporal lattice equation takes form (see free action
+\refeq{LC21freeAction})
+\beq
+(-\Box + {\mu}^2\id)\,\Xx = \Mm
+%\,,  \qquad
+%{\mu}^2={s}-2
+% \Box\,\ssp_{\zeit}:= \ssp_{\zeit-1}-2\ssp_{\zeit} +\ssp_{\zeit+1}
+\,,
+\ee{OneCat}
+where the Klein-Gordon mass ${\mu}$ is related to the cat-map
+stretching parameter ${s}$ by ${\mu}^2={s}-2$, as already noted
+in \refeq{CatMap2d}.
+
+For small stretching parameter values, $s<2$, this discretized
+Euler–\-Lagrange equation \refeq{LC21eqMotion} describes a set of coupled
+penduli, with oscillatory solutions, known as the discrete Helmholtz
+equation in applied math\rf{DiHaHu01,Lick89,FetWal03}, as  the
+tight-binding model, the Harper's or Azbel-Hofstadter model in solid
+state physics\rf{Peierls33,MiDuWh92,Cserti00,Economou06,CsSzDa11},  and
+the critical almost Mathieu operator in mathematical physics\rf{Simon82},
+with quadratic action \refeq{LC21freeAction} written as Hamiltonian
+\[ %beq
+H=\sum_\ell\ket{\ell}\epsilon_0\bra{\ell}
+  + \sum_{\ell m}\ket{\ell}V_{\ell m}\bra{m}
+\,,\quad
+   V_{\ell m} = \left\{
+     \begin{array}{ll}
+         V & \mbox{if\ } \ell,m \mbox{ nearest neighbors}\\
+         0 & \mbox{otherwise}
+     \end{array}
+             \right.
+\] %ee{Economou06(5.7)}
+with the stretching factor ${s}=-\epsilon_0/V$ in
+\refeq{LC21PerViv2.2}.
+%{OneCat}.
+Here we study the strong stretching, $s>2$ case, known as the discrete
+\sPe\rf{Dorr70,GoVanLo96,HuCon96,HuRyCo98,FetWal03,Pozrikidis14},
+whose solutions are hyperbolic. We refer to the
+Euler–\-Lagrange equation
+\refeq{OneCat} as the `{\em \templatt}', both to distinguish it from
+the forward-in-time Hamiltonian cat \emph{map} \refeq{catMap}, and in the
+anticipation of the \catlatt\ to be discussed in the sequel
+\refref{CL18}.
+
+\bigskip
+
+\noindent\textbf{\tempLatt, summarized.}
+In the \spt\ formulation a \emph{global} {temporal {\lattstate}}
+\beq
+\transp{\Xx} % = \{\ssp_j\}
+             = (\ssp_\zeit,\ssp_{\zeit+1},\cdots,\ssp_{\zeit+k})
+\ee{path}
+is not determined by a forward-in-time `cat map' evolution
+\refeq{catMap}, but rather by the fixed point condition
+\refeq{LC21eqMotion}
+% tempCatFixPoint}
+that the \emph{local}, 3-term discrete temporal
+lattice condition \refeq{catMapNewt} is satisfied at every lattice point.
+This temporal 1\dmn\ lattice reformulation is the bridge that takes us
+from the single cat map \refeq{catMap} to the higher-\dmn\ coupled
+``multi-cat'' \spt\ lattices of \refref{CL18}.
+
+And, did you know that the cute Arnold cat is but the % very fundamental
+{\sPe} in disguise? And that the lattice form \refeq{catMapNewt}
+of the theory is so much more elegant than the
+cat-map form \refeq{catMap}?
+A cat is Hooke's wild, `anti-harmonic' sister.
+For $s<2$ Hooke rules: restoring oscillations around the sleepy resting
+state.
+For $s>2$ cats rule: exponential runaway, wrapped globally around a
+\statesp\ torus. {Cat} is to {chaos} what {harmonic oscillator} is to
+{order}. There is no more fundamental example of chaos in mechanics.
+
+
+\renewcommand{\period}[1]{{\ensuremath{T_{#1}}}}         %continuous cycle period

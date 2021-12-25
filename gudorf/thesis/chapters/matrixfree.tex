@@ -1,0 +1,118 @@
+% siminos/gudorf/thesis/chapter/matrixfree.tex
+% $Author: predrag $ $Date: 2020-05-25 15:18:45 -0400 (Mon, 25 May 2020) $
+
+%Possible figures
+%Display of computation time vs. matrix and matrix-free methods?
+
+An important piece that appears in our calculations but we have yet to cover
+is how, given limits to computational memory, we calculate matrix vector
+products such as $\frac{\partial F}{\partial \mathbf{z}}\delta \mathbf{z}$
+and $\frac{\partial F}{\partial \mathbf{z}}^{\top}\delta\mathbf{z}$. These
+quantities arise frequently in many numerical methods designed
+for finding periodic solutions of a nonlinear PDE. Very often, it results from
+the linearization that leads to the Newton equation\rf{Visw08,ChaKer12,WillisPipe17}.
+In all of those examples, the matrix-vector product
+involving the Jacobian matrix is approximated with a (typically first order)
+finite-difference approximation\rf{KK04,Brown87}.
+For equations of motion
+\beq \label{e-eqnmotion}
+u_t \equiv v(u(t))
+\eeq
+the time evolution rule is given by
+\beq \label{e-timeevolution}
+f^{t}(u_0) = u(t) = u_0 + \int_0^t d\tau v(u(\tau))\,.
+\eeq
+The Taylor expansion
+\beq \label{e-tangentspace}
+f^{t}(u+\delta u) \approx f^{t}(u) + \frac{\partial f^{t}(u)}{\partial u(0)}\delta u + ...
+\eeq
+where we define the Jacobian matrix as
+\beq \label{e-Jacobian}
+J^{t}(u_0) = \frac{\partial  f^{t}(u)}{\partial u(0)}\,.
+\eeq
+The finite difference approximation in question is derived
+by simply rearrangement of \refeq{e-Jacobian}
+\beq \label{e-finitediffJac}
+\frac{f^{t}(u+\epsilon \delta u)-f^{t}(u)}{\epsilon} \approx J^{t}(u_0) \delta u
+\eeq
+where the replacement $\delta u \to \epsilon \delta \hat{u}$ where
+$|\delta u| = 1$ is merely to abide by convention. The approximation
+\refeq{e-finitediffJac} relates a finite difference
+with the \emph{action} of the Jacobian on a vector. The implicit time dependence is accounted
+for via time integration. One consequence of this is that the computational
+effort required to evaluate this approximation can be quite high.
+In our case, however, there are no dynamics, and hence no integration.
+The lack of dynamics or time dependence means that in our situation the
+matrix derived in a similar fashion is no longer a Jacobian matrix by our
+definition as it does not transport tangent space perturbations. To avoid confusion
+we shall refer to the analogous matrix of our system as the \emph{sensitivity matrix}
+because it represents the response of \refeq{e-ks} to perturbations of system parameters.
+Once again our \spt\ formulation is advantageous as the finite-difference approximation
+\refeq{e-finitediffJac} can
+be exchanged for a faster and more accurate spectral computation. Speed
+and accuracy are usually inversely proporational which further reinforces
+how potent the spectral calculation is.
+%I feel like I'll need to include
+%proof that it's faster and more accurate.
+Our intent of this discussion is to very thoroughly describe what we are doing,
+in part because the notion of approximating the Jacobian via finite-differences
+is seemingly hardwired in certain disciplines.
+In order to do keep the derivations
+as concise and understandable as possible
+we elect to use a ``direct matrix'' notation\rf{Chu09}.
+That is to say, we rewrite \refeq{e-kssFb}
+in terms of linear operators and pointwise multiplications
+\beq \label{e-KSmatrixform}
+(\mathcal{D}_t + \mathcal{D}_{xx} + \mathcal{D}_{xxxx}+\frac{\sigma}{T}\mathcal{D}_x) \Fu
++ \frac{1}{2} \mathcal{D}_{x} \mathcal{F}(\mathcal{F}^{-1}\Fu*\mathcal{F}^{-1}\Fu)
+\eeq
+where subscripts indicate differentiation.
+This notation will simplify the expressions derived for the sensitivity
+matrix and its adjoint. Namely, the columns of the sensitivity matrix
+\beq \label{e-SensMatGeneral}
+\frac{\partial F}{\partial z} =
+\begin{bmatrix}
+\frac{\partial F}{\partial \Fu}         &
+\frac{\partial F}{\partial \speriod{}}  &
+\frac{\partial F}{\partial \period{}}   &
+\frac{\partial F}{\partial \sigma}
+\end{bmatrix}\,.
+\eeq
+can be written as follows in the direct matrix notation
+\bea \label{e-Partials}
+\frac{\partial F}{\partial \Fu}
+&=& (\mathcal{D}_t + \mathcal{D}_{xx}
++\mathcal{D}_{xxxx}+\frac{\sigma}{\period{}}\mathcal{D}_x)
++\mathcal{D}_{x} \mathcal{F}\cdot \text{Diag}(u)\cdot \mathcal{F}^{-1}
+\continue
+\frac{\partial F}{\partial \speriod{}}
+&=& (\frac{-2}{\speriod{}}\mathcal{D}_{xx}
+-\frac{4}{\speriod{}}\mathcal{D}_{xxxx}
+-\frac{\sigma}{\period{}\speriod{}}\mathcal{D}_x)\Fu
+-\frac{1}{2L} \mathcal{D}_{x}
+\mathcal{F}(\mathcal{F}^{-1}\Fu)*\mathcal{F}^{-1}\Fu)
+\continue
+\frac{\partial F}{\partial \period{}}
+&=& (-\frac{1}{\period{}}\mathcal{D}_{t}
+-\frac{\sigma}{T^2}\mathcal{D}_x)\Fu
+\continue
+\frac{\partial F}{\partial \sigma}
+&=&\frac{1}{\period{}}\mathcal{D}_x \Fu\,.
+\eea
+The adjoint of the first equation of \refeq{e-Partials} is
+\beq \label{e-AdjSens}
+\frac{\partial F}{\partial \Fu}^{\dagger}
+= -\mathcal{D}_t + \mathcal{D}_{xx}
++\mathcal{D}_{xxxx}-\frac{\sigma}{\period{}}\mathcal{D}_x
+-\mathcal{F}\cdot \text{Diag}(u)\cdot \mathcal{F}^{-1}\mathcal{D}_{x}
+\eeq
+The remaining adjoints (row vectors) are not shown because
+the matrix free computation is the same as \refeq{e-Partials}
+merely with an additional transposition.
+In summary, to compute all relevant matrix vector products
+we need matrix free versions of Fourier transforms, differentiation,
+elementwise multiplication. The only difficulty
+that arises are when \emph{symmetry specific} \xDft\ are desired.
+As implied by the name, these are \xDft\ which remove redundant
+\spt\ \Fcs\ which are constrained by symmetry.
+For a discussion of these constraints see \refsect{sect:selectionKS}.

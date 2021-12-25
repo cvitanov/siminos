@@ -1,0 +1,98 @@
+% siminos/spatiotemp/Solutions/soluSqrtA.tex  called by blogSVW.tex
+% $Author: predrag $ $Date: 2021-09-14 18:16:58 -0400 (Tue, 14 Sep 2021) $
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% From Golub and Van Loan\rf{GoVanLo96} sect 9.4.2
+% copied from PHYS-7143-21/notes/solutions/soluWeek1.tex
+% Predrag                                   2020-08-19
+\solution{e-sqrtA}{The matrix square root.}{.
+                                            \inCB
+
+\noindent
+a) It is easy to check that
+\[
+A = \left[\begin{array}{cc}
+ 4 & 10 \\
+ 0 & 9
+\end{array}\right]
+  = \left(A_{ij}^{1/2}\right)^2
+\]
+for the matrices
+\bea
+A^{1/2}_{++}&=&\left[\begin{array}{cc}
+ 2 & 2 \\
+ 0 & 3 \\
+\end{array}\right]
+    \,,\quad\quad\;\;
+A^{1/2}_{+-}=\left[\begin{array}{cc}
+ -2 & 10 \\
+ 0 & 3 \\
+\end{array} \right]
+\continue
+A^{1/2}_{--}&=&\left[
+\begin{array}{cc}
+ -2 & -2 \\
+ 0 & -3 \\
+\end{array}\right]
+    \,,\quad
+A^{1/2}_{-+}=\left[
+\begin{array}{cc}
+ 2 & -10 \\
+ 0 & -3 \\
+\end{array}\right]
+\label{ProjOp2d-pm}
+\eea
+Being upper-triangular, the eigenvalues of the four matrices
+can be read off their diagonals:
+there are four square root $\pm$ eigenvalue combinations
+$\{$3,2$\}$, $\{$-3,2$\}$, $\{$3,-2$\}$, and $\{$-3,-2$\}$.
+
+Associated with each set $\lambda_i\in\{\lambda_1,\lambda_2\}$
+is the {\em projection operator}
+%\refeq{2dEigVec} %RESTORE
+\bea
+\PP^{(1)}_{ij} &=& \frac{1}{\lambda_1-\lambda_2} (A_{ij}^{1/2} - \lambda_2\matId)
+\,=\, \MatrixII{0}{2}
+               {0}{1}
+\label{ProjOp2d(1)} \\
+\PP^{(2)}_{ij} &=& \frac{1}{\lambda_2-\lambda_1}(A_{ij}^{1/2} -\lambda_1\matId)
+\,=\, \MatrixII{1}{-2}
+               {0}{ 0}
+\,.
+\label{ProjOp2d(2)}
+\eea
+Note that all {`}square root{'} matrices have the
+same projection operators / eigenvectors as the matrix $A$ itself, so
+one can drop the $ij$ subscripts on $\PP^{(1)},\PP^{(2)}$.
+
+\noindent
+b) If the eigenvalues of  a [$d\times{d}$] matrix are all distinct,
+the matrix is diagonalizable, so
+the number of square root $\pm$ combinations is $2^d$.
+However, for general matrices things can get crazy - there can be
+\HREF{https://en.wikipedia.org/wiki/Square_root_of_a_matrix}
+{no, or some, or $\infty$} of `square root' matrices.
+
+\noindent
+c)  We
+know $\{\lambda_1,\lambda_2\}$ and $\PP^{(\alpha)}$ for $A$, and the four
+`square root' eigenvalues are clearly
+$\{\pm\lambda_1^{1/2},\pm\lambda_2^{1/2}\}$. That suggest finding the
+`square root' matrices \refeq{ProjOp2d-pm} by reverse-engineering
+\refeq{ProjOp2d(1)}, \refeq{ProjOp2d(2)}:
+\[
+A_{ij}^{1/2} =(\lambda_1-\lambda_2)\PP^{(1)}  + \lambda_2\matId
+\,,
+\]
+which is, of course, how the problem was cooked up.
+For example,
+\[
+A_{+-}^{1/2}
+ = (+3-(-2))\MatrixII{0}{2}
+                     {0}{1}
+  + (-2)\MatrixII{1}{0}
+                 {0}{1}
+\,.
+\]
+    } %end \solution{e-sqrtA}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%

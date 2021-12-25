@@ -1,0 +1,259 @@
+% examInvariants.tex called by {invariants}{25may2014}{Cycle stability}
+% $Author: predrag $ $Date: 2019-03-16 17:14:50 -0400 (Sat, 16 Mar 2019) $
+
+% Predrag                            5nov2017
+% Predrag                           25may2014
+
+% called by
+%           siminos/spatiotemp/chapter/spatiotemp.tex
+
+\section{Examples}
+\label{exam:invariants}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\example{Equivariance under infinitesimal transformations.}
+        { \label{exam:EquiInfntmsl}
+% Predrag                           2018-02-02
+% from \Chapter{continuous}{31jan2015}{Relativity for cyclists}
+A flow $\dot{\ssp}= \vel(\ssp)$ is $\Group$-equivariant,
+%\refeq{GvCommut},
+if symmetry transformations commute with time evolution
+\beq
+\vel(\ssp)=\LieEl^{-1} \, \vel(\LieEl \, \ssp)
+\,,\qquad \mbox{for all } \LieEl \in {\Group}
+\,.
+\ee{eq:FiniteRot}
+For an infinitesimal transformation % \refeq{intsmLieTransf}
+the $\Group$-equivariance condition % \refeq{eq:FiniteRot}
+becomes
+\[
+\vel(\ssp) =(1-\gSpace \cdot \Lg) \, \vel(\ssp+\gSpace \cdot \Lg \ssp) + \cdots
+       =\vel(\ssp)- \gSpace \cdot \Lg \vel(\ssp)
+             + \frac{d\vel}{d\ssp} \,\gSpace \cdot \Lg \ssp + \cdots
+\,.
+\]
+The $\vel(x)$ cancel, and $\gSpace_a$ are arbitrary. Denote
+the \emph{group flow tangent field} at \ssp\ by
+$\groupTan_a(\ssp)_{i}= (\Lg_a){}_{ij} \ssp_j$. Thus the
+infinitesimal, Lie algebra $\Group$-equivariance condition is
+\index{group!tangent field}\index{tangent!field, group}
+\beq
+%  \left(
+%    \Lg_a  - \groupTan_a(\ssp) \cdot \frac{\partial}{\partial \ssp}
+%  \right) \vel(\ssp) =
+  \groupTan_a(\vel)  - \Mvar(\ssp) \, \groupTan_a(\ssp) =0
+  \,,
+\ee{inftmInv}
+where $\Mvar = {\pde \vel}/{\pde \ssp}$ is the \stabmat. %\refeq{DerMatrix}.
+A learned remark: The directional derivative along
+direction $\xi$ is
+\(
+    %Df(x)\xi
+    \lim_{t \to 0} ({f(x+t\xi)-f(x))}/{t}
+    \,.
+\)
+The left-hand side of \refeq{inftmInv} is
+the {\em Lie derivative} of the dynamical flow
+field $\vel$ along the direction of the infinitesimal
+group-rotation induced flow $\groupTan_a(\ssp)= \Lg_a \ssp$,
+\beq
+{\cal L}_{\groupTan_a} \vel =
+\left.\left(
+  \Lg_a - \frac{\partial}{\partial y}(\Lg_a \ssp)
+ \right) \vel(y)\right|_{y=\ssp}
+\,.
+\ee{LieDeriv}
+The equivariance condition \refeq{inftmInv} states that the two
+flows, one induced by the dynamical vector field $\vel$, and
+the other by the group tangent field $\groupTan$, commute if
+their Lie derivatives (or the `Lie brackets ' or `Poisson
+brackets') vanish.
+    \index{Lie!derivative} \index{Lie!bracket}
+    \index{Poisson!bracket}
+                \jumpBack{exam:EquiInfntmsl}
+    } %end \example{Equivariance under inf. transf.}{exam:EquiInfntmsl
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\example{Stability of spatiotemporal patterns.}{ \label{exam:spatioTempStab}
+% Predrag                           2018-02-02
+%   from \Chapter{stability}{25may2014}{Local stability}
+%   section Stability of flows
+% Predrag                           25may2014
+How does one determine the eigen\-values of the finite time local
+deformation $\jMps^\zeit$ for a general nonlinear smooth flow? The
+\jacobianM\ is computed by integrating the equations of variations
+% \refeq{die}
+\beq
+\ssp(\zeit)=\flow{\zeit}{\xInit} \,, \quad
+\deltaX (\xInit,\zeit) \,= \,\jMps^\zeit(\xInit) \, \deltaX (\xInit,0)
+\,.
+\ee{xit_1}
+% with the initial tangent space vector ${\bf \eta}$ transported by
+% the \jacobianM\ $\jMps^\zeit(\xInit) $.
+The equations are linear, so we should be able to integrate them--but
+in order to make sense of the answer, we derive this integral step by
+step.
+
+Consider the case of a general, non-stationary trajectory
+$\ssp(\zeit)$. The exponential of a constant matrix can be defined
+either by its Taylor series expansion or in terms of the Euler limit:
+% \refeq{EqDyn141}:
+\index{Euler!limit}
+\beq
+e^{\zeit{\Mvar}} \,=\, \sum_{k=0}^\infty \frac{\zeit^k}{k !} {\Mvar}^k
+    \,=\, \lim_{m \to \infty}\left(\matId + \frac{\zeit}{m} {\Mvar} \right)^{m}
+\,.
+\ee{exp_prod}
+Taylor expanding is fine if ${\Mvar}$ is a constant matrix. However,
+only the second, tax-accountant's discrete step definition of an
+exponential is appropriate for the task at hand.  For dynamical
+systems, the local rate of neighborhood distortion ${\Mvar}(\ssp)$
+depends on where we are along the trajectory. The linearized
+neighborhood is deformed along the flow, and the $m$
+discrete time-step approximation to $\jMps^\zeit$ is therefore given
+by a generalization of the Euler product \refeq{exp_prod}:
+\index{Euler!product}
+\bea
+\jMps^\zeit(\xInit) &=&
+\lim_{m \to \infty}\prod_{n=m}^1
+\left(\matId + \delta t {\Mvar}(\ssp_n) \right)
+          =
+\lim_{m \to \infty}\prod_{n=m}^1 e^{\delta t\, {\Mvar}(\ssp_n)}
+                            \label{Jprod} \\
+         &= &
+\lim_{m \to \infty}
+e^{\delta t\, {\Mvar}(\ssp_m)}
+e^{\delta t\, {\Mvar}(\ssp_{m-1})}
+\cdots
+e^{\delta t\, {\Mvar}(\ssp_2)}
+e^{\delta t\, {\Mvar}(\ssp_1)}
+\,,
+\nnu
+\eea
+where $\delta t = {(t-t_0)/ m}$, and $\ssp_n=\ssp(t_0+n\delta t)$.
+Indexing of the product indicates that the successive infinitesimal
+deformation are applied by multiplying from the left. The
+$m\to\infty$ limit of this procedure is the formal integral
+\index{time!ordered integration}
+\beq
+\jMps^\zeit_{ij}(\xInit)
+= \left[ {\bf T} e^{ \int_0^\zeit d\tau {\Mvar} (\ssp(\tau)) } \right]_{ij}
+\,,
+\label{hodes}
+\eeq
+where ${\bf T}$ stands for time-ordered integration, {\em defined} as
+the continuum limit of successive multiplications
+\refeq{Jprod}.
+This integral formula for $\jMps^\zeit$ is the main conceptual result of
+the present chapter. This formula is the finite time companion of the differential
+definition \refeq{Bew_Miaw}.
+The definition makes evident important properties of \jacobianMs,
+such as their being multiplicative along the flow,
+\beq
+\jMps^{\zeit+\zeit'}\!(\ssp)
+    = \jMps^{\zeit'}\!(\ssp')\, \jMps^\zeit(\ssp), \qquad \mbox{where} \,\;
+\ssp'=\flow{\zeit}{\xInit}
+\,,
+\ee{Jmultiplic}
+which is an immediate consequence of the time-ordered product structure of
+\refeq{Jprod}.
+\index{semigroup!dynamical}
+                \jumpBack{exam:spatioTempStab}
+    } %end \example{Stability of spatiotemporal patterns.}{exam:spatioTempStab
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\example{Floquet multipliers of a spatiotemporal torus are invariant.}
+        { \label{exam:FloqTorus}
+% Predrag                           2018-02-02
+%   from \Chapter{invariants}{}{Cycle stability}
+%   \example{Stability of cycles for maps.}{ \label{exam:cycStabMap}
+% Predrag                           25may2014
+The 1\dmn\ map Floquet multiplier %\refeq{Lambda_1p}
+is a product of derivatives over all points around the cycle, and is
+therefore independent of which periodic point is chosen as the
+initial one.
+In higher dimensions the form of the \FloquetM\
+$\jMps_p(\xInit)$ % in \refeq{Jrepeat}
+does depend on the choice
+of coordinates and the initial point $\xInit \in \pS_p$.
+Nevertheless, as we shall now show, the cycle {\em Floquet
+multipliers} are intrinsic property of a cycle in any
+dimension. Consider the $i$th eigenvalue, eigen\-vector pair
+$(\ExpaEig_{j},\, \jEigvec[j])$ computed from $\jMps_p$
+evaluated at a periodic point $\ssp$,
+    \PC{}{fix scale in \reffig{f:covariantPO}, refer to it}
+\beq
+\jMps_p (\ssp) \,\jEigvec[j](\ssp) =
+    \ExpaEig_{j} \,\jEigvec[j](\ssp)\,,  \quad
+\ssp \in \pS_p \,.
+\ee{e-transp}
+%and at
+Consider another point on the cycle at time $t$ later,
+$\ssp'=f^t(\ssp)$ whose \FloquetM\ is $\jMps_{p} (\ssp')$.  By the
+semigroup property \refeq{Jmultiplic},
+$\jMps^{\period{}+t} = \jMps^{t+\period{}}$,
+and the \jacobianM\ at $\ssp'$ can be written either as
+\index{semigroup!dynamical}
+\[
+\jMps^{\period{}+t} (\ssp) = \jMps^{\period{}} (\ssp') \, \jMps^{t} (\ssp)
+               = \jMps_p (\ssp') \, \jMps^t (\ssp)
+\,,
+\]
+%\PC{}{Benny + Lan want me to be more explicit}
+or
+$ % \jMps_p (\ssp') \, \jMps^t (\ssp) =
+  \jMps^t (\ssp) \, \jMps_p (\ssp)$.
+Multiplying \refeq{e-transp} by $\jMps^t (\ssp)$, we find that the
+\FloquetM\ evaluated at $\ssp'$ has the same Floquet multiplier,
+\beq
+\jMps_p (\ssp') \,\jEigvec[j](\ssp') =
+    \ExpaEig_{j} \,\jEigvec[j](\ssp')\,,  \quad
+     \jEigvec[j] (\ssp') = \jMps^t (\ssp) \,\jEigvec[j](\ssp)
+\,,
+\ee{EigsInvar}
+but with the eigen\-vector $\jEigvec[j]$ transported along the flow
+$\ssp \to \ssp'$ to $\jEigvec[j](\ssp')=\jMps^t(\ssp)
+\,\jEigvec[j](\ssp)$. Hence, in the spirit of the Floquet theory
+% (\refappe{s-FloquetTheory})
+one can define time-periodic eigen\-vectors (in a
+co-moving `Lagrangian frame')
+\index{co-moving frame}\index{Lagrangian!frame}
+\beq
+\jEigvec[j](t) =
+ e^{- \eigExp[j] t } \,\jMps^t(\ssp)\,\jEigvec[j](0)
+    \,,\qquad
+\jEigvec[j](t) = \jEigvec[j](\ssp(t))
+    \,,\;\;
+\ssp(t) \in \pS_p
+\,.
+\ee{coMovingEig}
+$\jMps_p$ evaluated anywhere
+along the cycle has the same set of Floquet multipliers
+$\{\ExpaEig_{1}, \ExpaEig_{2},$
+$\cdots, 1,\cdots$ $,\ExpaEig_{d-1}\}$.
+% \PC{}{YL: elaborate!}
+%\beq
+%\left( \jMps_p (\ssp') - \E\ssppaEig_{p,j}\matId \right) \jEigvec[j] (\ssp') =
+%0\,, \quad  \ssp' \in \pS_p \,.
+%\ee{EigsInvar}
+ As quantities such as $\tr \jMps_{p}(\ssp)$, $\det \jMps_{p}(\ssp)$ depend
+only on the eigenvalues of $\jMps_{p}(\ssp)$ and not on
+the starting point $\ssp$, in expressions such as
+$ \det \! \left( \matId - \jMps^{r}_{p}(\ssp) \right)$
+we may omit reference to $\ssp$,
+\beq
+\det \! \left( \matId - \jMps^{r}_{p} \right)
+            =
+\det \! \left( \matId - \jMps^{r}_{p}(\ssp) \right)
+\quad \mbox{for any $\ssp \in \pS_p $}
+\,.
+\ee{NoXdepJp}
+We postpone the proof that the cycle Floquet multipliers are smooth
+conjugacy invariants of the flow; % to  \refsect{s-SmoothConj};
+time-forward map \refeq{EigsInvar} is the special case of this
+general property of smooth manifolds and their tangent spaces.
+                \jumpBack{exam:FloqTorus}
+    } %end \example{Floquets of a spatiotemporal torus}{exam:FloqTorus
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%

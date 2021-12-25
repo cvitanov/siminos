@@ -1,0 +1,227 @@
+% siminos/cats/nonlin-v1/reviews/response2-v1.tex
+% $Author: predrag $ $Date: 2020-11-17 00:57:43 -0500 (Tue, 17 Nov 2020) $
+
+% Predrag                                       2020-11-16
+% Predrag                                       2020-10-26
+% Boris                                         2020-09-25
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+                        \newif\ifboyscout\boyscouttrue      %% commented %%
+                        \newif\ifsubmission\submissionfalse
+                        \newif\ifhighlightedits\highlighteditstrue
+% Toggle between draft and public versions:
+% \boyscoutfalse\highlighteditsfalse    % public, hyperlinked
+% \boyscoutfalse\highlighteditstrue     % for Nonlinearity referees
+% \boyscoutfalse\submissiontrue         % for Nonlinearity
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\documentclass[12pt]{iopart}
+% loads AMS amsgen, amsfonts, amsbsy, amssymb:
+\usepackage{iopams} % to load AMS extension fonts msam and msbm
+                     % the blackboard bold alphabet, extra maths symbols
+                     % and extra definitions for bold Greek letters.
+                     % do not use amsmath.sty
+
+\pdfminorversion=4  % the very start the TeX file, so PDF or bitmap figures
+                    % are PDF version 1.4 or lower
+
+\usepackage{graphicx}              % is the recommended load line
+\graphicspath{{../figs/}{../Fig/}}  %% directories with graphics files
+\usepackage{color} % dvips allows for colors
+\usepackage[colorlinks]{hyperref} %% hyperlinks
+\usepackage{amsthm}
+\usepackage{parskip}
+\input{../biblatex}    % this makes references hyperlinked
+\addbibresource{../../bibtex/siminos.bib}
+
+\input{../defsCats}      %% all article-specific edits: \renewcommand, etc
+
+\pagestyle{plain}
+\renewcommand{\baselinestretch}{1.0}
+\setlength{\parindent}{2em}
+
+\begin{document}
+                    \hfill October 25, 2020
+
+\bigskip
+\noindent
+---------------------------------------------------------------------- \\
+Referee 2 Report -- NON-104197 / Gutkin et al \\
+---------------------------------------------------------------------- \\
+
+\bigskip
+\bigskip
+
+
+
+\noindent
+In what follows, referee's remarks are followed by our responses, either
+as indented ``{\em Response~~~} $\cdots$'' blocks of text, or marked
+\edit{blue}. In the attached revised manuscript, all edits
+are indicated by \edit{blue text}.
+\bigskip\bigskip
+
+The referee writes:
+I would like to add a few questions that came to my mind and might
+be still considered in the manuscript:
+
+\begin{enumerate}
+  \item[(1)]
+bottom of p. 5. Is it clear why the system is chaotic for
+    $s > 2$ ?
+    What is the reason for such a simple relation with the
+    dimensionality?
+
+\begin{quote}
+{\em Response~~~}
+To answer this key question clearly,
+we have now redefined the stretching factor $s$ from the initial
+Nonlinearity submission\\
+  $(\Box + s - 2d) x_z = m_z$  to
+\beq
+\edit{(\Box + d(s - 2)) x_z = m_z}
+\ee{kittensEq}
+Why?
+
+We do not believe it would be wise to get into the larger picture in this
+paper (whose focus is narrow - evidence for the conjectured \catlatt\
+ergodicity), so the remarks that follow are just for the referee:
+
+\catLatt's continuum relatives are
+the inhomogeneous \emph{Helmoltz equation}\rf{DiHaHu01,Lick89,FetWal03}
+\beq
+   (\Box+k^2)\,\field(x)= -4\pi\rho(x)\,,\qquad x\in \reals^d
+\,,
+\label{CatMapContinuesPC}
+\eeq
+and, for
+the ${\mu}^2=-k^2>0$ (imaginary $k$) case, the equation
+\beq
+   (\Box-{\mu}^2)\,\field(x)= -\rho(x)\,,\qquad x\in \reals^d
+\,,
+\label{sPe}
+\eeq
+known as  the
+{\sPe}, Klein–Gordon or Yukawa equation\rf{Dorr70,GoVanLo96,HuCon96,HuRyCo98}.
+Sitting between the two is
+ the Poisson equation, the $k \to 0$ limit of the Helmholtz equation;
+\beq
+   \Box\,\field(x)= -4\pi\rho(x)\,,\qquad x\in \reals^d
+\,.
+\ee{PoissonEq}
+For $\rho=0$, the equation is known as \emph{Laplace's equation}.
+
+The $d$\dmn, purely hyperbolic ${\mu}^2>0$
+{\catlatt} \refeq{kittensEq}
+\beq
+ (\Box - {\mu}^2\unit)_{zz'} \field_{z'} = \m_z
+    \,, \qquad
+  \field_{z} \in  \mathbb{T}^{1}
+    \,, \quad
+  m_{z} \in \A^{1}
+    \,, \quad
+  z\in \integers^{d}
+\,,
+\ee{GreenLinearConnPC}
+that we study is a discretization of the inhomogeneous {\sPe}
+\refeq{sPe},
+where the Yukawa massive field mass parameter is related to the \catlatt\
+\refeq{kittensEq} stretching parameter ${s}$ by
+\beq
+{\mu}^2=d(s-2)
+\,.
+\ee{catlattMass}
+In this parametrization it is clear
+that \catlatt\ is hyperbolic for $s>2$ in any dimension $d$.
+\end{quote}
+
+  \item[(2.a)]
+Do the results for classical discrete cat-lattices allow implications for
+the continuum limit, ie. where the system passes from a lattice to a
+field?
+
+\begin{quote}
+{\em Response~~~}
+For $|s|<2$ the limit is the Helmholtz equation
+\refeq{CatMapContinuesPC}, with oscillatory eigenmodes.
+The difference between the three cases is illustrated by
+the $d=3$ dimensions' outgoing Green's functions for $|s|<2$,
+$s=2$ and $s>2$, respectively:
+\bea
+g_+({x},x') &=& -\frac{e^{ik\vert{x}- x'\vert}}{4\pi\vert{x}- x'\vert}
+\continue
+g({x},x') &=&-\frac{1}{4\pi\vert{x}- x'\vert}
+\continue
+g({x},x') &=& -\frac{e^{-{\mu}\vert{x}- x'\vert}}{4\pi\vert{x}- x'\vert}
+\,.
+\label{GreenFunContinuesPC1}
+\eea
+\end{quote}
+
+  \item[(2.b)]
+What is expected for the coding in the continuum limit?
+
+\begin{quote}
+{\em Response~~~}
+The $s>2$ continuum limit of the coding, or the field $\field(x)$ we
+have not thought through carefully.
+The quick answer
+is {\sPe} \refeq{sPe} with exponentially decaying eigenmodes, but the
+{\catlatt} \refeq{kittensEq} $\mod 1$ restriction $\field_{z} \in
+\mathbb{T}^{1}$ (rather than the usual {\sPe} scalar field $\field_{z}\in\reals$)
+might require some care.
+\end{quote}
+
+  \item[(3.a)]
+Do we need to consider $s\to\infty$ to keep chaotic dynamics?
+
+\begin{quote}
+{\em Response~~~}
+No, the system is chaotic for any $s>2$, but with a
+            nontrivial grammar for admissible symbol \brick s.
+\end{quote}
+
+  \item[(3.b)]
+Does this imply simple Bernoulli processes in the $s\to\infty$  limit?
+
+\begin{quote}
+{\em Response~~~}
+     Yes, for $s\to\infty$, the ``inner", ``bulk" full-shift alphabet
+     overwhelms the ``outer", ``boundary", and the system is simple
+     Bernoulli process in the same sense that the usual $1d$ Bernoulli
+     map generates a simple Bernoulli process.
+\end{quote}
+
+  \item[(4)]
+May it happen that one is always running into a not fully chaotic regime
+when fixing the local dynamics parameter $s$ and increasing the
+dimension?
+
+\begin{quote}
+{\em Response~~~}
+    No, with $s$ defined in \refeq{kittensEq}, the {\catlatt} is chaotic
+    for $s>2$ in all $d$.
+\end{quote}
+
+  \item[(5)]
+ What are implications for semiclassical many-body approaches?
+
+\begin{quote}
+{\em Response~~~}
+As explained in Gutkin and Osipov\rf{GutOsi15}, the partner
+periodic tori considered in Sect.~5.2 play a major role in the
+semiclassical treatment of the  quantum spatiotemporal  cat problem since
+their action differences are small.    The results of the current paper
+allow for an effective way to construct them. Their  qualitative
+contribution into spectral correlations  is a challenging  problem which
+is beyond the scope of the current submission.
+\end{quote}
+\end{enumerate}
+
+% \newpage
+\printbibliography[
+heading=bibintoc,
+title={References}
+				  ] %, type=online]  % if not using default "Bibliography"
+
+\end{document}

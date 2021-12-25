@@ -1,0 +1,142 @@
+% siminos/spatiotemp/Examples/diffEq4term.tex
+% $Author: predrag $ $Date: 2021-12-21 09:12:40 -0500 (Tue, 21 Dec 2021) $
+% Predrag 2020-12-14 called by siminos/spatiotemp/stability.tex
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+    \ifblog
+\subsection{Second-order difference equation}
+    \else % called by kittens/CL18.tex
+\subsubsection{Second-order difference equation.}
+    \fi
+\label{exam:diffEq3term}
+\PC{2020-12-15}{
+Transfer to ChaosBook.org. Once incorporated, remove from here)
+    }                                   \toCB
+
+A second-order difference equation with constant coefficients has the form
+\beq
+\ssp_{\zeit+2} + p_1\ssp_{\zeit+2} + p_2\ssp_{\zeit} = 0
+%\,.
+\ee{Elaydi99(4.21)}
+Let $\ssp_{0,\zeit}=\ssp_{\zeit}$, $\ssp_{1,\zeit}=\ssp_{\zeit+1}$,
+and rewrite this as a pair of coupled first-order difference equations
+\bea
+\Xx_{\zeit+1} &=& A\,\Xx_{\zeit}
+    \,,\qquad
+\Xx_{\zeit} = \transp{(\ssp_{0,\zeit}, \ssp_{1,\zeit})}
+    \continue
+A &=&  \left(
+\begin{array}{cc}
+0    & 1 \cr
+-p_2 & -p_1
+\end{array}
+\right)
+\,.
+\label{Elaydi99(4.22)}
+\eea
+The characteristic equation
+\beq
+\lambda^{2} + p_1\lambda + p_2 = 0
+%\,.
+\ee{Elaydi99(4.23)}
+can be obtained by substitution $\ssp_{\zeit}=\lambda^{n}$ into the
+two-term recursion \refeq{Elaydi99(4.21)}.
+
+If $\lambda_1\neq\lambda_2$, $\lambda_j$ real, then the solution of
+\refeq{Elaydi99(4.21)} is
+\beq
+\ssp_{\zeit} = c_1\lambda_1^\zeit + c_2\lambda_2^\zeit
+\,.
+\ee{Elaydi99(4.24)}
+If $\lambda_1=\lambda_2=\lambda$, then the  solution is
+\beq
+\ssp_{\zeit} = c_1\lambda^\zeit + c_2\zeit\lambda^\zeit
+\,.
+\ee{Elaydi99(4.25)}
+If $\lambda_1=\alpha +i\beta$, $\lambda_2=\alpha -i\beta$, then the solution
+is
+\beq
+\ssp_{\zeit} = |\lambda|^\zeit(c_1\cos\zeit\omega + c_2\sin\zeit\omega)
+\,,
+\ee{Elaydi99(4.26)}
+where $\omega= \arctan(\beta/\alpha)$.
+To solve such second-order difference equation, one has to specify
+initial conditions, for example
+\(
+\ssp_{0}=1, \ssp_{1}=0
+\,.
+\)
+
+\hfill (Based on Elaydi\rf{Elaydi99})
+%%%%%%%%%%%%%% end {exam:diffEq3term}%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+    \ifblog
+\subsection{Third-order difference equation}
+    \else % called by kittens/CL18.tex
+\subsubsection{Third-order difference equation.}
+    \fi
+\label{exam:diffEq4term}
+
+One can always reformulate an $k$-term recursion relation
+\refeq{Elaydi05(2.3.1)} as a set of
+$k$ coupled first-order difference equations (delay equations).
+For example, one can rewrite the three-term recursion relation (third-order
+difference equation)
+\beq
+\ssp_{\zeit+3} + p_1\ssp_{\zeit+2} + p_2\ssp_{\zeit+1} + p_3\ssp_{\zeit} = 0
+%\,.
+\ee{Elaydi05(5.2.4)}
+as three coupled first-order difference
+equations
+\bea
+\ssp_{0,\zeit+1} &=& \ssp_{1,\zeit},
+    \continue
+\ssp_{1,\zeit+1} &=& \ssp_{2,\zeit},
+    \continue
+\ssp_{2,\zeit+1} &=& -p_3\ssp_{0,\zeit} -p_2\ssp_{1,\zeit}- p_1\ssp_{2,\zeit}
+\,.
+\label{Elaydi05(5.2.4a)}
+\eea
+where $\ssp_{0,\zeit}=\ssp_{\zeit}$, $\ssp_{1,\zeit}=\ssp_{\zeit+1}$,
+$\ssp_{2,\zeit}=\ssp_{\zeit+2}$. Compactly
+\bea
+\Xx_{\zeit+1} &=& A\,\Xx_{\zeit}
+    \,,\qquad
+\Xx_{\zeit} = \transp{(\ssp_{0,\zeit}, \ssp_{1,\zeit}, \ssp_{2,\zeit})}
+    \continue
+A &=&  \left(
+\begin{array}{ccc}
+0 & 1 & 0 \cr
+0 & 0 & 1 \cr
+-p_3 & -p_2 & -p_1
+\end{array}
+\right)
+\,.
+\label{Elaydi05(5.2.4b)}
+\eea
+The eigenvalues of $A$ are the characteristic roots of
+\refeq{Elaydi05(5.2.4)}, see  \refeq{Elaydi05(2.3.2)} and
+\refeq{FGHLW74:charFunct1d}.
+
+The discrete time derivative of a {\lattstate} \Xx\ evaluated at the
+lattice site \zeit\ is given by the \emph{difference operator}
+    \index{lattice!derivative}\index{derivative, lattice}
+    \index{lattice!derivative, forward}\index{difference operator}
+\beq
+\dot{\Xx}_\zeit =
+\left[\frac{\partial\Xx}{\partial\zeit}\right]_\zeit
+        =
+    \frac{\ssp_{\zeit} - \ssp_{\zeit-1}}{\Delta\zeit}
+\ee{lattTimeDer1}
+Eq. \refeq{Elaydi05(5.2.4b)} can be viewed
+as a time-discretized, first-order ODE dynamical system
+\beq
+   \dot{\Xx} \,=\, \vel(\Xx)
+\,,
+\ee{1stepVecEq}
+with the time increment set to $\Delta\zeit=1$
+
+\hfill (Based on Elaydi\rf{Elaydi05})
+%%%%%%%%%%%%%% end {exam:diffEq4term}%%%%%%%%%%%%%%%%%%%%%%%%%%%%

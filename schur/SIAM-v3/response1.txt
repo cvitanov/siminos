@@ -1,0 +1,240 @@
+SIADS MS#M103729
+    Periodic eigendecomposition and its application to
+    Kuramoto-Sivashinsky system,
+    by Xiong Ding and Predrag Cvitanovi\'c
+
+----------------------------------------------------------------------
+Report of Referee 1
+----------------------------------------------------------------------
+    [all responses refer to DingCvit14-v3.pdf]
+    [revised text highlighted in red in DingCvit14-v3.pdf]
+
+
+In the submitted contribution, the authors propose an accurate
+method to compute Floquet multipliers and vectors of periodic
+orbits in spatially extended systems. The method is scientifically
+sound, clearly explained, and compared with existing methods. The
+authors also evaluate its computational cost and applied it to the
+Kuramoto-Sivashinsky equation. Because the periodic orbits play
+important roles in various respects for understanding dynamical
+systems, the proposed method can make a good contribution to the
+research field. Overall, the paper is well written, except for a
+number of points that I remark in the following. Supposing these
+comments are sufficiently taken into account (or the authors give
+convincing counterarguments), I would recommend publication of the
+manuscript.
+
+1. Somehow the authors sporadically mention the inertial manifold,
+entangled modes, etc, even in the abstract, though they are not
+studied in the submitted paper. They even make claims on these
+concepts ("it is a good indicator of existence of a finite
+dimensional inertial manifold", "The 8 leading exponents correspond
+to the entangled modes...") without showing any supporting data. I
+appreciate this application as a motivation of the presented study,
+but the authors should restrict the content of the paper to what
+the paper really deals with.
+
+    RESPONSE:
+
+    Initially, we thought that materials on the study of effective 
+    dimension of inertial manifold can effectively express our desire
+    to compute Floquet vectors, but the feedback indicates that it is
+    too much. So we get rid of the sentence about the inertial manifold
+    research in the abstract, and also rewrite {Section 2, Paragraph 2}
+    to emphasize our motivation of studying Floquet vectors of periodic
+    orbits without too much exposition to the research on effective 
+    dimension of inertial manifold. 
+
+    Other places that are modified accordingly:	
+
+    1) {Paragraph 1 on page 16} : avoid mentioning "inertial manifold". 
+       Original sentence :
+       "This feature is observed for all the other periodic orbits we have 
+       experimented, and it is a good indicator of existence of a finite 
+       dimensional inertial manifold."
+
+    2) {Paragraph 1 in page 18} : remove "physical modes".
+       Original sentence :
+       "because they are usually decoupled from the physical modes"
+
+    3) {Caption of Figure 3} : replace "entangled modes" with "exponents"
+       
+    4) {Caption of Table 1} : remove the sentence talking about "entangled 
+       modes" and "isolated modes".
+       Original sentence:
+       "The 8 leading exponents correspond to the entangled modes: note the 
+       sharp drop in the value of the 9 th and subsequent exponents, 
+       corresponding to the isolated modes."
+
+    Places that we think it is better to keep:
+
+    1) {paragraph 2 in page 16} : We mention the experiments conducted on 
+       covariant Lyapunov vectors and expect Floquet vectors may serve the
+       same purpose and propose our future work.
+
+    2) In the conclusion part for future work : we mention our goal 
+       to determine the physical dimension of a turbulent Navier-Stokes
+       flow.
+
+
+2. The last paragraph of section 2.4 and figure 2 are
+incomprehensible, at least at that point, until readers find much
+clearer explanations in the subsequent sections. The authors should
+explain what the figure represents and avoid using undefined
+technical terms, especially if they wish to make the paper
+physicist-friendly, as they suggest in the manuscript.
+
+    RESPONSE:
+
+    We replace Fig.2 with a new one which illustrates the 2 stages of 
+    periodic Schur decomposition of three [6x6] matrices. Compared with
+    the vague old one, this new figure is more straightforward and 
+    labels 2 stages explicitly. Also, {Section 2.4, Paragraph 2} is 
+    rewritten to avoid some technical details and the convergence 
+    properties. Readers can obtain all details from the references
+    cited in this paragraph.
+
+
+3. Right after equation (3.3), the author describes that "$R_m$ is
+quasi-upper triangular ... and the remaining $R_i$ ... are upper
+triangular". Is this an assumption or a consequence of other
+assumptions? If the latter is the case, what makes the step k=m
+special? If it is an assumption, it seems to me that the iteration
+method will not give the same series of $R_i$ as defined here, but
+only the product of $R_i$ agrees, because the effect of rotation
+for complex conjugate pairs will be distributed to all $m$ time
+intervals. Anyhow it is not clear whether the statement is an
+assumption or a consequence.
+
+    RESPONSE:
+
+    $R_m$ being quasi-upper triangular is an assumption without
+    loss of generality.  One may think that simultaneous iteration 
+    for $J^{(k)}$ will make $R_k$ quasi-upper triangular. Such a 
+    concern is sensible because in equation (4.2) we absorb matrix 
+    $D$ into $R^{(0)}$. However, this is only performed for $R^{(0)}$
+    not for other $R^{(k)}$. So after one iteration, $Q_0$ rotates
+    to $Q'_0$ and is rotated back to $Q_0$ intentionally, and all 
+    other $Q_i$ do not change. This point is critical because the
+    choice of quasi-upper triangular matrix in equation (3.3) should
+    be consistent and not change for different $k$.
+
+    We changed the sentences under equation (3.3) and (4.2) to 
+    explain our choice of $R_m$. 
+
+    If you think we are wrong, we can discuss again.
+    
+
+4. At the beginning of section 5.2, the authors state that the
+eigenvectors of $R^{(k)}$ cannot be obtained at the same time by
+the iteration method. This is misleading because one does not
+compute those eigenvalues by using equation (3.5) nor by repeating
+the whole iteration process for each $k$, but the results for all
+$k$ are naturally obtained during the iteration process needed for
+a single $k$. No additional task is required. A similar misleading
+statement can be found at the bottom of p.13.
+
+    RESPONSE:
+    
+    This is our severe mistake.  We made the following changes:	
+    
+    1) Add a few sentences at the end of the 1st paragraph of 
+       section 5.1 to indicate how power iteration generates 
+       eigenvectors of all $R^{(k)}$ simultaneously.
+
+    2) Remove the first paragraph of section 5.2 which talks about 
+       the drawbacks of iteration method.
+    
+    3) Remove the sentences talking about the drawbacks of 
+       iteration method in the 3rd paragraph in {Section 6, Paragraph 3}.
+       
+    4) Delete the statement under formula (3.5) about the iteration method.
+    
+
+5. In section 6, when the authors evaluate computational cost of
+each step of each method, they should refer to specific equations
+and/or descriptions in the previous sections. Otherwise it is
+ambiguous how the authors obtained the presented evaluations,
+because there are too many different stages and methods.
+    
+    RESPONSE:
+    
+    Substantial changes have been made to section 6. We refer to 
+    equations or figures when trying to obtain complexity expression. 
+    Only high-lever processes are discussed and a lot details, 
+    like Householder transformation and Givens rotation, are hidden. 
+    The details are covered in any numerical linear algebra book, 
+    and the reader can get them from the references provided in that 
+    section. Also, we correct the complexity of GEPP from $O(mn^2)$ 
+    in general to $O(mi^2)$ for the i-th eigenvalue. 
+    
+
+6. Major typos: First, "real part", located for example three lines
+above equation (2.2), should be the modulus. The authors made the
+same error a few times (while it is also used correctly at other
+places), so they should check all the "real parts" that appear in
+the manuscript. Secondly, at the beginning of section 2.2, the
+indices used for the contracting directions (variables with
+superscript "-") are inconsistent: if $V^-_i = U^-_s + U^-_{s-1} +
+... + U^-_{s-i+1}$ as defined in the text, the authors should index
+$\lambda^-_i$ so as to satisfy $\lambda^+_i = -\lambda^-_i =
+\lambda_i$. Finally, I guess $v_i$ in section 4 should be replaced
+with $e_i$ (anyhow $v_i$ is not defined in that section). There are
+also not a few minor typos, such as "figure figure 1".
+
+    RESPONSE:
+
+    1) We correct the error about Floquet exponents in the caption of
+       Table 1. But for other places, we think the usage of "real 
+       part of Floquet exponents" is appropraite. 
+       When written in exponential form,  Floquet multipliers are 
+       $\Lambda_j = \exp(T \lambda_j) = \exp(T \mu_j + i\theta)$, 
+       Small letter $\lambda_j$ is called Floquet exponent. 
+       $\mu$ is the real 
+       part of $\lambda_j$ and it determines the magnitude of 
+       $\Lambda_j$. Maybe our phrasing is misleading, so the 3 lines
+       above equation (2.2) are slightly changed. 
+       We can discuss it if you have a different opinion.
+
+   2) Yes, we made a mistake about the indices of forward/backward
+      invariant subspaces of Oseledets matrices. It is corrected
+      following the style in Ref.[26]. Also, we change the '+' 
+      symbol to '\oplus' to emphasize that it is direct sum of 
+      subspaces.
+
+   3) Yes, we made a mistake about the symbol reserved for eigenvectors. 
+      $v_i^{(k)}$ are eigenvectors of $R^{(k)}$, while $e_i^{(k)}$ are 
+      eigenvectors of $J^{(k)}$. So, $v_i$ are all replaced by $e_i$ 
+      in section 4.  
+   
+   4) Typos such as "figure figure 1" are corrected.
+
+
+7. Reference: at some places Ginelli et al.'s paper [15] which
+first presented the covariant vector method is missing and should
+be cited: for example in p.1 and p.4 where this method is
+introduced. In addition, citing the book [37] at the end of the
+first paragraph of section 4 is bizarre, because this book was
+published before Ginelli's method was invented.
+	  
+    RESPONSE:
+
+    1) We add Ref[14] (indices of references in the new version
+       are different from that in the old version) on page 1, 4
+       and 5, all the places where we mention Gineelli et al.'s work.
+   
+    2) When we say "these two methods are equivalent", we are not 
+       referring to simultaneous iteration and covariant Lyapunov 
+       vector algorithm. Actually, we try to say "simultaneous 
+       iteration is equivalent to periodic Schur decomposition 
+       algorithm". We changed the phrasing at {Section 4, Paragraph 1}
+       to make it clearer. 
+
+----------------------------------------------------------------------
+
+We would like to thank the referee for all the suggestions (point 1, 2, 3, 5)
+which will improve the content of this manuscript, and also for pointing
+out mistakes we made (point 4, 6, 7). All these comments are very 
+insightful and useful. We sincerely appreciate his/her time for 
+reading and correcting this manuscript.
+

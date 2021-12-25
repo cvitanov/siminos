@@ -1,0 +1,348 @@
+% inputs/layout.tex
+% $Author: predrag $ $Date: 2021-07-25 19:52:46 -0400 (Sun, 25 Jul 2021) $
+
+% from ChaosBook                        Predrag          5jun2008
+
+\newcommand{\authorXD}[1]
+     {\hfill (X. Ding, #1)}
+\newcommand{\authorSFPC}[1] % Date 6 Jun 2009, for example
+     {\hfill (S. Froehlich and P. Cvitanovi\'c, #1)}
+\newcommand{\authorSF}[1]
+     {\hfill (S. Froehlich, #1)}
+\newcommand{\authorYL}[1]
+     {\hfill (Y. Lan, #1)}
+\newcommand{\authorHL}[1]
+     {\hfill (H. Liang, #1)}
+\newcommand{\authorRW}[1]
+     {\hfill (R. Wilczek, #1)}
+\newcommand{\authorES}[1]
+     {\hfill (E. Siminos, #1)}
+\newcommand{\authorPC}[1]
+     {\hfill (P. Cvitanovi\'c, #1)}
+\newcommand{\authorJMPC}
+     {\hfill (J. Mathiesen and P. Cvitanovi\'c)}
+\newcommand{\authorRA}%{\marginpar{RM+PC}}
+     {\hfill (R. Artuso)}
+
+        \ifdasbuch
+%%%%%%%%%%%%%%% FORMATING: PAGINATION FOR bin/mkbook %%%%%%%%%%%%%%%%%%%%%%%
+\newcounter{startSect}  %% page numbering used to generate ps pages
+\newcounter{endSect}    %% page numbering used to generate ps pages
+\newcommand{\chapName}{Unnamed} %% chapter label
+\newcommand{\Chapter}[3]{\clearpage\thispagestyle{empty}\cleardoublepage
+                % was \newcommand{\inputfile}{#1 -  #2} % until cludge 2021-05-04
+                % PC 2018-01-28, get rid of it in ChaosBook?
+                \renewcommand{\inputfile}{#1 -  #2}
+                        \renewcommand{\chapName}{#1}
+                         \chapter[#3]{#3}
+                         \label{c-#1}
+                         \setcounter{startSect}{\thepage}
+                        }
+\newcommand{\ChapterEnd}{\setcounter{endSect}{\thepage}
+%               Predrag         13nov2010
+                        \addtocontents{toc}{\par} % end ... references entry
+                         }
+%%%%%%%% for pointers:
+\newcommand{\tangent}{\includegraphics[width=0.08\textwidth]{Fig/chili.eps}~~}
+\newcommand{\toChap}[1]
+{\marginpar[{\color{green}\sf\footnotesize\hfill chapter \ref{#1} }]%
+{\color{green}\sf\footnotesize chapter \ref{#1} \hfill}}
+\newcommand{\toAppe}[1]
+{\marginpar[{\color{green}\sf\footnotesize\hfill appendix \ref{#1} }]
+               {\color{green}\sf\footnotesize appendix \ref{#1} \hfill}}
+\newcommand{\toSect}[1]
+{\marginpar[{\color{green}\sf\footnotesize\hfill section \ref{#1}}]
+               {\color{green}\sf\footnotesize section \ref{#1}\hfill}}
+\newcommand{\toExam}[1]
+{\marginpar[{\color{green}\sf\footnotesize\hfill example \ref{#1} }]
+               {\color{green}\sf\footnotesize example \ref{#1} \hfill}}
+\newcommand{\toRem}[1]
+{\marginpar[{\color{green}\sf\footnotesize\hfill remark \ref{#1} }]
+               {\color{green}\sf\footnotesize remark \ref{#1} \hfill}}
+\newcommand{\toPage}[1]
+{\marginpar[{\color{green}\sf\footnotesize\hfill p.~\pageref{#1} }]
+               {\color{green}\sf\footnotesize p.~\pageref{#1} \hfill}}
+%\newcommand{\toCB}[1]
+%{\marginpar[{\color{green}\sf\footnotesize\hfill \wwwcb{#1} }]
+%               {\color{green}\sf\footnotesize \wwwcb{#1} \hfill}}
+\newcommand{\exerbox}[1]
+{\marginpar[{\color{red}\sf\footnotesize\hfill exercise \ref{#1} }]
+               {\color{red}\sf\footnotesize exercise \ref{#1} \hfill}}
+%%%%  mark section as `cyclist':
+            \newsavebox{\bike}\sbox{\bike}
+            {\raisebox{-5.0ex}[4.5ex][3.5ex]
+             {\includegraphics[width=1.6cm]{w11-1bicycle}}} %{Fig/w11-1bicycle}}}
+\newcommand{\cyclist}{\marginpar[\hfill\usebox{\bike}]
+        {\usebox{\bike}\hfill}}
+%%%% mark section as `pedestrian':
+           \newsavebox{\trot}\sbox{\trot}
+           {\raisebox{-5.0ex}[4.5ex][3.5ex]
+            {\includegraphics[width=1.6cm]{i-4-pedestrian}}}
+\newcommand{\pedestrian}{\marginpar[\hfill\usebox{\trot}]
+        {\usebox{\trot}\hfill}}
+\newcommand{\fastTrack}[1]
+           {\hfill {\raisebox{-3.0ex}[4.5ex][3.5ex]{
+                              \includegraphics[width=1.25cm]{Fig/thisWay.ps}
+                                                   }
+            \begin{minipage}[t]{0.25\textwidth}
+            {\sf \footnotesize
+                   fast track: \\
+                               \refsect{#1}, p.~\pageref{#1}
+                        }
+            \end{minipage}
+                    }
+           }
+\newcommand{\fastTrackChap}[1]
+           {\hfill {\raisebox{-3.0ex}[4.5ex][3.5ex]{
+                              \includegraphics[width=1.25cm]{Fig/thisWay.ps}
+                                                   }
+            \begin{minipage}[t]{0.25\textwidth}
+            {\sf \footnotesize
+                   fast track: \\
+                               \refchap{#1}, p.~\pageref{#1}
+                        }
+            \end{minipage}
+                    }
+           }
+\newcommand{\fastTrackExam}[1]
+           {{\raisebox{-3.0ex}[-4.5ex][-3.5ex]{
+                              \includegraphics[width=1.25cm]{thisWay}
+                                                   }
+            \ifpaper\else\phantomsection\label{pointer:#1}\fi
+            \begin{minipage}[t]{0.16\textwidth}
+            {\sf \footnotesize
+                   \refexam{#1}\\
+                   p.~\pageref{#1}
+                        }
+            \end{minipage}
+                    }
+           }
+\newcommand{\jumpBack}[1]
+{\marginpar[{\color{green}\sf\footnotesize\hfill click to return:~p.~\pageref{pointer:#1} }]
+               {\color{green}\sf\footnotesize click to return:~p.~\pageref{pointer:#1} \hfill}}
+%\newcommand{\ChapterEnd}{} %\setcounter{endSect}{\thepage}}
+        \else
+\newcommand{\tangent}{}
+\newcommand{\toChap}[1]{}
+\newcommand{\toAppe}[1]{}
+\newcommand{\toSect}[1]{}
+\newcommand{\toExam}[1]{}
+\newcommand{\toRem}[1]{}
+\newcommand{\toPage}[1]{}
+%\newcommand{\toCB}[1]{}
+%\newcommand{\exerbox}[1]{}
+\newcommand{\cyclist}{}
+\newcommand{\pedestrian}{}
+\newcommand{\fastTrack}[1]{}
+\newcommand{\fastTrackChap}[1]{}
+\newcommand{\fastTrackExam}[1]{}
+\newcommand{\jumpBack}[1]{}
+\newcommand{\ChapterEnd}{}
+        \fi
+
+%%%%%%%% for figure layouts:
+%% fine tuning floatingfigure \usepackage[nooneline] captions %%%%%
+%        \renewcommand{\captionfont}{\footnotesize} % \sffamily}
+%        \renewcommand{\captionlabelfont}{\footnotesize \bfseries \rmfamily}
+%        % \renewcommand{\captionlabeldelim}{.\quad}
+%        % \setlength{\captionmargin}{10pt}
+
+% \FIG{#1}    % \includegraphics[width=0.40\textwidth]{f_name.ps}  ...
+%     {#2}    % short caption text omitted here
+%     {#3}    % full caption text
+%     {#4}    % f-figure-label
+%??? 2011-07-23 Predrag: what package defines {widefigure}?
+\newcommand{\FIG}[4]{\begin{widefigure}[t]{#4}
+    \widefigparts{\begin{minipage}[b]{0.98\textwidth}
+                    #1\end{minipage}}{#3}\end{widefigure}}
+
+\newcommand{\FFIG}[5]{\begin{floatingfigure}[v]{0.40\textwidth}
+                      \noindent
+                      \includegraphics[#1]{#2}
+                      \caption[#3]{#4}
+                      \label{#5}
+              \end{floatingfigure} }
+
+%   \BFIG{#1}   % width=#1\textwidth
+%        {#2}   % f_name.ps
+%    {#3}   % short caption text
+%    {#4}   % full caption text
+%    {#5}   % f-figure-label
+%       defined here:
+\newcommand{\BFIG}[5]{\begin{figure}
+              \hspace*{0.10\textwidth}%
+              \begin{minipage}[b]{1.00\textwidth}
+              \centering{
+                      \includegraphics[width=#1\textwidth]{#2}
+                     }
+                      \caption[#3]{#4}
+                      \label{#5}
+              \end{minipage}
+              \end{figure} }
+
+%  \SFIG{#1}    % f_name.png (or .pdf)
+%       {#2}    % short caption text
+%       {#3}    % full caption text
+%       {#4}    % f-figure-label
+\newcommand{\SFIG}[4]{\begin{figure}[h]
+              %\hspace*{-0.10\textwidth}
+              \hspace*{0.10\textwidth}
+              \begin{minipage}[b]{0.55\textwidth}
+                      \caption[#2]{#3}
+                      \label{#4}
+              \end{minipage}~~~~~%
+              \begin{minipage}[b]{0.40\textwidth}
+                      \includegraphics[width=1.00\textwidth]{#1}
+              \end{minipage}
+              %\hfill
+              \end{figure} }
+
+\newcommand{\MultiFIG}[6]{\begin{figure}[h]
+              %\hspace*{-0.10\textwidth}
+              \hspace*{0.10\textwidth}
+              \begin{minipage}[b]{0.35\textwidth}
+                      \caption[#4]{#5}
+                      \label{#6}
+              \end{minipage}~~~~~%
+              \begin{minipage}[b]{0.60\textwidth}
+                      \includegraphics[width=1.00\textwidth]{#1}
+                      \includegraphics[width=1.00\textwidth]{#2}
+                      \includegraphics[width=1.00\textwidth]{#3}
+              \end{minipage}
+              %\hfill
+              \end{figure} }
+
+
+%%%%%%%%%%%%%%% FORMATING: PAGINATION FOR bin/mkbook %%%%%%%%%%%%%%%%%%%%%%%
+
+\newcommand{\Resume}{\section*{\textsf{\textbf{R\'esum\'e}}}
+    %   \addcontentsline{toc}{section}{{~~~~Resum\'e}}
+                \addtocontents{toc}{{\small r\'esum\'e \thepage ~}} }
+\newcommand{\ResumeEnd}{}
+
+\newcommand{\Remarks}{\section*{\textsf{\textbf{Commentary}}}
+%        \addtocontents{toc}{{\small commentary \thepage ~ }}
+                     }
+\newcommand{\RemarksEnd}{\ifOUP   %\end{enumerate}
+        \end{reading} \else  \fi}
+
+\newcommand{\Problems}[2]{
+                \renewcommand{\inputfile}{#1 -  #2}
+    \ifboyscout \begin{exercisesBS} \else
+                \begin{exercises} \fi
+    \begin{enumerate}}
+\newcommand{\ProblemsEnd}{\end{enumerate}
+    \ifboyscout \end{exercisesBS} \else
+    \end{exercises} \fi}
+
+\newcommand{\Solution}[4]{
+        \section*{Chapter~\ref{c-#1}. #4}
+                % PC 2018-01-28, get rid of it in ChaosBook?
+                \renewcommand{\inputfile}{#1 -  #2}
+                % was \renewcommand{\inputfile}{#1 -  #2}
+        % PC:  modified 28 may 2000
+                %         \renewcommand{\chapName}{#1}
+                %        \setcounter{startSect}{\thepage}
+                        }
+\newcommand{\Solutions}{
+        \section{\textsf{\textbf{Solutions}}}
+        %\addcontentsline{toc}{section}{{~~~~Solutions}}
+                        }
+
+
+%%%%%%%%%%%%%%% NUMBERED ENVIRONMENTS %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% REPLACE {13.5cm} by \textwidth counter in these environments
+
+%    \ifarticle
+%\newcommand{\exerbox}[1]{}
+%\newcommand{\exercise}[2]{}{}
+%\newcommand{\solution}[3]{}{}{}
+%    \else
+%\newtheorem{exerc}{\textsf{\textbf{Exercise}}}[chapter]
+%% \newtheorem{exerc}{}[chapter]
+%% \newtheorem{exerc}{{$\bullet$}}[chapter]
+% \newcommand{\exercise}[2]{
+%        %\vskip -13mm
+%         \noindent
+%         \begin{exerc}{
+%\renewcommand{\theenumi}{\alph{enumi}}
+%\renewcommand{\labelenumi}{\textbf{(\alph{enumi})\ }}
+%    {\noindent\small
+%         ~~\textsf{\textbf{#1}} ~
+%           \slshape\sffamily{#2}  } % \textsl would not work...
+%    }
+%         \vskip -1mm
+%% removed the line: % \noindent\rule[.1mm]{\linewidth}{.5mm}
+%         \end{exerc}
+%                          }
+%
+%\newcommand{\Exercise}[2]{      %environment for obligatory problems
+%        %\vskip -13mm
+%        \noindent
+%        \begin{exerc}{
+%\renewcommand{\theenumi}{\alph{enumi}}
+%\renewcommand{\labelenumi}
+%    {\textsf{\textbf{ (\alph{enumi})\ }}}
+%        {\noindent
+%         ~~\textsf{\textbf{\underline{#1}}} ~
+%           \slshape\sffamily{#2}  } % \textsl would not work...
+%        }
+%         \vskip -1mm
+%        \end{exerc}
+%                          }
+
+\renewcommand{\exercise}[2]{
+    \item
+    {\textbf{#1}} ~ {#2}}
+
+\newcommand{\solution}[3]{
+        {\noindent\small
+         \textsf{\textbf{Solution \ref{#1}~-~#2}} %LABEL - TITLE
+         \slshape\sffamily{#3}                    %TEXT
+         }
+         \vskip  1ex  %4mm
+% removed the line: % \noindent\rule[.1mm]{\linewidth}{.5mm}
+                        }
+%\newcommand{\exerbox}[1]
+%{\marginpar[{\color{red}\sf\footnotesize\hfill exercise \ref{#1} }]
+%               {\color{red}\sf\footnotesize exercise \ref{#1} \hfill}}
+%    \fi %end of article switch
+
+
+    \ifarticle
+\newtheorem{exmple}{\noindent\small\textsf{\textbf{Example}}}[section]
+\newcommand{\example}[2]{
+    \vskip -13mm
+        %\begin{offset}
+        \begin{exmple}
+           \noindent\small
+           \textsf{\textbf{#1}} ~
+       \slshape\sffamily{#2}
+       % \textsl would not work...
+    \end{exmple}
+    %\end{offset}
+        \vskip -1mm
+             }
+    \else
+\newtheorem{rmark}{{\small\textsf{\textbf{Remark}}}}[chapter]
+\newcommand{\remark}[2]{
+        % \begin{quotation}
+        \begin{rmark}
+        {\small\em\noindent {\small\sf \underline{ #1} ~} #2 }
+    \end{rmark}
+    % \end{quotation}
+              }
+\newtheorem{exmple}{\noindent\small\textsf{\textbf{Example}}}[chapter]
+\newcommand{\example}[2]{
+    \vskip -13mm
+        %\begin{offset}
+        \begin{exmple}
+           \noindent\small
+           \textsf{\textbf{#1}} ~
+       \slshape\sffamily{#2}
+       % \textsl would not work...
+    \end{exmple}
+    %\end{offset}
+        \vskip -1mm
+             }
+    \fi %end of article switch

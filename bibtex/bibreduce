@@ -1,0 +1,66 @@
+#!/usr/bin/perl
+
+# siminos/bibtex/bibreduce
+# svn $Author: predrag $ $Date: 2008-07-26 06:30:43 -0400 (Sat, 26 Jul 2008) $
+
+# Evangelos Siminos, Vasilios Christaras	Sep 11 2007
+#
+# Given a large bibtex collection large.bib, the script uses information
+# from article.aux to obtain a list of the items that are cited in article.tex
+# and export them in file small.bib.
+#
+# bibreduce large.bib article.aux small.bib
+#
+# The initial bibtex file must have entries of the form
+# @format{label,
+# 	....
+# }
+# with closing brace in the first column. Using program bibclean is
+# thus suggested if there are problems in extraction.
+
+
+die "usage: bibreduce large.bib article.aux small.bib \n" if @ARGV < 3;
+
+open AUX, $ARGV[1];
+
+# Step 1: Scan .aux file for \citation items
+while (<AUX>) {
+  chomp;
+  if (/\\citation\{(.+)}/) {
+#  	print $1,"\n";
+  	$used_refs[$i]=$1;
+	$i=$i+1;
+}
+}
+
+close AUX;
+
+# Get rid of duplicates
+%seen = ( );
+foreach $item (@used_refs) {
+    push(@uniq, $item) unless $seen{$item}++;
+}
+
+# Sort labels alphabetically (case insensitive)
+@used_refs = sort { "\L$a" cmp "\L$b" }  @uniq;
+
+# Step 2: Find bibtex entries in original bibliography and write in the new file
+open NEWBIB, "> $ARGV[2]";
+
+foreach $label (@used_refs) {
+
+$big_line="";
+
+open BIB, $ARGV[0];
+
+while (<BIB>) {
+#	chomp;
+	if(/(\@.*\{$label,\n)/) {
+		$big_line=$1;
+		do { $new_line = <BIB>; $big_line .= $new_line } until ( $new_line =~ /^\}/ ||  eof );
+	}
+}
+print NEWBIB $big_line,"\n";
+
+close BIB;
+}

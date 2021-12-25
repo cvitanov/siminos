@@ -1,0 +1,134 @@
+Once identified, the most frequently recurring patterns are used
+as initial guesses in the search for {\fpo}s. Specifically, a {\spt} window is
+fit to the pattern such that the state within the window is as close to being
+doubly periodic as possible. Once the best window is found, the region of space-time
+is clipped from the {\po} and used as an initial condition.
+Hitherto, clipping has always been performed manually. As a consequence there
+is substantial variability in clipping quality;
+multiple clippings may be necessary to find a single {\fpo}.
+
+
+
+It is one thing to claim that certain \spt\ \twots\ are the building blocks
+of turbulence for the \KSe. It is
+another thing entirely to put our money where our mouth is by actually using them in this manner. We would like to remind the audience that the ability to construct and find solutions in this manner
+has not been witnessed in the literature. With this in mind our choices should
+be treated as preliminary ones; it is entirely possible and likely that
+many improvements could be made.
+Much like the clipping process used to find tiles combining solutions in space-time,
+the overarching idea of gluing is straightforward and intuitive.
+Specifically, the tiles represent the
+Brillouin zone, fundamental domain, unit cell of a lattice, etc.
+of each fundamental \twot.
+The general case is that we have a general $s_n \times s_m$ sized mosaic of tiles.
+The admissibility of the gluing is determined by the (currently unknown) symbolic
+dynamics. Gluing is only well defined if the lattices being combined have the same
+number of grid points along the gluing boundary.
+This creates a problem, however, as
+different tiles will have different \spt\ dimensions $\speriod{},\period{}$ because
+they are fundamentally different solutions.
+This actually helps provide a precise meaning to the term ``gluing''.
+Gluing is a method of creating initial conditions which approximates
+a non-uniform rectangular lattice (combination of tiles) as uniform.
+This of course introduces local error which depends on the grid size; therefore
+there should not be an extreme discrepancy between the \twots\ or tiles being glued.
+With this in mind, we simply rediscretize and concatenate the new lattices.
+The dimensions of the new lattice are determined by the sum or average of
+the original dimensions.
+For example, if gluing two tiles together in time, the new period would be
+$\period{} = \period{1} + \period{2}$ but the new spatial period is
+$\speriod{} = \frac{\speriod{1} + \speriod{2}}{2}$.
+In this case the number of spatial grid \emph{points} and temporal grid \emph{spacing}
+should be the same. There are many more complicated alternatives, limited only by
+the imagination.
+
+It is actually recommended to not use descent methods for small dimension problems; Newton
+converges too quickly to not use and with backtracking the region of convergence can
+increase substantially.
+
+
+Another option would be to simply decrease the allowed damping, thus causing more failures,
+but run more searches in parallel.
+
+Searching through the library of collected \twots\ led to a number of candidates
+for fundamental tiles. This was a natural result of picking out the most frequent patterns
+that occur spatiotemporally. This section focuses on the numerical process of finding tiles;
+it is almost self explanatory. The claim is that the tiles are \twots\ which shadow larger \twots.
+Therefore we should be able to find these tiles by numerically clipping them out of larger \twots\
+and then passing them to the same numerical routine used to converge the larger \twot. If
+the original \twot\ has dimensions $x \in [0, L_0]$ and $t \in [0, T_0]$ and is defined on
+a lattice $[\xm, \tn]$ then the process is as follows. Find the approximate domain on which
+the shadowing occurs $x \in [0, x_{i}-x_{j}]$, $t \in [0, t_{p}-t_{j}]$; translational invariance allows
+us to start from the origin. The tile is then defined on the corresponding lattice of size
+$M', N' = M \frac{x_{i}-x_{j}}{L}, N * \frac{t_{i}-x_{j}}{T}$.
+$M', N'$ are always taken to be even numbers for reasons specific to our computational codes.
+This leaves us with a field defined on this subset of the original lattice;
+this will never be doubly periodic. The discontinuities which result from
+the clipping are handled by simple truncation of the higher
+frequency \spt\ \Fcs.
+
+
+If possible, clippings were made such that the result minimized the discontinuities at
+the boundary. This is both numerically beneficial but also motivated by the notion
+of tiles representing shadowing of small \twots.
+
+This process suffices to find tiles such that any other methods that
+improve the initial conditions are ignored.
+
+The only step left is to converge these initial conditions numerically
+just like how was done with the larger \twots.
+This process continues until we believe that we have captured all
+fundamental solutions depicting in our library of \twots.
+This appeals to our intuition which begs the question: is there a quantitative
+manner to know whether our tile collection is complete? The answer to this
+question arises naturally as a consequence of the next component of this numerical method,
+namely, the gluing of \twots\ and tiles.
+
+
+It is one thing to claim that certain \spt\ \twots\ are building blocks; it is
+another thing all together to be able to actually use them in this manner. We would like to
+remind the audience that the ability to construct and find solutions in this manner
+has not been witnessed in the literature. With this in mind our choices should
+be treated as preliminary ones; it is entirely possible and likely that
+many improvements could be made. This
+description covers both the implementation that worked for us for the \spt\ \KSe,
+as well as some alternatives.
+
+
+\MNGedit{The idea behind clipping is very intuitive. Given any {\po}, a clipping is a window
+of space-time which is used as an initial guess.
+Clipping may be applied iteratively until ultimately a {\fpo} is reached.
+The reverse process, combining {\fpo}s together
+to create initial guesses for find larger orbits is also possible; in fact,
+this technique is the crux of our theory. We denote this combination process as
+gluing, a name which again appeals to our intuition.}
+
+%\subsubsection{clip}
+As a reminder, our claim is that the tiles are \twots\ which shadow larger \twots.
+Therefore we should be able to converge subdomains which have been numerically clipped out
+of larger \twots. After visual inspection, we believed the number of fundamental tiles to
+be small. Therefore, a precise and unsupervised algorithm for clipping was not developed.
+Instead the only criteria we abided by is that the clipping must include the tile being
+sought after; of course, clippings that were closer to being doubly periodic were sought after.
+For the original \twot\ with dimensions $x \in [0, \speriod{0}]$ and $t \in [0, \period{0}]$ defined on a lattice, the
+clipping can be described as follows. Find the approximate domain on which
+the shadowing occurs and then literally extract the subregion of the parent lattice,
+setting the new {\spt} dimensions according to the smaller lattice. In other words,
+the same grid spacing was maintained throughout this procedure.
+This process in combination with our numerical methods was sufficient
+for finding tiles.
+
+As a reminder, our claim is that the tiles are \twots\ which shadow larger \twots.
+Therefore we should be able to converge subdomains which have been numerically clipped out
+of larger \twots. After visual inspection, we believed the number of fundamental tiles to
+be small. Therefore, a precise and unsupervised algorithm for clipping was not developed.
+Instead the only criteria we abided by is that the clipping must include the tile being
+sought after; of course, clippings that were closer to being doubly periodic were sought after.
+For the original \twot\ with dimensions $x \in [0, \speriod{0}]$ and $t \in [0, \period{0}]$ defined on a lattice, the
+clipping can be described as follows. Find the approximate domain on which
+the shadowing occurs and then literally extract the subregion of the parent lattice,
+setting the new {\spt} dimensions according to the smaller lattice. In other words,
+the same grid spacing was maintained throughout this procedure.
+This process in combination with our numerical methods was sufficient
+for finding tiles.
+
