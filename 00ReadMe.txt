@@ -1,10 +1,10 @@
-siminos/00ReadMe.txt
+GitHub.com/cvitanov/siminos/00ReadMe.txt
 $Author: predrag $
-$Date: 2021-06-22 07:48:14 -0400 (Tue, 22 Jun 2021) $
+$Date: 2021-12-25 07:48:14 -0400 (Tue, 25 Dec 2021) $
 --------------------------------------------------------
 
-Budanur, Ding, Gudorf, Liang, Siminos
-thesis, publications and working notes
+Liang + Cvitanovic
+temporary publications repository
 ========================================================
 
 bibtex/siminos.bib
