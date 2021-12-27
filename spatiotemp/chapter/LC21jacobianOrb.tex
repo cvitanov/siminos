@@ -94,7 +94,39 @@ and for \templatt
 %%%%% siminos/kittens/cat.tex                    2021-04-27 %%%%%
 
 The key to understanding their chaoticity are the eigenvalues of
-the {\jacobianOrb}, the matrix of second variations of
+the {\jacobianOrb},
+
+The {temporal Bernoulli} condition \refeq{tempBern} %{1stepDiffEq}
+can be thus viewed as a time-discretized, first-order ODE dynamical
+system
+\beq
+   \dot{\Xx} \,=\, \vel(\Xx) \,,
+\ee{XX1stepVecEq}
+where the `velocity' vector field $\vel$ is given by
+\[
+\vel(\Xx) \,=\,
+   % \vel(\Xx;\Mm) \,=\,
+(s-1)\,\Xx-\Mm
+\,,
+\]
+with the time increment set to $\Delta\zeit=1$, and perturbations that
+grow (or decay) with rate $({s}-1)$.
+
+consider a temporal lattice with a set of $d$ fields
+$\ssp_{\zeit}=\{\ssp_{\zeit,1},\ssp_{\zeit,2},\dots,\ssp_{\zeit,d}\}$ on
+each lattice site $\zeit$, and time evolution given by a $d$\dmn\ map
+$\ssp_{\zeit+1}=\hat{\map}(\ssp_{\zeit})$.
+A period-$\cl{}$ {\lattstate} \refeq{pathBern} thus
+satisfies site-by-site the first-order difference equation
+\beq
+\ssp_{\zeit} - \hat{\map}(\ssp_{\zeit-1}) = 0
+    \,,\qquad
+\zeit=1,2,\cdots,\cl{}
+\,.
+\ee{XX1stepNonlimTemp}
+
+
+the matrix of second variations of
 the action $\action[\Xx]_{\zeit\zeit'}$,
 %
 \beq
