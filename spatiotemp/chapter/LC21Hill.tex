@@ -13,162 +13,83 @@
 \label{s:LC21Hill}
 % PC started with: siminos/kittens/Hill.tex  2021-08-19
 
-In 1878-1886 a study of stability of the planar motion of the moon around
-the earth led  Hill to the \emph{Hill's formula}\rf{Hill86}
+His 1878-1886 study of the stability of planar motion of the Moon around
+the Earth led  Hill to the \emph{Hill's formula}\rf{Hill86}
 \beq
 \left|\Det\jMorb_c \right|= \left|\det (\id - \jMat_c)\right|
 %\,.
 \ee{detDet}
 which relates the characteristic polynomial of the for\-ward-in-time
-evolution {\po} Floquet stability matrix (monodromy matrix) $\jMat_p$ to the
-determinant of the global {\jacobianOrb} $\jMorb_p$ (in Lagrangian settings,
-the Hessian, the second variation of the action functional).
-The discrete-time Lagrangian systems' Hill's formula
-% \refeq{MacMei83(17)}
-that we use here was derived by Mackay and Meiss\rf{MacMei83} in 1983.
+evolution {\po} Floquet matrix (monodromy matrix) $\jMat_c$ to the
+determinant of the global {\jacobianOrb} $\jMorb_c$ (in Lagrangian
+settings, the Hessian, the second variation of the action functional).
+In case of Lagrangian dynamics, the discrete-time Hill's formula that we
+use here was derived  by Mackay and Meiss\rf{MacMei83} in 1983.
 
-Hill was lucky: he computed $\Det\jMorb_c$ in a $3\times 3$ Fourier modes
-matrix approximation, which turned out to be quite a good approximation.
+Historically,  in \po\ theory calculations one always computes $\jMat_c$.
+However, as we shall argue here, it is the {\HillDet} $\Det\jMorb_c$ that
+is the computationally robust quantity that one should evaluate.
+In his application Hill was lucky: $\Det\jMorb_c$ that he computed in a
+$[3\!\times\!3]$ Fourier modes matrix approximation turned out to be a
+quite good approximation.
 But this is a remarkable formula, especially in the limit of
-$\cl{}\to\infty$ infinitesimal time steps, that relates a
-field-theoretic, $\infty$\dmn\ \emph{functional} {\HillDet}
-$\Det\jMorb_c$ to a determinant of the finite, $[d\times{d}]$ matrix
-$\jMat_c$, and it took \Poincare\rf{Poinc1886} to prove that Hill's
-Fourier modes calculation is correct in the continuum limit.
-
-the {\jacobianOrb}  and the temporal evolution
-\refeq{PV2config} stability ${{\hat{\mathbf{\jMat}}_{p}}}$ are related by
-the remarkable (discrete time) Hill's formula\rf{MacMei83,BolTre10}
-which expresses the  {\HillDet} of the arbitrarily large \jacobianOrb\
-$\jMorb$  in terms of a determinant of a small
-[$2\speriod{}\!\times\!2\speriod{}$] time-evolution \jacobianM\
-$\hat{\mathbf{\jMat}}_p$.
-
+$\cl{}\to\infty$ infinitesimal time steps, a formula that relates the
+$\infty$\dmn\ \emph{functional} {\HillDet} $\Det\jMorb_c$ to a
+determinant of the finite $[d\!\times\!d]$ matrix $\jMat_c$, and it took
+\Poincare\rf{Poinc1886} to prove that Hill's Fourier modes calculation is
+correct in the continuum limit.
 
 While first discovered in a Lagrangian setting, Hill's formulas are much
 more general, with the Lagrangian formalism of
-\refrefs{MacMei83,TreZub09,BolTre10,kooknewt} --just a special case-- only
-getting in way of understanding them.
-As the formula is fundamental to the formulation
-of the \spt\ chaotic field theory, we shall
-rederive it here in several ways, relying on nothing more than elementary
-linear algebra, in order to emphasize that formula applies to dissipative dynamical
-systems as well, from the Bernoulli map to \NS\ and
-\KS\rf{GudorfThesis,GuBuCv17}.
+\refrefs{MacMei83,TreZub09,BolTre10,kooknewt} getting in the way of
+understanding the general case.
+The formula applies to dissipative dynamical systems as well, from the
+Bernoulli map to \NS\ and \KSe\rf{GudorfThesis,GuBuCv17}. As the formula
+is fundamental to the formulation of the \spt\ chaotic field theory, we
+shall rederive it here in three ways, relying on nothing more than
+elementary linear algebra.
 
+The formula is so elementary that many practitioners routinely use it
+without ever having heard of `Hill's formula'.
+Let's say that a periodic $\ssp_{\zeit+\cl{}}=\ssp_\zeit$ {\lattstate}
+$\Xx_c$ is known `numerically exactly', that is to say, to a high (but not
+infinite) precision. One way to present the solution is to list the field
+value $\ssp_0$ at a single lattice site $\zeit=0$, and let the reader
+reconstruct the rest by stepping forward in time,
+$\ssp_{\zeit}=\hat{\map}^\zeit(\ssp_0)$.
 
-\bigskip
-
-Assume that a \po\ $\ssp(\period{p}+\zeit)=\ssp(\zeit)$ of a continuous
-time flow
-\(
-\dot{\ssp}=\vel(\ssp)
-\)
-is known `numerically exactly', that is to say, to arbitrary (but not
-infinite) precision. One way to present the solution is to give a single
-point $\ssp(0)$ in the orbit, and let the reader reconstruct the orbit
-$p$ by integrating forward in time,
-$\ssp(\zeit)=\hat{\map}^\zeit(\ssp(0))$, $\zeit\in[0,\period{p}]$.
-
-However, for a linearly unstable \po\ a single point does not suffice to
-present the orbit, because there is always a finite `Lyapunov time'
-$\zeit_{Lyap}$  beyond which $\hat{\map}^\zeit(\ssp(0))$ has lost all memory of
-the \po\ $p$. This problem is particularly severe in searches for {`\ecs
-s'} embedded in turbulence, where even the shortest period solutions have
-to be computed to the (for everyday fluid dynamics excessive) machine
-precision\rf{GHCW07,channelflow,openpipeflow} in order to complete the
-first return to the initial state.
+However, for a linearly unstable orbit a single  field value $\ssp_0$
+does not suffice to present the solution, because there is always a finite
+`Lyapunov time' $\zeit_{Lyap}$  beyond which $\hat{\map}^\zeit(\ssp_0)$
+has lost all memory of the {\lattstate} $\Xx_c$. This problem is particularly
+severe in searches for {`\ecs s'} embedded in turbulence, where even the
+shortest period solutions have to be computed to the (for a working fluid
+dynamicist excessive) machine
+precision\rf{GHCW07,channelflow,openpipeflow}, in order to complete the
+first return to the initial state. So, the words uttered in introductory
+nonlinear dynamics courses is never what is practiced.
 
 Instead of relaying on for\-ward-in-time numerical integration,
 \emph{global methods} for finding periodic orbits\rf{ChoGuck99} view them
 as equations for the vector fields $\dot{\ssp}$ on spaces of closed
-curves. In numerical implementations one discretizes the \po\  $p$ into
+curves. In numerical implementations one discretizes a \po\  $p$ into
 sufficiently many short
-segments\rf{auto,GM00aut,ChoGuck99,DingCvit14,DCTSCD14}, and lists a
-point for each segment
+segments\rf{auto,GM00aut,ChoGuck99,DingCvit14,DCTSCD14}, and lists one
+field value for each segment
 \beq
-p=(\ssp_1,\ssp_2,\cdots,\ssp_\cl{p})
+p=(\ssp_1,\ssp_2,\cdots,\ssp_\cl{c})
 \,.
 \ee{nXdCycle}
-For a $k$\dmn\ discrete time map $\hat{\map}$ obtained by cutting the flow by a
-set of {\PoincSec s}, with the \po\ $p$ of discrete period $\cl{p}$,
-every segment can be reconstructed by a short time integration, and
+For a $\cl{c}$\dmn\ discrete time map $\hat{\map}$ obtained by cutting the flow by
+$\cl{c}$ local {\PoincSec s}, with the \po\ $c$ of discrete period $\cl{c}$,
+every segment can be reconstructed by short time integration, and
 satisfies
 \beq
-\ssp_{k+1}=\hat{\map}(\ssp_k)
+\ssp_{\zeit+1}=\hat{\map}_\zeit(\ssp_\zeit)
 \,,
 \ee{CyclePntErr}
 to high accuracy, as for sufficiently short times the exponential
 instabilities are numerically controllable.
-
-
-\bigskip
-
-The temporal Bernoulli {\jacobianOrb} %\refeq{1stepVecEq},
-$\jMorb=\partial/\partial\zeit-(s-1)\,\shift^{-1}$ is a differential
-operator whose determinant one usually computes by a Fourier transform
-diagonalization (see \refsect{sect:LC21recip1d}). The Fourier discretization
-approach goes all the way back to Hill's 1886 paper\rf{Hill86};
-
-
-\bigskip
-
-In preparing this summary we have found expositions of Lagrangian
-dynamics for discrete time systems by MacKay, Meiss and
-Percival\rf{MKMP84,meiss92}, and Li and Tomsovic\rf{LiTom17b} particulary
-helpful.
-
-This formula was derived by Mackay and Meiss\rf{MacMei83} and
-Allroth\rf{Allroth83} (Allroth eq.~(12)). It applies to general
-``one-degree-of-freedom'' systems, \ie, 1D lattices with only the nearest
-neighbor interactions. For a finite set of neighbors, \ie, higher\dmn\
-discrete-time systems, Allroth\rf{Allroth83} has some partial results in the
-context of Frenkel-Kontorova models.
-
-{\HillDet}\rf{MacMei83,BolTre10,Verdiere07};
-discrete Hill's formula and the Hill discriminant, Toda lattice\rf{Toda89}.
-
-Toda\rf{Toda89} % {\em Theory of Nonlinear Lattices},
-Chapt.~4.{\em Periodic Systems}
-
-Toda studies the classical mechanics of one-dimensional
-lattices (chains) of particles with nearest neighbor interaction; they
-are discrete and infinite in space, continuous in time.
-
-The {\em inverse scattering method} for an infinite lattice makes use of
-the discrete Schrodinger equation. For periodic systems this gives a
-discrete Hill's equation, and in place of the scattering data, it is
-convenient to use the spectrum of the discrete Hill's equation.
- Thus the initial value problem reduces to the inverse problem
-(Jacobi's inverse problem), or inverse spectral theory.
-
-Toda discrete Hill's equation is continuous in time, so presumably the most
-of the work is for stationary states.
-
-He works with a 3-term recurrence (4.1.3a), and defines a 2-configuration
-monodromy matrix (4.1.11).
-
-For special values of A, the solution of (4.1.4) can be periodic, but
-more generally it is relative periodic (4.1.16), or the Bloch function
-(it's existence given by the Floquet theorem).
-His \jacobianOrb\ (4.1.28) has variable diagonal and off
-diagonal elements, corresponding to nontrivial nonlinear solutions for
-$d=1$ lattice.
-
-Historically,  in \po\ theory
-calculations one always computes $\jMat_\Mm$. However, as we shall show
-here, and in more generality in \refsect{s:Hill}, it is the {\HillDet}
-$\Det\jMorb$ that is the computationally robust quantity that one should
-evaluate.
-
-\begin{quote}
-A succinct  explanation of the Hill's formula:\\
-If you evaluate stability of the 3-term recurrence \refeq{JiKoKr20(2)} on
-a periodic lattice you get the {\jacobianOrb} $\jMorb$;
-if you evaluate it by multiplying the `two-configuration representation'
-matrix $\jMps$, you get the `time evolution' side of the Hill's formula.
-\end{quote}
-
 
 % PC 2021-10-23
 %     moved from siminos/spatiotemp/chapter/LC21Bernoulli.tex
@@ -691,7 +612,7 @@ and the {\HillDet} is:
 \mbox{\templatt: }\quad
 \Det(-\shift+{s}\,\id-\shift^{-1})
     &=&
-\prod_{k=0}^{\cl{}-1} ({s} - 2\cos(2\pi k/\cl{}))
+\prod_{k=0}^{\cl{}-1} [{s} - 2\cos(2\pi k/\cl{})]
     \continue
     &=&
 2 T_{\cl{}} \left({s}/{2}\right) - 2 \, ,
@@ -739,30 +660,36 @@ no mention of Chebyshev polynomials. Not important, will revisit later.
 \subsection{Remarks}
 \label{s:LC21HillForm}
 
-Two remarks.
-First, the reformulation of the \catlatt\ 3-term recurrence
-% \refeq{CatMap2dHill}
-as the `two-configuration' map \refeq{PV2config} is
-a passage from the Lagrangian to the Hamiltonian formulation, also known
-as `transfer matrix' formulation of lattice field
+A succinct  explanation of the Hill's formula:
+\begin{quote}
+If you evaluate stability of the 3-term recurrence \refeq{JiKoKr20(2)} on
+a periodic lattice you get the {\jacobianOrb} $\jMorb$;
+if you evaluate it by multiplying the `two-configuration representation'
+matrix $\jMps$, you get the `time evolution' side of the Hill's formula.
+\end{quote}
+
+The reformulation of the \catlatt\ 3-term recurrence
+\refeq{catMapNewt} % {CatMap2dHill}
+as the `two-configuration' map
+\refeq{LC21PerViv} % {PV2config}
+is a passage from the Lagrangian to the Hamiltonian formulation, also
+known as `transfer matrix' formulation of lattice field
 theories\rf{MonMun94,MunWal00} and Ising
 models\rf{Onsager44,Kastening02}. We chose to prove it here using only
 elementary linear algebra, not only because the Lagrangian
 formalism\rf{BolTre10} is not needed for the problem at hand, but because
 it actually obscures the generality of Hill's formula, which works
-equally well for dissipative systems (see Bernoulli Hill's formula
-\refeq{LC21PerViv}), systems with no Lagrangian formulation.
-% use
+equally well for dissipative systems, such as the Bernoulli Hill's formula
+\refeq{LC21PerViv}).
 
-Second,
-for Hamiltonian evolution \refeq{catMap}, the $[2\!\times\!2]$
+For Hamiltonian evolution \refeq{catMap}, the $[2\!\times\!2]$
 \jacobianM\ $\jMat^\cl{}$ (the monodromy matrix of a \po) describes
 the growth of an initial state perturbation in $\cl{}$ steps. For the
 corresponding Lagrangian system with action $\action$,
 % (see \refsect{s:catLagrForm}),
 the first variation of
-the action $\delta\action=0$ yields the \templatt\ condition
-\refeq{catTempLatt}, while the second variation, the
+the action $\delta\action=0$ yields the Euler–Lagrange equations
+\refeqs{LC21eqMotion}{catTempLatt}, while the second variation, the
 $[\cl{}\!\times\!\cl{}]$ {\jacobianOrb} \refeq{tempCatFix},
 describes the stability of the \emph{entire} given \po. In this,
 classical mechanics context, Bolotin and Treschev\rf{BolTre10} refer to
@@ -771,3 +698,23 @@ Bernoulli discussion of \refsect{s:JacobianOrb}, and applications to \KS\
 and Navier-Stokes systems\rf{GuBuCv17}, this notion of global stability
 of orbits is general, and applies to all dynamical systems, not only the
 Hamiltonian ones.
+
+In preparing this section we have found expositions of Lagrangian
+dynamics for discrete time systems by MacKay, Meiss and
+Percival\rf{MKMP84,meiss92}, and Li and Tomsovic\rf{LiTom17b} particulary
+helpful.
+Hill's formula as derived by Mackay and Meiss\rf{MacMei83} and
+Allroth\rf{Allroth83} (Allroth eq.~(12)) applies to
+`one-degree-of-freedom' systems, \ie, 1D lattices with only the nearest
+neighbor interactions. For a finite set of neighbors,
+Allroth\rf{Allroth83} has partial results in the
+context of Frenkel-Kontorova models.
+
+Discrete Hill's formula plays important role in the theory of Toda
+lattices\rf{Toda89}, \ie, classical mechanics of one-dimensional lattices
+(chains) of particles with nearest neighbor interaction, discrete and
+infinite in space, continuous in time.
+
+The {\em inverse scattering method} for periodic systems this gives a
+discrete Hill's equation, and in place of the scattering data, it is
+convenient to use the spectrum of the discrete Hill's equation.
