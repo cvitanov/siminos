@@ -16,9 +16,9 @@ The 1-degree of freedom maps that describe kicked rotors
 subject to discrete time sequences of angle-dependent force pulses
 $P(\coord_{\zeit})$, $\zeit\in\integers$,
 \bea
-\coord_{\zeit+1} - \coord_{\zeit} &=& p_{\zeit+1} \qquad  (\mbox{mod}\;1),
+\coord_{\zeit+1} &=& \coord_{\zeit} + p_{\zeit+1} \qquad  (\mbox{mod}\;1),
     \label{LC21PerViv2.1b}\\
-p_{\zeit+1} - p_{\zeit} &=& P(\coord_{\zeit})
+p_{\zeit+1}       &=& p_{\zeit} + P(\coord_{\zeit})
 \,,
     \label{LC21PerViv2.1a}
 \eea
@@ -38,26 +38,17 @@ $\dot{p}=-\partial V(\coord)/\partial \coord$: at each kick the angular
 momentum $p_{\zeit}$ is accelerated to $p_{\zeit+1}$ by the force pulse
 $P(\coord_{\zeit})\Delta{\zeit}$, with the time step and the rotor mass
 set to $\Delta{\zeit}=1$,  $m=1$.
-    \HL{2021-12-26} {
-I think \refeqs{LC21PerViv2.1b}{LC21PerViv2.1a} should be written as:
-\bea
-\coord_{\zeit+1} &=& \coord_{\zeit} + p_{\zeit+1} \qquad  (\mbox{mod}\;1), \\
-p_{\zeit+1} &=& p_{\zeit} + P(\coord_{\zeit}) \,.
-\eea
-Otherwise the angle of the rotor $\coord$ is not constrained to $[0,1)$.
-}
 
 %\section{Life of a single Hamiltonian cat}
 \subsection{Cat map}
 %    \fi
 \label{s:catPV}
 
-The simplest kicked rotor is subject to a force is proportional to
-displacement, that is, Hooke's law force $V'(\coord)=K\coord$ linear in
-the angular displacement $\coord$.
-The $(\mbox{mod}\;1)$ makes the map a
-discontinuous `sawtooth,' unless $K$ is an integer. In the integer $K$
-case, the map (\ref{LC21PerViv2.1b},\ref{LC21PerViv2.1a}) is of form
+The simplest kicked rotor is subject to force pulses
+$P(\coord)=\kappa\coord$ proportional to the angular displacement
+$\coord$: in that case, the map
+(\ref{LC21PerViv2.1b},\ref{LC21PerViv2.1a}) is of form
+%    \PC{2021-12-26}{I see \refeq{HLHamiltonsEquations} here:)}
  \beq
  \left(\begin{array}{c}
  \coord_{\zeit+1}  \\
@@ -69,26 +60,22 @@ case, the map (\ref{LC21PerViv2.1b},\ref{LC21PerViv2.1a}) is of form
   \end{array} \right )\quad (\mbox{mod}\;1)
     \,,  \qquad
  {\jMat} =\left(\begin{array}{cc}
- 1-K & 1 \\
- -K & 1
+ \kappa+1 & 1 \\
+  \kappa & 1
   \end{array} \right)
 \,.
 \ee{catMap}
-The determinant of the one-step Jacobian $\det \jMat=1$, \ie, $\jMat$ is
-area-preserving. The map is then a Continuous Automorphism of the Torus
+The $(\mbox{mod}\;1)$ makes the map a
+discontinuous `sawtooth,' unless $\kappa$ is a positive integer.
+The map is then a Continuous Automorphism of the Torus
 known as the Thom-Anosov-Arnol'd-Sinai
 {\em `cat map'}\rf{ArnAve,deva87,StOtWt06}, extensively studied as the
 simplest example of a chaotic Hamiltonian system.
 
-The 2-component field at the
-temporal lattice site \zeit,
-\(
-\ssp_{\zeit} =(\coord_{\zeit},p_{\zeit}) \in  (0,1]\times(0,1]
-\)
-is kicked rotor's the angular position and momentum.
-Let $K = 2-s$.
-For $|s|>2$ the one-time-step {\jacobianM} $\jMat$
-{characteristic equation}
+The determinant of the one-time-step Jacobian is
+$\det \jMat=1$, \ie, the mapping is area-preserving.
+Let ${s}=\tr{\jMat}=\kappa+2$ be the trace of the Jacobian.
+For $|s|>2$ the $\jMat$ {characteristic equation}
 \beq
 \ExpaEig^{2} - {s}\ExpaEig + 1 = 0
 \,,
@@ -99,16 +86,12 @@ $\Lyap >0$,
 \beq
 \ExpaEig=e^{\Lyap} = \frac{1}{2}(s+\sqrt{(s-2)(s+2)})
 \,,\qquad
-s=\tr{\jMat}=\ExpaEig+\ExpaEig^{-1}
+{s}=\tr{\jMat}=\ExpaEig+\ExpaEig^{-1}
 \,.
 \ee{StabMtlpr}
 The eigenvalues are functions of the stretching parameter $s$, and
 for $|s| > 2$ the cat map \refeq{catMap} is a fully chaotic
-Hamiltonian dynamical system. Cat maps with the same $s$ are equivalent
-up to a similarity transformation, so it suffices to work out a single
-convenient realization, as we shall do here for the
-\PV\rf{PerViv} `two-configuration representation'
-\refeq{LC21PerViv}.
+Hamiltonian dynamical system.
 
 \subsection{\tempLatt}
 \label{s:catLagrange}
@@ -123,21 +106,28 @@ field theories, to be developed in \refref{CL18}, we now recast the
 \emph{local} initial value, Hamiltonian time-evolution  as a
 \emph{global} solution to the Euler–Lagrange equations.
 
+The 2-component field at the
+temporal lattice site \zeit,
+\(
+\ssp_{\zeit} =(\coord_{\zeit},p_{\zeit}) \in  (0,1]\times(0,1]
+\)
+is kicked rotor's the angular position and momentum.
 Hamilton's equations (\ref{LC21PerViv2.1b},\ref{LC21PerViv2.1a}) induce
-forward-in-time evolution on a 2-torus  $(\coord_{\zeit},p_\zeit)$ {\em
+for\-ward-in-time evolution on a 2-torus  $(\coord_{\zeit},p_\zeit)$ {\em
 phase space}.
 Eliminating the momentum by Hamilton's discrete time velocity
 eq.~\refeq{LC21PerViv2.1b},
 \beq
 (\coord_\zeit,p_\zeit) =
 \left(
-    \ssp_{\zeit},\frac{\ssp_{\zeit} - \ssp_{\zeit-1}}{\Delta\zeit}
+    \coord_{\zeit},\frac{\coord_{\zeit} - \coord_{\zeit-1}}{\Delta\zeit}
 \right)
 %\,,\qquad \Delta\zeit= 1
 \,,
 \ee{Ham2Lagr}
-and setting the time step to $\Delta\zeit=1$, the
-forward-in-time Hamilton's first order difference equations are brought
+setting the time step to $\Delta\zeit=1$, and forgetting for a moment
+the $(\mbox{mod}\;1)$ condition, the
+for\-ward-in-time Hamilton's first order difference equations are brought
 to the second order difference, 3-term recurrence Euler–Lagrange equations
 for scalar field $\ssp_{\zeit}=q_\zeit$,
 \beq
@@ -297,9 +287,9 @@ Here we study the strong stretching, $s>2$ case, known as the discrete
 whose solutions are hyperbolic. We refer to the
 Euler–\-Lagrange equation
 \refeq{OneCat} as the `{\em \templatt}', both to distinguish it from
-the forward-in-time Hamiltonian cat \emph{map} \refeq{catMap}, and in the
+the for\-ward-in-time Hamiltonian cat \emph{map} \refeq{catMap}, and in the
 anticipation of the \emph{\catlatt} to be discussed in the sequel
-\refref{CL18}. {\catLatt} differs from all of the above model because the
+\refref{CL18}. {\catLatt} differs from all of the above models because the
 field $\ssp_\zeit$ compactification to unit circle makes it a
 strongly nonlinear deterministic field theory, with nontrivial symbolic
 dynamics.
@@ -312,7 +302,7 @@ In the \spt\ formulation a \emph{global} {temporal {\lattstate}}
 \transp{\Xx} % = \{\ssp_j\}
              = (\ssp_\zeit,\ssp_{\zeit+1},\cdots,\ssp_{\zeit+k})
 \ee{path}
-is not determined by a forward-in-time `cat map' evolution
+is not determined by a for\-ward-in-time `cat map' evolution
 \refeq{catMap}, but rather by the fixed point condition
 \refeq{LC21eqMotion}
 % tempCatFixPoint}
