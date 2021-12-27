@@ -24,16 +24,21 @@ the
 \ee{detDet}
 which relates the characteristic polynomial of the forward-in-time
 evolution {\po} Floquet (or monodromy) stability matrix $\jMat_p$ to the
-determinant of the global {\jacobianOrb} $\jMorb_p$ (in Hill's problem,
+determinant of the global {\jacobianOrb} $\jMorb_p$ (in Lagrangian settings,
 the Hessian, the second variation of the action functional).
-In 1983 Mackay and Meiss\rf{MacMei83} derived Hill's formula
-\refeq{MacMei83(17)} for the multipliers of a \po\ for general discrete-time
-one-degree-of-freedom Lagrangian systems.
+The discrete-time Lagrangian systems' Hill's formula
+% \refeq{MacMei83(17)}
+that we use here was derived by Mackay and Meiss\rf{MacMei83} in 1983.
 
-The equation
-appeared in 1983 for discrete  systems in \refref{MacMei83},
-and was further elaborated in \refrefs{TreZub09,BolTre10}.
-
+As the formula is fundamental to our \spt\ field theory project, we shall
+rederive it here in several ways, relying on nothing more than elementary
+linear algebra, emphasizing that they apply to dissipative dynamical
+systems as well, from the Bernoulli map to \NS\ and
+\KS\rf{GudorfThesis,GuBuCv17}.
+While first discovered in a Lagrangian setting, Hill's formulas are much
+more general, with the Lagrangian formalism of
+\refrefs{MacMei83,TreZub09,BolTre10,kooknewt} --a special case-- only
+getting in way when it comes to understanding them.
 
 the {\jacobianOrb}  and the temporal evolution
 \refeq{PV2config} stability ${{\hat{\mathbf{\jMat}}_{p}}}$ are related by
@@ -51,14 +56,6 @@ a remarkable formula, relating a field-theoretic, $\infty$\dmn\
 finite, $[d\times{d}]$ matrix $\jMat_\Mm$, and it took
 \Poincare\rf{Poinc1886} to prove that Hill's Fourier modes calculation is
 correct in the continuum limit.
-
-Poincar\'e
-explained the meaning of the {\HillDet} and presented a rigorous
-proof of Hill's formula.
-
-
-As the formula is much more general, here we derive it in several ways
-without any recourse to the Lagrangian formalism.
 
 \bigskip
 
@@ -104,19 +101,8 @@ satisfies
 to high accuracy, as for sufficiently short times the exponential
 instabilities are numerically controllable.
 
-Kook and Meiss\rf{kooknewt}
-% {\em Application of {Newton}'s method to {Lagrangian} mappings}.
-
-The explicit form of the Hessian displayed by Kook and Meiss reminds me of
-Bolotin discrete Hill's formula (\refsect{LiTom17b:GenFctn}
-
 
 \bigskip
-
-
-We will now show that  is related
-to the  by
-
 
 The temporal Bernoulli {\jacobianOrb} %\refeq{1stepVecEq},
 $\jMorb=\partial/\partial\zeit-(s-1)\,\shift^{-1}$ is a differential
@@ -127,31 +113,12 @@ Hill computed $\Det\jMorb_p$ by a $3\times 3$ Fourier modes
 matrix, which gave  quite a good approximation.
 
 
-
-The linear stability of a \po\ is determined by its multipliers, the eigenvalues
-of the derivative of the return map round the orbit. While the first variation of
-the action is by definition zero for an orbit, the multipliers of a \po\ can be
-related to the second variations of the action in the space of periodic paths.
-This has been shown in various cases. Hill\rf{Hill86} and \Poincare\rf{Poinc1886}
-derived a formula for the multipliers in the case of one-degree-of-freedom
-systems of the form kinetic minus potential\rf{Hill86}, using a Fourier
-representation for periodic paths.
+\bigskip
 
 In preparing this summary we have found expositions of Lagrangian
 dynamics for discrete time systems by MacKay, Meiss and
 Percival\rf{MKMP84,meiss92}, and Li and Tomsovic\rf{LiTom17b} particulary
 helpful.
-
-We do not derive the formula the way you did it (ours also works for
-dissipative systems), but the paper made the light bulb turn on...
-
-Hill's formula here is the discrete Hill's formula\rf{MacMei83,BolTre10}
-\refeq{MacMei83(17)}.
-
-Mackay and Meiss\rf{MacMei83} relate the multipliers of a periodic orbit to the second variations of
-the action about the orbit, and compute the {\HillDet} of the matrix
-of second variations of the action in the space of periodic
-paths of period $\period{}$.
 
 This formula was derived by Mackay and Meiss\rf{MacMei83} and
 Allroth\rf{Allroth83} (Allroth eq.~(12)). It applies to general
@@ -190,11 +157,6 @@ His \jacobianOrb\ (4.1.28) has variable diagonal and off
 diagonal elements, corresponding to nontrivial nonlinear solutions for
 $d=1$ lattice.
 
-He says that the $\speriod{}=3$ three-particle system is important
-because, though the simplest, it shows nearly all the characteristic
-features which $\speriod{}$-particle systems exhibit.
-
-
 Historically,  in \po\ theory
 calculations one always computes $\jMat_\Mm$. However, as we shall show
 here, and in more generality in \refsect{s:Hill}, it is the {\HillDet}
@@ -208,10 +170,6 @@ a periodic lattice you get the {\jacobianOrb} $\jMorb$;
 if you evaluate it by multiplying the `two-configuration representation'
 matrix $\jMps$, you get the `time evolution' side of the Hill's formula.
 \end{quote}
-
-We should emphasize that, while discovered first in Lagrangian setting,
-Hill's formulas are much more general, they
-apply also to dissipative dynamical systems as well, see
 
 
 % PC 2021-10-23
@@ -371,9 +329,10 @@ the {\jacobianOrb}
 \refeq{tempBern} is the same for all {\lattstate}s of period $\cl{}$,
 so
 \beq
+\mbox{temporal {Bernoulli}: }\quad
 N_\cl{} = |\Det\jMorb| = {s}^{\cl{}} - 1
 \,,
-\ee{detBern2}
+\ee{LC21detBern}
 in agreement with the time-evolution count \refeq{noPerPtsBm}; all
 itineraries are allowed, except that the periodicity of
 $\shift^\cl{}=\id$ accounts for $\cycle{0}$ and
@@ -644,7 +603,7 @@ where the hat $\hat{~}$~ indicates a $2$\dmn\
 
 The $1$\dmn\ field theory 3-term recurrence \refeq{LC21:1dTempFT} written
 in the \PV\rf{PerViv} `two-configuration representation'
-\refeq{eq:StateSpCatMap}.
+\refeq{LC21PerViv}.
 
 
 $\mathbf{\jMorb}_1$ is the spatial
@@ -654,10 +613,10 @@ $d=1$ \templatt\ form \refeq{tempCatFix},
 
 This proves that $\det\hat{\mathbf{\jMorb}}$ of the
 `Hamiltonian' or `two-configuration'
-$[2\speriod{}\period{}\times2\speriod{}\period{}]$ `phase space'
+$[2\speriod{}\cl{}\times2\speriod{}\cl{}]$ `phase space'
 \jacobianOrb\ $\hat{\mathbf{\jMorb}}$ defined by \refeq{eq:orbitJPVJxS}
 equals the `Lagrangian' {\HillDet} of the
-$[\speriod{}\period{}\times\speriod{}\period{}]$ \jacobianOrb\
+$[\speriod{}\cl{}\times\speriod{}\cl{}]$ \jacobianOrb\
 $\mathbf{\jMorb}$.
 
 
@@ -677,7 +636,7 @@ The temporal Bernoulli {\jacobianOrb} %\refeq{1stepVecEq},
 $\jMorb=\partial/\partial\zeit-(s-1)\,\shift^{-1}$ is a differential
 operator whose determinant one usually computes by a Fourier transform
 diagonalization (see \refsect{sect:LC21recip1d}). The Fourier discretization
-approach goes all the way back to Hill's 1886 paper\rf{Hill86}
+approach goes all the way back to Hill's 1886 paper\rf{Hill86}.
 
 The first advantage of using the reciprocal lattice is that it provides a
 way to compute the {\HillDet}.
@@ -731,10 +690,12 @@ The eigenvalues of the \templatt\
 \eea
 and the {\HillDet} is:
 \bea
+\mbox{\templatt: }\quad
 \Det(-\shift+{s}\,\id-\shift^{-1})
-=
+    &=&
 \prod_{k=0}^{\cl{}-1} ({s} - 2\cos(2\pi k/\cl{}))
-=
+    \continue
+    &=&
 2 T_{\cl{}} \left({s}/{2}\right) - 2 \, ,
 \eea
 where $T_{\cl{}}$ is the Chebyshev polynomial of the first
@@ -783,7 +744,7 @@ no mention of Chebyshev polynomials. Not important, will revisit later.
 Two remarks.
 First, the reformulation of the \catlatt\ 3-term recurrence
 % \refeq{CatMap2dHill}
-as the `two-configuration' form \refeq{PV2config} is
+as the `two-configuration' map \refeq{PV2config} is
 a passage from the Lagrangian to the Hamiltonian formulation, also known
 as `transfer matrix' formulation of lattice field
 theories\rf{MonMun94,MunWal00} and Ising
@@ -792,18 +753,19 @@ elementary linear algebra, not only because the Lagrangian
 formalism\rf{BolTre10} is not needed for the problem at hand, but because
 it actually obscures the generality of Hill's formula, which works
 equally well for dissipative systems (see Bernoulli Hill's formula
-\refeq{noPerPts}), systems with no Lagrangian formulation.
+\refeq{LC21PerViv}), systems with no Lagrangian formulation.
+% use
 
 Second,
 for Hamiltonian evolution \refeq{catMap}, the $[2\!\times\!2]$
-\jacobianM\ $\jMat^\period{}$ (the monodromy matrix of a \po) describes
-the growth of an initial state perturbation in $\period{}$ steps. For the
+\jacobianM\ $\jMat^\cl{}$ (the monodromy matrix of a \po) describes
+the growth of an initial state perturbation in $\cl{}$ steps. For the
 corresponding Lagrangian system with action $\action$,
 % (see \refsect{s:catLagrForm}),
 the first variation of
 the action $\delta\action=0$ yields the \templatt\ condition
 \refeq{catTempLatt}, while the second variation, the
-$[\period{}\!\times\!\period{}]$ {\jacobianOrb} \refeq{tempCatFix},
+$[\cl{}\!\times\!\cl{}]$ {\jacobianOrb} \refeq{tempCatFix},
 describes the stability of the \emph{entire} given \po. In this,
 classical mechanics context, Bolotin and Treschev\rf{BolTre10} refer to
 $\jMorb$ as the `Hessian operator', but, as it is clear from our
