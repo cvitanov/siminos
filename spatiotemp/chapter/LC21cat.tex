@@ -6,7 +6,7 @@
 \label{s:kickRot}
 
 Temporal Bernoulli is perhaps the simplest chaotic lattice field
-theory. Our nexst task is to formulate a deterministic {\spt}ly chaotic
+theory. Our next task is to formulate a deterministic {\spt}ly chaotic
 field theory, Hamiltonian and energy conserving, because (a) that is
 physics, and (b) one cannot do quantum theory without it. We need a
 system as simple as the Bernoulli map, but mechanical. So, we move on
@@ -38,6 +38,14 @@ $\dot{p}=-\partial V(\coord)/\partial \coord$: at each kick the angular
 momentum $p_{\zeit}$ is accelerated to $p_{\zeit+1}$ by the force pulse
 $P(\coord_{\zeit})\Delta{\zeit}$, with the time step and the rotor mass
 set to $\Delta{\zeit}=1$,  $m=1$.
+    \HL{2021-12-26} {
+I think \refeqs{LC21PerViv2.1b}{LC21PerViv2.1a} should be written as:
+\bea
+\coord_{\zeit+1} &=& \coord_{\zeit} + p_{\zeit+1} \qquad  (\mbox{mod}\;1), \\
+p_{\zeit+1} &=& p_{\zeit} + P(\coord_{\zeit}) \,.
+\eea
+Otherwise the angle of the rotor $\coord$ is not constrained to $[0,1)$.
+}
 
 %\section{Life of a single Hamiltonian cat}
 \subsection{Cat map}
@@ -45,7 +53,7 @@ set to $\Delta{\zeit}=1$,  $m=1$.
 \label{s:catPV}
 
 The simplest kicked rotor is subject to a force is proportional to
-displacement, that is, Hooke's law force $V'\coord)=K\coord$ linear in
+displacement, that is, Hooke's law force $V'(\coord)=K\coord$ linear in
 the angular displacement $\coord$.
 The $(\mbox{mod}\;1)$ makes the map a
 discontinuous `sawtooth,' unless $K$ is an integer. In the integer $K$
@@ -61,13 +69,12 @@ case, the map (\ref{LC21PerViv2.1b},\ref{LC21PerViv2.1a}) is of form
   \end{array} \right )\quad (\mbox{mod}\;1)
     \,,  \qquad
  {\jMat} =\left(\begin{array}{cc}
- a & c \\
- d & b
+ 1-K & 1 \\
+ -K & 1
   \end{array} \right)
-\,,
+\,.
 \ee{catMap}
-where $a,b,c,d$ are integers whose precise values do not matter, as long
-as $\det \jMat=1$, \ie, the one-time step Jacobian $\jMat$ is
+The determinant of the one-step Jacobian $\det \jMat=1$, \ie, $\jMat$ is
 area-preserving. The map is then a Continuous Automorphism of the Torus
 known as the Thom-Anosov-Arnol'd-Sinai
 {\em `cat map'}\rf{ArnAve,deva87,StOtWt06}, extensively studied as the
@@ -79,6 +86,7 @@ temporal lattice site \zeit,
 \ssp_{\zeit} =(\coord_{\zeit},p_{\zeit}) \in  (0,1]\times(0,1]
 \)
 is kicked rotor's the angular position and momentum.
+Let $K = 2-s$.
 For $|s|>2$ the one-time-step {\jacobianM} $\jMat$
 {characteristic equation}
 \beq
