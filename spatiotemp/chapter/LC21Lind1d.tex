@@ -6,13 +6,32 @@
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Lind zeta function}
-% Topological $\Dn{\infty}$-zeta function}
 \label{sect:LC21Lind1d}    % derived from blogCats.tex {sect:dihedralZeta}
 
+For a discrete time dynamical system
+\(
+\ssp_{\zeit+1}=\flow{}{\ssp_{\zeit}}
+\,,\)
+period-$\cl{}$ solutions (in present context, the period-$\cl{}$ Bravais
+cell {\lattstate}s) are fixed points of the $\cl{}$th iterate map
+$\map^\cl{}$.
+The symmetry of a time-invariant dynamical `law' $\map$ is \Cn{\infty},
+the group of all temporal lattice translations. For a period-$\cl{}$
+solution, the symmetry is its translation subgroup $H_{\cl{}}$.
 
-Let $\Group$ be a group, $\pS$ a set and $\map: \Group \times \pS \to
-\pS$ a $\Group$-action on $\pS$. The Lind zeta function\rf{Lind96} is
-defined as
+This observation motivates definition of a very general, purely
+group-theoretic \emph{fixed-points counting function} that relates the
+number of {\lattstate}s to the number of prime orbits for any \statesp\
+map
+\(
+\map : \pS \to \pS
+\)
+with a symmetry group $\Group$, a counting function that applies equally
+well to multi\dmn\ lattice field theories\rf{CL18} as to the 1\dmn\
+theories considered here.
+
+Let $\Group$ be a group whose action permutes elements of a set $\pS$.
+The Lind zeta function\rf{Lind96} is defined as
 \beq
 \zeta_{Lind}(t) =
 \exp \left( \sum_{H} \;
@@ -22,7 +41,7 @@ defined as
 \ee{LindZeta} % was {LindZeta}
 where the sum is over all subgroups $H$ of $\Group$
 of multiplicity $|G/H| < \infty$, and $N_{H}$ is the number of states
-in $\pS$ invariant under action of (fixed points of) subgroup $H$,
+in $\pS$ invariant under action of (\ie, fixed points of) subgroup $H$,
 \beq
 N_{H} =
    |\{\Xx \in \pS : \mbox{ all } h \in H \quad \map(h,\Xx) = \Xx\}|
@@ -30,51 +49,71 @@ N_{H} =
 \ee{LindN_H} % was {LC21Ryu17eq:1.3A}
 The multiplicity $|\Group/{H}|$ is best explained by working out a few examples.
 
-In the 1\dmn\ lattice field theory setting, $\pS$ is the set of
-all {\lattstate}s. The group $\Group$ is either the
+In the lattice field theory setting, $\pS$ is the set of all
+{\lattstate}s.
+For 1\dmn\ lattice field theories, the group $\Group$ is either the
 {infinite cyclic group}  \Cn{\infty} of all lattice translations \refeq{C_infty},
-or the
-{infinite dihedral group} $\Dn{\infty}$  of all translations and
-reflections \refeq{LC21D_infty}. Their finite-multiplicity subgroups $H$ are,
+or
+the {infinite dihedral group} $\Dn{\infty}$  of all translations and
+reflections \refeq{LC21D_infty}.
+Their finite-multiplicity subgroups $H$ are,
 respectively, infinite translation subgroups $H_{\mathbf{a}}$
 \refeq{H(n)subgroup}, or $H_{\mathbf{a}}$ and infinite dihedral subgroups
 $H_{\mathbf{a},k}$ \refeq{H(n,k)subgroup}.
+
+\subsection{Artin-Mazur zeta function}
+\label{sect:ArtinMazur}
 
 Assume that the symmetry group of a given discrete time dynamical system
 is the group of temporal lattice translations \Cn{\infty}, \ie, that the
 defining law of dynamics is time invariant. 1\dmn\ infinite translation
 subgroup $H_{\mathbf{a}}$ \refeq{H(n)subgroup} leaves {Bravais cell} of
 {period} \cl{} \refeq{1DBravLatt} invariant, so the sum over $H$ in
-\refeq{LindZeta} can replaced by the sum over periods $\cl{}$.
-$N_\cl{}$ is the number of {\lattstate}s of period $\cl{}$. For \Cn{\infty} subgroups --see
-\reffig{fig:1dLatStatC_5}\,(1)-($\shift_4$)-- the multiplicity is
+\refeq{LindZeta} can replaced by the sum over periods $\cl{}$, with
+$N_\cl{}$ the number of {\lattstate}s of period $\cl{}$. For \Cn{\infty}
+subgroups (contemplate the \Cn{\infty} column of
+\reffig{fig:1dLatStatC_5}) %\,(1)-($\shift_4$)
+the multiplicity is
 \beq
 |\Cn{\infty}/H_\cl{}|=\cl{}
-\,,
+\,.
 \ee{CinfHnMult}
-and the Lind zeta function
-\refeq{LindZeta} reduces to the familiar Artin-Mazur zeta
-func\-tion \refeq{topoZeta},
-\[
-\zetatop(z) =
-     \exp\left(-\sum_{\cl{}=1}^\infty
-\frac{z^\cl{}}{\cl{}} N_\cl{}
+The Lind zeta function
+\refeq{LindZeta} takes form of the Artin-Mazur zeta
+func\-tion\rf{ArtMaz65,CBcount}
+% \refeq{topoZeta},
+\beq
+\zeta_{\mbox{\footnotesize AM}}(z) =
+     \exp\left(\sum_{\cl{}=1}^\infty
+\frac{N_\cl{}}{\cl{}} z^\cl{}
          \right)
 \,,
-\] % copy of ee{topoZeta}
-Consider next the case that the symmetry group of temporal lattice of a
-given dynamical system is the {infinite dihedral group}
-$\Dn{\infty}$, the group of all translations and reflections\rf{KiLePa03}, \ie,
-the defining law of dynamics is time and time-reversal invariant.
+\ee{AMzeta} % copy of ee{topoZeta}
+which, from group-theoretic perspective, is the statement that the law
+governing the dynamical system is time invariant.
+
+\subsection{Kim-Lee-Park zeta function}
+\label{sect:KiLePa}
+
+If the symmetry group $\Group$ is not the maximal symmetry, Lind zeta
+function erroneously counts some of the symmetry-related {\lattstate}s as
+belonging to separate `prime orbits', a problem that repeatedly bedevils
+the \wwwcb{} exposition of \po\ theory whenever dynamics is time-reversal
+invariant.
+
+In particular, if the symmetry group of temporal lattice of a
+given dynamical system is the {infinite dihedral group} $\Dn{\infty}$,
+the group of all translations and reflections\rf{KiLePa03}, \ie, the
+defining law of dynamics is time and time-reversal invariant.
 
 For the infinite translation $H_{\mathbf{a}}$ subgroup
 \refeq{H(n)subgroup}
-the multiplicity is --as illustrated by \reffig{fig:1dLatStatC_5}--
+the multiplicity is (as illustrated by \reffig{fig:1dLatStatC_5})
 \beq
 |\Dn{\infty}/H_{\cl{}}| =  2\cl{}
-\,,
+\,.
 \ee{HnMult}
-and, as explained in \refsect{s:LattStateSyms}, the \Dn{\infty} orbits of
+As explained in \refsect{s:LattStateSyms}, the \Dn{\infty} orbits of
 reflection-symmetric {\lattstate}s contain only translations, so the
 multiplicity of each infinite dihedral subgroup $H_{\mathbf{a},k}$
 \refeq{H(n,k)subgroup} is
@@ -82,60 +121,49 @@ multiplicity of each infinite dihedral subgroup $H_{\mathbf{a},k}$
 |\Dn{\infty}/H_{\cl{},k}| = \cl{}
 \,.
 \ee{HnkMult}
-The Lind zeta function
-\refeq{LindZeta}
-is now of form\rf{KiLePa03}
+The Lind zeta function \refeq{LindZeta} now counts separately the four
+types of (a)symmetric {\lattstate}s\rf{KiLePa03} of
+\refsect{s:LattStateSyms}
 \beq
 %\zeta_{\map,\Refl}(t) =
-\zeta_{\Refl}(t) =
+\zeta_{\mbox{\footnotesize KLP}}(t) =
 \exp \Big(\sum_{\cl{}=1}^{\infty} \, \frac{N_{\cl{}}}{2\cl{}}t^{2\cl{}}
           +\sum_{\cl{}=1}^{\infty} \, \sum_{k=0}^{\cl{}-1}\,
                      \frac{N_{\cl{},k}}{\cl{}}t^{\cl{}} \Big)
 \,.
-\ee{LC21Ryu17eq:3.0B}
-The first sum yields a square-root of the {Artin-Mazur} zeta func\-tion
+\ee{KLPzeta}
+The first sum is a square-root of the {Artin-Mazur} zeta func\-tion
 \refeq{topoZeta}:
     % was {ArtMaz5} and  {Ryu17eq:2.1A}
 \beq
 \exp \left(\sum_{\cl{}=1}^\infty
 \frac{t^{2\cl{}}}{2\cl{}} N_\cl{}
          \right)
-= \sqrt{\zeta_{top}(t^2)}
+= \sqrt{\zeta_{\mbox{\footnotesize AM}}(t^2)}
+\,.
 \ee{LC21Ryu17eq:2.1B}
 This takes care of {\lattstate}s \refeq{reflSymNo} with no reflection
 symmetry.
-The number of reflection-symmetric lattice states does not depend on $k$,
-only on the type of symmetry, so
-
-\bigskip\bigskip
-================== stopped editing here ========================
-
-The class count \refeq{H(n,k)class}, \refeq{DnClassRefl} tells us that
+The number of reflection-symmetric lattice states does not depend on the
+location of the reflection point $k$, only on the type of symmetry (see
+the class counts \refeq{H(n,k)class} and \refeq{DnClassRefl}), so
 \beq
 N_{\cl{},k} =
-    \begin{cases}
-\, N_{\cl{}, 0} \qquad \mbox{ if } \cl{} \mbox{ is odd}, \\
-\, N_{\cl{}, 0} \qquad \mbox{ if } \cl{} \mbox{ and } k \mbox{ are even}, \\
+          \left\{
+            \begin{array}{ll}
+\, N_{\cl{}, 0} \qquad \mbox{ if } \cl{} \mbox{ is odd} \\ %[1ex]
+\, N_{\cl{}, 0} \qquad \mbox{ if } \cl{} \mbox{ and } k \mbox{ are even} \\ %[1ex]
 \, N_{\cl{}, 1} \qquad \mbox{ if } \cl{} \mbox{ is even and } k \mbox{ is odd}
-\,.
-    \end{cases}
-\ee{LC21Ryu17eq:3.0D}
-Hence
+\,,
+        \end{array}
+           \right.
+\ee{N_nkCount}
+and the Lind zeta function takes the form
+that we refer to as the Kim-Lee-Park\rf{KiLePa03} zeta function
 \beq
-\sum_{k=0}^{\cl{}-1} \, \frac{N_{\cl{},k}}{\cl{}}
-=   \begin{cases}
-\, N_{\cl{},0} \qquad \qquad \qquad \qquad
-                            \mbox{if } \cl{} \mbox{ is odd}
-\,,\\ \\ \,
-\displaystyle{\frac{N_{\cl{},0}+N_{\cl{},1}}{2} \qquad
-                            \mbox{if } \cl{} \mbox{ is even}\,.}
-    \end{cases}
-\ee{LC21Ryu17eq:3.0E}
-so the Lind zeta function teks the form
-that we shall refer to as the Kim-Lee-Park\rf{KiLePa03} zeta function
-\beq
-\zeta_{\Refl}(t) = \sqrt{\zeta_{top}(t^2)} \; e^{h(t)},
-\ee{LC21Ryu17eq:2.1}
+\zeta_{\mbox{\footnotesize KLP}}(t)
+    = \sqrt{\zeta_{\mbox{\footnotesize AM}}(t^2)} \; e^{h(t)},
+\ee{KLPzetaFact}
 where
 \beq
 h(t) = \sum_{m=1}^{\infty} \left\{
@@ -143,10 +171,32 @@ h(t) = \sum_{m=1}^{\infty} \left\{
        + \left(N_{2m,0}+N_{2m,1}\right)\,\frac{ t^{2m}}{2}
                                \right\}
 \,.
-\ee{LC21Ryu17eq:2.11}
+\ee{KLPzetaExp}
 
-The zeta function $\zeta_{\Refl}$ can be written as a product over
-{\orbit}s. Let $O_1$ be the collection of finite orbits with time
+\subsection{Euler product form of zeta function }
+\label{sect:KiLePaEuler}
+
+In 1966 Ihara\rf{Ihara66} defined the zeta function of an undirected
+graph $\Gamma$ using Euler's product form definition of a zeta function,
+\beq
+\zeta_{\mbox{\footnotesize Ihara}}(\Gamma,z) =
+        \prod_{[C]}\frac{1}{1-z^{|C|}}
+\,,
+\ee{Sato05Zeta}
+where the product is over all equivalence classes of primitive closed
+loops $C$, and $|C|$ denotes the length of $C$.
+
+Ihara zeta functions are graph-theoretical objects%
+\rf{Ihara66,Bass92,Pollicott01,Sato05,GuIsLa08,Terras10,RAEWH10,
+Clair14,ZhXiHe15,Deitmar15,daCosta16,Saito18},
+``graph-theoretic analogues of discrete Laplacians''\rf{Sunada13}
+defined here in \refeq{LC21:Lap}, but they do not seem related to
+the time-reversal Kim-Lee-Park\rf{KiLePa03} zeta function
+\refeq{KLPzetaFact} derived above.
+
+Still,  the idea that zeta function
+$\zeta_{\mbox{\footnotesize KLP}}(t)$ can be written as a product over
+prime {\orbit}s holds. Let $O_1$ be the collection of finite orbits with time
 reversal (flip) symmetry, and $O_2$ be the collection of the pairs of
 orbits without time reversal symmetry, each an orbit and the flipped
 orbit. A finite \orbit\ $p$ is a periodic points set
@@ -174,7 +224,7 @@ and if $p \in O_2$,
 \ee{ZetaO2}
 The product form of the zeta function is:
 \beq
-1/\zeta_{\Refl}(t) =
+1/\zeta_{\mbox{\footnotesize AM}}(t) =
 \sqrt{\prod_{p_1\in {O_1}}(1-t^{2\cl{p_1}})}
       \;\exp\left(-\frac{t^{\cl{p_1}}}{1-t^{\cl{p_1}}}\right)
 \prod_{p_2\in O_2} (1-t^{\cl{p_2}})
@@ -333,7 +383,7 @@ N_{\cl{},1} \right)&=&
 \left|\ExpaEig^{m}-\ExpaEig^{-m}\right|
 \,.
 \eea
-Now we can compute the $h(t)$ from \refeq{LC21Ryu17eq:2.11}
+Now we can compute the $h(t)$ from \refeq{KLPzetaExp}
 \bea
 h(t) &=& \sum_{m=1}^{\infty} \left[
        N_{2m-1, 0}\,t^{2m-1}
@@ -349,7 +399,7 @@ h(t) &=& \sum_{m=1}^{\infty} \left[
 -\frac{\mu^2+5}{2(\ExpaEig-\ExpaEig^{-1})}\frac{\ExpaEig^{-1} t^2}{1- \ExpaEig^{-1} t^2}
 \,.
 \eea
-Using \refeq{LC21Ryu17eq:2.1} we have the "flip" part of the zeta function. Testing
+Using \refeq{KLPzetaFact} we have the "flip" part of the zeta function. Testing
 this zeta function using \refeq{HLFlipGeneratingFunction}, we have:
 \bea
 - t \frac{\partial}{\partial t}(\ln e^{-h(t)}) &=&
@@ -367,13 +417,13 @@ and \reftab{tab:Bmack93Fixed}.
 \label{sect:LC21poCounts}    % derived from blogCats.tex {sect:PeriodicPsCount}
 
 
-Given the {\tzeta} \refeq{LC21Ryu17eq:3.0B} we can count the
+Given the {\tzeta} \refeq{KLPzeta} we can count the
 number of lattice states from the generating function:
     \PC{2021-08-25}{
     We have the counts of the Bravais lattice states $N_\cl{}$,
-    $N_{\cl{},k}$ already, from \refeq{LC21Ryu17eq:3.0D}, so why don't we
+    $N_{\cl{},k}$ already, from \refeq{N_nkCount}, so why don't we
     reverse the logic, start here, and get the zeta function
-    \refeq{LC21Ryu17eq:2.1} by integration? Mention that this is an
+    \refeq{KLPzetaFact} by integration? Mention that this is an
     example of Lind zeta function\rf{Lind96} \refeq{LindZeta}
     without ever writing it down, so we do not have to explain it? It's a
     side issue for us, really.
@@ -421,7 +471,7 @@ t + 7t^2 + 12t^3 + 41t^4 + 55t^5 + \dots \, ,
 which is in agreement with \refeq{LC21zetatopCoefficients}, where the $N_\cl{}$ and $N_{\cl{}}^{\Refl}$
 are the $C_\cl{}$ and $SF_\cl{}$ in the \reftab{tab:Bmack93Fixed}.
 
-We are not able to retrieve the numbers of fixed points by their symmetry groups using this {\tzeta} \refeq{LC21Ryu17eq:3.0B}, unless we rewrite the {\tzeta} with two variables:
+We are not able to retrieve the numbers of fixed points by their symmetry groups using this {\tzeta} \refeq{KLPzeta}, unless we rewrite the {\tzeta} with two variables:
 \beq
 \zeta_{\Refl}(t,u) =
 \exp \Big(\sum_{\cl{}=1}^{\infty} \, \frac{N_{\cl{}}}{2\cl{}}t^{2\cl{}}
