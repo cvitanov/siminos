@@ -6,7 +6,23 @@
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Lind zeta function}
-\label{sect:LC21Lind1d}    % derived from blogCats.tex {sect:dihedralZeta}
+\label{sect:LC21Lind1d}
+
+% clipped from Sterling\rf{SterlingThesis99}
+\Poincare\ was the first
+to  recognize the importance of recurrent phenomena in understanding
+ergodic dynamical behavior.
+The problem of counting periodic orbits and how they partition
+the \statesp\ partitions is among the
+first problems that one needs to address%
+\rf{ArtMaz65,ChAnPi85,brucks,Lutzky88,Lutzky93,BLMS91,XH94,
+CheLou97,BriPer05,CBcount}.
+For
+the quadratic maps it was addressed in 1950's by
+\HREF{https://en.wikipedia.org/wiki/Pekka_Myrberg} {Myrberg}, in what was
+arguably
+the first application of computers to
+dynamics\rf{Myrberg58a,Myrberg58b,Myrberg59,Myrberg62,Myrberg63}.
 
 For a discrete time dynamical system
 \(
@@ -19,10 +35,9 @@ The symmetry of a time-invariant dynamical `law' $\map$ is \Cn{\infty},
 the group of all temporal lattice translations. For a period-$\cl{}$
 solution, the symmetry is its translation subgroup $H_{\cl{}}$.
 
-This observation motivates definition of a very general, purely
-group-theoretic \emph{fixed-points counting function} that relates the
-number of {\lattstate}s to the number of prime orbits for any \statesp\
-map
+This observation motivates definition of a general group-theoretic
+\emph{fixed-points counting} generating  function that relates the number
+of {\lattstate}s to the number of prime orbits for any \statesp\ map
 \(
 \map : \pS \to \pS
 \)
@@ -47,7 +62,8 @@ N_{H} =
    |\{\Xx \in \pS : \mbox{ all } h \in H \quad \map(h,\Xx) = \Xx\}|
 \,.
 \ee{LindN_H} % was {LC21Ryu17eq:1.3A}
-The multiplicity $|\Group/{H}|$ is best explained by working out a few examples.
+The multiplicity factor $|\Group/{H}|$ is best explained by working out a
+few examples.
 
 In the lattice field theory setting, $\pS$ is the set of all
 {\lattstate}s.
@@ -79,18 +95,122 @@ the multiplicity is
 \,.
 \ee{CinfHnMult}
 The Lind zeta function
-\refeq{LindZeta} takes form of the Artin-Mazur zeta
+\refeq{LindZeta} now takes form of the Artin-Mazur zeta
 func\-tion\rf{ArtMaz65,CBcount}
-% \refeq{topoZeta},
 \beq
 \zeta_{\mbox{\footnotesize AM}}(z) =
      \exp\left(\sum_{\cl{}=1}^\infty
 \frac{N_\cl{}}{\cl{}} z^\cl{}
          \right)
 \,,
-\ee{AMzeta} % copy of ee{topoZeta}
+\ee{AMzeta}
 which, from group-theoretic perspective, is the statement that the law
 governing the dynamical system is time invariant.
+
+In what sense is $\zeta_{\mbox{\footnotesize AM}}(z)$ a {\lattstate}
+count generating  function? Given the $\zeta_{\mbox{\footnotesize
+AM}}(z)$, the number of periodic points of period $\cl{}$ is given by its
+logarithmic derivative (see
+\HREF{http://chaosbook.org/chapters/ChaosBook.pdf\#section.18.7}
+{ChaosBook}\rf{CBcount})
+\beq
+\sum_{\cl{}=1}N_\cl{} z^\cl{}
+    = \frac{1}{\zeta_{\mbox{\footnotesize AM}}}
+            \,z\frac{d}{dz} \zeta_{\mbox{\footnotesize AM}}
+\,.
+\ee{zetatop-N}
+
+\paragraph{Bernoulli.}
+For example, for a Bernoulli system we know how to
+count the numbers of {\lattstate}s,
+eq.~\refeq{noPerPtsBm}, so
+\bea
+\zetatop(z)
+ &=&  \exp \left(-\sum_{\cl{}=1}^\infty
+\frac{z^\cl{}}{\cl{}} ({s}^\cl{} - 1)
+         \right)
+\,=\,
+\exp \left[\ln(1 -  {s}z) - \ln(1 - z) \right]
+\continue
+ &=&
+\frac{1 -  {s}z}{1 - z}
+\,.
+\label{BernZeta}
+\eea
+The numerator $(1 - {s}z)$ says that a Bernoulli system is a full
+shift\rf{CBcount}: there are $s$ fundamental {\lattstate}s, in this case
+fixed points $\{\ssp_0,\ssp_1,\cdots,\ssp_{s-1}\}$, and every other
+{\lattstate} is built from their concatenations and repeats. The
+denominator $(1 - z)$ compensates for the single overcounted
+{\lattstate}, the fixed point $\ssp_{{s}-1}=\ssp_{0}$ $(\mbox{mod}\;1)$
+of \reffig{fig:BernPart} and its repeats. For non-integer values of the
+stretching factor ${s}=\beta$, the map \refeq{n-tuplingMap} is called the
+`$\beta$-transformation'. For its Artin-Mazur zeta function see
+\refref{FlLaPo94}.
+
+\paragraph{\tempLatt.}
+We know how to count \templatt\ {\lattstate}s as well.
+Substituting the numbers of {\lattstate}s $N_{\cl{}}$
+\refeq{1stepDiffSolu} into the Artin-Mazur zeta \refeq{AMzeta},
+Isola\rf{Isola90} obtains
+\bea
+\zetatop(z)
+ &=& \exp \left(-\sum_{\cl{}=1}^\infty
+\frac{z^\cl{}}{\cl{}} N_\cl{}
+         \right)
+ =  \exp \left(-\sum_{\cl{}=1}^\infty
+\frac{z^\cl{}}{\cl{}} (\ExpaEig^\cl{} + \ExpaEig^{-\cl{}} - 2)
+         \right)
+\continue
+ &=&
+\exp \left[\ln(1 - z \ExpaEig) + \ln(1 - z \ExpaEig^{-1}) - 2 \ln(1 - z) \right]
+\continue
+ &=&
+\frac{(1 - z \ExpaEig)(1 - z \ExpaEig^{-1})}{(1 - z)^2}
+ =
+\frac{1 - s z + z^2}
+     {(1 - z)^2}
+\,.
+\label{Isola90-13}
+\eea
+Conversely, given the \tzeta, the generating function for the number of
+temporal {\lattstate}s of period $\cl{}$ is given by the logarithmic
+derivative of the {\tzeta} \refeq{zetatop-N},
+\bea
+\sum_{{n}=0}^\infty N_{n} z^{n}
+    & = & \frac{2-{s}z}{1 - s z + z^2}-\frac{2}{1 - z}
+    \continue
+& = & (s-2)\left[z + ({s}+2) z^2 + ({s}+1)^2 z^3 \right.
+    \ceq
+      \left.\qquad\quad
+      +\,({s}+2)\,{s}^2 z^4 + (s^2+ s-1)^2 z^5  +  \cdots\right]
+\,,
+\label{1stChebGenF}
+\eea
+which is indeed the generating function for $T_{\cl{}}(s/2)$, the
+{Chebyshev polynomial of the first kind} \refeq{POsChebyshev}.
+Why Chebyshev? Essentially because $T_k(x)$ are also
+defined by a 3-term recurrence:
+\bea
+T_0(x) &=& 1\,,\quad
+T_1(x)=x
+    \continue
+T_k(x)  &=&  2x T_{k-1}(x) - T_{k-2}(x)
+\quad \mbox{for } k \geq 2
+\,,
+\label{Cheb1stRecurr} %{Rangarajan17:TkRecurr}
+\eea
+
+\paragraph{\Henlatt.}
+The problem of counting orbits for the
+{\HenonMap} was addressed in 1979 pioneering work by
+Sim{\'o}\rf{Simo79}.
+
+MacKay\rf{Bmack93} 1982 PhD thesis, published as
+{\em Renormalisation in Area-preserving Maps} has a chapter on
+reversible maps. Do cite in our paper(s).
+MacKay had these numbers already
+listed in Table 1.2.3.5.1 of his 1982 PhD thesis\rf{Bmack93}.
 
 \subsection{Kim-Lee-Park zeta function}
 \label{sect:KiLePa}
@@ -133,7 +253,7 @@ types of (a)symmetric {\lattstate}s\rf{KiLePa03} of
 \,.
 \ee{KLPzeta}
 The first sum is a square-root of the {Artin-Mazur} zeta func\-tion
-\refeq{topoZeta}:
+\refeq{AMzeta}:
     % was {ArtMaz5} and  {Ryu17eq:2.1A}
 \beq
 \exp \left(\sum_{\cl{}=1}^\infty
@@ -231,10 +351,86 @@ The product form of the zeta function is:
 \,.
 \ee{ZetaProd}
 
+\Tzeta s count {\em prime
+orbits}, \ie, time invariant \emph{sets} of equivalent {\lattstate}s
+related by translations (cyclic permutations), and other
+symmetries\rf{CBcount}.
+
 \newpage % REMOVE
+\subsection{Counting {temporal Bernoulli} prime \po s}
+\label{s:bernPrime}
+
+Substituting the Bernoulli map \tzeta\ \refeq{BernZeta}
+into \refeq{zetatop-N}
+we obtain
+% ------------------- siminos/mathematica/ ----------
+% CatMaptopZeta.nb                                    2020-01-18
+% Bernoulli map periodic points counting for CL18.tex
+\bea
+\sum_{n=1}N_n z^n
+    &=&
+ z+3 z^2+7 z^3+15 z^4+31 z^5+63 z^6+127 z^7
+    \ceq
++255 z^8+511 z^9+ 1023z^{10} +2047 z^{11}
+\cdots
+\,,
+\label{bernN_n-s=2}
+\eea
+in agreement with the {\lattstate}s count \refeq{LC21detBern}.
+The number of \emph{prime} cycles of period $\cl{}$ is given recursively by
+subtracting repeats of shorter prime cycles\rf{CBcount},
+\beq
+M_n\,=\,\frac{1}{n}\left( N_n - \sum _{d|n}^{d<n}\,d M_d \right)
+\,,
+\ee{primeCount}
+where $d$'s are all divisors of $n$, hence
+% ------------------- siminos/mathematica/ ----------
+% CatMaptopZeta.nb                                    2020-01-18
+% Bernoulli map periodic points counting for CL18.tex
+\bea
+\sum_{n=1}M_n z^n
+    &=&
+ z+  z^2+2 z^3+3 z^4+6 z^5+9 z^6+18 z^7
+    \ceq
++30 z^8+56 z^9+99 z^{10} +186 z^{11}
+\cdots
+\,,
+\label{bernM_n-s=2}
+\eea
+in agreement with the usual numbers of binary symbolic dynamics prime
+cycles\rf{CBcount}.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{table}
+\begin{tabular}{c|rrrrr|rrrrr|rrrrr}
+$n$ &  1 &  2 &  3 &  4 &  5 &
+       6 &  7 &  8 &  9 & 10 &
+      11 \\%& 12 & 13 & 14 & 15 \\
+\hline
+$N_n$ &   1 &   5 &  16 &  45 &  121 &
+        320 & 841 & 2205 &5776 &15125&
+       39601& %   &      &     & 1364
+             \rule[-1ex]{0ex}{3.5ex} \\
+$M_n$ &   1 &   2 &   5 &  10 &   24 &
+         50 & 120 & 270 & 640 & 1500 &
+       3600 &  %% &     &     &
+\end{tabular}
+\bigskip
+\caption{\label{tab:catMapN_n-s=3}
+Lattice states and {prime} orbit counts for the ${s}=3$ cat map
+(Bird and Vivaldi\rf{BirViv}).
+        }
+\end{table}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{Counting \templatt\ {\lattstate}s}
 \label{sect:LC21catCounts}    % derived from blogCats.tex {sect:PeriodicPsCount}
+
+The
+numbers of {periodic points} and \emph{prime} cycles $M_n$ (given by
+\refeq{primeCount}) are tabulated in \reftab{tab:catMapN_n-s=3}.
 
 \refeq{AABHM99-46b}, \refeq{catlattMass} introduce ${\mu}$.
 See also \refeq{3diagCircEigs}, \refeq{3diagCircEigs1},
@@ -525,7 +721,7 @@ for a given system.
 We shall refer to $\Group$-orbit \refeq{GroupOrbDisc} counting generating
 function for a symmetry group $\Group$ as the topological $\Group$-zeta
 function, or the Lind zeta function\rf{Lind96}. The classic example is
-\refeq{topoZeta}, the {\em Artin-Mazur} zeta
+\refeq{AMzeta}, the {\em Artin-Mazur} zeta
 func\-tion\rf{ArtMaz65,CBcount} for the \emph{infinite cyclic group}
 \Cn{\infty} of all integer time translations. Here we focus on the
 \emph{infinite dihedral group} topological $\Dn{\infty}$-zeta function
