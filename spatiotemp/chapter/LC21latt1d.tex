@@ -899,7 +899,8 @@ translations, as any reflection amounts to a cyclic group
 (Try reflecting a  {\lattstate} in \reffig{fig:symmLattStates}\,(b-d)
 over any lattice site or mid-interval.)
   \item[(2)]
-{\lattstate} is a `half' of it, the length ${m}$ orbit,
+The prime {\lattstate} is a `half' of the Bravais cell,
+give or take some boundary sites, the length ${m}$ orbit,
 \beq
 \tilde{\Xx}      = \ssp_1 \ssp_2 \ssp_3 \cdots \ssp_{m}
 \,.
@@ -909,8 +910,210 @@ over any lattice site or mid-interval.)
 \end{itemize}
 Reflection breaks the translational invariance, and how one reconstructs
 the period-$\cl{}$ orbit from this length-$m$ \brick\ is a bit tricky. To
-develop intuition about that, it is helpful to have a look at a matrix
-representation of $\Dn{\cl{}}$.
+develop intuition about that, it is helpful to have a look at
+explicit matrix
+representations of $\Dn{\cl{}}$ operations.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Permutation representation}
+\label{sect:permReps}
+
+A {\lattstate} {\Xx} over a Bravais cell $\mathbf{a}$ can be assembled
+into an $\cl{}$\dmn\ vector whose components are lattice site fields
+\beq
+\transp{\Xx} = (\ssp_0,\ssp_1,\ssp_2,\ssp_3,\cdots,\ssp_{\cl{}-1})
+\,,
+\ee{1dLattStatVec}
+with the first field in such vector placed at the lattice site 0, the
+second at the lattice site 1, and so on. Matrices that reshuffle the
+components of such vectors form the {\em permutation representation} of a
+finite group \Group, which gives us a different and helpful
+perspective on the three kinds of symmetric solutions of the preceding
+section.
+
+The permutation representation of 1-step lattice translation $\shift$
+acts on a Bravais {\lattstate} by the off-diagonal
+$[\cl{}\!\times\!\cl{}]$ matrix \refeq{hopMatrix}. This is a cyclic
+\Cn{\cl{}} permutation that translates the {\lattstate} $\Xx$
+"for\-ward-in-time" by one site,
+\[
+\transp{(\shift\Xx)}=(\ssp_1,\ssp_2,\cdots,\ssp_{\cl{}-1},\ssp_0)
+\,.
+\]
+A permutation representation of a \Dn{\cl{}} translate-reflect operation
+is essentially an anti-diagonal matrix that reverses the order of site
+fields, up to a cyclic permutation
+\[
+\transp{(\Refl_k\Xx)}=(\ssp_{\cl{}-1},\cdots,\ssp_2,\ssp_1,\ssp_0)
+\,.
+\]
+Symmetries of triangles and squares, \reffig{fig:D3D4}, help us make this
+precise.
+
+%     \item[2021-03-09 Han]
+\emph{Odd period}:
+In odd dimensions, the $\cl{}$ translate-reflect matrices of \Dn{\cl{}} are
+related by translations \refeq{D_nConj}.
+For example, for a period-3 {\lattstate}
+without symmetry
+\(
+\transp{\Xx} = (\ssp_0,\ssp_1,\ssp_2)
+\,,
+\)
+they are
+\[
+\Refl=
+\left(
+\begin{array}{ccc}
+ 1 & 0 & 0 \\
+ 0 & 0 & 1 \\
+ 0 & 1 & 0
+\end{array}
+\right)
+    \,,\quad
+{\Refl_1}=
+\left(
+\begin{array}{ccc}
+ 0 & 1 & 0 \\
+ 1 & 0 & 0 \\
+ 0 & 0 & 1
+\end{array}
+\right)
+    \,,\quad
+\Refl_2=
+\left(
+\begin{array}{ccc}
+ 0 & 0 & 1 \\
+ 0 & 1 & 0 \\
+ 1 & 0 & 0
+\end{array}
+\right)
+\,.
+\]
+In agreement with \refeq{reflSymOdd}, \reffig{fig:D3D4}\,$(o)$ and
+\reffig{fig:symmLattStates}\,$(o)$, reflections keep one lattice site fixed
+(for each permutation matrix $\Refl_k$ there is only one `1' on the
+diagonal), swap the rest.
+
+Next consider a period-5 reflection symmetric {\lattstate}s tiles the infinite lattice
+\lattice\ with a reflection-fixed $\sitebox{\ssp_0}$, and a length-2
+{\brick} $(\ssp_1,\ssp_2)$,
+\beq
+\Xx =
+\cdots \ssp_2 \ssp_1 \sitebox{\ssp_0} \ssp_1 \ssp_2 |
+      \ssp_2 \ssp_1 \sitebox{\ssp_0} \ssp_1 \ssp_2 |\cdots
+\,.
+\ee{symmCycD5}
+\Dn{5} permutation representation of reflections of a pentagon, illustrates that
+fixpoints {\Xx} of $\Refl_{k}$ are cyclicly related:
+\bea
+\Refl\Xx &=&
+\left(
+\begin{array}{ccccc}
+ 1 & 0 & 0 & 0 & 0 \\
+ 0 & 0 & 0 & 0 & 1 \\
+ 0 & 0 & 0 & 1 & 0 \\
+ 0 & 0 & 1 & 0 & 0 \\
+ 0 & 1 & 0 & 0 & 0
+\end{array}
+\right)
+\left(\begin{array}{c}
+ \sitebox{\ssp_0}\cr
+ \ssp_1\cr
+ \ssp_2\cr
+ \ssp_2\cr
+ \ssp_1\cr
+\end{array}\right)
+=
+\left(\begin{array}{c}
+ \sitebox{\ssp_0}\cr
+ \ssp_1\cr
+ \ssp_2\cr
+ \ssp_2\cr
+ \ssp_1\cr
+\end{array}\right)
+        \continue
+\Refl_{4}(\shift_{-2}\Xx )
+     &=&
+\left(
+\begin{array}{ccccc}
+ 0 & 0 & 0 & 0 & 1 \\
+ 0 & 0 & 0 & 1 & 0 \\
+ 0 & 0 & 1 & 0 & 0 \\
+ 0 & 1 & 0 & 0 & 0\\
+ 1 & 0 & 0 & 0 & 0
+\end{array}
+\right)
+\left(\begin{array}{c}
+ \ssp_2\cr
+ \ssp_1\cr
+ \sitebox{\ssp_0}\cr
+ \ssp_1\cr
+ \ssp_2\cr
+\end{array}\right)
+=
+\left(\begin{array}{c}
+ \ssp_2\cr
+ \ssp_1\cr
+ \sitebox{\ssp_0}\cr
+ \ssp_1\cr
+ \ssp_2\cr
+\end{array}\right)
+\,.
+\label{symmCycD5Refl}
+\eea
+
+The symmetry conditions are the Bravais lattice site 5-periodicity
+mod 5, and the even reflection across
+$\sitebox{\ssp_0}$:
+\beq
+\ssp_{i} = \ssp_{i+5}
+    \,, \quad
+\ssp_{-i} = \ssp_{i}
+\,.
+\ee{symmCycD5bcs}
+A {\lattstate} satisfies
+the defining equation \refeq{LC21:1dTempFT} %{catMapNewt}
+\beq
+- \ssp_{\zeit-1}  +  V'(\ssp_{\zeit}) - \ssp_{\zeit+1}
+    =
+\Ssym{\zeit}
+\,,
+\ee{LC21:1dTempFTa} %{catMapHL}
+on the period-5 Bravais cell,
+\bea
+    V'(\ssp_{0}) - 2 \ssp_1 &=& m_0 \continue
+-\ssp_0 +V'(\ssp_{1}) -\ssp_2 &=& m_1 \continue
+-\ssp_1 +V'(\ssp_{2}) -\ssp_2 &=& m_2 \continue
+-\ssp_1 +V'(\ssp_{2}) -\ssp_2 &=& m_2 \continue
+-\ssp_0 +V'(\ssp_{1}) -\ssp_2 &=& m_1
+\label{symmCycD5eqs5} % from {HLsymmCycD5eqs}
+\eea
+where we have used \refeq{symmCycD5bcs}.
+The result is a symmetry reduced {\jacobianOrb}, with
+rows modified by the \bcs,
+\bea
+    V'(\ssp_{0}) - 2 \ssp_1 &=& m_0 \continue
+-\ssp_0 +V'(\ssp_{1}) -\ssp_2 &=& m_1 \continue
+-\ssp_1 +V'(\ssp_{2}) -\ssp_2 &=& m_2
+\label{symmCycD5eqs} % from {HLsymmCycD5eqs}
+\eea
+with a 3\dmn\ {\jacobianOrb} \refeq{jMorb1dFT}
+\bea
+\jMorb_+ &=&
+\left(\begin{array}{ccc}
+{s}_0 & -2 & 0 \\
+ -1 & {s}_1 & -1 \\
+ 0 & -1 & {s}_2-1
+\end{array}\right)
+\,,
+\label{OrbJacobianD5} % from {HLOrbJacobianD5}
+\eea
+At this point we have to abandon the detailed discussion of the four
+kinds of symmetry reduced {\jacobianOrbs}: the message is that for any
+reflection-symmetric Bravais cell the cyclic translational symmetry is
+broken, and one has to impose the correct $\sitebox{\ssp_0}$ and odd $|$
+reflection \bcs\ to define the {\jacobianOrb} for the \emph{prime} orbit.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{Reciprocal lattice}
@@ -1019,507 +1222,3 @@ is 0, the arguments of the components
 in the $k=2$ and $k=3$ subspaces are $0\leq\arg(\cssp_{2})<2\pi/3{}$ and
 $0\leq\arg(\cssp_{3})<\pi$. Each orbit is guaranteed to visit this fundamental
 domain exactly once.
-
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\subsection{Permutation representation}
-\label{sect:permReps}
-
-A {\lattstate} {\Xx} over a Bravais cell $\mathbf{a}$ can be assembled
-into an $\cl{}$\dmn\ vector whose components are lattice site fields
-\beq
-\transp{\Xx} = (\ssp_0,\ssp_1,\ssp_2,\ssp_3,\cdots,\ssp_{\cl{}-1})
-\,,
-\ee{1dLattStatVec}
-with the first field in such vector placed at the lattice site 0, the
-second at the lattice site 1, and so on. Matrices that reshuffle the
-components of such vectors form the {\em permutation representation} of a
-finite group \Group, which gives us a different and helpful
-perspective on the three kinds of symmetric solutions of the preceding
-section.
-
-The permutation representation of 1-step lattice translation $\shift$
-acts on a Bravais {\lattstate} by the off-diagonal
-$[\cl{}\!\times\!\cl{}]$ matrix \refeq{hopMatrix}. This is a cyclic
-\Cn{\cl{}} permutation that translates the {\lattstate} $\Xx$
-"for\-ward-in-time" by one site,
-\[
-\transp{(\shift\Xx)}=(\ssp_1,\ssp_2,\cdots,\ssp_{\cl{}-1},\ssp_0)
-\,.
-\]
-A permutation representation of a \Dn{\cl{}} translate-reflect should
-morally be an anti-diagonal matrix that reverses the order of site
-fields,
-\[
-\transp{(\Refl_k\Xx)}=(\ssp_{\cl{}-1},\cdots,\ssp_2,\ssp_1,\ssp_0)
-\,.
-\]
-Symmetries of triangles and squares help us make this precise.
-
-%     \item[2021-03-09 Han]
-\emph{Odd period}:
-In odd dimensions, the $\cl{}$ translate-reflect matrices of \Dn{\cl{}} are
-related by translations \refeq{D_nConj}.
-
-A period-3 example: For $\cl{}=3$ {\lattstate}
-without symmetry
-\(
-\transp{\Xx} = (\ssp_0,\ssp_1,\ssp_2)
-\,,
-\)
-they are
-\[
-\Refl=
-\left(
-\begin{array}{ccc}
- 1 & 0 & 0 \\
- 0 & 0 & 1 \\
- 0 & 1 & 0
-\end{array}
-\right)
-    \,,\quad
-{\Refl_1}=
-\left(
-\begin{array}{ccc}
- 0 & 1 & 0 \\
- 1 & 0 & 0 \\
- 0 & 0 & 1
-\end{array}
-\right)
-    \,,\quad
-\Refl_2=
-\left(
-\begin{array}{ccc}
- 0 & 0 & 1 \\
- 0 & 1 & 0 \\
- 1 & 0 & 0
-\end{array}
-\right)
-\,.
-\]
-In agreement with \refeq{reflSymOdd}, \reffig{fig:D3D4}\,$(o)$ and
-\reffig{fig:symmLattStates}\,$(o)$, reflections keep one lattice site fixed
-(for each permutation matrix $\Refl_k$ there is only one `1' on the
-diagonal), swap the rest.
-
-A period-5 example: reflection symmetric {\lattstate}s tiles the infinite lattice
-\lattice\ with a reflection-fixed $\sitebox{\ssp_0}$, and a length-2
-{\brick} $(\ssp_1,\ssp_2)$,
-\beq
-\Xx =
-\cdots \ssp_2 \ssp_1 \sitebox{\ssp_0} \ssp_1 \ssp_2 |
-      \ssp_2 \ssp_1 \sitebox{\ssp_0} \ssp_1 \ssp_2 |\cdots
-\,.
-\ee{symmCycD5}
-\Dn{5} permutation representation of reflections of a pentagon, illustrates that
-fixpoints {\Xx} of $\Refl_{k}$ are cyclicly related:
-\bea
-\Refl\Xx &=&
-\left(
-\begin{array}{ccccc}
- 1 & 0 & 0 & 0 & 0 \\
- 0 & 0 & 0 & 0 & 1 \\
- 0 & 0 & 0 & 1 & 0 \\
- 0 & 0 & 1 & 0 & 0 \\
- 0 & 1 & 0 & 0 & 0
-\end{array}
-\right)
-\left(\begin{array}{c}
- \sitebox{\ssp_0}\cr
- \ssp_1\cr
- \ssp_2\cr
- \ssp_2\cr
- \ssp_1\cr
-\end{array}\right)
-=
-\left(\begin{array}{c}
- \sitebox{\ssp_0}\cr
- \ssp_1\cr
- \ssp_2\cr
- \ssp_2\cr
- \ssp_1\cr
-\end{array}\right)
-        \continue
-\Refl_{4}(\shift_{-2}\Xx )
-     &=&
-\left(
-\begin{array}{ccccc}
- 0 & 0 & 0 & 0 & 1 \\
- 0 & 0 & 0 & 1 & 0 \\
- 0 & 0 & 1 & 0 & 0 \\
- 0 & 1 & 0 & 0 & 0\\
- 1 & 0 & 0 & 0 & 0
-\end{array}
-\right)
-\left(\begin{array}{c}
- \ssp_2\cr
- \ssp_1\cr
- \sitebox{\ssp_0}\cr
- \ssp_1\cr
- \ssp_2\cr
-\end{array}\right)
-=
-\left(\begin{array}{c}
- \ssp_2\cr
- \ssp_1\cr
- \sitebox{\ssp_0}\cr
- \ssp_1\cr
- \ssp_2\cr
-\end{array}\right)
-\,.
-\label{symmCycD5Refl}
-\eea
-
-The symmetry conditions are the Bravais lattice site 5-periodicity
-mod 5, and the even reflection across
-$\sitebox{\ssp_0}$:
-\beq
-\ssp_{i} = \ssp_{i+5}
-    \,, \quad
-\ssp_{-i} = \ssp_{i}
-\,.
-\ee{symmCycD5bcs}
-A {\lattstate} satisfies
-the defining equation \refeq{LC21:1dTempFT} %{catMapNewt}
-\beq
-- \ssp_{\zeit-1}  +  V'(\ssp_{\zeit}) - \ssp_{\zeit+1}
-    =
-\Ssym{\zeit}
-\,,
-\ee{LC21:1dTempFTa} %{catMapHL}
-on the period-5 Bravais cell,
-\bea
-    V'(\ssp_{0}) - 2 \ssp_1 &=& m_0 \continue
--\ssp_0 +V'(\ssp_{1}) -\ssp_2 &=& m_1 \continue
--\ssp_1 +V'(\ssp_{2}) -\ssp_2 &=& m_2 \continue
--\ssp_1 +V'(\ssp_{2}) -\ssp_2 &=& m_2 \continue
--\ssp_0 +V'(\ssp_{1}) -\ssp_2 &=& m_1
-\label{symmCycD5eqs5} % from {HLsymmCycD5eqs}
-\eea
-where we have used \refeq{symmCycD5bcs}.
-The result is a length-3 \brick\ {\lattstate} condition for
-$\sitebox{\ssp_0}$, followed by the 2-{\brick} $(\ssp_1,\ssp_2)$,
-\bea
-    V'(\ssp_{0}) - 2 \ssp_1 &=& m_0 \continue
--\ssp_0 +V'(\ssp_{1}) -\ssp_2 &=& m_1 \continue
--\ssp_1 +V'(\ssp_{2}) -\ssp_2 &=& m_2
-\label{symmCycD5eqs} % from {HLsymmCycD5eqs}
-\eea
-with a 3\dmn\ {\jacobianOrb} \refeq{jMorb1dFT}
-\bea
-\jMorb_+ &=&
-\left(\begin{array}{ccc}
-{s}_0 & -2 & 0 \\
- -1 & {s}_1 & -1 \\
- 0 & -1 & {s}_2-1
-\end{array}\right)
-\,,
-\label{OrbJacobianD5} % from {HLOrbJacobianD5}
-\eea
-
-While the translational symmetry is broken, the even
-$\sitebox{\ssp_0}$ and odd $|$ reflection \bcs\ only affect the
-top and the bottom rows.
-
-The {\jacobianOrb} \refeq{jMorb1dFT}, 3 symmetry cases:
-
-
-\emph{Odd period} Bravais cell \refeq{reflSymOdd},
-is $[(m+1)\times(m+1)]$\dmn\
-(compare with \refeq{HLreflectionSymOdd}):
-        \PC{2021-09-01} {
-The bottom, odd, looks like Neumann boundary condition, see
-Pozrikidis\rf{Pozrikidis14} \CBlibrary{Pozrikidis14} eq.~(1.5.4).
-The top, time-direction symmetry breaking b.c. I do not recognize.
-    }
-\beq
-\jMorb[\Xx] =
-\left(\begin{array}{cccccccc}
-%\begin{pmatrix}
-{s}_{0} & {\color{red}-2} & 0 & 0 & \cdots & 0 & 0 & {\color{red}0} \\
--1 & {s}_{1} & -1 & 0 & \cdots & 0 & 0 & 0 \\
-0 & -1 & {s}_{2} & -1 & \cdots & 0 & 0 & 0 \\
-\vdots & \vdots & \vdots & \vdots & \ddots & \vdots & \vdots & \vdots \\
-0 & 0 & 0 & 0 & \cdots & -1 & {s}_{m-1} & -1 \\
-{\color{red}0} & 0 & 0 & 0 & \cdots & 0 & -1 & {s}_{m} {\color{red}-1}
-%\end{pmatrix}
-          \end{array} \right)
-\,.
-\ee{jMorb1dFTodd}
-
-\emph{Even period} $\cl{}=2m+2$, \emph{even reflection} $k$ \refeq{reflSymEvens0}
-(compare with \refeq{HLreflectionSymSecondKind}):
-\beq
-\jMorb[\Xx] =
-\left(\begin{array}{cccccccc}
-%\begin{pmatrix}
-{s}_{0} & {\color{red}-2} & 0 & 0 & \cdots & 0 & 0 & {\color{red}0} \\
--1 & {s}_{1} & -1 & 0 & \cdots & 0 & 0 & 0 \\
-0 & -1 & {s}_{2} & -1 & \cdots & 0 & 0 & 0 \\
-\vdots & \vdots & \vdots & \vdots & \ddots & \vdots & \vdots & \vdots \\
-0 & 0 & 0 & 0 & \cdots & -1 & {s}_{m} & -1 \\
-{\color{red}0} & 0 & 0 & 0 & \cdots & 0 &  {\color{red}-2} & {s}_{m+1}
-%\end{pmatrix}
-          \end{array} \right)
-\,.
-\ee{jMorb1dFTEvens0}
-
-\emph{Even period} $\cl{}=2m$, \emph{odd reflection}  $k$ \refeq{reflSymEvens1}
-(compare with \refeq{HLreflectionSymFirstKind}):
-\beq
-\jMorb[\Xx] =
-\left(\begin{array}{ccccccc}
-%\begin{pmatrix}
- {s}_{1} {\color{red}-1}& -1 & 0 & \cdots & 0 & 0 & {\color{red}0} \\
- -1 & {s}_{2} & -1 & \cdots & 0 & 0 & 0 \\
- \vdots & \vdots & \vdots & \ddots & \vdots & \vdots & \vdots \\
- 0 & 0 & 0 & \cdots & -1 & {s}_{m-1} & -1 \\
-{\color{red}0} & 0 & 0 & \cdots & 0 & -1 & {s}_{m} {\color{red}-1}
-%\end{pmatrix}
-          \end{array} \right)
-\,.
-\ee{jMorb1dFTEvens1}
-
-
-\bigskip\bigskip
-
- {\jacobianOrb} $\jMorb$ evaluated on the {\lattstate}
- commutes with $\Refl$,
-\beq
-\jMorb\Refl%  = \shift - s\id + \shift^{-1}
-  =
-\left(\begin{array}{ccccc}
- {s}_0& -1 & 0 & 0 & -1 \\
- -1 &  {s}_1& -1 & 0 &0\\
- 0 & -1 &  {s}_2& -1 &0 \\
- 0 & 0 & -1 & {s}_2& -1 \\
- -1 & 0 & 0 & -1 &  {s}_1
-\end{array} \right)
-\left(
-\begin{array}{ccccc}
- 1 & 0 & 0 & 0 & 0 \\
- 0 & 0 & 0 & 0 & 1 \\
- 0 & 0 & 0 & 1 & 0 \\
- 0 & 0 & 1 & 0 & 0 \\
- 0 & 1 & 0 & 0 & 0
-\end{array}
-\right)
-=\Refl \jMorb
-\,.
-\ee{LC21Hessian}
-
-
-\bigskip\bigskip
-
-\emph{Even period} examples:
-For even dimensions, there are two classes of reflections,
-the even ones, \reffig{fig:symmLattStates}\,$(ee)$, that leave two `yellow'
-site fields fixed, swap the rest,
-and
-the odd ones, \reffig{fig:symmLattStates}\,$(eo)$, that swap the
-`reds' and `blues'.
-This is illustrated by the \Dn{4} permutation representation of the  even
-$\Refl$, odd $\Refl_{3}$ reflection symmetries of a square,
-\reffig{fig:D3D4}\,$(e)$:
-\beq
-\Refl =
-\left(
-\begin{array}{cccc}
- 1 & 0 & 0 & 0 \\
- 0 & 0 & 0 & 1 \\
- 0 & 0 & 1 & 0 \\
- 0 & 1 & 0 & 0
-\end{array}
-\right)
-    \,,\quad
-\Refl_{3} =
-\left(
-\begin{array}{cccc}
- 0 & 0 & 0 & 1 \\
- 0 & 0 & 1 & 0 \\
- 0 & 1 & 0 & 0 \\
- 1 & 0 & 0 & 0
-\end{array}
-\right)
-\,.
-\ee{D4Refl03}
-The even reflection keeps two site fields fixed,
-\[
-\transp{(\Refl\Xx)}=(\sitebox{\ssp_{0}},\ssp_3,\sitebox{\ssp_2},\ssp_1)
-\,,
-\]
-in agreement with \refeq{reflSymEvens0}.
-while
- the odd reflection reverses the order of site fields
-\[
-\transp{(\Refl_{3}\Xx)}=(\ssp_{3},\ssp_2|\ssp_1,\ssp_0)
-\,,
-\]
-in agreement with \refeq{reflSymEvens1},
-
-
-\bigskip\bigskip\bigskip
-
-\refeq{HLsymmCycD8s1}
-is invariant under the 1/2 lattice spacing reflection:
-\bea
-\Refl=
-\left(
-\begin{array}{ccccccccc}
- 0 & 0 & 0 & 0 & 0 & 0 & 0 & 1 \\
- 0 & 0 & 0 & 0 & 0 & 0 & 1 & 0 \\
- 0 & 0 & 0 & 0 & 0 & 1 & 0 & 0 \\
- 0 & 0 & 0 & 0 & 1 & 0 & 0 & 0 \\
- 0 & 0 & 0 & 1 & 0 & 0 & 0 & 0 \\
- 0 & 0 & 1 & 0 & 0 & 0 & 0 & 0 \\
- 0 & 1 & 0 & 0 & 0 & 0 & 0 & 0 \\
- 1 & 0 & 0 & 0 & 0 & 0 & 0 & 0 \\
-\end{array}
-\right)
-\,.
-\eea
-
-\refeq{HLsymmCycD8s0}
-the corresponding
-reflection operator leaves sites 1 and 4 invariant:
-\bea
-\Refl_1=
-\left(
-\begin{array}{ccccccccc}
- 1 & 0 & 0 & 0 & 0 & 0 & 0 & 0 \\
- 0 & 0 & 0 & 0 & 0 & 0 & 0 & 1 \\
- 0 & 0 & 0 & 0 & 0 & 0 & 1 & 0 \\
- 0 & 0 & 0 & 0 & 0 & 1 & 0 & 0 \\
- 0 & 0 & 0 & 0 & 1 & 0 & 0 & 0 \\
- 0 & 0 & 0 & 1 & 0 & 0 & 0 & 0 \\
- 0 & 0 & 1 & 0 & 0 & 0 & 0 & 0 \\
- 0 & 1 & 0 & 0 & 0 & 0 & 0 & 0 \\
-\end{array}
-\right)
-\,.
-%\label{HL-ReflD9-1}
-\eea
-
-
-Combination $\shift+\shift^{-1}$
-%in \refeq{SVWorbitJac}
-commutes with $\Refl_k$,
-and $\Refl_k$ conjugacy reverses ${\mathbb{S}}$
-\bea
-\Refl_k\jMorb\Refl_k &=&-\shift+\Refl_k{\mathbb{S}}\,\Refl_k-\shift^{-1}
-    \continue
-            &=&
-\left(\begin{array}{ccccccc} %\begin{bmatrix}
-{s}_{n-1} & -1 & 0 & 0 & \dots & 0 & -1\\
--1 & {s}_{n-2} & -1 & 0 & \dots & 0 & 0\\
-0 & -1 & {s}_2 & -1 & \dots & 0 & 0\\
-\vdots & \vdots & \vdots & \vdots & \ddots & \vdots & \vdots\\
-0 & 0 & \dots & \dots & \dots & {s}_{2} & -1\\
--1 & 0 & \dots & \dots & \dots & -1 & {s}_{1}
-\end{array}\right) %\end{bmatrix}
-%\label{LC21:reverOrbitJac}
-\eea
-where ${\mathbb{S}}$ is a diagonal matrix with the lattice site $k$ `stretching'
-factor ${s}_k$ in the $k$th row/column.
-
-If a period-9 orbit is invariant under the reflection operator (see
-\refeq{HL-ReflD9-1})
-\bea
-\Refl=
-\left(
-\begin{array}{ccccccccc}
- 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 1 \\
- 0 & 0 & 0 & 0 & 0 & 0 & 0 & 1 & 0 \\
- 0 & 0 & 0 & 0 & 0 & 0 & 1 & 0 & 0 \\
- 0 & 0 & 0 & 0 & 0 & 1 & 0 & 0 & 0 \\
- 0 & 0 & 0 & 0 & 1 & 0 & 0 & 0 & 0 \\
- 0 & 0 & 0 & 1 & 0 & 0 & 0 & 0 & 0 \\
- 0 & 0 & 1 & 0 & 0 & 0 & 0 & 0 & 0 \\
- 0 & 1 & 0 & 0 & 0 & 0 & 0 & 0 & 0 \\
- 1 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 \\
-\end{array}
-\right)
-\,.
-%\label{ReflD9-0}
-\eea
-
-If a period-8 orbit is of form (see \refeq{reflSymEvens0}) %{HLsymmCycD8s0})
-\beq
-\cycle{\sitebox{\ssp_0} \ssp_1 \ssp_2 \ssp_3 \sitebox{\ssp_4} \ssp_3 \ssp_2 \ssp_1}
-\,,
-\eeq %\ee{symmCycD8s0}
-the corresponding
-reflection operator leaves sites 0 and 4 invariant  (see \refeq{HL-ReflD9-1}):
-\bea
-\Refl=
-\left(
-\begin{array}{ccccccccc}
- 1 & 0 & 0 & 0 & 0 & 0 & 0 & 0 \\
- 0 & 0 & 0 & 0 & 0 & 0 & 0 & 1 \\
- 0 & 0 & 0 & 0 & 0 & 0 & 1 & 0 \\
- 0 & 0 & 0 & 0 & 0 & 1 & 0 & 0 \\
- 0 & 0 & 0 & 0 & 1 & 0 & 0 & 0 \\
- 0 & 0 & 0 & 1 & 0 & 0 & 0 & 0 \\
- 0 & 0 & 1 & 0 & 0 & 0 & 0 & 0 \\
- 0 & 1 & 0 & 0 & 0 & 0 & 0 & 0 \\
-\end{array}
-\right)
-\,.
-%\label{ReflD9-1}
-\eea
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\begin{table} %[ht]
-\caption{\label{tab:LC21HenCycD5} % extracted from {tab:orbitdet}
-    The {\henlatt} period-5 and -6 symmetric {\lattstate}s of type
-    \reffig{fig:symmLattStates}\,(b), with symmetry indicated in the
-    $\Refl$-reflection format \refeq{symmCycD5Refl}. %{HLsymmCycD5}.
-    For odd $\cl{}=2m+1$, symmetric orbits reduce to {\brick}s of length $m+1$.
-    For even $\cl{}=2m$, their lengths are either $m+1$ or $m$.
-    The period-5 {\lattstate}s are plotted in \reffig{fig:PChenlatt5cyc}
-    (to supersede \reffig{SVW5CycHamHen}\,(left)).
-    There is no asymmetric period-5, the first $\Cn{\cl{}}$ asymmetric pair is
-    period-6.
-    Indicated: the binary code $\Ssym{j}$ of the field $\ssp_j$
-    at the lattice site $j=0,1,2,3,4$.
-         }
-\centering
-\begin{tabular}{|lll|} % right alligned columns (2 columns)
-%\hline\hline %inserts double horizontal lines
-\hline
- \Cn{5}  & $\ssp_{-2} \ssp_{-1} \sitebox{\ssp_0}\,\ssp_1 \ssp_2 |$ & \Dn{5}
-\\[0.5ex]
- $11110$ & $11\,\sitebox{0}\,11\,|$ & $\sitebox{0}\,11\,|$\\
- $00011$ & $10\,\sitebox{0}\,01\,|$ & $\sitebox{0}\,01\,|$\\
- $00101$ & $01\,\sitebox{0}\,10\,|$ & $\sitebox{0}\,10\,|$\\
- $00001$ & $00\,\sitebox{1}\,00\,|$ & $\sitebox{1}\,00\,|$\\[0.5ex]
- $11010$ & $10\,\sitebox{1}\,01\,|$ & $\sitebox{1}\,01\,|$\\
- $11100$ & $01\,\sitebox{1}\,10\,|$ & $\sitebox{1}\,10\,|$\\
-[1ex]
-\hline
-\end{tabular}
-~~~~
-\begin{tabular}{|lll|} % next table
-\hline
- \Cn{6}  & $\ssp_0 \ssp_1 \ssp_2 \ssp_3 \ssp_4 \ssp_5$ & \Dn{6}
-\\ [0.5ex]
- $001011$ & $001011$ & $001011$\\
- $110100$ & $110100$ &  \\
-\hline
- & $\sitebox{\ssp_0} \ssp_1 \ssp_2 \sitebox{\ssp_3} \ssp_2 \ssp_1$ &
-\\ [0.5ex]
- $010001$ & $\sitebox{0}\,10\,\sitebox{0}\,01$ & $\sitebox{0}\,10\,\sitebox{0}$\\
- $011111$ & $\sitebox{0}\,11\,\sitebox{1}\,11$ & $\sitebox{0}\,11\,\sitebox{1}$\\
- $001110$ & $\sitebox{0}\,01\,\sitebox{1}\,10$ & $\sitebox{0}\,01\,\sitebox{1}$\\
- $100000$ & $\sitebox{1}\,00\,\sitebox{0}\,00$ & $\sitebox{1}\,00\,\sitebox{0}$\\
- $101110$ & $\sitebox{1}\,01\,\sitebox{1}\,10$ & $\sitebox{1}\,01\,\sitebox{1}$\\
-\hline
- & $ \ssp_0  \ssp_1 \ssp_2 | \ssp_2 \ssp_1 \ssp_0|$ &
-\\ [0.5ex]
- $001100$ & $001|100|$ & $|001|$\\
- $011110$ & $011|110|$ & $|011|$\\
-[1ex]
-\hline
-\end{tabular}
-\end{table}
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%

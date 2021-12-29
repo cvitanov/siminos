@@ -662,6 +662,254 @@ classes, all other {\lattstate}s symmetric with respect to
 reflection $\Refl_{k}$, for any  integer $k$, are conjugate to the above
 two types of symmetric {\lattstate}s.
 
+The {\jacobianOrb} \refeq{jMorb1dFT}, 3 symmetry cases:
+
+
+\emph{Odd period} Bravais cell \refeq{reflSymOdd},
+is $[(m+1)\times(m+1)]$\dmn\
+(compare with \refeq{HLreflectionSymOdd}):
+        \PC{2021-09-01} {
+The bottom, odd, looks like Neumann boundary condition, see
+Pozrikidis\rf{Pozrikidis14} \CBlibrary{Pozrikidis14} eq.~(1.5.4).
+The top, time-direction symmetry breaking b.c. I do not recognize.
+    }
+\beq
+\jMorb[\Xx] =
+\left(\begin{array}{cccccccc}
+%\begin{pmatrix}
+{s}_{0} & {\color{red}-2} & 0 & 0 & \cdots & 0 & 0 & {\color{red}0} \\
+-1 & {s}_{1} & -1 & 0 & \cdots & 0 & 0 & 0 \\
+0 & -1 & {s}_{2} & -1 & \cdots & 0 & 0 & 0 \\
+\vdots & \vdots & \vdots & \vdots & \ddots & \vdots & \vdots & \vdots \\
+0 & 0 & 0 & 0 & \cdots & -1 & {s}_{m-1} & -1 \\
+{\color{red}0} & 0 & 0 & 0 & \cdots & 0 & -1 & {s}_{m} {\color{red}-1}
+%\end{pmatrix}
+          \end{array} \right)
+\,.
+\ee{jMorb1dFTodd}
+
+\emph{Even period} $\cl{}=2m+2$, \emph{even reflection} $k$ \refeq{reflSymEvens0}
+(compare with \refeq{HLreflectionSymSecondKind}):
+\beq
+\jMorb[\Xx] =
+\left(\begin{array}{cccccccc}
+%\begin{pmatrix}
+{s}_{0} & {\color{red}-2} & 0 & 0 & \cdots & 0 & 0 & {\color{red}0} \\
+-1 & {s}_{1} & -1 & 0 & \cdots & 0 & 0 & 0 \\
+0 & -1 & {s}_{2} & -1 & \cdots & 0 & 0 & 0 \\
+\vdots & \vdots & \vdots & \vdots & \ddots & \vdots & \vdots & \vdots \\
+0 & 0 & 0 & 0 & \cdots & -1 & {s}_{m} & -1 \\
+{\color{red}0} & 0 & 0 & 0 & \cdots & 0 &  {\color{red}-2} & {s}_{m+1}
+%\end{pmatrix}
+          \end{array} \right)
+\,.
+\ee{jMorb1dFTEvens0}
+
+\emph{Even period} $\cl{}=2m$, \emph{odd reflection}  $k$ \refeq{reflSymEvens1}
+(compare with \refeq{HLreflectionSymFirstKind}):
+\beq
+\jMorb[\Xx] =
+\left(\begin{array}{ccccccc}
+%\begin{pmatrix}
+ {s}_{1} {\color{red}-1}& -1 & 0 & \cdots & 0 & 0 & {\color{red}0} \\
+ -1 & {s}_{2} & -1 & \cdots & 0 & 0 & 0 \\
+ \vdots & \vdots & \vdots & \ddots & \vdots & \vdots & \vdots \\
+ 0 & 0 & 0 & \cdots & -1 & {s}_{m-1} & -1 \\
+{\color{red}0} & 0 & 0 & \cdots & 0 & -1 & {s}_{m} {\color{red}-1}
+%\end{pmatrix}
+          \end{array} \right)
+\,.
+\ee{jMorb1dFTEvens1}
+
+
+\bigskip\bigskip
+
+ {\jacobianOrb} $\jMorb$ evaluated on the {\lattstate}
+ commutes with $\Refl$,
+\beq
+\jMorb\Refl%  = \shift - s\id + \shift^{-1}
+  =
+\left(\begin{array}{ccccc}
+ {s}_0& -1 & 0 & 0 & -1 \\
+ -1 &  {s}_1& -1 & 0 &0\\
+ 0 & -1 &  {s}_2& -1 &0 \\
+ 0 & 0 & -1 & {s}_2& -1 \\
+ -1 & 0 & 0 & -1 &  {s}_1
+\end{array} \right)
+\left(
+\begin{array}{ccccc}
+ 1 & 0 & 0 & 0 & 0 \\
+ 0 & 0 & 0 & 0 & 1 \\
+ 0 & 0 & 0 & 1 & 0 \\
+ 0 & 0 & 1 & 0 & 0 \\
+ 0 & 1 & 0 & 0 & 0
+\end{array}
+\right)
+=\Refl \jMorb
+\,.
+\ee{LC21Hessian}
+
+
+\bigskip\bigskip
+
+\emph{Even period} examples:
+For even dimensions, there are two classes of reflections,
+the even ones, \reffig{fig:symmLattStates}\,$(ee)$, that leave two `yellow'
+site fields fixed, swap the rest,
+and
+the odd ones, \reffig{fig:symmLattStates}\,$(eo)$, that swap the
+`reds' and `blues'.
+This is illustrated by the \Dn{4} permutation representation of the  even
+$\Refl$, odd $\Refl_{3}$ reflection symmetries of a square,
+\reffig{fig:D3D4}\,$(e)$:
+\beq
+\Refl =
+\left(
+\begin{array}{cccc}
+ 1 & 0 & 0 & 0 \\
+ 0 & 0 & 0 & 1 \\
+ 0 & 0 & 1 & 0 \\
+ 0 & 1 & 0 & 0
+\end{array}
+\right)
+    \,,\quad
+\Refl_{3} =
+\left(
+\begin{array}{cccc}
+ 0 & 0 & 0 & 1 \\
+ 0 & 0 & 1 & 0 \\
+ 0 & 1 & 0 & 0 \\
+ 1 & 0 & 0 & 0
+\end{array}
+\right)
+\,.
+\ee{D4Refl03}
+The even reflection keeps two site fields fixed,
+\[
+\transp{(\Refl\Xx)}=(\sitebox{\ssp_{0}},\ssp_3,\sitebox{\ssp_2},\ssp_1)
+\,,
+\]
+in agreement with \refeq{reflSymEvens0}.
+while
+ the odd reflection reverses the order of site fields
+\[
+\transp{(\Refl_{3}\Xx)}=(\ssp_{3},\ssp_2|\ssp_1,\ssp_0)
+\,,
+\]
+in agreement with \refeq{reflSymEvens1},
+
+
+\bigskip\bigskip\bigskip
+
+\refeq{HLsymmCycD8s1}
+is invariant under the 1/2 lattice spacing reflection:
+\bea
+\Refl=
+\left(
+\begin{array}{ccccccccc}
+ 0 & 0 & 0 & 0 & 0 & 0 & 0 & 1 \\
+ 0 & 0 & 0 & 0 & 0 & 0 & 1 & 0 \\
+ 0 & 0 & 0 & 0 & 0 & 1 & 0 & 0 \\
+ 0 & 0 & 0 & 0 & 1 & 0 & 0 & 0 \\
+ 0 & 0 & 0 & 1 & 0 & 0 & 0 & 0 \\
+ 0 & 0 & 1 & 0 & 0 & 0 & 0 & 0 \\
+ 0 & 1 & 0 & 0 & 0 & 0 & 0 & 0 \\
+ 1 & 0 & 0 & 0 & 0 & 0 & 0 & 0 \\
+\end{array}
+\right)
+\,.
+\eea
+
+\refeq{HLsymmCycD8s0}
+the corresponding
+reflection operator leaves sites 1 and 4 invariant:
+\bea
+\Refl_1=
+\left(
+\begin{array}{ccccccccc}
+ 1 & 0 & 0 & 0 & 0 & 0 & 0 & 0 \\
+ 0 & 0 & 0 & 0 & 0 & 0 & 0 & 1 \\
+ 0 & 0 & 0 & 0 & 0 & 0 & 1 & 0 \\
+ 0 & 0 & 0 & 0 & 0 & 1 & 0 & 0 \\
+ 0 & 0 & 0 & 0 & 1 & 0 & 0 & 0 \\
+ 0 & 0 & 0 & 1 & 0 & 0 & 0 & 0 \\
+ 0 & 0 & 1 & 0 & 0 & 0 & 0 & 0 \\
+ 0 & 1 & 0 & 0 & 0 & 0 & 0 & 0 \\
+\end{array}
+\right)
+\,.
+%\label{HL-ReflD9-1}
+\eea
+
+
+Combination $\shift+\shift^{-1}$
+%in \refeq{SVWorbitJac}
+commutes with $\Refl_k$,
+and $\Refl_k$ conjugacy reverses ${\mathbb{S}}$
+\bea
+\Refl_k\jMorb\Refl_k &=&-\shift+\Refl_k{\mathbb{S}}\,\Refl_k-\shift^{-1}
+    \continue
+            &=&
+\left(\begin{array}{ccccccc} %\begin{bmatrix}
+{s}_{n-1} & -1 & 0 & 0 & \dots & 0 & -1\\
+-1 & {s}_{n-2} & -1 & 0 & \dots & 0 & 0\\
+0 & -1 & {s}_2 & -1 & \dots & 0 & 0\\
+\vdots & \vdots & \vdots & \vdots & \ddots & \vdots & \vdots\\
+0 & 0 & \dots & \dots & \dots & {s}_{2} & -1\\
+-1 & 0 & \dots & \dots & \dots & -1 & {s}_{1}
+\end{array}\right) %\end{bmatrix}
+%\label{LC21:reverOrbitJac}
+\eea
+where ${\mathbb{S}}$ is a diagonal matrix with the lattice site $k$ `stretching'
+factor ${s}_k$ in the $k$th row/column.
+
+If a period-9 orbit is invariant under the reflection operator (see
+\refeq{HL-ReflD9-1})
+\bea
+\Refl=
+\left(
+\begin{array}{ccccccccc}
+ 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 1 \\
+ 0 & 0 & 0 & 0 & 0 & 0 & 0 & 1 & 0 \\
+ 0 & 0 & 0 & 0 & 0 & 0 & 1 & 0 & 0 \\
+ 0 & 0 & 0 & 0 & 0 & 1 & 0 & 0 & 0 \\
+ 0 & 0 & 0 & 0 & 1 & 0 & 0 & 0 & 0 \\
+ 0 & 0 & 0 & 1 & 0 & 0 & 0 & 0 & 0 \\
+ 0 & 0 & 1 & 0 & 0 & 0 & 0 & 0 & 0 \\
+ 0 & 1 & 0 & 0 & 0 & 0 & 0 & 0 & 0 \\
+ 1 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 \\
+\end{array}
+\right)
+\,.
+%\label{ReflD9-0}
+\eea
+
+If a period-8 orbit is of form (see \refeq{reflSymEvens0}) %{HLsymmCycD8s0})
+\beq
+\cycle{\sitebox{\ssp_0} \ssp_1 \ssp_2 \ssp_3 \sitebox{\ssp_4} \ssp_3 \ssp_2 \ssp_1}
+\,,
+\eeq %\ee{symmCycD8s0}
+the corresponding
+reflection operator leaves sites 0 and 4 invariant  (see \refeq{HL-ReflD9-1}):
+\bea
+\Refl=
+\left(
+\begin{array}{ccccccccc}
+ 1 & 0 & 0 & 0 & 0 & 0 & 0 & 0 \\
+ 0 & 0 & 0 & 0 & 0 & 0 & 0 & 1 \\
+ 0 & 0 & 0 & 0 & 0 & 0 & 1 & 0 \\
+ 0 & 0 & 0 & 0 & 0 & 1 & 0 & 0 \\
+ 0 & 0 & 0 & 0 & 1 & 0 & 0 & 0 \\
+ 0 & 0 & 0 & 1 & 0 & 0 & 0 & 0 \\
+ 0 & 0 & 1 & 0 & 0 & 0 & 0 & 0 \\
+ 0 & 1 & 0 & 0 & 0 & 0 & 0 & 0 \\
+\end{array}
+\right)
+\,.
+%\label{ReflD9-1}
+\eea
+
+
 \begin{description}
 
     \PCpost {2021-08-23}{
