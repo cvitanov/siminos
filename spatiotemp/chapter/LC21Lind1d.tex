@@ -233,6 +233,11 @@ orbits for the ${a}=6$ {\HenonMap}.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %
 
+\paragraph{{$\phi^4$} field theory.}
+Essentially the same as the \henlatt, with $2\to3$ replacement in
+\refeq{HenonZeta}.
+
+
 \subsection{Kim-Lee-Park zeta function}
 \label{sect:KiLePa}
 
@@ -348,13 +353,13 @@ The \statesp\ \pS\ of a $\Dn{\infty}$ invariant dynamical is union of
 4 subspaces of {\lattstate}s 4 distinct symmetries
 (see \reffig{fig:symmLattStates})
 \beq
-\pS = \pS_{n} \cup \pS_{o} \cup \pS_{ee} \cup \pS_{ee}
+\pS = \pS_{a} \cup \pS_{o} \cup \pS_{ee} \cup \pS_{ee}
 \,,
 \ee{pSunion}
 where
 
 \noindent
-$\qquad \Xx\in\pS_{n}\quad\;$
+$\qquad \Xx\in\pS_{a}\quad\;$
     {\em no reflection symmetry} \refeq{reflSymNo},
                                  see \reffig{fig:1dLatStatC_5}
 \\ \qquad\qquad\qquad
@@ -364,7 +369,9 @@ orbit $p=\{\Xx, \shift\Xx, \cdots, \shift_{\cl{}-1}\Xx,
 \noindent
 $\qquad \Xx\in\pS_{o}\quad\;$
     {\em odd period, reflection-symmetric:} \refeq{reflSymOdd}
-\\
+                                            see \reffig{fig:symmLattStates}
+\\ \qquad\qquad\qquad
+orbit $p=\{\Xx, \shift\Xx, \cdots, \shift_{\cl{}-1}\Xx\}$
 
 \noindent
 $\qquad \Xx\in\pS_{ee}\quad$
@@ -372,7 +379,7 @@ $\qquad \Xx\in\pS_{ee}\quad$
 \\
 
 \noindent
-$\qquad \Xx\in\pS_{ee}\quad$
+$\qquad \Xx\in\pS_{eo}\quad$
     {\em even period, odd reflection-symmetric:} \refeq{reflSymEvens1}.
 
 
@@ -386,44 +393,82 @@ $\qquad \Xx\in\pS_{ee}\quad$
 \bigskip\bigskip
 ========================================================================
 
+Let $\pS_{a}$ be the set of pairs of asymmetric orbits
+ \refeq{reflSymNo}, each element of
+the set a forward-in-time orbit and the time-reversed orbit.
+If prime cycle $p \in \pS_{a}$ exists, it and each of its repeats counts
+as 1:
+\beq
+1/\zeta_{p}(t) =
+\exp \Big(-\sum_{r=1}^{\infty} \, \frac{1}{2\cl{p}r}t^{2\cl{p}r}\Big)
+    =
+\sqrt{1-t^{2\cl{p}}}
+\,.
+\ee{zeta_p(a)}
 
+prime {\lattstate} $p \in \pS_{o}$ exists,
+{\lattstate} invariant under the dihedral group $H_{\cl{},k}$, $\cl{p}$
+values of $k$
+\beq
+1/\zeta_{p}(t) =
+\exp \Big(-\sum_{r=1}^{\infty} \,
+                     \frac{1}{r}t^{\cl{p}r}
+      \Big) =
+\exp \Big(-\sum_{r=1}^{\infty} \,
+                     \frac{t^{\cl{p}}}{1-t^{\cl{p}}}
+      \Big)
+\,.
+\ee{zeta_p(o)}
 
+prime cycle $p \in \pS_{ee}$ exists
+\beq
+1/\zeta_{p}(t) =
+\exp \Big(-\sum_{m=1}^{\infty} \left\{
+       N_{2m-1, 0}\,t^{2m-1}
+       + \left(N_{2m,0}+N_{2m,1}\right)\,\frac{ t^{2m}}{2}
+                               \right\}\Big)
+\,.
+\ee{zeta_p(ee)}
 
+prime cycle $p \in \pS_{eo}$ exists
+\beq
+1/\zeta_{p}(t) =
+\exp \Big(-\sum_{m=1}^{\infty} \left\{
+       N_{2m-1, 0}\,t^{2m-1}
+       + \left(N_{2m,0}+N_{2m,1}\right)\,\frac{ t^{2m}}{2}
+                               \right\}\Big)
+\,.
+\ee{zeta_p(eo)}
 
 
 
 Let $O_1$ be the collection of finite orbits with time
-reversal (flip) symmetry, and $\pS_{n}$ be the collection of the pairs of
+reversal (flip) symmetry, and $\pS_{a}$ be the collection of the pairs of
 orbits without time reversal symmetry, each an orbit and the flipped
 orbit. A finite \orbit\ $p$ is a periodic points set
 \[
 p = \{\ssp, \map(\ssp), \dots, \map^{\cl{p}-1}(\ssp)\}
 \]
-if $p \in O_1$, and
+if $p \in \pS_{s}$, and
 \[
 p = \{\ssp, \map(\ssp), \dots, \map^{k-1}(\ssp)\} \cup
 \{\Refl(\ssp), \map\circ\Refl(\ssp), \dots, \map^{k-1}\circ\Refl(\ssp)\}
 \]
-if $p \in \pS_{n}$, where $k=\cl{p}/2$.
+if $p \in \pS_{a}$, where $k=\cl{p}/2$.
 
-If $p \in O_1$,
+If $p \in \pS_{s}$,
 \beq
 \zeta_{p}(t) =
 \sqrt{\frac{1}{1-t^{2\cl{p}}}}\exp\left(\frac{t^{\cl{p}}}{1-t^{\cl{p}}}\right)
 \,,
 \ee{ZetaO1}
-and if $p \in \pS_{n}$,
-\beq
-\zeta_{p}(t) =
-\frac{1}{1-t^{\cl{p}}}
-\,.
-\ee{ZetaO2}
+
 The product form of the zeta function is:
 \beq
-1/\zeta_{\mbox{\footnotesize AM}}(t) =
-\sqrt{\prod_{p_1\in {O_1}}(1-t^{2\cl{p_1}})}
+1/\zeta_{\mbox{\footnotesize KLP}}(t) =
+\prod_{p_1\in {O_1}}\sqrt{1-t^{2\cl{p_1}}}
       \;\exp\left(-\frac{t^{\cl{p_1}}}{1-t^{\cl{p_1}}}\right)
-\prod_{p_2\in \pS_{n}} (1-t^{\cl{p_2}})
+\prod_{p_2\in \pS_{a}} (1-t^{\cl{p_2}})
 \,.
 \ee{ZetaProd}
 
@@ -504,68 +549,6 @@ Lattice states and {prime} orbit counts for the ${s}=3$ cat map
 \subsection{Counting \templatt\ {\lattstate}s}
 \label{sect:LC21catCounts}    % derived from blogCats.tex {sect:PeriodicPsCount}
 
-The
-numbers of {periodic points} and \emph{prime} cycles $M_n$ (given by
-\refeq{primeCount}) are tabulated in \reftab{tab:catMapN_n-s=3}.
-
-\refeq{AABHM99-46b}, \refeq{catlattMass} introduce ${\mu}$.
-See also \refeq{3diagCircEigs}, \refeq{3diagCircEigs1},
-\refeq{HL:detTemCatCheb}, \refeq{GraRyz1.395.2}, \refeq{HLhalfHalf},
-
-
-For $s>2$ the stability multipliers
-\(
-(\ExpaEig^{+},\ExpaEig^{-})
-\,=\,(\ExpaEig\,,\; \ExpaEig^{-1})
-\)
-are real,
-\beq
-\ExpaEig^{\pm}=\frac{1}{2}(s\pm \surd{D})
-\,,\qquad
-\ExpaEig=e^{\Lyap}
-\,,
-\ee{LC21catEigs}
-where
-\bea
-s&=&\ExpaEig+\ExpaEig^{-1}
-  =  2\cosh(\Lyap)
-    \continue
-s-2 &=&{\mu}^2
-    \continue
-\surd{D}&=&\ExpaEig-\ExpaEig^{-1}
-  =  2\sinh(\Lyap)
-    \continue
-\mbox{discriminant }
-{D}  &=& {s}^{2}-4
-      =  {\mu}^2({\mu}^2+4)
-\label{LC21catEigs1}
-\eea
-
-The sine, sinh, cos, cosh are related by the identities
-\refeq{GraRyzSect1.30sin} and \refeq{GraRyzSect1.30cos}.
-%    \item[2021-03-10 Predrag]
-For \Dn{\cl{}} irreps, I think we should use the \refeq{tildejMorbDisg} form
-of eigenvalues, and Klein-Gordon mass $\mu$
-\bea
-\lambda_m &=& {\mu}^2+ 4 \sin^2\left(\alpha_m/2\right)
-\continue
-   &=& \left({\mu} - i\,2\sin\left(\frac{\alpha_m}{2}\right)\right)
-   \,  \left({\mu} + i\,2\sin\left(\frac{\alpha_m}{2}\right)\right)
-\continue
-%\,,\quad
-\alpha_m &=& 2\pi{m}/{\cl{}}
-\,,
-\label{LC21tildejMorbDisg1}
-\eea
-rather than \refeq{HLEigenvalueD62} and stretching $s$, which is
-appropriate to \Cn{\cl{}} irreps. Identities like \refeq{IvIzHu02:GraRyz},
-\refeq{IvIzHu02:HL},
-\refeq{Zab00} and {Gradshteyn and Ryzhik}\rf{GraRyz} Eq.~1.317.1
-\CBlibrary{GraRyz}
-\beq
-2\sin^2\left(\theta/2\right)= 1-\cos\left(\theta\right)
-\ee{LC21GraRyz1.317.1}
-are also suggestive in this context.
 
 %    \item[2021-08-26 Han]
 How to count the number of {\lattstate}s for \templatt?
@@ -803,77 +786,3 @@ Do cite in our paper(s).
 MacKay had these numbers already
 listed in Table 1.2.3.5.1 of his 1982 PhD thesis\rf{Bmack93}.
     }
-
-We use the temporal 1D lattice for
-systems with time-reversal symmetry to explain how such zeta functions
-are constructed.
-
-A {\tzeta} is the generating function of all distinct orbits \refeq{GroupOrbDisc}
-for a given system.
-
-We shall refer to $\Group$-orbit \refeq{GroupOrbDisc} counting generating
-function for a symmetry group $\Group$ as the topological $\Group$-zeta
-function, or the Lind zeta function\rf{Lind96}. The classic example is
-\refeq{AMzeta}, the {\em Artin-Mazur} zeta
-func\-tion\rf{ArtMaz65,CBcount} for the \emph{infinite cyclic group}
-\Cn{\infty} of all integer time translations. Here we focus on the
-\emph{infinite dihedral group} topological $\Dn{\infty}$-zeta function
-(Kim-Lee-Park\rf{KiLePa03} flip-zeta function).
-
-The \emph{infinite dihedral group} $\Dn{\infty}$ \refeq{D_infty}
-
-
-
-
-the {\em trace formula for maps}:
-\index{trace!formula!maps}
-%  This formula yields the spectrum of $\Lop$ as
-% the poles of $\tr z\Lop /( 1 - z\Lop)$.
-% The relation
-\PC{} {box this relation}
-\index{generating!function}
-\beq
-%\sum_{\alpha=0}^\infty {z e^{\eigenvL_\alpha} \over 1 - z e^{\eigenvL_\alpha} }
-%   =
-    \sum_p \cl{p} \sum_{r=1}^\infty
-    \frac{ z^{\cl{p} r}} %\, e^{r \beta \Obser_p}
-    {\oneMinJ{r}}
-\,.
-\ee{tr-L-s}
-
-the trace formula \refeq{tr-L-s} can be recovered
-from the \Fd\ by taking a derivative
-\beq
-    %\tr {z\Lop \over 1- z\Lop} =
-    -z \frac{d~}{dz}
-          \ln \det(1 - z\Lop)
-    \,.
-\ee{der-det-map}
-
-
-
-
-For every integer temporal period
-$\cl{}$, we first determine $N_\cl{}$, the number of all periodic
-\emph{{\lattstate}} ${\Xx}_{\Mm}$ solutions on a tile of length
-$\cl{}$.
-
-
-Due to
-the time invariance of the defining equations, there are $\cl{p}$
-physically equivalent copies of a given solution in the orbit of
-every $\Xx_p$. So all we really have to do is to enumerate $M_\cl{}$
-{\em orbits} of the time-invariance equivalent \po\ solutions,
-whose generating function is the {\tzeta}.
-
-\bigskip\bigskip
-
-That {\HillDet} factors as
-\(
-\Det\jMorb  = \Det\jMorb_{-}\,\Det\jMorb_{+}
-\)
-for all symmetric states must propagate into the factorization of the
-{\dzeta}, mirroring the Kim \etal\rf{KiLePa03} topological (counting)
-Lind eta function \refeq{Ryu17eq:2.1}.
-
-multiplicity $m_\Xx$ of orbit $\pS_\Xx$ \refeq{GroupOrbMult}
