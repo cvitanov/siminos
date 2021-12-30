@@ -15,7 +15,7 @@ forget about `time' for time being, and think instead like a
 crystallographer, about lattices and the space groups that describe their
 symmetries.
 
-Of necessity, there many group-theoretic notions a crystallographer must
+Of necessity, there are many group-theoretic notions a crystallographer must
 juggle (see \toChaosBook{section.11.2}{sect.~11.2}), but only a few key
 things to understand.
 For a 1\dmn\ lattice, there are only two kinds of qualitatively different
@@ -99,8 +99,8 @@ in crystallography called the translation group.
 
 The other half of elements are reflections $\Refl_{k}^2=1$
 (`inversions', `time reversals', `flips'), defined by first translating
-by $k$ steps, and then reflecting, resulting in a `translate-reflect'
-operation
+by $k$ steps, and then reflecting over the 0th lattice point, 
+resulting in a `translate-reflect' operation
 \beq
 \Refl_{k}=\Refl\shift_k
 \,.
@@ -258,15 +258,15 @@ m\in\integers
 \label{DinftyClassRefl}
 \eea
 By \refeq{D_nConj} $r H_{\cl{},k} r^{-1} = H_{\cl{},k-2}$, so for odd
-\cl{}, there are $\cl{}$ Bravais sublattices in the class, and
-for even \cl{}, $H_{\cl{},k}$ separate into 2 classes
-\refeq{DinftyClassRefl},
+\cl{}, all subgroup $H_{\cl{},k}$ are conjugate subgroups,
+%there are $\cl{}$ Bravais sublattices in the class, 
+and for even \cl{}, $H_{\cl{},k}$ separate into 2 sets of conjugate subgroups,
 \bea
 \mbox{even}
     &&\quad
 \{H_{2m,2j}\}
 \,,\qquad
-0\leq j<\cl{}/2
+0\leq j<m
     \continue
 \mbox{odd}
     &&\quad
@@ -274,7 +274,7 @@ for even \cl{}, $H_{\cl{},k}$ separate into 2 classes
 \,,
 \label{H(n,k)class}
 \eea
-each containing  $m$ Bravais sublattices.
+each containing $m$ subgroups.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{Reflections}
@@ -413,10 +413,10 @@ notion that ``rotations are rotations, and translations are
 translations.''
 Translated into a more familiar language,
 conjugation \refeq{conjugate} is central
-to all of physics: a `law' $f(\Xx)$ is invariant if it
+to all of physics: a `law' $F(\Xx)$ is invariant if it
 retains its form in all symmetry related coordinate frames,
 \beq
-f(\Xx)  =  \LieEl^{-1} f(\LieEl\,\Xx)
+F(\Xx)  =  \LieEl^{-1} F(\LieEl\,\Xx)
 \,,
 \label{dscr:L-inv}
 \eeq
@@ -425,12 +425,11 @@ element $\LieEl\in \Group$.
 If this holds, we say that $\Group$ is the \emph{symmetry} of the system.
 
 For example, the `temporal Bernoulli' defining equation
-\refeq{1stepDiffEq}  retains its form under conjugation by any
+\refeq{tempBern}  retains its form under conjugation by any
 $\Cn{\infty}$  translation \refeq{C_infty},
 \beq
-\shift_i({s}\ssp_{\zeit} - \ssp_{\zeit+1})\shift_i^{-1}
-= ({s}\ssp_{\zeit+i} - \ssp_{\zeit+i+1})\shift_i^{-1}
-= {s}\ssp_{\zeit} - \ssp_{\zeit+1}
+\shift_i({s} 1 - \shift_1)\shift_i^{-1} \Xx
+= ({s} 1 - \shift_1) \Xx
 \,,
 \ee{invBern}
 while the Euler–Lagrange second-order difference equations
@@ -446,11 +445,14 @@ under any  $\Dn{\infty}$ reflection,
     }
 \beq
 \Refl_i(
-  -\ssp_{\zeit+1} + \,{g}\,V'(\ssp_{\zeit})-\ssp_{\zeit-1}
-         )\Refl_i^{-1}
-= -\ssp_{-\zeit+1} + \,{g}\,V'(\ssp_{-\zeit}) -\ssp_{-\zeit-1}
-\,.
+  -\shift_1 + \,{g}\,V' - \shift_{-1}
+         )\Refl_i^{-1} \Xx
+=(
+  -\shift_1 + \,{g}\,V' - \shift_{-1}
+         )\Xx
+\,,
 \ee{invPhi4}
+where $V'$ is not a linear operator but $V'(\Xx)_\zeit$ only depends on $\phi_\zeit$.
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
