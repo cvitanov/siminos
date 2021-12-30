@@ -8,29 +8,29 @@
 \section{Lind zeta function}
 \label{sect:LC21Lind1d}
 
-% clipped from Sterling\rf{SterlingThesis99}
-\Poincare\rf{poincare} was the first to  recognize the importance of
-recurrent phenomena in understanding ergodic dynamical behavior. The
-problem of counting periodic orbits is among the first problems that one
-needs to address%
+\Poincare\rf{poincare} was the first to  recognize the fundamental role
+{\po}s play in shaping ergodic dynamics. The first problem that one then
+needs to address is the problem of counting {\po}s%
 \rf{ArtMaz65,ChAnPi85,brucks,Lutzky88,Lutzky93,BLMS91,XH94,
 CheLou97,BriPer05,CBcount}, starting with 1950's
 \HREF{https://en.wikipedia.org/wiki/Pekka_Myrberg} {Myrberg}
-investigations if {\po}s of quadratic maps, in what was arguably the
+investigations of {\po}s of quadratic maps, in what was arguably the
 first application of computers to
 dynamics\rf{Myrberg58a,Myrberg58b,Myrberg59,Myrberg62,Myrberg63}.
+Such orbit counts are most elegantly encoded by \emph{topological zeta
+functions}.
 
 For a discrete time dynamical system
 \(
 \ssp_{\zeit+1}=\flow{}{\ssp_{\zeit}}
 \,,\)
 period-$\cl{}$ solutions (in present context, the period-$\cl{}$ Bravais
-cell {\lattstate}s) are fixed points of the $\cl{}$th iterate map
+cell {\lattstate}s) are \emph{fixed point}s of the $\cl{}$th iterate map
 $\map^\cl{}$.
-The symmetry of a time-invariant dynamical `law' $\map$ is
+While the symmetry of a time-invariant dynamical `law' $\map$ is
 the {infinite cyclic group} \Cn{\infty},
-the group of all temporal lattice translations. For a period-$\cl{}$
-solution, the symmetry is its translation subgroup $H_{\cl{}}$.
+the group of all temporal lattice translations, for a period-$\cl{}$
+solution the symmetry is $\cl{}$-steps translation subgroup $H_{\cl{}}$.
 
 This observation motivates definition of a general group-theoretic
 \emph{fixed-points counting} generating  function that relates the number
@@ -118,11 +118,12 @@ logarithmic derivative (see
             \,z\frac{d}{dz} \zeta_{\mbox{\footnotesize AM}}
 \,.
 \ee{zetatop-N}
+Let us evaluate $\zeta_{\mbox{\footnotesize AM}}$ for scalar lattice
+field theories studied here.
 
 \paragraph{Bernoulli.}
-For example, for a Bernoulli system we know how to
-count the numbers of {\lattstate}s,
-eq.~\refeq{noPerPtsBm}, so
+The number of Bernoulli system period-\cl{} {\lattstate}s is given in
+\refeq{noPerPtsBm}, so
 \bea
 \zetatop(z)
  =  \exp \left(-\sum_{\cl{}=1}^\infty
@@ -139,15 +140,14 @@ fixed points $\{\ssp_0,\ssp_1,\cdots,\ssp_{s-1}\}$, and every other
 {\lattstate} is built from their concatenations and repeats. The
 denominator $(1 - z)$ compensates for the single overcounted
 {\lattstate}, the fixed point $\ssp_{{s}-1}=\ssp_{0}$ $(\mbox{mod}\;1)$
-of \reffig{fig:BernPart} and its repeats. For non-integer values of the
-stretching factor ${s}=\beta$, the map \refeq{n-tuplingMap} is called the
+of \reffig{fig:BernPart} and its repeats. If the stretching factor
+${s}=\beta$ is not an integer, the map \refeq{n-tuplingMap} is called the
 `$\beta$-transformation'. For its Artin-Mazur zeta function see
 \refref{FlLaPo94}.
 
 \paragraph{\tempLatt.}
-We know how to count \templatt\ {\lattstate}s as well.
-Substituting the numbers of {\lattstate}s $N_{\cl{}}$
-\refeq{1stepDiffSolu} into the Artin-Mazur zeta \refeq{AMzeta},
+The number of \templatt\ period-\cl{} {\lattstate}s is given in
+\refeq{1stepDiffSolu} into the Artin-Mazur zeta \refeq{AMzeta}, so
 Isola\rf{Isola90} obtains
 \bea
 \zetatop(z)
@@ -162,7 +162,7 @@ Isola\rf{Isola90} obtains
 \eea
 Conversely, given the \tzeta, the generating function for the number of
 temporal {\lattstate}s of period $\cl{}$ is given by the logarithmic
-derivative of the {\tzeta} \refeq{zetatop-N},
+derivative \refeq{zetatop-N},
 \bea
 \sum_{{n}=0}^\infty N_{n} z^{n}
     & = & \frac{2-{s}z}{1 - s z + z^2}-\frac{2}{1 - z}
@@ -189,12 +189,12 @@ T_k(x)  &=&  2x T_{k-1}(x) - T_{k-2}(x)
 \eea
 
 \paragraph{\Henlatt.}
-The problem of counting orbits for the {\HenonMap} was addressed in 1979
+The problem of counting orbits for the {\HenonMap} was addressed
+already in 1979
 pioneering work by Sim{\'o}\rf{Simo79}.
-For the complete horseshoe ${a}=6$ {\HenonMap} repeller
+For the complete horseshoe, ${a}=6$ {\HenonMap} repeller
 there are $2^\cl{}$
-period-$\cl{}$ {\lattstate}s, giving
-the Artin-Mazur zeta
+period-$\cl{}$ {\lattstate}s, so
 \bea
 \zetatop(z)
  =  \exp \left(-\sum_{\cl{}=1}^\infty
@@ -205,7 +205,7 @@ the Artin-Mazur zeta
 \,.
 \label{HenonZeta}
 \eea
-The numbers of the short periods {\lattstate}s and prime orbits are
+The numbers of the shortest period {\lattstate}s and prime orbits are
 listed in \reftab{tab:LC21HamHenon}.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -236,6 +236,11 @@ orbits for the ${a}=6$ {\HenonMap}.
 \subsection{Kim-Lee-Park zeta function}
 \label{sect:KiLePa}
 
+There is a problem with the \templatt\ Artin-Mazur zeta
+\refeq{Isola90-13}: it counts pairs of orbits related by time reversal as
+distinct orbits, but the \templatt\ Euler–\-Lagrange equation
+\refeq{catMapNewt} is manifestly time-reversal invariant, so
+time-reversal pairs are physically equivalent.
 If the symmetry group $\Group$ is not the maximal symmetry, Lind zeta
 function erroneously counts some of the symmetry-related {\lattstate}s as
 belonging to separate `prime orbits', a problem that repeatedly bedevils
@@ -318,27 +323,77 @@ h(t) = \sum_{m=1}^{\infty} \left\{
 \label{sect:KiLePaEuler}
 
 In 1966 Ihara\rf{Ihara66} defined the zeta function of an undirected
-graph $\Gamma$ using Euler's product form definition of a zeta function,
+graph $\Gamma$ by analogy to Euler's product form of a zeta function,
 \beq
-\zeta_{\mbox{\footnotesize Ihara}}(\Gamma,z) =
+\zeta_{\mbox{\footnotesize Ihara}}(z)_\Gamma =
         \prod_{[C]}\frac{1}{1-z^{|C|}}
 \,,
 \ee{Sato05Zeta}
-where the product is over all equivalence classes of primitive closed
-loops $C$, and $|C|$ denotes the length of $C$.
-
-Ihara zeta functions are graph-theoretical objects%
+where the product is over all equivalence classes of prime (non-self
+retracing) loops $C$ of $\Gamma$, and $|C|$ denotes the length of $C$.
+Ihara zeta functions%
 \rf{Ihara66,Bass92,Pollicott01,Sato05,GuIsLa08,Terras10,RAEWH10,
-Clair14,ZhXiHe15,Deitmar15,daCosta16,Saito18},
-``graph-theoretic analogues of discrete Laplacians''\rf{Sunada13}
-defined here in \refeq{LC21:Lap}, but they do not seem related to
-the time-reversal Kim-Lee-Park\rf{KiLePa03} zeta function
+Clair14,ZhXiHe15,Deitmar15,daCosta16,Saito18}
+are ``graph-theoretic analogues of discrete Laplacians''\rf{Sunada13}
+defined here in \refeq{LC21:Lap}. Even though
+``undirected" refers to no preferential
+time direction, they do not appear related to
+the time-reversal, group-theoretic Kim-Lee-Park zeta function
 \refeq{KLPzetaFact} derived above.
 
 Still,  the idea that zeta function
 $\zeta_{\mbox{\footnotesize KLP}}(t)$ can be written as a product over
-prime {\orbit}s holds. Let $O_1$ be the collection of finite orbits with time
-reversal (flip) symmetry, and $O_2$ be the collection of the pairs of
+prime {\orbit}s holds.
+The \statesp\ \pS\ of a $\Dn{\infty}$ invariant dynamical is union of
+4 subspaces of {\lattstate}s 4 distinct symmetries
+(see \reffig{fig:symmLattStates})
+\beq
+\pS = \pS_{n} \cup \pS_{o} \cup \pS_{ee} \cup \pS_{ee}
+\,,
+\ee{pSunion}
+where
+
+\noindent
+$\qquad \Xx\in\pS_{n}\quad\;$
+    {\em no reflection symmetry} \refeq{reflSymNo},
+                                 see \reffig{fig:1dLatStatC_5}
+\\ \qquad\qquad\qquad
+orbit $p=\{\Xx, \shift\Xx, \cdots, \shift_{\cl{}-1}\Xx,
+       \Refl\Xx, \Refl_1\Xx, \cdots, \Refl_{\cl{}-1}\Xx\}$
+
+\noindent
+$\qquad \Xx\in\pS_{o}\quad\;$
+    {\em odd period, reflection-symmetric:} \refeq{reflSymOdd}
+\\
+
+\noindent
+$\qquad \Xx\in\pS_{ee}\quad$
+    {\em even period, even reflection-symmetric:} \refeq{reflSymEvens0}
+\\
+
+\noindent
+$\qquad \Xx\in\pS_{ee}\quad$
+    {\em even period, odd reflection-symmetric:} \refeq{reflSymEvens1}.
+
+
+
+
+
+
+
+
+
+\bigskip\bigskip
+========================================================================
+
+
+
+
+
+
+
+Let $O_1$ be the collection of finite orbits with time
+reversal (flip) symmetry, and $\pS_{n}$ be the collection of the pairs of
 orbits without time reversal symmetry, each an orbit and the flipped
 orbit. A finite \orbit\ $p$ is a periodic points set
 \[
@@ -349,7 +404,7 @@ if $p \in O_1$, and
 p = \{\ssp, \map(\ssp), \dots, \map^{k-1}(\ssp)\} \cup
 \{\Refl(\ssp), \map\circ\Refl(\ssp), \dots, \map^{k-1}\circ\Refl(\ssp)\}
 \]
-if $p \in O_2$, where $k=\cl{p}/2$.
+if $p \in \pS_{n}$, where $k=\cl{p}/2$.
 
 If $p \in O_1$,
 \beq
@@ -357,7 +412,7 @@ If $p \in O_1$,
 \sqrt{\frac{1}{1-t^{2\cl{p}}}}\exp\left(\frac{t^{\cl{p}}}{1-t^{\cl{p}}}\right)
 \,,
 \ee{ZetaO1}
-and if $p \in O_2$,
+and if $p \in \pS_{n}$,
 \beq
 \zeta_{p}(t) =
 \frac{1}{1-t^{\cl{p}}}
@@ -368,7 +423,7 @@ The product form of the zeta function is:
 1/\zeta_{\mbox{\footnotesize AM}}(t) =
 \sqrt{\prod_{p_1\in {O_1}}(1-t^{2\cl{p_1}})}
       \;\exp\left(-\frac{t^{\cl{p_1}}}{1-t^{\cl{p_1}}}\right)
-\prod_{p_2\in O_2} (1-t^{\cl{p_2}})
+\prod_{p_2\in \pS_{n}} (1-t^{\cl{p_2}})
 \,.
 \ee{ZetaProd}
 
