@@ -568,7 +568,8 @@ the orbit invariant, as the \emph{symmetry}
 $\Group_\Xx$ of the orbit $\pS_\Xx$,
 \beq
 \Group_\Xx =
-   \{ \LieEl \in \Group_\Xx \mid \LieEl \Xx \in \pS_\Xx
+   \{ \LieEl \in \Group_\Xx \mid \LieEl \Xx = \Xx
+   %\in \pS_\Xx
    %,\,    \LieEl \ssp \neq \ssp  \mbox{ for } \LieEl \neq e
    \}
 \,.
@@ -861,7 +862,7 @@ of \reffig{fig:symmLattStates}\,$(o)$.
         \sitebox{\ssp_{m+1}} \ssp_{m} \cdots \ssp_2 \ssp_1}
 \label{reflSymEvens0} \\
     &&
-\mbox{ multiplicity } m_\Xx=\cl{}/2
+\mbox{ multiplicity } m_\Xx=\cl{}
     \nnu %\,,
 \eea
 {\lattstate} invariant under the dihedral group $H_{\cl{},k}$,
@@ -875,7 +876,7 @@ of \reffig{fig:symmLattStates}\,$(ee)$.
 \cycle{\ssp_1 \ssp_2 \ssp_3 \cdots \ssp_{m}| \ssp_{m}\cdots \ssp_2 \ssp_1|}
 \label{reflSymEvens1} \\
     &&
-\mbox{ multiplicity } m_\Xx=\cl{}/2
+\mbox{ multiplicity } m_\Xx=\cl{}
     \nnu %\,,
 \eea
 {\lattstate} invariant under the dihedral group $H_{\cl{},k}$,
@@ -1103,7 +1104,7 @@ rows modified by the \bcs,
 \eea
 with a 3\dmn\ {\jacobianOrb} \refeq{jMorb1dFT}
 \bea
-\jMorb_+ &=&
+\jMorb_o &=&
 \left(\begin{array}{ccc}
 {s}_0 & -2 & 0 \\
  -1 & {s}_1 & -1 \\
@@ -1229,3 +1230,92 @@ is 0, the arguments of the components
 in the $k=2$ and $k=3$ subspaces are $0\leq\arg(\cssp_{2})<2\pi/3{}$ and
 $0\leq\arg(\cssp_{3})<\pi$. Each orbit is guaranteed to visit this fundamental
 domain exactly once.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Symmetry reduced {\jacobianOrbs} of the prime {\lattstate}}
+\label{sect:SymmReducedJacobian}
+As shown in \refeq{OrbJacobianD5}, the {\jacobianOrb} in the linear space of the prime
+{\lattstate} with time reversal symmetry has a different form compare to the {\jacobianOrb}
+ that acts on a Bravais {\lattstate}. It only acts on `half' of the Bravais cell and the 
+cyclic translational symmetry is broken.
+
+As an example, consider periodic {\lattstate}s of the {\tempLatt}. If a {\lattstate} has 
+time-reflection symmetry $(o)$ defined by \refeq{reflSymOdd}, the prime {\lattstate}
+is a $m+1$-\dmn\ vector:
+\beq
+\transp{\tilde{\Xx}} = (\ssp_0,\ssp_1,\ssp_2,\ssp_3,\cdots,\ssp_{m}) \,.
+\ee{primeLattStato}
+And the $[(m+1)\times(m+1)]$ symmetry reduced {\jacobianOrb} is:
+\bea
+{\jMorb_o}
+  =
+\left(\begin{array}{cccccc}
+ s& -2 & 0 & \dots &0& 0 \\
+ -1 &  s& -1 & \dots &0&0 \\
+0 & -1 &  s & \dots &0 & 0 \\
+\vdots & \vdots & \vdots & \ddots &\vdots &\vdots\\
+0 & 0 & \dots  &\dots  & s & -1 \\
+0 & 0 & \dots  &\dots& -1 &  s-1
+\end{array} \right)
+\,.
+\label{OrbJacobianO}
+\eea
+If {\lattstate}s have symmetries defined by \refeq{reflSymEvens0} or \refeq{reflSymEvens1},
+the symmetry reduced {\jacobianOrb}s are $[(m+1)\times(m+1)]$ matrix:
+\bea
+{\jMorb_{ee}}
+  =
+\left(\begin{array}{cccccc}
+ s& -2 & 0 & \dots &0& 0 \\
+ -1 &  s& -1 & \dots &0&0 \\
+0 & -1 &  s & \dots &0 & 0 \\
+\vdots & \vdots & \vdots & \ddots &\vdots &\vdots\\
+0 & 0 & \dots  &\dots  & s & -1 \\
+0 & 0 & \dots  &\dots& -2 &  s
+\end{array} \right)
+\,,
+\label{OrbJacobianEE}
+\eea
+or $[m\times m]$ matrix:
+\bea
+{\jMorb_{eo}}
+  =
+\left(\begin{array}{cccccc}
+ s-1& -1 & 0 & \dots &0& 0 \\
+ -1 &  s& -1 & \dots &0&0 \\
+0 & -1 &  s & \dots &0 & 0 \\
+\vdots & \vdots & \vdots & \ddots &\vdots &\vdots\\
+0 & 0 & \dots  &\dots  & s & -1 \\
+0 & 0 & \dots  &\dots& -1 &  s-1
+\end{array} \right)
+\,.
+\label{OrbJacobianEO}
+\eea
+The determinants of these symmetry reduced {\jacobianOrb}s are the stabilities of the
+lattice states in the time-reflection symmetric subspace. Using the fundamental fact,
+one can compute the number of time-reversal invariant lattice states of {\tempLatt}.
+
+Note that even though the symmetry reduced {\jacobianOrb}s are not circulant matrices, 
+they share eigenvalues with circulant {\jacobianOrb}s \refeq{Hessian}, because the 
+eigenvectors of the circulant {\jacobianOrb}s are Fourier modes and can be written as
+symmetric and anti-symmetric vectors. The determinants of the symmetry reduced 
+{\jacobianOrb}s are:
+\bea
+\Det{\jMorb_o} &=& 
+\prod_{j=0}^{(\cl{}-1)/2} \left(s-2\cos\frac{2\pi j}{\cl{}}\right)
+=\sqrt{\left(s-2\right)\Det\jMorb} \,,
+\continue
+\Det{\jMorb_{ee}} &=& 
+\prod_{j=0}^{(\cl{}-2)/2} \left(s-2\cos\frac{2\pi j}{\cl{}}\right)
+=\sqrt{\left(s-2\right)\left(s+2\right)\Det\jMorb} \,,
+\continue
+\Det{\jMorb_{ee}} &=& 
+\prod_{j=0}^{\cl{}/2} \left(s-2\cos\frac{2\pi j}{\cl{}}\right)
+=\sqrt{\frac{\left(s-2\right)}{\left(s+2\right)}\Det\jMorb}
+\,,
+\label{HillDetSymmReduced}
+\eea
+where $\Det\jMorb$ is can be written as \refeq{1stepDiffSolu}.
+$\Det\jMorb$, $\Det\jMorb_{o}$, $\Det\jMorb_{ee}$ and $\Det\jMorb_{eo}$
+count numbers of periodic lattice states that satisfy the symmetries defined by
+\refeqs{reflSymNo}{reflSymEvens1} respectively.
