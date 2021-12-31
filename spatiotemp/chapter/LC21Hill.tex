@@ -483,79 +483,17 @@ Compare the trace \refeq{ForwardInTimeTrRecurrence} and
 \section{\HillDet s}
 \label{s:HillDet}
 
-\HL{2021-12-16}{The rest of this section is from the old version.
-        }
-
 Our task is to compute the {\HillDet} $|\Det\jMorb|$. We first show how
 to do that directly, by computing the volume of the {\fundPip}.
-
-\subsection{{\HillDet}: fundamental parallelepiped evaluation}
-\label{s:LC21fundFacteval}
-% 2020-02-16 Predrag computed  using siminos/mathematica/Tensors.nb
-As a concrete example
-consider the Bravais lattice % \refeq{1DBravLatt}
-with basis
-vector
-
-The {\em \jacobianOrb} is the $\delta/\delta\ssp_k$ derivative of the
-{\henlatt} 3-term recurrence relation \refeq{jMorb1dFT}
-\bea
-\jMorb_p &=& - \shift + 2\,{\mathbb{X}}_p - \shift^{-1}
-\,,
-\label{Henlatt-orbitJac}
-\eea
-where ${\mathbb{X}}_p$ is a diagonal matrix with $p$-{\lattstate} $\ssp_k$ in the
-$k$th row/column, and the `$1$'s in the upper right and lower left corners
-enforce the periodic boundary conditions.
-
-The action of the \henlatt\ {\jacobianOrb} can be hard to visualize,
-as a period-2 {\lattstate} is a 2-torus,
-period-3 {\lattstate} a 3-torus, \etc. Still, the {\fundPip} for the period-2
-and period-3 {\lattstate}s, should suffice to
-convey the idea. The {\fundPip} basis vectors \refeq{lattJac} are the
-columns of $\jMorb$. The $[2\!\times\!2]$ {\jacobianOrb}
-and its {\HillDet} follow from \refeq{Henlatt-2-cycle}
-\beq
-\jMorb =
- \left(\begin{array}{cc}
-2\,\ssp_0   & -2 \\
-         -2 & 2\,\ssp_1
- \end{array} \right)
-\,,\quad
-\Det\jMorb = 4\,(\ssp_0\ssp_1-1)
-           = -4\,(a-3)
-\,.
-\ee{Henlatt-catFundPar2}
-% $( 1+ \sqrt{a-3} )( 1- \sqrt{a-3} )-1 = -a+3$
-The resulting {\fundPip} shown in \reffig{fig:Henlatt-catCycJacob}\,(a).
-Period-3
-{\lattstate}s for $s=3$ are contained in the half-open {\fundPip} of
-\reffig{fig:Henlatt-catCycJacob}\,(b),
-defined by the columns of $[3\!\times\!3]$
-{\jacobianOrb}
-\beq
-\jMorb =
-\left(
-\begin{array}{ccc}
-2\,\ssp_0 &-1           &-1 \\
-         -1 & 2\,\ssp_1 &-1 \\
-         -1 &-1           & 2\,\ssp_2
-\end{array}
-\right)
-\,,
-\qquad
-\Det \jMorb
-    = 8\,\ssp_0\ssp_1\ssp_2-2\,(\ssp_0+\ssp_2+\ssp_3)+2
-\,,
-\label{Henlatt-catFundPar3}
-\eeq
 
 \subsection{Fundamental fact} %{Integer lattices}
 \label{sect:fundFact}
 
+As a concrete example, consider {temporal Bernoulli} and
+{\templatt}. 
 The {\jacobianOrb} \jMorb\ stretches the \statesp\ unit hyper-cube
 $\Xx\in[0,1)^\cl{}$ into the \cl{}\dmn\ {\em \fundPip}, and maps each
-periodic point ${\Xx}_{\Mm}$ into an integer lattice $\integers^\cl{}$
+periodic {\lattstate} ${\Xx}_{\Mm}$ into an integer lattice $\integers^\cl{}$
 site, which is then translated by the winding numbers $\Mm$ into the
 origin, in order to satisfy the fixed point condition
 \refeq{tempFixPoint}. Hence $N_\cl{}$, the total number of the solutions
@@ -567,7 +505,7 @@ N_\cl{} = |\Det\jMorb|
 \,,
 \ee{fundFact}
 \ie, fact that the number of integer points in the {\fundPip} is equal to
-its volume, or, what we refer to as the `{\HillDet}' below. In two
+its volume, or, what we refer to as the {\HillDet}. In two
 dimensions this formula is known since 1899 as
 \HREF{https://en.wikipedia.org/wiki/Pick\%27s_theorem} {Pick's theorem},
 in higher dimensions it was given by Nielsen\rf{Nielsen1920,BBPT75} in
@@ -610,8 +548,8 @@ corresponding fraction of the unit hypercube volume.
 \end{figure}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %
-The action of {\jacobianOrb}
-$\jMorb$ for the period-2 {\lattstate}s (periodic points) of the Bernoulli map of
+The action of the {\jacobianOrb}
+$\jMorb$ for period-2 {\lattstate}s (periodic points) of the Bernoulli map of
 \reffig{fig:BernPart}\,(a), suffices to convey the idea. In this
 case, the $[2\!\times\!2]$ {\jacobianOrb} \refeq{tempBern}, the unit
 square basis vectors, and their images are
@@ -620,7 +558,7 @@ square basis vectors, and their images are
  \left(\begin{array}{cc}
   2 & -1 \\
  -1 &  2
- \end{array} \right)
+ \end{array} \right) \,,
     \continue
 \Xx^{(B)} &=&
  \left(\begin{array}{c}
@@ -632,9 +570,19 @@ square basis vectors, and their images are
  \left(\begin{array}{c}
   2  \\
  -1
+ \end{array} \right) \,,
+ \continue
+\Xx^{(D)} &=&
+ \left(\begin{array}{c}
+ 0  \\
+ 1
  \end{array} \right)
-\,,\quad \cdots
-\nnu
+\;\to\;
+\Xx^{(D')} = \jMorb\,\Xx^{(D)} =
+ \left(\begin{array}{c}
+ -1  \\
+ 2
+ \end{array} \right) \,,
 \eea
 \ie, the columns of the {\jacobianOrb} are the edges of the {\fundPip},
 \beq
@@ -665,37 +613,8 @@ their translates form a partition of the extended \statesp\
 \reffig{fig:catCycJacob}.
 % and \refeq{3times2basisVecs}.
 
-Note that in the {temporal lattice} reformulation, the Bernoulli system
-involves two distinct lattices:
-\begin{itemize}
-  \item[(i)]
-Any lattice field theory:
-in the discretization \refeq{LattField}
- of the time continuum, one replaces \emph{any}
-dynamical system's time-dependent field $\ssp(\zeit)\in\reals$ at time
-$\zeit\in\reals$ by a discrete set of its values
-$\ssp_\zeit=\ssp(a\,\zeit)$ at time instants $\zeit\in\integers$.
-Here the index $\zeit$ is a \emph{coordinate} over which the field
-$\ssp$ is defined.
-  \item[(ii)]
-Specific to the Bernoulli system: the site $\zeit$ field value
-$\ssp_{\zeit}$ \refeq{n-tuplingMap} is confined to the unit interval
-$[0,1)$, imparting integer lattice structure onto the intermediate
-calculational steps in the extended \statesp\ \refeq{BerStretch} on which
-the {\jacobianOrb} \jMorb\ \refeq{tempBern} acts.
-\end{itemize}
-
-    \PC{2021-10-25}{
-    Combine the above with the \templatt\ \refpage{} discussion into a
-    remark that temporal Bernoulli and \templatt\ aslo have a
-    \emph{dynamical} \Dn{1} symmetry, not utilized in this paper, as
-    nonlinear field theories such as \henlatt\ do not have such
-    symmetries. Here we study only the symmetries of the floor, not the
-    dancer.
-    }
-
 For \templatt\ the total number of {\lattstate}s is again, as
-for the Bernoulli system \refeq{fundFact}, given by the `fundamental
+for the Bernoulli system, given by the `fundamental
 fact \refeq{fundFact}.
 However, while for the temporal Bernoulli every sequence of alphabet
 letters \refeq{base-sAlph}  but one is admissible, for \templatt\ the
@@ -804,7 +723,7 @@ N_3 = \Det \jMorb
 \label{catFundPar3}
 \eeq
 again in agreement with the {\po} count \refeq{1stChebGenF}.
-The 16 period-3, ${s}=3$ {\lattstate}s $\Xx_\Mm=(\ssp_0,\ssp_1,\ssp_3)$
+The 16 period-3, ${s}=3$ {\lattstate}s $\Xx_\Mm=(\ssp_0,\ssp_1,\ssp_2)$
 are the $\Xx_{000}$ fixed point at the vertex at the origin, 3 period-3
 orbits on the faces of the {\fundPip}, and 2 period-3 orbits in its
 interior.
@@ -850,20 +769,25 @@ N_\cl{}
 where $T_{\cl{}}(s/2)$ is the Chebyshev polynomial of the first kind.
 % end of copied from siminos/spatiotemp/chapter/Green1d.tex
 
-Note that in the {temporal lattice} reformulation, the \templatt\
-happens to involve two unrelated lattices:
+Note that in the {temporal lattice} reformulation, 
+the {temporal Bernoulli} and \templatt\
+involve two distinct lattices:
 \begin{itemize}
   \item[(i)]
-In the latticization of a time continuum, one replaces a time-dependent
+In the latticization \refeq{LattField} of a time continuum, 
+one replaces a time-dependent
 field $\ssp(\zeit)$ at time $\zeit\in\reals$ of \emph{any} dynamical system by a
-discrete set of its values $\ssp_\zeit=\ssp(\zeit\Delta{T})$,
-$\zeit\in\integers$. Here the index $`\zeit'$ is a \emph{coordinate} over
+discrete set of its values $\ssp_\zeit=\ssp(a\,\zeit)$, at time instants
+$\zeit\in\integers$. Here the index `$\zeit$' is a \emph{coordinate} over
 which the field $\ssp$ lives.
   \item[(ii)]
-A peculiarity of the \templatt\ is that the \emph{field} $\ssp_{\zeit}$
-\refeq{LC21PerViv} is confined to the unit interval $[0,1)$,
-imparting a $\integers^1$ lattice structure onto the calculationally
-intermediate {\fundPip} $\jMorb$ basis vectors \refeq{lattJac}.
+A peculiarity of the {temporal Bernoulli} and \templatt\ is that the 
+\emph{field} $\ssp_{\zeit}$, \refeq{n-tuplingMap} and \refeq{LC21PerViv}, 
+is confined to the unit interval $[0,1)$,
+imparting an integer lattice structure onto 
+the intermediate calculational steps in the 
+extended \statesp\ \refeq{BerStretch} on which
+the {\jacobianOrb} \jMorb\ acts.
 \end{itemize}
 
 \subsection{\JacobianOrb\ on reciprocal lattice}
