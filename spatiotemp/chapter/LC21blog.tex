@@ -752,7 +752,233 @@ The product form of the zeta function is:
 \ee{ZetaProd}
 ========================================================================
 
-    %
+
+\bigskip\bigskip
+========================================================================
+%    \item[2021-08-26 Han]
+How to count the number of {\lattstate}s for \templatt?
+
+\emph{No symmetry} {\lattstate}s \HillDet:
+\[
+N_\cl{} = \prod_{j=0}^{\cl{}-1} \left( s - 2\cos\frac{2\pi j}{\cl{}}\right)
+\,.
+\]
+The products of eigenvalues for the $\Cn{\cl{}}$ discrete Fourier
+case follows from \refeq{TableOfISP13952-2}:
+\beq
+\prod_{j=0}^{\cl{}-1} \left( s - 2\cos\frac{2\pi j}{\cl{}}\right)
+= (\ExpaEig^{\cl{}/2}-\ExpaEig^{-\cl{}/2})^2
+\,,
+\ee{eigsProduct}
+It's a square, because of the  $\Dn{\cl{}}$ symmetry.
+Consider even, odd casses, use $\cos0=1$, $\cos\pi=-1$,
+$\cos(-\theta)=\cos\theta$. The product over non-trivial eigenvalues is:
+\bea
+\cl{}=2m
+     &&
+M_{\cl{},0} =
+ \prod_{j=1}^{m-1}\left({s}-2\cos\frac{\pi{j}}{m}\right)
+      =  \frac{|\ExpaEig^{\cl{}/2}-\ExpaEig^{-\cl{}/2}|}
+              {{\mu}\sqrt{{\mu}^2+4}}
+\,,
+\label{LC21:eigsProdEven}
+\eea
+
+\bea
+\cl{}= 2m-1
+     &&
+M_{\cl{},1} =
+ \prod_{j=1}^{m-1}\left({s}-2\cos\frac{2j\pi}{2m-1}\right)
+     = \frac{|\ExpaEig^{\cl{}/2}-\ExpaEig^{-\cl{}/2}|}
+              {{\mu}}
+\,,
+\label{LC21:eigsProdOdd}
+\eea
+
+Next, look at the \emph{symmetric} {\lattstate}s {\HillDet}s:
+
+For odd $\cl{}=2m-1$,
+\bea
+N_{\cl{},1} = \prod_{j=0}^{m-1} \left(s-2\cos\frac{2\pi j}{\cl{}}\right)
+={\mu}M_{\cl{},1}
+\,.
+\eea
+For $\cl{}=2m$,
+\bea
+N_{\cl{},1} &=& \prod_{j=0}^{m-1} \left(s-2\cos\frac{2\pi j}{\cl{}}\right)
+            \continue
+N_{\cl{},0} &=& % \prod_{j=0}^{m} \left(s-2\cos\frac{2\pi j}{\cl{}}\right) =
+                (s+2)\,N_{\cl{},1}
+\,,
+\eea
+and
+\bea
+\frac{1}{2}\left(N_{\cl{},0}+
+N_{\cl{},1} \right)
+= \frac{\mu^2+5}{2}\prod_{j=0}^{m-1} \left(s-2\cos\frac{2\pi j}{\cl{}}\right)
+= \frac{\mu^2+5}{2\mu}
+\sqrt{\frac{\left(\ExpaEig^{\cl{}} + \ExpaEig^{-\cl{}} - 2\right)}
+           {\mu^2+4}}
+\,.
+\eea
+The number of {\lattstate}s can be written as polynomials:
+For $\cl{}=2m-1$:
+\bea
+N_{\cl{},0} &=&
+\mu\left(\ExpaEig^{\cl{}/2}-\ExpaEig^{-\cl{}/2}\right)
+\continue
+&=&
+\mu^2\ExpaEig^{-1/2}\left(\ExpaEig^{m}-\ExpaEig^{-m+1}\right)
+\,.
+\eea
+For $\cl{}=2m$:
+\bea
+\frac{1}{2}\left(N_{\cl{},0}+
+N_{\cl{},1} \right)&=&
+\frac{s+3}{2(\ExpaEig-\ExpaEig^{-1})}
+\left(\ExpaEig^{\cl{}/2}-\ExpaEig^{-\cl{}/2}\right)
+\continue
+&=&
+\frac{{\mu}^2+5}{2{\mu}\sqrt{{\mu}^2+4}}
+\left|\ExpaEig^{m}-\ExpaEig^{-m}\right|
+\,.
+\eea
+Now we can compute the $h(t)$ from \refeq{KLPzetaExp}
+\bea
+h(t) &=& \sum_{m=1}^{\infty} \left[
+       N_{2m-1, 0}\,t^{2m-1}
+       + \left(N_{2m,0}+N_{2m,1}\right)\,\frac{ t^{2m}}{2}
+                               \right]
+\continue
+&=&
+\mu\frac{\ExpaEig^{1/2} t}{1-\ExpaEig t^2}
+-\mu\frac{\ExpaEig^{-1/2}t}{1-\ExpaEig^{-1}t^2}
+\continue
+&&+
+\frac{\mu^2+5}{2(\ExpaEig-\ExpaEig^{-1})}\frac{\ExpaEig t^2}{1- \ExpaEig t^2}
+-\frac{\mu^2+5}{2(\ExpaEig-\ExpaEig^{-1})}\frac{\ExpaEig^{-1} t^2}{1- \ExpaEig^{-1} t^2}
+\,.
+\eea
+Using \refeq{KLPzetaFact} we have the symmetric {\lattstate}s
+part of the Kim-Lee-Park zeta function. Expanding
+this zeta function using \refeq{HLFlipGeneratingFunction}, we have:
+\bea
+- t \frac{\partial}{\partial t}(\ln e^{-h(t)}) &=&
+t + 6 t^2 + 12 t^3 + 36 t^4 + 55 t^5 +144 t^6
+\continue
+&&+ 203 t^7 + 504 t^8 + 684 t^9
++1650 t^{10} + \dots
+\,,
+\eea
+which is in agreement with \refeq{HLFlipGeneratingFunction}
+and \reftab{tab:Bmack93Fixed}.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Counting {\lattstate}s}
+\label{sect:LC21poCounts}    % derived from blogCats.tex {sect:PeriodicPsCount}
+
+
+Given the {\tzeta} \refeq{KLPzeta} we can count the
+number of {\lattstate}s from the generating function:
+    \PC{2021-08-25}{
+    We have the counts of the Bravais {\lattstate}s $N_\cl{}$,
+    $N_{\cl{},k}$ already, from \refeq{N_nkCount}, so why don't we
+    reverse the logic, start here, and get the zeta function
+    \refeq{KLPzetaFact} by integration? Mention that this is an
+    example of Lind zeta function\rf{Lind96} \refeq{LindZeta}
+    without ever writing it down, so we do not have to explain it? It's a
+    side issue for us, really.
+    }
+\beq
+\frac{-t\frac{d}{dt}(1/\zeta_{\Refl}(t))}{1/\zeta_{\Refl}(t)}
+= \sum_{\cl{}=1}^\infty N_\cl{}t^{2\cl{}}
++ \sum_{\cl{}=1}^\infty\sum_{k=0}^{\cl{}-1}N_{\cl{},k}t^{\cl{}}
+= \sum_{m=1}^\infty a_m t^m \, ,
+\ee{LC21zetatopGenerating}
+where the coefficients are:
+% https://tex.stackexchange.com/questions/401201/difference-between-align-and-alignedt
+\beq
+a_m =
+\left\{
+\begin{array}{ll}
+\sum_{k=0}^{m-1} N_{m,k}^{\Refl}
+= m N_{m,0}^{\Refl}
+\,,\quad & \mbox{$m$ is odd}
+ \, ,\\
+N_{m/2} + \sum_{k=0}^{m-1} N_{m,k}^{\Refl}
+= N_{m/2} + \frac{m}{2} \left(N_{m,0}^{\Refl} + N_{m,1}^{\Refl}\right)
+\,,\quad & \mbox{$m$ is even}
+\,.
+ \end{array}\right.
+\ee{LC21zetatopCoefficients}
+Using the product formula of {\tzeta} \refeq{ZetaProd} and
+the numbers of orbits with length up to 5 from the \reftab{tab:Bmack93Fixed},
+we can write the {\tzeta}:
+\bea
+1/\zeta_{\Refl}(t) &=&
+\sqrt{1-t^2} \exp\left(-\frac{t}{1-t}\right) (1-t^4) \exp\left(-\frac{2t^2}{1-t^2}\right)
+\left(\sqrt{1-t^6}\right)^3 \continue
+&& \exp\left(-\frac{3t^3}{1-t^3}\right)(1-t^6)(1-t^8)^3
+\exp\left(-\frac{6t^4}{1-t^4}\right) \continue
+&& (1-t^8)^2(1-t^{10})^5\exp\left(-\frac{10t^5}{1-t^5}\right)
+(1-t^{10})^6 \dots \, .
+\eea
+The generating function is:
+\bea
+\frac{-t\frac{d}{dt}(1/\zeta_{\Refl})}{1/\zeta_{\Refl}}
+=
+t + 7t^2 + 12t^3 + 41t^4 + 55t^5 + \dots \, ,
+\eea
+which is in agreement with \refeq{LC21zetatopCoefficients}, where the $N_\cl{}$ and $N_{\cl{}}^{\Refl}$
+are the $C_\cl{}$ and $SF_\cl{}$ in the \reftab{tab:Bmack93Fixed}.
+
+We are not able to retrieve the numbers of fixed points by their symmetry groups using this {\tzeta} \refeq{KLPzeta}, unless we rewrite the {\tzeta} with two variables:
+\beq
+\zeta_{\Refl}(t,u) =
+\exp \Big(\sum_{\cl{}=1}^{\infty} \, \frac{N_{\cl{}}}{2\cl{}}t^{2\cl{}}
+          +\sum_{\cl{}=1}^{\infty} \, \sum_{k=0}^{\cl{}-1}\,
+                     \frac{N_{\cl{},k}}{\cl{}}u^{\cl{}} \Big)
+\,.
+\ee{LC21FlipZetaTU}
+Using this {\tzeta} $\zeta_{\Refl}(t,u)$ we can write two generating functions:
+\beq
+\frac{-t\frac{\partial}{\partial t}(1/\zeta_{\Refl}(t,u))}{1/\zeta_{\Refl}(t,u)}
+= \sum_{\cl{}=1}^\infty N_\cl{}t^{2\cl{}}
+\, ,
+\ee{LC21zetatopGeneratingT}
+and
+\beq
+\frac{-u\frac{\partial}{\partial u}(1/\zeta_{\Refl}(t,u))}{1/\zeta_{\Refl}(t,u)}
+= \sum_{\cl{}=1}^\infty\sum_{k=0}^{\cl{}-1}N_{\cl{},k}u^{\cl{}}
+\, .
+\ee{LC21zetatopGeneratingU}
+Using the product formula of this {\tzeta} and the numbers of orbits with length
+up to 5 from the \reftab{tab:Bmack93Fixed}, the Kim-Lee-Park zeta function is:
+\bea
+1/\zeta_{\Refl}(t,u) &=&
+\sqrt{1-t^2} \exp\left(-\frac{u}{1-u}\right) (1-t^4) \exp\left(-\frac{2u^2}{1-u^2}\right)
+\left(\sqrt{1-t^6}\right)^3 \continue
+&& \exp\left(-\frac{3u^3}{1-u^3}\right)(1-t^6)(1-t^8)^3
+\exp\left(-\frac{6u^4}{1-u^4}\right) \continue
+&& (1-t^8)^2(1-t^{10})^5\exp\left(-\frac{10u^5}{1-u^5}\right)
+(1-t^{10})^6 \dots \, .
+\eea
+And the generating function from this {\tzeta} is:
+\bea
+\frac{-u\frac{\partial}{\partial u}(1/\zeta_{\Refl}(t,u))}{1/\zeta_{\Refl}(t,u)}
+=
+u + 6u^2 + 12u^3 + 36u^4 + 55u^5 + \dots \, ,
+\label{HLFlipGeneratingFunction}
+\eea
+which is in agreement with \refeq{LC21zetatopGeneratingU}, where the $N_{\cl{}}^{\Refl}$ is the $SF_{\cl{}}$
+in the \reftab{tab:Bmack93Fixed}.
+
+    \PCpost{2021-12-10} {
+Form $(V'(\ssp_{\zeit})-\Ssym{\zeit})$ looks like the most convenient
+definition of the ``$\Ssym{}$-centered" subregion $\pS_\Ssym{}$ potential,
+applicable to both linear and nonlinear field theories?
+    }
+
     \PCpost{2021-08-23} {
 We have omitted ``Quotienting the temporal Bernoulli system''
     \refeq{1stepDiffEqBlog} from this paper.

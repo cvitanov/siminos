@@ -5,10 +5,6 @@
 \section{Orbit stability}
 \label{s:JacobianOrb}
 
-The {temporal lattice} reformulation gives us deep insights into how to
-enumerate and determine all global solutions ({\lattstate}s) of
-lattice field theories.
-
 The discretized Euler–\-Lagrange
 $F[\Xx_c]=0$ fixed point condition \refeq{LC21eqMotion} is central to the
 theory of {global methods} for finding {\po}s. Instead of
@@ -26,20 +22,14 @@ and lists the field value at a point of each segment
 Starting with an initial guess for \Xx, the zero of function
 $F[\Xx_c]$ can then be found by Newton iteration, which requires
 an evaluation of the $[\cl{}\!\times\!\cl{}]$ \emph{\jacobianOrb}
+\refeq{jacobianOrb}
 \beq
 \jMorb_{\zeit\zeit'} =\frac{\delta F[\Xx_c]_\zeit}{\delta \ssp_{\zeit'}}
 \,.
 \ee{jacobianOrb}
 
-\subsection{Temporal Bernoulli, {\templatt}} % \jacobianOrb}
-\label{s:JacobianOrbBern}
-% joined with \subsection{{\tempLatt} \jacobianOrb}
-% \label{s:tempCatJacobianOrb}
-
-The {temporal Bernoulli} condition
-\refeq{tempBern} and
-the
-{\templatt} discretized Euler–\-Lagrange equation \refeq{catTempLatt}
+The {temporal Bernoulli} condition \refeq{tempBern},
+the {\templatt} discretized Euler–\-Lagrange equation \refeq{catTempLatt}
 can be viewed as searches for zeros of the vector of
 $\cl{}$ functions
 \bea
@@ -54,13 +44,15 @@ F[\Xx_\Mm] &=& \jMorb\Xx-\Mm = 0
 with the entire periodic \emph{{\lattstate}} ${\Xx}_{\Mm}$ treated as a
 single fixed \emph{point} $(\ssp_0,\ssp_{1},\cdots,\ssp_{\cl{}-1})$ in the
 \cl{}\dmn\ \statesp\ unit hyper-cube $\Xx\in[0,1)^\cl{}$, and
-the $[\cl{}\!\times\!\cl{}]$ {\jacobianOrb}  $\jMorb$.
-
-The $[\cl{}\!\times\!\cl{}]$ {\jacobianOrb} $\jMorb$ is a
-%tri-diagonal
+the $[\cl{}\!\times\!\cl{}]$ {\jacobianOrb}  $\jMorb$ a
 Toeplitz matrix, \ie, matrix constant along each diagonal,
-$\jMorb_{k\ell} = j_{k-\ell}$, of circulant form,
-for the {temporal Bernoulli},
+$\jMorb_{k\ell} = j_{k-\ell}$.
+
+At this point, writing out these matrices in matrix format is helpful:
+\bigskip
+
+\noindent
+{Temporal Bernoulli} \refeq{bernFixPoint}
 \beq
 \jMorb %  = \shift - s\id + \shift^{-1}
   =
@@ -74,7 +66,10 @@ for the {temporal Bernoulli},
         \end{array} \right)
 \,.
 \ee{bernJacOrb}
-and for \templatt
+\bigskip
+
+\noindent
+\tempLatt\ \refeq{tempCatFix}
 \beq
 \jMorb %  = \shift - s\id + \shift^{-1}
   =
@@ -88,17 +83,10 @@ and for \templatt
         \end{array} \right)
 \,.
 \ee{Hessian}
+\bigskip
 
-\subsection{Nonlinear field theories}
-\label{s:henlattJacobianOrb}
-%%%%% siminos/kittens/cat.tex                    2021-04-27 %%%%%
-
-The key to understanding their chaoticity are the eigenvalues of
-the {\jacobianOrb}.
-
-The matrix of second variations of
-the action $\action[\Xx]_{\zeit\zeit'}$,
-%
+\noindent
+Nonlinear field theory \refeq{LC21:2-step}
 \beq
 \jMorb[\Xx] =
 \left(\begin{array}{ccccccc}
@@ -113,10 +101,8 @@ the action $\action[\Xx]_{\zeit\zeit'}$,
           \end{array} \right)
 \,,
 \ee{jMorb1dFT} %was {jMorb1dField}, {PCJiKoKr20(8)}
-%
-evaluated on a {\lattstate} \Xx,
-and its {\HillDet} $\Det\jMorb[\Xx]$,
-with the `stretching factor' ${s}_{\zeit}= V''(\ssp_{\zeit})$ at
+is not Toeplitz: it is evaluated on a {\lattstate} \Xx, with the
+`stretching factor' ${s}_{\zeit}= V''((\ssp_\zeit,\Ssym{\zeit}))$ at
 lattice site $\zeit$ in general a function of the site field $\ssp_\zeit$
 for the given \lattstate\ $\Xx$.
     \PC{2020-06-01}{
