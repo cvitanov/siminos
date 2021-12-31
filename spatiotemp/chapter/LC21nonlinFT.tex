@@ -40,8 +40,8 @@ Hamiltonian {\HenonMap} is the product of consecutive  one time-step
 where the successive 1-time step \jacobianMs\ are multiplied in the order
 they are applied, as
 $\jMps^\cl{}(x_0)=\jMps(x_{\cl{}-1})\cdots\jMps(x_0)$. So, once we have a
-{\HenonMap} {\po}, we also have its \FloquetM\
-(monodromy matrix). When $\jMps^\cl{}$ is
+{\HenonMap} {\po}, we also have its Floquet
+(monodromy) matrix. When $\jMps^\cl{}$ is
 hyperbolic, only the expanding
 eigen\-value $\ExpaEig_1=1/\ExpaEig_2$ needs to be determined, as the
 determinant of the {\Henon} 1-time step \jacobianM\ is unity,
@@ -76,7 +76,13 @@ V(\ssp_\zeit,\Ssym{\zeit}) =  \frac{a}{3}\ssp_{\zeit}^3
         \Ssym{\zeit} = -1
 \,,
 \ee{LC21BWcubic}
-giving rise to kicking pulse \refeq{LC21PerViv2.1a}.
+giving rise to kicking pulse \refeq{LC21PerViv2.1a}, so we
+refer to this field theory as $\ssp^3$ theory.
+
+Thus the lattice site field values of this $\phi^3$ theory are in
+one-to-one correspondence to the unimodal \HenonMap\
+Smale horseshoe repeller, cleanly split into the `left', positive stretching and
+`right', negative stretching lattice site field values.
 Devaney, Nitecki, Sterling and Meiss\rf{Devaney79,StMeiss98,SteDuMei99}
 have shown that the Hamiltonian {\HenonMap} has a complete Smale
 horseshoe for sufficiently large `stretching parameter' values
@@ -87,14 +93,85 @@ horseshoe for sufficiently large `stretching parameter' values
 In numerical\rf{ChaosBook} and analytic\rf{EndGal06} calculations we fix
 (arbitrarily) the stretching parameter value to $a=6$, in order to
 guarantee that all $2^\cl{}$ periodic points  $\ssp=\flow{\cl{}}{\ssp}$
-of the {\HenonMap} \refeq{LC21eq2.1} exist.
-    \PC{2021-12-10} {
-Explain that $\phi^3$ theory is correspond to the unimodal \henlatt, with
-the Smale horseshoe repeller cleanly split into the left (negative) and
-right (positive) lattice site field values.
-This is very much like the temporal Bernoulli, in contrast to the
+of the {\HenonMap} \refeq{LC21eq2.1} exist, see \reftab{tab:LC21HamHenon}.
+The symbolic dynamics is as simple as the temporal Bernoulli, in contrast to the
 \templatt\ which has nontrivial pruning, see \reftab{tab:catMapN_n-s=3}.
-    }
+
+
+\section{A {$\phi^4$} field theory}
+\label{s:phi4latt}
+
+If a potential that is bounded from below is needed to make sense of the
+probabilistic interpretation of the configuration weight
+\refeq{ProbConf}, or a symmetry forbids the odd-power potentials such as
+\refeq{LC21BWcubic}, one starts instead with a quartic potential
+\refeq{polynPotent}
+\beq
+V(\ssp_\zeit,\Ssym{\zeit}) =  \frac{g}{4}\ssp_{\zeit}^4
+                            - \ssp_{\zeit}^2 -\Ssym{\zeit}\,\ssp_\zeit
+\,,
+\ee{LC21phi4pot}
+leading to an example of the `{$\phi^4$} lattice field theory'.
+\refeq{LC21:1dPhi4},
+\bea
+- \ssp_{\zeit+1} + {g}\,\ssp_{\zeit}^3 - \ssp_{\zeit-1}
+    &=&
+\Ssym{\zeit}
+\,.
+\label{LC21:1dPhi4a}
+\eea
+Topology of the \statesp\ of $\phi^4$ theory is
+very much like
+what we had learned for the unimodal \HenonMap\ $\phi^3$ theory,
+except that the repeller set is now bimodal. As long as coupling $g$
+is sufficiently large, the repeller is a full 3-letter shift.
+Indeed, while Smale's first horseshoe\rf{smale}, his fig.~1, was unimodal, he
+also sketched the $\phi^4$ bimodal repeller, his fig.~5.
+
+As $\phi^4$ example adds little to understanding
+over what is learned from \henlatt, we will not discus is further in this
+paper.
+
+
+\section{Computing {\lattstate}s for nonlinear theories}
+\label{s:nonlinLattStates}
+
+Unlike the {temporal Bernoulli} \refeq{LC21:1dBernLatt} and the
+{\templatt} \refeq{LC21:1dTemplatt}, for which the {\lattstate} fixed
+point condition \refeq{LC21eqMotion}
+% {tempCatFixPoint}
+is linear and easily solved, for
+nonlinear lattice field theories the {\lattstate}s are roots of
+polynomials of arbitrarily high order. While Gallas and collaborators%
+\rf{EndGal01,EndGal02,EG05,EG05a,EndGal06,Gallas18,Gallas20,Gallas20a}
+have developed a powerful theory that yields {\HenonMap} {\po}s in
+analytic form, it would be unrealistic to demand such explicit solutions for
+general field theories on multi-dimensional lattices. We take a
+pragmatic, numerical route, and search for the fixed-point solutions
+\refeq{LC21eqMotion}
+starting with the deviation of an approximate trajectory from the 3-term
+recurrence \refeq{LC21:1dTempFT}, given by the lattice deviation vector
+\beq
+v_{\zeit} = -\ssp_{\zeit+1} + V'(\ssp_{\zeit},\Ssym{\zeit}) - \ssp_{\zeit-1}
+\,,
+\ee{LC21BWdeviate}
+and minimizing this error term by any convenient variational or
+optimization method, perhaps in conjunction with a high-dimensional
+variant of the Newton method\rf{CvitLanCrete02,lanVar1}.
+
+\subsection{Remarks}
+
+Equilibria or steady solutions of
+the $d$-dimensional Frenkel-Kontorova Hamiltonian lattice differential
+equation\rf{AuAb90,MraRin12}
+\beq
+\frac{d^2 \ssp_i}{dt^2} + V'[\ssp_i] - \Box\,\ssp_i
+    = 0 \ \mbox{for all} \ i\in\mathbb{Z}^d.
+\ee{LC21FKHam}
+are examples of what we here call `nonlinear field theories'.
+The model describes the motion of particles under the
+competing influence of an onsite periodic potential field and nearest
+neighbor attraction.
 
     \PC{2021-06-04}{
 S. Aubry\rf{aub95ant}
@@ -129,11 +206,6 @@ Sterling and Meiss\rf{StMeiss98}
     } % end     \PC{2021-06-04}
 
 
-
-We are lucky that strong coupling, strong local stretching field theories
-classical solutions live on horseshoes. That keeps safely away from the
-regions of intermediate stretches, where dragons live.
-
 % \PC{2020-05-31} {
 Politi and Torcini\rf{PolTor92} note that
 a problem in reconstructing the statistical properties of an
@@ -162,86 +234,9 @@ fixed point in fictitious time corresponds to a spatio-temporal cycle
 $\BravCell{\speriod{}}{\period{}}{\tilt{}}$.
 
 
-\section{A {$\phi^4$} field theory}
-\label{s:phi4latt}
-
-If a potential that is bounded from below is needed to make sense of the
-probabilistic interpretation of the configuration weight
-\refeq{ProbConf}, or a symmetry forbids the odd-power potentials such as
-\refeq{LC21BWcubic}, one starts instead with a quartic potential
-$\ssp_{\zeit}^4$, leading to the `{$\phi^4$} lattice field theory'
-\refeq{LC21:1dPhi4}. As $\phi^4$ example adds little to understanding
-over what is learned from \henlatt, we will not discus is further in this
-paper.
-    \PC{2021-12-10} {
-No! Explain that $\phi^4$ theory is the bimodal extension of
-what we had learned for the unimodal \henlatt.
-
-The \HenonMap/$\phi^3$ approaches should be safe for multimodal maps with
-complete repelling sets, and it should work for finite-grammar Smale
-horseshoe repellers.
-Smale's original horseshoe\rf{smale}, his fig.~1 was unimodal, but he
-also explicitly gives our $\phi^4$ bimodal repeller, his fig.~5.
-    }
-
-    \PC{2021-10-13}{RECHECK,
-maybe applies to \catlatt: Equilibria or steady solutions of
-Frenkel-Kontorova lattices, the smooth function $V:\reals\to\reals$ is a
-periodic onsite potential, $V[\ssp+1]=V[\ssp]$ for all $\xi\in\reals$.
-
-%\PC{2019-06-26}{
-%Mramor and Rink
-The $d$-dimensional Frenkel-Kontorova Hamiltonian lattice differential
-equation\rf{AuAb90,MraRin12}
-\beq
-\frac{d^2 \ssp_i}{dt^2} + V'[\ssp_i] - \Box\,\ssp_i
-    = 0 \ \mbox{for all} \ i\in\mathbb{Z}^d.
-\ee{LC21FKHam}
-describes the motion of particles under the
-competing influence of an onsite periodic potential field and nearest
-neighbor attraction.
-
-the goal is to find a
-$d$-dimensional ``lattice configuration''
-(for us, {\lattstate})
-$x:\integers^d\to \reals$ that satisfies
-\beq
-V'[\ssp_i] - \Box\,\ssp_i = 0 \  \ \mbox{for all} \ i\in \mathbb{Z}^d
-\,.
-\ee{FKeq} %\ref{RR} in {MraRin12}
-% \PC{2019-06-26}{
-Eq.~\refeq{FKeq}
-is relevant for statistical mechanics\rf{MraRin12}, because it is
-related to Eq.~\refeq(FKeq) describes its stationary solutions.
-%  }
-    }
-
-
-\section{Computing {\lattstate}s for nonlinear theories}
-\label{s:nonlinLattStates}
-
-Unlike the {temporal Bernoulli} \refeq{LC21:1dBernLatt} and the
-{\templatt} \refeq{LC21:1dTemplatt}, for which the {\lattstate} fixed
-point condition \refeq{LC21eqMotion}
-% {tempCatFixPoint}
-is linear and easily solved, for
-nonlinear lattice field theories the {\lattstate}s are roots of
-polynomials of arbitrarily high order. While Gallas and collaborators%
-\rf{EndGal01,EndGal02,EG05,EG05a,EndGal06,Gallas18,Gallas20,Gallas20a}
-have developed a powerful theory that yields {\HenonMap} {\po}s in
-analytic form, it would be unrealistic to demand such explicit solutions for
-general field theories on multi-dimensional lattices. We take a
-pragmatic, numerical route, and search for the fixed-point solutions
-\refeq{LC21eqMotion}
-starting with the deviation of an approximate trajectory from the 3-term
-recurrence \refeq{LC21:1dTempFT}, given by the lattice deviation vector
-\beq
-v_{\zeit} = -\ssp_{\zeit+1} + V'(\ssp_{\zeit},\Ssym{\zeit}) - \ssp_{\zeit-1}
-\,,
-\ee{LC21BWdeviate}
-and minimizing this error term by any convenient variational or
-optimization method, perhaps in conjunction with a high-dimensional
-variant of the Newton method\rf{CvitLanCrete02,lanVar1}.
+We are lucky that strong coupling, strong local stretching field theories
+deterministic solutions live on horseshoes. That keeps safely away from the
+regions of intermediate stretches, where dragons live.
 
 \subsection{Papers to refer to?}
 
