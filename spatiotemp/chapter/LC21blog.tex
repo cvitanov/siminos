@@ -1098,6 +1098,124 @@ the {\jacobianOrb} \jMorb\ \refeq{tempBern} acts.
     }
 }
 
+\subsection{{\HillDet}: Reciprocal lattice evaluation}
+
+$\omega = e^{2i\pi/\cl{}}$
+
+$\cssp_k=x_k+i\,y_k = |\cssp_k| e^{i\theta_k}$
+
+$q_k=2\pi{k}/\cl{}$,
+
+$\cl{}$ is the Bravais cell period
+
+\bigskip
+
+The temporal Bernoulli {\jacobianOrb} %\refeq{1stepVecEq},
+$\jMorb=\partial/\partial\zeit-(s-1)\,\shift^{-1}$ is a differential
+operator whose determinant one usually computes by a Fourier transform
+diagonalization (see \refsect{sect:LC21recip1d}). The Fourier discretization
+approach goes all the way back to Hill's 1886 paper\rf{Hill86}.
+
+The first advantage of using the reciprocal lattice is that it provides a
+way to compute the {\HillDet}.
+If the \jacobianOrb\ \refeq{jacobianOrb} commutes with the translation
+operator, the plane waves are eigenvectors of the \jacobianOrb. Using
+these eigenvectors one can find the eigenvalues and the determinant of
+the \jacobianOrb. In the $\cl{}$\dmn\ space of {\lattstate}s with
+period-$\cl{}$, the one-lattice spacing translation operator is a shift
+matrix \refeq{hopMatrix},
+%\bea
+%\shift
+%=  \left(\begin{array}{ccccc}
+%             0    &  1    &        &   &  \cr
+%                  &  0    &   1    &   &  \cr
+%                  &       &        & \ddots &  \cr
+%                  &       &        & 0 & 1 \cr
+%             1    &       &        &   & 0
+%          \end{array} \right)
+%\,,
+%\eea
+whose eigenvectors are plane waves $\tilde{e}_k$:
+\bea
+\shift\,\tilde{e}_k = \omega^{k} \tilde{e}_k \, .
+\eea
+For example, the eigenvalues of the {temporal Bernoulli}
+{\jacobianOrb} \refeq{tempBern} are
+% $(\id-{s}\,\shift^{-1})$ is given by:
+% \jMorb =
+\bea
+({s}\id - {\shift})\,\tilde{e}_k
+= ({s} - \omega^{k})\,\tilde{e}_k
+\,,
+\eea
+and the {\HillDet} is simply a polynomial whose roots are the \cl{}th
+roots of unity,
+\bea
+\Det({s}\id - {\shift})
+=
+\prod_{k=0}^{\cl{}-1} ({s} - \omega^{k})
+=
+s^{\cl{}} - 1
+\,.
+\eea
+see \refeq{shift2n}.
+The eigenvalues of the \templatt\
+{\jacobianOrb} \refeq{tempCatFix} are:
+\bea
+(-\shift+{s}\,\id-\shift^{-1})\,\tilde{e}_k
+=
+({s} - 2\cos(2\pi k/\cl{}))\,\tilde{e}_k \, ,
+\eea
+and the {\HillDet} is:
+\bea
+\mbox{\templatt: }\quad
+\Det(-\shift+{s}\,\id-\shift^{-1})
+    &=&
+\prod_{k=0}^{\cl{}-1} [{s} - 2\cos(2\pi k/\cl{})]
+    \continue
+    &=&
+2 T_{\cl{}} \left({s}/{2}\right) - 2 \, ,
+\eea
+where $T_{\cl{}}$ is the Chebyshev polynomial of the first
+kind.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%2021-12-31 Han: figSrc/han/Mathematica/LC21Figure/TemporalCatEigenvalueBand.nb
+\begin{figure}\begin{center}
+            \begin{minipage}[c]{0.3\textwidth}\begin{center}
+\includegraphics[width=1.0\textwidth]{HLTemplattBand}\\(a)
+            \end{center}\end{minipage}
+            \begin{minipage}[c]{0.3\textwidth}\begin{center}
+\includegraphics[width=1.0\textwidth]{HLTemplattBand3cycle}\\(b)
+            \end{center}\end{minipage}
+            \begin{minipage}[c]{0.3\textwidth}\begin{center}
+\includegraphics[width=1.0\textwidth]{HLTemplattBand4cycle}\\(c)
+            \end{center}\end{minipage}
+\end{center}
+  \caption{\label{fig:LC21emplattBand}
+(a) The eigenvalue $E_k$ of the \jacobianOrb\ on the infinite lattice as a function of the wave
+vector $k$ in the first Brillouin zone. The \jacobianOrb\ has the reflection symmetry so the
+eigenvalue is also invariant under the reflection $k\to -k$.
+(b) For period 3 {\lattstate}s, the wave vectors of the eigenstates exist on the reciprocal lattice
+spanned by $2\pi/3$. These lattice sites are labeled by the red dashed lines. There are only
+3 period 3 eigenstates, with eigenvalues $s+1$, $s-2$ and $s+1$.
+(c) For period 4 {\lattstate}s, the wave vectors of the eigenstates exist on the reciprocal lattice
+spanned by $\pi/2$. These lattice sites are labeled by the red dashed lines. There are only
+4 period 4 eigenstates, with eigenvalues $s$, $s-2$, $s$ and $s+2$.
+$k=\pi$ and $k=-\pi$ are different by a reciprocal lattice translation, so they are a same
+wave vector and should be only counted once.
+          }
+\end{figure}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+Explain \reffig{fig:LC21emplattBand}.
+
+        \PC{2021-09-02} {
+I think I prefer some version of the identity \refeq{TableOfISP13952},
+\refeq{HillDetOrbJ},
+no mention of Chebyshev polynomials. Not important, will revisit later.
+    }
+
 
 \end{description}
 
