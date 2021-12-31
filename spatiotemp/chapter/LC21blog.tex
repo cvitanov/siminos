@@ -1006,9 +1006,97 @@ V(\Xx,\Mm) = \sum_{\zeit\in\lattice}\left(
 \ee{LC21BWcubic1}
     }
 
+\subsection{{\HillDet}: fundamental parallelepiped evaluation}
+\label{s:LC21fundFacteval}
+% 2020-02-16 Predrag computed  using siminos/mathematica/Tensors.nb
+As a concrete example
+consider the Bravais lattice % \refeq{1DBravLatt}
+with basis
+vector
 
+The {\em \jacobianOrb} is the $\delta/\delta\ssp_k$ derivative of the
+{\henlatt} 3-term recurrence relation \refeq{jMorb1dFT}
+\bea
+\jMorb_p &=& - \shift + 2\,{\mathbb{X}}_p - \shift^{-1}
+\,,
+\label{Henlatt-orbitJac}
+\eea
+where ${\mathbb{X}}_p$ is a diagonal matrix with $p$-{\lattstate} $\ssp_k$ in the
+$k$th row/column, and the `$1$'s in the upper right and lower left corners
+enforce the periodic boundary conditions.
 
+The action of the \henlatt\ {\jacobianOrb} can be hard to visualize,
+as a period-2 {\lattstate} is a 2-torus,
+period-3 {\lattstate} a 3-torus, \etc. Still, the {\fundPip} for the period-2
+and period-3 {\lattstate}s, should suffice to
+convey the idea. The {\fundPip} basis vectors \refeq{lattJac} are the
+columns of $\jMorb$. The $[2\!\times\!2]$ {\jacobianOrb}
+and its {\HillDet} follow from \refeq{Henlatt-2-cycle}
+\beq
+\jMorb =
+ \left(\begin{array}{cc}
+2\,\ssp_0   & -2 \\
+         -2 & 2\,\ssp_1
+ \end{array} \right)
+\,,\quad
+\Det\jMorb = 4\,(\ssp_0\ssp_1-1)
+           = -4\,(a-3)
+\,.
+\ee{Henlatt-catFundPar2}
+% $( 1+ \sqrt{a-3} )( 1- \sqrt{a-3} )-1 = -a+3$
+The resulting {\fundPip} shown in \reffig{fig:Henlatt-catCycJacob}\,(a).
+Period-3
+{\lattstate}s for $s=3$ are contained in the half-open {\fundPip} of
+\reffig{fig:Henlatt-catCycJacob}\,(b),
+defined by the columns of $[3\!\times\!3]$
+{\jacobianOrb}
+\beq
+\jMorb =
+\left(
+\begin{array}{ccc}
+2\,\ssp_0 &-1           &-1 \\
+         -1 & 2\,\ssp_1 &-1 \\
+         -1 &-1           & 2\,\ssp_2
+\end{array}
+\right)
+\,,
+\qquad
+\Det \jMorb
+    = 8\,\ssp_0\ssp_1\ssp_2-2\,(\ssp_0+\ssp_2+\ssp_3)+2
+\,,
+\label{Henlatt-catFundPar3}
+\eeq
 
+\HLpost{2021-12-31}{
+Note that in the {temporal lattice} reformulation, the Bernoulli system
+involves two distinct lattices:
+\begin{itemize}
+  \item[(i)]
+Any lattice field theory:
+in the discretization \refeq{LattField}
+ of the time continuum, one replaces \emph{any}
+dynamical system's time-dependent field $\ssp(\zeit)\in\reals$ at time
+$\zeit\in\reals$ by a discrete set of its values
+$\ssp_\zeit=\ssp(a\,\zeit)$ at time instants $\zeit\in\integers$.
+Here the index $\zeit$ is a \emph{coordinate} over which the field
+$\ssp$ is defined.
+  \item[(ii)]
+Specific to the Bernoulli system: the site $\zeit$ field value
+$\ssp_{\zeit}$ \refeq{n-tuplingMap} is confined to the unit interval
+$[0,1)$, imparting integer lattice structure onto the intermediate
+calculational steps in the extended \statesp\ \refeq{BerStretch} on which
+the {\jacobianOrb} \jMorb\ \refeq{tempBern} acts.
+\end{itemize}
+
+    \PC{2021-10-25}{
+    Combine the above with the \templatt\ \refpage{} discussion into a
+    remark that temporal Bernoulli and \templatt\ aslo have a
+    \emph{dynamical} \Dn{1} symmetry, not utilized in this paper, as
+    nonlinear field theories such as \henlatt\ do not have such
+    symmetries. Here we study only the symmetries of the floor, not the
+    dancer.
+    }
+}
 
 
 \end{description}
