@@ -1,11 +1,12 @@
 GitHub.com/cvitanov/siminos/00ReadMe.txt
 $Author: predrag $
-$Date: 2021-12-25 07:48:14 -0400 (Tue, 25 Dec 2021) $
+$Date: 2022-01-01 07:48:14 -0400 (Tue, 25 Dec 2021) $
 --------------------------------------------------------
 
 Liang + Cvitanovic
 temporary publications repository
 ========================================================
+frozen on 2022-01-01
 
 bibtex/siminos.bib
 	one bibliography for all projects
