@@ -844,6 +844,72 @@ For the {\templatt}, the {\HillDet} of a period-\cl{} {\lattstate} is:
 2 T_{\cl{}} \left({s}/{2}\right) - 2 \, .
 \eea
 
+\subsection{Eigenvalue spectrum of the {\jacobianOrb}}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%2021-12-31 Han: figSrc/han/Mathematica/LC21Figure/TemporalCatEigenvalueBand.nb
+\begin{figure}\begin{center}
+            \begin{minipage}[c]{0.3\textwidth}\begin{center}
+\includegraphics[width=1.0\textwidth]{HLTemplattBand}\\(a)
+            \end{center}\end{minipage}
+            \begin{minipage}[c]{0.3\textwidth}\begin{center}
+\includegraphics[width=1.0\textwidth]{HLTemplattBand3cycle}\\(b)
+            \end{center}\end{minipage}
+            \begin{minipage}[c]{0.3\textwidth}\begin{center}
+\includegraphics[width=1.0\textwidth]{HLTemplattBand4cycle}\\(c)
+            \end{center}\end{minipage}
+\end{center}
+  \caption{\label{fig:LC21emplattBand}
+(a) The eigenvalue $E_k$ of the \jacobianOrb\ on the infinite lattice as a function of the wave
+vector $k$ in the first Brillouin zone. The \jacobianOrb\ has the reflection symmetry so the
+eigenvalue is also invariant under the reflection $k\to -k$.
+(b) For period 3 {\lattstate}s, the wave vectors of the eigenstates exist on the reciprocal lattice
+spanned by $2\pi/3$. These lattice sites are labeled by the red dashed lines. There are only
+3 period 3 eigenstates, with eigenvalues $s+1$, $s-2$ and $s+1$.
+(c) For period 4 {\lattstate}s, the wave vectors of the eigenstates exist on the reciprocal lattice
+spanned by $\pi/2$. These lattice sites are labeled by the red dashed lines. There are only
+4 period 4 eigenstates, with eigenvalues $s$, $s-2$, $s$ and $s+2$.
+$k=\pi$ and $k=-\pi$ are different by a reciprocal lattice translation, so they are a same
+wave vector and should be only counted once.
+          }
+\end{figure}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+In the previous example, the {\jacobianOrb} \refeq{jacobianOrb} of a period-\cl{} {\lattstate}
+is an $[\cl{}\!\times\!\cl{}]$ matrix, which acts on an \cl{}\dmn\ linear space. 
+For an infinitely long {\lattstate}, the {\jacobianOrb} is an infinite\dmn\ linear operator. 
+
+Consider the {\templatt} as an example. The infinite\dmn\ {\jacobianOrb} still has the form
+\refeq{tempCatFix}, where the {\shiftOp} $\shift$ implements the shift operation on
+the infinite lattice. The {\jacobianOrb} commutes with the {\shiftOp}, which means that the
+{\jacobianOrb} has the translation symmetry, and the translation symmetry group is given by the
+integer lattice. By the Bloch theorem (or Floquet theorem), we know that the eigenstates of 
+the linear operator $\jMorb$ have the form of a plane wave times a periodic function:
+\beq
+\psi_{k}(\zeit) = e^{\mathrm{i}k\zeit} u_{k}(\zeit) \,,
+\ee{BlochTheorem}
+where $u_k(\zeit)$ is a periodic function with period 1.
+Since the {\jacobianOrb} only acts on the field defined on the integer lattice, the periodic
+function $u_k(\zeit)$ is a constant on the lattice. And the eigenstate $\psi_k$ is:
+\beq
+(\psi_{k})_\zeit = \psi_{k}(\zeit) = e^{\mathrm{i}k\zeit}
+    \,,\quad \zeit \in \integers
+ \,.
+\ee{BlochLatt}
+So the eigenstates are plane waves on the lattice, in agreement with the fact that eigenstates
+of translation operators are plane waves.
+Given the periodicity of the integer lattice, we can find all eigenvalues with the wave vector
+$k$ confined in the first Brillouin zone: from $k=-\pi$ to $k=\pi$. Let the {\jacobianOrb}
+\refeq{tempCatFix} act on the eigenstates \refeq{BlochLatt}, we find that the 
+eigenvalues of the {\jacobianOrb} are:
+\beq
+E_k = \jMorb \psi_k = s - 2\cos\left(\frac{2\pi k}{\cl{}}\right) \,.
+\ee{EigenvalueSpectrum}
+The eigenvalue with wave vector $k$ in the first Brillouin zone is plotted in 
+\reffig{fig:LC21emplattBand} (a).
+
+
+
 % siminos/reversal/zeta1d.tex      pdflatex LC21; bibtex LC21
 % temporary: siminos/spatiotemp/chapter/LC21zeta1d.tex
 % $Author: predrag $ $Date: 2021-12-24 01:25:20 -0500 (Fri, 24 Dec 2021) $
